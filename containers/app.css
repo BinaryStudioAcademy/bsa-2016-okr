@@ -1,0 +1,11 @@
+div {
+	 background-color: green;
+	 height: 50px;
+	 border: 1px solid blue;
+}
+
+.myDiv {
+	background: yellow;
+	text-align: center;
+	color: red;
+}
