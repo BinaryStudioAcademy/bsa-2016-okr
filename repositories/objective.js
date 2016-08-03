@@ -13,6 +13,10 @@ ObjectiveRepository.prototype.getAllObjectives = function(queryString, callback)
 	this.getAll(callback);
 };
 
+ObjectiveRepository.prototype.createObjective = function(objective, queryString, callback) {
+	this.add(objective, callback);
+};
+
 ObjectiveRepository.prototype.getObjective = function(id, queryString, callback) {
 	this.getById(id, callback);
 };
