@@ -5,6 +5,7 @@ const comment = require('./comment');
 const category = require('./category');
 const plan = require('./plan');
 const history = require('./history');
+const userMentor = require('./userMentor');
 
 module.exports = function(app){
 	app.use('/api/user', user);
@@ -14,4 +15,5 @@ module.exports = function(app){
 	app.use('/api/category', category);
 	app.use('/api/plan', plan);
 	app.use('/api/history', history);
+	app.use('/api/mentor', userMentor);
 };
