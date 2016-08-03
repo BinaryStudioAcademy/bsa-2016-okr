@@ -1,11 +1,13 @@
 const router = require('express').Router();
+const repository = require('../../repositories/key');
+const dbCallback = require('./response');
 
 router.post('/', (req, res, next) => {
-	//key create
+	repository.createKey(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	//key update
+	repository.updateKey(req.params.id, req.body, dbCallback(res));
 });
 
 module.exports = router;

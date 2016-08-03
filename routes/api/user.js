@@ -1,11 +1,10 @@
 const router = require('express').Router();
-const repository = require('../repositories/user');
+const repository = require('../../repositories/user');
 const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
 	repository.getAllUsers(dbCallback(res));
 });
-
 
 router.get(':id', (req, res, next) => {
 	repository.getUser(req.params.id, dbCallback(res));

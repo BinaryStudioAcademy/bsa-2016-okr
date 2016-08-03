@@ -1,23 +1,25 @@
 const router = require('express').Router();
+const repository = require('../../repositories/plan');
+const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-	//Get all categories
+	repository.getAllPlans(dbCallback(res));
 });
 
 router.get('/:id', (req, res, next) => {
-	//Get plan by id
+	repository.getPlanById(req.params.id, dbCallback(res));
 });
 
 router.post('/', (req, res, next) => {
-	//plan create
+	repository.createPlan(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	//plan update
+	repository.updatePlan(req.params.id, req.body, dbCallback(res));
 });
 
 router.get('/user/:id', (req, res, next) => {
-	//Get plan by user id
+	repository.getPlanByUserId(req.params.id, dbCallback(res));
 });
 
 module.exports = router;
