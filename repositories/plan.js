@@ -13,6 +13,10 @@ PlanRepository.prototype.getAllPlans = function(queryString, callback) {
 	this.getAll(callback);
 };
 
+PlanRepository.prototype.createPlan = function(plan, queryString, callback) {
+	this.add(plan, callback);
+};
+
 PlanRepository.prototype.getPlanById = function(id, queryString, callback) {
 	this.getById(id, callback);
 };
