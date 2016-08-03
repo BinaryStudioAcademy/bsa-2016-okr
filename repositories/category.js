@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
-var Plan = require('../schemas/category').model;
+var Category = require('../schemas/category').model;
 
 var CategoryRepository = function(){
 	Repository.prototype.constructor.call(this);
@@ -25,3 +25,4 @@ CategoryRepository.prototype.deleteCategory = function(id, queryString, callback
 	this.delete(id, callback);
 };
 
+module.exports = new CategoryRepository();

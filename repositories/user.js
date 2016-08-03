@@ -22,6 +22,7 @@ UserRepository.prototype.createUser = function(user, queryString, callback) {
 };
 
 UserRepository.prototype.updateUser = function(id, body, queryString, callback) {
-	this.update(id, body);
+	this.update(id, body, callback);
 };
 
+module.exports = new UserRepository();

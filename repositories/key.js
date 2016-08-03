@@ -7,12 +7,14 @@ var KeyRepository = function(){
 	this.model = Key;
 };
 
-CommentRepository.prototype = new Repository();
+KeyRepository.prototype = new Repository();
 
-CommentRepository.prototype.createKey = function(key, queryString, callback) {
+KeyRepository.prototype.createKey = function(key, queryString, callback) {
 	this.add(key, callback);
 };
 
-CommentRepository.prototype.updateKey = function(id, body, queryString, callback) {
+KeyRepository.prototype.updateKey = function(id, body, queryString, callback) {
 	this.update(id, body, callback);
 };
+
+module.exports = new KeyRepository();

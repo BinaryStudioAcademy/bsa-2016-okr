@@ -21,3 +21,4 @@ HistoryRepository.prototype.createHistory = function(history, queryString, callb
 	this.add(history, callback);
 };
 
+module.exports = new HistoryRepository();
