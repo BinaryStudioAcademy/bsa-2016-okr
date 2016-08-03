@@ -10,14 +10,14 @@ var HistoryRepository = function(){
 HistoryRepository.prototype = new Repository();
 
 HistoryRepository.prototype.getAllHistory = function(queryString, callback) {
-	History.getAll(callback);
+	this.getAll(callback);
 };
 
 HistoryRepository.prototype.getHistoryById = function(id, queryString, callback) {
-	History.getById(id, callback);
+	this.getById(id, callback);
 };
 
 HistoryRepository.prototype.createHistory = function(history, queryString, callback) {
-	History.add(history, callback);
+	this.add(history, callback);
 };
 

@@ -10,9 +10,9 @@ var KeyRepository = function(){
 CommentRepository.prototype = new Repository();
 
 CommentRepository.prototype.createKey = function(key, queryString, callback) {
-	Key.add(key, callback);
+	this.add(key, callback);
 };
 
 CommentRepository.prototype.updateKey = function(id, body, queryString, callback) {
-	Key.update(id, body, callback);
+	this.update(id, body, callback);
 };

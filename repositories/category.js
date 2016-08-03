@@ -10,18 +10,18 @@ var CategoryRepository = function(){
 CategoryRepository.prototype = new Repository();
 
 CategoryRepository.prototype.getAllCategories = function(queryString, callback) {
-	Category.getAll(callback);
+	this.getAll(callback);
 };
 
 CategoryRepository.prototype.createCategory = function(category, queryString, callback) {
-	Category.add(category, callback);
+	this.add(category, callback);
 };
 
 CategoryRepository.prototype.updateCategory = function(id, body, queryString, callback) {
-	Category.update(id, body, callback);
+	this.update(id, body, callback);
 };
 
 CategoryRepository.prototype.deleteCategory = function(id, queryString, callback) {
-	Category.delete(id, callback);
+	this.delete(id, callback);
 };
 
