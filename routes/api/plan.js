@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 router.get('/', (req, res, next) => {
-	//Get all categories
+	//Get all plans
 });
 
 router.get('/:id', (req, res, next) => {

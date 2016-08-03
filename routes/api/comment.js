@@ -5,13 +5,8 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-	//Get comments by objective id
+	//Get comment
 	 console.log("comment update");
-});
-
-router.get('/objective/:id', (req, res, next) => {
-	//Get comments by objective id
-	 console.log("Get comments by objective id");
 });
 
 router.get('/objective/:id', (req, res, next) => {
