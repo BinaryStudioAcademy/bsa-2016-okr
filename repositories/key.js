@@ -9,6 +9,12 @@ var KeyRepository = function(){
 
 KeyRepository.prototype = new Repository();
 
+KeyRepository.prototype.getkeyByObjectiveId = function(objectiveId, callback) {
+	var model = this.model;
+	var query = model.find({'objectiveId': objectiveId});
+	query.exec(callback);
+};
+
 KeyRepository.prototype.setIsApprovedToTrue = function(id, callback) {
 	var model = this.model;
 	var query = model.update({_id:id}, {$set: {'isApproved': 'true'} });
