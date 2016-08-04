@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var keyResultSchema = new Schema({
 	objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
-	title: String
+	title: String,
 	score: Number,
 	forks: Number,
 	difficulty: String,
