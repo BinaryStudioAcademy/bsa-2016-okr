@@ -9,20 +9,4 @@ var UserRepository = function(){
 
 UserRepository.prototype = new Repository();
 
-UserRepository.prototype.getAllUsers = function(queryString, callback) {
-	this.getAll(callback);
-};
-
-UserRepository.prototype.getUser = function(id, queryString, callback) {
-	this.getById(id, callback);
-};
-
-UserRepository.prototype.createUser = function(user, queryString, callback) {
-	this.add(user, callback);	
-};
-
-UserRepository.prototype.updateUser = function(id, body, queryString, callback) {
-	this.update(id, body, callback);
-};
-
 module.exports = new UserRepository();

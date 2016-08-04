@@ -9,12 +9,16 @@ var KeyRepository = function(){
 
 KeyRepository.prototype = new Repository();
 
-KeyRepository.prototype.createKey = function(key, queryString, callback) {
-	this.add(key, callback);
+KeyRepository.prototype.setIsApprovedToTrue = function(id, callback) {
+	var model = this.model;
+	var query = model.update({_id:id}, {$set: {'isApproved': 'true'} });
+	query.exec(callback);
 };
 
-KeyRepository.prototype.updateKey = function(id, body, queryString, callback) {
-	this.update(id, body, callback);
+KeyRepository.prototype.setIsApprovedToFalse = function(id, callback) {
+	var model = this.model;
+	var query = model.update({_id:id}, {$set: {'isApproved': 'false'} });
+	query.exec(callback);
 };
 
 module.exports = new KeyRepository();

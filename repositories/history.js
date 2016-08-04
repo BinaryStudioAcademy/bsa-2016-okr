@@ -9,16 +9,4 @@ var HistoryRepository = function(){
 
 HistoryRepository.prototype = new Repository();
 
-HistoryRepository.prototype.getAllHistory = function(queryString, callback) {
-	this.getAll(callback);
-};
-
-HistoryRepository.prototype.getHistoryById = function(id, queryString, callback) {
-	this.getById(id, callback);
-};
-
-HistoryRepository.prototype.createHistory = function(history, queryString, callback) {
-	this.add(history, callback);
-};
-
 module.exports = new HistoryRepository();

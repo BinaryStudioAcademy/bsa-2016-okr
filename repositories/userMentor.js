@@ -9,24 +9,10 @@ var UserMentorRepository = function(){
 
 UserMentorRepository.prototype = new Repository();
 
-UserMentorRepository.prototype.getAllMentors = function(queryString, callback) {
-	this.getAll(callback);
-};
-
-UserMentorRepository.prototype.getMentorById = function(id, queryString, callback) {
-	this.getById(id, callback);
-};
-
-UserMentorRepository.prototype.getMentorByMentorId = function(mentorId, queryString, callback) {
-	this.model.findOne({'mentorId': mentorId}).exec(callback);
-};
-
-UserMentorRepository.prototype.createMentor = function(mentor, queryString, callback) {
-	this.add(mentor, callback);
-};
-
-UserMentorRepository.prototype.deleteMentor = function(id, queryString, callback) {
-	this.delete(id, callback);
+UserMentorRepository.prototype.getMentorByMentorId = function(mentorId, callback) {
+	var model = this.model;
+	var query = findOne({'mentorId': mentorId});
+	query.exec(callback);
 };
 
 module.exports = new UserMentorRepository();

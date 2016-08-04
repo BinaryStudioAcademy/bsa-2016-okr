@@ -9,20 +9,11 @@ var CommentRepository = function(){
 
 CommentRepository.prototype = new Repository();
 
-CommentRepository.prototype.createComment = function(comment, queryString, callback) {
-	this.add(comment, callback);
+CommentRepository.prototype.getCommentByObjId = function(objectiveId, callback) {
+	var model = this.model;
+	var query = model.find({'objectiveId': objectiveId});
+	query.exec(callback);
 };
 
-CommentRepository.prototype.getCommentById = function(id, queryString, callback) {
-	this.getById(id, callback);
-};
-
-CommentRepository.prototype.getCommentByObjId = function(objectiveId, queryString, callback) {
-	Comment.find({'objectiveId': objectiveId}).exec(callback);
-};
-
-CommentRepository.prototype.deleteComment = function(id, queryString, callback) {
-	this.delete(id, callback);
-};
 
 module.exports = new CommentRepository();

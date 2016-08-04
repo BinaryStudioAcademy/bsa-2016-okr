@@ -1,6 +1,4 @@
-var Repository = function(){
-
-};
+var Repository = function(){};
 
 Repository.prototype.add = function(data, callback){
 	var model = this.model;
@@ -30,5 +28,36 @@ Repository.prototype.getById = function(id, callback){
 	var query = model.findOne({_id:id});
 	query.exec(callback);
 };
+
+Repository.prototype.getAllNotDeleted = function(callback) {
+	var model = this.model;
+	var query = model.find({'isDeleted': 'false'});
+	query.exec(callback);
+};
+
+Repository.prototype.getAllDeleted = function(callback) {
+	var model = this.model;
+	var query = model.find({'isDeleted': 'true'});
+	query.exec(callback);
+};
+
+Repository.prototype.getNotDeleted = function(id, callback) {
+	var model = this.model;
+	var query = model.findOne({_id:id}, {'isDeleted': 'false'});
+	query.exec(callback);
+};
+
+Repository.prototype.setToDeleted = function(id, callback) {
+	var model = this.model;
+	var query = model.update({_id:id}, {$set: {'isDeleted': 'true'} });
+	query.exec(callback);
+};
+
+Repository.prototype.setToNotDeleted = function(id, callback) {
+	var model = this.model;
+	var query = model.update({_id:id}, {$set: {'isDeleted': 'false'} });
+	query.exec(callback);
+};
+
 
 module.exports = Repository;
