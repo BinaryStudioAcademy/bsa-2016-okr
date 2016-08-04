@@ -1,74 +1,100 @@
 var UserRepository = require('../repositories/user.js'),
-    ObjectiveRepository = require('../repositories/objective.js'),
-    KeysRepository = require('../repositories/key.js'),
-    async = require(async);
+	ObjectiveRepository = require('../repositories/objective.js'),
+	KeysRepository = require('../repositories/key.js'),
+	async = require('async');
 
-var ObjectiveService = function(){
-
-};
+var ObjectiveService = function() {};
 
 /**
- *
- * @param data - contain three object: 1) objective 2) keys array 3) userId
- * @param callback
- */
+*
+* @param data - contain three object: 1) objective 2) keys array 3) userId
+* @param callback
+*/
 
-ObjectiveService.prototype.addObjectiveToUser = function(data, callback) {
-    async.waterfall([
-        myFirstFunction,
-        mySecondFunction,
-        myLastFunction,
-    ], function (err, result) {
-        // result now equals 'done'
-    });
+ObjectiveService.prototype.addObjectiveToUser = (data, callback) => {
+	let userId = data.userId;
 
-    function myFirstFunction(callback) {
-        if (!data.objective.objectiveId){
-            ObjectiveRepository.add(data.objective, function(err, data){
-                if (err){
-                    return callback(err, null);
-                };
+	async.waterfall([
+		addObjectiveToDb,
+		addObjectiveToUser,
+		addEventsToHistory,
+	], (err, result) => {
+		callback(err);
+	});
 
-                for (var i= 0, length=data.keys.length; i<length;i++ ) {
-                    KeysRepository.add(data.keys[i], function (err, data) {
-                        if (err) {
-                            return callback(err, null);
-                        };
+	function addObjectiveToDb(callback) {
+		if (!data.objective.objectiveId) {
+			async.waterfall([
+				(callback) => {
+					ObjectiveRepository.add(data.objective, (err, data) => {
+						if (err) {
+							return callback(err, null);
+						};
 
-                    });
-                }
-            });
-        } else {
-            ObjectiveRepository.getById(data.objective.objectiveId, function(err, data){
-                if (err){
-                    return callback(err, null);
-                };
+						return callback(null);
+					});
+				}, (callback) => {
+					async.every(data.keys, (key, callback) => {
+						KeysRepository.add(key, (err, data) => {
+							return err ? callback(err, null) : callback(null);
+						});
+					}, (err, result) => {
+							return callback(err);
+					});
+				}
+			], (err, result) => {
+				return callback(err);
+			});
+		} else {
+			async.waterfall([
+				(callback) => {
+					ObjectiveRepository.getById(data.objective.objectiveId, (err, objective) => {
+						if (err) {
+							return callback(err, null);
+						};
 
-                data.forks.push(data.userId);
+						return callback(null, objective);
+					}
+				}, (objective, callback) => {
+					if(objective.forks.indexOf(userId) === -1) {
+						objective.forks.push(userId);
+					}
 
-                ObjectiveRepository.update(data.objective.objectiveId,data,function(err, data){
-                    if (err){
-                        return callback(err, null);
-                    };
-                });
-            });
-        }
+					return callback(null);
+				}, (callback) => {
+					data.keys.forEach((key) => {
+						if(key.id) {
+							// Fork key from keys collection
+							KeysRepository.getById(key.id, (err, key)  => {
+								if(key.forks.indexOf(userId) === -1) {
+									key.forks.push(userId);
+								}
 
-        callback(null, data);
-    }
-    function mySecondFunction(arg1, arg2, callback) {
-        // arg1 now equals 'one' and arg2 now equals 'two'
-        callback(null, 'three');
-    }
-    function myLastFunction(arg1, callback) {
-        // arg1 now equals 'three'
-        callback(null, 'done');
-    }
+								return callback(null);
+							});
+						} else {
+							// Add key to keys collection
+							KeysRepository.add(key, (err, data) => {
+								return err ? callback(err, null) : callback(null);
+							})
+						}
+					});
+				}
+			], (err, result) => {
+				return callback(err);
+			});
+		}
 
+		callback(null);
+	}
+	
+	function addObjectiveToUser(arg1, arg2, callback) {
+		return callback(null, 'three');
+	}
 
+	function addEventsToHistory(arg1, callback) {
+		return callback(null, 'done');
+	}
 };
-
-
-
 
 module.exports = new ObjectiveService();
