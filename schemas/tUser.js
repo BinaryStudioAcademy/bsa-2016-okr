@@ -8,8 +8,8 @@ var userSchema = new Schema({
 	objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'tObjective'}
 	}],
 	objectives: [
-    {objectiveId: Number,
-    keys: [{keyId: Number,
+    {objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'tObjective'},
+    keys: [{keyId: {type: mongoose.Schema.Types.ObjectId, ref: 'tKeyResult'},
 			title: String,
 			score: Number,
 			forks: Number

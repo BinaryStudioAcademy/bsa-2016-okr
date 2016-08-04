@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var userMentorSchema = new Schema({
 	id: mongoose.Schema.ObjectId,
 	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'tUser'},
-  mentorId: Number
+  mentorId: {type: mongoose.Schema.Types.ObjectId, ref: 'tUser'}
 });
 
 module.exports = mongoose.model('tUserMentor', userMentorSchema);
