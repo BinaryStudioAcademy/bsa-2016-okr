@@ -10,4 +10,8 @@ router.put('/:id', (req, res, next) => {
 	repository.updateKey(req.params.id, req.body, dbCallback(res));
 });
 
+router.get('/title/:title', (req, res, next) => {
+	repository.getAllApprovedKeysByTitle(req.params.title, dbCallback(res));
+});
+
 module.exports = router;

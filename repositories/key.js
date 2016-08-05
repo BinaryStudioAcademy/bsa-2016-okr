@@ -21,6 +21,12 @@ KeyRepository.prototype.getkeyByObjectiveId = function(objectiveId, callback) {
 	query.exec(callback);
 };
 
+KeyRepository.prototype.getAllApprovedKeysByTitle = function(title, callback) {
+	var model = this.model;
+	var query = model.find({'title': title}, {'isApproved': 'true'});
+	query.exec(callback);
+};
+
 KeyRepository.prototype.setIsApprovedToTrue = function(id, callback) {
 	var model = this.model;
 	var query = model.update({_id:id}, {$set: {'isApproved': 'true'} });

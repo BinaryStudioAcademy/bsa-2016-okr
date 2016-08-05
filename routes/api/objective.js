@@ -22,4 +22,8 @@ router.get('/user/:id', (req, res, next) => {
 	repository.getObjectiveByUserId(req.params.id, dbCallback(res));
 });
 
+router.get('/title/:title', (req, res, next) => {
+	repository.getAllApprovedObjectivesByTitle(req.params.title, dbCallback(res));
+});
+
 module.exports = router;
