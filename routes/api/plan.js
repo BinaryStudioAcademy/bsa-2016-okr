@@ -3,11 +3,7 @@ const repository = require('../../repositories/plan');
 const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-<<<<<<< HEAD
 	repository.getAllPlans(dbCallback(res));
-=======
-	//Get all plans
->>>>>>> feature/repositories
 });
 
 router.get('/:id', (req, res, next) => {

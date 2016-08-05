@@ -11,4 +11,4 @@ var keyResultSchema = new Schema({
 	isDeleted: Boolean
 });
 
-module.exports = mongoose.model('KeyResult', keyResultSchema);
+module.exports = mongoose.model('Key', keyResultSchema);
