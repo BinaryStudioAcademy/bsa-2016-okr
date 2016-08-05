@@ -25,7 +25,7 @@ Repository.prototype.getAll = function(callback){
 
 Repository.prototype.getById = function(id, callback){
 	var model = this.model;
-	var query = model.findOne({_id:id});
+	var query = model.findOne({ '_id': id });
 	query.exec(callback);
 };
 

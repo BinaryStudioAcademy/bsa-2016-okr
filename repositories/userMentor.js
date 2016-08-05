@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
-var UserMentor = require('../schemas/userMentor').model;
+var UserMentor = require('../schemas/userMentor');
 
 var UserMentorRepository = function(){
 	Repository.prototype.constructor.call(this);

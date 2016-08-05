@@ -1,25 +1,27 @@
 const router = require('express').Router();
 const repository = require('../../repositories/objective');
+const service = require('../../services/objective');
 const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-	repository.getAllObjectives(dbCallback(res));
+	repository.getAll(dbCallback(res));
 });
 
 router.get('/:id', (req, res, next) => {
-	repository.getObjective(req.params.id, dbCallback(res));
+	let id = req.params.id;
+	repository.getById(id, dbCallback(res));
 });
 
 router.post('/', (req, res, next) => {
-	repository.createObjective(req.body, dbCallback(res));
+	repository.add(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	repository.updateObjective(req.params.id, req.body, dbCallback(res));
+	repository.update(req.params.id, req.body, dbCallback(res));
 });
 
 router.get('/user/:id', (req, res, next) => {
-	repository.getObjectiveByUserId(req.params.id, dbCallback(res));
+	repository.getByUserId(req.params.id, dbCallback(res));
 });
 
 router.get('/title/:title', (req, res, next) => {

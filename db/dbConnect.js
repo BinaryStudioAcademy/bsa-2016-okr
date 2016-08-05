@@ -1,8 +1,8 @@
 function dbConnectionHandler() {
 	var mongoose = require('mongoose'),
-		config = require('../config');
+		config = require('../config/db');
 
-	mongoose.connect(config.db.uri, config.db.opts);
+	mongoose.connect(config.uri, config.opts);
 	mongoose.set('debug', true);
 
 	this.connection = mongoose.connection;

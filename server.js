@@ -12,6 +12,8 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 
+const dbConnect = require('./db/dbConnect');
+
 //added routes
 const routes = require('./routes/api/routes')(app);
 

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
-var Comment = require('../schemas/comment').model;
+var Comment = require('../schemas/comment');
 
 var CommentRepository = function(){
 	Repository.prototype.constructor.call(this);
