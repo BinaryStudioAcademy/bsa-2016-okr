@@ -14,7 +14,7 @@
     "bsa16",
     "okr"
   ],
-  "author": "Dubrovskiy Evgeniy",
+  "author": "BSA-2016",
   "scripts": {
     "test": "",
     "start": "node server",
