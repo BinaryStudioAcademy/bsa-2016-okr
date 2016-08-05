@@ -8,6 +8,10 @@ Requires global packages
 
 ``` npm install -g rimraf webpack cross-env ```
 
-To start the project run
+To start the project for development run
 
 ``` npm start ```
+
+To start the project on production run
+
+``` npm run-script build ```
