@@ -1,8 +1,8 @@
-import "babel-polyfill"
-import React from "react"
-import { render } from "react-dom"
-import App from "./containers/app"
-import LoginPage from "./components/login-page.js"
+import 'babel-polyfill';
+import React from 'react';
+import { render } from 'react-dom';
+import App from './containers/app';
+import LoginPage from './components/login-page.js';
 import {IndexRoute, Route, Router, browserHistory} from 'react-router';
 
 render(
@@ -12,4 +12,4 @@ render(
         </Route>
     </Router>)
     , document.getElementById('root')
-)
+);
