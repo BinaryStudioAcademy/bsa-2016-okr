@@ -3,7 +3,7 @@ const repository = require('../../repositories/comment');
 const dbCallback = require('./response');
 
 router.post('/', (req, res, next) => {
-	repository.create(req.body, dbCallback(res));
+	repository.add(req.body, dbCallback(res));
 });
 
 router.get('/:id', (req, res, next) => {

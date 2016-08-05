@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
-var UserMentor = require('../schemas/userMentor').model;
+var UserMentor = require('../schemas/userMentor');
 
 var UserMentorRepository = function(){
 	Repository.prototype.constructor.call(this);
@@ -9,7 +9,7 @@ var UserMentorRepository = function(){
 
 UserMentorRepository.prototype = new Repository();
 
-UserMentorRepository.prototype.getMentorByMentorId = function(mentorId, callback) {
+UserMentorRepository.prototype.getByMentorId = function(mentorId, callback) {
 	var model = this.model;
 	var query = findOne({'mentorId': mentorId});
 	query.exec(callback);

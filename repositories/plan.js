@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
-var Plan = require('../schemas/plan').model;
+var Plan = require('../schemas/plan');
 
 var PlanRepository = function(){
 	Repository.prototype.constructor.call(this);
@@ -9,7 +9,7 @@ var PlanRepository = function(){
 
 PlanRepository.prototype = new Repository();
 
-PlanRepository.prototype.getPlanByUserId = function(userId,callback) {
+PlanRepository.prototype.getByUserId = function(userId,callback) {
 	var model = this.model;
 	var query = model.findOne({'userId': userId})
 	query.exec(callback);

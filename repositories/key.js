@@ -9,13 +9,7 @@ var KeyRepository = function(){
 
 KeyRepository.prototype = new Repository();
 
-KeyRepository.prototype.getById = function(id, callback) {
-	var model = this.model;
-	var query = model.findOne({_id: id});
-	query.exec(callback);
-};
-
-KeyRepository.prototype.getkeyByObjectiveId = function(objectiveId, callback) {
+KeyRepository.prototype.getByObjectiveId = function(objectiveId, callback) {
 	var model = this.model;
 	var query = model.find({'objectiveId': objectiveId});
 	query.exec(callback);
