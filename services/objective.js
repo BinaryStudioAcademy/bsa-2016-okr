@@ -5,37 +5,6 @@ var UserRepository = require('../repositories/user.js'),
 
 var ObjectiveService = function() {};
 
-
-ObjectiveService.prototype.getById = (id, callback) => {
-	console.log('In objective service: getById');
-	console.log('id: ' + id);
-	var res;
-	
-	async.waterfall([
-		// get objective from objective repo
-		(callback) => {
-			ObjectiveRepository.getById(id, (err, data) => {
-				if(err) {
-					return callback(err);
-				}
-				return callback(null, data);
-			});
-		},
-		// merge with objective from user.objectives
-		(data, callback) => {
-			return callback(null, data);
-		},
-		// merge each key from user.objective.keys with key from key repo
-		(data, callback) => {
-			return callback(null, data);
-		}
-	], (err, result) => {	
-		console.log('Async finished');
-		console.log(result);
-		// return callback(err, result);
-	});
-};
-
 /**
 *
 * @param data - contain three object: 1) objective 2) keys array 3) userId
@@ -118,11 +87,11 @@ ObjectiveService.prototype.getById = (id, callback) => {
 // 		callback(null);
 // 	}
 	
-// 	function addObjectiveToUser(arg1, arg2, callback) {
+// 	function addObjectiveToUser(callback) {
 // 		return callback(null, 'three');
 // 	}
 
-// 	function addEventsToHistory(arg1, callback) {
+// 	function addEventsToHistory(callback) {
 // 		return callback(null, 'done');
 // 	}
 // };
