@@ -23,6 +23,7 @@
     "jscs": "jscs ."
   },
   "dependencies": {
+    "async": "^2.0.1",
     "babel-cli": "^6.4.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
