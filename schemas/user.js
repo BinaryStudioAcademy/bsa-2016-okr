@@ -10,9 +10,7 @@ var userSchema = new Schema({
 		description: String,
 		{objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
 		keys: [{keyId: {type: mongoose.Schema.Types.ObjectId, ref: 'KeyResult'},
-			title: String,
 			score: Number,
-			forks: Number
 		}],
 		category: String,
 		score: Number,
