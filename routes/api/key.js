@@ -11,7 +11,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.get('/title/:title', (req, res, next) => {
-	repository.getAllApprovedKeysByTitle(req.params.title, dbCallback(res));
+	repository.getAllApprovedByTitle(req.params.title, dbCallback(res));
 });
 
 module.exports = router;

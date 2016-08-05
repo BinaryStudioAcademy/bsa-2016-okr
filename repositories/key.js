@@ -15,13 +15,13 @@ KeyRepository.prototype.getById = function(id, callback) {
 	query.exec(callback);
 };
 
-KeyRepository.prototype.getkeyByObjectiveId = function(objectiveId, callback) {
+KeyRepository.prototype.getByObjId = function(objectiveId, callback) {
 	var model = this.model;
 	var query = model.find({'objectiveId': objectiveId});
 	query.exec(callback);
 };
 
-KeyRepository.prototype.getAllApprovedKeysByTitle = function(title, callback) {
+KeyRepository.prototype.getAllApprovedByTitle = function(title, callback) {
 	var model = this.model;
 	var query = model.find({'title': title}, {'isApproved': 'true'});
 	query.exec(callback);
