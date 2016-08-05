@@ -9,7 +9,7 @@ var PlanRepository = function(){
 
 PlanRepository.prototype = new Repository();
 
-PlanRepository.prototype.getByUserId = function(userId,callback) {
+PlanRepository.prototype.getPlanByUserId = function(userId,callback) {
 	var model = this.model;
 	var query = model.findOne({'userId': userId})
 	query.exec(callback);

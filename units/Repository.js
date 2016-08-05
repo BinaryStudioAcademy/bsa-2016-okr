@@ -25,7 +25,7 @@ Repository.prototype.getAll = function(callback){
 
 Repository.prototype.getById = function(id, callback){
 	var model = this.model;
-	var query = model.findOne({ '_id': id });
+	var query = model.findOne({_id:id});
 	query.exec(callback);
 };
 
@@ -59,5 +59,13 @@ Repository.prototype.setToNotDeleted = function(id, callback) {
 	query.exec(callback);
 };
 
+Repository.prototype.getCount= function() {
+	
+	var model = this.model;
+
+	model.count( {}, function( err, count) {
+		console.log( "Count :", count );
+	});
+}
 
 module.exports = Repository;

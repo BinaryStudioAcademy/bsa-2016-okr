@@ -8,14 +8,17 @@ function dbConnectionHandler() {
 	this.connection = mongoose.connection;
 
 	mongoose.connection.on('connected', function() {
+		console.log("DB connect");
 		this.state = 'connected';
 	});
 
 	mongoose.connection.on('error', function() {
+		console.log("DB disconnected(error)");
 		this.state = 'disconnected';
 	});
 
 	mongoose.connection.on('disconnected', function() {
+		console.log("DB disconnected");
 		this.state = 'disconnected';
 	});
 

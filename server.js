@@ -8,11 +8,12 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
 const bodyParser = require('body-parser');
 
+//connect to db
+const dbConnectHandler = require('./db/dbConnect');
+
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
-
-const dbConnect = require('./db/dbConnect');
 
 //added routes
 const routes = require('./routes/api/routes')(app);

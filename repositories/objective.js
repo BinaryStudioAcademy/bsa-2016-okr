@@ -9,7 +9,7 @@ var ObjectiveRepository = function(){
 
 ObjectiveRepository.prototype = new Repository();
 
-ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
+ObjectiveRepository.prototype.getObjectivesByUserId = function(userId, callback) {
 	var model = this.model;
 	var query = model.find({'createdBy': userId});
 	query.exec(callback);
