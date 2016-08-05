@@ -39,9 +39,12 @@ module.exports = {
     }, {
       test: /\.json?$/,
       loader: 'json'
-    }, { 
-      test: /\.css$/, 
+    }, {
+      test: /\.css$/,
       loader: "style-loader!css-loader"
-      }]
+    }, {
+      test: /\.scss$/,
+      loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+    }]
   }
 };
