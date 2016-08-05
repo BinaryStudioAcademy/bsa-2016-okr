@@ -1,25 +1,21 @@
 const router = require('express').Router();
+const repository = require('../../repositories/comment');
+const dbCallback = require('./response');
 
 router.post('/', (req, res, next) => {
-	//Comment create
+	repository.createComment(req.body, dbCallback(res));
 });
 
-router.put('/:id', (req, res, next) => {
-	//Get comments by objective id
-	 console.log("comment update");
-});
-
-router.get('/objective/:id', (req, res, next) => {
-	//Get comments by objective id
-	 console.log("Get comments by objective id");
+router.get('/:id', (req, res, next) => {
+	repository.getCommentById(req.params.id, dbCallback(res));
 });
 
 router.get('/objective/:id', (req, res, next) => {
-	//Get comments by objective id
+	repository.getCommentByObjId(req.params.id, dbCallback(res));
 });
 
 router.delete('/:id', (req, res, next) => {
-	//Delete comment
+	repository.deleteComment(req.params.id, dbCallback(res));
 });
 
 module.exports = router;

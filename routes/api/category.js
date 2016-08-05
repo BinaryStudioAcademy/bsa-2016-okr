@@ -1,19 +1,21 @@
 const router = require('express').Router();
+const repository = require('../../repositories/category');
+const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-	//Get all categories
+	repository.getAllCategories(dbCallback(res));
 });
 
 router.post('/', (req, res, next) => {
-	//create category
+	repository.createCategory(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	//Update category
+	repository.updateCategory(req.params.id, req.body, dbCallback(res));
 });
 
 router.delete('/:id', (req, res, next) => {
-	//Delete category
+	repository.deleteCategory(req.params.id, dbCallback(res));
 });
 
 module.exports = router;

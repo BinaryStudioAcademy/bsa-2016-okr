@@ -1,24 +1,25 @@
 const router = require('express').Router();
+const repository = require('../../repositories/objective');
+const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-	//Get all objectives
+	repository.getAllObjectives(dbCallback(res));
 });
 
-
 router.get('/:id', (req, res, next) => {
-	//Get objective by id
+	repository.getObjective(req.params.id, dbCallback(res));
 });
 
 router.post('/', (req, res, next) => {
-	//objective create
+	repository.createObjective(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	//objective update
+	repository.updateObjective(req.params.id, req.body, dbCallback(res));
 });
 
-router.put('/user/:id', (req, res, next) => {
-	//Get objectives by user id
+router.get('/user/:id', (req, res, next) => {
+	repository.getObjectiveByUserId(req.params.id, dbCallback(res));
 });
 
 module.exports = router;

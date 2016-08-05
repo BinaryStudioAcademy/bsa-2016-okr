@@ -1,21 +1,21 @@
 const router = require('express').Router();
+const repository = require('../../repositories/user');
+const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-	//Get all users
+	repository.getAllUsers(dbCallback(res));
 });
-
 
 router.get(':id', (req, res, next) => {
-	//Get user by id
+	repository.getUser(req.params.id, dbCallback(res));
 });
 
-
 router.post('/', (req, res, next) => {
-	//User create
+	repository.createUser(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	//User update
+	repository.updateUser(req.params.id, req.body, dbCallback(res));
 });
 
 module.exports = router;
