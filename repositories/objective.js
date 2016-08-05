@@ -15,7 +15,7 @@ ObjectiveRepository.prototype.getObjectivesByUserId = function(userId, callback)
 	query.exec(callback);
 };
 
-KeyRepository.prototype.getAllApprovedObjectivesByTitle = function(title, callback) {
+ObjectiveRepository.prototype.getAllApprovedObjectivesByTitle = function(title, callback) {
 	var model = this.model;
 	var query = model.find({'title': title}, {'isApproved': 'true'});
 	query.exec(callback);

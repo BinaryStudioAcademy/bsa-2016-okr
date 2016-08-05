@@ -9,7 +9,7 @@ var UserMentorRepository = function(){
 
 UserMentorRepository.prototype = new Repository();
 
-UserMentorRepository.prototype.getMentorByMentorId = function(mentorId, callback) {
+UserMentorRepository.prototype.getByMentorId = function(mentorId, callback) {
 	var model = this.model;
 	var query = findOne({'mentorId': mentorId});
 	query.exec(callback);

@@ -3,19 +3,19 @@ const repository = require('../../repositories/category');
 const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-	repository.getAllCategories(dbCallback(res));
+	repository.getAll(dbCallback(res));
 });
 
 router.post('/', (req, res, next) => {
-	repository.createCategory(req.body, dbCallback(res));
+	repository.add(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	repository.updateCategory(req.params.id, req.body, dbCallback(res));
+	repository.update(req.params.id, req.body, dbCallback(res));
 });
 
 router.delete('/:id', (req, res, next) => {
-	repository.deleteCategory(req.params.id, dbCallback(res));
+	repository.delete(req.params.id, dbCallback(res));
 });
 
 module.exports = router;

@@ -1,7 +1,10 @@
-div {
-	 background-color: green;
-	 height: 50px;
-	 border: 1px solid blue;
+input {
+	margin-bottom: 10px;
+}
+
+
+textarea {
+	margin-bottom: 10px;
 }
 
 .myDiv {

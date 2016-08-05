@@ -9,7 +9,7 @@ var CommentRepository = function(){
 
 CommentRepository.prototype = new Repository();
 
-CommentRepository.prototype.getCommentByObjId = function(objectiveId, callback) {
+CommentRepository.prototype.getByObjId = function(objectiveId, callback) {
 	var model = this.model;
 	var query = model.find({'objectiveId': objectiveId});
 	query.exec(callback);
