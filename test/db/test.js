@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import '../../db/dbConnect';
-import mongoose from 'mongoose';
+import { connection } from 'mongoose';
 
 describe('Database tests', () => {
 	
 	it('Connected to DB', () => {
-		expect(mongoose.connection.readyState).to.equal(1);
+		expect(connection.readyState).to.equal(1);
 	});
 });
