@@ -6,7 +6,7 @@ var objectiveSchema = new Schema({
 	title: String,
 	cheers: [{userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}}],
 	views: [{userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}}],
-	forks: [{userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}}],
+	forks: Number,
 	isApproved: Boolean,
 	isDeleted: Boolean
 });

@@ -1,4 +1,4 @@
-var seedObjectives = require('./seedObjectives');
+var seedCollections = require('./seedCollections');
 var util = require('util');
 var mongoose = require('mongoose');
 var async = require('async');
@@ -6,33 +6,38 @@ var async = require('async');
 mongoose.connect('mongodb://localhost:27017/okr-app');
 
 mongoose.connection.once('open', () => {
-	var items = seedObjectives();
-	seedCollections(items);
+	var items = seedCollections();
+	seed(items);
 });
 
-function seedCollections(items) {
-	var collections = Object.keys(mongoose.connection.collections);
-
-	async.forEach(collections, function(collection, done) {
-		var collection = mongoose.connection.collections[collection];
-		collection.drop(function(err) {
+function seed(items) {
+	async.forEach(mongoose.connection.collections, function (collection, done) {
+		collection.drop(function (err) {
 			if (err && err.message != 'ns not found') {
 				done(err);
 			}
 
 			console.log('Collection ' + collection.name + ' dropped successfully');
 
-			if(items[collection.name]) {
-				async.forEach(items[collection.name], ((item, done) => item.save((err, data) => {
-					console.log(`data ${util.inspect(data)}`);
-					return done(err);
-				})), (err, res) => {
+			var seedItems = items[collection.name];
+			if (seedItems) {
+				collection.insertMany(seedItems, (err) => {
+					if (err) {
+						console.log(`Error inserting into ${collection.name}`);
+						console.log(err);
+					}
+					else {
+						console.log(`${seedItems.length} item inserted into ${collection.name}`);
+					}
 					done(err);
 				});
 			}
+			else {
+				done(err);
+			}
 		});
 	}, (err, result) => {
-		if(!err) {
+		if (!err) {
 			console.log('All collections dropped and seeded');
 			mongoose.connection.close();
 		}
