@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var historySchema = new Schema({
-	authorId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	authorId: {type: Schema.Types.ObjectId, ref: 'User'},
 	typeId: Number,
 	type: String,
 	date: Date
