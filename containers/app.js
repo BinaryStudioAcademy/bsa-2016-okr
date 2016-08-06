@@ -1,12 +1,10 @@
-import React, { Component } from 'react'
-import './app.css'
+import React, { Component } from 'react';
+import './app.scss';
 
-class App extends Component {
+export default class App extends Component {
     render() {
-        return (
-		   <div id='application'>{this.props.children}</div>
-        )
+      return (
+		    <div id="application">{this.props.children}</div>
+      );
     }
 }
-
-export default App
