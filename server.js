@@ -9,7 +9,7 @@ const config = require('./webpack.config.js');
 const bodyParser = require('body-parser');
 
 //connect to db
-const dbConnectHandler = require('./db/dbConnect');
+const dbConnectHandler = require('./backend/db/dbConnect');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
@@ -17,7 +17,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-const routes = require('./routes/api/routes')(app);
+const routes = require('./backend/routes/api/routes')(app);
 
 if (isDeveloping) {
   const compiler = webpack(config);
