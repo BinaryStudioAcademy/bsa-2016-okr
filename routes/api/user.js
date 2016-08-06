@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const repository = require('../../repositories/user');
+const service = require('../../services/user');
 const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
@@ -11,11 +12,19 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-	repository.add(req.body, dbCallback(res));
+	service.add(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
-	repository.update(req.params.id, req.body, dbCallback(res));
+	service.update(req.params.id, req.body, dbCallback(res));
 });
+
+router.get('/me/:id', (req, res, next) => {
+	service.getMe(req.params.id, dbCallback(res));
+});
+
+//router.delete('/:id', (req, res, next) => {
+	//service.delete(req.params.id, dbCallback(res));
+//})
 
 module.exports = router;

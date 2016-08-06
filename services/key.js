@@ -31,4 +31,29 @@ KeysService.prototype.autocomplete = function(title, callback){
 	});
 }
 
+KeysService.prototype.changeApprove = function(id, callback){
+	KeyRepository.getById(id, function(err, key){
+		if (err){
+			return callback(err, null);
+		};	
+
+		if(key.isApproved){
+			KeyRepository.setIsApprovedToFalse(id, function(err, key){
+				if (err){
+					return callback(err, null);
+				};	
+			});
+		}
+		else{
+			KeyRepository.setIsApprovedToTrue(id, function(err, key){
+				if (err){
+					return callback(err, null);
+				};	
+			});
+		};
+
+		callback(err, key);
+	});
+};
+
 module.exports = new KeysService();

@@ -95,3 +95,5 @@ UserService.prototype.delete = function(id, callback){
 		callback(err, user);
 	});
 };
+
+module.exports = new UserService();
