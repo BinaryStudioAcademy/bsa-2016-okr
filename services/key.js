@@ -11,24 +11,22 @@ KeysService.prototype.generateNotification = function(){
 
 };
 
-KeysService.prototype.getKeysByObjId(id, callback){
-	KeyRepository.getkeyByObjectiveId(id, function(err, keys){
-		if (err){
-			return callback(err, null);
-		};
+KeysService.prototype.autocomplete = function(title, callback){
+	let keys = [];
+
+	KeyRepository.getAllNotDeleted(function(err, keysArr){
+			if (err){
+				return callback(err, null);
+			};	
+
+		keysArr.forEach(function(result, index){
+			if (result['title'].toLowerCase().indexOf(title.toLowerCase()) == 0){
+				keys.push(result);
+			}
+		});
 
 		callback(err, keys);
 	});
-};
-
-KeysService.prototype.approveKey(id, callback){
-	KeyRepository.setIsApprovedToTrue(id, function(err, keys){
-		if (err){
-			return callback(err, null);
-		};
-
-		callback(err, keys);
-	});
-};
+}
 
 module.exports = new KeysService();
