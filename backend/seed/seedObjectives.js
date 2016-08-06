@@ -26,7 +26,13 @@ module.exports = function () {
                 getRandomUserId(users),
                 getRandomUserId(users)
             ],
-            forks: chance.integer({ min: 0, max: 50 }),
+            forks: [
+                getRandomUserId(users),
+                getRandomUserId(users),
+                getRandomUserId(users),
+                getRandomUserId(users),
+                getRandomUserId(users)
+            ],
             isDeleted: i % 10 === 0
         });
         objectives.push(objective);
