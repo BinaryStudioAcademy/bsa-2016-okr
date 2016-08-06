@@ -4,7 +4,6 @@ const dbCallback = require('./response');
 const service = require('../../services/key.js')
 
 router.post('/', (req, res, next) => {
-	console.log(req.body);
 	repository.add(req.body, dbCallback(res));
 });
 

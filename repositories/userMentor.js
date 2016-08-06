@@ -15,4 +15,10 @@ UserMentorRepository.prototype.getByMentorId = function(mentorId, callback) {
 	query.exec(callback);
 };
 
+UserMentorRepository.prototype.getByUserId = function(userId, callback) {
+	var model = this.model;
+	var query = findOne({'userId': userId});
+	query.exec(callback);
+};
+
 module.exports = new UserMentorRepository();
