@@ -6,7 +6,7 @@ router.get('/', (req, res, next) => {
 	repository.getAll(dbCallback(res));
 });
 
-router.get(':id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
 	repository.getById(req.params.id, dbCallback(res));
 });
 

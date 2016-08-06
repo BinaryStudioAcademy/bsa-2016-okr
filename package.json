@@ -1,75 +1,78 @@
 {
-  "name": "bsa-16-okr",
-  "version": "0.1.0",
-  "description": "bsa16 okr application, first structure",
-  "main": "server.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BinaryStudioAcademy/bsa-2016-okr.git"
-  },
-  "keywords": [
-    "express",
-    "webpack",
-    "node",
-    "bsa16",
-    "okr"
-  ],
-  "author": "Dubrovskiy Evgeniy",
-  "scripts": {
-    "test": "mocha",
-    "start": "node server",
-    "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
-    "eslint": "eslint .",
-    "jscs": "jscs ."
-  },
-  "dependencies": {
-    "async": "^2.0.1",
-    "babel-cli": "^6.4.0",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "react-router": "^2.6.1",
-    "express": "^4.13.3",
-    "mongoose": "^4.1.10"
-  },
-  "devDependencies": {
-    "autoprefixer": "^6.0.3",
-    "babel-eslint": "^4.1.6",
-    "babel-jscs": "^2.0.5",
-    "babel-loader": "^6.2.3",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
-    "babel-preset-react-hmre": "^1.1.0",
-    "babel-preset-stage-0": "^6.3.13",
-    "body-parser": "^1.15.2",
-    "chai": "^3.5.0",
-    "chance": "^1.0.4",
-    "cross-env": "^1.0.7",
-    "css-loader": "^0.19.0",
-    "eslint": "^1.5.0",
-    "eslint-plugin-react": "^3.4.2",
-    "extract-text-webpack-plugin": "^0.8.2",
-    "html-webpack-plugin": "^1.6.1",
-    "jscs": "^2.1.1",
-    "jsdom": "^6.5.1",
-    "json-loader": "^0.5.3",
-    "mocha": "^2.5.3",
-    "mocha-jsdom": "^1.0.0",
-    "mongoose": "^4.5.8",
-    "postcss-loader": "^0.6.0",
-    "react-addons-test-utils": "^0.14.3",
-    "react-transform-hmr": "^1.0.0",
-    "rimraf": "^2.4.3",
-    "sinon": "^1.16.1",
-    "sinon-chai": "^2.8.0",
-    "stats-webpack-plugin": "^0.2.1",
-    "style-loader": "^0.12.4",
-    "webpack": "^1.12.2",
-    "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.2.0"
-  },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/BinaryStudioAcademy/bsa-2016-okr/issues"
-  },
-  "homepage": "https://github.com/BinaryStudioAcademy/bsa-2016-okr#readme"
+	"name": "bsa-16-okr",
+	"version": "0.1.0",
+	"description": "bsa16 okr application, first structure",
+	"main": "server.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BinaryStudioAcademy/bsa-2016-okr.git"
+	},
+	"keywords": [
+		"express",
+		"webpack",
+		"node",
+		"bsa16",
+		"okr"
+	],
+	"author": "Dubrovskiy Evgeniy",
+	"scripts": {
+		"test": "mocha --compilers js:babel-core/register --recursive",
+		"start": "node ./seed/seed.js && node server",
+		"build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
+		"eslint": "eslint .",
+		"jscs": "jscs ."
+	},
+	"babel": {
+		"presets": ["es2015"]
+	},
+	"dependencies": {
+		"async": "^2.0.1",
+		"babel-cli": "^6.4.0",
+		"react": "^0.14.3",
+		"react-dom": "^0.14.3",
+		"react-router": "^2.6.1",
+		"express": "^4.13.3",
+		"mongoose": "^4.1.10"
+	},
+	"devDependencies": {
+		"autoprefixer": "^6.0.3",
+		"babel-eslint": "^4.1.6",
+		"babel-jscs": "^2.0.5",
+		"babel-loader": "^6.2.3",
+		"babel-preset-es2015": "^6.3.13",
+		"babel-preset-react": "^6.3.13",
+		"babel-preset-react-hmre": "^1.1.0",
+		"babel-preset-stage-0": "^6.3.13",
+		"body-parser": "^1.15.2",
+		"chai": "^3.5.0",
+		"chance": "^1.0.4",
+		"cross-env": "^1.0.7",
+		"css-loader": "^0.19.0",
+		"eslint": "^1.5.0",
+		"eslint-plugin-react": "^3.4.2",
+		"extract-text-webpack-plugin": "^0.8.2",
+		"html-webpack-plugin": "^1.6.1",
+		"jscs": "^2.1.1",
+		"jsdom": "^6.5.1",
+		"json-loader": "^0.5.3",
+		"mocha": "^2.5.3",
+		"mocha-jsdom": "^1.0.0",
+		"mongoose": "^4.5.8",
+		"postcss-loader": "^0.6.0",
+		"react-addons-test-utils": "^0.14.3",
+		"react-transform-hmr": "^1.0.0",
+		"rimraf": "^2.4.3",
+		"sinon": "^1.16.1",
+		"sinon-chai": "^2.8.0",
+		"stats-webpack-plugin": "^0.2.1",
+		"style-loader": "^0.12.4",
+		"webpack": "^1.12.2",
+		"webpack-dev-middleware": "^1.2.0",
+		"webpack-hot-middleware": "^2.2.0"
+	},
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/BinaryStudioAcademy/bsa-2016-okr/issues"
+	},
+	"homepage": "https://github.com/BinaryStudioAcademy/bsa-2016-okr#readme"
 }
