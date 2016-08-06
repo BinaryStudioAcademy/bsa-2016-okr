@@ -2,7 +2,7 @@ const router = require('express').Router();
 const repository = require('../../repositories/objective');
 const dbCallback = require('./response');
 const session = require('../../config/session');
-const userMentorRepository('../../repositories/objective');
+const userMentorRepository = require('../../repositories/userMentor');
 
 router.get('/', (req, res, next) => {
 	repository.getAll(dbCallback(res));
