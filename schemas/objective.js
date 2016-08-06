@@ -4,12 +4,9 @@ var Schema = mongoose.Schema;
 var objectiveSchema = new Schema({
 	createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	title: String,
-	description: String,
 	cheers: [{userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}}],
-	createDate: Date,
-	editDate: Date,
 	views: [{userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}}],
-	forks: Number,
+	forks: [{userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}}],,
 	isApproved: Boolean,
 	isDeleted: Boolean
 });
