@@ -20,7 +20,9 @@ KeysService.prototype.autocomplete = function(title, callback){
 			};	
 
 		keysArr.forEach(function(result, index){
-			if (result['title'].toLowerCase().indexOf(title.toLowerCase()) == 0){
+			if ((result['title'].toLowerCase().indexOf(title.toLowerCase()) == 0) &&
+				(result['isApproved'] === true))
+			{
 				keys.push(result);
 			}
 		});
