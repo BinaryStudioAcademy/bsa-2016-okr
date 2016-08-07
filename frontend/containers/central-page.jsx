@@ -1,5 +1,5 @@
 import React from 'react';
-import "central-page.css";
+import "./central-page.css";
 
 export default class CentralPage extends React.Component{
    render(){

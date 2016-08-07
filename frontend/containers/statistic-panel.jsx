@@ -1,7 +1,7 @@
 import React from 'react';
-import "statistic-panel.css";
+import "./statistic-panel.css";
 
-export default class StatiscticPanel extends React.Component{
+export default class StatisticPanel extends React.Component{
    render(){
       return(
          <aside id="inter-panel">

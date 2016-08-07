@@ -25,7 +25,7 @@ render(
     (<Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={App}>
-           <IndexRoute component={LoginPage} />
+           <IndexRoute component={HomePage} />
         </Route>
       </Router>
     </Provider>)
