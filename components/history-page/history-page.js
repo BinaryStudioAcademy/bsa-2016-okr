@@ -3,51 +3,14 @@ import HistoryItem from './history-item'
 import HistoryQurterBar from './history-quarter-bar'
 import HistorySearch from './history-search'
 import './history-page.scss'
+import historyMock from './historyPageMock'
 
 class HistoryPage extends React.Component {
 
 	constructor() {
 		super();
-		let now = new Date();
-		let date = ('0' + now.getDate()).slice(-2) + ' / ' + ('0' + (now.getMonth() + 1)).slice(-2) + ' / ' + now.getFullYear();
 		this.state = {
-			items: [
-				{
-					id: 0,
-					authorId: 0,
-					typeId: 0,
-					type: 'Edit name',
-					date: date
-				},
-				{
-					id: 1,
-					authorId: 0,
-					typeId: 0,
-					type: 'Edit key result',
-					date: date
-				},
-				{
-					id: 2,
-					authorId: 0,
-					typeId: 0,
-					type: 'Edit key result',
-					date: date
-				},
-				{
-					id: 3,
-					authorId: 0,
-					typeId: 0,
-					type: 'Edit key result',
-					date: date
-				},
-				{
-					id: 4,
-					authorId: 0,
-					typeId: 0,
-					type: 'Edit key result',
-					date: date
-				}
-			]
+			items: historyMock
 		}
 	}
 
