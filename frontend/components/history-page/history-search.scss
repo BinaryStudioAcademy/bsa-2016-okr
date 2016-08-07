@@ -1,0 +1,31 @@
+@import "normalize";
+@import "_variables";
+
+.history-search-bar {
+  display: flex;
+  flex-direction: row;
+}
+
+.history-search-bar-input {
+  display: block;
+  height: 30px;
+  width: 300px;
+}
+
+.btn {
+  display: inline-block;
+  border-radius: 3px;
+  border: 2px solid $color-main;
+  font-family: 'Roboto', sans-serif;
+  font-size: $font-size;
+  background-color: $color-white;
+}
+
+.btn:hover {
+  background-color: $color-history-quarter-hover;
+}
+
+.btn-search {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}

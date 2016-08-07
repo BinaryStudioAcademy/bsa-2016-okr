@@ -12,6 +12,12 @@ To start the project for development run
 
 ``` npm start ```
 
+If there are any errors with sass/scss:
+
+``` npm rebuild node-sass ```
+
+Then run ``` npm start ``` again
+
 To start the project on production run
 
 ``` npm run-script build ```
