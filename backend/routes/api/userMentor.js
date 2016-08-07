@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const repository = require('../../repositories/userMentor');
+const service = require('../../services/userMentor');
 const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
@@ -7,15 +8,19 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-    repository.getById(req.params.id, dbCallback(res));
+    repository.getByMentorId(req.params.id, dbCallback(res));
 });
 
 router.post('/', (req, res, next) => {
-    repository.add(req.body, dbCallback(res));
+    service.setUserAsMentor(req.body, dbCallback(res));
 });
 
 router.delete('/:id', (req, res, next) => {
-    repository.delete(req.params.id, dbCallback(res));
+    repository.deleteByMentorId(req.params.id, dbCallback(res));
+});
+
+router.delete('/user/:id', (req, res, next) => {
+    repository.deleteByUserId(req.params.id, dbCallback(res));
 });
 
 module.exports = router;
