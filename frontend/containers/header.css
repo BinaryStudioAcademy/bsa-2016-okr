@@ -52,6 +52,6 @@ header {
 #bars i.fa:hover {
    color: #ffffff;
 }
-#bars i.fa.active {
+#bars.active i.fa {
    color: #ffffff;
 }

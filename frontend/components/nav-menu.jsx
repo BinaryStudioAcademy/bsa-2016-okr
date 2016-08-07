@@ -6,8 +6,6 @@ class NavMenu extends React.Component {
       super();
    }
 
-
-
    render() {
       return (
          <aside id="navbar">
