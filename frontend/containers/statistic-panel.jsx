@@ -1,5 +1,5 @@
 import React from 'react';
-import "./statistic-panel.css";
+import "./statistic-panel.scss";
 
 export default class StatisticPanel extends React.Component{
    render(){

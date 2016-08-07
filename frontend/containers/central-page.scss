@@ -10,9 +10,9 @@
 }
 #central-window {
    height: 100%;
+   position: relative;
    margin-top: -70px;
    z-index: 0;
-   padding: 20px;
    margin-right: 350px;
    margin-left: 60px;
 }
