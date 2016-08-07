@@ -3,13 +3,13 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
 	followObjectives: [
-		{userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-		objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'}
+		{userId: {type: Schema.Types.ObjectId, ref: 'User'},
+		objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'}
 	}],
 	objectives: [{
 		description: String,
-		objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
-		keys: [{keyId: {type: mongoose.Schema.Types.ObjectId, ref: 'KeyResult'},
+		objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'},
+		keys: [{keyId: {type: Schema.Types.ObjectId, ref: 'KeyResult'},
 				score: Number,
 		}],
 		category: String,
