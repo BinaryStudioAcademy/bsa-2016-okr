@@ -133,6 +133,9 @@ button#obj-search-filter i.fa {
    color: #aaa;
    cursor: pointer;
 }
+button#obj-search-filter i.fa:hover {
+   color: #ffffff;
+}
 button#obj-search-filter i.fa.active {
    color: #ffffff;
 }

@@ -2,6 +2,25 @@ import React from 'react';
 import "./search-bar.css";
 
 class Search extends React.Component {
+   constructor(){
+      super();
+
+      this.handle_filter_click = this.handle_filter_click.bind(this);
+   }
+
+   handle_filter_click(event){
+      var   target = event.target,
+            filters = document.getElementById('filters');
+
+      if(!target.classList.contains('active')){
+         target.classList.add('active');
+         filters.classList.add('opened');
+      } else {
+         target.classList.remove('active');
+         filters.classList.remove('opened');
+      }
+   }
+
    render() {
       return (
          <div id="obj-search">
@@ -12,7 +31,7 @@ class Search extends React.Component {
                      <i className="fa fa-search" aria-hidden="true"></i>
                   </button>
                   <button id="obj-search-filter" type="button">
-                     <i className="fa fa-filter" aria-hidden="true"></i>
+                     <i className="fa fa-filter" aria-hidden="true" onClick={this.handle_filter_click}></i>
                   </button>
                </div>
                <div id="filters">

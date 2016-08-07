@@ -6,6 +6,25 @@ import CentralPage from "../containers/central-page.jsx";
 import StatPanel from "../containers/statistic-panel.jsx";
 
 class Home extends React.Component{
+   constructor(){
+      super();
+
+      this.menu_handle_click = this.menu_handle_click.bind(this);
+   }
+
+   menu_handle_click(event){
+      var   target = event.target,
+            menu = document.getElementById('navbar');
+
+      if(!target.classList.contains('active')){
+         target.classList.add('active');
+         menu.classList.add('opened');
+      } else {
+         target.classList.remove('active');
+         menu.classList.remove('opened');
+      }
+   }
+
    render(){
       return(
          <div>
@@ -20,7 +39,7 @@ class Home extends React.Component{
                   </div>
                </div>
                <button id="bars">
-                  <i className="fa fa-bars fa-lg" aria-hidden="true"></i>
+                  <i className="fa fa-bars fa-lg" aria-hidden="true" onClick={this.menu_handle_click}></i>
                </button>
                <Search />
             </Header>
