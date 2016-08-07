@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 
-import reducer from './components/reducers/reducer'
+import reducer from './components/reducers/commonReducer'
 
 const middleware = [ thunk ]
 

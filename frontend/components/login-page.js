@@ -10,12 +10,14 @@ export default class LoginPage extends React.Component {
 
     render() {
 
-        const { message } = this.props.stateFromReducer;
+        const { message } = this.props.stateFromReducer.message;
+        const { counter } = this.props.stateFromReducer.counter;
 
         return (
 
         	<form onSubmit={this.SendRequest.bind(this)}>
                <h3>{message}</h3>
+               <h3>Counter: {counter}</h3>
                <div>
 	           	   <input type="text" name="userId" placeholder="userId" id="userId"/>
                 </div>
@@ -34,7 +36,10 @@ export default class LoginPage extends React.Component {
 
         event.preventDefault();
 
-        this.props.test();
+        console.log(this.props);
+
+        this.props.test1();
+        this.props.test2();
 
         var chance = new Chance();
 
