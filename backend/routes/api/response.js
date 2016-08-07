@@ -1,8 +1,9 @@
 module.exports = function (res) {
     return (err, data) => {
         if (err) {
-            res.status(err.status || 400).send(err);
+            return res.status(err.status || 500).send(err);
         }
-        res.send(data);
+
+        return res.status(200).send(data);
     }
 };

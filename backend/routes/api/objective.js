@@ -5,11 +5,24 @@ const session = require('../../config/session');
 const userMentorRepository = require('../../repositories/userMentor');
 
 router.get('/', (req, res, next) => {
-	repository.getAll(dbCallback(res));
+	return repository.getAll(dbCallback(res));
+});
+
+// Admin ONLY
+router.get('/deleted/', (req, res, next) => {
+	if(!session.isAdmin) {
+		var err = new Error('You are not allowed to do this');
+		err.status = 403;
+		console.log('before calling dbCallback');
+		console.log(err);
+		return dbCallback(err);
+	}
+	console.log('admin. ok');
+	return repository.getAllDeleted(dbCallback(res));
 });
 
 router.get('/:id', (req, res, next) => {
-	repository.getById(req.params.id, dbCallback(res));
+	return repository.getById(req.params.id, dbCallback(res));
 });
 
 router.post('/', (req, res, next) => {
@@ -31,7 +44,7 @@ router.post('/', (req, res, next) => {
 		isDeleted: false
 	}
 
-	repository.add(data, dbCallback(res));
+	return repository.add(data, dbCallback(res));
 });
 
 router.post('/user/:id', (req, res, next) => {
@@ -43,7 +56,7 @@ router.post('/user/:id', (req, res, next) => {
 		return dbCallback(err);
 	}
 
-	repository.add(req.body, dbCallback(res));
+	return repository.add(req.body, dbCallback(res));
 });
 
 router.put('/:id', (req, res, next) => {
