@@ -1,6 +1,6 @@
 let recycleBin = [{
 	"id": "5791f8847ed517bc028e739a",
-	"objTitle":, "Learn Ruby"
+	"objTitle":, "Learn Ruby",
 	"objDescription": "Learn Ruby for fun",
 	"category": "Knowledge",
 	"ownerName": "Grigoriy Skovoroda",
@@ -26,7 +26,7 @@ let recycleBin = [{
 },
 {
 	"id": "0000f8847ed517bc028e739a",
-	"objTitle":, "Socket io chat"
+	"objTitle":, "Socket io chat",
 	"objDescription": "Get familiar with socket.io library",
 	"category": "Projects",
 	"ownerName": "John Dou",
