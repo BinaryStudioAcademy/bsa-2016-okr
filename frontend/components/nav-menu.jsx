@@ -2,6 +2,12 @@ import React from 'react';
 import "./nav-menu.css";
 
 class NavMenu extends React.Component {
+   constructor(){
+      super();
+   }
+
+
+
    render() {
       return (
          <aside id="navbar">
