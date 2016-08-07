@@ -34,7 +34,7 @@
    position: relative;
    display: inline-block;
    margin-top: 15px;
-   margin-left: -4px;
+   margin-left: 0;
    font-family: "Roboto Condensed", sans-serif;
    font-weight: 300;
 }
@@ -132,6 +132,9 @@ button#obj-search-filter i.fa {
    padding: 10px;
    color: #aaa;
    cursor: pointer;
+}
+button#obj-search-filter i.fa:hover {
+   color: #ffffff;
 }
 button#obj-search-filter i.fa.active {
    color: #ffffff;

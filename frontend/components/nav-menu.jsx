@@ -2,6 +2,9 @@ import React from 'react';
 import "./nav-menu.scss";
 
 class NavMenu extends React.Component {
+   handleShow(){
+      ShowUsersList();
+   }
    render() {
       return (
          <aside id="navbar">
@@ -15,7 +18,7 @@ class NavMenu extends React.Component {
                      <i className="fa fa-home fa-2x" aria-hidden="true"></i>
                      Home
                   </a></li>
-                  <li><a href="#">
+                  <li onClick={this.handleShow.bind(this)}><a href="#">
                      <i className="fa fa-users fa-2x" aria-hidden="true"></i>
                      Users
                   </a></li>
@@ -35,3 +38,15 @@ class NavMenu extends React.Component {
 }
 
 export default NavMenu;
+
+function ShowUsersList(){
+   var usersList = document.getElementById('usersList');
+   if (usersList.classList.contains('undisplay')) {
+      usersList.classList.remove('undisplay');
+      usersList.classList.add('display');
+   }
+   else {
+      usersList.classList.remove('display');
+      usersList.classList.add('undisplay');
+   }
+}

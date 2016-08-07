@@ -58,7 +58,21 @@ class OtherPersonsPage extends Component {
 	render() {
 		return (
 			<div>
-				<Header />
+				<Header >
+					<div className="user-info clearfix">
+                  		<div className="logo">
+                    		<img src="http://www.appresume.com/cv_templates/cv_2_1/conf/images/profile.jpg" alt="" />
+                  		</div>
+                  		<div className="credentials">
+                    		<span className="name">John Doe</span><br/>
+                     		<span className="field">CEO</span>
+                  		</div>
+               		</div>
+            		<button id="bars">
+                	<i className="fa fa-bars fa-lg" aria-hidden="true" onClick={this.menu_handle_click}></i>
+               	</button>
+               	<Search />
+            	</Header>
 				<NavMenu />
 				<CentralPage>
 					<PersonInfo data={this.state.data} id={this.state.id} />

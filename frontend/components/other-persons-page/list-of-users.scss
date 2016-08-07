@@ -2,12 +2,14 @@
 
 #usersList {
 	position: absolute;
-	z-index: 2;
+	top: 70px;
+	left: 0;
+	z-index: 3;
 	background: #fff;
-	width: 350px;
-	height: 100%;
+	width: 280px;
+	height: calc(100vh - 70px);
 	max-width: $sidebar-width;
-	border-left: 2px solid $border-color;
+	border-right: 2px solid $border-color;
 	border-bottom: 2px solid $navbar-color;
 	box-sizing: border-box;
 
@@ -49,7 +51,7 @@
 			position: absolute;
 			top: 35%;
 			width: 80%;
-			padding-bottom: 21px;
+			padding-bottom: 22px;
 			font-size: 16px;
 			font-weight: 700;
 		    border-bottom: 1px solid $border-color;
