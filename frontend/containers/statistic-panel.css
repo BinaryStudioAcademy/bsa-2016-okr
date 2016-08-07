@@ -1,0 +1,13 @@
+aside#inter-panel {
+   float: right;
+   height: 100%;
+   margin-top: -70px;
+   width: 350px;
+   background-color: #ddd;
+   z-index: 0;
+}
+aside#inter-panel:before {
+   content: '';
+   display: block;
+   padding-top: 70px;
+}
