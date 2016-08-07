@@ -4,6 +4,7 @@ import App from "./containers/app"
 import LoginPage from "./components/login-page.js"
 import HomePage from "./components/home-page.js"
 import "normalize.css";
+import "./components/global.css";
 import {IndexRoute, Route, Router, browserHistory} from 'react-router';
 
 import { createStore, applyMiddleware } from 'redux'
