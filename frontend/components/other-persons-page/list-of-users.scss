@@ -1,0 +1,76 @@
+@import 'variables';
+
+#usersList {
+	position: absolute;
+	z-index: 2;
+	background: #fff;
+	width: 350px;
+	height: 100%;
+	max-width: $sidebar-width;
+	border-left: 2px solid $border-color;
+	border-bottom: 2px solid $navbar-color;
+	box-sizing: border-box;
+
+	input[type='text'] {
+		height: 55px;
+		width: 100%;
+		font-size: 16px;
+		padding: 10px;
+		padding-left: 17%;
+		border: none;
+		border-bottom: 2px solid $border-color;
+		outline: none;
+		background: url('https://pp.vk.me/c633829/v633829341/473c0/QvHFhU8EclE.jpg') no-repeat;
+		background-size: contain;
+		box-sizing: border-box;
+	}
+}
+.display{
+	display: block;
+}
+.undisplay{
+	display: none;
+}
+.listOfUsers {
+	height: calc(100% - 55px);
+	list-style: none;
+	padding: 0;
+	margin: 0;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+	.userItem{
+		position: relative;
+
+		div{
+			display: inline-block;
+			position: absolute;
+			top: 35%;
+			width: 80%;
+			padding-bottom: 21px;
+			font-size: 16px;
+			font-weight: 700;
+		    border-bottom: 1px solid $border-color;
+		}
+
+		img{
+			margin: 5px 10px 2px;
+			width: 50px;
+			border-radius: 50%; 
+		}
+	}
+
+	.userItem:hover{
+		cursor: pointer;
+		color: #fff;
+		background-color: $navbar-color;
+	}
+
+	.userItem:last-child div{
+    	border-bottom: none;
+	}
+}
+
+

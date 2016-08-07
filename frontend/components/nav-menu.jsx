@@ -1,5 +1,5 @@
 import React from 'react';
-import "nav-menu.css";
+import "./nav-menu.scss";
 
 class NavMenu extends React.Component {
    render() {
@@ -16,7 +16,7 @@ class NavMenu extends React.Component {
                      Home
                   </a></li>
                   <li><a href="#">
-                     <i classname="fa fa-users fa-2x" aria-hidden="true"></i>
+                     <i className="fa fa-users fa-2x" aria-hidden="true"></i>
                      Users
                   </a></li>
                   <li><a href="#">
