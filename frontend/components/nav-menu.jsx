@@ -14,7 +14,7 @@ class NavMenu extends React.Component {
                      <i className="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
                      New Objective
                   </a></li>
-                  <li><a href="#">
+                  <li><a href="/home">
                      <i className="fa fa-home fa-2x" aria-hidden="true"></i>
                      Home
                   </a></li>

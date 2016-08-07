@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ListOfUsers from './list-of-users.js';
+import ListOfUsers from '../list-of-users/list-of-users.js';
 import PersonInfo from './persons-info.js';
 import Header from "../../containers/header.jsx";
 import NavMenu from ".././nav-menu.jsx";

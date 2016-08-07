@@ -5,6 +5,7 @@ import './list-of-users.scss';
 class ListOfUsers extends Component {
 	handleTakeUser(id) {
 		this.props.takeUser(id)
+		
 	}
 	handleChange(e) {
 		var value = e.target.value;
