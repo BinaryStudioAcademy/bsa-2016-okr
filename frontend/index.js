@@ -27,16 +27,10 @@ render(
     (<Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={App}>
-           <IndexRoute component={HomePage} />
-           <Route path="recycle-bin" component={RecycleBin}/>
-        </Route>
-
-        <Route path="/home" component={App}>
-           <IndexRoute component={HomePage} />
-        </Route>
-
-        <Route path="/users" component={App}>
-           <IndexRoute component={UserPage} />
+          <IndexRoute component={HomePage} />
+          <Route path="home" component={HomePage} />
+          <Route path="users" component={UserPage} />
+          <Route path="recycle-bin" component={RecycleBin}/>
         </Route>
       </Router>
     </Provider>)
