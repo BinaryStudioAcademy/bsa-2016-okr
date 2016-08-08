@@ -12,6 +12,7 @@
 		font-weight: 700;
 	}
 	i{
+		clear: both;
 		float: right;
 		font-size: 25px;
 		padding-top: 10px;
@@ -49,9 +50,10 @@
 	.progress-bar {
 		float: right;
 		padding-top: 10px;
+		width: 30%;
 
 		progress[value]{
-			width: 200px;
+			width: 100%;
 			-webkit-appearance: none;
 			appearance: none;
 		}
