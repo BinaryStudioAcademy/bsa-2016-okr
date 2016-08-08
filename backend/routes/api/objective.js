@@ -10,6 +10,36 @@ router.get('/', (req, res, next) => {
 	return repository.getAll(res.callback);
 });
 
+router.post('/', (req, res, next) => {
+	if(!session.isAdmin) {
+		return res.forbidden();
+	}
+
+	var title = req.body.title;
+	var description = req.body.description;
+	var keys = req.body.keys || [];
+
+	if( ValidateService.isEmpty(title) 
+		|| ValidateService.isEmpty(description)
+		|| !ValidateService.isArray(keys)) {
+		return res.badRequest();
+	}
+
+	var data = {
+		createdBy: session._id,
+		title: title,
+		description: description,
+		keys: keys,
+		cheers: [],
+		views: [],
+		forks: [],
+		isApproved: true,
+		isDeleted: false
+	}
+
+	return service.add(data, res.callback);
+});
+
 // Admin ONLY
 // Done
 router.get('/deleted/', (req, res, next) => {
@@ -31,24 +61,8 @@ router.get('/:id', (req, res, next) => {
 	return repository.getById(id, res.callback);
 });
 
-router.post('/', (req, res, next) => {
-	if(!session.isAdmin) {
-		return res.forbidden();
-	}
-
-	var title = req.body.title.trim();
-
-	var data = {
-		createdBy: session._id,
-		title: title,	
-		cheers: [],
-		views: [],
-		forks: [],
-		isApproved: true,
-		isDeleted: false
-	}
-
-	return repository.add(data, res.callback);
+router.put('/:id', (req, res, next) => {
+	return repository.update(req.params.id, req.body, res.callback);
 });
 
 router.post('/user/:id', (req, res, next) => {
@@ -59,10 +73,6 @@ router.post('/user/:id', (req, res, next) => {
 	}
 
 	return repository.add(req.body, res.callback);
-});
-
-router.put('/:id', (req, res, next) => {
-	return repository.update(req.params.id, req.body, res.callback);
 });
 
 router.get('/user/:id', (req, res, next) => {

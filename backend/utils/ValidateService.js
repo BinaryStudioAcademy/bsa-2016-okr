@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 
 module.exports = {
 	isCorrectId: isCorrectId,
-	isEmpty: isEmpty
+	isEmpty: isEmpty,
+	isArray: isArray
 };
 
 function isCorrectId(id) {
@@ -18,4 +19,8 @@ function isCorrectId(id) {
 
 function isEmpty(value) {
 	return (value == null || value.length === 0);
+}
+
+function isArray(value) {
+  return Object.prototype.toString.call(value) === '[object Array]';
 }
