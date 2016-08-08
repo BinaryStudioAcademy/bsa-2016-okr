@@ -20,6 +20,8 @@ var userSchema = new Schema({
 	lastVisitDate: Date,
 	historyWatchDate: Date,
 	isDeleted: Boolean
+}, {
+	timestamps: true
 });
 
 module.exports = mongoose.model('User', userSchema);

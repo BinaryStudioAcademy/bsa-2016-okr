@@ -6,8 +6,10 @@ const category = require('./category');
 const plan = require('./plan');
 const history = require('./history');
 const userMentor = require('./userMentor');
+const response = require('./response');
 
-module.exports = function(app){
+module.exports = function(app) {
+	app.use('/api/', response);
 	app.use('/api/user', user);
 	app.use('/api/objective', objective);
 	app.use('/api/key', key);

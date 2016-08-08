@@ -9,6 +9,8 @@ var keyResultSchema = new Schema({
 	difficulty: String,
 	isApproved: Boolean,
 	isDeleted: Boolean
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('Key', keyResultSchema);

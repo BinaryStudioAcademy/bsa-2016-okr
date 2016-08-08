@@ -9,6 +9,8 @@ var objectiveSchema = new Schema({
 	forks: Number,
 	isApproved: Boolean,
 	isDeleted: Boolean
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('Objective', objectiveSchema);
