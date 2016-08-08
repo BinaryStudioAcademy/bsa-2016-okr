@@ -8,6 +8,7 @@ aside#navbar {
    background-color: #34495e;
    overflow-y: auto;
    overflow-x: hidden;
+   z-index: 50;
 }
 aside#navbar ul {
    list-style-type: none;
