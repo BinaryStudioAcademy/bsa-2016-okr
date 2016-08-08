@@ -27,7 +27,7 @@ class NavMenu extends React.Component {
                         New Objective
                      </button>
                   </li>
-                  <li><Link to="/home" className="active">
+                  <li><Link to="/home">
                      <i className="fa fa-home fa-2x" aria-hidden="true"></i>
                      Home
                   </Link></li>

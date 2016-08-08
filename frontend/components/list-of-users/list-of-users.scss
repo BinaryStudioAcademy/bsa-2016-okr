@@ -1,17 +1,19 @@
 @import 'variables';
 
 #usersList {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 3;
+	position: fixed;
+	top: 70px;
+	left: 60px;
+  	bottom: 0;
+	z-index: 25;
 	background: #fff;
 	width: 280px;
-	height: calc(100vh - 70px);
 	max-width: $sidebar-width;
 	border-right: 2px solid $border-color;
 	border-bottom: 2px solid $navbar-color;
 	box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
 
 	input[type='text'] {
 		height: 55px;
