@@ -28,6 +28,7 @@ render(
         <Route path="/" component={App}>
           <IndexRoute component={HomePage} />
           <Route path="home" component={HomePage} />
+           <Route path="users" component={UserPage} />
           <Route path="recycle-bin" component={RecycleBin}/>
         </Route>
       </Router>

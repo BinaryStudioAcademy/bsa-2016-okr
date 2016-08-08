@@ -124,3 +124,4 @@ function switch_open_state(target, action) {
       target.classList.add('opened');
    else if (action === 'close') target.classList.remove('opened');
 }
+
