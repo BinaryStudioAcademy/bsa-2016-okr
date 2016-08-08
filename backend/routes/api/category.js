@@ -1,15 +1,14 @@
 const router = require('express').Router();
 const repository = require('../../repositories/category');
-const dbCallback = require('./response');
 const session = require('../../config/session');
 const categoryService = require('../../services/category');
 
 router.get('/', (req, res, next) => {
-	repository.getAll(dbCallback(res));
+	repository.getAll(res.callback);
 });
 
 router.get('/deleted', (req, res, next) => {
-	repository.getAllDeleted(dbCallback(res));
+	repository.getAllDeleted(res.callback);
 });
 
 router.post('/', (req, res, next) => {
@@ -31,7 +30,7 @@ router.post('/', (req, res, next) => {
 			isDeleted: false
 		}
 
-		categoryService.add(data, dbCallback(res));
+		categoryService.add(data, res.callback);
 		// the response is empty now
 	}else {
 		/// this doesn't work
@@ -49,7 +48,7 @@ router.put('/:id', (req, res, next) => {
 		}
 		*/
 		//TODO add title verefication
-	repository.update(req.params.id, req.body, dbCallback(res));
+	repository.update(req.params.id, req.body, res.callback);
 });
 
 router.delete('/:id', (req, res, next) => {
@@ -61,8 +60,8 @@ router.delete('/:id', (req, res, next) => {
 		}
 		*/
 		//for now soft delete only
-	repository.update(req.params.id, {isDeleted: 1}, dbCallback(res));
-	//repository.delete(req.params.id, dbCallback(res));
+	repository.update(req.params.id, {isDeleted: 1}, res.callback);
+	//repository.delete(req.params.id, res.callback);
 });
 
 module.exports = router;

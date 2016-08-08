@@ -11,6 +11,8 @@ var planSchema = new Schema({
     },
     title: String,
     isDeleted: Boolean
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('Plan', planSchema);
