@@ -2,13 +2,9 @@ aside#inter-panel {
    position: absolute;
    top: 0;
    right: 0;
-   height: 100%;
+   bottom: 0;
    width: 350px;
    background-color: #ddd;
-   z-index: 0;
-}
-aside#inter-panel:before {
-   content: '';
-   display: block;
-   padding-top: 70px;
+   overflow-y: auto;
+   overflow-x: hidden;
 }
