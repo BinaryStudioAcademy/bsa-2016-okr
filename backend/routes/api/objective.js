@@ -5,31 +5,25 @@ const session = require('../../config/session');
 const userMentorRepository = require('../../repositories/userMentor');
 
 router.get('/', (req, res, next) => {
-	return repository.getAll(dbCallback(res));
+	return repository.getAll(res.callback);
 });
 
 // Admin ONLY
 router.get('/deleted/', (req, res, next) => {
 	if(!session.isAdmin) {
-		var err = new Error('You are not allowed to do this');
-		err.status = 403;
-		console.log('before calling dbCallback');
-		console.log(err);
-		return dbCallback(err);
+		return res.forbidden();
 	}
-	console.log('admin. ok');
-	return repository.getAllDeleted(dbCallback(res));
+
+	return repository.getAllDeleted(res.callback);
 });
 
 router.get('/:id', (req, res, next) => {
-	return repository.getById(req.params.id, dbCallback(res));
+	return repository.getById(req.params.id, res.callback);
 });
 
 router.post('/', (req, res, next) => {
 	if(!session.isAdmin) {
-		var err = new Error('You are not allowed to do this');
-		err.status = 403;
-		return dbCallback(err);
+		return res.forbidden();
 	}
 
 	var title = req.body.title.trim();
@@ -44,16 +38,14 @@ router.post('/', (req, res, next) => {
 		isDeleted: false
 	}
 
-	return repository.add(data, dbCallback(res));
+	return repository.add(data, res.callback);
 });
 
 router.post('/user/:id', (req, res, next) => {
 	var id = req.params.id;
 
 	if(id !== session._id && !userMentorRepository.checkUserMentor(id, session._id)) {
-		var err = new Error('You are not allowed to do this');
-		err.status = 403;
-		return dbCallback(err);
+		return res.forbidden();
 	}
 
 	return repository.add(req.body, dbCallback(res));
