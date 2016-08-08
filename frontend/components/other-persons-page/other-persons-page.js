@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ListOfUsers from '../list-of-users/list-of-users.js';
 import PersonInfo from './persons-info.js';
+import UserOjectives from './user-objectives.js';
 import Header from "../../containers/header.jsx";
 import NavMenu from ".././nav-menu.jsx";
 import Search from '.././search-bar.jsx';
@@ -76,6 +77,7 @@ class OtherPersonsPage extends Component {
 				<NavMenu />
 				<CentralPage>
 					<PersonInfo data={this.state.data} id={this.state.id} />
+					<UserOjectives />
 					<ListOfUsers takeUser={this.takeUser} search={this.search}
 					 searchValue={this.state.searchValue} data={this.state.data} />
 				</CentralPage>

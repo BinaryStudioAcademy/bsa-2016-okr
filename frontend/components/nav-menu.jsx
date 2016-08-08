@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import "./nav-menu.scss";
 
 class NavMenu extends React.Component {
@@ -14,10 +15,10 @@ class NavMenu extends React.Component {
                      <i className="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
                      New Objective
                   </a></li>
-                  <li><a href="/home">
+                  <li><Link to="/home">
                      <i className="fa fa-home fa-2x" aria-hidden="true"></i>
                      Home
-                  </a></li>
+                  </Link></li>
                   <li onClick={this.handleShow.bind(this)}><a href="#">
                      <i className="fa fa-users fa-2x" aria-hidden="true"></i>
                      Users
