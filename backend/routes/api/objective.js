@@ -2,12 +2,15 @@ const router = require('express').Router();
 const repository = require('../../repositories/objective');
 const session = require('../../config/session');
 const userMentorRepository = require('../../repositories/userMentor');
+const ValidateService = require('../../utils/ValidateService');
 
+// Done
 router.get('/', (req, res, next) => {
 	return repository.getAll(res.callback);
 });
 
 // Admin ONLY
+// Done
 router.get('/deleted/', (req, res, next) => {
 	if(!session.isAdmin) {
 		return res.forbidden();
@@ -16,8 +19,15 @@ router.get('/deleted/', (req, res, next) => {
 	return repository.getAllDeleted(res.callback);
 });
 
+// Done
 router.get('/:id', (req, res, next) => {
-	return repository.getById(req.params.id, res.callback);
+	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	}
+
+	return repository.getById(id, res.callback);
 });
 
 router.post('/', (req, res, next) => {
@@ -51,15 +61,15 @@ router.post('/user/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-	repository.update(req.params.id, req.body, res.callback);
+	return repository.update(req.params.id, req.body, res.callback);
 });
 
 router.get('/user/:id', (req, res, next) => {
-	repository.getByUserId(req.params.id, res.callback);
+	return repository.getByUserId(req.params.id, res.callback);
 });
 
 router.get('/title/:title', (req, res, next) => {
-	repository.getAllApprovedByTitle(req.params.title, res.callback);
+	return repository.getAllApprovedByTitle(req.params.title, res.callback);
 });
 
 module.exports = router;
