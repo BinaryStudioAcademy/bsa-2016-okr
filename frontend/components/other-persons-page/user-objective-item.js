@@ -8,7 +8,21 @@ class ObjectiveItem extends Component {
 	}
 
 	handleShow() {
-		Show(this.props.index);
+		var keyResult = document.getElementsByClassName('key-result-details'),
+   			icon = document.getElementsByClassName('change'),
+   			i = this.props.index;
+	   	if (keyResult[i].classList.contains('undisplay')) {
+	    	keyResult[i].classList.remove('undisplay');
+	    	keyResult[i].classList.add('display');
+	    	icon[i].classList.remove('fa-angle-double-down');
+	   		icon[i].classList.add('fa-angle-double-up');
+		}
+	   	else {
+	   		icon[i].classList.remove('fa-angle-double-up');
+	   		icon[i].classList.add('fa-angle-double-down');
+	    	keyResult[i].classList.remove('display');
+	    	keyResult[i].classList.add('undisplay');
+	   	}
 	}
 	render() {
 
@@ -34,23 +48,6 @@ class ObjectiveItem extends Component {
 		    </div>        
 		)
 	}
-}
-
-function Show(i){
-   var keyResult = document.getElementsByClassName('key-result-details');
-   var icon = document.getElementsByClassName('change');
-   if (keyResult[i].classList.contains('undisplay')) {
-    	keyResult[i].classList.remove('undisplay');
-    	keyResult[i].classList.add('display');
-    	icon[i].classList.remove('fa-angle-double-down');
-   		icon[i].classList.add('fa-angle-double-up');
-   }
-   else {
-   		icon[i].classList.remove('fa-angle-double-up');
-   		icon[i].classList.add('fa-angle-double-down');
-    	keyResult[i].classList.remove('display');
-    	keyResult[i].classList.add('undisplay');
-   }
 }
 
 export default ObjectiveItem

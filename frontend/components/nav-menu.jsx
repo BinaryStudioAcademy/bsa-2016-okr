@@ -4,7 +4,15 @@ import "./nav-menu.scss";
 
 class NavMenu extends React.Component {
    handleShow(){
-      ShowUsersList();
+      var usersList = document.getElementById('usersList');
+      if (usersList.classList.contains('undisplay')) {
+         usersList.classList.remove('undisplay');
+         usersList.classList.add('display');
+      }
+      else {
+         usersList.classList.remove('display');
+         usersList.classList.add('undisplay');
+      }      
    }
    render() {
       return (
@@ -39,15 +47,3 @@ class NavMenu extends React.Component {
 }
 
 export default NavMenu;
-
-function ShowUsersList(){
-   var usersList = document.getElementById('usersList');
-   if (usersList.classList.contains('undisplay')) {
-      usersList.classList.remove('undisplay');
-      usersList.classList.add('display');
-   }
-   else {
-      usersList.classList.remove('display');
-      usersList.classList.add('undisplay');
-   }
-}
