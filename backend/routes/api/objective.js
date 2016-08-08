@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const repository = require('../../repositories/objective');
-const dbCallback = require('./response');
 const session = require('../../config/session');
 const userMentorRepository = require('../../repositories/userMentor');
 
@@ -48,19 +47,19 @@ router.post('/user/:id', (req, res, next) => {
 		return res.forbidden();
 	}
 
-	return repository.add(req.body, dbCallback(res));
+	return repository.add(req.body, res.callback);
 });
 
 router.put('/:id', (req, res, next) => {
-	repository.update(req.params.id, req.body, dbCallback(res));
+	repository.update(req.params.id, req.body, res.callback);
 });
 
 router.get('/user/:id', (req, res, next) => {
-	repository.getByUserId(req.params.id, dbCallback(res));
+	repository.getByUserId(req.params.id, res.callback);
 });
 
 router.get('/title/:title', (req, res, next) => {
-	repository.getAllApprovedByTitle(req.params.title, dbCallback(res));
+	repository.getAllApprovedByTitle(req.params.title, res.callback);
 });
 
 module.exports = router;

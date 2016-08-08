@@ -1,17 +1,16 @@
 const router = require('express').Router();
 const repository = require('../../repositories/history');
-const dbCallback = require('./response');
 
 router.get('/', (req, res, next) => {
-	repository.getAll(dbCallback(res));
+	repository.getAll(res.callback);
 });
 
 router.get('/:id', (req, res, next) => {
-	repository.getById(req.params.id, dbCallback(res));
+	repository.getById(req.params.id, res.callback);
 });
 
 router.post('/', (req, res, next) => {
-	repository.add(req.body, dbCallback(res));
+	repository.add(req.body, res.callback);
 });
 
 module.exports = router;
