@@ -22,8 +22,8 @@ router.get('/me/:id', (req, res, next) => {
 	service.getMe(req.params.id, res.callback);
 });
 
-//router.delete('/:id', (req, res, next) => {
-	//service.delete(req.params.id, res.callback);
-//})
+router.delete('/:id', (req, res, next) => {
+	service.delete(req.params.id, res.callback);
+})
 
 module.exports = router;
