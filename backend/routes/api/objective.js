@@ -2,6 +2,7 @@ const router = require('express').Router();
 const repository = require('../../repositories/objective');
 const session = require('../../config/session');
 const userMentorRepository = require('../../repositories/userMentor');
+const service = require('../../services/objective');
 
 router.get('/', (req, res, next) => {
 	return repository.getAll(res.callback);
@@ -59,7 +60,8 @@ router.get('/user/:id', (req, res, next) => {
 });
 
 router.get('/title/:title', (req, res, next) => {
-	repository.getAllApprovedByTitle(req.params.title, res.callback);
+	//repository.getAllApprovedByTitle(req.params.title, res.callback);
+	service.autocomplete(req.params.title, res.callback);
 });
 
 module.exports = router;
