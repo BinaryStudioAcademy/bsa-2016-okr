@@ -9,7 +9,7 @@ class KeyResult extends Component {
 	render() {
 	
 		return (
-			<li id="r">
+			<li className="keyResult">
          		{this.props.item.title}
 		    </li>        
 		)
