@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 class Quarter extends Component {
-   constructor() {
+constructor() {
       super();
       this.hendleClick = this.hendleClick.bind(this);
       this.openTab = this.openTab.bind(this);
@@ -25,8 +25,8 @@ class Quarter extends Component {
       else if (date < 1483192310417)
          li[3].classList.add('active'); 
    }
+   
    render() {
-   //   this.openTab()
       return (
          <div id='quaterPanel'>
             <ul id='quaterList'>
