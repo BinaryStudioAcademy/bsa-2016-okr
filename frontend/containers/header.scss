@@ -39,13 +39,14 @@ header {
 ** Bars menu button
 */
 #bars {
-   display: inline-block;
+   display: block;
    width: 60px;
    height: 70px;
    text-align: center;
    background: none;
    border: none;
    cursor: pointer;
+   float: left;
 }
 #bars:focus,
 #bars:active {
