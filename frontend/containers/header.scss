@@ -39,7 +39,8 @@ header {
 ** Bars menu button
 */
 #bars {
-   display: inline-block;
+   display: block;
+   float: left;
    width: 60px;
    height: 70px;
    text-align: center;
@@ -51,14 +52,14 @@ header {
 #bars:active {
    outline: none;
 }
-#bars i.fa {
+#bars i {
    color: #dddddd;
    cursor: pointer;
    pointer-events: none;
 }
-#bars:hover i.fa {
+#bars:hover i {
    color: #ffffff;
 }
-#bars.active i.fa {
+#bars.active i {
    color: #ffffff;
 }

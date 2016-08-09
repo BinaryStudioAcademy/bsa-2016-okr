@@ -12,7 +12,6 @@ class NavMenu extends React.Component {
    }
 
    links_feedback_handler(event) {
-      console.log(event.target);
       links_feedback(event);
    }
 
@@ -27,7 +26,7 @@ class NavMenu extends React.Component {
                         New Objective
                      </button>
                   </li>
-                  <li><Link to="/home">
+                  <li><Link to="/">
                      <i className="fa fa-home fa-2x" aria-hidden="true"></i>
                      Home
                   </Link></li>
@@ -37,11 +36,11 @@ class NavMenu extends React.Component {
                         Users
                      </button>
                   </li>
-                  <li><Link to="">
+                  <li><Link to="#">
                      <i className="fa fa-calendar-o fa-2x" aria-hidden="true"></i>
                      Plan
                   </Link></li>
-                  <li><Link to="">
+                  <li><Link to="/history">
                      <i className="fa fa-clock-o fa-2x" aria-hidden="true"></i>
                      History
                   </Link></li>
@@ -51,7 +50,6 @@ class NavMenu extends React.Component {
       )
    }
 }
-
 export default NavMenu;
 
 function ShowUsersList() {
@@ -67,44 +65,36 @@ function ShowUsersList() {
 }
 
 function links_feedback(event) {
-   var target = event.target,
-      links = document.querySelectorAll('#navbar a'),
-      nav = document.getElementById('navbar'),
-      menu_bars = document.getElementById('bars');
+   var   target = event.target,
+         links = document.querySelectorAll('#navbar a'),
+         nav = document.getElementById('navbar');
 
-   if (target.matches('#navbar a')) {
+   if (target.matches('#navbar #new-obj-btn')) {
       if (!isActive(target)) {
+         switch_link_state(target, 'active');
+         if (isOpen(nav)) close_nav();
+      } else {
+         switch_link_state(target, 'disactive');
+         console.log('disactive');
+         if (isOpen(nav)) close_nav();
+      }
+   } else if(target.matches('#navbar a')){
+      if(!isActive(target)){
          disactiveAll(links);
-         switch_active_state(target, 'activate');
-         if (isOpen(nav)) {
-            switch_open_state(nav, 'close');
-            switch_active_state(menu_bars, 'disactivate');
-         }
+         switch_link_state(target, 'active');
+         if(isOpen(nav)) close_nav();
       } else {
-         if (isOpen(nav)) {
-            switch_open_state(nav, 'close');
-            switch_active_state(menu_bars, 'disactivate');
-         }
+         switch_link_state(target, 'disactive');
+         if (isOpen(nav)) close_nav();
       }
-   } else if (target.matches('#navbar #new-obj-btn') || target.matches('#navbar #users-link')) {
-      if (!isActive(target)) {
-         switch_active_state(target, 'activate');
-         if (isOpen(nav)) {
-            switch_open_state(nav, 'close');
-            switch_active_state(menu_bars, 'disactivate');
-         }
-      } else {
-         switch_active_state(target, 'disactivate');
-         if (isOpen(nav)) {
-            switch_open_state(nav, 'close');
-            switch_active_state(menu_bars, 'disactivate');
-         }
-      }
+   } else if(target.matches('#navbar #users-link')){
+      if(isOpen(nav)) close_nav();
    }
+
 
 }
 function disactiveAll(target) {
-   target.forEach(function (el) {
+   target.forEach((el) => {
       el.classList.remove('active');
    })
 }
@@ -114,14 +104,22 @@ function isActive(target) {
 function isOpen(target) {
    return target.classList.contains('opened');
 }
-function switch_active_state(target, action) {
-   if (action === 'activate')
+function switch_link_state(target, action) {
+   if (action === 'active'){
       target.classList.add('active');
-   else if (action === 'disactivate') target.classList.remove('active');
-}
-function switch_open_state(target, action) {
-   if (action === 'open')
+   } else if (action === 'disactive') {
+      target.classList.remove('active');
+   } else if (action === 'open'){
       target.classList.add('opened');
-   else if (action === 'close') target.classList.remove('opened');
+   } else if (action === 'close'){
+      target.classList.remove('opened');
+   }
+}
+function close_nav() {
+   var   nav = document.getElementById('navbar'),
+         menu_bars = document.getElementById('bars');
+
+   switch_link_state(nav, 'close');
+   switch_link_state(menu_bars, 'disactive');
 }
 

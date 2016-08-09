@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import ListOfUsers from '../list-of-users/list-of-users.js';
 import PersonInfo from './persons-info.js';
 import UserOjectives from './user-objectives.js';
-import Header from "../../containers/header.jsx";
-import NavMenu from ".././nav-menu.jsx";
-import Search from '.././search-bar.jsx';
-import MainPage from '../../containers/main-page.jsx';
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
+import ChatTimeline from "../objectiveView/chatTimeline/chatTimeline.js";
 
 class OtherPersonsPage extends Component {
 	constructor() {
@@ -60,19 +57,13 @@ class OtherPersonsPage extends Component {
 	render() {
 		return (
 			<div>
-				<Header >
-               	<Search />
-				</Header>
-				<NavMenu />
-				<MainPage>
-					<CentralWindow>
-						<PersonInfo data={this.state.data} id={this.state.id} />
-						<UserOjectives />
-						<ListOfUsers takeUser={this.takeUser} search={this.search}
-										 searchValue={this.state.searchValue} data={this.state.data} />
-					</CentralWindow>
-					<StatPanel></StatPanel>
-				</MainPage>
+				<CentralWindow>
+					<PersonInfo data={this.state.data} id={this.state.id} />
+					<UserOjectives />
+					<ListOfUsers takeUser={this.takeUser} search={this.search}
+								searchValue={this.state.searchValue} data={this.state.data} />
+				</CentralWindow>
+				<StatPanel><ChatTimeline /></StatPanel>
 			</div>
 		)
 	}

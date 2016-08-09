@@ -36,7 +36,6 @@
    display: inline-block;
    margin-top: 15px;
    margin-left: 0;
-   font-family: "Roboto Condensed", sans-serif;
    font-weight: 300;
 }
 #obj-search form {
@@ -125,6 +124,7 @@ button#obj-search-filter {
    right: 0;
    border: none;
    background: transparent;
+   cursor: pointer;
 }
 button#obj-search-filter:focus {
    outline: none;
@@ -132,11 +132,12 @@ button#obj-search-filter:focus {
 button#obj-search-filter i.fa {
    padding: 10px;
    color: #aaa;
+   pointer-events: none;
    cursor: pointer;
 }
-button#obj-search-filter i.fa:hover {
+button#obj-search-filter:hover i.fa {
    color: #ffffff;
 }
-button#obj-search-filter i.fa.active {
+button#obj-search-filter.active i.fa {
    color: #ffffff;
 }
