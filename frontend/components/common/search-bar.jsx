@@ -35,7 +35,7 @@ class Search extends React.Component {
                   </button>
                </div>
                <div id="filters">
-                  <div>
+                  <section>
                      <label for="filter-key-results">
                         <input type="checkbox" id="filter-key-results"/>
                         key results</label>
@@ -50,8 +50,8 @@ class Search extends React.Component {
                            <option value="past">Past</option>
                         </select>
                      </label>
-                  </div>
-                  <div>
+                  </section>
+                  <section>
                      <label for="filter-assessment">
                         <input type="checkbox" id="filter-assessment"/>
                         has assessment</label>
@@ -66,7 +66,7 @@ class Search extends React.Component {
                            <option value="knowledge">Knowledge</option>
                         </select>
                      </label>
-                  </div>
+                  </section>
                </div>
                <ul className="search-result">
                   <li className="search-result-item">
