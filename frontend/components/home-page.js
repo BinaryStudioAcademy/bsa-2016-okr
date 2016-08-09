@@ -3,11 +3,12 @@ import Header from "../containers/header.jsx";
 import ListOfUsers from './list-of-users/list-of-users.js';
 import NavMenu from "./nav-menu.jsx";
 import Search from './search-bar.jsx';
-import CentralPage from "../containers/central-page.jsx";
+import MainPage from '../containers/main-page.jsx';
+import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
 
-class Home extends React.Component{
-      constructor() {
+class Home extends React.Component {
+   constructor() {
       super();
       this.state = {
          searchValue: '',
@@ -56,11 +57,11 @@ class Home extends React.Component{
       })
    }
 
-   menu_handle_click(event){
-      var   target = event.target,
-            menu = document.getElementById('navbar');
+   menu_handle_click(event) {
+      var target = event.target,
+         menu = document.getElementById('navbar');
 
-      if(!target.classList.contains('active')){
+      if (!target.classList.contains('active')) {
          target.classList.add('active');
          menu.classList.add('opened');
       } else {
@@ -69,16 +70,20 @@ class Home extends React.Component{
       }
    }
 
-   render(){
-      return(
+   render() {
+      return (
          <div>
             <Header>
                <Search />
             </Header>
             <NavMenu />
-            <CentralPage><ListOfUsers takeUser={this.takeUser} search={this.search}
-                searchValue={this.state.searchValue} data={this.state.data} /></CentralPage>
-            <StatPanel></StatPanel>
+            <MainPage>
+               <CentralWindow>
+                  <ListOfUsers takeUser={this.takeUser} search={this.search}
+                               searchValue={this.state.searchValue} data={this.state.data} />
+               </CentralWindow>
+               <StatPanel></StatPanel>
+            </MainPage>
          </div>
       )
    }

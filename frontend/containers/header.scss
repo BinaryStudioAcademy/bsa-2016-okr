@@ -1,10 +1,12 @@
 header {
-   position: relative;
+   height: 70px;
    background-color: #2c3e50;
    padding-right: 20px;
-   height: 70px;
-   z-index: 3;
+   z-index: 100;
 }
+/*
+** User info
+*/
 .user-info {
    float: right;
    padding-left: 20px;
@@ -33,6 +35,9 @@ header {
    font-weight: 300;
    font-style: italic;
 }
+/*
+** Bars menu button
+*/
 #bars {
    display: inline-block;
    width: 60px;
@@ -40,6 +45,7 @@ header {
    text-align: center;
    background: none;
    border: none;
+   cursor: pointer;
 }
 #bars:focus,
 #bars:active {
@@ -48,8 +54,9 @@ header {
 #bars i.fa {
    color: #dddddd;
    cursor: pointer;
+   pointer-events: none;
 }
-#bars i.fa:hover {
+#bars:hover i.fa {
    color: #ffffff;
 }
 #bars.active i.fa {

@@ -1,5 +1,5 @@
 import React from 'react';
-import "./central-page.scss";
+import "./central-window.scss";
 
 export default class CentralPage extends React.Component{
    render(){

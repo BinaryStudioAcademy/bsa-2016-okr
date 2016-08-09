@@ -2,7 +2,6 @@
 @import "_variables";
 
 .history-item {
-  font-family: 'Roboto', sans-serif;
   padding: $padding;
   border-bottom: 2px solid $border-color;
   display: flex;
@@ -40,11 +39,11 @@
 }
 
 .history-item-date-icon-container {
-
+  color: #828282;
 }
 
 .history-item-date-info {
-  min-width: 100px;
+  min-width: 120px;
   padding-top: 6px;
   padding-left: $padding;
   padding-right: $padding;

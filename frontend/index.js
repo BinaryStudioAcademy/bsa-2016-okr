@@ -9,6 +9,8 @@ import "normalize.css";
 import "./components/global.scss";
 import {IndexRoute, Route, Router, browserHistory} from 'react-router';
 import RecycleBin from './components/RecycleBin/RecycleBin.js';
+import ObjectiveView from "./components/objectiveView/objectiveView.js"
+import OKRmanagingList from "./components/admin/OKRmanaging/OKRmanagingList.js"
 
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
@@ -29,16 +31,12 @@ render(
       <Router history={browserHistory}>
         <Route path="/" component={App}>
 			<IndexRoute component={HomePage} />
+			<Route path="home" component={HomePage} />
+			<Route path="users" component={UserPage} />
 			<Route path="history" component={History}/>
 			<Route path="recycle-bin" component={RecycleBin}/>
-        </Route>
-
-        <Route path="/home" component={App}>
-           <IndexRoute component={HomePage} />
-        </Route>
-
-        <Route path="/users" component={App}>
-           <IndexRoute component={UserPage} />
+			<Route path="objective" component={ObjectiveView}/>
+			<Route path="admin/okr-managing" component={OKRmanagingList}/>
         </Route>
       </Router>
     </Provider>)
