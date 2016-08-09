@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var UserRepository = require('../repositories/user');
-var UserMentorRepository = require('../repositories/userMentor')
+var UserMentorRepository = require('../repositories/userMentor');
+var async = require('async');
 
 var UserService = function(){
 
