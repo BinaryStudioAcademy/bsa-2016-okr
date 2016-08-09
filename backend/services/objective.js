@@ -1,14 +1,41 @@
-var UserRepository = require('../repositories/user.js'),
-	ObjectiveRepository = require('../repositories/objective.js'),
-	KeysRepository = require('../repositories/key.js'),
-	async = require('async');
+var UserRepository = require('../repositories/user.js');
+var Objective = require('../schemas/objective');
+var Key = require('../schemas/key');
+var ObjectiveRepository = require('../repositories/objective.js');
+var KeyRepository = require('../repositories/key.js');
+var async = require('async');
 
 var ObjectiveService = function() {};
 
-ObjectiveService.prototype.add = function(data, callback) {
+// 1) Create new objective with empty keys array
+// 2) Create all keys with corresponding objectiveId
+// 3) Push key ids to objective.keys
+// 4) Save objective and keys in DB
+// 5) Profit =)
+ObjectiveService.prototype.add = function(objective, keys, callback) {
+	objective = new Objective(objective);
+
+	keys = keys.map((key) => {
+		key.objectiveId = objective._id;
+		key = new Key(key);
+		objective.keys.push(key._id);
+
+		return key;
+	});
+
 	async.waterfall([
 		(callback) => {
-			return callback(null);
+			objective.save((err) => {
+				return err ? callback(err) : callback(null);
+			});
+		}, (callback) => {
+			async.forEach(keys, (key, callback) => {
+				key.save((err) => {
+					return err ? callback(err) : callback(null);
+				});
+			}, (err) => {
+				return callback(err);
+			});
 		}
 	], (err, result) => {
 		return callback(err, result);	

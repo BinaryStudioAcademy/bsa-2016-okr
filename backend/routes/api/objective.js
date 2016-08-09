@@ -11,31 +11,52 @@ router.get('/', (req, res, next) => {
 	return repository.getAll(res.callback);
 });
 
+// Done
 router.post('/', adminOnly, (req, res, next) => {
 	var title = req.body.title;
 	var description = req.body.description;
 	var keys = req.body.keys || [];
 
+	var isKeysInvalid = keys.some((key) => {
+		return !ValidateService.isObject(key)
+		|| ValidateService.isEmpty(key.title)
+		|| ValidateService.isEmpty(key.difficulty) 
+		|| !ValidateService.isValidDifficulty(key.difficulty);
+	});
+
 	if( ValidateService.isEmpty(title)
 		|| ValidateService.isEmpty(description)
-		|| !ValidateService.isArray(keys)) 
+		|| !ValidateService.isArray(keys)
+		|| isKeysInvalid) 
 	{
 		return res.badRequest();
 	}
 
-	var data = {
+	var objective = {
 		createdBy: req.session._id,
 		title: title,
 		description: description,
-		keys: keys,
+		keys: [],
 		cheers: [],
 		views: [],
-		forks: [],
+		forks: 0,
 		isApproved: true,
 		isDeleted: false
 	}
 
-	return service.add(data, res.callback);
+	keys = keys.map((item) => {
+		var key = {
+			title: item.title,
+			difficulty: item.difficulty,
+			forks: 0,
+			isApproved: true,
+			isDeleted: false
+		};
+
+		return key;
+	});
+
+	return service.add(objective, keys, res.callback);
 });
 
 router.post('/user/:id', (req, res, next) => {
