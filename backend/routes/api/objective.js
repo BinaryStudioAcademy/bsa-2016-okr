@@ -41,31 +41,6 @@ router.post('/', (req, res, next) => {
 	return service.add(data, res.callback);
 });
 
-// Admin ONLY
-// Done
-router.get('/deleted/', (req, res, next) => {
-	if(!session.isAdmin) {
-		return res.forbidden();
-	}
-
-	return repository.getAllDeleted(res.callback);
-});
-
-// Done
-router.get('/:id', (req, res, next) => {
-	var id = req.params.id;
-
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	}
-
-	return repository.getById(id, res.callback);
-});
-
-router.put('/:id', (req, res, next) => {
-	return repository.update(req.params.id, req.body, res.callback);
-});
-
 router.post('/user/:id', (req, res, next) => {
 	var id = req.params.id;
 
@@ -84,11 +59,46 @@ router.get('/title/:title', (req, res, next) => {
 	return service.autocomplete(req.params.title, res.callback);
 });
 
+// Admin ONLY
+// Done
+router.get('/deleted/', (req, res, next) => {
+	if(!session.isAdmin) {
+		return res.forbidden();
+	}
+
+	return repository.getAllDeleted(res.callback);
+});
+
+// Admin ONLY
+// Done
+router.get('/notApproved/', (req, res, next) => {
+	if(!session.isAdmin) {
+		return res.forbidden();
+	}
+
+	return repository.getAllNotApproved(res.callback);
+});
+
 // to clone template objective with keys to the user, id - objective id
 router.get('/clone/:id', (req, res, next) => {
 	console.log(req.params.id);
 	var obj = {};
 	cloneObjective.clone(req.params.id, obj, res.callback);
+});
+
+// Done
+router.get('/:id', (req, res, next) => {
+	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	}
+
+	return repository.getById(id, res.callback);
+});
+
+router.put('/:id', (req, res, next) => {
+	return repository.update(req.params.id, req.body, res.callback);
 });
 
 module.exports = router;

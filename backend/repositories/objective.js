@@ -28,6 +28,16 @@ ObjectiveRepository.prototype.getAllDeleted = function(callback) {
 	query.exec(callback);
 };
 
+ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
+	var model = this.model;
+	var query = model.find({
+		isDeleted: false,
+		isApproved: false
+	});
+
+	query.exec(callback);
+};
+
 ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 	var model = this.model;
 	var query = model.find({ 
