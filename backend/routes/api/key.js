@@ -10,8 +10,8 @@ router.post('/', (req, res, next) => {
 router.get('/objective/:id', (req, res, next) => {
 	var id = req.params.id;
 
-	if(id !== session._id && !userMentorRepository.checkUserMentor(id, session._id)) {
-		return res.forbidden();
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
 	};
 
 	repository.getByObjId(id, res.callback);
@@ -20,8 +20,8 @@ router.get('/objective/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
 
-	if(id !== session._id && !userMentorRepository.checkUserMentor(id, session._id)) {
-		return res.forbidden();
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
 	};
 	
 	repository.update(id, req.body, res.callback);
@@ -34,8 +34,8 @@ router.get('/title/:title', (req, res, next) => {
 router.put('/:id/approve', (req, res, next) => {
 	var id = req.params.id;
 
-	if(id !== session._id && !userMentorRepository.checkUserMentor(id, session._id)) {
-		return res.forbidden();
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
 	};
 	
 	service.changeApprove(id, res.callback);
@@ -44,8 +44,8 @@ router.put('/:id/approve', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
 	var id = req.params.id;
 
-	if(id !== session._id && !userMentorRepository.checkUserMentor(id, session._id)) {
-		return res.forbidden();
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
 	};
 	
 	repository.delete(id, res.callback);
