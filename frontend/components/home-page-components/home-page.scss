@@ -1,0 +1,116 @@
+@import "variables";
+/*
+** Quarter section
+*/
+.quater-bg{
+  background: #f3f2ff;
+  padding: 20px 0;
+}
+#quaterPanel{
+  display:table;
+  width: 90%;
+  margin: 5px 5% 0;
+  border-collapse: collapse;
+}
+#quaterList {
+  display: table-row;
+
+  .quater{
+    border: 2px solid $header-color;
+    padding: 5px;
+    text-align: center;
+    display: table-cell;
+    color: $header-color;
+    cursor: pointer;
+  }
+
+  .active{
+    background: $header-color;
+    color: #fff;
+  }
+  .quater:hover{
+    background: $header-color;
+    color: #fff;
+  }
+}
+/*
+** Objectives
+*/
+.objective{
+  margin: 20px 5%;
+  padding: 5px 15px;
+  border: 1px solid $border-color;
+  border-left: 5px solid #6aa84f;
+
+  .name{
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  span.plus-icon{
+    clear: both;
+    float: right;
+    font-size: 25px;
+    padding-top: 10px;
+    cursor: pointer;
+  }
+  .description {
+    margin-bottom: 10px;
+  }
+  .key-result{
+    margin: -15px 0 5px 10px;
+    span{
+      color: #0080ff;
+      cursor: pointer;
+      padding-left: 5px;
+    }
+    .display{
+      display: block;
+    }
+    .undisplay{
+      display: none;
+    }
+    ol {
+      margin: 5px 0 0;
+
+      padding-left: 20px;
+
+      li{
+        margin: 5px
+      }
+      .completed{
+        text-decoration: line-through;
+      }
+    }
+  }
+  .progress-bar {
+    float: right;
+    padding-top: 10px;
+    width: 30%;
+
+    progress[value]{
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+  }
+  .objective-info {
+    margin-left: 40%;
+
+    div	{
+      display: inline-block;
+      margin-right: 15%;
+    }
+    div:last-child{
+
+      margin-right: 0;
+    }
+
+    .co-workers{
+      span {
+        padding-right: 10px;
+      }
+    }
+  }
+}

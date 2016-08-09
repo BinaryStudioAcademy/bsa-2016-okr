@@ -11,7 +11,7 @@ class PersonsInfo extends Component {
 
       return (
          <div id='topPanel'>
-            <div id='serachPanel'>
+            <div id='searchPanel'>
                <div className='userInfo'>
                   <div className='logo'>
                      <img src='https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg'/>
