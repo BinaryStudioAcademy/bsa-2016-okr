@@ -30,8 +30,8 @@ class Search extends React.Component {
                   <button type="submit" id="obj-search-submit">
                      <i className="fa fa-search" aria-hidden="true"></i>
                   </button>
-                  <button id="obj-search-filter" type="button">
-                     <i className="fa fa-filter" aria-hidden="true" onClick={this.handle_filter_click}></i>
+                  <button id="obj-search-filter" type="button" onClick={this.handle_filter_click}>
+                     <i className="fa fa-filter" aria-hidden="true"></i>
                   </button>
                </div>
                <div id="filters">

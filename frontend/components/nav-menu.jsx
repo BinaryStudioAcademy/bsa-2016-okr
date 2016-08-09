@@ -37,11 +37,11 @@ class NavMenu extends React.Component {
                         Users
                      </button>
                   </li>
-                  <li><Link to="">
+                  <li><Link to="#">
                      <i className="fa fa-calendar-o fa-2x" aria-hidden="true"></i>
                      Plan
                   </Link></li>
-                  <li><Link to="">
+                  <li><Link to="/history">
                      <i className="fa fa-clock-o fa-2x" aria-hidden="true"></i>
                      History
                   </Link></li>
