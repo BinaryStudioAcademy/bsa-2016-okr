@@ -29,12 +29,12 @@ render(
     (<Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={App}>
-			<IndexRoute component={HomePage} />
-			<Route path="home" component={HomePage} />
-			<Route path="users" component={UserPage} />
-			<Route path="recycle-bin" component={RecycleBin}/>
-			<Route path="objective" component={ObjectiveView}/>
-			<Route path="admin/okr-managing" component={OKRmanagingList}/>
+    			<IndexRoute component={HomePage} />
+    			<Route path="home" component={HomePage} />
+    			<Route path="users" component={UserPage} />
+    			<Route path="recycle-bin" component={RecycleBin}/>
+    			<Route path="objective" component={ObjectiveView}/>
+    			<Route path="admin/okr-managing" component={OKRmanagingList}/>
         </Route>
       </Router>
     </Provider>)

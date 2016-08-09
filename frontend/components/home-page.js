@@ -1,9 +1,5 @@
 import React from 'react';
-import Header from "../containers/header.jsx";
 import ListOfUsers from './list-of-users/list-of-users.js';
-import NavMenu from "./nav-menu.jsx";
-import Search from './search-bar.jsx';
-import MainPage from '../containers/main-page.jsx';
 import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
 
@@ -73,17 +69,11 @@ class Home extends React.Component {
    render() {
       return (
          <div>
-            <Header>
-               <Search />
-            </Header>
-            <NavMenu />
-            <MainPage>
                <CentralWindow>
                   <ListOfUsers takeUser={this.takeUser} search={this.search}
                                searchValue={this.state.searchValue} data={this.state.data} />
                </CentralWindow>
                <StatPanel></StatPanel>
-            </MainPage>
          </div>
       )
    }
