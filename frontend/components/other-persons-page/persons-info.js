@@ -14,7 +14,7 @@ class PersonsInfo extends Component {
             <div id='searchPanel'>
                <div className='userInfo'>
                   <div className='logo'>
-                     <img src='https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg'/>
+                     <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
                   </div>
                   <div className='credentials'>{data}</div>
                </div>

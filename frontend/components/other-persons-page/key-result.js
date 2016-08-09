@@ -11,9 +11,9 @@ class KeyResult extends Component {
 			return <KeyResultItem index={index} key={index} item={item} />
 		})
 		return (
-			<ol>
+			<ul>
          		{item}
-		    </ol>        
+		    </ul>        
 		)
 	}
 }

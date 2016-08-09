@@ -26,12 +26,19 @@ aside#navbar li:last-child {
 aside#navbar li a,
 aside#navbar button{
    display: block;
+   position: relative;
+   white-space: nowrap;
+   padding: 15px 0;
+   padding-left: 60px;
    text-align: left;
    text-align: -moz-left;
-   line-height: 20px;
-   white-space: nowrap;
-   padding: 10px 15px;
    color: #dddddd;
+}
+aside#navbar i{
+   position: absolute;
+   top: 8px;
+   left: 15px;
+   pointer-events: none;
 }
 aside#navbar li a:hover {
    background-color: #2c3e50;
@@ -42,10 +49,6 @@ aside#navbar li a.active {
    color: #ffffff;
 }
 aside#navbar li span{
-   pointer-events: none;
-}
-aside#navbar li i.fa {
-   margin-right: 20px;
    pointer-events: none;
 }
 aside#navbar #new-obj-btn {

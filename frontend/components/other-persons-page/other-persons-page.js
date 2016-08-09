@@ -63,7 +63,7 @@ class OtherPersonsPage extends Component {
 					<ListOfUsers takeUser={this.takeUser} search={this.search}
 								searchValue={this.state.searchValue} data={this.state.data} />
 				</CentralWindow>
-				<StatPanel><ChatTimeline /></StatPanel>
+				<StatPanel></StatPanel>
 			</div>
 		)
 	}
