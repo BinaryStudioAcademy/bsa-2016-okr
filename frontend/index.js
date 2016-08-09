@@ -5,11 +5,10 @@ import LoginPage from "./components/login-page.js"
 import History from "./components/history-page/history-page.js"
 import HomePage from "./components/home-page.js"
 import UserPage from "./components/other-persons-page/other-persons-page.js"
-import HomeAdmin from "./components/admin-home-page.js"
 import "normalize.css";
 import "./components/global.scss";
 import {IndexRoute, Route, Router, browserHistory} from 'react-router';
-import RecycleBin from './components/RecycleBin/RecycleBin.js';
+import RecycleBin from './components/admin/RecycleBin/RecycleBin.js';
 import ObjectiveView from "./components/objectiveView/objectiveView.js"
 import OKRmanagingList from "./components/admin/OKRmanaging/OKRmanagingList.js"
 
@@ -37,13 +36,7 @@ render(
           <Route path="history" component={History} />
     			<Route path="recycle-bin" component={RecycleBin}/>
     			<Route path="objective" component={ObjectiveView}/>
-    			<Route path="admin/okr-managing" component={OKRmanagingList}/>
-        </Route>
-        <Route path="/admin" component={App}>
-           <IndexRoute component={HomeAdmin} />
-           <Route path="home" component={HomePage} />
-           <Route path="users" component={UserPage} />
-           <Route path="recycle-bin" component={RecycleBin}/>
+          <Route path="okr-managing" component={OKRmanagingList}/>
         </Route>
       </Router>
     </Provider>)

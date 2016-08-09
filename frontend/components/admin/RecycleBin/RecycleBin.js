@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.scss';
 import RecycleItem from './RecycleItem.js'
-import response from '../mockData/recycleBin.js';
+import response from '../../mockData/recycleBin.js';
 
 class RecycleBin extends Component {
 
