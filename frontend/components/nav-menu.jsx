@@ -48,7 +48,7 @@ class NavMenu extends React.Component {
                         Users
                      </button>
                   </li>
-                  <li><Link to="">
+                  <li><Link to="#">
                      <i className="fa fa-calendar-o fa-2x" aria-hidden="true"></i>
                      Plan
                   </Link></li>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import KeyResult from './key-result';
+import Progress from './progress-bar.js';
 
 class ObjectiveItem extends Component {
 	constructor(props) {
@@ -27,9 +28,7 @@ class ObjectiveItem extends Component {
 	render() { 
 		return (
 			<div className='objective'>
-			<div className='progress-bar'>
-		            	<progress max="100" value='25'></progress>
-		       	</div>
+				<Progress data={this.props.item.keyResults}/>
          		<div className='name'>{this.props.item.objTitle}
          		</div>
          		<span className="plus-icon">
