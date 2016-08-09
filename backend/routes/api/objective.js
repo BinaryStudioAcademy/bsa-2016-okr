@@ -4,6 +4,7 @@ const session = require('../../config/session');
 const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
 const ValidateService = require('../../utils/ValidateService');
+const cloneObjective = require('../../services/cloneObjective');
 
 // Done
 router.get('/', (req, res, next) => {
@@ -19,7 +20,7 @@ router.post('/', (req, res, next) => {
 	var description = req.body.description;
 	var keys = req.body.keys || [];
 
-	if( ValidateService.isEmpty(title) 
+	if( ValidateService.isEmpty(title)
 		|| ValidateService.isEmpty(description)
 		|| !ValidateService.isArray(keys)) {
 		return res.badRequest();
@@ -81,6 +82,13 @@ router.get('/user/:id', (req, res, next) => {
 
 router.get('/title/:title', (req, res, next) => {
 	return service.autocomplete(req.params.title, res.callback);
+});
+
+// to clone template objective with keys to the user, id - objective id
+router.get('/clone/:id', (req, res, next) => {
+	console.log(req.params.id);
+	var obj = {};
+	cloneObjective.clone(req.params.id, obj, res.callback);
 });
 
 module.exports = router;
