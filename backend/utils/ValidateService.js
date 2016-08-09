@@ -7,7 +7,9 @@ module.exports = {
 };
 
 function isCorrectId(id) {
-	var id = '' + id.trim();
+	var id = '' + id;
+
+	id = id.trim();
 	
 	if(!id || !mongoose.Types.ObjectId.isValid(id)) {
 		return false;

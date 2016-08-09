@@ -50,7 +50,7 @@ ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 ObjectiveRepository.prototype.getAllApprovedByTitle = function(title, callback) {
 	var model = this.model;
 	var query = model.find({
-		title: title, 
+		title: title,
 		isApproved: true,
 		isDeleted: false
 	});

@@ -31,7 +31,7 @@ ObjectiveService.prototype.autocomplete = function(title, callback) {
 			
 			objArr.forEach((objective) => {
 				if (objective.title.toLowerCase().indexOf(title.toLowerCase()) !== -1) {
-					objectives.push(objective.title);
+					objectives.push(objective);
 				}
 			});
 

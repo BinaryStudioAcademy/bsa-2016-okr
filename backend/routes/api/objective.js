@@ -1,6 +1,6 @@
 const router = require('express').Router();
+const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/objective');
-const session = require('../../config/session');
 const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
 const ValidateService = require('../../utils/ValidateService');
@@ -11,23 +11,20 @@ router.get('/', (req, res, next) => {
 	return repository.getAll(res.callback);
 });
 
-router.post('/', (req, res, next) => {
-	if(!session.isAdmin) {
-		return res.forbidden();
-	}
-
+router.post('/', adminOnly, (req, res, next) => {
 	var title = req.body.title;
 	var description = req.body.description;
 	var keys = req.body.keys || [];
 
 	if( ValidateService.isEmpty(title)
 		|| ValidateService.isEmpty(description)
-		|| !ValidateService.isArray(keys)) {
+		|| !ValidateService.isArray(keys)) 
+	{
 		return res.badRequest();
 	}
 
 	var data = {
-		createdBy: session._id,
+		createdBy: req.session._id,
 		title: title,
 		description: description,
 		keys: keys,
@@ -44,7 +41,7 @@ router.post('/', (req, res, next) => {
 router.post('/user/:id', (req, res, next) => {
 	var id = req.params.id;
 
-	if(id !== session._id && !userMentorRepository.checkUserMentor(id, session._id)) {
+	if(id !== req.session._id && !userMentorRepository.checkUserMentor(id, req.session._id)) {
 		return res.forbidden();
 	}
 
@@ -56,26 +53,22 @@ router.get('/user/:id', (req, res, next) => {
 });
 
 router.get('/title/:title', (req, res, next) => {
+	var title = req.params.title;
+
+	if(ValidateService.isEmpty(title)) {
+		return res.badRequest();
+	}
+
 	return service.autocomplete(req.params.title, res.callback);
 });
 
-// Admin ONLY
 // Done
-router.get('/deleted/', (req, res, next) => {
-	if(!session.isAdmin) {
-		return res.forbidden();
-	}
-
+router.get('/deleted/', adminOnly, (req, res, next) => {
 	return repository.getAllDeleted(res.callback);
 });
 
-// Admin ONLY
 // Done
-router.get('/notApproved/', (req, res, next) => {
-	if(!session.isAdmin) {
-		return res.forbidden();
-	}
-
+router.get('/notApproved/', adminOnly, (req, res, next) => {
 	return repository.getAllNotApproved(res.callback);
 });
 
