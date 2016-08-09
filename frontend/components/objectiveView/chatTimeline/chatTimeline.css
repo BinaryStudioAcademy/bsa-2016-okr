@@ -1,0 +1,118 @@
+.chat-container{
+	width: 100%;
+	display: block;
+	margin: 42px auto;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+.chat-header{
+	position: relative;  
+	background:#2C3E50;
+	color:#fff;
+	text-align: center;
+	cursor: pointer;
+}
+.chat-header div:first-child {
+	float: left;
+	width: 50%;
+	height: 100%;
+	background-color: #6b7784;
+}
+
+.chat-header h2{
+	font-size:16px;
+	line-height:15px;
+	display:inline-block;
+}
+.chat-box, .enter-message{
+	background:#ECECEC;
+	padding:0 20px;
+	color:#a1a1a1;
+}
+.chat-box .message-box{
+	padding:18px 0 10px;
+	clear:both;
+}
+.message-box .picture{
+	float:left;
+	width:50px;
+	display:block;
+	padding-right:10px;
+}
+.picture img{
+	width:43px;
+	height:48px;
+	border-radius:5px;
+}
+.picture span{
+	font-weight:bold;
+	font-size:12px;
+	clear:both;
+	display:block;
+	text-align:center;
+	margin-top:3px;
+}
+.message{
+	background:#fff;
+	display:inline-block;
+	padding:13px;
+	width: 72%;
+	border-radius:2px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.04);
+	position:relative;
+}
+.message:before{
+	content:"";
+	position:absolute;
+	display:block;
+	left:0;
+	border-right:6px solid #fff;
+	border-top: 6px solid transparent;
+	border-bottom:6px solid transparent;
+	top:10px;
+	margin-left:-6px;
+	}
+.message span{
+	color:#555;
+	font-weight:bold;
+}
+.message p{
+	padding-top:5px;
+}
+.message-box.right-img .picture{
+	float:right;
+	padding:0;
+	padding-left:10px;
+}
+.message-box.right-img .picture img{
+	float:right;
+}
+.message-box.right-img .message:before{
+	left:100%;
+	margin-right:6px;
+	margin-left:0;
+	border-right:6px solid transparent;
+	border-left:6px solid #fff;
+	border-top: 6px solid transparent;
+	border-bottom:6px solid transparent;
+	}
+.enter-message{
+	padding:13px 0px;
+}
+.enter-message input{
+	border:none;
+	padding:10px 12px;
+	background:#d3d3d3;
+	width: 72%;
+	border-radius:2px;
+}
+.enter-message a.send{
+	padding:10px 15px;
+	background:#0093BA;
+	border-radius:2px;
+	color: black;
+	float:right;
+}
+
+.enter-message a.send:hover {
+	background-color: #32a8c7;
+}

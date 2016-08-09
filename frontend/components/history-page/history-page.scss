@@ -1,0 +1,43 @@
+@import "normalize";
+@import "_variables";
+
+.history-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#top-panel {
+  width: 100%;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  background-color: #F3F2FF;
+}
+
+.history-page-header {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  padding: 0 5%;
+}
+
+.history-page-title {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  padding:12px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.history-search-bar-container {
+  width: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.history-items-list {
+  height: 100%;
+  overflow-y: auto;
+}
