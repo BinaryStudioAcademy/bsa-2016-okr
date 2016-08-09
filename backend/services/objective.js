@@ -5,6 +5,26 @@ var UserRepository = require('../repositories/user.js'),
 
 var ObjectiveService = function() {};
 
+
+ObjectiveService.prototype.autocomplete = function(title, callback){
+	let objectives = [];
+
+	ObjectiveRepository.getAllNotDeleted(function(err, objArr){
+			if (err){
+				return callback(err, null);
+			};	
+
+		objArr.forEach(function(result, index){
+			if ((result['title'].toLowerCase().indexOf(title.toLowerCase()) == 0) &&
+				(result['isApproved'] === true))
+			{
+				objectives.push(result);
+			}
+		});
+
+		callback(err, objectives);
+	});
+}
 /**
 *
 * @param data - contain three object: 1) objective 2) keys array 3) userId

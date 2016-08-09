@@ -39,7 +39,7 @@ class ObjectiveItem extends Component {
 		            <div className='co-workers'><span className="fa fa-users"></span>4</div>
 		            <div className='co-workers'><span  className="fa fa-thumbs-up"></span>10</div>
 		        </div>
-		        <div className='key-result' onClick={this.handleShow}>Key results
+		        <div className='user-key-results' onClick={this.handleShow}>Key results
 		            <span className="fa fa-angle-double-down fa-lg change"></span>
 		            <div className='key-result-details undisplay'>
 		            	<KeyResult data={this.props.item.keyResults} />

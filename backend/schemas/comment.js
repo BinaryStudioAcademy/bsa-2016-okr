@@ -5,9 +5,9 @@ var commentSchema = new Schema({
 	userId: {type: Schema.Types.ObjectId, ref: 'User'},
 	objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'},
 	text: String,
-	isDeleted: Boolean,
-	createDate: Date,
-	editDate: Date
+	isDeleted: Boolean
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('Comment', commentSchema);
