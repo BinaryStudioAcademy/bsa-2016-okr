@@ -10,7 +10,7 @@ let recycleBin = [{
 			"title": "Read cool ruby -book name-",
 			"completed": "true",
 			"completedDate": "2016-06-22T10:50:12.643Z",
-			"score": "0.1"
+			"score": "1"
 		},
 		{
 			"created": "2016-05-22T10:51:12.643Z",
@@ -36,14 +36,14 @@ let recycleBin = [{
 			"title": "Determine packages dep",
 			"completed": "true",
 			"completedDate": "2016-06-22T10:50:12.643Z",
-			"score": "0.1"
+			"score": "1"
 		},
 		{
 			"created": "2016-04-22T13:51:12.643Z",
 			"title": "Create main page html, with js files for client",
 			"completed": "true",
 			"completedDate": "",
-			"score": "0.1"
+			"score": "1"
 		},
 		{
 			"created": "2016-04-22T13:51:12.643Z",
