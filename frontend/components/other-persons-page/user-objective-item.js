@@ -24,16 +24,17 @@ class ObjectiveItem extends Component {
 	    	keyResult[i].classList.add('undisplay');
 	   	}
 	}
-	render() {
-
+	render() { 
 		return (
 			<div className='objective'>
 			<div className='progress-bar'>
-		            	<progress max="100" value="25"></progress>
+		            	<progress max="100" value='25'></progress>
 		       	</div>
          		<div className='name'>{this.props.item.objTitle}
          		</div>
-         		<i className="fa fa-plus-circle" title="Clone"></i>
+         		<span className="plus-icon">
+         			<img src="https://maxcdn.icons8.com/iOS7/PNG/25/Very_Basic/plus-25.png" title="Plus" width="25"/>
+         		</span>
          		<div className='description'>{this.props.item.objDescription}</div>
 		        <div className="objective-info">
 		            <div className='co-workers'><span className="fa fa-users"></span>4</div>
