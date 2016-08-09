@@ -72,7 +72,7 @@ UserService.prototype.delete = function(id, callback){
 			if(err){
 				return callback(err, null);
 			};
-
+			console.log(userMentors);
 			userMentors.forEach(function(userMentor, i , arr){
 				UserMentorRepository.delete(userMentor._id, function(err){
 					if(err){
