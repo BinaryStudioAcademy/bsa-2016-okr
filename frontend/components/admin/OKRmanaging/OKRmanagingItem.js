@@ -9,7 +9,8 @@ export default class OKRmanagingItem extends React.Component {
            <td className="minify sortID">{this.props.id}</td>
            <td className="sortDesc">{this.props.ownerName}</td>
            <td className="sortDesc">{this.props.objTitle}</td>
-           <td className="minify textright"><i className="fa fa-trash" aria-hidden="true"></i></td>
+           <td className="sortDesc">{this.props.category}</td>
+           <td className="minify textright"><i className="fa fa-trash" aria-hidden="true" onClick ={this.props.handleRemoveObjective}></i></td>
          </tr>
         );
     }

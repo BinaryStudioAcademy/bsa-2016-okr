@@ -4,229 +4,83 @@ import NavMenu from ".././../nav-menu.jsx";
 import Search from '.././../search-bar.jsx';
 import MainPage from '../../../containers/main-page.jsx';
 import CentralWindow from "../../../containers/central-window.jsx";
-import StatPanel from "../..//../containers/statistic-panel.jsx";
+import StatPanel from "../../../containers/statistic-panel.jsx";
 import OKRmanagingItem from './OKRmanagingItem.js'
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../../actions/admin/OKRmanagingActions";
 
 import './OKRmanagingList.scss';
 
-var OKRmanagingItems = [{
+const objectiveList = [{
     id: "000001",
-    objTitle: "1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Take the Landmark Forum Training",
     category: "Knowledge",
-    ownerName: "Walter Ahumada",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Walter Ahumada"    
 },
 {
     id: "000002",
-    objTitle: "2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Create a dynamic coaching and training community with 50 or more members",
     category: "Knowledge",
-    ownerName: "Lakeisha Breen",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Lakeisha Breen"
+   
 }, {
     id: "000003",
-    objTitle: "3 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Receive the CPAE designation from the National Speakers Association",
     category: "Knowledge",
-    ownerName: "Jayna Bhatti",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Jayna Bhatti"
+   
 },
 {
     id: "000004",
-    objTitle: "4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Create a curriculum guide for a college course based on The Success Principles",
     category: "Knowledge",
-    ownerName: "Parker Hohlt",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Parker Hohlt"
+   
 },
 {
     id: "000005",
-    objTitle: "5 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Develop a leadership training",
     category: "Knowledge",
-    ownerName: "Leana Bowley",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Leana Bowley"
+    
 },
 {
     id: "000006",
-    objTitle: "6 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Type 150 words a minute",
     category: "Knowledge",
-    ownerName: "Neva April",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Neva April"
+    
 },
 {
     id: "000007",
-    objTitle: "7 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Give a talk to an audience of 10,000 people ",
     category: "Knowledge",
-    ownerName: "Epifania Leo",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Epifania Leo"
+    
 },
 {
     id: "000008",
-    objTitle: "8 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Learn to speak Spanish fluently",
     category: "Knowledge",
-    ownerName: "Nam Beaudin",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Nam Beaudin"
+    
 },
 {
     id: "000009",
-    objTitle: "9 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "position as a software tester ",
     category: "Knowledge",
     ownerName: "Luana Hack",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    
 },
 {
     id: "000010",
-    objTitle: "10 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    objTitle: "Produce a PBS program",
     category: "Knowledge",
-    ownerName: "Son Gossage",
-    keyResults: [
-        {
-            created: "2016-05-22T10:50:12.643Z",
-            title: "sed do eiusmod tempor incididunt",
-            completed: "true",
-            completedDate: "2016-06-22T10:50:12.643Z",
-            score: "0.1"
-        },
-        {
-            created: "2016-05-22T10:51:12.643Z",
-            title: "incididunt ut labore et dolore",
-            completed: "false",
-            completedDate: "",
-            score: "0.1"
-        }
-    ],
+    ownerName: "Son Gossage"
+    
 }];
 
 
@@ -236,29 +90,52 @@ export default class OKRmanagingList extends React.Component {
         super();
 
         this.state = {
-            showObjectives:[]
+            showObjectives:[],
+            search: ""
         }
+
+        this.handleRemoveObjective = this.handleRemoveObjective.bind(this);
+       /* this.handleOjectiveSearch = this.handleObjectiveSearch.bind(this);*/
 
     } 
 
     componentDidMount() {
-        this.setState({showObjectives: OKRmanagingItems})
-    }  
+        this.setState({showObjectives: objectiveList});
+        console.log(objectives)
+    } 
 
-    handleRemoveUObjective (event, item) {
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            showObjectives: nextProps.showObjectives,
+            search: nextProps.search
+        })
+    } 
+
+    handleRemoveObjective (event, item) {
         if(confirm('Are you sure you want to delete this item?')) {
-            console.log(item);
 
-            var index = this.state.showObjectives.indexOf(item);
-            var OKRmanagingItems = this.state.showObjectives.slice();
-            OKRmanagingItems.splice(index, 1);
+            var index = this.props.stateFromReducer.showObjectives.indexOf(item);
+            var objectiveList = this.props.stateFromReducer.showObjectives.slice();
+            objectiveList.splice(index, 1);
 
-            this.setState({showObjectives: OKRmanagingItems})
+            this.props.removeObjective ({showObjectives: objectiveList})
 
         }
     } 
 
+/*    handleObjectiveSearch(event){
+
+        this.props.objectiveSearch({search: event.target.value.substr(0, 20)});
+    }*/
+
     render() {
+
+
+/*        let filteredObjectives = this.props.stateFromReducer.showObjectives.filter(
+            (objective) => {
+                return objective.objTitle.toLowerCase().indexOf(this.props.stateFromReducer.search.toLowerCase()) !== -1;
+            }
+        );*/
         
         return (
             <div>
@@ -273,14 +150,15 @@ export default class OKRmanagingList extends React.Component {
 							  <thead>
 								<tr><th><button type="button" className="sort" data-sort="sortID">#<i className="caret" /></button></th>
 								  <th><button type="button" className="sort" data-sort="sortDesc">First name, last name<i className="caret" /></button></th>
-								  <th><button type="button" className="sort" data-sort="sortDesc">Description<i className="caret" /></button></th>
+								  <th><button type="button" className="sort" data-sort="sortDesc">Objective Title<i className="caret" /></button></th>
+                                  <th><button type="button" className="sort" data-sort="sortDesc">Category<i className="caret" /></button></th>
 								  <th>Options<i className="caret" /></th>
 								</tr></thead>
 							  <tbody className="list">
 
 								{
-									this.state.showObjectives.map((objective, index) => {
-										return <OKRmanagingItem key={index} id={objective.id} objTitle={objective.objTitle} ownerName={objective.ownerName} state={this.state.showObjectives} />
+									this.props.stateFromReducer.showObjectives.map((objective, index) => {
+										return <OKRmanagingItem key={index} id={objective.id} objTitle={objective.objTitle} ownerName={objective.ownerName} category = {objective.category} state={this.props.stateFromReducer.showObjectives} handleRemoveObjective ={this.handleRemoveObjective.bind(null, objective)} />
 									})                        
 								}              
 								
@@ -294,7 +172,7 @@ export default class OKRmanagingList extends React.Component {
 									  <button type="button" className="btn-tablepage jTablePageNext">»</button>
 									</div>
 									<div className="table-filter ">
-									  <i className="fa fa-search" aria-hidden="true"></i> <input className="search " placeholder="Search " />
+									  <i className="fa fa-search" aria-hidden="true"></i> <input className="search " placeholder="Search" onChange={this.handleObjectiveSearch} />
 									</div>
 								  </td>
 								</tr>
@@ -309,3 +187,16 @@ export default class OKRmanagingList extends React.Component {
         )
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+        stateFromReducer: state
+    };
+}
+
+const OKRmanagingListConnected = connect(mapStateToProps, mapDispatchToProps)(OKRmanagingList);
+export default OKRmanagingListConnected;
