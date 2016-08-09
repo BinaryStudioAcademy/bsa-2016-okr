@@ -7,9 +7,14 @@ class KeyResult extends Component {
 	}
 	
 	render() {
-	
+	if (this.props.item.completed == 'true')
 		return (
-			<li className="keyResult">
+			<li className="key-result completed">
+         		{this.props.item.title}
+		    </li>        
+		)
+		return (
+			<li className="key-result">
          		{this.props.item.title}
 		    </li>        
 		)
