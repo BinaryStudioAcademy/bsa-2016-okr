@@ -1,0 +1,14 @@
+.keyResult {
+  width: 500px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.keyResult .title {
+  display:inline-block;
+  margin-left: 10px;
+}
+
+.keyResult .rate {
+  float: right;
+}

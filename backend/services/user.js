@@ -68,27 +68,31 @@ UserService.prototype.delete = function(id, callback){
 			return callback(err, null);
 		};
 
-		UserMentorRepository.getByUserId(id, function(err, userMentor){
+		UserMentorRepository.getByUserId(id, function(err, userMentors){
 			if(err){
 				return callback(err, null);
 			};
 
-			UserMentorRepository.delete(userMentor._id, function(err){
-				if(err){
-					return callback(err, null);
-				};
+			userMentors.forEach(function(userMentor, i , arr){
+				UserMentorRepository.delete(userMentor._id, function(err){
+					if(err){
+						return callback(err, null);
+					};
+				});
 			});
 		});
 
-		UserMentorRepository.getByMentorId(id, function(err, userMentor){
+		UserMentorRepository.getByMentorId(id, function(err, userMentors){
 			if(err){
 				return callback(err, null);
 			};
 
-			UserMentorRepository.delete(userMentor._id, function(err){
-				if(err){
-					return callback(err, null);
-				};
+			userMentors.forEach(function(userMentor, i ,arr){
+				UserMentorRepository.delete(userMentor._id, function(err){
+					if(err){
+						return callback(err, null);
+					};
+				});
 			});
 		});
 
