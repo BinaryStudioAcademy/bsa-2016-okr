@@ -6,6 +6,7 @@ import Search from './search-bar.jsx';
 import MainPage from '../containers/main-page.jsx';
 import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
+import Dashboard from "./dashboard/dashboard.jsx";
 
 class Home extends React.Component {
    constructor() {
@@ -82,7 +83,9 @@ class Home extends React.Component {
                   <ListOfUsers takeUser={this.takeUser} search={this.search}
                                searchValue={this.state.searchValue} data={this.state.data} />
                </CentralWindow>
-               <StatPanel></StatPanel>
+               <StatPanel>
+               <Dashboard></Dashboard>
+               </StatPanel>
             </MainPage>
          </div>
       )
