@@ -4,13 +4,11 @@ import "./header.scss";
 export default class Header extends React.Component{
    constructor(){
       super();
-
-      this.menu_handle_click = this.menu_handle_click.bind(this);
    }
 
-   menu_handle_click(event){
+   bars_handle_click(event){
       var   target = event.target,
-         menu = document.getElementById('navbar');
+            menu = document.getElementById('navbar');
 
       if(!target.classList.contains('active')){
          target.classList.add('active');
@@ -24,8 +22,8 @@ export default class Header extends React.Component{
    render(){
       return(
          <header>
-            <button id="bars">
-               <i className="fa fa-bars fa-lg" aria-hidden="true" onClick={this.menu_handle_click}></i>
+            <button id="bars" onClick={this.bars_handle_click.bind(this)}>
+               <i className="fa fa-bars fa-lg" aria-hidden="true"></i>
             </button>
             <div className="user-info clearfix">
                <div className="logo">

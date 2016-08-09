@@ -6,6 +6,8 @@ var historySchema = new Schema({
 	keyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Key'},
 	type: String,
 	date: Date
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('History', historySchema);

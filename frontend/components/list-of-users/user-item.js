@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 class UserItem extends Component {
 	handleUser() {
@@ -7,12 +8,12 @@ class UserItem extends Component {
 	}
 	render() {
 		return (
-			<a href="/users">
+			<Link to="/users">
 			<li className='userItem' onClick={this.handleUser.bind(this)}>
 				<img src='https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg'/>
 				<div>{this.props.name}</div>
 			</li>
-			</a>
+			</Link>
 		)
 	}
 }

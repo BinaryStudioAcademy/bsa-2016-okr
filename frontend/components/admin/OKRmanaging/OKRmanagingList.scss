@@ -1,0 +1,151 @@
+$text:#333333;
+$table-border: #d2d2d2; 
+$table-padding: 9px;
+
+//General styles
+* {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+outline: 0; }
+html, body { 
+  width:100%; height:100%; margin:0; padding:0; }
+body { 
+  background-color:#f3f2f2; color:$text;
+  font-family:sans-serif; font-size:14px; }
+table { 
+  border-collapse:collapse; 
+  border-spacing:0px; line-height:16px; }
+th { 
+  text-align:left; font-weight:normal; 
+  font-size:12px; }
+button { 
+  background:none; 
+  background-color:transparent; 
+  box-shadow:none; border:none;
+  font-family:inherit; color:inherit; 
+  border-radius:0; 
+  cursor:pointer; }
+.number { 
+  width:1%; white-space:nowrap; 
+  text-align:right; 
+  padding-left:20px !important; }
+.ellipsis { 
+  overflow:hidden; 
+  white-space:nowrap; 
+  text-overflow:ellipsis; }
+.textcenter { text-align:center; }
+.textright { text-align:right; }
+.minify { width:1%; white-space:nowrap; }
+.table-icon { width:30px; max-width:30px; text-align:center; }
+
+
+//TABLE
+
+//stick the height! (adjust based on pagingRows * rowHeight)
+//later we could use vh and adjust number of rows to match viewport.
+.table-list { height: 280px; } 
+
+//table styles, optional
+.table-list { 
+  background-color:#ffffff; 
+  border:1px solid $table-border; 
+  width:800px; margin:0 auto;  }
+.table-list th { 
+  border-bottom:1px solid $table-border; }
+.table-list tbody td { 
+  white-space:nowrap; padding:$table-padding; 
+  vertical-align:top; height:35px;
+  border-bottom:1px solid $table-border; }
+tr:last-child td { height:auto; }
+
+//sort styles, optional
+.sort {
+  text-align:left; 
+  padding:$table-padding;;
+  border: none; background: none; 
+  display: block; width:100%; 
+  color: #808080; 
+  line-height:14px; }
+.sort.textcenter { text-align:center; }
+.sort.textright { text-align:right; }
+
+.caret { line-height:0; }
+.caret:after { content:""; }
+.asc .caret:after {
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3px solid #808080;
+  content: "";
+  position: relative;
+  top: -3px;
+  right: -4px;
+  font-size:0; }
+.desc .caret:after {
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid #808080;
+  content: "";
+  position: relative;
+  top: -7px;
+  right: -4px;
+  font-size:0; }
+.sort .caret { display:none; }
+.sort.asc .caret { display:inline-block; }
+.sort.desc .caret { display:inline-block; }
+.sortUnitPrice, .sortQty, .sortTotal { min-width:90px; }
+
+//footer styles, optional
+.table-footer { 
+  border-top:1px solid $table-border; padding:0; }
+.table-filter {
+  float:right; 
+  border-left:1px solid $table-border; }
+.table-filter .search { 
+  padding:$table-padding; 
+  width:300px;
+  border:none; background:transparent; box-shadow:none; }
+
+//pagination styles,  optional
+.table-pagination {
+  display:table; border-collapse:collapse; 
+  width:156px; float:left; 
+  border-right:1px solid $table-border; 
+  padding:6px; }
+.btn-tablepage { display:table-cell; width:33px; padding:$table-padding; }
+
+.pagination { display:table-cell; text-align:center; list-style:none; margin:0; padding:0; width:90px; }
+.pagination li { display:inline-table;  border:1px solid #eaeaea; }
+
+.page { 
+  display:block; 
+  padding:4px 0; width:22px;
+  text-align:center; 
+  text-decoration:none; 
+  line-height:12px; font-size:12px; 
+  color:#808080;  }
+
+.pagination .disabled { display:none; }
+.pagination .active { border-color:#aaa; }
+.active .page {  background:#aaa; color:#fff; }
+
+
+/* unused */
+
+.table-btn-dropdown { 
+  padding:$table-padding - 1; }
+.btn-with-caret { 
+  position:relative; padding-right:24px; }
+.btn-with-caret:after {
+  content:"";
+  display: block; position:absolute; 
+  top:50%; right:10px; margin-top:-2px;  
+  width: 0;
+  height: 0;
+  border-top: 4px solid $text;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent; }
