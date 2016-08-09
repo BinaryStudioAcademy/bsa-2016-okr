@@ -1,0 +1,23 @@
+.push {
+   content: '';
+   display: block;
+   padding-top: 70px;
+}
+.full-screen {
+   height: 100%;
+   margin-top: -70px;
+   z-index: 0;
+}
+#central-window {
+   height: 100%;
+   position: relative;
+   margin-top: -70px;
+   z-index: 0;
+   margin-right: 350px;
+   margin-left: 60px;
+}
+#central-window:before {
+   content: '';
+   display: block;
+   padding-top: 70px;
+}

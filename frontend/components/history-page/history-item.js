@@ -15,7 +15,7 @@ class HistoryItem extends React.Component {
         return(
                 <div className="history-item">
                     <div className="history-item-user-avatar-container">
-                        <img className="history-item-user-avatar" src="http://vignette1.wikia.nocookie.net/legomessageboards/images/9/91/Avatar-placeholder.png/revision/latest?cb=20150616201536"/>
+                        <img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/>
                     </div>
                     <div className="history-item-info">
                         <div className="history-item-author">AuthorId: {this.state.item.authorId}</div>
@@ -24,7 +24,7 @@ class HistoryItem extends React.Component {
                     </div>
                     <div className="history-item-date">
                         <div className="history-item-date-icon-container">
-                            <img className="history-item-date-icon" src="https://cdn0.iconfinder.com/data/icons/feather/96/clock-128.png"/>
+                            <i className="fa fa-clock-o fa-2x" aria-hidden="true"/>
                         </div>
                         <div className="history-item-date-info">
                             {this.state.item.date}

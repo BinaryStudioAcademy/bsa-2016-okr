@@ -7,19 +7,28 @@
   flex-direction: column;
 }
 
+#top-panel {
+  width: 100%;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  background-color: #F3F2FF;
+}
+
 .history-page-header {
   width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  background-color: #F3F2FF;
-  font-family: 'Roboto', sans-serif;
+  padding: 0 5%;
 }
 
 .history-page-title {
   width: 30%;
-  border-bottom: 2px solid #DDDDDD;
   display: flex;
   justify-content: center;
+  padding:12px;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .history-search-bar-container {

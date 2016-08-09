@@ -1,0 +1,57 @@
+header {
+   position: relative;
+   background-color: #2c3e50;
+   padding-right: 20px;
+   height: 70px;
+   z-index: 3;
+}
+.user-info {
+   float: right;
+   padding-left: 20px;
+}
+.user-info .logo {
+   height: 70px;
+   width: 70px;
+   margin-left: 20px;
+   overflow: hidden;
+   float: right;
+   cursor: pointer;
+}
+.user-info .logo img {
+   display: block;
+   height: 100%;
+}
+.user-info .credentials {
+   float: left;
+   margin: 16px 0;
+   text-align: right;
+   color: #ffffff;
+}
+.user-info .credentials .field {
+   font-family: 'Lato', sans-serif;
+   color: #ccc;
+   font-weight: 300;
+   font-style: italic;
+}
+#bars {
+   display: inline-block;
+   width: 60px;
+   height: 70px;
+   text-align: center;
+   background: none;
+   border: none;
+}
+#bars:focus,
+#bars:active {
+   outline: none;
+}
+#bars i.fa {
+   color: #dddddd;
+   cursor: pointer;
+}
+#bars i.fa:hover {
+   color: #ffffff;
+}
+#bars.active i.fa {
+   color: #ffffff;
+}
