@@ -3,8 +3,8 @@ import { Link } from 'react-router';
 import "./nav-menu.scss";
 
 class NavMenu extends React.Component {
-   constructor() {
-      super();
+   constructor(props) {
+      super(props);
    }
 
    handleShow() {
@@ -17,6 +17,17 @@ class NavMenu extends React.Component {
    }
 
    render() {
+      let adminMenuItems;
+      if(this.props.isAdmin) {
+         adminMenuItems = (
+            <li>
+               <Link to="">
+                  <i className="fa fa-recycle fa-2x" aria-hidden="true"></i>
+                  Recycle Bin
+               </Link>
+            </li>
+         )
+      }
       return (
          <aside id="navbar">
             <nav onClick={this.links_feedback_handler.bind(this)}>
@@ -45,6 +56,7 @@ class NavMenu extends React.Component {
                      <i className="fa fa-clock-o fa-2x" aria-hidden="true"></i>
                      History
                   </Link></li>
+                  {adminMenuItems}
                </ul>
             </nav>
          </aside>

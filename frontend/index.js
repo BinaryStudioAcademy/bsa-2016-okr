@@ -4,6 +4,7 @@ import App from "./containers/app"
 import LoginPage from "./components/login-page.js"
 import HomePage from "./components/home-page.js"
 import UserPage from "./components/other-persons-page/other-persons-page.js"
+import HomeAdmin from "./components/admin-home-page.js"
 import "normalize.css";
 import "./components/global.scss";
 import {IndexRoute, Route, Router, browserHistory} from 'react-router';
@@ -31,6 +32,12 @@ render(
            <Route path="home" component={HomePage} />
            <Route path="users" component={UserPage} />
           <Route path="recycle-bin" component={RecycleBin}/>
+        </Route>
+        <Route path="/admin" component={App}>
+           <IndexRoute component={HomeAdmin} />
+           <Route path="home" component={HomePage} />
+           <Route path="users" component={UserPage} />
+           <Route path="recycle-bin" component={RecycleBin}/>
         </Route>
       </Router>
     </Provider>)
