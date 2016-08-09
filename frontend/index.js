@@ -2,6 +2,7 @@ import React from "react"
 import { render } from "react-dom"
 import App from "./containers/app"
 import LoginPage from "./components/login-page.js"
+import History from "./components/history-page/history-page.js"
 import HomePage from "./components/home-page.js"
 import UserPage from "./components/other-persons-page/other-persons-page.js"
 import "normalize.css";
@@ -32,6 +33,7 @@ render(
 			<IndexRoute component={HomePage} />
 			<Route path="home" component={HomePage} />
 			<Route path="users" component={UserPage} />
+			<Route path="history" component={History}/>
 			<Route path="recycle-bin" component={RecycleBin}/>
 			<Route path="objective" component={ObjectiveView}/>
 			<Route path="admin/okr-managing" component={OKRmanagingList}/>
