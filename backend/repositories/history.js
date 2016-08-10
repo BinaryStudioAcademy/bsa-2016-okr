@@ -15,6 +15,12 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 	query.exec(callback);	
 };
 
+HistoryRepository.prototype.addUserEvent = function (authorId, userId, type, callback) {
+	 let model = this.model;
+	 let newEvent = new model({authorId, userId, type});
+	 newEvent.save(callback);
+}
+
 HistoryRepository.prototype.addKeyEvent = function(authorId, keyId, type, callback) {
 	let model = this.model;
 	let newEvent = new model({authorId, keyId, type});
