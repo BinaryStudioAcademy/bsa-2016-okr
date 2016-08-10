@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import KeyResultItem from './key-result-item.js';
-
+import KeyResult from './key-result.js';
+import './key-result.scss';
 class KeyResults extends Component {
 	constructor(props) {
 		super(props);
@@ -8,7 +8,7 @@ class KeyResults extends Component {
 	
 	render() {
 		let item = this.props.data.map((item, index) => {
-			return <KeyResultItem index={index} key={index} item={item} />
+			return <KeyResult index={index} key={index} item={item} />
 		})
 		return (
 			<ul>
