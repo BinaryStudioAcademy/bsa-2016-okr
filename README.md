@@ -12,6 +12,17 @@ To start the project for development run
 
 ``` npm start ```
 
+To start the project in production mode run:
+
+* ``` npm run build ```
+* ``` npm run prod ```
+
+P.S. Can be used for ONLY BACKEND development ( to avoid looooong webpack hot reload )
+
+To run automated tests run:
+
+``` npm run test ```
+
 If there are any errors with sass/scss:
 
 ``` npm rebuild node-sass ```
@@ -20,4 +31,4 @@ Then run ``` npm start ``` again
 
 To start the project on production run
 
-``` npm run-script build ```
+``` npm run build && node server ```
