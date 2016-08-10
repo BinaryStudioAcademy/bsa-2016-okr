@@ -17,7 +17,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-const routes = require('./backend/routes/api/routes')(app);
+const routes = require('./backend/routes/routes')(app);
 
 if (isDeveloping) {
   const compiler = webpack(config);
@@ -44,14 +44,15 @@ if (isDeveloping) {
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('*', function response(req, res) {
-    console.log(__dirname);
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
 }
 
-app.listen(port, '127.0.0.1', function onStart(err) {
+var server = app.listen(port, '127.0.0.1', function onStart(err) {
   if (err) {
     console.log(err);
   }
   console.info('==> Listening on port %s. Open up http://127.0.0.1:%s/ in your browser.', port, port);
 });
+
+module.exports = server;

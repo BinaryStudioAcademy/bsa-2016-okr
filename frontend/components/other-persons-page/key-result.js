@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import KeyResultItem from './key-result-item.js';
 
-class KeyResult extends Component {
+class KeyResults extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -11,11 +11,11 @@ class KeyResult extends Component {
 			return <KeyResultItem index={index} key={index} item={item} />
 		})
 		return (
-			<ol>
+			<ul>
          		{item}
-		    </ol>        
+		    </ul>        
 		)
 	}
 }
 
-export default KeyResult
+export default KeyResults
