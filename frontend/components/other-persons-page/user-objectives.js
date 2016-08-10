@@ -20,6 +20,6 @@ class Objectives extends Component {
 	}
 }
 Objectives.defaultProps = {
-	data: data
+	data: data.templates
 }
 export default Objectives
