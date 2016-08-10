@@ -31,4 +31,4 @@ Then run ``` npm start ``` again
 
 To start the project on production run
 
-``` npm run build && node server ```
+``` npm install && npm run build && node server ```
