@@ -34,8 +34,15 @@ let data_for_recycle = {
 			"title": "Make server routs",
 			"score": "0.1"
 		}
-		],
+		]
 	}],
-	"plans": []
+	"plans": [1, 2, 3]
 }
 export default data_for_recycle
+
+
+// {
+// 		"id": "0000f8847ed517bc028e7390",
+// 		"title": "Plan name 1",
+// 		"description": "Plan name 1 descrioption"
+// 	},

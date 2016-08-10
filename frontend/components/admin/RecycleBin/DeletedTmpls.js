@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import binItems from '../../mockData/recycleBin.js'
+import binItems from '../../mockData/data_for_recycle_bin'
+import DeletedTmplsItem from './deletedTmplsItem'
 
 class DeletedTmps extends Component {
 
@@ -8,10 +9,12 @@ class DeletedTmps extends Component {
 	}
 
 	render() {
-		// console.log(binItems.templates);
+		let items = binItems.templates.map((item) => {
+			return <DeletedTmplsItem item={item} key={item.id} />
+		})
 		return (
 		<div className="deleted-items">
-			<h2>Deleted tmps</h2>
+			{ items }
 		</div>
 		);
 	}
