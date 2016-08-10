@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ListOfUsers from '../list-of-users/list-of-users.js';
+import users from '../mockData/users.js';
 import PersonInfo from './persons-info.js';
 import UserOjectives from './user-objectives.js';
 import CentralWindow from "../../containers/central-window.jsx";
@@ -12,38 +13,12 @@ class OtherPersonsPage extends Component {
 		this.state = {
 			searchValue: '',
 			id: '',
-			data: [
-				{
-					id: 0,
-					name: 'Kelly Bloom',
-					photo: 0
-				},
-				{
-					id: 1,
-					name: 'Josh Peterson',
-					photo: 0
-				},
-				{
-					id: 2,
-					name: 'Sahan Roman',
-					photo: 0
-				},
-				{
-					id: 3,
-					name: 'Taras Barladun',
-					photo: 0
-				},
-				{
-					id: 4,
-					name: 'Roman Vintish',
-					photo: 0
-				}
-			]
-		}
+	}
 		this.search = this.search.bind(this);
 		this.takeUser = this.takeUser.bind(this);
 	}
 	takeUser(id) {
+		console.log(id)
 		this.setState({
 			id: id
 		})
@@ -54,19 +29,22 @@ class OtherPersonsPage extends Component {
 			searchValue: value
 		})
 	}
+
 	render() {
 		return (
 			<div>
 				<CentralWindow>
-					<PersonInfo data={this.state.data} id={this.state.id} />
+					<PersonInfo data={this.props.users} id={this.state.id} />
 					<UserOjectives />
 					<ListOfUsers takeUser={this.takeUser} search={this.search}
-								searchValue={this.state.searchValue} data={this.state.data} />
+								searchValue={this.state.searchValue} />
 				</CentralWindow>
 				<StatPanel></StatPanel>
 			</div>
 		)
 	}
 }
-
+OtherPersonsPage.defaultProps = {
+	users: users
+}
 export default OtherPersonsPage
