@@ -157,7 +157,7 @@ export default class OKRmanagingList extends React.Component {
 							  <tbody className="list">
 
 								{
-									this.props.stateFromReducer.showObjectives.map((objective, index) => {
+									this.props.stateFromReducer.showObjectives.showObjectives.map((objective, index) => {
 										return <OKRmanagingItem key={index} id={objective.id} objTitle={objective.objTitle} ownerName={objective.ownerName} category = {objective.category} state={this.props.stateFromReducer.showObjectives} handleRemoveObjective ={this.handleRemoveObjective.bind(null, objective)} />
 									})                        
 								}              
