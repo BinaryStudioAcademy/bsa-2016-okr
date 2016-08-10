@@ -1,40 +1,39 @@
 import React from 'react';
 import {Link} from 'react-router';
-import UserStats from './userStats.jsx';
-import ObjectiveStats from './objectiveStats.jsx';
-import TemplateStats from './templateStats.jsx';
+import DashboardStats from './dashboardStats.jsx';
+import Tab from './tab.jsx';
+import TabControl from './tabControl.jsx';
 import './dashboard.scss';
 
-class Dashboard extends React.Component {
+export default class Dashboard extends React.Component {
     constructor() {
         super();
     }
+    
     render() {
-
         return (
             <div className="dashboard">
-                <ul className="tabs">
-                    <div className="active"><li><h2>Users</h2></li></div>
-                    <div> <li><h2>Objectives</h2></li></div>
-                    <div><li><h2>Templates</h2></li></div>
-                </ul>
-                <div className="main">
-                    <p><b>256</b> Users have active Objectives<br/>in this quarter</p>
-                    <table>
-                        <caption>Top 5 users with the highest performance</caption>
-                        <th>Name</th><th>objectives completed, %</th>
-                        <tr><td>Peter</td><td>78%</td></tr>
-                        <tr><td>Elma</td><td>50%</td></tr>
-                        <tr><td>Ronaldo</td><td>45%</td></tr>
-                        <tr><td>Grigory</td><td>39%</td></tr>
-                        <tr><td>Ricardo</td><td>28%</td></tr>
-                    </table>
-                </div>
+                <TabControl selected={0}>
+                    <Tab label="Users">
+                        <DashboardStats count="256" counterName="Users have active Objectives"
+                            caption="Top 5 Users by performance" columns={["Name", "Completed"]}
+                            rows={[["Peter", "78%"], ["Elma", "50%"], ["Ronaldo", "45%"], ["Grigory", "39%"], ["Ricardo", "28%"]]}/>
+                    </Tab>
+                    <Tab label="Objectives">
+                        <DashboardStats count="340" counterName="Objectives in progress"
+                            caption="Top 5 Objectives by number of likes" columns={["Title", "Likes"]}
+                            rows={[["To learn Angular", "67"], ["Read the book", "63"], ["To do task", "51"], ["To start running in the morning", "48"], ["To prepare the cake", "41"]]}/>
+                    </Tab>
+                    <Tab label="Templates">
+                        <DashboardStats count="78" counterName="Tampletes have been forked"
+                            caption="Top 5 Templates by number of forks" columns={["Title", "Forks"]}
+                            rows={[["Read the book", "43"], ["Learn React", "36"], ["Get fit", "32"], ["Lern salsa", "29"], ["Get a new job", "21"]]}/>
+                    </Tab>
+                </TabControl>
             </div>)
     }
 }
 
-export default Dashboard;
 
 
 

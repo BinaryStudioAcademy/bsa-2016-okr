@@ -1,50 +1,64 @@
-
 .dashboard{
     width: 100%;
-    margin-top: 10px;
-    color:#2c3e50;
+    padding: 10px 0;
 }
 
-.dashboard .tabs{
-    display:flex;
-    justify-content: space-around;
-    margin:-5% 0 0 -10%; 
+.dashboard .tabPanel{
+    display:table;
+    width: 90%;
+    margin: 5px 5% 0;
+    border-collapse: collapse;
 }
 
-.dashboard .tabs li{
-    display: inline-block;
-    list-style-type: none;
-    margin:5px;
-    }
-
-.dashboard .active,
-.dashboard .tabs div:hover{
-    background: #C5C4CA;
-    padding:10px 10px 0 10px;
+.dashboard .tabs {
+    display: table-row;
 }
 
-.dashboard .main{
-   position:absolute;
-   top:10%;
-   left:0;
-   padding:30px 30px;
-}
-
-.dashboard p{
+.dashboard li {
+    border: 2px solid #2c3e50;;
+    padding: 5px;
     text-align: center;
-    font-size:120%;
+    display: table-cell;
+    color: #2c3e50;;
+    cursor: pointer;
+  }
+
+.dashboard .active, .dashboard li:hover{
+    background: #2c3e50;;
+    color: #fff;
+  }
+  
+.dashboard .main{
+    position:absolute;
+    margin: 0 5%;
+     width: 90%;
+    top:10%;
+    left:0;    
+}
+
+.dashboard .countInfo, .dashboard .tableInfo{
+    margin: 20px 0;
+    padding: 5px 15px;
+    border: 1px solid #EDEDED;
+    border-left: 5px solid #6aa84f;
+    background: white;
+    width:100%;
+    box-sizing: border-box;
+}
+
+.dashboard .countInfo b{
+    color:#0080ff;
 }
 
 .dashboard table{
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    width:100%;
     font-size: 12px;
-    width: 300px;
     background: white;
     text-align: center;
     border-collapse: collapse;
     color: #3E4347;
-    margin-top:30px;
-    margin-left: -5px;
+    margin-top:10px;
+    margin-left: 5px;
 }
 
 .dashboard th :first-child, .dashboard td:first-child {
@@ -58,6 +72,7 @@
     border-right: 20px solid white;
     border-left: 20px solid white;
     padding: 8px 10px;
+    text-align: center;
 }
 
 .dashboard td {
@@ -69,4 +84,5 @@
 
 .dashboard caption{
     font-size: 14px;
+    text-align: center;
 }
