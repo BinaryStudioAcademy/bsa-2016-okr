@@ -96,7 +96,6 @@ function links_feedback(event) {
          switch_link_state(target, 'active');
          if(isOpen(nav)) close_nav();
       } else {
-         switch_link_state(target, 'disactive');
          if (isOpen(nav)) close_nav();
       }
    } else if(target.matches('#navbar #users-link')){
