@@ -27,14 +27,8 @@ class ObjectiveItem extends Component {
 	}
 	render() { 
 		var date =  Date.parse(this.props.item.startDate)
-			
 			var first = Date.parse('2016-12-31T13:51:50.417Z');
-			console.log(first);
-			if (date > first)
-				return (
-					<div></div>
-					)
-			else
+			
 		return (
 			<div className='objective'>
 				<Progress data={this.props.item.keyResults}/>
@@ -45,8 +39,12 @@ class ObjectiveItem extends Component {
          		</span>
          		<div className='description'>{this.props.item.objDescription}</div>
 		        <div className="objective-info">
-		            <div className='co-workers'><img src="https://maxcdn.icons8.com/iOS7/PNG/25/Users/group-25.png" title="User Group Man Man" width="25" />4</div>
-		            <div className='followed'><img src="https://maxcdn.icons8.com/iOS7/PNG/25/Hands/thumb_up-25.png" title="Thumb Up" width="25" />10</div>
+		            <div className='co-workers'>
+		            	<img src="https://maxcdn.icons8.com/iOS7/PNG/25/Users/group-25.png" title="User Group Man Man" width="25" />4
+		        	</div>
+		            <div className='followed'>
+		            	<img src="https://maxcdn.icons8.com/iOS7/PNG/25/Hands/thumb_up-25.png" title="Thumb Up" width="25" />10
+		            </div>
 		        </div>
 		        <div className='user-key-results'>Key results
 		            <span className="fa fa-angle-double-down fa-lg change" onClick={this.handleShow}></span>

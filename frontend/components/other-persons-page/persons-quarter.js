@@ -11,7 +11,7 @@ constructor() {
       for (var i=0; i<4; i++)
          li[i].classList.remove('active');
       e.target.classList.add('active');
-      console.log()
+      
    }
    openTab(){
       var li = document.getElementsByClassName('quater');
@@ -30,7 +30,7 @@ constructor() {
       return (
          <div id='quaterPanel'>
             <ul id='quaterList'>
-               <li className="quater active" onClick={this.hendleClick}>1-st quater</li>
+               <li className="quater active" onClick={this.hendleClick} ref='a'>1-st quater</li>
                <li className="quater" onClick={this.hendleClick}>2-nd quater</li>
                <li className="quater" onClick={this.hendleClick}>3-rd quater</li>
                <li className="quater" onClick={this.hendleClick}>4-th quater</li>
