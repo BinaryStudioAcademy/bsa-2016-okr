@@ -5,6 +5,7 @@ import MainPage from '../containers/main-page.jsx';
 import "normalize.css";
 import './app.scss';
 
+
 export default class App extends Component {
 
 	render() {
@@ -17,7 +18,7 @@ export default class App extends Component {
 					{
 						(() => {
 							if (process.env.NODE_ENV !== 'production') {
-								const DevTools = require('../shared/devtools/DevTools');
+								const DevTools = require('../shared/devtools/DevTools').default;
 								return <DevTools />;
 							}
 						})()

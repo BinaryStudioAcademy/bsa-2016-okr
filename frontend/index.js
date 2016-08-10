@@ -12,6 +12,8 @@ import RecycleBin from './components/admin/RecycleBin/RecycleBin.js'
 import DeletedTmpls from './components/admin/RecycleBin/DeletedTmpls.js'
 import DeletedPlans from './components/admin/RecycleBin/DeletedPlans.js'
 
+import DevTools from './shared/devtools/DevTools';
+
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import logger from 'redux-logger'
@@ -23,7 +25,8 @@ const middleware = [ thunk ]
 
 const store = createStore(
 	reducer,
-	applyMiddleware(...middleware)
+	applyMiddleware(...middleware),
+	DevTools.instrument()
 )
 
 render(
