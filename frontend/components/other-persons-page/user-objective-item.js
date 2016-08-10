@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import KeyResult from './key-result';
+import KeyResults from './key-result.js';
 import Progress from './progress-bar.js';
 
 class ObjectiveItem extends Component {
@@ -26,9 +26,6 @@ class ObjectiveItem extends Component {
 	   	}
 	}
 	render() { 
-		var date =  Date.parse(this.props.item.startDate)
-			var first = Date.parse('2016-12-31T13:51:50.417Z');
-			
 		return (
 			<div className='objective'>
 				<Progress data={this.props.item.keyResults}/>
@@ -49,7 +46,7 @@ class ObjectiveItem extends Component {
 		        <div className='user-key-results'>Key results
 		            <span className="fa fa-angle-double-down fa-lg change" onClick={this.handleShow}></span>
 		            <div className='key-result-details undisplay'>
-		            	<KeyResult data={this.props.item.keyResults} />
+		            	<KeyResults data={this.props.item.keyResults} />
 		            </div>
 		        </div>
 		    </div>        

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import UserItem from './user-item.js';
 import './list-of-users.scss';
+import users from '../mockData/users.js';
 
 class ListOfUsers extends Component {
    handleTakeUser(id) {
       this.props.takeUser(id)
-
    }
    handleChange(e) {
       var value = e.target.value;
@@ -13,12 +13,12 @@ class ListOfUsers extends Component {
    }
 
    render() {
-      var userNodes = this.props.data.map(function (data) {
-         if(data.name.toLowerCase().indexOf(this.props.searchValue.toLowerCase()) === -1)
+      var userNodes = this.props.users.map(function (user) {
+         if(user.name.toLowerCase().indexOf(this.props.searchValue.toLowerCase()) === -1)
             return;
          else
             return (
-               <UserItem takeUser={this.handleTakeUser.bind(this)} key={data.id} id={data.id} name={data.name} />
+               <UserItem takeUser={this.handleTakeUser.bind(this)} key={user.id} id={user.id} name={user.name} />
             );
       }.bind(this));
 
@@ -29,6 +29,9 @@ class ListOfUsers extends Component {
          </div>
       )
    }
+}
+ListOfUsers.defaultProps = {
+   users: users
 }
 
 export default ListOfUsers

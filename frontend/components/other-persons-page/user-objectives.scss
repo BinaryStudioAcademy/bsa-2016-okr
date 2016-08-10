@@ -4,6 +4,7 @@
 	padding: 5px 15px;
 	border: 1px solid #99bce0;
 	border-left: 10px solid $navbar-color;
+	min-height: 100px;
 
 	.name{
 		display: inline-block;
@@ -52,8 +53,8 @@
 			.completed{
 				text-decoration: line-through;
 			}
-		}
-	}
+		} 
+	} 
 	.progress-bar{
 		float: right;
 		padding-top: 10px;
