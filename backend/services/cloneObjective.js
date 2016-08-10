@@ -3,27 +3,60 @@ var ObjectiveRepository = require('../repositories/objective.js'),
   HistoryRepository = require('../repositories/history'),
   KeyRepository = require('../repositories/key'),
   ObjectId = require('mongoose').Types.ObjectId;
+  async = require('async');
 
 var CloneObjective = function() {};
 
-CloneObjective.prototype.clone = function(id, obj, callback){
-  ObjectiveRepository.getById(id, function(err, query){
-    console.log(query);
-    var objId = new ObjectId(id);
-    KeyRepository.getByObjId(objId, function(errr, keys){
+CloneObjective.prototype.clone = function(data, callback) {
+	async.waterfall([
+		(callback) => {
+			ObjectiveRepository.getById(data.objectiveId, function(err, objective) {
+				if (err) {
+					return callback(err, null);
+				}
+				return callback(null, data, objective);
+			});
+		},
+		(data, objective, callback) => {
+      //todo hadle nulls, this becomes null if objective for given id wasn't found
+      var objId = objective._id;
+      KeyRepository.getByObjId(objId, function(err, keys) {
+				if (err) {
+					return callback(err, null);
+				}
+        data.objectiveId = objId;
+				return callback(null, data, keys);
+			});
+		},
+    (data, keys, callback) => {
+      var keysResult = [];
+      keys.forEach(function(result, index){
+        result['score'] = 0;
+        keysResult.push(result);
+      		});
+  		return callback(null, data, keysResult);
+  	},
+    (data, keysResult, callback) => {
       var body = {
         objectives: [{
-          description: "hardcoded description",
-          objectiveId: objId,
-          keys : keys
+          objectiveId: data.objectiveId,
+          keys : keysResult
         }]
       }
-      var userId = '57a9005eaa76244c0cc61ab3';
+      var userId = data.userId;
       UserRepository.update(userId, body, callback);
-      console.log("DONE");
-      console.log(keys);
-    });
-  });
-};
+  	},
+    (body, callback) => {
+      var body = {
+        authorId: ObjectId(data.userId),
+        keyId: ObjectId(data.objectiveId),
+        type: "cloned objective"
+      }
+      HistoryRepository.add(body, callback);
+    },
+	], (err, result) => {
+		return callback(err, result);
+	});
+}
 
 module.exports = new CloneObjective();
