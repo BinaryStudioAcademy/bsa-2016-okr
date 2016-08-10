@@ -13,7 +13,15 @@ export default class App extends Component {
 				<Header />
 				<NavMenu />
 				<MainPage>
-					{this.props.children}	
+					{this.props.children}
+					{
+						(() => {
+							if (process.env.NODE_ENV !== 'production') {
+								const DevTools = require('../shared/devtools/DevTools');
+								return <DevTools />;
+							}
+						})()
+					}	
 				</MainPage>
 		    </div>
       );
