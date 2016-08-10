@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import './style.scss';
-import RecycleItem from './RecycleItem.js'
-import response from '../../mockData/recycleBin.js';
+import { Link } from 'react-router';
+import './style.scss'
 
 class RecycleBin extends Component {
 
@@ -10,28 +9,19 @@ class RecycleBin extends Component {
 	}
 
 	render() {
-		let recycleItems = this.props.items.map((item) => {
-			return <RecycleItem key={item.id} item={item} />
-		})
 		return (
 		<div id="recycle-bin">
 			<div id="recycle-bin-header">
-				<h2>Recycle bin</h2>
+				<h2>Recycle bin 2</h2>
+				<Link to="deleted-tmpls">Templates</Link>
+				<Link to="deleted-plans">Plans</Link>
 			</div>
 			<div id="recycle-bin-container">
-				{recycleItems}
+				{this.props.children}
 			</div>
 		</div>
 		);
 	}
 }
-
-RecycleBin.defaultProps = {
-	items: response
-}
-
-RecycleBin.propTypes = {
-	items: React.PropTypes.array
-};
 
 export default RecycleBin

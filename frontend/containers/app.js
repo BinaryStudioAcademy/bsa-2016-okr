@@ -5,6 +5,7 @@ import MainPage from '../containers/main-page.jsx';
 import "normalize.css";
 import './app.scss';
 
+
 export default class App extends Component {
 
 	render() {
@@ -13,7 +14,15 @@ export default class App extends Component {
 				<Header />
 				<NavMenu />
 				<MainPage>
-					{this.props.children}	
+					{this.props.children}
+					{
+						(() => {
+							if (process.env.NODE_ENV !== 'production') {
+								const DevTools = require('../shared/devtools/DevTools').default;
+								return <DevTools />;
+							}
+						})()
+					}	
 				</MainPage>
 		    </div>
       );

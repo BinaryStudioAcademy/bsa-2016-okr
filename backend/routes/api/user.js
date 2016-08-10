@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const repository = require('../../repositories/user');
 const service = require('../../services/user');
+const adminOnly = require('../adminOnly');
 
 router.get('/', (req, res, next) => {
 	repository.getAll(res.callback);
@@ -10,7 +11,7 @@ router.get('/:id', (req, res, next) => {
 	repository.getById(req.params.id, res.callback);
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', adminOnly, (req, res, next) => {
 	service.add(req.body, res.callback);
 });
 
@@ -22,7 +23,7 @@ router.get('/me/:id', (req, res, next) => {
 	service.getMe(req.params.id, res.callback);
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', adminOnly, (req, res, next) => {
 	service.delete(req.params.id, res.callback);
 })
 

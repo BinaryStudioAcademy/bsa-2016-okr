@@ -1,30 +1,74 @@
-var UserRepository = require('../repositories/user.js'),
-	ObjectiveRepository = require('../repositories/objective.js'),
-	KeysRepository = require('../repositories/key.js'),
-	async = require('async');
+var UserRepository = require('../repositories/user.js');
+var Objective = require('../schemas/objective');
+var Key = require('../schemas/key');
+var ObjectiveRepository = require('../repositories/objective.js');
+var KeyRepository = require('../repositories/key.js');
+var async = require('async');
 
 var ObjectiveService = function() {};
 
+// 1) Create new objective with empty keys array
+// 2) Create all keys with corresponding objectiveId
+// 3) Push key ids to objective.keys
+// 4) Save objective and keys in DB
+// 5) Profit =)
+ObjectiveService.prototype.add = function(objective, keys, callback) {
+	objective = new Objective(objective);
 
-ObjectiveService.prototype.autocomplete = function(title, callback){
-	let objectives = [];
+	keys = keys.map((key) => {
+		key.objectiveId = objective._id;
+		key = new Key(key);
+		objective.keys.push(key._id);
 
-	ObjectiveRepository.getAllNotDeleted(function(err, objArr){
-			if (err){
-				return callback(err, null);
-			};	
+		return key;
+	});
 
-		objArr.forEach(function(result, index){
-			if ((result['title'].toLowerCase().indexOf(title.toLowerCase()) == 0) &&
-				(result['isApproved'] === true))
-			{
-				objectives.push(result);
-			}
-		});
+	async.waterfall([
+		(callback) => {
+			objective.save((err) => {
+				return err ? callback(err) : callback(null);
+			});
+		}, (callback) => {
+			async.forEach(keys, (key, callback) => {
+				key.save((err) => {
+					return err ? callback(err) : callback(null);
+				});
+			}, (err) => {
+				return callback(err);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);	
+	});
+};
 
-		callback(err, objectives);
+ObjectiveService.prototype.autocomplete = function(title, callback) {
+	async.waterfall([
+		(callback) => {
+			ObjectiveRepository.getAll(function(err, objArr) {
+				if (err) {
+					return callback(err, null);
+				}
+
+				return callback(null, objArr);
+			});
+		}, 
+		(objArr, callback) => {
+			let objectives = [];
+			
+			objArr.forEach((objective) => {
+				if (objective.title.toLowerCase().indexOf(title.toLowerCase()) !== -1) {
+					objectives.push(objective);
+				}
+			});
+
+			return callback(null, objectives);
+		}
+	], (err, result) => {
+		return callback(err, result);
 	});
 }
+
 /**
 *
 * @param data - contain three object: 1) objective 2) keys array 3) userId

@@ -1,4 +1,4 @@
-var ValidateService = require('../../utils/ValidateService');
+var ValidateService = require('../utils/ValidateService');
 
 module.exports = function (req, res, next) {
 	res.callback = (err, data) => {
@@ -28,6 +28,13 @@ module.exports = function (req, res, next) {
 
 		return res.callback(err);
 	};
+
+	res.unauthorized = (message) => {
+		var err = new Error(message || 'Unauthorized');
+		err.status = 401;
+
+		return res.callback(err);
+	}
 
 	next();
 };

@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var UserRepository = require('../repositories/user');
-var UserMentorRepository = require('../repositories/userMentor')
+var UserMentorRepository = require('../repositories/userMentor');
+var async = require('async');
 
 var UserService = function(){
 
@@ -72,7 +73,7 @@ UserService.prototype.delete = function(id, callback){
 			if(err){
 				return callback(err, null);
 			};
-
+			console.log(userMentors);
 			userMentors.forEach(function(userMentor, i , arr){
 				UserMentorRepository.delete(userMentor._id, function(err){
 					if(err){

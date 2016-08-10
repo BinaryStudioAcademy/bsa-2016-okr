@@ -2,6 +2,8 @@ function dbConnectionHandler() {
 	var mongoose = require('mongoose'),
 		config = require('../config/db');
 
+	mongoose.Promise = require('bluebird');
+
 	mongoose.connect(config.uri, config.opts);
 	mongoose.set('debug', true);
 

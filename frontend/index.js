@@ -5,10 +5,14 @@ import LoginPage from "./components/login-page.js"
 import History from "./components/history-page/history-page.js"
 import HomePage from "./components/home-page.js"
 import UserPage from "./components/other-persons-page/other-persons-page.js"
-import {IndexRoute, Route, Router, browserHistory} from 'react-router';
-import RecycleBin from './components/admin/RecycleBin/RecycleBin.js';
+import {IndexRoute, Route, Router, browserHistory} from 'react-router'
 import ObjectiveView from "./components/objectiveView/objectiveView.js"
 import OKRmanagingList from "./components/admin/OKRmanaging/OKRmanagingList.js"
+import RecycleBin from './components/admin/RecycleBin/RecycleBin.js'
+import DeletedTmpls from './components/admin/RecycleBin/DeletedTmpls.js'
+import DeletedPlans from './components/admin/RecycleBin/DeletedPlans.js'
+
+import DevTools from './shared/devtools/DevTools';
 
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
@@ -20,22 +24,26 @@ import reducer from './reducers/commonReducer'
 const middleware = [ thunk ]
 
 const store = createStore(
-  reducer,
-  applyMiddleware(...middleware)
+	reducer,
+	applyMiddleware(...middleware),
+	DevTools.instrument()
 )
 
 render(
-    (<Provider store={store}>
-      <Router history={browserHistory}>
-        <Route path="/" component={App}>
-    			<IndexRoute component={HomePage} />
-    			<Route path="users" component={UserPage} />
-            <Route path="history" component={History} />
-    			<Route path="recycle-bin" component={RecycleBin}/>
-    			<Route path="objective" component={ObjectiveView}/>
-          <Route path="okr-managing" component={OKRmanagingList}/>
-        </Route>
-      </Router>
-    </Provider>)
-    , document.getElementById('root')
+		(<Provider store={store}>
+			<Router history={browserHistory}>
+				<Route path="/" component={App}>
+					<IndexRoute component={HomePage} />
+					<Route path="users" component={UserPage} />
+					<Route path="history" component={History} />
+					<Route path="objective" component={ObjectiveView} />
+					<Route path="okr-managing" component={OKRmanagingList} />
+					<Route path="recycle-bin" component={RecycleBin}>
+						<Route path="/deleted-tmpls" component={DeletedTmpls} />
+						<Route path="/deleted-plans" component={DeletedPlans} />
+					</Route>
+				</Route>
+			</Router>
+		</Provider>)
+		, document.getElementById('root')
 )

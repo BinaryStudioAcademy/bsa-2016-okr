@@ -42,6 +42,8 @@ function randomObjective(users, i) {
 	return new Objective({
 		createdBy: getRandomId(users),
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
+		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
+		keys: [],
 		cheers: [
 			getRandomId(users),
 			getRandomId(users)

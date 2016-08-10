@@ -17,7 +17,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-const routes = require('./backend/routes/api/routes')(app);
+const routes = require('./backend/routes/routes')(app);
 
 if (isDeveloping) {
   const compiler = webpack(config);
