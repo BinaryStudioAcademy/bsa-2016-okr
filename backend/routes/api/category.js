@@ -17,20 +17,16 @@ router.post('/', adminOnly, (req, res, next) => {
 	console.log("Category rest POST hit");
 	console.log(req.body);
 	var title = req.body.title.trim();
-
 	if(ValidateService.isEmpty(title)){
 	return res.badRequest();
 	}
-
-//	if(title != undefined && title.length > 0) {
-//		console.log(title);
 
 		var data = {
 			title: title,
 			isDeleted: false
 		}
 
-		categoryService.add(data, res.callback);
+		categoryService.add(req.session._id, data, res.callback);
 /*		// the response is empty now
 	}else {
 		/// this doesn't work
@@ -41,7 +37,6 @@ router.post('/', adminOnly, (req, res, next) => {
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
-		//TODO add title verefication
 		var title = req.body.title.trim();
 
 		if(ValidateService.isEmpty(title)){
@@ -52,8 +47,17 @@ router.put('/:id', adminOnly, (req, res, next) => {
 
 router.delete('/:id', adminOnly, (req, res, next) => {
 		//for now soft delete only
-	repository.update(req.params.id, {isDeleted: 1}, res.callback);
-	//repository.delete(req.params.id, res.callback);
+		if(!ValidateService.isCorrectId(req.params.id)){
+		return res.badRequest();
+		}
+
+		var data = {
+			userId: req.session._id,
+			categoryId: req.params.id,
+			delete: {isDeleted: 1}
+		}
+
+	categoryService.delete(data, res.callback);
 });
 
 module.exports = router;

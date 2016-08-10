@@ -7,6 +7,7 @@ var historySchema = new Schema({
 	objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
 	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	planId: {type: mongoose.Schema.Types.ObjectId, ref: 'Plan'},
+	categoryId: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
 	type: String
 }, {
     timestamps: true
