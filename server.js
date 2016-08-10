@@ -49,9 +49,11 @@ if (isDeveloping) {
   });
 }
 
-app.listen(port, '127.0.0.1', function onStart(err) {
+var server = app.listen(port, '127.0.0.1', function onStart(err) {
   if (err) {
     console.log(err);
   }
   console.info('==> Listening on port %s. Open up http://127.0.0.1:%s/ in your browser.', port, port);
 });
+
+module.exports = server;
