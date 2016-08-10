@@ -12,7 +12,7 @@ class RecycleBin extends Component {
 		return (
 		<div id="recycle-bin">
 			<div id="recycle-bin-header">
-				<h2>Recycle bin 2</h2>
+				<h2>Recycle</h2>
 				<Link to="deleted-tmpls">Templates</Link>
 				<Link to="deleted-plans">Plans</Link>
 			</div>

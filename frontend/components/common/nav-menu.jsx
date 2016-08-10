@@ -50,9 +50,12 @@ class NavMenu extends React.Component {
 								History
 							</Link>
 						</li>
-						<Link to="recycle-bin">
-							Recycle Bin
-						</Link>
+						<li>
+							<Link to="/recycle-bin">
+								<i className="fa fa-recycle fa-2x" aria-hidden="true"></i>
+								Recycle Bin
+							</Link>
+						</li>
 					</ul>
 				</nav>
 			</aside>
