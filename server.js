@@ -44,7 +44,6 @@ if (isDeveloping) {
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('*', function response(req, res) {
-    console.log(__dirname);
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
 }
