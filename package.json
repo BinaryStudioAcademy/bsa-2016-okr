@@ -31,11 +31,11 @@
   "dependencies": {
     "async": "^2.0.1",
     "babel-cli": "^6.4.0",
+    "bluebird": "^3.4.1",
     "express": "^4.14.0",
     "lodash": "^4.14.1",
     "mongoose": "^4.1.10",
     "normalize.css": "^4.2.0",
-    "lodash": "^4.14.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.4.5",

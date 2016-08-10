@@ -9,4 +9,18 @@ var HistoryRepository = function(){
 
 HistoryRepository.prototype = new Repository();
 
+HistoryRepository.prototype.addKeyEvent = function(authorId, keyId, type, callback) {
+	let model = this.model;
+	let date = Date.now();
+	let newEvent = new model({authorId, keyId, type, date});
+	newEvent.save(callback);
+};
+
+HistoryRepository.prototype.addObjectiveEvent = function(authorId, objectiveId, type, callback) {
+	let model = this.model;
+	let date = Date.now();
+	let newEvent = new model({authorId, objectiveId, type, date});
+	newEvent.save(callback);
+};
+
 module.exports = new HistoryRepository();

@@ -1,6 +1,27 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
 
-.myDiv {
-	background: yellow;
-	text-align: center;
-	color: red;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+.clearfix:after {
+  content: '';
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+aside,
+#central-window {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
 }

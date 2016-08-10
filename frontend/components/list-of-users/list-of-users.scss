@@ -40,7 +40,6 @@
 	list-style: none;
 	padding: 0;
 	margin: 0;
-    letter-spacing: 1px;
     word-spacing: 2px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -55,9 +54,7 @@
 			top: 35%;
 			width: 80%;
 			padding-bottom: 22px;
-			font-size: 16px;
-			font-weight: 700;
-		    border-bottom: 1px solid $border-color;
+			border-bottom: 1px solid $border-color;
 		}
 
 		img{
@@ -70,7 +67,7 @@
 	.userItem:hover{
 		cursor: pointer;
 		color: #fff;
-		background-color: $navbar-color;
+		background-color: #99bce0;
 	}
 
 	.userItem:last-child div{

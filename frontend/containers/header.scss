@@ -52,14 +52,14 @@ header {
 #bars:active {
    outline: none;
 }
-#bars i.fa {
+#bars i {
    color: #dddddd;
    cursor: pointer;
    pointer-events: none;
 }
-#bars:hover i.fa {
+#bars:hover i {
    color: #ffffff;
 }
-#bars.active i.fa {
+#bars.active i {
    color: #ffffff;
 }
