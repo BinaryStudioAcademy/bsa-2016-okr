@@ -1,4 +1,4 @@
-import data from '../mockData/recycleBin.js';
+import data from '../mockData/objectives.js';
 import React, { Component } from 'react';
 import ObjectiveItem from './objective.jsx';
 
