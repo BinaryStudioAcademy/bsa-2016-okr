@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './keyResults.css';
 
-export default class KeyResults extends Component {
+class KeyResults extends Component {
   render() {
     return (
       <div className="keyResult">
@@ -12,3 +12,5 @@ export default class KeyResults extends Component {
     );
   }
 }
+
+export default KeyResults

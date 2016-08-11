@@ -5,6 +5,7 @@ import Quarter from './home-page-components/quarter.jsx';
 import UserObjectives from './home-page-components/objectives.jsx';
 import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
+import Dashboard from "./dashboard/dashboard.jsx";
 
 class Home extends React.Component {
    constructor() {
@@ -78,7 +79,9 @@ class Home extends React.Component {
                   <Quarter />
                   <UserObjectives />
                </CentralWindow>
-               <StatPanel></StatPanel>
+               <StatPanel>
+               <Dashboard></Dashboard>
+               </StatPanel>
          </div>
       )
    }

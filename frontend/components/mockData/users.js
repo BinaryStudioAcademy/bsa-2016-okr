@@ -7,7 +7,7 @@ let users = [
     {
         id: 1,
         name: 'Josh Peterson',
-        photo: 'https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'
+        photo: 'https://pp.vk.me/c626130/v626130341/22df6/nuKBZdXDShc.jpg'
     },
     {
         id: 2,

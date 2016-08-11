@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import binItems from '../../mockData/recycleBin'
+import DeletedPlansItem from './deletedPlansItem'
 
 class DeletedPlans extends Component {
 
@@ -8,10 +9,13 @@ class DeletedPlans extends Component {
 	}
 
 	render() {
+		console.log(binItems)
+		let items = binItems.plans.map((item) => {
+			return <DeletedPlansItem item={item} key={item.id} />
+		})
 		return (
 		<div className="deleted-items">
-			<h2>Deleted Plans</h2>
-
+			{ items }
 		</div>
 		);
 	}

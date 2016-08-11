@@ -2,8 +2,8 @@ let recycleBin = {
 	"templates": [
 	{
 		"id": "5791f8847ed517bc028e739a",
-		"title": "Learn Ruby",
-		"description": "Learn Ruby for fun",
+		"objTitle": "Learn Ruby",
+		"objDescription": "Learn Ruby for fun",
 		"category": "Knowledge",
 		"keyResults": [
 		{

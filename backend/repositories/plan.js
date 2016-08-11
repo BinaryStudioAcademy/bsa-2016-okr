@@ -11,7 +11,7 @@ PlanRepository.prototype = new Repository();
 
 PlanRepository.prototype.getByUserId = function(userId,callback) {
 	var model = this.model;
-	var query = model.findOne({'userId': userId})
+	var query = model.find({'userId': userId})
 	query.exec(callback);
 };
 
