@@ -1,7 +1,7 @@
 @import "../components/common/varaibles";
 
 #main{
-   position: fixed;
+   position: absolute;
    right: 0;
    left: $left-nav-width;
    top: $header-height;
