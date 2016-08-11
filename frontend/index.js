@@ -9,10 +9,9 @@ import UserPage from "./components/other-persons-page/other-persons-page.js"
 import {IndexRoute, Route, Router, browserHistory} from 'react-router'
 import ObjectiveView from "./components/objectiveView/objectiveView.js"
 import OKRmanagingList from "./components/admin/OKRmanaging/OKRmanagingList.js"
-import RecycleBin from './components/admin/RecycleBin/recycleBin.js'
-import DeletedTmpls from './components/admin/RecycleBin/deletedTmpls.js'
-import DeletedPlans from './components/admin/RecycleBin/deletedPlans.js'
-import DeletedTmplDetails from './components/admin/RecycleBin/deletedTmplDetails.js'
+import { RecycleBin } from './components/admin/RecycleBin/RecycleBin.js'
+import DeletedTmpls from './components/admin/RecycleBin/DeletedTmpls.js'
+import DeletedPlans from './components/admin/RecycleBin/DeletedPlans.js'
 
 import DevTools from './shared/devtools/DevTools';
 
