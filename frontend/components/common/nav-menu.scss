@@ -1,7 +1,7 @@
 @import "varaibles";
 
 aside#navbar {
-   position: absolute;
+   position: fixed;
    top: $header-height;
    left: 0;
    bottom: 0;

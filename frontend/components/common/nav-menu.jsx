@@ -76,27 +76,35 @@ function ShowUsersList() {
 function links_feedback(event) {
 	var   target = event.target,
 			links = document.querySelectorAll('#navbar a'),
-			nav = document.getElementById('navbar');
+			nav = document.getElementById('navbar'),
+			newObjButton = document.getElementById('new-obj-btn'),
+			newObjWindow = document.getElementById('new-objective');
 
    if (target.matches('#navbar #new-obj-btn')) {
-      if (!isActive(target)) {
-         switch_link_state(target, 'active');
+
+		if (!isActive(target)) {
+         switch_state(target, 'active');
          if (isOpen(nav)) close_nav();
+			switch_state(newObjWindow, 'open');
       } else {
-         switch_link_state(target, 'disactive');
-         console.log('disactive');
+         switch_state(target, 'disactive');
          if (isOpen(nav)) close_nav();
+			switch_state(newObjWindow, 'close');
       }
    } else if(target.matches('#navbar a')){
-      if(!isActive(target)){
+
+		if(!isActive(target)){
          disactiveAll(links);
-         switch_link_state(target, 'active');
+         switch_state(target, 'active');
          if(isOpen(nav)) close_nav();
-      } else {
-         if (isOpen(nav)) close_nav();
+			if(isOpen(newObjWindow)){
+				switch_state(newObjButton, 'disactive');
+				switch_state(newObjWindow, 'close');
+			}
       }
    } else if(target.matches('#navbar #users-link')){
-      if(isOpen(nav)) close_nav();
+
+		if(isOpen(nav)) close_nav();
    }
 }
 function disactiveAll(target) {
@@ -110,7 +118,7 @@ function isActive(target) {
 function isOpen(target) {
 	return target.classList.contains('opened');
 }
-function switch_link_state(target, action) {
+function switch_state(target, action) {
 	if (action === 'active'){
 		target.classList.add('active');
 	} else if (action === 'disactive') {
@@ -125,7 +133,7 @@ function close_nav() {
 	var   nav = document.getElementById('navbar'),
 			menu_bars = document.getElementById('bars');
 
-	switch_link_state(nav, 'close');
-	switch_link_state(menu_bars, 'disactive');
+	switch_state(nav, 'close');
+	switch_state(menu_bars, 'disactive');
 }
 

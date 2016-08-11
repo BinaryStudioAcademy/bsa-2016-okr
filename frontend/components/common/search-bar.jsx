@@ -36,13 +36,13 @@ class Search extends React.Component {
                </div>
                <div id="filters">
                   <section>
-                     <label for="filter-key-results">
+                     <label htmlFor="filter-key-results">
                         <input type="checkbox" id="filter-key-results"/>
                         key results</label>
-                     <label for="filter-following">
+                     <label htmlFor="filter-following">
                         <input type="checkbox" id="filter-following"/>
                         following</label>
-                     <label for="filter-period">
+                     <label htmlFor="filter-period">
                         Period:&nbsp;&nbsp;
                         <select id="filter-period">
                            <option value="present">Present</option>
@@ -52,13 +52,13 @@ class Search extends React.Component {
                      </label>
                   </section>
                   <section>
-                     <label for="filter-assessment">
+                     <label htmlFor="filter-assessment">
                         <input type="checkbox" id="filter-assessment"/>
                         has assessment</label>
-                     <label for="filter-achived">
+                     <label htmlFor="filter-achived">
                         <input type="checkbox" id="filter-achived"/>
                         achived</label>
-                     <label for="filter-category">
+                     <label htmlFor="filter-category">
                         Category:&nbsp;&nbsp;
                         <select id="filter-category">
                            <option value="projects">Projects</option>
