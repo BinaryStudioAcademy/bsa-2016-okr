@@ -11,6 +11,7 @@ import OKRmanagingList from "./components/admin/OKRmanaging/OKRmanagingList.js"
 import RecycleBin from './components/admin/RecycleBin/recycleBin.js'
 import DeletedTmpls from './components/admin/RecycleBin/deletedTmpls.js'
 import DeletedPlans from './components/admin/RecycleBin/deletedPlans.js'
+import DeletedTmplDetails from './components/admin/RecycleBin/deletedTmplDetails.js'
 
 import DevTools from './shared/devtools/DevTools';
 
@@ -40,6 +41,7 @@ render(
 					<Route path="okr-managing" component={OKRmanagingList} />
 					<Route path="recycle-bin" component={RecycleBin}>
 						<Route path="/deleted-tmpls" component={DeletedTmpls} />
+						<Route path="/deleted-tmpls/:id" component={DeletedTmplDetails} />
 						<Route path="/deleted-plans" component={DeletedPlans} />
 					</Route>
 				</Route>
