@@ -3,10 +3,16 @@ import ListOfUsers from '../list-of-users/list-of-users.js';
 import StatPanel from '../../containers/statistic-panel.jsx';
 import CentralWindow from "../../containers/central-window.jsx";
 import HistoryItem from './history-item'
+import HistoryItemList from './history-item-list'
 import HistoryQurterBar from './history-quarter-bar'
 import HistorySearch from './history-search'
 import './history-page.scss'
 import historyMock from '../mockData/historyPageMock'
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+
+import * as actions from "../../actions/actions";
 
 class HistoryPage extends React.Component {
 
@@ -77,13 +83,15 @@ class HistoryPage extends React.Component {
 								<HistorySearch/>
 							</div>
 						</div>
-						<HistoryQurterBar/>
 					</div>
-					<div className="history-items-list">
+					<HistoryItemList historyItems={this.state.items}/>
+					{
+						//console.log(this.state.items)
+					/*<div className="history-items-list">
 						{this.state.items.map((item, i) => {
 							return(<HistoryItem key={item.id} item={item}/>)
 						})}
-					</div>
+					</div>*/}
 				</div>
 				</CentralWindow>
 				<StatPanel/>
