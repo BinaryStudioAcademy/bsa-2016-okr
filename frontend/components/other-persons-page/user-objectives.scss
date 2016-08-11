@@ -5,6 +5,7 @@
 	padding: 5px 15px;
 	border: 1px solid #99bce0;
 	border-left: 10px solid $navbar-color;
+	min-height: 100px;
 
 	.name{
 		display: inline-block;
@@ -53,13 +54,19 @@
 			.completed{
 				text-decoration: line-through;
 			}
-		}
-	}
+		} 
+	} 
 	.progress-bar{
 		float: right;
 		padding-top: 10px;
 		width: 30%;
+		position: relative;
 
+		.progressValue {
+			position: absolute;
+			top: 28%;
+			left: 45%;
+		}
 		progress[value]{
 			width: 100%;
 			-webkit-appearance: none;

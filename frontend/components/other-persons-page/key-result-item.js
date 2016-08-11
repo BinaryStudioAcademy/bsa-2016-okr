@@ -5,7 +5,6 @@ class KeyResult extends Component {
 		super(props);
 
 	}
-	
 	render() {
 	if (this.props.item.completed == 'true')
 		return (

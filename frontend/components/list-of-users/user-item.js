@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 class UserItem extends Component {
 	handleUser() {
 		this.props.takeUser(this.props.id);
-		ShowUsersList();
+		ShowUsersList(this.props.id);
 	}
 	render() {
 		return (

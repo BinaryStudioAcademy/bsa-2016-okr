@@ -1,0 +1,235 @@
+@import "../common/varaibles";
+
+.clearfix:after{
+  content: '';
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+
+#new-objective{
+  position: fixed;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 30px 0;
+  top: $header-height;
+  left: $left-nav-width;
+  right: 0;
+  bottom: 0;
+  margin-right: $right-stat-panel-witdh;
+  background: $add-new-obj-bg-color;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: $new-obj-index;
+  display: none;
+  &.opened{
+    display: block;
+  }
+
+  &:after{
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 0;
+    height: 0;
+    width: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid $primary-color-light;
+  }
+
+  form{
+    display: block;
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  input[type=text],
+  select,
+  textarea{
+    border: 1px solid #d3d3d3;
+    color: #777777;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    &:focus{
+      outline: none;
+      -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+      -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+      box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+    }
+  }
+}
+
+/*** Section for Objective Credentials ***/
+
+section#new-obj-creds{
+  margin-bottom: 30px;
+  label{
+    display: block;
+    width: 100%;
+    font-family: $primary-font;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  /*
+  ** Description textarea
+  */
+  textarea{
+    display: block;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    font-family: $primary-font;
+    min-height: 120px;
+    max-height: 160px;
+  }
+
+  .title-group{
+    float: left;
+  }
+  .category-group{
+    float: right;
+  }
+
+  /*
+  ** Title input
+  */
+  input#new-obj-title{
+    display: block;
+    padding: 10px;
+    width: 530px;
+    margin-bottom: 10px;
+  }
+
+  /*
+  ** Category input
+  */
+  select#new-obj-category{
+    display: block;
+    padding: 9px;
+  }
+}
+/*** Section for Key Results ***/
+
+section#new-obj-keyresults{
+  margin-bottom: 25px;
+  .keyresult-group{
+    margin-bottom: 15px;
+  }
+  input[type=text]{
+    padding: 8px;
+    width: 520px;
+  }
+  p{
+    margin: 0;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  a#add-new-keyresult-btn{
+    display: inline-block;
+    cursor: pointer;
+    color: #2ecc71;
+    &:hover{
+      color: #27ae60;
+      text-decoration: underline;
+    }
+  }
+
+  /*
+  ** Styling Range input
+  */
+  input[type=range]{
+    -webkit-appearance: none;
+    background: none;
+    float: right;
+    width: 130px;
+    margin: 15px 0;
+    /* tracker */
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    height: 7px;
+    border: 1px solid #bdc3c7;
+    background: #ffffff;
+    &::-moz-range-track{
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      height: 7px;
+      border: 1px solid #bdc3c7;
+      background: #ffffff;
+    }
+    /* tracker thumb */
+    &::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      background-color: #ecf0f1;
+      border: 1px solid #bdc3c7;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    &::-moz-range-thumb{
+      -webkit-appearance: none;
+      background-color: #ecf0f1;
+      border: 1px solid #bdc3c7;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    /* when focus */
+    &:active{
+      &::-webkit-slider-thumb{
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+      }
+      &::-moz-range-thumb{
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+      }
+    }
+
+  }
+}
+
+/*** Section for Submit Objective ***/
+
+section#new-obj-submit{
+  button#new-obj-submit-btn{
+    background: #4CAF50;
+    padding: 10px 20px;
+    margin-right: 10px;
+    color: #fffde8;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+    &:focus{
+      outline: none;
+      border: none;
+    }
+    &:hover{
+      -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+      -moz-box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+    }
+  }
+  input#obj-to-clone{
+    padding: 10px;
+    margin-left: 10px;
+    width: 200px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    &:focus{
+      width: 400px;
+    }
+  }
+}

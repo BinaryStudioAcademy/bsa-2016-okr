@@ -1,7 +1,9 @@
+@import "../components/common/varaibles";
+
 #main{
-   position: absolute;
+   position: fixed;
    right: 0;
-   left: 60px;
-   top: 70px;
+   left: $left-nav-width;
+   top: $header-height;
    bottom: 0;
 }

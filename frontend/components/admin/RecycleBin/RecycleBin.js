@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import './style.scss'
+import React, { Component } from 'react'
+import TabLink from './tabLink.js'
+import './recycleBin.scss'
 
 class RecycleBin extends Component {
 
@@ -10,11 +10,13 @@ class RecycleBin extends Component {
 
 	render() {
 		return (
-		<div id="recycle-bin">
-			<div id="recycle-bin-header">
-				<h2>Recycle bin 2</h2>
-				<Link to="deleted-tmpls">Templates</Link>
-				<Link to="deleted-plans">Plans</Link>
+		<div className="recycle-page">
+			<div className="header">
+				<h2 className="title">Recycle</h2>
+				<div className="recycle-tabs">
+					<TabLink to="deleted-tmpls">Templates</TabLink>
+					<TabLink to="deleted-plans">Plans</TabLink>
+				</div>
 			</div>
 			<div id="recycle-bin-container">
 				{this.props.children}

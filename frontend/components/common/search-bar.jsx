@@ -35,14 +35,14 @@ class Search extends React.Component {
                   </button>
                </div>
                <div id="filters">
-                  <div>
-                     <label for="filter-key-results">
+                  <section>
+                     <label htmlFor="filter-key-results">
                         <input type="checkbox" id="filter-key-results"/>
                         key results</label>
-                     <label for="filter-following">
+                     <label htmlFor="filter-following">
                         <input type="checkbox" id="filter-following"/>
                         following</label>
-                     <label for="filter-period">
+                     <label htmlFor="filter-period">
                         Period:&nbsp;&nbsp;
                         <select id="filter-period">
                            <option value="present">Present</option>
@@ -50,15 +50,15 @@ class Search extends React.Component {
                            <option value="past">Past</option>
                         </select>
                      </label>
-                  </div>
-                  <div>
-                     <label for="filter-assessment">
+                  </section>
+                  <section>
+                     <label htmlFor="filter-assessment">
                         <input type="checkbox" id="filter-assessment"/>
                         has assessment</label>
-                     <label for="filter-achived">
+                     <label htmlFor="filter-achived">
                         <input type="checkbox" id="filter-achived"/>
                         achived</label>
-                     <label for="filter-category">
+                     <label htmlFor="filter-category">
                         Category:&nbsp;&nbsp;
                         <select id="filter-category">
                            <option value="projects">Projects</option>
@@ -66,7 +66,7 @@ class Search extends React.Component {
                            <option value="knowledge">Knowledge</option>
                         </select>
                      </label>
-                  </div>
+                  </section>
                </div>
                <ul className="search-result">
                   <li className="search-result-item">

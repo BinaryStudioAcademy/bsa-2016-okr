@@ -1,9 +1,11 @@
+@import "../components/common/varaibles";
+
 aside#inter-panel {
    position: absolute;
    top: 0;
    right: 0;
    bottom: 0;
-   width: 350px;
+   width: $right-stat-panel-witdh;
    background-color: #ddd;
    overflow-y: auto;
    overflow-x: hidden;
