@@ -29,6 +29,12 @@ Repository.prototype.getById = function(id, callback){
 	query.exec(callback);
 };
 
+Repository.prototype.getFieldsById = function(id, fields, callback){
+	var model = this.model;
+	var query = model.findOne({_id:id}, fields);
+	query.exec(callback);
+};
+
 Repository.prototype.getAllNotDeleted = function(callback) {
 	var model = this.model;
 	var query = model.find({'isDeleted': 'false'});
@@ -60,7 +66,7 @@ Repository.prototype.setToNotDeleted = function(id, callback) {
 };
 
 Repository.prototype.getCount= function() {
-	
+
 	var model = this.model;
 
 	model.count( {}, function( err, count) {

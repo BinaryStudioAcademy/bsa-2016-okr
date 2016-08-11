@@ -9,7 +9,9 @@ var historySchema = new Schema({
 	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	planId: {type: mongoose.Schema.Types.ObjectId, ref: 'Plan'},
 	categoryId: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
-	type: String
+	type: String,
+	updateFrom: {},
+	updateTo: {}
 }, {
     timestamps: true
 });

@@ -27,13 +27,6 @@ router.post('/', adminOnly, (req, res, next) => {
 		}
 
 		categoryService.add(req.session._id, data, res.callback);
-/*		// the response is empty now
-	}else {
-		/// this doesn't work
-		var err = new Error('Title must be set');
-		return dbCallback(err);
-	}
-*/
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
@@ -42,7 +35,14 @@ router.put('/:id', adminOnly, (req, res, next) => {
 		if(ValidateService.isEmpty(title)){
 		return res.badRequest();
 		}
-	repository.update(req.params.id, req.body, res.callback);
+
+		var data = {
+			userId: req.session._id,
+			categoryId: req.params.id,
+			body: {title: req.body.title}
+		}
+
+	categoryService.update(data, res.callback);
 });
 
 router.delete('/:id', adminOnly, (req, res, next) => {

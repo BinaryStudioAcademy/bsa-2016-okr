@@ -4,44 +4,6 @@ var CategoryRepository = require('../repositories/category'),
   async = require('async');
 
 var CategoryService = function() {};
-/*
-CategoryService.prototype.add = function(title, callback){
-  /*
-  console.log("CategoryService hit");
-  CategoryRepository.add(title, function(err, data){
-    if (err){
-      return callback(err, null);
-    };
-    console.log("CategoryRepository hit");
-    callback(err, null);
-  });
- console.log("check history");
- console.log(title);
-  HistoryRepository.add(title, function(err, data){
-    if (err){
-      return callback(err, null);
-    };
-    console.log("CategoryRepository hit");
-    callback(err, null);
-  });
-*/
-/*
- 	async.waterfall([
- 		addCategory,
- 		addEventToHistory,
- 	], (err, result) => {
- 		callback(err);
- 	});
-*/
-
-//  CategoryRepository.add(title, callback);
-//    var history = {
-//      type: "added new category",
-//    }
-  //HistoryRepository.add(history, callback);
-
-//};
-
 //Done
 CategoryService.prototype.add = function (userId, data, callback) {
 	 async.waterfall([
@@ -81,6 +43,41 @@ CategoryService.prototype.delete = function (data, callback) {
         authorId: ObjectId(data.userId),
         categoryId: ObjectId(data.categoryId),
         type: "soft delete Category"
+      }
+      HistoryRepository.add(body, callback);
+    },
+	], (err, result) => {
+		return callback(err, result);
+	});
+}
+//Done
+CategoryService.prototype.update = function (data, callback) {
+	 async.waterfall([
+		(callback) => {
+      var fields = Object.assign({}, data.body);
+      fields._id = 0;
+      CategoryRepository.getFieldsById(data.categoryId, fields, (err, original) => {
+        if(err){
+          return  callback(err, null);
+        };
+        return callback(null, original);
+      });
+    },
+    (original, callback) =>{
+			CategoryRepository.update(data.categoryId, data.body, (err, result) => {
+				if(err){
+					return  callback(err, null);
+				};
+				return callback(null, result, original);
+			});
+		},
+		(result, original, callback) =>{
+      var body = {
+        authorId: ObjectId(data.userId),
+        categoryId: ObjectId(data.categoryId),
+        type: "update Category",
+        updateFrom: original,
+        updateTo: data.body
       }
       HistoryRepository.add(body, callback);
     },
