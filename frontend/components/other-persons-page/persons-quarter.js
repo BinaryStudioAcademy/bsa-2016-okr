@@ -6,11 +6,15 @@ constructor() {
       this.hendleClick = this.hendleClick.bind(this);
    }
    hendleClick(e){
+      e.preventDefault();
       var li = document.getElementsByClassName('quater');
       for (var i=0; i<4; i++) {
          li[i].classList.remove('active');
+         if ( li[i] == e.target)
+            var currentTab = i;
       }
       e.target.classList.add('active');
+      this.props.changeTab(++currentTab);
    }
    
    render() {
