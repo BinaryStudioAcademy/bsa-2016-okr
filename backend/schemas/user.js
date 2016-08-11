@@ -9,11 +9,11 @@ var userSchema = new Schema({
 	objectives: [{
 		description: String,
 		objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'},
-		keys: [{keyId: {type: Schema.Types.ObjectId, ref: 'KeyResult'},
+		keys: [{keyId: {type: Schema.Types.ObjectId, ref: 'Key'},
 				score: Number,
 		}],
 		category: {type: Schema.Types.ObjectId, ref: 'Category'},
-		score: Number,
+		isDeleted: Boolean,
 		isArchived: Boolean,
 		feedback: String
 	}],

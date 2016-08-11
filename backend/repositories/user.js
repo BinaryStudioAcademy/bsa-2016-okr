@@ -9,4 +9,14 @@ var UserRepository = function(){
 
 UserRepository.prototype = new Repository();
 
+UserRepository.prototype.getById = function(id, callback) {
+	User
+		.findOne({ _id: id })
+		.populate('objectives.objectiveId')
+		.populate('objectives.keys.keyId')
+		.exec((err, user) => {
+			return callback(err, user);
+		});
+}
+
 module.exports = new UserRepository();

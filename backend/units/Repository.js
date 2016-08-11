@@ -7,7 +7,8 @@ Repository.prototype.add = function(data, callback){
 };
 
 Repository.prototype.update = function(id, body, callback){
-	var query = this.model.update({_id:id}, body);
+	var model = this.model;
+	var query = model.update({_id:id}, body);
 	query.exec(callback);
 };
 

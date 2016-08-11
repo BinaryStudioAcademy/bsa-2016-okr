@@ -63,6 +63,27 @@ router.post('/me/', (req, res, next) => {
 	var title = req.body.title || '';
 	var description = req.body.description || '';
 	var keys = req.body.keys || [];
+	var assignedTo = req.body.assignedTo;
+	var isApproved = false;
+
+	// Validate assignedTo param
+	// Should be correct ObjectId of user
+	if(!assignedTo) {
+		assignedTo = req.session._id;
+	} else {
+		if(!ValidateService.isCorrectId(assignedTo)) {
+			return res.badRequest();
+		}
+
+		// If assignedTo is correct ObjectId,
+		// but it doesn't equal to current userId
+		// then check current user to be a mentor for assinedTo or admin
+		if(assignedTo !== req.session._id 
+			&& ( !userMentorRepository.checkUserMentor(assignedTo, req.session._id) || !req.session.isAdmin) ) 
+		{
+			return res.forbidden();
+		}
+	}
 
 	var isKeysInvalid = keys.some((key) => {
 		return !ValidateService.isObject(key)
@@ -79,6 +100,10 @@ router.post('/me/', (req, res, next) => {
 		return res.badRequest();
 	}
 
+	if(req.session.isAdmin) {
+		isApproved = true;
+	}
+
 	var objective = {
 		createdBy: req.session._id,
 		title: title,
@@ -86,8 +111,8 @@ router.post('/me/', (req, res, next) => {
 		keys: [],
 		cheers: [],
 		views: [],
-		forks: 0,
-		isApproved: false,
+		forks: 1,
+		isApproved: isApproved,
 		isDeleted: false
 	}
 
@@ -95,15 +120,15 @@ router.post('/me/', (req, res, next) => {
 		var key = {
 			title: item.title,
 			difficulty: item.difficulty,
-			forks: 0,
-			isApproved: false,
+			forks: 1,
+			isApproved: isApproved,
 			isDeleted: false
 		};
 
 		return key;
 	});
 
-	return service.addToMe(objective, keys, res.callback);
+	return service.addToUser(objective, keys, assignedTo, res.callback);
 });
 
 router.post('/user/:id', (req, res, next) => {

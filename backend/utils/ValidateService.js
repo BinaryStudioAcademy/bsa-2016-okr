@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
 	isCorrectId: isCorrectId,
@@ -10,10 +11,11 @@ module.exports = {
 
 function isCorrectId(id) {
 	var id = '' + id;
+	var regex = /^[a-fA-F0-9]{24}$/;
 
 	id = id.trim();
 	
-	if(!id || !mongoose.Types.ObjectId.isValid(id)) {
+	if(!id || !regex.test(id)) {
 		return false;
 	}
 
