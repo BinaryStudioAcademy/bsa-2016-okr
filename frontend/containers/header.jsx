@@ -25,7 +25,6 @@ export default class Header extends React.Component{
             <button id="bars" onClick={this.bars_handle_click.bind(this)}>
                <i className="fa fa-bars fa-lg" aria-hidden="true"></i>
             </button>
-            <a id="roles-link" href="/roles">Role mapping</a>
             <div className="user-info clearfix">
                <div className="logo">
                   <img src="http://www.appresume.com/cv_templates/cv_2_1/conf/images/profile.jpg" alt="" />

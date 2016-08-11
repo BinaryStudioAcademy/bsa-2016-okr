@@ -4,7 +4,7 @@ import './tabLink.scss'
 
 class TabLink extends Component{
 	render() {
-		return <Link {...this.props} activeClassName="active" className="recycle-tab"/>
+		return <Link {...this.props} activeClassName="active-tab" className="recycle-tab"/>
 	}
 }
 

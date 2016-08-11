@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import binItems from '../../mockData/data_for_recycle_bin'
 import DeletedTmplsItem from './deletedTmplsItem'
 
-class DeletedTmps extends Component {
+class DeletedTmpls extends Component {
 
 	constructor(props) {
 		super(props);
@@ -20,4 +20,4 @@ class DeletedTmps extends Component {
 	}
 }
 
-export default DeletedTmps
+export default DeletedTmpls
