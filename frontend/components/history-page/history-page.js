@@ -6,6 +6,8 @@ import HistoryItem from './history-item'
 import HistoryItemList from './history-item-list'
 import HistoryQurterBar from './history-quarter-bar'
 import HistorySearch from './history-search'
+import HistoryFilter from './history-filter'
+import HistorySort from './history-sort'
 import './history-page.scss'
 import historyMock from '../mockData/historyPageMock'
 
@@ -76,22 +78,25 @@ class HistoryPage extends React.Component {
 				<div className="history-page">
 					<div id="top-panel">
 						<div className="history-page-header">
-							<div className="history-page-title">
-								History
+							<div className="history-page-header-row">
+								<div className="history-page-title">
+									History
+								</div>
+								<div className="history-search-bar-container">
+									<HistorySearch/>
+								</div>
 							</div>
-							<div className="history-search-bar-container">
-								<HistorySearch/>
+							<div className="history-page-header-row">
+								<div className="history-filter-bar-container">
+									<HistoryFilter/>
+								</div>
+								<div className="history-sort-bar-container">
+									<HistorySort/>
+								</div>
 							</div>
 						</div>
 					</div>
 					<HistoryItemList historyItems={this.state.items}/>
-					{
-						//console.log(this.state.items)
-					/*<div className="history-items-list">
-						{this.state.items.map((item, i) => {
-							return(<HistoryItem key={item.id} item={item}/>)
-						})}
-					</div>*/}
 				</div>
 				</CentralWindow>
 				<StatPanel/>

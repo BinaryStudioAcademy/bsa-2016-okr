@@ -18,7 +18,7 @@
   width: 100%;
   box-sizing: border-box;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0 5%;
 }
 
@@ -26,7 +26,6 @@
   width: 30%;
   display: flex;
   justify-content: center;
-  padding:12px;
   font-size: 28px;
   font-weight: bold;
 }
@@ -40,4 +39,11 @@
 .history-items-list {
   height: 100%;
   overflow-y: auto;
+}
+
+.history-page-header-row {
+  width: 100%;
+  padding: 12px 0 12px 0;
+  display: flex;
+  flex-direction: row;
 }

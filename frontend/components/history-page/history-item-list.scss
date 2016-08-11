@@ -20,6 +20,29 @@
 
 	td {
 		border: 1px solid #000;
+		vertical-align: center;
+	}
+
+	.actionCreate {
+		color: green;
+	}
+
+	.actionUpdate {
+		color: orange;
+	}
+
+	.actionDelete {
+		color: red;
+	}
+
+	.actionDefault {
+		color: #000;
+	}
+
+	.history-item-user-avatar {
+		height: auto;
+		width: 18px;
+		border-radius: 50%;
 	}
 	
 }

@@ -13,15 +13,6 @@ class HistoryItem extends React.Component {
     render() {
 
         return(
-            <tr>
-                <td>Hello</td>
-                <td>Hello</td>
-                <td>Hello</td>
-                <td>Hello</td>
-            </tr>
-        )
-
-        /*return(
             <div className="history-item">
                 <div className="history-item-user-avatar-container">
                     <img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/>
@@ -40,7 +31,7 @@ class HistoryItem extends React.Component {
                     </div>
                 </div>
             </div>
-        )*/
+        )
     }
 }
 

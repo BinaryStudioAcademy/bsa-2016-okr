@@ -6,9 +6,26 @@ class HistoryItemList extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log('history-item-list hello');
         this.state = {
             its: this.props.historyItems
+        }
+        this.getActionColor = this.getActionColor.bind(this);
+    }
+
+    getActionColor(actionType) {
+        switch(actionType) {
+            case 'create': 
+                return 'actionCreate'
+                break;
+            case 'update': 
+                return 'actionUpdate'
+                break;
+            case 'delete': 
+                return 'actionDelete'
+                break;
+            default: 
+                return 'actionDefault'
+                break;
         }
     }
 
@@ -19,21 +36,23 @@ class HistoryItemList extends React.Component {
             	<table>
             		<tr>
             			<th>User</th>
-            			<th>Type of action</th>
+            			<th>Action</th>
             			<th>Object</th>
             			<th>Created at</th>
             			<th>Updated at</th>
             		</tr>
 	                {
-	                	this.state.its.map(function(item, i) {
+	                	this.state.its.map((function(item, i) {
 	                		return(<tr id={i}>
-	                			<td>{item.authorId}</td>
-								<td>{item.type}</td>
-								<td>{item.typeId}</td>
+	                			<td>
+                                    <img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/> {item.authorId}
+                                </td>
+								<td className={this.getActionColor(item.type)}>{item.type}</td>
+								<td><a href="#">{item.typeId}</a></td>
 								<td>{item.createdAt}</td>
 								<td>{item.updatedAt}</td>
 								</tr>)
-	                	})
+	                	}).bind(this))
 					}
 				</table>	
             </div>
