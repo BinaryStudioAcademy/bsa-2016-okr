@@ -1,0 +1,120 @@
+#role-mapping-wrapper {
+	width: 100%;
+}
+
+#role-mapping-header-wrapper {
+    padding-top: 50px;
+	width: 100%;
+    display: flex;
+    justify-content: center;;
+	overflow: hidden;
+}
+
+#role-mapping-header-wrapper input {
+    border: none;
+	background-color: #F0F0F0;
+	border: 1px solid grey;
+    float: left;
+	width: 1100px;
+	height: 40px;
+	margin-top: 0;
+}
+
+#role-mapping-header-wrapper  button {
+    float: left;
+	width: 100px;
+	height: 100px;
+	background-color: #2c3e50;
+	height: 40px;
+	background-image: url("http://bigbangupdates.com/wp-content/themes/peach/img/search_icon.png");
+	background-repeat: no-repeat;
+    background-size: contain;
+    background-position-x: 30px;
+}
+
+#role-mapping-header-wrapper button:hover {
+   background-color: black;;
+}
+
+#role-mapping-content-wrapper {
+	width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    background-color: #F0F0F0;
+	margin-top: 50px;
+	width: 1200px;
+}
+
+#role-mapping-wrapper h3 {
+	height: 40px;
+	line-height: 40px;
+	display: inline;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#role-mapping-wrapper .first-column {
+	width: 10%;
+	margin-left: 1%;
+}
+
+#role-mapping-wrapper .second-column {
+	width: 15%;
+}
+
+#role-mapping-wrapper .third-column {
+	width: 15%;
+}
+
+#role-mapping-wrapper .fourth-column {
+	width: 19%;
+}
+
+#role-mapping-wrapper .fifth-column {
+	width: 20%;
+}
+
+#role-mapping-wrapper .sixth-column {
+	width: 20%;
+}
+
+.table-head {
+	height: 40px;
+	border-bottom: solid 1px grey;
+}
+
+.table-row {
+	height: 100px;
+	display: flex;
+	align-items: center;
+	border-bottom: solid 1px grey;
+}
+
+.table-row:hover {
+	background-color: lightgrey;
+}
+
+.table-row img {
+	width: 50px;
+	height: 50px;
+	background: url("https://avatars3.githubusercontent.com/u/19537599?v=3&s=140") 100% 100% no-repeat;
+	background-size: cover;
+}
+
+#role-mapping-wrapper h4 {
+	font-weight: normal;
+	float: left;
+}
+
+#role-mapping-wrapper .table-row .fifth-column {
+	width: 15%;
+	margin-right: 5%;
+}
+
+#role-mapping-wrapper .table-row .sixth-column {
+	width: 15%;
+}

@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const adminOnly = require('../adminOnly');
+const ValidateService = require('../../utils/ValidateService');
 const repository = require('../../repositories/category');
 const session = require('../../config/session');
 const categoryService = require('../../services/category');
@@ -11,19 +13,17 @@ router.get('/deleted', (req, res, next) => {
 	repository.getAllDeleted(res.callback);
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', adminOnly, (req, res, next) => {
 	console.log("Category rest POST hit");
-/*
-	if(!session.isAdmin) {
-		var err = new Error('You are not allowed to do this');
-		err.status = 403;
-		return dbCallback(err);
-	}
-	*/
 	console.log(req.body);
-	var title = req.body.title;
-	if(title != undefined && title.length > 0) {
-		console.log(title);
+	var title = req.body.title.trim();
+
+	if(ValidateService.isEmpty(title)){
+	return res.badRequest();
+	}
+
+//	if(title != undefined && title.length > 0) {
+//		console.log(title);
 
 		var data = {
 			title: title,
@@ -31,34 +31,26 @@ router.post('/', (req, res, next) => {
 		}
 
 		categoryService.add(data, res.callback);
-		// the response is empty now
+/*		// the response is empty now
 	}else {
 		/// this doesn't work
 		var err = new Error('Title must be set');
 		return dbCallback(err);
 	}
+*/
 });
 
-router.put('/:id', (req, res, next) => {
-	/*
-		if(!session.isAdmin) {
-			var err = new Error('You are not allowed to do this');
-			err.status = 403;
-			return dbCallback(err);
-		}
-		*/
+router.put('/:id', adminOnly, (req, res, next) => {
 		//TODO add title verefication
+		var title = req.body.title.trim();
+
+		if(ValidateService.isEmpty(title)){
+		return res.badRequest();
+		}
 	repository.update(req.params.id, req.body, res.callback);
 });
 
-router.delete('/:id', (req, res, next) => {
-	/*
-		if(!session.isAdmin) {
-			var err = new Error('You are not allowed to do this');
-			err.status = 403;
-			return dbCallback(err);
-		}
-		*/
+router.delete('/:id', adminOnly, (req, res, next) => {
 		//for now soft delete only
 	repository.update(req.params.id, {isDeleted: 1}, res.callback);
 	//repository.delete(req.params.id, res.callback);
