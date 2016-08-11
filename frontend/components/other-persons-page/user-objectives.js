@@ -31,7 +31,7 @@ class Objectives extends Component {
 		}
 		else if (this.state.currentTab == 3) {
 			var ObjectiveItems = this.props.data.map((item, index) => {
-				if (Date.parse(item.startDate) < '2016-09-30T10:42:12.643Z' && Date.parse(item.startDate) > '2016-06-30T10:42:12.643Z')
+				if (item.startDate < '2016-09-30T10:42:12.643Z' && item.startDate > '2016-06-30T10:42:12.643Z')
 				return <ObjectiveItem index={index} key={item.id} item={item} />
 			})	
 		}
@@ -41,6 +41,7 @@ class Objectives extends Component {
 				return <ObjectiveItem index={index} key={item.id} item={item} />
 			})	
 		}
+		
 		return (
 			<div>
 			 	<Quarter changeTab={this.changeTab.bind(this)} currentTab={this.state.currentTab}/>
@@ -52,6 +53,6 @@ class Objectives extends Component {
 	}
 }
 Objectives.defaultProps = {
-	data: data.templates
+	data: data
 }
 export default Objectives

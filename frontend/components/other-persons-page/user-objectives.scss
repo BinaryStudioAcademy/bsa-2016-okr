@@ -60,7 +60,13 @@
 		float: right;
 		padding-top: 10px;
 		width: 30%;
+		position: relative;
 
+		.progressValue {
+			position: absolute;
+			top: 28%;
+			left: 45%;
+		}
 		progress[value]{
 			width: 100%;
 			-webkit-appearance: none;
