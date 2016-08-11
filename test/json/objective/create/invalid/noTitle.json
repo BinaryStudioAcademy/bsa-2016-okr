@@ -1,0 +1,17 @@
+{
+	"description": "Shouldn't work at all. Will return 400", 
+	"keys": [
+		{
+			"title": "Node.js book", 
+			"difficulty": "low"
+		}, 
+		{
+			"title": "Node.js docs", 
+			"difficulty": "intermediate"
+		}, 
+		{
+			"title": "Node.js practice", 
+			"difficulty": "high"
+		}
+	]
+}

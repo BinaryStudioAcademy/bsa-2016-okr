@@ -3,11 +3,8 @@
 #topPanel {
   display: inline-block;
   width: 100%;
-  padding: 15px 30px;
+  padding: 15px 8%;
   box-sizing: border-box;
-
-  #searchPanel{
-    padding: 0 5%;
 
     .userInfo{
       position: relative;
@@ -34,7 +31,6 @@
         display: inline-block;
       }
     }
-  }
 }
 #quaterPanel{
   display:table;

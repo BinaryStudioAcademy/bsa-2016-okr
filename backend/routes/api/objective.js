@@ -20,14 +20,14 @@ router.post('/', adminOnly, (req, res, next) => {
 	var isKeysInvalid = keys.some((key) => {
 		return !ValidateService.isObject(key)
 		|| ValidateService.isEmpty(key.title)
-		|| ValidateService.isEmpty(key.difficulty) 
+		|| ValidateService.isEmpty(key.difficulty)
 		|| !ValidateService.isValidDifficulty(key.difficulty);
 	});
 
 	if( ValidateService.isEmpty(title)
 		|| ValidateService.isEmpty(description)
 		|| !ValidateService.isArray(keys)
-		|| isKeysInvalid) 
+		|| isKeysInvalid)
 	{
 		return res.badRequest();
 	}
@@ -95,9 +95,15 @@ router.get('/notApproved/', adminOnly, (req, res, next) => {
 
 // to clone template objective with keys to the user, id - objective id
 router.get('/clone/:id', (req, res, next) => {
-	console.log(req.params.id);
-	var obj = {};
-	cloneObjective.clone(req.params.id, obj, res.callback);
+	if(!ValidateService.isCorrectId(req.params.id)
+		|| !ValidateService.isCorrectId(req.session._id)){
+	return res.badRequest();
+	}
+	var data = {
+		objectiveId: req.params.id,
+		userId: req.session._id
+	}
+	cloneObjective.clone(data, res.callback);
 });
 
 // Done

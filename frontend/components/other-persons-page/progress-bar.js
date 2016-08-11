@@ -15,6 +15,7 @@ class Progress extends Component {
 		return (
 			<div className='progress-bar'>
 		    	<progress max="100" value={value}></progress>
+		    	<span className='progressValue'>{value}%</span>
 		    </div>
          		       
 		)
