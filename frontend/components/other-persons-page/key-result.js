@@ -4,9 +4,7 @@ import KeyResultItem from './key-result-item.js';
 class KeyResults extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-		index: '' 
-	}
+
 		this.handleShow = this.handleShow.bind(this);
 	}
 	handleShow(e) {
@@ -19,7 +17,7 @@ class KeyResults extends Component {
 	    	icon.classList.remove('fa-angle-double-down');
 	   		icon.classList.add('fa-angle-double-up');
 		}
-	   	else {
+		else {
 	   		icon.classList.remove('fa-angle-double-up');
 	   		icon.classList.add('fa-angle-double-down');
 	    	keyResult.classList.remove('display');
@@ -42,5 +40,5 @@ class KeyResults extends Component {
 		)
 	}
 }
-var i ;
+
 export default KeyResults

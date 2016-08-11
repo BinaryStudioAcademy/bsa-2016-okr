@@ -9,7 +9,6 @@ class ObjectiveItem extends Component {
 
 	
 	render() { 
-		console.log(this.props.item.keyResults)
 		return (
 			<div className='objective'>
 				<Progress data={this.props.item.keyResults}/>
