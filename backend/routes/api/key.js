@@ -6,27 +6,50 @@ const adminOnly = require('../adminOnly');
 const session = require('../../config/session');
 
 router.post('/', (req, res, next) => {
-	service.add(session._id, req.body, res.callback);
+	var objectiveId = req.body.objectiveId;
+	var title = req.body.title.trim() ;
+	var difficulty = req.body.difficulty ;
+	var isApproved = req.body.isApproved;
+
+	if(!ValidateService.isCorrectId(objectiveId) 
+		|| ValidateService.isEmpty(title)
+		|| !ValidateService.isValidDifficulty(difficulty)
+		|| !(typeof (isApproved) === 'boolean' ))
+		{
+			return res.badRequest();
+		};
+
+	var key = {
+		objectiveId,
+		title,
+		score: 0,
+		forks: 0, 
+		difficulty,
+		isDeleted: false,
+		isApproved: (isApproved && session.isAdmin) || false		
+	};
+
+	return service.add(session._id, key, res.callback);
 });
 
 router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
-
+	
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
 	
-	service.update(session._id, id, req.body, res.callback);
+	return service.update(session._id, id, req.body, res.callback);
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
 	
-	service.delete(session._id, id, res.callback);
+	return service.delete(session._id, id, res.callback);
 });
 
 router.get('/objective/:id', (req, res, next) => {
@@ -36,12 +59,17 @@ router.get('/objective/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	repository.getByObjId(id, res.callback);
+	return repository.getByObjId(id, res.callback);
 });
 
 
 router.get('/title/:title', (req, res, next) => {
-	service.autocomplete(req.params.title, res.callback);
+	var title = req.params.title.trim();
+	if(ValidateService.isEmpty(title)){
+		return res.badRequest();
+	};
+
+	return service.autocomplete(title, res.callback);
 });
 
 router.put('/:id/approve', adminOnly, (req, res, next) => {
@@ -51,7 +79,7 @@ router.put('/:id/approve', adminOnly, (req, res, next) => {
 		return res.badRequest();
 	};
 	
-	service.changeApprove(session._id, id, res.callback);
+	return service.changeApprove(session._id, id, res.callback);
 });
 
 
