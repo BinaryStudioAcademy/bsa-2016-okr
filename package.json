@@ -19,6 +19,7 @@
     "test": "better-npm-run test",
     "start": "node server",
     "prod": "better-npm-run prod",
+    "prod:watch": "better-npm-run prod:watch",
     "seed": "node ./backend/seed/seed.js",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
@@ -32,8 +33,15 @@
         "PORT": "3000"
       }
     },
+    "prod:watch": {
+      "command": "nodemon server",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "3000"
+      }
+    },
     "test": {
-      "command": "mocha --recursive",
+      "command": "node test/index",
       "env": {
         "NODE_ENV": "production",
         "PORT": "3000"

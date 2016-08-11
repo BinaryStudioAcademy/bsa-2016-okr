@@ -12,9 +12,9 @@ var userSchema = new Schema({
 		keys: [{keyId: {type: Schema.Types.ObjectId, ref: 'KeyResult'},
 				score: Number,
 		}],
-		category: String,
+		category: {type: Schema.Types.ObjectId, ref: 'Category'},
 		score: Number,
-		status: Number,
+		isArchived: Boolean,
 		feedback: String
 	}],
 	lastVisitDate: Date,

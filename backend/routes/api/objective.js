@@ -13,8 +13,8 @@ router.get('/', (req, res, next) => {
 
 // Done
 router.post('/', adminOnly, (req, res, next) => {
-	var title = req.body.title;
-	var description = req.body.description;
+	var title = req.body.title || '';
+	var description = req.body.description || '';
 	var keys = req.body.keys || [];
 
 	var isKeysInvalid = keys.some((key) => {
@@ -57,6 +57,53 @@ router.post('/', adminOnly, (req, res, next) => {
 	});
 
 	return service.add(objective, keys, res.callback);
+});
+
+router.post('/me/', (req, res, next) => {
+	var title = req.body.title || '';
+	var description = req.body.description || '';
+	var keys = req.body.keys || [];
+
+	var isKeysInvalid = keys.some((key) => {
+		return !ValidateService.isObject(key)
+		|| ValidateService.isEmpty(key.title)
+		|| ValidateService.isEmpty(key.difficulty)
+		|| !ValidateService.isValidDifficulty(key.difficulty);
+	});
+
+	if( ValidateService.isEmpty(title)
+		|| ValidateService.isEmpty(description)
+		|| !ValidateService.isArray(keys)
+		|| isKeysInvalid)
+	{
+		return res.badRequest();
+	}
+
+	var objective = {
+		createdBy: req.session._id,
+		title: title,
+		description: description,
+		keys: [],
+		cheers: [],
+		views: [],
+		forks: 0,
+		isApproved: false,
+		isDeleted: false
+	}
+
+	keys = keys.map((item) => {
+		var key = {
+			title: item.title,
+			difficulty: item.difficulty,
+			forks: 0,
+			isApproved: false,
+			isDeleted: false
+		};
+
+		return key;
+	});
+
+	return service.addToMe(objective, keys, res.callback);
 });
 
 router.post('/user/:id', (req, res, next) => {

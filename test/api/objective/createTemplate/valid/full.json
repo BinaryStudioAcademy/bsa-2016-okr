@@ -1,5 +1,6 @@
 {
-	"description": "Shouldn't work at all. Will return 400", 
+	"title": "Learn Node in depth", 
+	"description": "description for Node", 
 	"keys": [
 		{
 			"title": "Node.js book", 

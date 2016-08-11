@@ -25,20 +25,44 @@ ObjectiveService.prototype.add = function(objective, keys, callback) {
 
 	async.waterfall([
 		(callback) => {
-			objective.save((err) => {
-				return err ? callback(err) : callback(null);
+			objective.save((err, obj) => {
+				return err ? callback(err) : callback(null, obj);
 			});
-		}, (callback) => {
+		}, (obj, callback) => {
+			obj = obj.toObject();
+			obj.keys = [];
 			async.forEach(keys, (key, callback) => {
-				key.save((err) => {
-					return err ? callback(err) : callback(null);
+				key.save((err, key) => {
+					if(err) { return callback(err); }
+					
+					obj.keys.push(key);
+					return callback(null);
 				});
 			}, (err) => {
-				return callback(err);
+				return callback(err, obj);
 			});
 		}
 	], (err, result) => {
 		return callback(err, result);	
+	});
+};
+
+ObjectiveService.prototype.addToMe = function(objective, keys, callback) {
+	userId = objective.createdBy;
+
+	async.waterfall([
+		(callback) => {
+			return ObjectiveService.prototype.add(objective, keys, callback);
+		}, (objective, callback) => {
+			UserRepository.getById(userId, (err, user) => {
+				return callback(err, user, objective);
+			});
+		}, (user, objective, callback) => {
+			console.log(user);
+			console.log('00000000');
+			console.log(objective);
+		}
+	], (err, result) => {
 	});
 };
 
