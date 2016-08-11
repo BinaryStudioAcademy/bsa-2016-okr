@@ -1,6 +1,7 @@
 import React from 'react'
 import ListOfUsers from '../list-of-users/list-of-users.js';
 import StatPanel from '../../containers/statistic-panel.jsx';
+import Dashboard from "../dashboard/dashboard.jsx";
 import CentralWindow from "../../containers/central-window.jsx";
 import HistoryItem from './history-item'
 import HistoryItemList from './history-item-list'
@@ -99,7 +100,9 @@ class HistoryPage extends React.Component {
 					<HistoryItemList historyItems={this.state.items}/>
 				</div>
 				</CentralWindow>
-				<StatPanel/>
+				<StatPanel>
+					<Dashboard></Dashboard>
+				</StatPanel>
 			</div>
 		)
 	}
