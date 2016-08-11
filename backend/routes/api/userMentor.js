@@ -3,6 +3,7 @@ const repository = require('../../repositories/userMentor');
 const service = require('../../services/userMentor');
 
 router.get('/', (req, res, next) => {
+    console.log(req.decoded);
     repository.getAll(res.callback);
 });
 
