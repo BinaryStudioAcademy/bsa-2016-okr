@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import binItems from '../../mockData/recycleBin'
-import DeletedPlansItem from './DeletedPlansItem'
+import DeletedPlansItem from './deletedPlansItem'
 
 class DeletedPlans extends Component {
 

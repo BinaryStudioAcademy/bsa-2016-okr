@@ -12,7 +12,7 @@ import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.js"
 import RecycleBin from './components/admin/RecycleBin/RecycleBin.js'
 import DeletedTmpls from './components/admin/RecycleBin/DeletedTmpls.js'
 import DeletedPlans from './components/admin/RecycleBin/DeletedPlans.js'
-import DeletedTmplDetails from "./components/admin/RecycleBin/DeletedTmplDetails.js"
+import DeletedTmplDetails from "./components/admin/RecycleBin/deletedTmplDetails.js"
 
 import DevTools from './shared/devtools/DevTools';
 

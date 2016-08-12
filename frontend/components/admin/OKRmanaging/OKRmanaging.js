@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserList from './components/UserList';
-import Searchbar from './components/Searchbar';
+import Searchbar from './components/SearchBar';
 import ActiveUser from './components/ActiveUser';
 import Toolbar from './components/Toolbar';
 import './OKRmanaging.scss';
