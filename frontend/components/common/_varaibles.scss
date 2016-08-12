@@ -31,3 +31,29 @@ $header-index: 100;
 $navbar-index: 50;
 $filters-index: 75;
 $new-obj-index: 45;
+
+/*
+** General styles to extend
+*/
+.clearfix{
+  &:after{
+    content: '';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+  }
+}
+.triangle{
+  &:after{
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 0;
+    height: 0;
+    width: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid $primary-color-light;
+  }
+}

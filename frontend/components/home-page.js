@@ -76,7 +76,6 @@ class Home extends React.Component {
                <CentralWindow>
                   <ListOfUsers takeUser={this.takeUser} search={this.search}
                                searchValue={this.state.searchValue} data={this.state.data} />
-                  <Quarter />
                   <UserObjectives />
                </CentralWindow>
                <StatPanel>

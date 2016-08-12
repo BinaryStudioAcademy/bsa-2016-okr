@@ -36,13 +36,15 @@ let data_for_recycle = {
 		}
 		]
 	}],
-	"plans": [1, 2, 3]
+	"plans": [{
+		"id": "0000f8847ed517bc028e7390",
+		"title": "Plan name 1",
+		"description": "Plan name 1 descrioption"
+	},
+	{
+		"id": "0000f8847ed777bc028e7390",
+		"title": "Plan name 2",
+		"description": "Plan name 1 descrioption"
+	}]
 }
 export default data_for_recycle
-
-
-// {
-// 		"id": "0000f8847ed517bc028e7390",
-// 		"title": "Plan name 1",
-// 		"description": "Plan name 1 descrioption"
-// 	},

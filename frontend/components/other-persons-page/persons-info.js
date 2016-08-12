@@ -16,8 +16,7 @@ class PersonsInfo extends Component {
                   <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
                </div>
                <div className='credentials'>{user}</div>
-            </div>
-            
+            </div>      
          </div>
       )
    }

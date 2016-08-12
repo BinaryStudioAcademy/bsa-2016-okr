@@ -56,6 +56,12 @@ class NavMenu extends React.Component {
 								Recycle Bin
 							</Link>
 						</li>
+						<li>
+							<Link to="/roles">
+								<i className="fa fa-server fa-2x" aria-hidden="true"></i>
+								Role mapping
+							</Link>
+						</li>
 					</ul>
 				</nav>
 			</aside>
