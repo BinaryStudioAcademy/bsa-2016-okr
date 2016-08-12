@@ -29,7 +29,7 @@ class KeyResults extends Component {
 			return <KeyResultItem index={index} key={index} item={item} />
 		})
 		return (
-			<div className='user-key-results'>Key results
+			<div className='users-key-results'>Key results
 		        <span className="fa fa-angle-double-down fa-lg change" onClick={this.handleShow}></span>
 		        <div className='key-result-details undisplay'>
 		        	<ul>
