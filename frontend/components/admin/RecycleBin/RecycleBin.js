@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Tabs from './Tabs'
 import Pane from './Pane'
-import DeletedTmplsItem from './DeletedTmplsItem'
-import DeletedPlansItem from './DeletedPlansItem'
+import DeletedTmplsItem from './deletedTmplsItem'
+import DeletedPlansItem from './deletedPlansItem'
 
 import './recycleBin.scss'
 
