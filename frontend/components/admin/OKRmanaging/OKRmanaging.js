@@ -29,7 +29,7 @@ var objectives = [{
 }, {
 	"id": "000002",
 	"objTitle": "Create a dynamic coaching and training community with 50 or more members",
-	"category": "Knowledge",
+	"category": "Projects",
 	"ownerName": "Lakeisha Breen"
 
 }, {
@@ -47,7 +47,7 @@ var objectives = [{
 }, {
 	"id": "000005",
 	"objTitle": "Develop a leadership training",
-	"category": "Knowledge",
+	"category": "Expertise",
 	"ownerName": "Leana Bowley"
 
 }, {
@@ -65,7 +65,7 @@ var objectives = [{
 }, {
 	"id": "000008",
 	"objTitle": "Learn to speak Spanish fluently",
-	"category": "Knowledge",
+	"category": "Expertise",
 	"ownerName": "Nam Beaudin"
 
 }, {
@@ -77,7 +77,7 @@ var objectives = [{
 }, {
 	"id": "000010",
 	"objTitle": "Produce a PBS program",
-	"category": "Knowledge",
+	"category": "Projects",
 	"ownerName": "Son Gossage"
 
 }];
@@ -97,6 +97,22 @@ export default class App extends Component {
 
 	updateData(config) {
 		this.setState(config);
+	}
+
+	removeData() {
+
+		if(confirm('Are you sure you want to delete this item?')) {
+
+			console.log("here");
+
+/*            var index = this.state.showUsers.indexOf(item);
+            var userList = this.state.showUsers.slice();
+            userList.splice(index, 1);
+
+            this.setState({showUsers: userList})*/
+
+        }
+		
 	}
 
 render() {
@@ -121,7 +137,7 @@ render() {
 				<ActiveUser data={this.state.data} active={this.state.active} />
 			</div>
 			<div className="OKR-managing user-list">
-				<UserList data={this.state.data} update={this.updateData.bind(this)} />
+				<UserList data={this.state.data} update={this.updateData.bind(this)} remove={this.removeData.bind(this)} />
 			</div>
 
 		</div>
