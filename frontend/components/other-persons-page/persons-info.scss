@@ -3,12 +3,8 @@
 #topPanel {
   display: inline-block;
   width: 100%;
-  background: #f3f2ff;
-  padding: 10px 30px;
+  padding: 15px 8%;
   box-sizing: border-box;
-
-  #serachPanel{
-    padding: 0 5%;
 
     .userInfo{
       position: relative;
@@ -18,6 +14,7 @@
         display: inline-block;
 
         img {
+
           width: 100%;
           border-radius: 50%;
         }
@@ -34,19 +31,18 @@
         display: inline-block;
       }
     }
-  }
 }
 #quaterPanel{
   display:table;
   width: 90%;
-  margin: 5px 5% 0;
+  margin: 10px 5% 0;
   border-collapse: collapse;
 }
 #quaterList {
   display: table-row;
 
   .quater{
-    border: 2px solid $header-color;
+    border: 1px solid $header-color;
     padding: 5px;
     text-align: center;
     display: table-cell;
@@ -55,11 +51,11 @@
   }
 
   .active{
-    background: $header-color;
+    background: #99bce0;
     color: #fff;
   }
   .quater:hover{
-    background: $header-color;
+    background: #99bce0;
     color: #fff;
   }
 }

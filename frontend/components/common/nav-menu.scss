@@ -1,0 +1,106 @@
+@import "varaibles";
+
+aside#navbar {
+   position: fixed;
+   top: $header-height;
+   left: 0;
+   bottom: 0;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   width: $left-nav-width;
+   background-color: $primary-color-light;
+   overflow: hidden;
+   z-index: $navbar-index;
+
+   /* Navbar opened */
+   &.opened{
+      width: $left-nav-width-opened;
+   }
+}
+
+aside#navbar ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   li {
+      margin-bottom: 10px;
+      &:last-child {
+         margin-bottom: 0;
+      }
+      a:hover {
+         background-color: $primary-color;
+         color: $nav-links-color-hover;
+      }
+      a.active {
+         background-color: $primary-color;
+         color: $nav-links-color-hover;
+      }
+      span {
+         pointer-events: none;
+      }
+   }
+   li a,
+   button {
+      display: block;
+      position: relative;
+      white-space: nowrap;
+      padding: 15px 0;
+      padding-left: 60px;
+      text-align: left;
+      text-align: -moz-left;
+      color: $nav-links-color;
+   }
+   i {
+      position: absolute;
+      top: 8px;
+      left: 15px;
+      pointer-events: none;
+   }
+}
+
+/*
+** Add new objective button
+*/
+aside#navbar #new-obj-btn {
+   background: none;
+   border: none;
+   width: 100%;
+   white-space: nowrap;
+   margin-top: 15px;
+   margin-bottom: 30px;
+   &:focus{
+      outline: none;
+   }
+   &:hover{
+      background: none;
+      color: $new-objective-btn-active;
+      cursor: pointer;
+   }
+   &.active{
+      background: none;
+      color: $new-objective-btn-active;
+   }
+}
+
+/*
+** Show users button
+*/
+aside#navbar #users-link{
+   width: 100%;
+   background: none;
+   border: none;
+   white-space: nowrap;
+   cursor: pointer;
+   &:focus{
+      outline: none;
+   }
+   &:hover{
+      background-color: $primary-color;
+      color: $nav-links-color-hover;
+   }
+   &.active{
+      background-color: $primary-color;
+      color: $nav-links-color-hover;
+   }
+}

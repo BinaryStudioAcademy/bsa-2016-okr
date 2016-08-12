@@ -12,13 +12,13 @@ UserMentorRepository.prototype = new Repository();
 
 UserMentorRepository.prototype.getByMentorId = function(mentorId, callback) {
 	var model = this.model;
-	var query = model.findOne({'mentorId': new ObjectId(mentorId)});
+	var query = model.find({'mentorId': new ObjectId(mentorId)});
 	query.exec(callback);
 };
 
 UserMentorRepository.prototype.getByUserId = function(userId, callback) {
 	var model = this.model;
-	var query = model.findOne({'userId': new ObjectId(userId)});
+	var query = model.find({'userId': new ObjectId(userId)});
 	query.exec(callback);
 };
 

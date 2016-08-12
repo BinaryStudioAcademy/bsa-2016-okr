@@ -4,8 +4,10 @@ var Schema = mongoose.Schema;
 var historySchema = new Schema({
 	authorId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	keyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Key'},
-	type: String,
-	date: Date
+	objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
+	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	planId: {type: mongoose.Schema.Types.ObjectId, ref: 'Plan'},
+	type: String
 }, {
     timestamps: true
 });

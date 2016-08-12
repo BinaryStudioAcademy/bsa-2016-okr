@@ -1,0 +1,170 @@
+@import "varaibles";
+
+/*
+** Filters
+*/
+#filters {
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   position: absolute;
+   width: 100%;
+   -webkit-box-shadow: $filters-box-shadow;
+   -moz-box-shadow: $filters-box-shadow;
+   box-shadow: $filters-box-shadow;
+   padding: 10px;
+   background: #dddddd;
+   display: none;
+   z-index: $filters-index;
+
+   /* Open state */
+   &.opened{
+      display: block;
+   }
+}
+/*
+** Filters sections
+*/
+#filters section {
+   float: left;
+   width: 50%;
+   color: #243342;
+   label{
+      display: block;
+      margin-bottom: 5px;
+      &:last-child{
+         margin-bottom: 0;
+      }
+   }
+   input{
+      margin-right: 5px;
+   }
+   option{
+      font-weight: 300;
+   }
+}
+
+/*
+** Objective searchbar
+*/
+#obj-search {
+   position: relative;
+   display: inline-block;
+   margin-top: 15px;
+   margin-left: 0;
+   font-weight: 300;
+   form{
+      display: block;
+   }
+}
+.search-group {
+   position: relative;
+}
+.search-result {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   position: absolute;
+   width: 100%;
+   background-color: #E5EBF1;
+   -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+   display: none;
+   &-item{
+      padding: 10px 15px;
+      border-bottom: 1px solid #ccc;
+      &:last-child{
+         border-bottom: 0;
+      }
+      &:hover{
+         background-color: #aaaaaa;
+      }
+   }
+}
+/*
+** Searchbar Input
+*/
+input#obj-search-input {
+   display: block;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+   border: none;
+   width: 450px;
+   height: 40px;
+   padding: 7px 0;
+   padding-right: 40px;
+   padding-left: 40px;
+   background-color: $primary-color-dark;
+   color: #dddddd;
+   &:focus{
+      outline: none;
+   }
+   &::-webkit-input-placeholder{
+      color: $placeholder-color;
+   }
+   &::-moz-placeholder{
+      color: $placeholder-color;
+   }
+   &:-moz-placeholder{
+      color: $placeholder-color;
+   }
+   &:-ms-input-placeholder{
+      color: $placeholder-color;
+   }
+}
+
+/*
+** Search button
+*/
+button#obj-search-submit {
+   position: absolute;
+   top: 50%;
+   padding: 10px;
+   -webkit-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+   left: 5px;
+   border: none;
+   background: transparent;
+   cursor: pointer;
+   &:focus{
+      outline: none;
+   }
+   &:active i{
+      color: #ffffff;
+   }
+   i{
+      color: #aaa;
+   }
+}
+
+/*
+** Filter button
+*/
+button#obj-search-filter {
+   display: inline-block;
+   position: absolute;
+   top: 50%;
+   -webkit-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+   right: 0;
+   border: none;
+   background: transparent;
+   cursor: pointer;
+   &:focus{
+      outline: none;
+   }
+   &:hover i{
+      color: #ffffff;
+   }
+   &.active i{
+      color: #ffffff;
+   }
+   i{
+      padding: 10px;
+      color: #aaa;
+      pointer-events: none;
+      cursor: pointer;
+   }
+}

@@ -1,0 +1,85 @@
+.key-results{
+    margin: -25px 0 5px 10px;
+    span{
+      padding-left: 5px;
+    }
+    .change{
+      color: #0080ff;
+      cursor: pointer;
+    }
+    .key-result-details span{
+      color: #000;
+      cursor: inherit;
+      padding: 0 15px 0 0;
+    }
+    .display{
+      display: block;
+    }
+    .undisplay{
+      display: none;
+    }
+    ul {
+      margin: 5px 0 0px;
+      list-style: none;
+      padding: 0px;
+    
+      li{
+        margin: 10px 0px;
+        width: 60%;
+
+          input[type=range]{
+            -webkit-appearance: none;
+            background: none;
+            width: 20%;
+            margin: 5px 10px;
+            /* tracker */
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            height: 7px;
+            border: 1px solid #bdc3c7;
+            background: #ffffff;
+            &::-moz-range-track{
+              -webkit-border-radius: 8px;
+              -moz-border-radius: 8px;
+              border-radius: 8px;
+              height: 7px;
+              border: 1px solid #bdc3c7;
+              background: #ffffff;
+            }
+            /* tracker thumb */
+            &::-webkit-slider-thumb{
+              -webkit-appearance: none;
+              background-color: #ecf0f1;
+              border: 1px solid #bdc3c7;
+              width: 15px;
+              height: 15px;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+            &::-moz-range-thumb{
+              -webkit-appearance: none;
+              background-color: #ecf0f1;
+              border: 1px solid #bdc3c7;
+              width: 20px;
+              height: 20px;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+            /* when focus */
+            &:active{
+              &::-webkit-slider-thumb{
+                box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+              }
+              &::-moz-range-thumb{
+                box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+              }
+            }
+
+          }
+      }
+      .completed{
+        text-decoration: line-through;
+      }
+    }
+  }

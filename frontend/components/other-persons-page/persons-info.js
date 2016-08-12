@@ -4,22 +4,19 @@ import './persons-info.scss'
 
 class PersonsInfo extends Component {
    render() {
-      var data = this.props.data.map(function(data) {
-         if (data.id == this.props.id)
-            return data.name;
+      var user = this.props.data.map(function(user) {
+         if (user.id == this.props.id)
+            return user.name;
       }.bind(this));
 
       return (
          <div id='topPanel'>
-            <div id='serachPanel'>
-               <div className='userInfo'>
-                  <div className='logo'>
-                     <img src='https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg'/>
-                  </div>
-                  <div className='credentials'>{data}</div>
+            <div className='userInfo'>
+               <div className='logo'>
+                  <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
                </div>
-            </div>
-            <Quarter />
+               <div className='credentials'>{user}</div>
+            </div>      
          </div>
       )
    }

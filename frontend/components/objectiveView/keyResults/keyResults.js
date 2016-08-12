@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import './keyResults.css';
+import KeyResult from './keyResult.js';
+import './keyResult.scss';
 
 export default class KeyResults extends Component {
+  
   render() {
+   let item = this.props.keyResultList.map((item, index) => {
+         return <KeyResult index={index} key={index} item={item} />
+      })
+
     return (
-      <div className="keyResult">
-        <input type="checkbox" name="isComplite" className="isComplite" />
-        <span className="title">Lorem ipsum dolor sit amet</span>
-        <span className="rate">Rate 0.25</span>
-      </div>
-    );
+	    	<ol className="keyResults-list">
+	    		{item}
+	    	</ol>
+    	)
   }
 }

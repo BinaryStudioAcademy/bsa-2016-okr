@@ -1,0 +1,208 @@
+@import "variables";
+/*
+** Quarter section
+*/
+.quater-bg{
+  background: #f3f2ff;
+  padding: 20px 0;
+}
+#quaterPanel{
+  display:table;
+  width: 90%;
+  margin: 5px 5% 0;
+  border-collapse: collapse;
+}
+#quaterList {
+  display: table-row;
+
+  .quater{
+    border: 2px solid $header-color;
+    padding: 5px;
+    text-align: center;
+    display: table-cell;
+    color: $header-color;
+    cursor: pointer;
+  }
+
+  .active{
+    background: $header-color;
+    color: #fff;
+  }
+  .quater:hover{
+    background: $header-color;
+    color: #fff;
+  }
+}
+/*
+** Objectives
+*/
+#objectives{
+.objective{
+  margin: 20px 5%;
+  padding: 5px 15px;
+  border: 1px solid #99bce0;
+  border-left: 10px solid $navbar-color;
+
+  .name{
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  span.plus-icon{
+    clear: both;
+    float: right;
+    font-size: 25px;
+    padding-top: 10px;
+    cursor: pointer;
+  }
+  .description {
+    margin-bottom: 10px;
+  }
+  .key-results{
+    margin: -25px 0 5px 10px;
+    span{
+      padding-left: 5px;
+    }
+    .change{
+      color: #0080ff;
+      cursor: pointer;
+    }
+    .key-result-details span{
+      color: #000;
+      cursor: inherit;
+      padding: 0 15px 0 0;
+    }
+    .display{
+      display: block;
+    }
+    .undisplay{
+      display: none;
+    }
+    ul {
+      margin: 5px 0 0px;
+      list-style: none;
+      padding: 0px;
+    
+      li{
+        margin: 10px 0px;
+        width: 60%;
+
+          input[type=range]{
+            -webkit-appearance: none;
+            background: none;
+            width: 20%;
+            margin: 5px 10px;
+            /* tracker */
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            height: 7px;
+            border: 1px solid #bdc3c7;
+            background: #ffffff;
+            &::-moz-range-track{
+              -webkit-border-radius: 8px;
+              -moz-border-radius: 8px;
+              border-radius: 8px;
+              height: 7px;
+              border: 1px solid #bdc3c7;
+              background: #ffffff;
+            }
+            /* tracker thumb */
+            &::-webkit-slider-thumb{
+              -webkit-appearance: none;
+              background-color: #ecf0f1;
+              border: 1px solid #bdc3c7;
+              width: 15px;
+              height: 15px;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+            &::-moz-range-thumb{
+              -webkit-appearance: none;
+              background-color: #ecf0f1;
+              border: 1px solid #bdc3c7;
+              width: 20px;
+              height: 20px;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+            /* when focus */
+            &:active{
+              &::-webkit-slider-thumb{
+                box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+              }
+              &::-moz-range-thumb{
+                box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+              }
+            }
+
+          }
+      }
+      .completed{
+        text-decoration: line-through;
+      }
+    }
+  }
+  .progress-bar{
+    float: right;
+    padding-top: 10px;
+    width: 30%;
+
+    progress[value]{
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+  }
+  ::-webkit-progress-bar {
+    border: 1px solid #a0a0a0;
+      background: #eee;
+      background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
+    background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
+  }
+  ::-webkit-progress-value {
+      background: #7fda57;
+    background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%); 
+    background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%); 
+  }
+  ::-moz-progress-bar {
+      border: 1px solid #a0a0a0;
+      background: #eee;
+      background: -moz-linear-gradient(top, #fff 0%, #eee 50%);
+  }
+  ::-moz-progress-value {
+      background: #7fda57;
+      background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
+  }
+  .objective-info {
+    margin-left: 40%;
+
+    div {
+      display: inline-block;
+      margin-right: 15%;
+    }
+    div:last-child{
+      
+      margin-right: 0;
+    }
+    
+    .co-workers{
+      position: relative;
+      span {
+          position: absolute;
+          top: 5px;
+          left: 30px;
+      }
+    }
+    .followed{
+      position: relative;
+      span {
+          position: absolute;
+          top: 5px;
+          left: 30px;
+      }
+    }
+  }
+}
+}

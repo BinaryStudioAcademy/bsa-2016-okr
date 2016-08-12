@@ -1,17 +1,20 @@
 @import 'variables';
+#objectives{
 .objective{
 	margin: 20px 5%;
 	padding: 5px 15px;
-	border: 1px solid $border-color;
-	border-left: 5px solid #6aa84f;
+	border: 1px solid #99bce0;
+	border-left: 10px solid $navbar-color;
+	min-height: 100px;
 
 	.name{
-		dislpay: inline-block;
+		display: inline-block;
 		margin-bottom: 10px;
 		font-size: 18px;
 		font-weight: 700;
 	}
-	i{
+	span.plus-icon{
+		clear: both;
 		float: right;
 		font-size: 25px;
 		padding-top: 10px;
@@ -20,12 +23,19 @@
 	.description {
 		margin-bottom: 10px;
 	}
-	.key-result{
-		margin: -15px 0 5px 10px;
+	.user-key-results{
+		margin: -25px 0 5px 10px;
 		span{
+			padding-left: 5px;
+		}
+		.change{
 			color: #0080ff;
 			cursor: pointer;
-			padding-left: 5px;
+		}
+		.key-result-details span{
+			color: #000;
+			cursor: inherit;
+			padding: 0 15px 0 0;
 		}
 		.display{
 			display: block;
@@ -33,28 +43,55 @@
 		.undisplay{
 			display: none;
 		}
-		ol {
+		ul {
 			margin: 5px 0 0;
 			
 			padding-left: 20px;
 
 			li{
-				margin: 5px
+				margin: 10px
 			}
 			.completed{
 				text-decoration: line-through;
 			}
-		}
-	}
-	.progress-bar {
+		} 
+	} 
+	.progress-bar{
 		float: right;
 		padding-top: 10px;
+		width: 30%;
+		position: relative;
 
+		.progressValue {
+			position: absolute;
+			top: 28%;
+			left: 45%;
+		}
 		progress[value]{
-			width: 200px;
+			width: 100%;
 			-webkit-appearance: none;
 			appearance: none;
 		}
+	}
+	::-webkit-progress-bar {
+		border: 1px solid #a0a0a0;
+    	background: #eee;
+    	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
+		background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
+	}
+	::-webkit-progress-value {
+    	background: #7fda57;
+		background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%); 
+		background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%); 
+	}
+	::-moz-progress-bar {
+    	border: 1px solid #a0a0a0;
+    	background: #eee;
+    	background: -moz-linear-gradient(top, #fff 0%, #eee 50%);
+	}
+	::-moz-progress-value {
+	    background: #7fda57;
+	    background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
 	}
 	.objective-info {
 		margin-left: 40%;
@@ -69,9 +106,21 @@
 		}
 		
 		.co-workers{
+			position: relative;
 			span {
-				padding-right: 10px;
+			    position: absolute;
+		    	top: 5px;
+		   		left: 30px;
+			}
+		}
+		.followed{
+			position: relative;
+			span {
+			    position: absolute;
+		    	top: 5px;
+		   		left: 30px;
 			}
 		}
 	}
+}
 }

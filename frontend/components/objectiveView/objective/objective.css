@@ -1,8 +1,9 @@
-.objective-container {
+.objective-view.objective-container {
     position: relative;
-    width: 100%;
+    width: 90%;
     height: auto;
     padding: 2%;
+    margin: 0 auto;
 }
 
 .objective-container .img {
@@ -20,7 +21,6 @@
 
 .objective-user {
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
     padding: 15px;
     background-color: #ECECEC;
 }
@@ -72,9 +72,8 @@
     margin-right: 5px;
 }
 
-.objective-container .result{
+.objective-container .objective-view.result{
     width: 33%;
-    height: 25px;
     position: relative;
     background: #555;
     -moz-border-radius: 25px;
@@ -105,7 +104,7 @@
             inset 0 -2px 6px rgba(0,0,0,0.4);
     position: relative;
     overflow: hidden;
-    margin-top: -7px;
+    margin-top: -3px;
 }
 
 .objective-container .fa.fa-check-square {

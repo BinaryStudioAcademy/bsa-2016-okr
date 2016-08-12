@@ -111,6 +111,7 @@
 	border-radius:2px;
 	color: black;
 	float:right;
+ 	margin-top: -38px;
 }
 
 .enter-message a.send:hover {

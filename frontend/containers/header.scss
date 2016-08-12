@@ -1,8 +1,10 @@
+@import "../components/common/varaibles";
+
 header {
-   height: 70px;
-   background-color: #2c3e50;
+   height: $header-height;
+   background-color: $primary-color;
    padding-right: 20px;
-   z-index: 100;
+   z-index: $header-index;
 }
 /*
 ** User info
@@ -10,55 +12,56 @@ header {
 .user-info {
    float: right;
    padding-left: 20px;
+   .logo{
+      height: 70px;
+      width: 70px;
+      margin-left: 20px;
+      overflow: hidden;
+      float: right;
+      cursor: pointer;
+      img{
+         display: block;
+         height: 100%;
+      }
+   }
+   .credentials{
+      float: left;
+      margin: 16px 0;
+      text-align: right;
+      color: #ffffff;
+      .field{
+         color: #ccc;
+         font-weight: 300;
+         font-style: italic;
+      }
+   }
 }
-.user-info .logo {
-   height: 70px;
-   width: 70px;
-   margin-left: 20px;
-   overflow: hidden;
-   float: right;
-   cursor: pointer;
-}
-.user-info .logo img {
-   display: block;
-   height: 100%;
-}
-.user-info .credentials {
-   float: left;
-   margin: 16px 0;
-   text-align: right;
-   color: #ffffff;
-}
-.user-info .credentials .field {
-   font-family: 'Lato', sans-serif;
-   color: #ccc;
-   font-weight: 300;
-   font-style: italic;
-}
+
 /*
 ** Bars menu button
 */
 #bars {
-   display: inline-block;
-   width: 60px;
-   height: 70px;
+   display: block;
+   float: left;
+   width: $left-nav-width;
+   height: $header-height;
    text-align: center;
    background: none;
    border: none;
    cursor: pointer;
-}
-#bars:focus,
-#bars:active {
-   outline: none;
-}
-#bars i.fa {
-   color: #dddddd;
-   cursor: pointer;
-   pointer-events: none;
-}
-#bars:hover i.fa {
-   color: #ffffff;
-}
-#bars.active i.fa {
-   color: #ffffff;
+   i{
+      color: $nav-links-color;
+      cursor: pointer;
+      pointer-events: none;
+   }
+   &:focus,
+   &:active{
+      outline: none;
+   }
+   &:hover i{
+      color: $nav-links-color-hover;
+   }
+   &.active i{
+      color: $nav-links-color-hover;
+   }
 }

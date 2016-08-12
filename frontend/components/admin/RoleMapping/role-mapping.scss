@@ -1,0 +1,141 @@
+#role-mapping-wrapper {
+	width: 100%;
+}
+
+#user-role-mapping-header-wrapper {
+    padding-top: 50px;
+	width: 100%;
+    display: flex;
+    justify-content: center;
+	overflow: hidden;
+}
+
+#user-role-mapping-header-wrapper input {
+    border: none;
+	background-color: #F0F0F0;
+	border: 1px solid grey;
+    float: left;
+	width: 850px;
+	height: 40px;
+	margin-top: 0;
+}
+
+#user-role-mapping-header-wrapper button {
+    float: left;
+	width: 100px;
+	height: 100px;
+	background-color: #2c3e50;
+	height: 40px;
+}
+
+#user-role-mapping-header-wrapper button:after {
+	content: "";
+    width: 57px;
+    height: 23px;
+    background-image: url("http://bigbangupdates.com/wp-content/themes/peach/img/search_icon.png");
+    background-repeat: no-repeat;
+    background-position-x: 31px;
+    background-size: contain;
+    float: left;
+}
+
+#user-role-mapping-header-wrapper button:hover {
+   background-color: black;;
+}
+
+#user-role-mapping-content-wrapper {
+	width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.table {
+    background-color: #F0F0F0;
+	margin-top: 50px;
+	width: 950px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+}
+
+#role-mapping-wrapper h3 {
+	height: 40px;
+	line-height: 40px;
+	display: inline;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#role-mapping-wrapper .first-column {
+	width: 14%;
+	margin-left: 1%;
+}
+
+#role-mapping-wrapper .second-column {
+	width: 19%;
+}
+
+#role-mapping-wrapper .third-column {
+	width: 19%;
+}
+
+#role-mapping-wrapper .fourth-column {
+	width: 23%;
+}
+
+#role-mapping-wrapper .fifth-column {
+	width: 24%;
+}
+
+.table-head {
+	height: 40px;
+	border-bottom: solid 1px grey;
+}
+
+.table-row {
+	height: 100px;
+	display: flex;
+	align-items: center;
+	border-bottom: solid 1px grey;
+}
+
+.table-row:hover {
+	background-color: lightgrey;
+}
+
+.table-row img {
+	width: 50px;
+	height: 50px;
+	background: url("https://avatars3.githubusercontent.com/u/19537599?v=3&s=140") 100% 100% no-repeat;
+	background-size: cover;
+}
+
+#role-mapping-wrapper h4 {
+	font-weight: normal;
+	float: left;
+}
+
+#role-mapping-wrapper .table-row .fifth-column {
+	width: 15%;
+}
+
+#roles-table {
+    background-color: #F0F0F0;
+	margin-top: 50px;
+	width: 500px;
+}
+
+#role-mapping-wrapper #roles-table .first-column {
+	width: 50%;
+}
+
+
+#roles-table .table-row {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	border-bottom: solid 1px grey;
+}
+
+
