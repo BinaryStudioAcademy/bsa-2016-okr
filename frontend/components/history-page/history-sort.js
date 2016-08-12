@@ -12,11 +12,11 @@ class HistorySort extends React.Component {
 		return(
 			<div className="history-sort-bar">
 				Sort by: 
-				<select>
-				  <option value="date">Date</option>
+				<select className="soflow">
+				  <option value="user">User</option>
 				  <option value="type">Action</option>
-				  <option value="author">Author</option>
-				  <option value="option">option</option>
+				  <option value="object">Object</option>
+				  <option value="date" select>Date</option>
 				</select>
 			</div>
 		)

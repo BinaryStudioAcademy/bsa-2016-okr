@@ -13,12 +13,16 @@
   padding: 0 12px 0 12px;
   border-radius: 0;
   border: none;
+  border: 1px solid $color-main;
+  border-right-width: 0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 .btn {
   display: inline-block;
   border-radius: 3px;
-  border: 2px solid $color-main;
+  border: 1px solid $color-main;
   font-family: 'Roboto', sans-serif;
   font-size: $font-size;
   background-color: $color-white;

@@ -9,7 +9,7 @@
 
 #top-panel {
   width: 100%;
-  padding: 10px 30px;
+  padding: 10px 0;
   box-sizing: border-box;
   background-color: #F3F2FF;
 }
@@ -19,7 +19,6 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 0 5%;
 }
 
 .history-page-title {
@@ -36,13 +35,26 @@
   align-items: center;
 }
 
+.history-filter-bar-container {
+  width: 100%;
+}
+
+.history-page-filter-sort-table {
+  td {
+    vertical-align: top;
+    padding: 3px;
+  }
+}
+
 .history-items-list {
   height: 100%;
   overflow-y: auto;
 }
 
 .history-page-header-row {
-  width: 100%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   padding: 12px 0 12px 0;
   display: flex;
   flex-direction: row;

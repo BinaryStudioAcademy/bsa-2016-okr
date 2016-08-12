@@ -8,7 +8,6 @@ import HistoryItemList from './history-item-list'
 import HistoryQurterBar from './history-quarter-bar'
 import HistorySearch from './history-search'
 import HistoryFilter from './history-filter'
-import HistorySort from './history-sort'
 import './history-page.scss'
 import historyMock from '../mockData/historyPageMock'
 
@@ -90,9 +89,6 @@ class HistoryPage extends React.Component {
 							<div className="history-page-header-row">
 								<div className="history-filter-bar-container">
 									<HistoryFilter/>
-								</div>
-								<div className="history-sort-bar-container">
-									<HistorySort/>
 								</div>
 							</div>
 						</div>
