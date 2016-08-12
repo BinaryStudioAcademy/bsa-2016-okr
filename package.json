@@ -30,21 +30,21 @@
       "command": "node server",
       "env": {
         "NODE_ENV": "production",
-        "PORT": "3000"
+        "PORT": "4444"
       }
     },
     "prod:watch": {
       "command": "nodemon server",
       "env": {
         "NODE_ENV": "production",
-        "PORT": "3000"
+        "PORT": "4444"
       }
     },
     "test": {
       "command": "node test/index",
       "env": {
         "NODE_ENV": "production",
-        "PORT": "3000"
+        "PORT": "4444"
       }
     }
   },
