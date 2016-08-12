@@ -34,6 +34,7 @@ class HistoryItemList extends React.Component {
         return(
             <div className="history-item-list">
             	<table>
+                    <tbody>
             		<tr>
             			<th>User</th>
             			<th>Action</th>
@@ -43,7 +44,7 @@ class HistoryItemList extends React.Component {
             		</tr>
 	                {
 	                	this.state.its.map((function(item, i) {
-	                		return(<tr id={i}>
+	                		return(<tr key={item._id}>
 	                			<td>
                                     <img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/> {item.authorId}
                                 </td>
@@ -54,6 +55,7 @@ class HistoryItemList extends React.Component {
 								</tr>)
 	                	}).bind(this))
 					}
+                    </tbody>
 				</table>	
             </div>
         )

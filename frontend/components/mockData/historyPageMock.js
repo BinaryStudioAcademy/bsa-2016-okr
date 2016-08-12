@@ -65,7 +65,7 @@ let historyMock = [
         "updatedAt": "2016-06-08 4:51"
     },
     {
-        "_id": "57aaeba52e95d8941a795599",
+        "_id": "57aaeba52e95d8941a795591",
         "authorId": "Sahan Roman",
         "typeId": "To do task",
         "type": "delete",
@@ -73,7 +73,7 @@ let historyMock = [
         "updatedAt": "2016-06-30 11:35"
     },
     {
-        "_id": "57aaeba52e95d8941a795599",
+        "_id": "57aaeba52e95d8941a795592",
         "authorId": "Taras Barladun",
         "typeId": "To start running in the morning",
         "type": "update",
@@ -81,7 +81,7 @@ let historyMock = [
         "updatedAt": "2016-06-30 11:35"
     },
     {
-        "_id": "57aaeba52e95d8941a795599",
+        "_id": "57aaeba52e95d8941a795593",
         "authorId": "Roman Vintish",
         "typeId": "To prepare the cake",
         "type": "create",

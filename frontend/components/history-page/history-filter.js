@@ -14,6 +14,7 @@ class HistoryFilter extends React.Component {
 			<div className="history-filter-bar">
 				
 				<table className="history-filter-table">
+					<tbody>
 					<tr>
 						<td><input className="history-filter-bar-input" type="text" placeholder="Filter user by..."/></td>
 						<td>Filter by created date: </td>
@@ -28,6 +29,7 @@ class HistoryFilter extends React.Component {
 						<td><input className="history-filter-bar-input" type="text" placeholder="To"/></td>
 						<td className="cell-right-align"><button className="btn btn-filter"><i className="fa fa-filter"/> Filter</button></td>
 					</tr>
+					</tbody>
 				</table>
 			</div>
 		)
