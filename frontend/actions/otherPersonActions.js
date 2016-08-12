@@ -19,7 +19,6 @@ export function receivedError(data) {
 }
 
 export function receivedData(user) {
-	console.log(user)
 	return {
 		type: 'RECEIVED_DATA',
 		userItem: user
