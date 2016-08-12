@@ -70,7 +70,7 @@ var objectives = [{
 
 }, {
 	"id": "000009 ",
-	"objTitle": "position as a software tester ",
+	"objTitle": "Position as a software tester ",
 	"category": "Knowledge",
 	"ownerName": "Luana Hack"
 
@@ -82,7 +82,6 @@ var objectives = [{
 
 }];
 
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -91,26 +90,27 @@ export default class App extends Component {
       data: objectives,
       active: 0,
       term: ''
-    };
+    }
 
+    this.updateData= this.updateData.bind(this);
+    this.removeData= this.removeData.bind(this);
   }
 
 	updateData(config) {
 		this.setState(config);
 	}
 
-	removeData() {
+	removeData(event, item) {
 
 		if(confirm('Are you sure you want to delete this item?')) {
 
-			console.log("here");
+			/*console.log(objectives);*/
 
-/*            var index = this.state.showUsers.indexOf(item);
-            var userList = this.state.showUsers.slice();
-            userList.splice(index, 1);
+            let index = this.state.data.indexOf(item);
+            let objectiveList = this.state.data.slice();
+            objectiveList.splice(index, 1);
 
-            this.setState({showUsers: userList})*/
-
+            this.setState({data: objectiveList})
         }
 		
 	}
@@ -123,13 +123,13 @@ render() {
 			    <Searchbar
 			      term={this.state.term}
 			      data={this.state.data}
-			      update={this.updateData.bind(this)}
+			      update={this.updateData}
 			    />
 			  </div>
 
 
 			<div className="OKR-managing toolbar">
-				<Toolbar data={this.state.data} update={this.updateData.bind(this)} />
+				<Toolbar data={this.state.data} objectives={objectives} update={this.updateData} />
 			</div>
 
 
@@ -137,7 +137,7 @@ render() {
 				<ActiveUser data={this.state.data} active={this.state.active} />
 			</div>
 			<div className="OKR-managing user-list">
-				<UserList data={this.state.data} update={this.updateData.bind(this)} remove={this.removeData.bind(this)} />
+				<UserList data={this.state.data} update={this.updateData} remove={this.removeData.bind(null)} />
 			</div>
 
 		</div>
