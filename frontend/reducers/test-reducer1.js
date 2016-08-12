@@ -2,8 +2,8 @@ const initialState = {
     message: "Init message"
 };
 
-export default function message(state = initialState, action) {
-    
+export default function message(state = initialState, action = {}) {
+
     switch (action.type) {
 
     	case "JUST_FOR_TEST1": {
@@ -19,7 +19,7 @@ export default function message(state = initialState, action) {
 
 
         default: {
-            return state;        
+            return state;
         }
     }
 }

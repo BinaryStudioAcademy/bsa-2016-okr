@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import ListOfUsers from '../list-of-users/list-of-users.js';
-import users from '../mockData/users.js';
 import PersonInfo from './persons-info.js';
 import UserOjectives from './user-objectives.js';
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
 import ChatTimeline from "../objectiveView/chatTimeline/chatTimeline.js";
+
+import users from '../mockData/users.js';
+import objectives from '../mockData/objectivesMock.js';
 
 class OtherPersonsPage extends Component {
 	constructor() {
@@ -34,9 +36,11 @@ class OtherPersonsPage extends Component {
 		return (
 			<div>
 				<CentralWindow>
-					<PersonInfo data={this.props.users} id={this.state.id} />
-					<UserOjectives />
-					<ListOfUsers takeUser={this.takeUser} search={this.search}
+					<PersonInfo data={this.props.users} 
+								id={this.state.id} />
+					<UserOjectives data={this.props.objectives}/>
+					<ListOfUsers takeUser={this.takeUser} 
+								search={this.search}
 								searchValue={this.state.searchValue} />
 				</CentralWindow>
 				<StatPanel></StatPanel>
@@ -45,6 +49,7 @@ class OtherPersonsPage extends Component {
 	}
 }
 OtherPersonsPage.defaultProps = {
-	users: users
+	users: users,
+	objectives: objectives
 }
 export default OtherPersonsPage
