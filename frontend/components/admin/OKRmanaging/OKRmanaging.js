@@ -104,15 +104,12 @@ export default class App extends Component {
 
 		if(confirm('Are you sure you want to delete this item?')) {
 
-			/*console.log(objectives);*/
-
             let index = this.state.data.indexOf(item);
             let objectiveList = this.state.data.slice();
             objectiveList.splice(index, 1);
 
             this.setState({data: objectiveList})
-        }
-		
+        }		
 	}
 
 render() {
@@ -129,7 +126,10 @@ render() {
 
 
 			<div className="OKR-managing toolbar">
-				<Toolbar data={this.state.data} objectives={objectives} update={this.updateData} />
+				<Toolbar 
+					data={this.state.data} 
+					objectives={objectives} 
+					update={this.updateData} />
 			</div>
 
 
@@ -137,7 +137,10 @@ render() {
 				<ActiveUser data={this.state.data} active={this.state.active} />
 			</div>
 			<div className="OKR-managing user-list">
-				<UserList data={this.state.data} update={this.updateData} remove={this.removeData.bind(null)} />
+				<UserList 
+					data={this.state.data} 
+					update={this.updateData} 
+					remove={this.removeData.bind(null)} />
 			</div>
 
 		</div>
