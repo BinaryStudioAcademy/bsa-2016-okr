@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+ 
 class DeletedTmplsItem extends Component {
 
 	constructor(props) {
