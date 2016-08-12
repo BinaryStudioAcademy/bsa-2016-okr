@@ -14,6 +14,8 @@ class UserRoleMappingItem extends React.Component {
 	                   <h4 className="third-column">{this.props.user.lastName}</h4>
 	                   <h4 className="fourth-column">{this.props.user.email}</h4>
 	                   <select className="fifth-column">
+		                 <option>Default</option>
+		                 <option>Mentor</option>
 	                     <option>Admin</option>
 	                     <option>User</option>
 	                   </select>
