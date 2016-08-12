@@ -3,7 +3,7 @@ const request = require('request');
 const path = require('path');
 const fs = require('fs');
 
-const rootUrl = 'http://localhost:3000/';
+const rootUrl = 'http://localhost:4444/';
 
 describe('Server start test', () => {
 
