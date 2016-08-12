@@ -57,8 +57,39 @@ UserService.prototype.update = function(authorId, userId, body, callback){
 	}
 	], (err, result) => {
 		return callback(err, result);
-	})
+	});
 };
+
+UserService.prototype.changeArchive = function (authorId, userId, objectiveId, callback) {
+	 async.waterfall([
+	 	(callback) => {
+	 		UserRepository.getByObjId(objectiveId, (err, user) => {
+	 			if(err){
+	 				return callback(err, null);
+	 			};
+	 			return callback(null, user);
+	 		})
+	 	},
+	 	(user, callback) => {
+	 		UserRepository.update(user._id, {isArchived: !user.isArchived}, (err) => {
+	 			if(err){
+	 				return callback(err, null);
+	 			};
+	 			return callback(null, user);
+	 		})
+	 	},
+	 	(user, callback) => {
+	 		HistoryRepository.addUserEvent(authorId, userId, "archived obj", (err) => {
+	 			if(err){
+	 				return callback(err, null);
+	 			};
+	 			return callback(null, user);
+	 		})
+	 	}
+	 ], (err, result) => {
+		return callback(err, result);
+	});
+}
 
 UserService.prototype.getMe = function(id, callback){
 	UserRepository.getById(id, function(err, user){

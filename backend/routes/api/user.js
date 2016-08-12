@@ -4,6 +4,7 @@ const service = require('../../services/user');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 const session = require('../../config/session');
+const userMentorRepository = require('../../repositories/userMentor');
 
 router.get('/', (req, res, next) => {
 	repository.getAll(res.callback);
@@ -44,6 +45,30 @@ router.get('/me/:id', (req, res, next) => {
 		service.getMe(id, res.callback)
 	else res.forbidden();
 });
+
+router.put('/archive/:id', (req, res, next) => {
+	var id = req.params.id;
+	var objectiveId = req.body.objectiveId;
+
+	if(ValidateService.isCorrectId(id) 
+		&& ValidateService.isCorrectId(objectiveId))
+	{
+		return res.badRequest();
+	};
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	if(!session._id === id && !session.isAdmin 
+		&& !userMentorRepository.checkUserMentor(id, session._id))
+	{
+		return res.forbidden();
+	};
+
+	service.changeArchive(session._id, id, objectiveId, res.callback);
+
+})
 
 router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;

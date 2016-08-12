@@ -7,9 +7,9 @@ const session = require('../../config/session');
 
 router.post('/', (req, res, next) => {
 	var objectiveId = req.body.objectiveId;
-	var title = req.body.title.trim() ;
-	var difficulty = req.body.difficulty ;
-	var isApproved = req.body.isApproved;
+	var title = req.body.title.trim() || " " ;
+	var difficulty = req.body.difficulty || "low";
+	var isApproved = req.body.isApproved || true;
 
 	if(!ValidateService.isCorrectId(objectiveId) 
 		|| ValidateService.isEmpty(title)

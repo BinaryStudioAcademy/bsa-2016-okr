@@ -17,6 +17,10 @@ UserRepository.prototype.getById = function(id, callback) {
 		.exec((err, user) => {
 			return callback(err, user);
 		});
-}
+};
+
+UserRepository.prototype.getByObjId = function (id, callback) {
+	User.findOne({'objectives.objectivesId': id}).exec(callback);
+};
 
 module.exports = new UserRepository();

@@ -7,6 +7,8 @@ var userSchema = new Schema({
 		objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'}
 	}],
 	objectives: [{
+		quarter: String,
+		year: String,
 		description: String,
 		objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'},
 		keys: [{keyId: {type: Schema.Types.ObjectId, ref: 'Key'},
