@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import Tabs from './Tabs'
-import Pane from './Pane'
 import DeletedTmplsItem from './DeletedTmplsItem'
-import DeletedPlansItem from './DeletedPlansItem'
+import CentralWindow from "../../../containers/central-window.jsx";
 
 import './recycleBin.scss'
 
@@ -15,24 +13,29 @@ class RecycleBin extends Component {
 	}
 
 	render() {
-		let deleted_tmpls = data_for_recycle.templates.map((item) => {
+		let deleted_items = data_for_recycle.map((item) => {
 			return <DeletedTmplsItem item={item} key={item.id} />
 		});
-		let deleted_plans = data_for_recycle.plans.map((item) => {
-			return <DeletedPlansItem item={item} key={item.id} />
-		});
 		return (
-			<div className="recycle-page">
-				<h2>Recycle Bin</h2>
-				<Tabs>
-					<Pane label="Templates">
-						{ deleted_tmpls }
-					</Pane>
-					<Pane label="Plans">
-						{ deleted_plans }
-					</Pane>
-				</Tabs>
-			</div>
+				<div>
+					<h2>Recycle Bin</h2>
+					<table className="bin-table">
+						<thead>
+							<tr>
+								<th>type</th>
+								<th>category</th>
+								<th>title</th>
+								<th>description</th>
+								<th>deletedBy</th>
+								<th>deletedDate</th>
+								<th className="actions">actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{ deleted_items }
+						</tbody>
+					</table>
+				</div>
 		);
 	}
 }

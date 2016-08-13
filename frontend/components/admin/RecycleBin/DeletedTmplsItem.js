@@ -8,17 +8,15 @@ class DeletedTmplsItem extends Component {
 
 	render() {
 		return (
-		<div id={this.props.item.id} className="recycle-bin-item">
-			<div className="bin-item-details">
-				<div className="item-titele"><span>Title: </span>{this.props.item.title}</div>
-				<div className="item-description"><span>Description: </span>{this.props.item.description}</div>
-				<div className="item-category"><span>Category: </span>{this.props.item.category}</div>
-				<div className="item-kr-count"><span>Amount of KR: </span>{this.props.item.keyResults.length}</div>
-			</div>
-			<div className="bin-item-control">
-				<button className="item-rapair">Restore</button>
-			</div>
-		</div>
+			<tr className="bin-item-row">
+				<td className="item-title">{ this.props.item.type }</td>
+				<td className="item-category">{ this.props.item.category }</td>
+				<td>{ this.props.item.title }</td>
+				<td>{ this.props.item.description }</td>
+				<td className="item-deleted-by">{ this.props.item.deletedBy.fullName }</td>
+				<td>{ this.props.item.deletedDate }</td>
+				<td><button>Restore</button></td>
+			</tr>
 		);
 	}
 }

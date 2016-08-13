@@ -13,8 +13,8 @@ router.get('/', (req, res, next) => {
 
 // Done
 router.post('/', adminOnly, (req, res, next) => {
-	var title = req.body.title;
-	var description = req.body.description;
+	var title = req.body.title || '';
+	var description = req.body.description || '';
 	var keys = req.body.keys || [];
 
 	var isKeysInvalid = keys.some((key) => {
@@ -57,6 +57,78 @@ router.post('/', adminOnly, (req, res, next) => {
 	});
 
 	return service.add(objective, keys, res.callback);
+});
+
+router.post('/me/', (req, res, next) => {
+	var title = req.body.title || '';
+	var description = req.body.description || '';
+	var keys = req.body.keys || [];
+	var assignedTo = req.body.assignedTo;
+	var isApproved = false;
+
+	// Validate assignedTo param
+	// Should be correct ObjectId of user
+	if(!assignedTo) {
+		assignedTo = req.session._id;
+	} else {
+		if(!ValidateService.isCorrectId(assignedTo)) {
+			return res.badRequest();
+		}
+
+		// If assignedTo is correct ObjectId,
+		// but it doesn't equal to current userId
+		// then check current user to be a mentor for assinedTo or admin
+		if(assignedTo !== req.session._id 
+			&& ( !userMentorRepository.checkUserMentor(assignedTo, req.session._id) || !req.session.isAdmin) ) 
+		{
+			return res.forbidden();
+		}
+	}
+
+	var isKeysInvalid = keys.some((key) => {
+		return !ValidateService.isObject(key)
+		|| ValidateService.isEmpty(key.title)
+		|| ValidateService.isEmpty(key.difficulty)
+		|| !ValidateService.isValidDifficulty(key.difficulty);
+	});
+
+	if( ValidateService.isEmpty(title)
+		|| ValidateService.isEmpty(description)
+		|| !ValidateService.isArray(keys)
+		|| isKeysInvalid)
+	{
+		return res.badRequest();
+	}
+
+	if(req.session.isAdmin) {
+		isApproved = true;
+	}
+
+	var objective = {
+		createdBy: req.session._id,
+		title: title,
+		description: description,
+		keys: [],
+		cheers: [],
+		views: [],
+		forks: 1,
+		isApproved: isApproved,
+		isDeleted: false
+	}
+
+	keys = keys.map((item) => {
+		var key = {
+			title: item.title,
+			difficulty: item.difficulty,
+			forks: 1,
+			isApproved: isApproved,
+			isDeleted: false
+		};
+
+		return key;
+	});
+
+	return service.addToUser(objective, keys, assignedTo, res.callback);
 });
 
 router.post('/user/:id', (req, res, next) => {

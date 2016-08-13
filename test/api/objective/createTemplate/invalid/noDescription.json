@@ -1,5 +1,5 @@
 {
-	"title": "Should return 400",
+	"title": "No description field. Should return 400",
 	"keys": [
 		{
 			"title": "Node.js book", 

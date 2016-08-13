@@ -4,10 +4,7 @@ import './persons-info.scss'
 
 class PersonsInfo extends Component {
    render() {
-      var user = this.props.data.map(function(user) {
-         if (user.id == this.props.id)
-            return user.name;
-      }.bind(this));
+      var user = this.props.data.userName;
 
       return (
          <div id='topPanel'>
@@ -15,7 +12,9 @@ class PersonsInfo extends Component {
                <div className='logo'>
                   <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
                </div>
-               <div className='credentials'>{user}</div>
+               <div className='credentials'>{user}
+                  <p className='lastVisite'>{this.props.data.lastVisitDate}</p>
+               </div>
             </div>      
          </div>
       )

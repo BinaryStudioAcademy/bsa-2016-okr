@@ -26,7 +26,7 @@ export default class Toolbar extends Component {
 
   reset() {
     this.props.update({
-      data: this.props.data,
+      data: this.props.objectives,
       term: '',
       active: 0
     });
@@ -36,11 +36,17 @@ export default class Toolbar extends Component {
     return (
       <div className="toolbar">
         <button className="btn btn-default" onClick={() => this.sort('ownerName')}>
-          <i className="fa fa-sort-alpha-asc"></i>  Sort by name
+          <i className="fa fa-sort"></i>  Sort by name
         </button>
+
         <button className="btn btn-default" onClick={() => this.sort('objTitle')}>
-          <i className="fa fa-sort-numeric-desc"></i>  Sort by objective
+          <i className="fa fa-sort"></i>  Sort by objective
         </button>
+
+        <button className="btn btn-default" onClick={() => this.sort('category')}>
+          <i className="fa fa-sort"></i>  Sort by category
+        </button>
+
         <button className="btn btn-danger" onClick={this.reset.bind(this)}>
           <i className="fa fa-ban"></i>  Reset
         </button>

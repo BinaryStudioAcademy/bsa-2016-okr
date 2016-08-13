@@ -7,7 +7,8 @@ Repository.prototype.add = function(data, callback){
 };
 
 Repository.prototype.update = function(id, body, callback){
-	var query = this.model.update({_id:id}, body);
+	var model = this.model;
+	var query = model.update({_id:id}, body);
 	query.exec(callback);
 };
 
@@ -26,6 +27,12 @@ Repository.prototype.getAll = function(callback){
 Repository.prototype.getById = function(id, callback){
 	var model = this.model;
 	var query = model.findOne({_id:id});
+	query.exec(callback);
+};
+
+Repository.prototype.getFieldsById = function(id, fields, callback){
+	var model = this.model;
+	var query = model.findOne({_id:id}, fields);
 	query.exec(callback);
 };
 
@@ -60,7 +67,7 @@ Repository.prototype.setToNotDeleted = function(id, callback) {
 };
 
 Repository.prototype.getCount= function() {
-	
+
 	var model = this.model;
 
 	model.count( {}, function( err, count) {

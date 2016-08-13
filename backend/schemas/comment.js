@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var commentSchema = new Schema({
-	userId: {type: Schema.Types.ObjectId, ref: 'User'},
-	objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'},
+	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
 	text: String,
 	isDeleted: Boolean
 }, {

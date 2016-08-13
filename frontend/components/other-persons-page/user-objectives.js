@@ -7,36 +7,35 @@ class Objectives extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentTab : 1
+			currentTab : 1,
 		}
 	}
-	changeTab(num) {
+	changeTab(tab) {
 		this.setState({
-			currentTab: num
+			currentTab: tab
 		})
 	}
 	render() {	
-		console.log(this.props.data)
 		if (this.state.currentTab == 1) {
-		var ObjectiveItems = this.props.data.map((item, index) => {
+		var ObjectiveItems = this.props.data.objectives.map((item, index) => {
 				if (item.startDate < this.props.first)
 				return <ObjectiveItem index={index} key={item.id} item={item} />
 			})	
 		}
 		else if (this.state.currentTab == 2) {
-			var ObjectiveItems = this.props.data.map((item, index) => {
+			var ObjectiveItems = this.props.data.objectives.map((item, index) => {
 				if (item.startDate < this.props.second && item.startDate > this.props.first)
 				return <ObjectiveItem index={index} key={item.id} item={item} />
 			})	
 		}
 		else if (this.state.currentTab == 3) {
-			var ObjectiveItems = this.props.data.map((item, index) => {
+			var ObjectiveItems = this.props.data.objectives.map((item, index) => {
 				if (item.startDate < this.props.third && item.startDate > this.props.second)
 				return <ObjectiveItem index={index} key={item.id} item={item} />
 			})	
 		}
 		else if (this.state.currentTab == 4) {
-			var ObjectiveItems = this.props.data.map((item, index) => {					
+			var ObjectiveItems = this.props.data.objectives.map((item, index) => {					
 				if (item.startDate > this.props.third)
 				return <ObjectiveItem index={index} key={item.id} item={item} />
 			})	

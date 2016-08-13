@@ -1,11 +1,11 @@
 import React from 'react';
 import UserData from './UserData';
 
-export default ({ data, update }) => {
+export default ({ data, update, remove }) => {
   if (!data) { return (<p>Loading...</p>); }
 
   const objectives = data.map((objective, index) => {
-    return (<UserData objective={objective} key={`objective-${index}`} index={index} update={update} />);
+    return (<UserData objective={objective} key={index} index={index} update={update} remove={remove} />);
   });
 
   return (
