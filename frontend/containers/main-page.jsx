@@ -1,5 +1,5 @@
 import React from 'react';
-import NewObjective from '../components/new-obj-components/new-objective.jsx';
+import NewObjective from '../components/new-objective/new-objective.jsx';
 import "./main-page.scss";
 
 export default class MainPage extends React.Component{
