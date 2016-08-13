@@ -17,10 +17,10 @@ class RecycleBin extends Component {
 		});
 		return (
 				<div>
-					<h2>Recycle Bin</h2>
+					<h2 className='recycle-title'>Recycle Bin</h2>
 					<table className="bin-table">
 						<thead>
-							<tr>
+							<tr className='recycle-head'>
 								<th>type</th>
 								<th>category</th>
 								<th>title</th>

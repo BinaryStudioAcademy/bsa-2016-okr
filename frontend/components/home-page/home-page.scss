@@ -6,33 +6,7 @@
   background: #f3f2ff;
   padding: 20px 0;
 }
-#quaterPanel{
-  display:table;
-  width: 90%;
-  margin: 5px 5% 0;
-  border-collapse: collapse;
-}
-#quaterList {
-  display: table-row;
 
-  .quater{
-    border: 2px solid $header-color;
-    padding: 5px;
-    text-align: center;
-    display: table-cell;
-    color: $header-color;
-    cursor: pointer;
-  }
-
-  .active{
-    background: $header-color;
-    color: #fff;
-  }
-  .quater:hover{
-    background: $header-color;
-    color: #fff;
-  }
-}
 /*
 ** Objectives
 */
