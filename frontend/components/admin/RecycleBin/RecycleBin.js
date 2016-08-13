@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import DeletedTmplsItem from './DeletedTmplsItem'
 import CentralWindow from "../../../containers/central-window.jsx";
-
 import './recycleBin.scss'
 
 import data_for_recycle from '../../mockData/data_for_recycle_bin'
