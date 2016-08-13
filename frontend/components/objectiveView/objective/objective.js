@@ -6,12 +6,41 @@ import ProgressTimeChart from "../progressTimeChart/progressTimeChart.js";
 import PieChart from "../pieChart/pieChart.js";
 import CoWorker from "../coWorker/coWorker.js";
 
-export default class Objective extends React.Component {
+const keyResultList = [{
+        "id": "001",
+        "created": "2016-05-22T10:50:12.643Z",
+        "title": "Achieve > $10M in product revenue",
+        "completed": "true",
+        "completedDate": "2016-06-22T10:50:12.643Z",
+        "score": "0.5"
+    },
+
+    {
+        "id": "002",
+        "created": "2016-05-22T10:50:12.643Z",
+        "title": "International sales of at least $2M",
+        "completed": "false",
+        "completedDate": "2016-06-22T10:50:12.643Z",
+        "score": "0.2"
+    },
+
+    {
+        "id": "003",
+        "created": "2016-05-22T10:50:12.643Z",
+        "title": "Customer churn rate under 5%",
+        "completed": "false",
+        "completedDate": "2016-06-22T10:50:12.643Z",
+        "score": "0.3"
+    }
+]
+
+
+export default class Objective extends React.Component {    
 
     render() {
 
         return (
-            <div className="objective-container">
+            <div className="objective-view objective-container">
                 <div className="objective-user">
                     <div className="img user">
                         <img src="http://static1.squarespace.com/static/5432fb86e4b0a2c1da894800/t/54f8e985e4b0e3b41a3efe03/1425598853953/Avatar+%5Bcircle%5D.png" />
@@ -31,7 +60,7 @@ export default class Objective extends React.Component {
                         <p><i className="fa fa-calendar-check-o" aria-hidden="true"></i>Modified: 05/08/2016</p>
                     </div> 
 
-                    <div className="result">
+                    <div className="objective-view result">
                     <span style={{width: '59%'}}></span><i className="fa fa-check-square" aria-hidden="true"><span>1/2</span></i>
                     </div>
 
@@ -40,7 +69,8 @@ export default class Objective extends React.Component {
                     </div>
                 </div>
 
-                <KeyResults />
+                <h4>My Key Results</h4>
+                <KeyResults keyResultList={keyResultList}/>
 
                 <div className="objective-charts">
                     <ProgressTimeChart />

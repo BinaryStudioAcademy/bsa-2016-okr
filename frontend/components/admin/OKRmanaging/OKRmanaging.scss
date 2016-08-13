@@ -1,0 +1,93 @@
+.user-image {
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.thumbnail {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.toolbar {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  .btn {
+    margin-right: 1rem;
+
+  }
+
+}
+
+.user-list {
+  border: 1px solid #ddd;
+  tbody tr {
+    cursor: pointer;
+    transition: background-color 100ms;
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+}
+
+.rc-intro {
+  background-color: #222;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.rc-img {
+  display: inline-block;
+  max-width: 50px;
+  margin: 0;
+}
+
+.rc-title {
+  font-size: 5rem;
+  margin-top: 3rem;
+  color: #fff;
+  font-family: 'Open Sans';
+  font-weight: 700;
+  letter-spacing: -2px;
+}
+
+.rc-description {
+  margin-top: 2rem;
+  font-size: 2rem;
+  color: #ccc;
+}
+
+.OKR-mnaging.active.user {
+  width: 30%;
+  float: right;
+  background-color: #d4d8dc;
+}
+
+.OKR-managing.user-info-table {
+    text-align: left;
+}
+
+table.OKR-managing.user-list-table {
+    width: 65%;
+    margin: 0 30px;
+
+    th {
+      height: 50px;
+      background-color: #e9ebed;
+    }
+}
+
+.OKR-managing.user-image {
+  width: 40px; 
+  float: left; 
+  margin-right: 20px;
+}
+
+.OKR-managing.search {
+    margin: 0 20px;
+    float: left;
+}
+
+

@@ -1,5 +1,7 @@
 #role-mapping-wrapper {
 	width: 100%;
+	background: #ECEFF1;
+	padding-bottom: 50px;
 }
 
 #user-role-mapping-header-wrapper {
@@ -8,24 +10,44 @@
     display: flex;
     justify-content: center;
 	overflow: hidden;
+	padding-bottom: 50px;
 }
 
 #user-role-mapping-header-wrapper input {
-    border: none;
-	background-color: #F0F0F0;
-	border: 1px solid grey;
+    border: 1px solid #d3d3d3;
+    padding: 10px;
+    color: #777777;
+    border-radius: 3px;
     float: left;
 	width: 850px;
 	height: 40px;
 	margin-top: 0;
+	outline:none;
+	-webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
 }
 
 #user-role-mapping-header-wrapper button {
     float: left;
 	width: 100px;
 	height: 100px;
-	background-color: #2c3e50;
 	height: 40px;
+	background: #03A9F4;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+}
+
+#user-role-mapping-header-wrapper button:hover {
+     -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+     -moz-box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+     box-shadow: 0px 3px 10px rgba(0, 0, 0, .15);
 }
 
 #user-role-mapping-header-wrapper button:after {
@@ -39,23 +61,16 @@
     float: left;
 }
 
-#user-role-mapping-header-wrapper button:hover {
-   background-color: black;;
-}
-
 #user-role-mapping-content-wrapper {
 	width: 100%;
-    display: flex;
-    justify-content: center;
     margin-bottom: 50px;
 }
 
-.table {
-    background-color: #F0F0F0;
-	margin-top: 50px;
+#role-mapping-wrapper .table {
+    background-color: #FFF;
 	width: 950px;
 	margin: 0 auto;
-	margin-bottom: 50px;
+	margin-top: -30px;
 }
 
 #role-mapping-wrapper h3 {
@@ -88,23 +103,25 @@
 	width: 24%;
 }
 
-.table-head {
+#role-mapping-wrapper .table-head {
+	background: #03A9F4;
+    color: white;
 	height: 40px;
 	border-bottom: solid 1px grey;
 }
 
-.table-row {
+#role-mapping-wrapper .table-row {
 	height: 100px;
 	display: flex;
 	align-items: center;
 	border-bottom: solid 1px grey;
 }
 
-.table-row:hover {
+#role-mapping-wrapper .table-row:hover {
 	background-color: lightgrey;
 }
 
-.table-row img {
+#role-mapping-wrapper .table-row img {
 	width: 50px;
 	height: 50px;
 	background: url("https://avatars3.githubusercontent.com/u/19537599?v=3&s=140") 100% 100% no-repeat;
@@ -121,15 +138,16 @@
 }
 
 #roles-table {
-    background-color: #F0F0F0;
-	margin-top: 50px;
+    background-color: #FFF;
 	width: 500px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+	margin-top: -30px;
 }
 
 #role-mapping-wrapper #roles-table .first-column {
 	width: 50%;
 }
-
 
 #roles-table .table-row {
 	height: 60px;
@@ -138,4 +156,50 @@
 	border-bottom: solid 1px grey;
 }
 
+#user-role-mapping-content-wrapper  p {
+    color: #aaaaaa;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    margin: 0;
+    padding: 4px;
+    width: 950px;
+    margin: 0 auto;
+}
+
+
+#user-role-mapping-content-wrapper  p span {
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    background: #ECEFF1;
+    z-index: 10;
+}
+
+#user-role-mapping-content-wrapper p:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 23px;
+    left: 0;
+    height: 0;
+    width: 100%;
+    border-top: 1px solid #aaaaaa;
+    z-index: 0;
+}
+
+
+#role-mapping-wrapper select {
+	border: 1px solid #d3d3d3;
+    color: #777777;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+    padding: 4px;
+    outline:none;
+}
 

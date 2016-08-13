@@ -8,7 +8,7 @@ import RolesPage from "./components/admin/RoleMapping/role-mapping.js"
 import UserPage from "./components/other-persons-page/other-persons-page.js"
 import {IndexRoute, Route, Router, browserHistory} from 'react-router'
 import ObjectiveView from "./components/objectiveView/objectiveView.js"
-import OKRmanagingList from "./components/admin/OKRmanaging/OKRmanagingList.js"
+import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.js"
 import RecycleBin from './components/admin/RecycleBin/RecycleBin'
 import ListOfUsers from './components/list-of-users/list-of-users.jsx'
 
@@ -40,7 +40,7 @@ render(
 					<Route path="history" component={History} />
 					<Route path="roles" component={RolesPage} />
 					<Route path="objective" component={ObjectiveView} />
-					<Route path="okr-managing" component={OKRmanagingList} />
+					<Route path="okr-managing" component={OKRmanaging} />
 					<Route path="recycle-bin" component={RecycleBin} />
 				</Route>
 			</Router>
