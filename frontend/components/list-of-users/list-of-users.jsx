@@ -37,7 +37,7 @@ class ListOfUsers extends Component {
 		}.bind(this));
 
 		return (
-			<div id='usersList' className='undisplay'>
+			<div id='usersList' className=''>
 				<input type='text' onChange={this.search} name='search' placeholder='Enter name'/>
 				<ul className='listOfUsers'>{userNodes}</ul>
 			</div>

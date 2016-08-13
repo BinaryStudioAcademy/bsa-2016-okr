@@ -11,18 +11,18 @@ class KeyResults extends Component {
 		var keyResult = e.target.nextElementSibling,
 			icon = e.target;
 
-	   	if (keyResult.classList.contains('undisplay')) {
-	    	keyResult.classList.remove('undisplay');
-	    	keyResult.classList.add('display');
-	    	icon.classList.remove('fa-angle-double-down');
-	   		icon.classList.add('fa-angle-double-up');
+		if (keyResult.classList.contains('undisplay')) {
+			keyResult.classList.remove('undisplay');
+			keyResult.classList.add('display');
+			icon.classList.remove('fa-angle-double-down');
+			icon.classList.add('fa-angle-double-up');
 		}
 		else {
-	   		icon.classList.remove('fa-angle-double-up');
-	   		icon.classList.add('fa-angle-double-down');
-	    	keyResult.classList.remove('display');
-	    	keyResult.classList.add('undisplay');
-	   	} 
+			icon.classList.remove('fa-angle-double-up');
+			icon.classList.add('fa-angle-double-down');
+			keyResult.classList.remove('display');
+			keyResult.classList.add('undisplay');
+		} 
 	}
 	render() {
 		let item = this.props.data.map((item, index) => {

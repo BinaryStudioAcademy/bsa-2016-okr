@@ -24,7 +24,7 @@ class UserItem extends Component {
 
 	render() {
 		return (
-			<Link to={`/user/${this.props.id}`}>
+			<Link to={this.props.id}>
 			<li className='userItem' onClick={this.takeUser}>
 				<img src='https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg'/>
 				<div>{this.props.name}</div>

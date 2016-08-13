@@ -7,10 +7,6 @@ class NavMenu extends React.Component {
 		super(props);
 	}
 
-	handleShow() {
-		ShowUsersList();
-	}
-
 	links_feedback_handler(event) {
 		links_feedback(event);
 	}
@@ -32,16 +28,10 @@ class NavMenu extends React.Component {
 								Home
 							</Link>
 						</li>
-						<li onClick={this.handleShow.bind(this)}>
-							<button id="users-link">
+						<li>
+							<Link to="/users">
 								<i className="fa fa-users fa-2x" aria-hidden="true"></i>
 								Users
-							</button>
-						</li>
-						<li>
-							<Link to="#">
-								<i className="fa fa-calendar-o fa-2x" aria-hidden="true"></i>
-								Plan
 							</Link>
 						</li>
 						<li>
@@ -69,18 +59,6 @@ class NavMenu extends React.Component {
 	}
 }
 export default NavMenu;
-
-function ShowUsersList() {
-	var usersList = document.getElementById('usersList');
-	if (usersList.classList.contains('undisplay')) {
-		usersList.classList.remove('undisplay');
-		usersList.classList.add('display');
-	}
-	else {
-		usersList.classList.remove('display');
-		usersList.classList.add('undisplay');
-	}
-}
 
 function links_feedback(event) {
 	var   target = event.target,

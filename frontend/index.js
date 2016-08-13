@@ -10,6 +10,7 @@ import {IndexRoute, Route, Router, browserHistory} from 'react-router'
 import ObjectiveView from "./components/objectiveView/objectiveView.js"
 import OKRmanagingList from "./components/admin/OKRmanaging/OKRmanagingList.js"
 import RecycleBin from './components/admin/RecycleBin/RecycleBin'
+import ListOfUsers from './components/list-of-users/list-of-users.jsx'
 
 import DevTools from './shared/devtools/DevTools';
 
@@ -33,7 +34,9 @@ render(
 			<Router history={browserHistory}>
 				<Route path="/" component={App}>
 					<IndexRoute component={HomePage} />
-					<Route path="/user/:userId" component={UserPage} />
+					<Route path="users" component={ListOfUsers}>
+						<Route path=":userId" component={UserPage} />
+					</Route>
 					<Route path="history" component={History} />
 					<Route path="roles" component={RolesPage} />
 					<Route path="objective" component={ObjectiveView} />
