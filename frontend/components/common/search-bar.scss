@@ -1,45 +1,61 @@
+@import "varaibles";
+
+/*
+** Filters
+*/
 #filters {
    -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
    box-sizing: border-box;
    position: absolute;
    width: 100%;
-   -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+   -webkit-box-shadow: $filters-box-shadow;
+   -moz-box-shadow: $filters-box-shadow;
+   box-shadow: $filters-box-shadow;
    padding: 10px;
    background: #dddddd;
    display: none;
-   z-index: 75;
+   z-index: $filters-index;
+
+   /* Open state */
+   &.opened{
+      display: block;
+   }
 }
-#filters div {
+/*
+** Filters sections
+*/
+#filters section {
    float: left;
    width: 50%;
    color: #243342;
+   label{
+      display: block;
+      margin-bottom: 5px;
+      &:last-child{
+         margin-bottom: 0;
+      }
+   }
+   input{
+      margin-right: 5px;
+   }
+   option{
+      font-weight: 300;
+   }
 }
-#filters div label {
-   display: block;
-   margin-bottom: 5px;
-}
-#filters div label:last-child {
-   margin-bottom: 0;
-}
-#filters div input {
-   margin-right: 5px;
-}
-#filters select option {
-   font-weight: 300;
-}
-#filters.opened {
-   display: block;
-}
+
+/*
+** Objective searchbar
+*/
 #obj-search {
    position: relative;
    display: inline-block;
    margin-top: 15px;
    margin-left: 0;
    font-weight: 300;
-}
-#obj-search form {
-   display: block;
+   form{
+      display: block;
+   }
 }
 .search-group {
    position: relative;
@@ -54,17 +70,20 @@
    -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
    display: none;
+   &-item{
+      padding: 10px 15px;
+      border-bottom: 1px solid #ccc;
+      &:last-child{
+         border-bottom: 0;
+      }
+      &:hover{
+         background-color: #aaaaaa;
+      }
+   }
 }
-.search-result-item {
-   padding: 10px 15px;
-   border-bottom: 1px solid #ccc;
-}
-.search-result-item:last-child {
-   border-bottom: 0;
-}
-.search-result-item:hover {
-   background-color: #aaaaaa;
-}
+/*
+** Searchbar Input
+*/
 input#obj-search-input {
    display: block;
    -webkit-box-sizing: border-box;
@@ -75,24 +94,28 @@ input#obj-search-input {
    padding: 7px 0;
    padding-right: 40px;
    padding-left: 40px;
-   background-color: #243342;
+   background-color: $primary-color-dark;
    color: #dddddd;
+   &:focus{
+      outline: none;
+   }
+   &::-webkit-input-placeholder{
+      color: $placeholder-color;
+   }
+   &::-moz-placeholder{
+      color: $placeholder-color;
+   }
+   &:-moz-placeholder{
+      color: $placeholder-color;
+   }
+   &:-ms-input-placeholder{
+      color: $placeholder-color;
+   }
 }
-input#obj-search-input:focus {
-   outline: none;
-}
-input#obj-search-input::-webkit-input-placeholder {
-   color: #fff;
-}
-input#obj-search-input::-moz-placeholder {
-   color: #fff;
-}
-input#obj-search-input:-moz-placeholder {
-   color: #fff;
-}
-input#obj-search-input:-ms-input-placeholder {
-   color: #fff;
-}
+
+/*
+** Search button
+*/
 button#obj-search-submit {
    position: absolute;
    top: 50%;
@@ -104,16 +127,20 @@ button#obj-search-submit {
    border: none;
    background: transparent;
    cursor: pointer;
+   &:focus{
+      outline: none;
+   }
+   &:active i{
+      color: #ffffff;
+   }
+   i{
+      color: #aaa;
+   }
 }
-button#obj-search-submit:focus {
-   outline: none;
-}
-button#obj-search-submit:active i.fa {
-   color: #ffffff;
-}
-button#obj-search-submit i.fa {
-   color: #aaa;
-}
+
+/*
+** Filter button
+*/
 button#obj-search-filter {
    display: inline-block;
    position: absolute;
@@ -125,19 +152,19 @@ button#obj-search-filter {
    border: none;
    background: transparent;
    cursor: pointer;
-}
-button#obj-search-filter:focus {
-   outline: none;
-}
-button#obj-search-filter i.fa {
-   padding: 10px;
-   color: #aaa;
-   pointer-events: none;
-   cursor: pointer;
-}
-button#obj-search-filter:hover i.fa {
-   color: #ffffff;
-}
-button#obj-search-filter.active i.fa {
-   color: #ffffff;
+   &:focus{
+      outline: none;
+   }
+   &:hover i{
+      color: #ffffff;
+   }
+   &.active i{
+      color: #ffffff;
+   }
+   i{
+      padding: 10px;
+      color: #aaa;
+      pointer-events: none;
+      cursor: pointer;
+   }
 }

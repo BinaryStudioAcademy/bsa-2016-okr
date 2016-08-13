@@ -1,0 +1,33 @@
+/*
+** Palette
+*/
+$primary-color: #2c3e50;
+$primary-color-light: #34495e;
+$add-new-obj-bg-color: #ECEFF1;
+$primary-color-dark: #243342;
+$nav-links-color: #dddddd;
+$nav-links-color-hover: #ffffff;
+$new-objective-btn-active: #4CAF50;
+$filters-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+$placeholder-color: #ffffff;
+
+/*
+** Metrics
+*/
+$header-height: 70px;
+$left-nav-width: 60px;
+$left-nav-width-opened: 190px;
+$right-stat-panel-witdh: 350px;
+
+/*
+** Fonts
+*/
+$primary-font: 'Lato', sans-serif;
+
+/*
+** Z-indexes
+*/
+$header-index: 100;
+$navbar-index: 50;
+$filters-index: 75;
+$new-obj-index: 45;

@@ -1,0 +1,30 @@
+.header {
+	background-color: #F3F2FF;
+	height: 135px;
+	padding: 10px 60px;
+
+	.title {
+		justify-content: center;
+		padding:12px;
+		font-size: 28px;
+		font-weight: bold;
+		color: black;
+		margin: 0;
+	}
+}
+.recycle-bin-item {
+	margin: 20px 5%;
+	padding: 5px 15px;
+	border: 1px solid #99bce0;
+	border-left: 10px solid #34495e;
+	.item-rapair {
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+	}
+}

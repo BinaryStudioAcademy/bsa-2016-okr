@@ -1,15 +1,17 @@
+@import "../components/common/varaibles";
+
 #central-window {
    position: absolute;
    top: 0;
    right: 0;
    left: 0;
    bottom: 0;
-   margin-right: 350px;
+   margin-right: $right-stat-panel-witdh;
    overflow-y: auto;
    overflow-x: hidden;
-}
-#main-content{
-   -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-   box-sizing: border-box;
+   #main-content{
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+   }
 }
