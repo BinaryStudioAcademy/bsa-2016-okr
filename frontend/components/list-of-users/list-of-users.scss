@@ -24,8 +24,8 @@ textarea{
 
 #usersList {
 	margin-top: 20px;
-	margin-left: 5%; 
-	
+	margin-left: 5%;
+
 	.title{
 		padding: 0 10% 10px;
 		font-size: 22px;
@@ -52,7 +52,7 @@ textarea{
 	margin: 10px;
 
 	.userItem{
-	    border-bottom: 1px solid #aaa;
+	    //border-bottom: 1px solid #aaa;
 		position: relative;
 		color: $header-color;
 		padding: 5px 0;
@@ -73,13 +73,13 @@ textarea{
 		::-webkit-progress-bar {
 			border: 1px solid #a0a0a0;
 	    	background: #eee;
-	    	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
-			background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
+	    	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%);
+			background: linear-gradient(to bottom, #fff 0%,#eee 50%);
 		}
 		::-webkit-progress-value {
 	    	background: #7fda57;
-			background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%); 
-			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%); 
+			background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%);
+			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%);
 		}
 		::-moz-progress-bar {
 	    	border: 1px solid #a0a0a0;
@@ -98,9 +98,6 @@ textarea{
 
 	.userItem:hover{
 		cursor: pointer;
-		color: #fff;
-		background-color: #99bce0;
+
 	}
 }
-
-
