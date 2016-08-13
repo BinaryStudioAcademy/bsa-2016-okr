@@ -10,7 +10,7 @@ import Dashboard from "./dashboard/dashboard.jsx";
 class Home extends React.Component {
    constructor() {
       super();
-     
+
       this.menu_handle_click = this.menu_handle_click.bind(this);
    }
 
@@ -32,7 +32,7 @@ class Home extends React.Component {
       return (
          <div>
                <CentralWindow>
-                  
+
                   <UserObjectives />
                </CentralWindow>
                <StatPanel>

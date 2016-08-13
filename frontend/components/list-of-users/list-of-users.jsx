@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../actions/otherPersonActions.js";
 
+import CentralWindow from "../../containers/central-window.jsx";
+import StatPanel from "../../containers/statistic-panel.jsx";
 import UserItem from './user-item.jsx';
 import './list-of-users.scss';
 
@@ -37,9 +39,15 @@ class ListOfUsers extends Component {
 		}.bind(this));
 
 		return (
-			<div id='usersList' className='undisplay'>
-				<input type='text' onChange={this.search} name='search' placeholder='Enter name'/>
-				<ul className='listOfUsers'>{userNodes}</ul>
+			<div>
+				<CentralWindow>
+					<div id='usersList'>
+						<div className='title'>Users</div>
+						<input type='text' onChange={this.search} name='search' placeholder='Enter name'/>
+						<ul className='listOfUsers'>{userNodes}</ul>
+					</div>
+				</CentralWindow>
+				<StatPanel></StatPanel>
 			</div>
 		)
 	}
