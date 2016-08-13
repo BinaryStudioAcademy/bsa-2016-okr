@@ -1,5 +1,5 @@
 @import "../common/varaibles";
-@import '../common/elements';
+@import '../common/styles/commonStyles';
 
 .keyresult-group{
   margin-bottom: 20px;
@@ -7,7 +7,6 @@
 
   /* key result input */
   input[type=text] {
-    @extend .form-input;
     padding: 10px;
     width: 570px;
   }

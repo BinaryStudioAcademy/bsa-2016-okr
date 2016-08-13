@@ -1,5 +1,5 @@
 @import "../common/varaibles";
-@import "../common/elements";
+@import "../common/styles/commonStyles";
 
 #new-objective {
   position: fixed;
@@ -86,7 +86,6 @@ button#new-obj-submit-btn {
 
   /* Clone Objective Input */
   input#obj-to-clone {
-    @extend .form-input;
     width: 525px;
   }
 
