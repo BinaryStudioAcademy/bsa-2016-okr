@@ -28,21 +28,61 @@ CategoryService.prototype.add = function (userId, data, callback) {
 	});
 }
 //Done
-CategoryService.prototype.delete = function (data, callback) {
+CategoryService.prototype.softDelete = function (data, callback) {
 	 async.waterfall([
 		(callback) => {
-			CategoryRepository.update(data.categoryId, data.delete, (err, result) => {
+			CategoryRepository.update(data.categoryId, data.body, (err, result) => {
 				if(err){
 					return  callback(err, null);
 				};
+        console.log();
 				return callback(null, data);
 			});
 		},
 		(data, callback) =>{
+      var type = "restore Category";
+      if(data.body.isDeleted == 1){
+        type = "soft delete Category";
+      }
       var body = {
         authorId: ObjectId(data.userId),
         categoryId: ObjectId(data.categoryId),
-        type: "soft delete Category"
+        type: type
+      }
+      HistoryRepository.add(body, callback);
+    },
+	], (err, result) => {
+		return callback(err, result);
+	});
+}
+
+CategoryService.prototype.delete = function (data, callback) {
+	 async.waterfall([
+     (callback) => {
+       CategoryRepository.getById(data.categoryId, (err, result) => {
+         if(err){
+           return  callback(err, null);
+         };
+         return callback(null, result, data);
+       });
+     },
+		(result, data, callback) => {
+      if(result.isDeleted == false){
+        return callback(true);
+      }
+			CategoryRepository.delete(data.categoryId, (err, end) => {
+				if(err){
+					return  callback(err, null);
+				};
+				return callback(null, result, data);
+			});
+		},
+		(result, data, callback) =>{
+      var type = 'hard delete Category "' + result.title + '"';
+      var body = {
+        authorId: ObjectId(data.userId),
+        categoryId: ObjectId(data.categoryId),
+        type: type
       }
       HistoryRepository.add(body, callback);
     },
