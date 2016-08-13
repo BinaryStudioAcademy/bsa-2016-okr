@@ -16,7 +16,7 @@ class ListOfUsers extends Component {
 	}
 
 	takeUser(id) {
-		this.props.takeUserId(this.props.stateFromReducer.users.user[id]);
+		this.props.takeUserId(id);
 	}
 
 	search(e) {

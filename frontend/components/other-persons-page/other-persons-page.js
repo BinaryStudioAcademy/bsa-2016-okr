@@ -17,13 +17,17 @@ class OtherPersonsPage extends Component {
 
 
 	render() {
-		const {userItem} = this.props.stateFromReducer.users;
+		const {user, id} = this.props.stateFromReducer.users;
 
+		var userItem = user.filter(function(user, index) {
+			if (user.userId == id)
+				return user
+		})
 		return (
 			<div>
 				<CentralWindow>
-					<PersonInfo data={userItem} />
-					<UserOjectives data={userItem}/>
+					<PersonInfo data={userItem[0]} />
+					<UserOjectives data={userItem[0]}/>
 				</CentralWindow>
 				<StatPanel></StatPanel>
 			</div>
