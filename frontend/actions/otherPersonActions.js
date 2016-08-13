@@ -13,15 +13,16 @@ export function sendRequest(userId) {
 
 export function receivedError(data) {
 	return {
-		type: RECEIVED_ERROR,
+		type: 'RECEIVED_ERROR',
 		data
 	};
 }
 
-export function receivedData(user) {
+export function receivedData(data) {
+	console.log('d')
 	return {
 		type: 'RECEIVED_DATA',
-		userItem: user
+		data
 	};
 }
 
@@ -33,10 +34,10 @@ export function search(value) {
 	return action;
 }
 
-export function takeUserId(user) {
+export function takeUserId(id) {
 	const action = {
 		type: 'TAKE_USER',
-		userItem: user
+		id: id
 	};
 	return action;
 }  
