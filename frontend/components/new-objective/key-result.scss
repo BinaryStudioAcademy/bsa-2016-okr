@@ -1,0 +1,61 @@
+@import "../common/varaibles";
+@import '../common/elements';
+
+.keyresult-group{
+  margin-bottom: 20px;
+  @extend .clearfix;
+
+  /* key result input */
+  input[type=text]{
+    @extend .form-input;
+    padding: 10px;
+    width: 400px;
+    -webkit-border-top-right-radius: 0;
+    -moz-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  /* range input */
+  input[type=range]{
+    @extend .range-input;
+    width: 90px;
+    margin: 15px 0;
+  }
+
+  /* score view */
+  .score-view{
+    @extend .form-input;
+    display: inline-block;
+    padding: 10px;
+    padding-top: 11px;
+    margin-left: -1px;
+    margin-right: 13px;
+    width: 45px;
+    text-align: center;
+    -webkit-border-top-left-radius: 0;
+    -moz-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .del-keyres{
+    @extend .btn;
+    display: block;
+    float: right;
+    padding: 10px;
+    background: #dddddd;
+    color: #777777;
+    &:hover{
+      background: $del-btn-bg;
+      color: #ffffff;
+    }
+    &:active{
+      background: $del-btn-bg-active;
+    }
+  }
+}

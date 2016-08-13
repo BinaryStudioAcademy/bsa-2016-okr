@@ -1,8 +1,8 @@
 import React from 'react';
-import './home-page-components/home-page.scss';
+import './home-page/home-page.scss';
 import ListOfUsers from './list-of-users/list-of-users.js';
-import Quarter from './home-page-components/quarter.jsx';
-import UserObjectives from './home-page-components/objectives.jsx';
+import Quarter from './home-page/quarter.jsx';
+import UserObjectives from './home-page/objectives.jsx';
 import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
 import Dashboard from "./dashboard/dashboard.jsx";
@@ -79,7 +79,7 @@ class Home extends React.Component {
                   <UserObjectives />
                </CentralWindow>
                <StatPanel>
-               <Dashboard></Dashboard>
+                  <Dashboard />
                </StatPanel>
          </div>
       )

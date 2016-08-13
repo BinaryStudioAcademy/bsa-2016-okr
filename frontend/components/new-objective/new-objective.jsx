@@ -11,7 +11,7 @@ class NewObjective extends React.Component{
                <section id="clone-obj">
                   <label htmlFor="obj-to-clone">Clone existed objective</label>
                   <input type="text" placeholder="Objective" id="obj-to-clone"/>
-                  <button id="clone-it">Clone it</button>
+                  <button type="button" id="clone-it">Clone it</button>
                </section>
                <p><span>Or add new one</span></p>
                <section>

@@ -6,9 +6,12 @@
    right: 0;
    left: 0;
    bottom: 0;
-   margin-right: $right-stat-panel-witdh;
+   margin-right: $right-stat-panel-width;
    overflow-y: auto;
    overflow-x: hidden;
+   &.full-screen{
+      margin-right: 0;
+   }
    #main-content{
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;

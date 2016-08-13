@@ -74,12 +74,12 @@ aside#navbar #new-obj-btn {
    }
    &:hover{
       background: none;
-      color: $new-objective-btn-active;
+      color: $new-obj-btn-bg;
       cursor: pointer;
    }
    &.active{
       background: none;
-      color: $new-objective-btn-active;
+      color: $new-obj-btn-bg;
    }
 }
 
