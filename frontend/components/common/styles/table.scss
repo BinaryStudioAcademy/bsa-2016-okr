@@ -1,0 +1,27 @@
+th {
+    background-color: #34495e;
+    border: 1px solid #99bce0;
+    color: #fff;
+    font-size: 18px;
+}
+
+td {
+    border: 1px solid #99bce0;
+    vertical-align: center;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+table {
+    border-collapse: collapse;
+}
