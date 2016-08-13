@@ -12,7 +12,9 @@ const bodyParser = require('body-parser');
 const dbConnectHandler = require('./backend/db/dbConnect');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
+
+const port = isDeveloping ? 4444 : process.env.PORT;
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -36,7 +38,7 @@ if (isDeveloping) {
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  
+
   app.get('*', function response(req, res) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
     res.end();

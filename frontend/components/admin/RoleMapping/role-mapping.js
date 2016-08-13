@@ -118,6 +118,8 @@ class RoleMapping extends React.Component {
 
                <div id="user-role-mapping-content-wrapper">
 
+                  <p><span>Global roles</span></p><br/><br/>
+
                   <div id="roles-table">
                         <div className="table-head">
                               <h3 className="first-column">Global role</h3>
@@ -129,7 +131,8 @@ class RoleMapping extends React.Component {
                          })}
 
                      </div>
-                  </div>
+
+                  <p><span>Personal roles</span></p><br/><br/>
 
                   <div className="table">
                      <div className="table-head">
@@ -143,8 +146,10 @@ class RoleMapping extends React.Component {
                         {this.state.users.map(function(user) {
                             return  <UserRoleMappingItem key={user.id} user={user}/>;
                          })}
+
+                     </div>
                     
-                  </div>
+               </div>
          </div>
       )
    }

@@ -14,46 +14,62 @@ router.get('/deleted', (req, res, next) => {
 });
 
 router.post('/', adminOnly, (req, res, next) => {
-	console.log("Category rest POST hit");
-	console.log(req.body);
-	var title = req.body.title.trim();
-
+	var title = req.body.title.trim() || '';
 	if(ValidateService.isEmpty(title)){
 	return res.badRequest();
 	}
-
-//	if(title != undefined && title.length > 0) {
-//		console.log(title);
 
 		var data = {
 			title: title,
 			isDeleted: false
 		}
 
-		categoryService.add(data, res.callback);
-/*		// the response is empty now
-	}else {
-		/// this doesn't work
-		var err = new Error('Title must be set');
-		return dbCallback(err);
-	}
-*/
+		categoryService.add(req.session._id, data, res.callback);
 });
-
+//validations done
 router.put('/:id', adminOnly, (req, res, next) => {
-		//TODO add title verefication
-		var title = req.body.title.trim();
+	var isDeleted = req.body.isDeleted;
+	var userId = req.session._id || '';
+	var categoryId = req.params.id || '';
 
+	if(!ValidateService.isCorrectId(userId)
+		|| !ValidateService.isCorrectId(categoryId)){
+		return res.badRequest();
+	}
+
+	if(isDeleted != undefined && ValidateService.isStringBoolean(isDeleted)){
+		var data = {
+			categoryId: categoryId,
+			body: {isDeleted: isDeleted}
+		}
+	categoryService.softDelete(data, res.callback);
+	} else {
+		var title = req.body.title.trim() || '';
 		if(ValidateService.isEmpty(title)){
+			return res.badRequest();
+		}
+		var data = {
+			userId: userId,
+			categoryId: categoryId,
+			body: {title: title}
+		}
+		categoryService.update(data, res.callback);
+	}
+});
+//Done validations
+router.delete('/:id', adminOnly, (req, res, next) => {
+	var userId = req.session._id || '';
+	var categoryId = req.params.id || '';
+	if(!ValidateService.isCorrectId(userId)
+		|| !ValidateService.isCorrectId(categoryId)){
 		return res.badRequest();
 		}
-	repository.update(req.params.id, req.body, res.callback);
-});
+	var data = {
+		userId: userId,
+		categoryId: categoryId
+	}
 
-router.delete('/:id', adminOnly, (req, res, next) => {
-		//for now soft delete only
-	repository.update(req.params.id, {isDeleted: 1}, res.callback);
-	//repository.delete(req.params.id, res.callback);
+	categoryService.delete(data, res.callback);
 });
 
 module.exports = router;

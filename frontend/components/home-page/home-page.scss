@@ -88,7 +88,8 @@
         margin: 10px 0px;
         width: 60%;
 
-          input[type=range]{
+          .keyScore{
+            float: left;
             -webkit-appearance: none;
             background: none;
             width: 20%;
@@ -113,8 +114,8 @@
               -webkit-appearance: none;
               background-color: #ecf0f1;
               border: 1px solid #bdc3c7;
-              width: 15px;
-              height: 15px;
+              width: 20px;
+              height: 20px;
               border-radius: 10px;
               cursor: pointer;
             }
