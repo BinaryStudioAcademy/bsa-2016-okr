@@ -1,33 +1,46 @@
 import React from 'react'
-import './history-item-list.scss'
-import HistoryItem from './history-item'
+// import './history-item-list.scss'
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../actions/historyActions";
 
 class HistoryItemList extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            its: this.props.historyItems
-        }
+    constructor() {
+        super();
         this.getActionColor = this.getActionColor.bind(this);
+		this.displayList = this.displayList.bind(this);
     }
 
     getActionColor(actionType) {
         switch(actionType) {
             case 'create': 
-                return 'actionCreate'
+                return 'actionCreate';
                 break;
             case 'update': 
-                return 'actionUpdate'
+                return 'actionUpdate';
                 break;
             case 'delete': 
-                return 'actionDelete'
+                return 'actionDelete';
                 break;
             default: 
-                return 'actionDefault'
+                return 'actionDefault';
                 break;
         }
     }
+
+	displayList(item, i) {
+		return(<tr key={item._id}>
+			<td>
+				<img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/> {item.authorId}
+			</td>
+			<td className={this.getActionColor(item.type)}>{item.type}</td>
+			<td><a href="#">{item.typeId}</a></td>
+			<td>{item.createdAt}</td>
+		</tr>)
+	}
 
     render() {
 
@@ -39,21 +52,10 @@ class HistoryItemList extends React.Component {
             			<th>User</th>
             			<th>Action</th>
             			<th>Object</th>
-            			<th>Created at</th>
-            			<th>Updated at</th>
+            			<th>Date</th>
             		</tr>
 	                {
-	                	this.state.its.map((function(item, i) {
-	                		return(<tr key={item._id}>
-	                			<td>
-                                    <img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/> {item.authorId}
-                                </td>
-								<td className={this.getActionColor(item.type)}>{item.type}</td>
-								<td><a href="#">{item.typeId}</a></td>
-								<td>{item.createdAt}</td>
-								<td>{item.updatedAt}</td>
-								</tr>)
-	                	}).bind(this))
+	                	this.props.historyItems.map(this.displayList)
 					}
                     </tbody>
 				</table>	
@@ -62,4 +64,15 @@ class HistoryItemList extends React.Component {
     }
 }
 
-export default HistoryItemList
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+	return {
+		historyItems: state.historyItems
+	};
+}
+
+const HistoryItemListConnected = connect(mapStateToProps, mapDispatchToProps)(HistoryItemList);
+export default HistoryItemListConnected

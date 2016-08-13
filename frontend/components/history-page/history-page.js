@@ -8,31 +8,21 @@ import HistoryQurterBar from './history-quarter-bar'
 import HistorySearch from './history-search'
 import HistoryFilter from './history-filter'
 import './history-page.scss'
-import historyMock from '../mockData/historyPageMock'
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
-import * as actions from "../../actions/actions";
+import * as actions from "../../actions/historyActions";
 
 class HistoryPage extends React.Component {
 
-	constructor() {
-		super();
-		this.state = {
-			items: historyMock,
-		}
-	}
-
-	
-
 	render() {
-
 		return(
 			<div>
 			<CentralWindow>
 				<div className="history-page">
 					<div id="top-panel">
+						historyItems: {console.log(this.props.historyItems)}
 						<div className="history-page-header">
 							<div className="history-page-header-row">
 								<div className="history-page-title">
@@ -49,7 +39,7 @@ class HistoryPage extends React.Component {
 							</div>
 						</div>
 					</div>
-					<HistoryItemList historyItems={this.state.items}/>
+					{/*<HistoryItemList/>*/}
 				</div>
 				</CentralWindow>
 				<StatPanel>

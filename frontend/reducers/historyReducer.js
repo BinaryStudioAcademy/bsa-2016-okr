@@ -1,28 +1,21 @@
-import historyMock from '../components/mockData/historyPageMock'
+import historyMock from '../components/mockData/historyPageMock.js'
 
 const initialState = {
     historyItems: historyMock,
-    message: "Init message"
+	searchValue: ''
 };
 
-export default function message(state = initialState, action) {
-    
+export default function historyReducer(state = initialState, action) {
     switch (action.type) {
-
-    	case "JUST_FOR_TEST1": {
-
-            console.log("ZASHEL");
-
-            const {message} = action;
-
-             return Object.assign({}, state, {
-                message: message
-            })
+    	case "SEARCH_OBJECTS": {
+    		const {searchValue} = action;
+			return Object.assign({}, state, {
+				searchValue
+			})
         }
 
-
         default: {
-            return state;        
+            return state;
         }
     }
 }
