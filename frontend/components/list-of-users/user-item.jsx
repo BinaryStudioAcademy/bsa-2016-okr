@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UserProgress from './user-progress.jsx'
 import { Link } from 'react-router';
 
 class UserItem extends Component {
@@ -24,10 +25,14 @@ class UserItem extends Component {
 
 	render() {
 		return (
-			<Link to={this.props.id}>
+			<Link to={`/user/${this.props.id}`}>
 			<li className='userItem' onClick={this.takeUser}>
-				<img src='https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg'/>
+				<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
+				<div className='userInfo'>
 				<div>{this.props.name}</div>
+				<div>Mentor</div>
+				<UserProgress />
+				</div>
 			</li>
 			</Link>
 		)
