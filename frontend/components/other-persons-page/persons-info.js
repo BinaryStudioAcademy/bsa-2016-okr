@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Quarter from './persons-quarter.js';
+import Quarter from './persons-quarter.js'
 import './persons-info.scss'
 
 class PersonsInfo extends Component {
@@ -14,6 +14,7 @@ class PersonsInfo extends Component {
                </div>
                <div className='credentials'>{user}
                   <p className='lastVisite'>{this.props.data.lastVisitDate}</p>
+                  <p className='mentor'>Mentor: {this.props.data.mentor}</p>
                </div>
             </div>      
          </div>

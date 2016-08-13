@@ -5,6 +5,7 @@
   width: 100%;
   padding: 15px 8%;
   box-sizing: border-box;
+  background-color: #ECEFF1;
 
     .userInfo{
       position: relative;
@@ -14,7 +15,6 @@
         display: inline-block;
 
         img {
-
           width: 100%;
           border-radius: 50%;
         }
@@ -22,44 +22,24 @@
 
       .credentials{
         position: absolute;
-        top: 25%;
+        top: 12%;
         left: 110px;
         font-size:18px;
         font-weight: 700;
-        letter-spacing: 1px;
-        word-spacing: 3px;
         display: inline-block;
+        
         .lastVisite{
+          margin-top: 5px;
           font-size: 12px;
           color: #aaa;
         }
+        .mentor {
+          font-size: 14px;
+        }
+        p{
+          font-weight: 400;
+        }
       }
+      
     }
-}
-#quaterPanel{
-  display:table;
-  width: 90%;
-  margin: 10px 5% 0;
-  border-collapse: collapse;
-}
-#quaterList {
-  display: table-row;
-
-  .quater{
-    border: 1px solid $header-color;
-    padding: 5px;
-    text-align: center;
-    display: table-cell;
-    color: $header-color;
-    cursor: pointer;
-  }
-
-  .active{
-    background: #99bce0;
-    color: #fff;
-  }
-  .quater:hover{
-    background: #99bce0;
-    color: #fff;
-  }
 }

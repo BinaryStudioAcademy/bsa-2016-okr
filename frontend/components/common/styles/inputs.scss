@@ -1,0 +1,108 @@
+input[type=text],
+select,
+textarea{
+	border: 1px solid #d3d3d3;
+	padding: 5px;
+	color: #777;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-transition: all .2s;
+	-moz-transition: all .2s;
+	-o-transition: all .2s;
+	transition: all .2s;
+
+	&:focus {
+		outline: none;
+		-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+		-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+		box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+	}
+}
+
+input[type=range] {
+	-webkit-appearance: none;
+	background: none;
+	width: 100px;
+
+	&:focus{
+		outline: none;
+	}
+	&::-webkit-slider-runnable-track{
+    	-webkit-border-radius: 4px;
+    	-moz-border-radius: 3px;
+		border-radius: 4px;
+		height: 6px;
+		border: 1px solid #bdc3c7;
+		background: #ffffff;
+	}
+
+	&::-moz-range-track{
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 3px;
+		border-radius: 4px;
+		height: 6px;
+		border: 1px solid #bdc3c7;
+		background: #ffffff;
+	}
+
+	&::-webkit-slider-thumb{
+		-webkit-appearance: none;
+		background-color: #ecf0f1;
+		border: 1px solid #bdc3c7;
+		width: 18px;
+		height: 18px;
+		border-radius: 10px;
+		cursor: pointer;
+	}
+
+	&::-moz-range-thumb{
+		-moz-appearance: none;
+		background-color: #ecf0f1;
+		border: 1px solid #bdc3c7;
+		width: 16px;
+		height: 16px;
+		border-radius: 9px;
+		cursor: pointer;
+	}
+
+	&:active::-webkit-slider-thumb{
+		box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+	}
+
+	&:active::-moz-range-thumb{
+		box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+	}
+}
+progress{
+	width: 200px;
+	-webkit-appearance: none;
+	appearance: none;
+	-moz-appearance: none;
+
+	progress[value]{
+		width: 100%;
+		-webkit-appearance: none;
+		appearance: none;
+		-moz-appearance: none;
+	}
+}
+::-webkit-progress-bar {
+	background: #eee;
+	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
+	background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
+}
+::-webkit-progress-value {
+   	background: #4CAF50;
+	background: -webkit-linear-gradient(top, #7fda57 0%,#4CAF50 60%); 
+	background: linear-gradient(to bottom, #7fda57 0%,#4CAF50 60%); 
+}
+::-moz-progress-bar {
+   	border: none;
+   	background: #ECEFF1;
+   	background: -moz-linear-gradient(top, #fff 0%, #eee 50%);
+}
+::-moz-progress-value {
+    background: #4CAF50;
+    background: -moz-linear-gradient(top, #7fda57 0%, #4CAF50  50%);
+}
