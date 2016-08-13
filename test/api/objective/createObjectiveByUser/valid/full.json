@@ -1,0 +1,18 @@
+{
+	"title": "Learn Node in depth", 
+	"description": "description for Node",
+	"keys": [
+		{
+			"title": "Node.js book", 
+			"difficulty": "low"
+		}, 
+		{
+			"title": "Node.js docs", 
+			"difficulty": "intermediate"
+		}, 
+		{
+			"title": "Node.js practice", 
+			"difficulty": "high"
+		}
+	]
+}

@@ -3,6 +3,7 @@ var UserRepository = require('../repositories/user');
 var UserMentorRepository = require('../repositories/userMentor');
 var HistoryRepository = require('../repositories/history');
 var async = require('async');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var UserService = function(){
 
@@ -15,8 +16,16 @@ UserService.prototype.generateNotification = function(){
 };
 
 UserService.prototype.add = function(authorId, user, callback){
+ 	console.log('user default '+ user.objectives[0].keys[0].keyId );
+ 	var newUser = Object.assign({}, user);
+ 	newUser.objectives[0].keys[0].keyId = ObjectId(user.objectives[0].keys[0].keyId);
+ 	newUser.objectives[0].category = ObjectId(user.objectives[0].category);
+ 	newUser.objectives[0].objectiveId = ObjectId(user.objectives[0].objectiveId);
+ 	
+ 	console.log('============ \n' + newUser);
 	async.waterfall([
 	(callback) => {
+		console.log('user before adding ' + user);
 		UserRepository.add(user, function(err, user){
 			if(err){
 				return callback(err, null);
@@ -57,8 +66,39 @@ UserService.prototype.update = function(authorId, userId, body, callback){
 	}
 	], (err, result) => {
 		return callback(err, result);
-	})
+	});
 };
+
+UserService.prototype.changeArchive = function (authorId, userId, objectiveId, callback) {
+	 async.waterfall([
+	 	(callback) => {
+	 		UserRepository.getByObjId(objectiveId, (err, user) => {
+	 			if(err){
+	 				return callback(err, null);
+	 			};
+	 			return callback(null, user);
+	 		})
+	 	},
+	 	(user, callback) => {
+	 		UserRepository.update(user._id, {isArchived: !user.isArchived}, (err) => {
+	 			if(err){
+	 				return callback(err, null);
+	 			};
+	 			return callback(null, user);
+	 		})
+	 	},
+	 	(user, callback) => {
+	 		HistoryRepository.addUserEvent(authorId, userId, "archived obj", (err) => {
+	 			if(err){
+	 				return callback(err, null);
+	 			};
+	 			return callback(null, user);
+	 		})
+	 	}
+	 ], (err, result) => {
+		return callback(err, result);
+	});
+}
 
 UserService.prototype.getMe = function(id, callback){
 	UserRepository.getById(id, function(err, user){

@@ -1,13 +1,9 @@
 {
-	"title": "Should return 400",
+	"title": "No key title in one of keys objects. Should return 400",
 	"description": "Shouldn't work at all. Will return 400", 
 	"keys": [
 		{
 			"difficulty": "low"
-		}, 
-		{
-			"title": "Node.js docs", 
-			"difficulty": "intermediate"
 		}
 	]
 }
