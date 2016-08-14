@@ -15,7 +15,7 @@ class DeletedTmplsItem extends Component {
 				<td>{ this.props.item.description }</td>
 				<td className="item-deleted-by">{ this.props.item.deletedBy.fullName }</td>
 				<td>{ this.props.item.deletedDate }</td>
-				<td><button>Restore</button></td>
+				<td><button className="btn btn-blue" title="Restore"><i className="fi flaticon-add"></i></button></td>
 			</tr>
 		);
 	}

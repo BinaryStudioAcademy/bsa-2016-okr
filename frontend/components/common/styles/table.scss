@@ -1,12 +1,15 @@
+.table th,
+.table td {
+    border: 1px solid #99bce0;
+    padding: 10px;
+}
 .table th {
     background-color: #34495e;
-    border: 1px solid #99bce0;
     color: #fff;
     font-size: 18px;
 }
 
 .table td {
-    border: 1px solid #99bce0;
     vertical-align: middle;
 }
 
