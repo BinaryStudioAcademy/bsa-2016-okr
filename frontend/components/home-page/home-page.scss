@@ -14,7 +14,7 @@
   margin-bottom: 30px;
 
   .business-year{
-    padding: 5px 15px;
+    padding: 5px 20px;
     border: 2px solid #607D8B;
     display: inline-block;
   }
@@ -30,14 +30,11 @@
 
   button#add-new-objective{
     @extend .btn;
+    @extend .btn-green;
     display: block;
     float: right;
     color: #ffffff;
-    background: $new-obj-btn-bg;
     padding: 10px 15px;
-    &:active{
-      background: $new-obj-btn-bg-active;
-    }
     i{
       margin-right: 10px;
     }
@@ -87,8 +84,9 @@
   background-color: #fff;
   padding: 5px 15px;
   margin-bottom: 5px;
+  background: lighten($color-blue-grey, 52%);
   border: 1px solid #99bce0;
-  border-left: 10px solid $primary-color-light;
+  border-left: 10px solid lighten($primary-color, 20%);
 
   .name{
     display: inline-block;
@@ -208,7 +206,7 @@
           background-color: #aaa;
           color: #fff;
           padding: 2px 12px 1px 14px;
-          border-radius: 0px 10px 10px 0px;
+          border-radius: 0 10px 10px 0;
 
       }
       
@@ -288,7 +286,7 @@
     display: inline-block;
     padding: 10px;
     position: relative;
-    background: $add-new-obj-bg-color;
+    background: lighten($color-blue-grey, 50%);
     z-index: 10;
   }
 

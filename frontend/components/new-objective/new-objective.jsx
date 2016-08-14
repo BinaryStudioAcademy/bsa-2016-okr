@@ -18,7 +18,7 @@ class NewObjective extends React.Component{
       return(
          <div id="new-objective">
             <button type="button" id="close-new-obj-window" onClick={this.handleCloseNewObjView}>
-               <i className="fa fa-times" aria-hidden="true"></i>
+               <i className="fi flaticon-multiply" aria-hidden="true"></i>
             </button>
             <form action="">
                <section>

@@ -9,9 +9,6 @@
    box-sizing: border-box;
    position: absolute;
    width: 100%;
-   -webkit-box-shadow: $filters-box-shadow;
-   -moz-box-shadow: $filters-box-shadow;
-   box-shadow: $filters-box-shadow;
    padding: 10px;
    background: #dddddd;
    display: none;
@@ -94,22 +91,22 @@ input#obj-search-input {
    padding: 7px 0;
    padding-right: 40px;
    padding-left: 40px;
-   background-color: $primary-color-dark;
+   background-color: darken($primary-color, 20%);
    color: #dddddd;
    &:focus{
       outline: none;
    }
    &::-webkit-input-placeholder{
-      color: $placeholder-color;
+      color: #ffffff;
    }
    &::-moz-placeholder{
-      color: $placeholder-color;
+      color: #ffffff;
    }
    &:-moz-placeholder{
-      color: $placeholder-color;
+      color: #ffffff;
    }
    &:-ms-input-placeholder{
-      color: $placeholder-color;
+      color: #ffffff;
    }
 }
 
