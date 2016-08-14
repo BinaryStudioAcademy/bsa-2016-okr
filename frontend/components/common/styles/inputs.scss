@@ -20,7 +20,7 @@ textarea{
 	}
 }
 
-input[type=range] {
+.range {
 	-webkit-appearance: none;
 	background: none;
 	width: 100px;
@@ -74,7 +74,7 @@ input[type=range] {
 		box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
 	}
 }
-progress{
+.progress{
 	width: 200px;
 	-webkit-appearance: none;
 	appearance: none;
@@ -87,21 +87,17 @@ progress{
 		-moz-appearance: none;
 	}
 }
-::-webkit-progress-bar {
+.progress::-webkit-progress-bar {
+	border: none;
 	background: #eee;
-	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
-	background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
 }
-::-webkit-progress-value {
+.progress::-webkit-progress-value {
    	background: #4CAF50;
-	background: -webkit-linear-gradient(top, #7fda57 0%,#4CAF50 60%); 
-	background: linear-gradient(to bottom, #7fda57 0%,#4CAF50 60%); 
 }
-::-moz-progress-bar {
-   	background: #7fda57;
-   	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
+.progress::-moz-progress-bar {
+   	background: #4CAF50;
+   	border: none;
 }
-::-moz-progress-value {
-    background: #4CAF50;
-    background: -moz-linear-gradient(top, #7fda57 0%, #4CAF50  50%);
+.progress::-moz-progress-value {
+    background: #7fda57;
 }

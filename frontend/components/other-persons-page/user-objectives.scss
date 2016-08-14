@@ -3,6 +3,7 @@
 	.objective{
 		margin: 20px 5%;
 		padding: 5px 15px;
+		background-color: #fff;
 		border: 1px solid #dddddd;
 		border-left: 15px solid #607D8B;
 		border-radius: 3px;
@@ -75,23 +76,18 @@
 			}
 		}
 		::-webkit-progress-bar {
-			border: 1px solid #a0a0a0;
+			border: none;
 	    	background: #eee;
-	    	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
-			background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
 		}
 		::-webkit-progress-value {
-	    	background: #7fda57;
-			background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%); 
-			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%); 
+	    	background: #4CAF50;
 		}
 		::-moz-progress-bar {
-	    	background: #7fda57;
-	    	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
+	    	background: #4CAF50;
+	    	border: none;
 		}
 		::-moz-progress-value {
 		    background: #7fda57;
-		    background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
 		}
 		.objective-info {
 			margin-left: 40%;
@@ -125,37 +121,33 @@
 	}
 }
 #quaterPanel{
-  width: 90%;
+ 
   margin: 10px 5% 0;
 
   #quaterList {
  	list-style: none;
- 	display: inline-block;
- 	width: 90%;
  	margin: 5px 0;
  	padding: 0;
 
- 	select{
- 		padding: 10px;
- 	}
   .quater{
-  	border: 2px solid #607D8B;
-  	display: inline-block;
-  	text-align: center;
-  	width: 15%;
-  	margin-right: -2px;
-    padding: 10px 4%;
-    color: $header-color;
+    border: 2px solid #607D8B;
+    display: inline-block;
+    text-align: center;
+    margin-right: -2px;
+    padding: 5px;
+    width: 22%;
+    color: #2c3e50;
     cursor: pointer;
+    box-sizing: border-box;
+    background-color: #fff;
   }
   .quater:first-child{
   	border-radius: 3px 0 0 3px;
   }
-  .quater:last-child{
-  	border-radius: 0 3px 3px 0;
-  }
-
    .year{
+   		width: 12%;
+   		border: 2px solid #607D8B;
+   		padding: 3px 10px 4px;
     	display: inline-block;
     }
 
