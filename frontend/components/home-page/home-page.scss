@@ -83,6 +83,7 @@
       color: #000;
       cursor: inherit;
       padding: 0 15px 0 0;
+
     }
     .display{
       display: block;
@@ -168,6 +169,7 @@
           z-index: 0;
           display: inline-block;
           position: absolute;
+          width: 24px;
           top: 36%;
           right: -45px;
           font-size: 12px;
