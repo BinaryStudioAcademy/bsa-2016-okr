@@ -51,9 +51,10 @@ header {
    background: none;
    border: none;
    cursor: pointer;
+   color: #cccccc;
    i{
-      color: #ffffff;
       cursor: pointer;
+      font-size: 30px;
       pointer-events: none;
    }
    &:focus,
