@@ -53,13 +53,15 @@ class HistoryItemList extends React.Component {
         return(
             <div className="history-item-list">
             	<table className="table">
-                    <tbody>
-            		<tr>
-            			<th>User</th>
-            			<th>Action</th>
-            			<th>Object</th>
-            			<th>Date</th>
-            		</tr>
+					<thead>
+						<tr>
+							<th>User</th>
+							<th>Action</th>
+							<th>Object</th>
+							<th>Date</th>
+						</tr>
+					</thead>
+					<tbody>
 	                {
 	                	this.historyItems.map(this.displayList)
 					}
