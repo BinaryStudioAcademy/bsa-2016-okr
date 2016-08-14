@@ -9,7 +9,7 @@ class Quarter extends Component {
    }
 
    handleTabClick(e) {
-      var li = document.getElementsByClassName('quater');
+      var li = document.getElementsByClassName('tab');
 
       for (var i=0; i<4; i++) {
          li[i].classList.remove('active');
@@ -36,11 +36,11 @@ class Quarter extends Component {
                  </button>
              </div>
              <div id="quarter-bar">
-                 <ul id='quarter-list' onClick={this.handleClick}>
-                     <li className="active">1-st quarter</li>
-                     <li>2-nd quarter</li>
-                     <li>3-rd quarter</li>
-                     <li>4-th quarter</li>
+                 <ul id='quarter-list' >
+                     <li className="tab active" onClick={this.handleTabClick}>1-st quarter</li>
+                     <li className="tab" onClick={this.handleTabClick}>2-nd quarter</li>
+                     <li className="tab" onClick={this.handleTabClick}>3-rd quarter</li>
+                     <li className="tab" onClick={this.handleTabClick}>4-th quarter</li>
                      <li>
                          <select className='business-year'>
                              <option>2016</option>
