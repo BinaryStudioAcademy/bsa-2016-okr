@@ -247,21 +247,25 @@
     }
     
     .co-workers{
-      position: relative;
-      span {
-          position: absolute;
-          top: 5px;
-          left: 30px;
+        position: relative;
+          padding-right: 5px;
+          font-size: 20px;
+        span {
+            position: absolute;
+            top: 5px;
+            left: 30px;
+        }
       }
-    }
-    .followed{
-      position: relative;
-      span {
-          position: absolute;
-          top: 5px;
-          left: 30px;
+      .followed{
+        position: relative;
+          padding: 0 5px 0 30px;
+          font-size: 20px;
+        span {
+            position: absolute;
+            top: 5px;
+            left: 30px;
+        }
       }
-    }
   }
 }
 }
@@ -290,7 +294,7 @@
     content: '';
     display: block;
     position: absolute;
-    top: 28px;
+    top: 25px;
     left: 0;
     height: 0;
     width: 100%;

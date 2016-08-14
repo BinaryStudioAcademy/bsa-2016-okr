@@ -37,13 +37,13 @@ class NavMenu extends React.Component {
 						</li>
 						<li>
 							<Link to="/recycle-bin">
-								<i className="fa fa-recycle fa-2x" aria-hidden="true"></i>
+								<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
 								Recycle Bin
 							</Link>
 						</li>
 						<li>
 							<Link to="/roles">
-								<i className="fa fa-server fa-2x" aria-hidden="true"></i>
+								<i className="fi flaticon-folder-14" aria-hidden="true"></i>
 								Role mapping
 							</Link>
 						</li>

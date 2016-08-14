@@ -13,17 +13,11 @@ class ObjectiveItem extends Component {
 			<div className='objective'>
 				<Progress data={this.props.item.keyResults}/>
          		<div className='name'>{this.props.item.objTitle}</div>
-         		<span className="plus-icon">
-         			<img src="https://maxcdn.icons8.com/iOS7/PNG/25/Very_Basic/plus-25.png" title="Plus" width="25"/>
-         		</span>
+         		<span className="fi flaticon-plus plus-icon"></span>
          		<div className='description'>{this.props.item.objDescription}</div>
 		        <div className="objective-info">
-		            <div className='co-workers'>
-		            	<img src="https://maxcdn.icons8.com/iOS7/PNG/25/Users/group-25.png" title="User Group Man Man" width="25" />4
-		        	</div>
-		            <div className='followed'>
-		            	<img src="https://maxcdn.icons8.com/iOS7/PNG/25/Hands/thumb_up-25.png" title="Thumb Up" width="25" />10
-		            </div>
+		            <span className='fi flaticon-users co-workers'></span>4
+		            <span className='fi flaticon-like followed'></span>10
 		        </div>
 		        <KeyResults data={this.props.item.keyResults} />
 		    </div>        

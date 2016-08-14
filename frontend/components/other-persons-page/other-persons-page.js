@@ -9,6 +9,7 @@ import PersonInfo from './persons-info.js';
 import UserOjectives from './user-objectives.js';
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
+import Dashboard from "../dashboard/dashboard.jsx";
 
 class OtherPersonsPage extends Component {
 	constructor(props) {
@@ -29,7 +30,9 @@ class OtherPersonsPage extends Component {
 					<PersonInfo data={userItem[0]} />
 					<UserOjectives data={userItem[0]}/>
 				</CentralWindow>
-				<StatPanel></StatPanel>
+				<StatPanel>
+					<Dashboard></Dashboard>
+				</StatPanel>
 			</div>
 		)
 	}

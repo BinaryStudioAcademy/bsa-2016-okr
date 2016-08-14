@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import DeletedTmplsItem from './DeletedTmplsItem';
 import StatPanel from '../../../containers/statistic-panel.jsx';
 import CentralWindow from "../../../containers/central-window.jsx";
-// import '../../common/fonts/flaticon/_flaticon.scss';
 import '../../common/styles/table.scss';
+import './recycleBin.scss';
 
 import data_for_recycle from '../../mockData/data_for_recycle_bin';
 
@@ -21,8 +21,24 @@ class RecycleBin extends Component {
 			<div>
 				<CentralWindow>
 					<h1>Recycle Bin</h1>
-					<input type="checkbox" id="cbObjectives" ></input>
-					<label for="cbObjectives">Objectives</label>
+					<div className="filter-box clearfix">
+						<div>
+							<input type="checkbox" id="cbObjectives" defaultChecked={true}></input>
+							<label htmlFor="cbObjectives">Objectives</label>
+						</div>
+						<div>
+							<input type="checkbox" id="cbKey"></input>
+							<label htmlFor="cbKey">Key</label>
+						</div>
+						<div>
+							<input type="checkbox" id="cbCategory"></input>
+							<label htmlFor="cbCategory">Category</label>
+						</div>
+						<div>
+							<input type="checkbox" id="cbUser"></input>
+							<label htmlFor="cbUser">User</label>
+						</div>
+					</div>
 					<div>
 						<table className='table'>
 							<thead>

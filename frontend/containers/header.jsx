@@ -23,7 +23,7 @@ export default class Header extends React.Component{
       return(
          <header>
             <button id="bars" onClick={this.bars_handle_click.bind(this)}>
-               <i className="fa fa-bars fa-lg" aria-hidden="true"></i>
+               <i className="fi flaticon-menu-1" aria-hidden="true"></i>
             </button>
             <div className="user-info clearfix">
                <div className="logo">

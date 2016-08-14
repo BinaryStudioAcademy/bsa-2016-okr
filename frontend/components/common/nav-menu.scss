@@ -15,7 +15,7 @@ aside#navbar {
 
    /* Navbar opened */
    &.opened{
-      width: $left-nav-width-opened;
+      width: auto;
    }
 }
 
@@ -48,9 +48,10 @@ aside#navbar ul {
       white-space: nowrap;
       padding: 15px 0;
       padding-left: 60px;
+      padding-right: 15px;
       text-align: left;
       text-align: -moz-left;
-      color: #ffffff;
+      color: #cccccc;
    }
    i {
       position: absolute;

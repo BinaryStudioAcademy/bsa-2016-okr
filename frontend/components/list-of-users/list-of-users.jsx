@@ -6,6 +6,7 @@ import * as actions from "../../actions/otherPersonActions.js";
 
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
+import Dashboard from "../dashboard/dashboard.jsx";
 import UserItem from './user-item.jsx';
 import './list-of-users.scss';
 
@@ -42,12 +43,16 @@ class ListOfUsers extends Component {
 			<div>
 				<CentralWindow>
 					<div id='usersList'>
-						<div className='title'>Users</div>
-						<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
+					<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
+						<div className="users-title">
+                    		<p><span>Users</span></p>
+                    	</div>
 						<ul className='listOfUsers'>{userNodes}</ul>
 					</div>
 				</CentralWindow>
-				<StatPanel></StatPanel>
+				<StatPanel>
+					<Dashboard></Dashboard>
+				</StatPanel>
 			</div>
 		)
 	}
