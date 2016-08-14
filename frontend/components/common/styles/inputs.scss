@@ -107,3 +107,48 @@ textarea{
 .progress::-moz-progress-value {
     background: #7fda57;
 }
+
+/* ---=== Custom checkboxes ===--- */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+	line-height: 2em;
+  position: relative;
+  padding-left: 40px;
+  cursor: pointer;
+}
+
+[type="checkbox"]:not(:checked) + label {
+	text-decoration: line-through;
+}
+
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:not(:checked) + label:before {
+	color: #999;
+}
+
+[type="checkbox"]:checked + label,
+[type="checkbox"]:checked + label:before {
+	color: #333;
+}
+
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  font-family: 'Flaticon';
+  font-size: 2em;
+  position: absolute;
+  left: 0;
+}
+
+[type="checkbox"]:checked + label:before {
+	content: '\f24d';
+}
+
+[type="checkbox"]:not(:checked) + label:before {
+	content: '\f24c';
+}

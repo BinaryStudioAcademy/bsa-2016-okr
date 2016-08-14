@@ -27,17 +27,21 @@
   }
 
   #close-new-obj-window{
-    @extend .btn;
     display: block;
+    background: none;
+    border: none;
     position: absolute;
     font-size: 20px;
     padding: 7px 10px;
     background-color: transparent;
     right: 10px;
     top: 10px;
-    color: #777777;
+    color: #AAAAAA;
     &:hover{
-      background: #CFD8DC;
+      color: #000000;
+    }
+    &:focus{
+      outline: none;
     }
   }
 }
