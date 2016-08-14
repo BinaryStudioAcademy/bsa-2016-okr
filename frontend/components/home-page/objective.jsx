@@ -25,7 +25,7 @@ changeScore(){
                <div className='description'>{this.state.item.objDescription}</div>
               <div className="objective-info">
                   <span className='fi flaticon-users co-workers'></span>4
-                  <span className='fi flaticon-like followed'></span>5
+                  <span className='fi flaticon-like-1 followed'></span>5
               </div>
               <KeyResults data={this.state.item.keyResults} changeScore={this.changeScore}/>
           </div>        
