@@ -1,5 +1,9 @@
 import React from 'react'
-// import './history-item-list.scss'
+
+import './history-item-list.scss'
+import  '../../common/styles/commonStyles.scss'
+
+import historyMock from '../../../components/mockData/historyPageMock.js'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -10,6 +14,8 @@ class HistoryItemList extends React.Component {
 
     constructor() {
         super();
+		this.historyItems = historyMock;
+		// console.log(this.historyItems);
         this.getActionColor = this.getActionColor.bind(this);
 		this.displayList = this.displayList.bind(this);
     }
@@ -46,7 +52,7 @@ class HistoryItemList extends React.Component {
 
         return(
             <div className="history-item-list">
-            	<table>
+            	<table className="table">
                     <tbody>
             		<tr>
             			<th>User</th>
@@ -55,7 +61,7 @@ class HistoryItemList extends React.Component {
             			<th>Date</th>
             		</tr>
 	                {
-	                	this.props.historyItems.map(this.displayList)
+	                	this.historyItems.map(this.displayList)
 					}
                     </tbody>
 				</table>	

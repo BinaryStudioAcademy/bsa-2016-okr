@@ -2,11 +2,11 @@ import React from 'react'
 import StatPanel from '../../../containers/statistic-panel.jsx';
 import Dashboard from "../../dashboard/dashboard.jsx";
 import CentralWindow from "../../../containers/central-window.jsx";
-import HistoryItem from './history-item'
-import HistoryItemList from './history-item-list'
-import HistoryQurterBar from './history-quarter-bar'
-import HistorySearch from './history-search'
-import HistoryFilter from './history-filter'
+// import HistoryItem from './history-item'
+import HistoryItemList from './history-item-list';
+// import HistoryQurterBar from './history-quarter-bar'
+import HistorySearch from './history-search';
+import HistoryFilter from './history-filter';
 import './history-page.scss'
 
 import { bindActionCreators } from 'redux';
@@ -39,7 +39,7 @@ class HistoryPage extends React.Component {
 							</div>
 						</div>
 					</div>
-					{/*<HistoryItemList/>*/}
+					<HistoryItemList/>
 				</div>
 				</CentralWindow>
 				<StatPanel>
