@@ -2,9 +2,46 @@
 /*
 ** Quarter section
 */
-.quater-bg{
-  background: #f3f2ff;
-  padding: 20px 0;
+#quaterPanel{
+ 
+  margin: 10px 5% 0;
+
+  #quaterList {
+  list-style: none;
+  margin: 5px 0;
+  padding: 0;
+
+  .quater{
+    border: 2px solid #607D8B;
+    display: inline-block;
+    text-align: center;
+    margin-right: -2px;
+    padding: 5px;
+    width: 22%;
+    color: #2c3e50;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: #fff;
+  }
+  .quater:first-child{
+    border-radius: 3px 0 0 3px;
+  }
+   .year{
+      width: 12%;
+      border: 2px solid #607D8B;
+      padding: 3px 10px 4px;
+      display: inline-block;
+    }
+
+  .active{
+   background-color: #607D8B;
+    color: #fff;
+  }
+  .quater:hover{
+    background-color: #607D8B;
+    color: #fff;
+  }
+}
 }
 
 /*
