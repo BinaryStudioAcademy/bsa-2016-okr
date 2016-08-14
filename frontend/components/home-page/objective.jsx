@@ -24,12 +24,8 @@ changeScore(){
                <div className='name'>{this.state.item.objTitle}</div>
                <div className='description'>{this.state.item.objDescription}</div>
               <div className="objective-info">
-                  <div className='co-workers'>
-                     <img src="https://maxcdn.icons8.com/iOS7/PNG/25/Users/group-25.png" title="User Group Man Man" width="25" />4
-               </div>
-                  <div className='followed'>
-                     <img src="https://maxcdn.icons8.com/iOS7/PNG/25/Hands/thumb_up-25.png" title="Thumb Up" width="25" />10
-                  </div>
+                  <span className='fi flaticon-users co-workers'></span>4
+                  <span className='fi flaticon-like followed'></span>5
               </div>
               <KeyResults data={this.state.item.keyResults} changeScore={this.changeScore}/>
           </div>        
