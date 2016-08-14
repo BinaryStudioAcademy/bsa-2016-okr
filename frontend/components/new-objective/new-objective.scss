@@ -2,15 +2,14 @@
 @import "../common/styles/commonStyles";
 
 #new-objective {
-  position: absolute;
+  position: fixed;
   padding-top: 35px;
   padding-bottom: 30px;
-  width: 100%;
-  top: 0;
+  top: $header-height;
   right: 0;
-  left: 0;
+  margin-right: $right-stat-panel-width;
+  left: $left-nav-width;
   bottom: 0;
-
   background: $add-new-obj-bg-color;
   overflow-y: auto;
   overflow-x: hidden;

@@ -85,6 +85,7 @@
 #objectives{
 .home-objective{
   padding: 5px 15px;
+  margin-bottom: 5px;
   border: 1px solid #99bce0;
   border-left: 10px solid $primary-color-light;
 
@@ -262,4 +263,20 @@
     }
   }
 }
+}
+
+.category{
+  margin-bottom: 20px;
+
+  p{
+    padding: 10px 30px;
+    display: inline-block;
+    margin-bottom: 10px;
+    background: #CFD8DC;
+    font-size: 16px;
+    color: #777;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+  }
 }

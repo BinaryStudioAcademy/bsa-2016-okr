@@ -17,7 +17,7 @@ changeScore(){
   })
 }
    
-   render() { console.log(this.state.item.keyResults)
+   render() {
       return (
          <div className='home-objective'>
             <Progress data={this.state.item.keyResults} />
