@@ -19,12 +19,9 @@ changeScore(){
    
    render() { console.log(this.state.item.keyResults)
       return (
-         <div className='objective'>
+         <div className='home-objective'>
             <Progress data={this.state.item.keyResults} />
                <div className='name'>{this.state.item.objTitle}</div>
-               <span className="plus-icon">
-                  <img src="https://maxcdn.icons8.com/iOS7/PNG/25/Very_Basic/plus-25.png" title="Plus" width="25"/>
-               </span>
                <div className='description'>{this.state.item.objDescription}</div>
               <div className="objective-info">
                   <div className='co-workers'>

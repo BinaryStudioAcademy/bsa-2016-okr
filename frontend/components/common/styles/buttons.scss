@@ -15,6 +15,9 @@
   -o-transition: all .1s;
   transition: all .1s;
   cursor: pointer;
+  &:focus{
+    outline: none;
+  }
 }
 
 .btn:hover {

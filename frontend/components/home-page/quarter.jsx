@@ -4,12 +4,13 @@ class Quarter extends Component {
    constructor() {
       super();
 
-      this.hendleClick = this.hendleClick.bind(this);
+      this.handleTabClick = this.handleTabClick.bind(this);
+      this.handleAddNewObjClick = this.handleAddNewObjClick.bind(this);
    }
 
-   hendleClick(e) {
+   handleTabClick(e) {
       var li = document.getElementsByClassName('quater');
-      
+
       for (var i=0; i<4; i++) {
          li[i].classList.remove('active');
          if ( li[i] == e.target)
@@ -19,23 +20,45 @@ class Quarter extends Component {
       e.target.classList.add('active');
       this.props.changeTab(++currentTab);
    }
-   
+
+    handleAddNewObjClick(event){
+        add_new_obj_handler.call(this, event);
+
+    }
+
    render() {
       return (
-         <div id='quaterPanel'>
-            <ul id='quaterList' onClick={this.hendleClick}>
-               <li className="quater active">1-st quarter</li>
-               <li className="quater">2-nd quarter</li>
-               <li className="quater">3-rd quarter</li>
-               <li className="quater">4-th quarter</li>
-            </ul>
-            <select className='year'>
+         <div id='top-bar'>
+             <div id="manage-bar">
+                 <button type="button" id="add-new-objective" onClick={this.handleAddNewObjClick}>
+                     <i className="fa fa-plus" aria-hidden="true"></i>
+                     New objective
+                 </button>
+             </div>
+             <div id="quarter-bar">
+                 <ul id='quarter-list' onClick={this.handleClick}>
+                     <li className="active">1-st quarter</li>
+                     <li>2-nd quarter</li>
+                     <li>3-rd quarter</li>
+                     <li>4-th quarter</li>
+                 </ul>
+                 <select className='business-year'>
                      <option>2016</option>
                      <option>2017</option>
-                  </select>
+                 </select>
+             </div>
          </div>
       )
    }
 }
 
 export default Quarter
+
+function add_new_obj_handler(event) {
+    var target = event.target,
+        newObjWindow = document.getElementById('new-objective');
+
+    if(!newObjWindow.classList.contains('opened')){
+        newObjWindow.classList.add('opened');
+    } else { newObjWindow.classList.remove('opened') }
+}

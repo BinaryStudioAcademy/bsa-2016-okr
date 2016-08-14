@@ -43,12 +43,12 @@ class Objectives extends Component {
       }
       
       return (
-         <div>
+         <div id="home-page-wrapper">
             <Quarter changeTab={this.changeTab.bind(this)} currentTab={this.state.currentTab}/>
             <div id='objectives'>
                   {ObjectiveItems}
              </div> 
-          </div>       
+          </div>
       )
    }
 }
