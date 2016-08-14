@@ -21,16 +21,18 @@ class RecycleBin extends Component {
 			<div>
 				<CentralWindow>
 					<h1>Recycle Bin</h1>
+					<input type="checkbox" id="cbObjectives" ></input>
+					<label for="cbObjectives">Objectives</label>
 					<div>
 						<table className='table'>
 							<thead>
 								<tr>
-									<th>type</th>
-									<th>category</th>
-									<th>title</th>
-									<th>description</th>
-									<th>deletedBy</th>
-									<th>deletedDate</th>
+									<th>Type</th>
+									<th>Category</th>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Deleted By</th>
+									<th>Date</th>
 									<th className="actions">actions</th>
 								</tr>
 							</thead>
