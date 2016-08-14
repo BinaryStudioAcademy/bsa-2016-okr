@@ -33,7 +33,7 @@ class ListOfUsers extends Component {
 				return;
 			else
 				return (
-					<UserItem takeUser={this.takeUser} key={index} 
+					<UserItem takeUser={this.takeUser} key={index}
 								id={user.userId} name={user.userName} mentor={user.mentor}/>
 				);
 		}.bind(this));
@@ -43,7 +43,7 @@ class ListOfUsers extends Component {
 				<CentralWindow>
 					<div id='usersList'>
 						<div className='title'>Users</div>
-						<input type='text' onChange={this.search} name='search' placeholder='Enter name'/>
+						<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
 						<ul className='listOfUsers'>{userNodes}</ul>
 					</div>
 				</CentralWindow>
