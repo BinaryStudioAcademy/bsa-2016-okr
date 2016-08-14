@@ -41,11 +41,13 @@ class Quarter extends Component {
                      <li>2-nd quarter</li>
                      <li>3-rd quarter</li>
                      <li>4-th quarter</li>
+                     <li>
+                         <select className='business-year'>
+                             <option>2016</option>
+                             <option>2017</option>
+                         </select>
+                     </li>
                  </ul>
-                 <select className='business-year'>
-                     <option>2016</option>
-                     <option>2017</option>
-                 </select>
              </div>
          </div>
       )
