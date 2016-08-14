@@ -86,9 +86,8 @@
 			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%); 
 		}
 		::-moz-progress-bar {
-	    	border: 1px solid #a0a0a0;
-	    	background: #eee;
-	    	background: -moz-linear-gradient(top, #fff 0%, #eee 50%);
+	    	background: #7fda57;
+	    	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
 		}
 		::-moz-progress-value {
 		    background: #7fda57;
