@@ -5,6 +5,7 @@ select,
 textarea{
 	border: 1px solid #d3d3d3;
 	color: #777;
+	padding: 10px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -79,7 +80,7 @@ textarea{
 
 			.progressValue{
 				position: absolute;
-				top: 0%;
+				top: 0;
 				left: 40%;
 			}
 
