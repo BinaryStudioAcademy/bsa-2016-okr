@@ -7,8 +7,12 @@ $add-new-obj-bg-color: #ECEFF1;
 $primary-color-dark: #243342;
 $nav-links-color: #dddddd;
 $nav-links-color-hover: #ffffff;
-$new-objective-btn-active: #4CAF50;
-$filters-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+$new-obj-btn-bg: #4CAF50;
+$new-obj-btn-bg-active: #388E3C;
+$clone-btn-bg: #03A9F4;
+$clone-btn-bg-active: #0288D1;
+$del-btn-bg: #EF5350;
+$del-btn-bg-active: #D32F2F;
 $placeholder-color: #ffffff;
 
 /*
@@ -17,7 +21,7 @@ $placeholder-color: #ffffff;
 $header-height: 70px;
 $left-nav-width: 60px;
 $left-nav-width-opened: 190px;
-$right-stat-panel-witdh: 350px;
+$right-stat-panel-width: 350px;
 
 /*
 ** Fonts
@@ -47,9 +51,9 @@ $new-obj-index: 45;
 .triangle{
   &:after{
     content: '';
-    position: absolute;
-    top: 28px;
-    left: 0;
+    position: fixed;
+    top: 98px;
+    left: 60px;
     height: 0;
     width: 0;
     border-top: 10px solid transparent;

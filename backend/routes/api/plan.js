@@ -10,7 +10,53 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-	service.add(session._id, req.body, res.callback);
+	var userId = req.body.userId || session.id;
+	var title = req.body.title.trim() || '';
+	var isDeleted = req.body.isDeleted || false;
+	var objectives = req.body.objectives || {"1": [], "2": [], "3": [], "4": []};
+
+	function objectivesValidation (obj = {}){
+		let isValid = true;
+		let quartals = ["1", "2", "3", "4"];
+
+		for (let key in obj) {
+			if( quartals.indexOf(key) === -1){
+				console.log("quartals incorrect " + key);
+				return false;
+			};
+			
+			if(!ValidateService.isArray(obj[key])){
+				console.log( key);
+				console.log("array incorrect ");
+				return false;
+			}
+
+			obj[key].forEach( function(element, index) {
+				if(!ValidateService.isCorrectId(element)){
+					console.log("validate id incorrect " + element + " i: " + index);
+					isValid = false;
+				}
+			});
+		};
+
+		return isValid;
+	};
+
+	if(! ValidateService.isCorrectId(userId)
+		|| ValidateService.isEmpty(title)
+		|| !(typeof (isDeleted) === 'boolean')
+		|| !objectivesValidation(objectives)) {
+		return res.badRequest();
+	}
+
+	var plan = {
+		userId,
+		title,
+		isDeleted,
+		objectives
+	};
+
+	service.add(session._id, plan, res.callback);
 });
 
 router.get('/:id', (req, res, next) => {

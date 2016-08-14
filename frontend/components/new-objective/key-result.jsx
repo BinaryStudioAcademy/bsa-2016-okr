@@ -20,8 +20,9 @@ class KeyResult extends React.Component{
       return(
          <li className="keyresult-group">
             <input type="text" placeholder="Key result name"/>
-            <span className="score-view">0</span>
-            <input ref="slider" type="range" min="0" max="1" step="0.1" onChange={this.handleScoreSliderChange}/>
+            <button type="button" className="del-keyres">
+               <i className="fa fa-trash" aria-hidden="true"></i>
+            </button>
          </li>
       )
    }

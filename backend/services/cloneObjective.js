@@ -18,7 +18,10 @@ CloneObjective.prototype.clone = function(data, callback) {
 			});
 		},
 		(data, objective, callback) => {
-      //todo hadle nulls, this becomes null if objective for given id wasn't found
+      if (objective == null){
+        return callback(true);
+      }
+      //^ to hadle nulls, this becomes null if objective for given id wasn't found
       var objId = objective._id;
       KeyRepository.getByObjId(objId, function(err, keys) {
 				if (err) {
@@ -31,17 +34,20 @@ CloneObjective.prototype.clone = function(data, callback) {
     (data, keys, callback) => {
       var keysResult = [];
       keys.forEach(function(result, index){
-        result['score'] = 0;
-        keysResult.push(result);
-      		});
-  		return callback(null, data, keysResult);
+        //result is immutalbe data, can't add props on the fly
+        var tmpResult = result.toObject();
+        tmpResult.score = 0;
+        keysResult.push(tmpResult);
+      });
+      return callback(null, data, keysResult);
   	},
     (data, keysResult, callback) => {
-      var body = {
+      var body = { $push: {
         objectives: [{
-          objectiveId: data.objectiveId,
-          keys : keysResult
+          keys : keysResult,
+          objectiveId: data.objectiveId
         }]
+        }
       }
       var userId = data.userId;
       UserRepository.update(userId, body, callback);

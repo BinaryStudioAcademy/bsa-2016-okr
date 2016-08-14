@@ -3,13 +3,14 @@ import users from '../components/mockData/users.js'
 const initialState = {
 	user: users,
 	searchValue: '',
-	userItem: ''
+	userItem: '',
+	id: ''
 }
 export default function patentDetailsReducer(state = initialState, action) {
     
     switch (action.type) {
 
-
+    	
         case 'SEARCH_USER': {
             const { searchValue } = action
             return Object.assign({}, state, {
@@ -18,9 +19,9 @@ export default function patentDetailsReducer(state = initialState, action) {
         }
 
         case 'TAKE_USER': {
-            const { userItem } = action
+            const { id } = action
             return Object.assign({}, state, {
-                userItem
+                id
             })               
         }
 
