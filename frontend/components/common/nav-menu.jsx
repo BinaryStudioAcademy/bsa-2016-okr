@@ -17,12 +17,6 @@ class NavMenu extends React.Component {
 				<nav onClick={this.links_feedback_handler.bind(this)}>
 					<ul>
 						<li>
-							<button id="new-obj-btn">
-								<i className="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
-								New Objective
-							</button>
-						</li>
-						<li>
 							<Link to="/">
 								<i className="fa fa-home fa-2x" aria-hidden="true"></i>
 								Home
@@ -63,31 +57,14 @@ export default NavMenu;
 function links_feedback(event) {
 	var   target = event.target,
 			links = document.querySelectorAll('#navbar a'),
-			nav = document.getElementById('navbar'),
-			newObjButton = document.getElementById('new-obj-btn'),
-			newObjWindow = document.getElementById('new-objective');
+			nav = document.getElementById('navbar');
 
-   if (target.matches('#navbar #new-obj-btn')) {
-
-		if (!isActive(target)) {
-         switch_state(target, 'active');
-         if (isOpen(nav)) close_nav();
-			switch_state(newObjWindow, 'open');
-      } else {
-         switch_state(target, 'disactive');
-         if (isOpen(nav)) close_nav();
-			switch_state(newObjWindow, 'close');
-      }
-   } else if(target.matches('#navbar a')){
+	if(target.matches('#navbar a')){
 
 		if(!isActive(target)){
          disactiveAll(links);
          switch_state(target, 'active');
          if(isOpen(nav)) close_nav();
-			if(isOpen(newObjWindow)){
-				switch_state(newObjButton, 'disactive');
-				switch_state(newObjWindow, 'close');
-			}
       }
    } else if(target.matches('#navbar #users-link')){
 

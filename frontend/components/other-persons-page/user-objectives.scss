@@ -1,8 +1,10 @@
 @import 'variables';
+@import '../common/varaibles';
 
 #objectives{
 	.objective{
 		margin: 20px 5%;
+	  	margin-top: 10px;
 		padding: 5px 15px;
 		background-color: #fff;
 		border: 1px solid #dddddd;
@@ -179,4 +181,38 @@
     color: #fff;
   }
 }
+}
+
+.user-category {
+
+  p {
+	color: #aaaaaa;
+	font-size: 20px;
+	text-align: center;
+	position: relative;
+	padding: 4px;
+	width: 100%;
+	margin: 30px 5%;
+  }
+
+  p > span {
+	display: inline-block;
+	padding: 10px;
+	position: relative;
+	background: $add-new-obj-bg-color;
+	z-index: 10;
+  }
+
+  p:after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 28px;
+	left: 0;
+	height: 0;
+	width: 100%;
+	border-top: 1px solid #aaaaaa;
+	z-index: 0;
+  }
+
 }

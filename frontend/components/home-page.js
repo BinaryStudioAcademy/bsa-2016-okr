@@ -7,6 +7,7 @@ import UserObjectives from './home-page/objectives.jsx';
 import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
 import Dashboard from "./dashboard/dashboard.jsx";
+import NewObjective from './new-objective/new-objective.jsx';
 
 class Home extends React.Component {
    constructor() {
@@ -33,7 +34,7 @@ class Home extends React.Component {
       return (
          <div>
                <CentralWindow>
-
+                  <NewObjective />
                   <UserObjectives />
                </CentralWindow>
                <StatPanel>

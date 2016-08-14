@@ -1,4 +1,5 @@
 @import 'variables';
+@import '../common/styles/images';
 
 #usersList {
 	margin-top: 20px;
@@ -10,15 +11,16 @@
 		font-weight: 700;
 		display: inline-block;
 	}
-	input[type='text'] {
+		.searchBar {
 		float: right;
 		width: 30%;
 		padding: 10px;
 		margin-right: 10%;
 		padding-left: 35px;
 		font-size: 16px;
-		background: url('https://pp.vk.me/c633829/v633829341/473c0/QvHFhU8EclE.jpg') no-repeat;
+		background: $search-jpg no-repeat;
 		background-size: contain;
+		background-color: white;
 	}
 }
 
@@ -29,7 +31,6 @@
 	margin-top: 10px;
 
 	.userItem{
-	    //border-bottom: 1px solid #aaa;
 		position: relative;
 		color: $header-color;
 		padding: 5px 0;
@@ -54,9 +55,9 @@
 			width: 30%;
 			position: relative;
 			margin-right: 40px;
-			
 
-			.progressValue { 
+
+			.progressValue {
 				z-index: 0;
 				display: inline-block;
 			    position: absolute;
@@ -69,7 +70,7 @@
 			    border-radius: 0px 10px 10px 0px;
 
 			}
-			
+
 			progress[value]{
 				position: relative;
 				z-index:1;
@@ -101,6 +102,5 @@
 
 	.userItem:hover{
 		cursor: pointer;
-
 	}
 }

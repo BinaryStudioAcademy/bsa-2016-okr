@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ObjectiveItem from './user-objective-item.js';
 import Quarter from './persons-quarter.js';
+import ObjectivesList from './user-objectives-list.jsx';
 import './user-objectives.scss'
 
 class Objectives extends Component {
@@ -46,7 +47,7 @@ class Objectives extends Component {
 			<div>
 			 	<Quarter changeTab={this.changeTab.bind(this)} currentTab={this.state.currentTab}/>
 				<div id='objectives'>
-	         		{ObjectiveItems}
+	         		<ObjectivesList objectives={ObjectiveItems} />
 			    </div> 
 		    </div>       
 		)
