@@ -2,20 +2,6 @@
 ** Palette
 */
 $primary-color: #2c3e50;
-$primary-color-light: #34495e;
-$add-new-obj-bg-color: #ECEFF1;
-$primary-color-dark: #243342;
-$nav-links-color: #dddddd;
-$nav-links-color-hover: #ffffff;
-$new-obj-btn-bg: #4CAF50;
-$new-obj-btn-bg-active: #388E3C;
-$clone-btn-bg: #03A9F4;
-$clone-btn-bg-active: #0288D1;
-$del-btn-bg: #EF5350;
-$del-btn-bg-active: #D32F2F;
-$placeholder-color: #ffffff;
-$quarter-bg: #607D8B;
-
 $color-blue: #2196f3;
 $color-blue-grey: #607d8b;
 $color-green: #4caf50;
@@ -55,16 +41,4 @@ $new-obj-index: 45;
     clear: both;
   }
 }
-.triangle{
-  &:after{
-    content: '';
-    position: fixed;
-    top: 98px;
-    left: 60px;
-    height: 0;
-    width: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid $primary-color-light;
-  }
-}
+
