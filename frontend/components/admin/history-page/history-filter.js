@@ -27,8 +27,7 @@ class HistoryFilter extends React.Component {
 								<option value="type">Update</option>
 								<option value="object">Delete</option>
 							</select></td>
-						<td className="cell-right-align">Sort by:
-							<select>
+						<td className="cell-right-align">Sort by: <select>
 								<option value="user">User</option>
 								<option value="type">Action</option>
 								<option value="object">Object</option>

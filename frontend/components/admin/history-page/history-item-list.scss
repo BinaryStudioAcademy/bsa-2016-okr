@@ -6,22 +6,22 @@
 		width: 90%;
 		margin: 24px auto 0px auto;
 	}
-
-	th, td {
-		padding: $padding;
-	}
-
-	th {
-		background-color: $color-main;
-		border: 1px solid #99bce0;
-		color: #fff;
-		font-size: 18px;
-	}
-
-	td {
-		border: 1px solid #99bce0;
-		vertical-align: center;
-	}
+    //
+	//th, td {
+	//	padding: $padding;
+	//}
+    //
+	//th {
+	//	background-color: $color-main;
+	//	border: 1px solid #99bce0;
+	//	color: #fff;
+	//	font-size: 18px;
+	//}
+    //
+	//td {
+	//	border: 1px solid #99bce0;
+	//	vertical-align: center;
+	//}
 
 	.actionCreate {
 		color: green;
@@ -44,5 +44,5 @@
 		width: 18px;
 		border-radius: 50%;
 	}
-	
+	//
 }

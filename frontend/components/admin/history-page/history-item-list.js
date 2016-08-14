@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './history-item-list.scss'
-import  '../../common/styles/commonStyles.scss'
+import  '../../common/styles/table.scss'
 
 import historyMock from '../../../components/mockData/historyPageMock.js'
 
