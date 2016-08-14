@@ -1,7 +1,7 @@
 import React from 'react'
-import StatPanel from '../../containers/statistic-panel.jsx';
-import Dashboard from "../dashboard/dashboard.jsx";
-import CentralWindow from "../../containers/central-window.jsx";
+import StatPanel from '../../../containers/statistic-panel.jsx';
+import Dashboard from "../../dashboard/dashboard.jsx";
+import CentralWindow from "../../../containers/central-window.jsx";
 import HistoryItem from './history-item'
 import HistoryItemList from './history-item-list'
 import HistoryQurterBar from './history-quarter-bar'
@@ -12,7 +12,7 @@ import './history-page.scss'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/historyActions";
+import * as actions from "../../../actions/historyActions";
 
 class HistoryPage extends React.Component {
 
@@ -22,7 +22,7 @@ class HistoryPage extends React.Component {
 			<CentralWindow>
 				<div className="history-page">
 					<div id="top-panel">
-						historyItems: {console.log(this.props.historyItems)}
+						{/*historyItems: {console.log(this.props.historyItems)}*/}
 						<div className="history-page-header">
 							<div className="history-page-header-row">
 								<div className="history-page-title">
@@ -43,7 +43,7 @@ class HistoryPage extends React.Component {
 				</div>
 				</CentralWindow>
 				<StatPanel>
-					<Dashboard></Dashboard>
+					<Dashboard/>
 				</StatPanel>
 			</div>
 		)

@@ -1,4 +1,6 @@
 import React from 'react'
+
+import '../../common/styles/commonStyles.scss'
 import './history-search.scss'
 
 class HistorySearch extends React.Component {
@@ -11,8 +13,8 @@ class HistorySearch extends React.Component {
 
 		return(
 			<div className="history-search-bar">
-				<input className="history-search-bar-input" type="text" placeholder="Search..."/>
-				<button className="btn btn-search"><i className="fa fa-search"/> Search</button>
+				<input type="text" id="history-search-bar-input" placeholder="Search..."/>
+				<button className="btn btn-green btn-search"><i className="fa fa-search"/> Search</button>
 			</div>
 		)
 	}

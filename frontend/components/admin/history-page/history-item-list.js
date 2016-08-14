@@ -4,7 +4,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/historyActions";
+import * as actions from "../../../actions/historyActions";
 
 class HistoryItemList extends React.Component {
 
