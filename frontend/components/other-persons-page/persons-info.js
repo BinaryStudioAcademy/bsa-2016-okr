@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Quarter from './persons-quarter.js'
-import './persons-info.scss'
 
 class PersonsInfo extends Component {
    render() {

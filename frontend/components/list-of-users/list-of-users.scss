@@ -1,21 +1,47 @@
-@import 'variables';
+@import '../common/variables';
 @import '../common/styles/images';
 
 #usersList {
-	margin-top: 20px;
+	.users-title {
+	clear: both;
 
-	.title{
-		padding: 0 10% 10px;
-		font-size: 22px;
-		font-weight: 700;
-		display: inline-block;
-	}
+  p {
+	color: #aaaaaa;
+	font-size: 20px;
+	text-align: center;
+	position: relative;
+	padding: 4px;
+    width: 98%;
+    margin: 0 5px;
+  }
+
+  p > span {
+	display: inline-block;
+	padding: 10px;
+	position: relative;
+	background: lighten($color-blue-grey, 50%);
+	z-index: 10;
+  }
+
+  p:after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 28px;
+	left: 0;
+	height: 0;
+	width: 100%;
+	border-top: 1px solid #aaaaaa;
+	z-index: 0;
+  }
+
+}
 		.searchBar {
 		float: right;
 		width: 30%;
 		padding: 10px;
-		margin-right: 10%;
-		padding-left: 35px;
+		margin-right: 5px;
+		padding-left: 30px;
 		font-size: 16px;
 		background: $search-jpg no-repeat;
 		background-size: contain;
@@ -30,7 +56,7 @@
 
 	.userItem{
 		position: relative;
-		color: $header-color;
+		color: $primary-color;
 		padding: 5px 0;
 
 		.userPhoto{
@@ -39,7 +65,7 @@
 		.userInfo{
 			display: inline-block;
 			position: absolute;
-			top: 10%;
+			top: 15px;
 			width: 30%;
 
 			.mentor{
@@ -102,3 +128,4 @@
 		cursor: pointer;
 	}
 }
+
