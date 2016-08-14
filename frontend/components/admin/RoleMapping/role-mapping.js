@@ -116,6 +116,9 @@ class RoleMapping extends React.Component {
       <div id="role-mapping-wrapper">
 
             <aside id="inter-panel">
+
+                 <p><span>Global roles</span></p>
+
                  <div id="roles-table">
                       <div className="table-head">
                             <h3 className="first-column">Global role</h3>

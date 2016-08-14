@@ -20,7 +20,7 @@ class NewObjCredentials extends React.Component{
                </div>
             </div>
             <div className="desc-group">
-               <label for="new-obj-desc">Description</label>
+               <label htmlFor="new-obj-desc">Description</label>
                <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
             </div>
          </div>

@@ -19,7 +19,13 @@ textarea{
 		box-shadow: 0 0 7px rgba(0, 0, 0, .15);
 	}
 }
-
+textarea{
+  resize: none;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;;
+}
 .range {
 	-webkit-appearance: none;
 	background: none;

@@ -13,10 +13,15 @@ class KeyResultList extends React.Component{
       };
 
       this.handleAddNewKeyRes = this.handleAddNewKeyRes.bind(this);
+      this.handleDelKeyResult = this.handleDelKeyResult.bind(this);
    }
 
    handleAddNewKeyRes(){
       add_new_keyres_handler.call(this);
+   }
+
+   handleDelKeyResult(id){
+      del_keyresult_handler.call(this, id);
    }
 
    render(){
@@ -26,7 +31,7 @@ class KeyResultList extends React.Component{
 
             {
                this.state.keyResults.map((el) => {
-                  return <KeyResult id={el.id} />
+                  return <KeyResult id={el.id} key={el.id} onClick={this.handleDelKeyResult}/>
                })
             }
 
@@ -39,11 +44,23 @@ class KeyResultList extends React.Component{
 export default KeyResultList;
 
 function add_new_keyres_handler(){
-   var newId = ++this.state.keyResults[this.state.keyResults.length - 1].id;
-   console.log(newId);
+   var newId = this.state.keyResults[this.state.keyResults.length - 1].id;
    this.setState({
       keyResults: this.state.keyResults.concat({
-         id: newId
+         id: ++newId
       })
    })
+}
+function del_keyresult_handler(id) {
+   if(this.state.keyResults.length > 1){
+      for(var i = 0, l = this.state.keyResults.length; i < l; i++){
+         if(id === this.state.keyResults[i].id){
+            this.state.keyResults.splice(i, 1);
+            break;
+         }
+      }
+      this.setState({
+         keyResults: this.state.keyResults
+      })
+   }
 }
