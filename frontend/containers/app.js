@@ -4,6 +4,7 @@ import NavMenu from "../components/common/nav-menu.jsx";
 import MainPage from '../containers/main-page.jsx';
 import "normalize.css";
 import '../components/common/fonts/flaticon/_flaticon.scss';
+import '../components/common/fonts/fira/_fira.scss';
 import './app.scss';
 
 
