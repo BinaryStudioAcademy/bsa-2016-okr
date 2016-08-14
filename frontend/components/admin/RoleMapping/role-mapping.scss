@@ -35,10 +35,12 @@
 
 #user-role-mapping-header-wrapper button {
     float: left;
+    border: none;
+    margin-left: 1%;
 	width: 100px;
 	height: 100px;
 	height: 40px;
-	background: #607D8B;
+	background: #03A9F4;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -46,12 +48,21 @@
     -moz-transition: all .2s;
     -o-transition: all .2s;
     transition: all .2s;
+    outline: none;
 }
 
 #user-role-mapping-header-wrapper button:hover {
      -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
      -moz-box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
      box-shadow: 0px 3px 10px rgba(0, 0, 0, .15);
+     border: none;
+     outline: none;
+}
+
+#user-role-mapping-header-wrapper button:active {
+    background: #0288D1;
+    border: none;
+    outline: none;
 }
 
 #role-mapping-wrapper .table {
@@ -94,7 +105,7 @@
 }
 
 #role-mapping-wrapper .table-head {
-	background: #607D8B;
+	background: #03A9F4;
     color: white;
 	height: 40px;
 	border-bottom: solid 1px grey;
@@ -131,7 +142,7 @@
     background-color: #FFF;
 	width: 300px;
 	margin: 0 auto;
-	margin-top: 30px;
+    margin-top: -25px;
 }
 
 #roles-table .second-column {
@@ -205,4 +216,14 @@
 #role-mapping-wrapper input:focus{
     box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
 }
+
+
+#role-mapping-wrapper aside span {
+    background: #ddd;
+}
+
+#role-mapping-wrapper aside p {
+    margin-top: 15px;
+}
+
 

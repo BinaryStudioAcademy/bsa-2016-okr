@@ -142,6 +142,9 @@
             height: 7px;
             border: 1px solid #bdc3c7;
             background: #ffffff;
+            &:focus{
+              outline: none;
+            }
             &::-moz-range-track{
               -webkit-border-radius: 8px;
               -moz-border-radius: 8px;

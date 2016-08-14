@@ -23,16 +23,16 @@ class Quarter extends Component {
    render() {
       return (
          <div id='quaterPanel'>
-            <ul id='quaterList' onClick={this.hendleClick}>
-               <li className="quater active">1-st quarter</li>
-               <li className="quater">2-nd quarter</li>
-               <li className="quater">3-rd quarter</li>
-               <li className="quater">4-th quarter</li>
-            </ul>
-            <select className='year'>
+            <ul id='quaterList'>
+               <li className="quater active" onClick={this.hendleClick}>1-st quarter</li>
+               <li className="quater" onClick={this.hendleClick}>2-nd quarter</li>
+               <li className="quater" onClick={this.hendleClick}>3-rd quarter</li>
+               <li className="quater" onClick={this.hendleClick}>4-th quarter</li>
+               <select className='year'>
                <option>2016</option>
                <option>2017</option>
-            </select>   
+            </select> 
+            </ul>  
          </div>
       )
    }
