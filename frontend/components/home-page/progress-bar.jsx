@@ -7,6 +7,7 @@ class Progress extends Component {
 			data: props.data
 		}
 	}
+
 	
 	render() {
 		var score = 0;
@@ -18,7 +19,7 @@ class Progress extends Component {
 		return (
 			<div className='progress-bar'>
 		    	<progress max="100" value={value}></progress>
-		    	<span className='progressValue'>{value}%</span>
+		    	<div className='progressValue'>{value}%</div>
 		    </div>
          		       
 		)

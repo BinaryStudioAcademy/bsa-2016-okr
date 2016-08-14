@@ -8,13 +8,15 @@ class KeyResult extends Component {
 	render() {
 	if (this.props.item.completed == 'true')
 		return (
-			<li className="user-key-result completed">
-         		{this.props.item.title}
+			<li className="user-key-result">
+				<span className='score'>{this.props.item.score}</span>
+         		<span className='completed'>{this.props.item.title}</span>
 		    </li>        
 		)
 		else
 			return (
 				<li className="user-key-result">
+	         		<span className='score'>{this.props.item.score}</span>
 	         		{this.props.item.title}
 			    </li>        
 			)

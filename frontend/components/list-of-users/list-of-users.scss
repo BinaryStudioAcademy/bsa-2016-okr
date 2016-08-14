@@ -48,44 +48,51 @@
 				margin-top: 10px;
 			}
 		}
-		.progress-bar{
-			    margin-top: 2%;
-			    position: relative;
-			    display: inline-block;
-			    width: 30%;
-			    float: right;
-			    margin-right: 30%;
+				.progress-bar{
+			float: right;
+			padding-top: 10px;
+			width: 30%;
+			position: relative;
+			margin-right: 40px;
+			
 
-			.progressValue{
-				position: absolute;
-				top: 0;
-				left: 40%;
+			.progressValue { 
+				z-index: 0;
+				display: inline-block;
+			    position: absolute;
+			    top: 36%;
+			    right: -45px;
+			    font-size: 13px;
+			    background-color: #aaa;
+			    color: #fff;
+			    padding: 1px 8px 1px 20px;
+			    border-radius: 0px 10px 10px 0px;
+
 			}
-
-		progress[value]{
-			width: 100%;
-			-webkit-appearance: none;
-			appearance: none;
-		}
+			
+			progress[value]{
+				position: relative;
+				z-index:1;
+				width: 100%;
+				-webkit-appearance: none;
+				appearance: none;
+			}
 		}
 		::-webkit-progress-bar {
-			border: 1px solid #a0a0a0;
+			border: none;
+			border-radius: 10px ;
 	    	background: #eee;
-	    	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%);
-			background: linear-gradient(to bottom, #fff 0%,#eee 50%);
 		}
 		::-webkit-progress-value {
-	    	background: #7fda57;
-			background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%);
-			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%);
+			border-radius: 10px;
+	    	background: #4CAF50;
 		}
 		::-moz-progress-bar {
-	    	background: #7fda57;
-	    	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
+	    	background: #4CAF50;
+	    	border: none;
 		}
 		::-moz-progress-value {
 		    background: #7fda57;
-		    background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
 		}
 			img{
 				margin: 5px 10px 2px;

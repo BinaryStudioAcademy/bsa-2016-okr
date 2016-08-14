@@ -22,6 +22,7 @@ class KeyResult extends Component {
       else
          e.target.parentElement.classList.remove('completed')
       this.props.changeScore(this.state.keyResult);
+
    }
 
    render() {

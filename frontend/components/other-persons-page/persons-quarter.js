@@ -24,14 +24,14 @@ class Quarter extends Component {
       return (
          <div id='quaterPanel'>
             <ul id='quaterList'>
+            <select className='year'>
+               <option>2016</option>
+               <option>2017</option>
+            </select> 
                <li className="quater active" onClick={this.hendleClick}>1-st quarter</li>
                <li className="quater" onClick={this.hendleClick}>2-nd quarter</li>
                <li className="quater" onClick={this.hendleClick}>3-rd quarter</li>
                <li className="quater" onClick={this.hendleClick}>4-th quarter</li>
-               <select className='year'>
-               <option>2016</option>
-               <option>2017</option>
-            </select> 
             </ul>  
          </div>
       )
