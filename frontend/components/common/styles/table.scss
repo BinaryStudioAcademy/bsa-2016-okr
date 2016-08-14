@@ -1,27 +1,27 @@
-th {
+.table th {
     background-color: #34495e;
     border: 1px solid #99bce0;
     color: #fff;
     font-size: 18px;
 }
 
-td {
+.table td {
     border: 1px solid #99bce0;
     vertical-align: middle;
 }
 
-tr {
+.table tr {
     display: table-row;
     vertical-align: inherit;
     border-color: inherit;
 }
 
-tbody {
+.table tbody {
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
 }
 
-table {
+.table table {
     border-collapse: collapse;
 }
