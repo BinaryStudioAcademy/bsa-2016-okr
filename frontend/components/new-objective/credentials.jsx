@@ -8,6 +8,11 @@ class NewObjCredentials extends React.Component{
             <div className="title-group">
                <label htmlFor="new-obj-title">New objective title</label>
                <input type="text" placeholder="Title" id="new-obj-title"/>
+               <select name="new-obj-category" id="new-obj-category">
+                  <option value="knowledge">Knowledge</option>
+                  <option value="expertise">Expertise</option>
+                  <option value="projects">Projects</option>
+               </select>
             </div>
             <div className="desc-group">
                <label htmlFor="new-obj-desc">Description</label>

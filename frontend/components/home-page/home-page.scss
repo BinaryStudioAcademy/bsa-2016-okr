@@ -266,17 +266,35 @@
 }
 
 .category{
-  margin-bottom: 20px;
 
-  p{
-    padding: 10px 30px;
-    display: inline-block;
-    margin-bottom: 10px;
-    background: #CFD8DC;
-    font-size: 16px;
-    color: #777;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+  p {
+    color: #aaaaaa;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    padding: 4px;
+    width: 100%;
+    margin: 30px auto;
   }
+
+  p > span {
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    background: $add-new-obj-bg-color;
+    z-index: 10;
+  }
+
+  p:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 28px;
+    left: 0;
+    height: 0;
+    width: 100%;
+    border-top: 1px solid #aaaaaa;
+    z-index: 0;
+  }
+
 }
