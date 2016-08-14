@@ -4,6 +4,7 @@ let users = [
     userId: '0',
     userName: 'Kelly Bloom',
     lastVisitDate: '2016-08-11',
+    mentor: 'Grigoriy Skovoroda',
     objectives: [
     {
         "id": "5791f8847ed517bc028e739a",
@@ -118,6 +119,7 @@ let users = [
     "id": "5791f8847ed517bc028e739a",
     userId: '1',
     userName: 'Josh Peterson',
+    mentor: 'Grigoriy Skovoroda',
     lastVisitDate: '2016-08-01',
     objectives: [
     {
@@ -232,6 +234,7 @@ let users = [
     "id": "5791f8847ed517bc028e739a",
     userId: '2',
     userName: 'Kelly Berry',
+    mentor: 'Grigoriy Skovoroda',
     lastVisitDate: '2016-07-22',
     objectives: [
     {
@@ -347,6 +350,7 @@ let users = [
     "id": "5791f8847ed517bc028e739a",
     userId: '3',
     userName: 'John Lock',
+    mentor: 'Grigoriy Skovoroda',
     lastVisitDate: '2016-05-22',
     objectives: [
     {

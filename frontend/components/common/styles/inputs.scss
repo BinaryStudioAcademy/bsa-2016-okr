@@ -73,6 +73,35 @@ input[type=range] {
 	&:active::-moz-range-thumb{
 		box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
 	}
+}
+progress{
+	width: 200px;
+	-webkit-appearance: none;
+	appearance: none;
+	-moz-appearance: none;
 
-
+	progress[value]{
+		width: 100%;
+		-webkit-appearance: none;
+		appearance: none;
+		-moz-appearance: none;
+	}
+}
+::-webkit-progress-bar {
+	background: #eee;
+	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
+	background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
+}
+::-webkit-progress-value {
+   	background: #4CAF50;
+	background: -webkit-linear-gradient(top, #7fda57 0%,#4CAF50 60%); 
+	background: linear-gradient(to bottom, #7fda57 0%,#4CAF50 60%); 
+}
+::-moz-progress-bar {
+   	background: #7fda57;
+   	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
+}
+::-moz-progress-value {
+    background: #4CAF50;
+    background: -moz-linear-gradient(top, #7fda57 0%, #4CAF50  50%);
 }

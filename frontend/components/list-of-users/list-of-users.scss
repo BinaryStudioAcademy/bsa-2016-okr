@@ -4,8 +4,8 @@ input[type=text],
 select,
 textarea{
 	border: 1px solid #d3d3d3;
-	padding: 10px;
 	color: #777;
+	padding: 10px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -31,12 +31,11 @@ textarea{
 		font-size: 22px;
 		font-weight: 700;
 		display: inline-block;
-		border-bottom: 1px solid #aaa;
-
 	}
 	input[type='text'] {
 		float: right;
 		width: 30%;
+		padding: 10px;
 		margin-right: 10%;
 		padding-left: 35px;
 		font-size: 16px;
@@ -46,10 +45,10 @@ textarea{
 }
 
 .listOfUsers {
-	width: 90%;
+	width: 89%;
 	list-style: none;
 	padding: 5px;
-	margin: 10px;
+	margin-top: 10px;
 
 	.userItem{
 	    //border-bottom: 1px solid #aaa;
@@ -60,9 +59,30 @@ textarea{
 		.userPhoto{
 			max-width: 100px;
 		}
+		.userInfo{
+			display: inline-block;
+			position: absolute;
+			top: 10%;
+			width: 30%;
+
+			.mentor{
+				font-size: 12px;
+				margin-top: 10px;
+			}
+		}
 		.progress-bar{
-			padding-top: 10px;
-			position: relative;
+			    margin-top: 2%;
+			    position: relative;
+			    display: inline-block;
+			    width: 30%;
+			    float: right;
+			    margin-right: 30%;
+
+			.progressValue{
+				position: absolute;
+				top: 0;
+				left: 40%;
+			}
 
 		progress[value]{
 			width: 100%;
@@ -82,9 +102,8 @@ textarea{
 			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%);
 		}
 		::-moz-progress-bar {
-	    	border: 1px solid #a0a0a0;
-	    	background: #eee;
-	    	background: -moz-linear-gradient(top, #fff 0%, #eee 50%);
+	    	background: #7fda57;
+	    	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
 		}
 		::-moz-progress-value {
 		    background: #7fda57;

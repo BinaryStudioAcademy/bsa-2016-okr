@@ -3,6 +3,8 @@ import UserRoleMappingItem from "./user-role-mapping-item.js";
 import RoleMappingItem from "./role-mapping-item.js";
 
 import './role-mapping.scss';
+import '../../common/styles/table.scss';
+import '../../../containers/central-window.scss';
 
 const users = [{
    id: 0,
@@ -110,47 +112,49 @@ class RoleMapping extends React.Component {
 
    render() {
       return (
-         <div id="role-mapping-wrapper">
 
-               <div id="user-role-mapping-header-wrapper">
-                 <input type="text" placeholder="Search it" id="role-mapping-search"/><button id="search-button"></button>
-               </div>
+      <div id="role-mapping-wrapper">
 
-               <div id="user-role-mapping-content-wrapper">
+            <aside id="inter-panel">
+                 <div id="roles-table">
+                      <div className="table-head">
+                            <h3 className="first-column">Global role</h3>
+                            <h3 className="second-column">Local role</h3>
+                      </div>
 
-                  <p><span>Global roles</span></p><br/><br/>
+                       {this.state.roles.map(function(role) {
+                            return  <RoleMappingItem key={role.id} role={role}/>;
+                       })}
 
-                  <div id="roles-table">
-                        <div className="table-head">
-                              <h3 className="first-column">Global role</h3>
-                              <h3 className="second-column">Local role</h3>
-                        </div>
+                  </div>
+             </aside>
 
-                         {this.state.roles.map(function(role) {
-                              return  <RoleMappingItem key={role.id} role={role}/>;
-                         })}
+          <div id="central-window">
+           
+                 <div id="user-role-mapping-header-wrapper">
+                   <input type="text" placeholder="Search it" id="role-mapping-search"/><button id="search-button"><i className="fa fa-search fa-2x" aria-hidden="true"></i></button>
+                 </div>
 
-                     </div>
+                    <p><span>Personal roles</span></p>
 
-                  <p><span>Personal roles</span></p><br/><br/>
+                    <div className="table">
+                       <div className="table-head">
+                             <h3 className="first-column">Avatar</h3>
+                             <h3 className="second-column">First name</h3>
+                             <h3 className="third-column">Last name</h3>
+                             <h3 className="fourth-column">E-mail</h3>
+                             <h3 className="fifth-column">Local role</h3>
+                       </div>
 
-                  <div className="table">
-                     <div className="table-head">
-                           <h3 className="first-column">Avatar</h3>
-                           <h3 className="second-column">First name</h3>
-                           <h3 className="third-column">Last name</h3>
-                           <h3 className="fourth-column">E-mail</h3>
-                           <h3 className="fifth-column">Local role</h3>
-                     </div>
+                      {this.state.users.map(function(user) {
+                          return  <UserRoleMappingItem key={user.id} user={user}/>;
+                       })}
 
-                        {this.state.users.map(function(user) {
-                            return  <UserRoleMappingItem key={user.id} user={user}/>;
-                         })}
+                  </div>
+             </div>
+      </div>
 
-                     </div>
-                    
-               </div>
-         </div>
+
       )
    }
 }
