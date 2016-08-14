@@ -1,16 +1,15 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
-@import "../components/common/varaibles";
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans);
+@import "../components/common/variables";
 
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-body {
   font-family: $primary-font;
   font-weight: 400;
 }
+
 .clearfix:after {
   content: '';
   display: block;
@@ -18,12 +17,18 @@ body {
   visibility: hidden;
   clear: both;
 }
+
 aside,
 #central-window {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-a{
+
+a {
   text-decoration: none;
+}
+
+h1 {
+  padding-left: 10%;
 }
