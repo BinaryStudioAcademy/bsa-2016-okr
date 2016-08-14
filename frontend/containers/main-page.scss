@@ -1,9 +1,10 @@
-@import "../components/common/varaibles";
+@import "../components/common/variables";
 
 #main{
    position: absolute;
    right: 0;
    left: $left-nav-width;
    top: $header-height;
+   background-color: lighten($color-blue-grey, 50%);
    bottom: 0;
 }

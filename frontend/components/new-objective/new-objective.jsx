@@ -4,16 +4,23 @@ import NewObjCredentials from './credentials.jsx';
 import './new-objective.scss';
 
 class NewObjective extends React.Component{
+   constructor(props){
+      super(props);
+
+      this.handleCloseNewObjView = this.handleCloseNewObjView.bind(this);
+   }
+
+   handleCloseNewObjView(){
+      close_window_handler.call(this);
+   }
+
    render(){
       return(
          <div id="new-objective">
+            <button type="button" id="close-new-obj-window" onClick={this.handleCloseNewObjView}>
+               <i className="fi flaticon-multiply" aria-hidden="true"></i>
+            </button>
             <form action="">
-               <section id="clone-obj">
-                  <label htmlFor="obj-to-clone">Clone existed objective</label>
-                  <input type="text" placeholder="Objective" id="obj-to-clone"/>
-                  <button type="button" id="clone-it">Clone it</button>
-               </section>
-               <p><span>Or add new one</span></p>
                <section>
                   <NewObjCredentials />
                </section>
@@ -29,3 +36,11 @@ class NewObjective extends React.Component{
 }
 
 export default NewObjective;
+
+function close_window_handler() {
+   var newObjWindow = document.getElementById('new-objective');
+
+   if(!newObjWindow.classList.contains('opened')){
+      newObjWindow.classList.add('opened');
+   } else { newObjWindow.classList.remove('opened'); }
+}

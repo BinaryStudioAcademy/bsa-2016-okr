@@ -1,24 +1,20 @@
-@import "../common/varaibles";
-@import "../common/elements";
+@import "../common/variables";
+@import "../common/styles/commonStyles";
 
 #new-objective {
   position: fixed;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   padding-top: 35px;
   padding-bottom: 30px;
   top: $header-height;
-  left: $left-nav-width;
   right: 0;
-  bottom: 0;
   margin-right: $right-stat-panel-width;
-  background: $add-new-obj-bg-color;
+  left: $left-nav-width;
+  bottom: 0;
+  background: lighten($color-blue-grey, 50%);
   overflow-y: auto;
   overflow-x: hidden;
   z-index: $new-obj-index;
   display: none;
-  @extend .triangle;
 
   &.opened {
     display: block;
@@ -29,6 +25,21 @@
     width: 70%;
     margin: 0 auto;
   }
+
+  #close-new-obj-window{
+    @extend .btn;
+    display: block;
+    position: absolute;
+    font-size: 20px;
+    padding: 7px 10px;
+    background-color: transparent;
+    right: 10px;
+    top: 10px;
+    color: #777777;
+    &:hover{
+      background: #CFD8DC;
+    }
+  }
 }
 
 /*
@@ -37,69 +48,9 @@
 
 button#new-obj-submit-btn {
   @extend .btn;
+  @extend .btn-green;
   display: block;
   float: left;
-  background: #4CAF50;
   margin-right: 10px;
   color: #fffde8;
-  &:active{
-    background: $new-obj-btn-bg-active;
-  }
-}
-
-#clone-obj{
-  margin-bottom: 10px;
-
-  @extend .clearfix;
-  & + p{
-    color: #aaaaaa;
-    font-size: 16px;
-    text-align: center;
-    position: relative;
-    margin: 0;
-    span{
-      display: inline-block;
-      padding: 10px;
-      position: relative;
-      background: $add-new-obj-bg-color;
-      z-index: 10;
-    }
-
-    &:after{
-      content: '';
-      display: block;
-      position: absolute;
-      top: 23px;
-      left: 0;
-      height: 0;
-      width: 100%;
-      border-top: 1px solid #aaaaaa;
-      z-index: -1;
-    }
-  }
-  label{
-    display: block;
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #777777;
-  }
-
-  /* Clone Objective Input */
-  input#obj-to-clone {
-    @extend .form-input;
-    width: 480px;
-    margin-right: 10px;
-  }
-
-  /* Clone Objective Button */
-  #clone-it{
-    @extend .btn;
-    padding: 11px 20px;
-    background: $clone-btn-bg;
-    float: right;
-    color: #fffde8;
-    &:active{
-      background: $clone-btn-bg-active;
-    }
-  }
 }

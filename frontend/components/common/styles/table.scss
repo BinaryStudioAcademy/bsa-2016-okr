@@ -1,27 +1,46 @@
-th {
-    background-color: #34495e;
-    border: 1px solid #99bce0;
-    color: #fff;
-    font-size: 18px;
-}
+@import '../variables';
 
-td {
-    border: 1px solid #99bce0;
-    vertical-align: center;
-}
+.table {
 
-tr {
-    display: table-row;
-    vertical-align: inherit;
-    border-color: inherit;
-}
+	table {
+		border-collapse: collapse;
+	}
 
-tbody {
-    display: table-row-group;
-    vertical-align: middle;
-    border-color: inherit;
-}
+	tbody {
+		display: table-row-group;
+		vertical-align: middle;
+		border-color: inherit;
+	}
 
-table {
-    border-collapse: collapse;
+	th, td {
+		border: 1px solid #99bce0;
+		padding: 10px;
+	}
+
+	th {
+		background-color: #34495e;
+		color: #fff;
+		font-size: 18px;
+	}
+
+	td {
+		vertical-align: middle;
+	}
+
+	tr {
+		display: table-row;
+		vertical-align: inherit;
+		border-color: inherit;
+	}
+
+	.controls {
+		.btn {
+			margin-left: 5px;
+			font-size: 1.3em;
+
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+	}
 }

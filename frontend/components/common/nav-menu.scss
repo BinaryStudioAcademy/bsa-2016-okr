@@ -1,4 +1,4 @@
-@import "varaibles";
+@import "variables";
 
 aside#navbar {
    position: fixed;
@@ -9,7 +9,7 @@ aside#navbar {
    -moz-box-sizing: border-box;
    box-sizing: border-box;
    width: $left-nav-width;
-   background-color: $primary-color-light;
+   background-color: lighten($primary-color, 5%);
    overflow: hidden;
    z-index: $navbar-index;
 
@@ -22,6 +22,7 @@ aside#navbar {
 aside#navbar ul {
    list-style-type: none;
    margin: 0;
+   margin-top: 20px;
    padding: 0;
    li {
       margin-bottom: 10px;
@@ -30,11 +31,11 @@ aside#navbar ul {
       }
       a:hover {
          background-color: $primary-color;
-         color: $nav-links-color-hover;
+         color: #ffffff;
       }
       a.active {
          background-color: $primary-color;
-         color: $nav-links-color-hover;
+         color: #ffffff;
       }
       span {
          pointer-events: none;
@@ -49,37 +50,14 @@ aside#navbar ul {
       padding-left: 60px;
       text-align: left;
       text-align: -moz-left;
-      color: $nav-links-color;
+      color: #ffffff;
    }
    i {
       position: absolute;
       top: 8px;
       left: 15px;
+      font-size: 30px;
       pointer-events: none;
-   }
-}
-
-/*
-** Add new objective button
-*/
-aside#navbar #new-obj-btn {
-   background: none;
-   border: none;
-   width: 100%;
-   white-space: nowrap;
-   margin-top: 15px;
-   margin-bottom: 30px;
-   &:focus{
-      outline: none;
-   }
-   &:hover{
-      background: none;
-      color: $new-obj-btn-bg;
-      cursor: pointer;
-   }
-   &.active{
-      background: none;
-      color: $new-obj-btn-bg;
    }
 }
 
@@ -97,10 +75,10 @@ aside#navbar #users-link{
    }
    &:hover{
       background-color: $primary-color;
-      color: $nav-links-color-hover;
+      color: #ffffff;
    }
    &.active{
       background-color: $primary-color;
-      color: $nav-links-color-hover;
+      color: #ffffff;
    }
 }

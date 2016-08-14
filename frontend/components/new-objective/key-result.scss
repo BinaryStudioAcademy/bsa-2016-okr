@@ -1,61 +1,32 @@
-@import "../common/varaibles";
-@import '../common/elements';
+@import "../common/variables";
+@import '../common/styles/commonStyles';
 
 .keyresult-group{
   margin-bottom: 20px;
   @extend .clearfix;
+  position: relative;
 
   /* key result input */
-  input[type=text]{
-    @extend .form-input;
+  input[type=text] {
     padding: 10px;
-    width: 400px;
-    -webkit-border-top-right-radius: 0;
-    -moz-border-top-right-radius: 0;
-    border-top-right-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    -moz-border-bottom-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  /* range input */
-  input[type=range]{
-    @extend .range-input;
-    width: 90px;
-    margin: 15px 0;
-  }
-
-  /* score view */
-  .score-view{
-    @extend .form-input;
-    display: inline-block;
-    padding: 10px;
-    padding-top: 11px;
-    margin-left: -1px;
-    margin-right: 13px;
-    width: 45px;
-    text-align: center;
-    -webkit-border-top-left-radius: 0;
-    -moz-border-top-left-radius: 0;
-    border-top-left-radius: 0;
-    -webkit-border-bottom-left-radius: 0;
-    -moz-border-bottom-left-radius: 0;
-    border-bottom-left-radius: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .del-keyres{
     @extend .btn;
+    @extend .btn-red;
     display: block;
-    float: right;
-    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 11px 14px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     background: #dddddd;
     color: #777777;
     &:hover{
-      background: $del-btn-bg;
       color: #ffffff;
-    }
-    &:active{
-      background: $del-btn-bg-active;
     }
   }
 }

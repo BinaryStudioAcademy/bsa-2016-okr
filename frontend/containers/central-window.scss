@@ -1,4 +1,4 @@
-@import "../components/common/varaibles";
+@import "../components/common/variables";
 
 #central-window {
    position: absolute;
@@ -9,12 +9,14 @@
    margin-right: $right-stat-panel-width;
    overflow-y: auto;
    overflow-x: hidden;
-   &.full-screen{
+   &.full-screen {
       margin-right: 0;
    }
-   #main-content{
+   
+   .main-content {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
+      padding: 3%;
    }
 }

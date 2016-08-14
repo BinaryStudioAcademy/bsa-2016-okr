@@ -1,3 +1,5 @@
+@import '../common/variables';
+
 #new-obj-keyresults{
   margin: 0;
   margin-bottom: 25px;
@@ -14,9 +16,9 @@
   a#add-new-keyresult-btn{
     display: inline-block;
     cursor: pointer;
-    color: #2ecc71;
+    color: $color-green;
     &:hover{
-      color: #27ae60;
+      color: darken($color-green, 10%);
       text-decoration: underline;
     }
   }

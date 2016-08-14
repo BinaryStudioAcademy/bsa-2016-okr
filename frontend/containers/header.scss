@@ -1,4 +1,4 @@
-@import "../components/common/varaibles";
+@import "../components/common/variables";
 
 header {
    height: $header-height;
@@ -52,7 +52,7 @@ header {
    border: none;
    cursor: pointer;
    i{
-      color: $nav-links-color;
+      color: #ffffff;
       cursor: pointer;
       pointer-events: none;
    }
@@ -61,9 +61,9 @@ header {
       outline: none;
    }
    &:hover i{
-      color: $nav-links-color-hover;
+      color: #ffffff;
    }
    &.active i{
-      color: $nav-links-color-hover;
+      color: #ffffff;
    }
 }

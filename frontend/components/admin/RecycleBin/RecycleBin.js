@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
-import DeletedTmplsItem from './DeletedTmplsItem'
+import React, { Component } from 'react';
+import DeletedTmplsItem from './DeletedTmplsItem';
+import StatPanel from '../../../containers/statistic-panel.jsx';
 import CentralWindow from "../../../containers/central-window.jsx";
-import './recycleBin.scss'
+// import '../../common/fonts/flaticon/_flaticon.scss';
+import '../../common/styles/table.scss';
 
-import data_for_recycle from '../../mockData/data_for_recycle_bin'
+import data_for_recycle from '../../mockData/data_for_recycle_bin';
 
 class RecycleBin extends Component {
 
@@ -16,25 +18,32 @@ class RecycleBin extends Component {
 			return <DeletedTmplsItem item={item} key={item.id} />
 		});
 		return (
-				<div>
-					<h2 className='recycle-title'>Recycle Bin</h2>
-					<table className="bin-table">
-						<thead>
-							<tr className='recycle-head'>
-								<th>type</th>
-								<th>category</th>
-								<th>title</th>
-								<th>description</th>
-								<th>deletedBy</th>
-								<th>deletedDate</th>
-								<th className="actions">actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{ deleted_items }
-						</tbody>
-					</table>
-				</div>
+			<div>
+				<CentralWindow>
+					<h1>Recycle Bin</h1>
+					<input type="checkbox" id="cbObjectives" ></input>
+					<label for="cbObjectives">Objectives</label>
+					<div>
+						<table className='table'>
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Category</th>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Deleted By</th>
+									<th>Date</th>
+									<th className="actions">actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{ deleted_items }
+							</tbody>
+						</table>
+					</div>
+				</CentralWindow>
+				<StatPanel></StatPanel>
+			</div>
 		);
 	}
 }

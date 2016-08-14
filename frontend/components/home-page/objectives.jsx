@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ObjectiveItem from './objective.jsx';
 import Quarter from './quarter.jsx';
 import objectives from '../mockData/objectivesMock.js';
+import ObjectivesList from './objective-list.jsx';
 
 class Objectives extends Component {
    constructor(props) {
@@ -19,7 +20,6 @@ class Objectives extends Component {
    render() {  
       if (this.state.currentTab == 1) {
       var ObjectiveItems = this.state.data.map((item, index) => {
-            if (item.startDate < this.props.first)
             return <ObjectiveItem index={index} key={item.id} item={item} />
          }) 
       }
@@ -43,12 +43,12 @@ class Objectives extends Component {
       }
       
       return (
-         <div>
+         <div id="home-page-wrapper">
             <Quarter changeTab={this.changeTab.bind(this)} currentTab={this.state.currentTab}/>
             <div id='objectives'>
-                  {ObjectiveItems}
+                  <ObjectivesList objectives={ObjectiveItems} />
              </div> 
-          </div>       
+          </div>
       )
    }
 }
