@@ -6,6 +6,7 @@ import * as actions from "../../actions/otherPersonActions.js";
 
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
+import Dashboard from "../dashboard/dashboard.jsx";
 import UserItem from './user-item.jsx';
 import './list-of-users.scss';
 
@@ -47,7 +48,9 @@ class ListOfUsers extends Component {
 						<ul className='listOfUsers'>{userNodes}</ul>
 					</div>
 				</CentralWindow>
-				<StatPanel></StatPanel>
+				<StatPanel>
+					<Dashboard></Dashboard>
+				</StatPanel>
 			</div>
 		)
 	}
