@@ -14,8 +14,12 @@
   margin-bottom: 30px;
 
   .business-year{
+<<<<<<< HEAD
     padding: 5px 20px;
     padding-bottom: 4px;
+=======
+    padding: 5px 15px;
+>>>>>>> 4ce2a553099fb06313c19b68e9c2766e7d63a8ba
     border: 2px solid #607D8B;
     display: inline-block;
   }
@@ -43,6 +47,7 @@
 }
 
 #quarter-list{
+  background-color: #fff;
   list-style-type: none;
   padding: 0;
   display: table;
@@ -81,6 +86,7 @@
 */
 #objectives{
 .home-objective{
+  background-color: #fff;
   padding: 5px 15px;
   margin-bottom: 5px;
   background: lighten($color-blue-grey, 52%);
@@ -109,6 +115,7 @@
       color: #000;
       cursor: inherit;
       padding: 0 15px 0 0;
+
     }
     .display{
       display: block;
@@ -197,12 +204,13 @@
           z-index: 0;
           display: inline-block;
           position: absolute;
-          top: 36%;
-          right: -45px;
+          width: 24px;
+          top: 10px;
+          right: -42px;
           font-size: 12px;
           background-color: #aaa;
           color: #fff;
-          padding: 2px 8px 2px 20px;
+          padding: 2px 12px 1px 14px;
           border-radius: 0 10px 10px 0;
 
       }
