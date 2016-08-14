@@ -8,6 +8,7 @@ class Objectives extends Component {
 		super(props);
 		this.state = {
 			currentTab : 1,
+
 		}
 	}
 	changeTab(tab) {
