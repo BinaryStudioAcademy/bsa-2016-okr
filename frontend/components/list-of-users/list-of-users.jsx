@@ -34,7 +34,7 @@ class ListOfUsers extends Component {
 			else
 				return (
 					<UserItem takeUser={this.takeUser} key={index} 
-								id={user.userId} name={user.userName} />
+								id={user.userId} name={user.userName} mentor={user.mentor}/>
 				);
 		}.bind(this));
 

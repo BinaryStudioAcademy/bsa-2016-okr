@@ -32,9 +32,9 @@ class UserItem extends Component {
 				<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
 				<div className='userInfo'>
 				<div>{this.props.name}</div>
-				<div>Mentor</div>
-				<UserProgress />
+				<div className='mentor'>Mentor: {this.props.mentor}</div>
 				</div>
+				<UserProgress />
 			</li>
 			</div>
 			</Link>
