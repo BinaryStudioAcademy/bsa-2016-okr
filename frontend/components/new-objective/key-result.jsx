@@ -24,4 +24,6 @@ class KeyResult extends React.Component{
    }
 }
 
+
 export default KeyResult;
+

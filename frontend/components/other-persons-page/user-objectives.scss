@@ -86,9 +86,8 @@
 			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%); 
 		}
 		::-moz-progress-bar {
-	    	border: 1px solid #a0a0a0;
-	    	background: #eee;
-	    	background: -moz-linear-gradient(top, #fff 0%, #eee 50%);
+	    	background: #7fda57;
+	    	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
 		}
 		::-moz-progress-value {
 		    background: #7fda57;
@@ -136,6 +135,9 @@
  	margin: 5px 0;
  	padding: 0;
 
+ 	select{
+ 		padding: 10px;
+ 	}
   .quater{
   	border: 2px solid #607D8B;
   	display: inline-block;
@@ -147,10 +149,10 @@
     cursor: pointer;
   }
   .quater:first-child{
-  	border-radius: 5px 0 0 5px;
+  	border-radius: 3px 0 0 3px;
   }
   .quater:last-child{
-  	border-radius: 0 5px 5px 0;
+  	border-radius: 0 3px 3px 0;
   }
 
    .year{

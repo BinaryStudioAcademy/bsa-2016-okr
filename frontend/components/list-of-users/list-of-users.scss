@@ -4,8 +4,8 @@ input[type=text],
 select,
 textarea{
 	border: 1px solid #d3d3d3;
-	padding: 10px;
 	color: #777;
+	padding: 10px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -24,19 +24,18 @@ textarea{
 
 #usersList {
 	margin-top: 20px;
-	margin-left: 5%; 
-	
+	margin-left: 5%;
+
 	.title{
 		padding: 0 10% 10px;
 		font-size: 22px;
 		font-weight: 700;
 		display: inline-block;
-		border-bottom: 1px solid #aaa;
-
 	}
 	input[type='text'] {
 		float: right;
 		width: 30%;
+		padding: 10px;
 		margin-right: 10%;
 		padding-left: 35px;
 		font-size: 16px;
@@ -46,13 +45,13 @@ textarea{
 }
 
 .listOfUsers {
-	width: 90%;
+	width: 89%;
 	list-style: none;
 	padding: 5px;
-	margin: 10px;
+	margin-top: 10px;
 
 	.userItem{
-	    border-bottom: 1px solid #aaa;
+	    //border-bottom: 1px solid #aaa;
 		position: relative;
 		color: $header-color;
 		padding: 5px 0;
@@ -60,9 +59,30 @@ textarea{
 		.userPhoto{
 			max-width: 100px;
 		}
+		.userInfo{
+			display: inline-block;
+			position: absolute;
+			top: 10%;
+			width: 30%;
+
+			.mentor{
+				font-size: 12px;
+				margin-top: 10px;
+			}
+		}
 		.progress-bar{
-			padding-top: 10px;
-			position: relative;
+			    margin-top: 2%;
+			    position: relative;
+			    display: inline-block;
+			    width: 30%;
+			    float: right;
+			    margin-right: 30%;
+
+			.progressValue{
+				position: absolute;
+				top: 0;
+				left: 40%;
+			}
 
 		progress[value]{
 			width: 100%;
@@ -73,18 +93,17 @@ textarea{
 		::-webkit-progress-bar {
 			border: 1px solid #a0a0a0;
 	    	background: #eee;
-	    	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%); 
-			background: linear-gradient(to bottom, #fff 0%,#eee 50%); 
+	    	background: -webkit-linear-gradient(top, #fff 0%,#eee 50%);
+			background: linear-gradient(to bottom, #fff 0%,#eee 50%);
 		}
 		::-webkit-progress-value {
 	    	background: #7fda57;
-			background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%); 
-			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%); 
+			background: -webkit-linear-gradient(top, #f8ffe8 0%,#7fda57 50%);
+			background: linear-gradient(to bottom, #f8ffe8 0%,#7fda57 50%);
 		}
 		::-moz-progress-bar {
-	    	border: 1px solid #a0a0a0;
-	    	background: #eee;
-	    	background: -moz-linear-gradient(top, #fff 0%, #eee 50%);
+	    	background: #7fda57;
+	    	background: -moz-linear-gradient(top, #f8ffe8 0%, #7fda57 50%);
 		}
 		::-moz-progress-value {
 		    background: #7fda57;
@@ -98,9 +117,6 @@ textarea{
 
 	.userItem:hover{
 		cursor: pointer;
-		color: #fff;
-		background-color: #99bce0;
+
 	}
 }
-
-
