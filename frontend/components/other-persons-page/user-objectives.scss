@@ -6,7 +6,7 @@
 		margin: 20px 5%;
 	  	margin-top: 10px;
 		padding: 5px 15px;
-		background-color: #fff;
+		background-color: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
 		border-left: 15px solid #607D8B;
 		border-radius: 3px;
@@ -82,7 +82,8 @@
 			    background-color: #aaa;
 			    color: #fff;
 			    padding: 2px 12px 1px 14px;
-			    border-radius: 0px 10px 10px 0px;
+			    border-radius: 0 10px 10px 0;
+
 
 			}
 			
@@ -106,9 +107,6 @@
 		::-moz-progress-bar {
 	    	background: #4CAF50;
 	    	border: none;
-		}
-		::-moz-progress-value {
-		    background: #7fda57;
 		}
 		.objective-info {
 			margin-left: 40%;
@@ -199,7 +197,7 @@
 	display: inline-block;
 	padding: 10px;
 	position: relative;
-	background: $add-new-obj-bg-color;
+	background: lighten($color-blue-grey, 50%);
 	z-index: 10;
   }
 

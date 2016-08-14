@@ -28,10 +28,10 @@ class Search extends React.Component {
                <div className="search-group">
                   <input type="text" placeholder="Search for objective" id="obj-search-input"/>
                   <button type="submit" id="obj-search-submit">
-                     <i className="fa fa-search" aria-hidden="true"></i>
+                     <i className="fi flaticon-search" aria-hidden="true"></i>
                   </button>
                   <button id="obj-search-filter" type="button" onClick={this.handle_filter_click}>
-                     <i className="fa fa-filter" aria-hidden="true"></i>
+                     <i className="fi flaticon-funnel" aria-hidden="true"></i>
                   </button>
                </div>
                <div id="filters">

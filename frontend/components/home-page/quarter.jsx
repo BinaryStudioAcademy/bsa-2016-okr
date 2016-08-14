@@ -31,7 +31,7 @@ class Quarter extends Component {
          <div id='top-bar'>
              <div id="manage-bar">
                  <button type="button" id="add-new-objective" onClick={this.handleAddNewObjClick}>
-                     <i className="fa fa-plus" aria-hidden="true"></i>
+                     <i className="fi flaticon-add" aria-hidden="true"></i>
                      New objective
                  </button>
              </div>

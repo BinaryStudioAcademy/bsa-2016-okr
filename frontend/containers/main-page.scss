@@ -5,6 +5,6 @@
    right: 0;
    left: $left-nav-width;
    top: $header-height;
-   background: $add-new-obj-bg-color;
+   background-color: lighten($color-blue-grey, 50%);
    bottom: 0;
 }
