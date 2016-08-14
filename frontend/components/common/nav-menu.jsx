@@ -19,19 +19,19 @@ class NavMenu extends React.Component {
 					<ul>
 						<li>
 							<Link to="/">
-								<i className="fa fa-home fa-2x" aria-hidden="true"></i>
+								<i className="fi flaticon-home-1" aria-hidden="true"></i>
 								Home
 							</Link>
 						</li>
 						<li>
 							<Link to="/users">
-								<i className="fa fa-users fa-2x" aria-hidden="true"></i>
+								<i className="fi flaticon-users" aria-hidden="true"></i>
 								Users
 							</Link>
 						</li>
 						<li>
 							<Link to="/history">
-								<i className="fa fa-clock-o fa-2x" aria-hidden="true"></i>
+								<i className="fi flaticon-time" aria-hidden="true"></i>
 								History
 							</Link>
 						</li>
