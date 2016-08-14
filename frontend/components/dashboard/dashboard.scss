@@ -16,7 +16,7 @@
 
 .dashboard li {
     border: 2px solid #2c3e50;;
-    padding: 5px;
+    padding: 10px;
     text-align: center;
     display: table-cell;
     color: #2c3e50;;
@@ -38,7 +38,7 @@
 
 .dashboard .countInfo, .dashboard .tableInfo{
     margin: 20px 0;
-    padding: 5px 15px;
+    padding: 10px 15px;
     border: 1px solid #EDEDED;
     border-left: 5px solid #6aa84f;
     background: white;
@@ -85,4 +85,9 @@
 .dashboard caption{
     font-size: 14px;
     text-align: center;
+    padding-bottom: 10px;
+}
+
+.dashboard td:first-child{
+    text-align: left;
 }
