@@ -3,7 +3,7 @@ import historyMock from '../components/mockData/historyPageMock.js'
 const initialState = {
     historyItems: historyMock,
 	searchValue: '',
-	showHistoryFilters: true
+	showHistoryFilters: false
 };
 
 export default function historyReducer(state = initialState, action) {

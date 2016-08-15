@@ -16,7 +16,7 @@ class HistoryFilter extends Component {
 	}
 
 	showFiltersContainer() {
-		console.log(this.props);
+		// console.log(this.props);
 		if (this.props.stateFromReducer.history.showHistoryFilters) {
 			return "show-container"
 		} else {
