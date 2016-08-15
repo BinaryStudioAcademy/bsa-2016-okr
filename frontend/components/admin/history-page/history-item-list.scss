@@ -1,0 +1,48 @@
+@import "_variables";
+
+.history-item-list {
+
+	table {
+		width: 100%;
+		margin: 24px auto 0 auto;
+	}
+    //
+	//th, td {
+	//	padding: $padding;
+	//}
+    //
+	//th {
+	//	background-color: $color-main;
+	//	border: 1px solid #99bce0;
+	//	color: #fff;
+	//	font-size: 18px;
+	//}
+    //
+	//td {
+	//	border: 1px solid #99bce0;
+	//	vertical-align: center;
+	//}
+
+	.actionCreate {
+		color: green;
+	}
+
+	.actionUpdate {
+		color: orange;
+	}
+
+	.actionDelete {
+		color: red;
+	}
+
+	.actionDefault {
+		color: #000;
+	}
+
+	.history-item-user-avatar {
+		height: auto;
+		width: 18px;
+		border-radius: 50%;
+	}
+	//
+}

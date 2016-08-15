@@ -17,7 +17,7 @@ class ObjectiveItem extends Component {
          		<div className='description'>{this.props.item.objDescription}</div>
 		        <div className="objective-info">
 		            <span className='fi flaticon-users co-workers'></span>4
-		            <span className='fi flaticon-like followed'></span>10
+		            <span className='fi flaticon-like-1 followed'></span>10
 		        </div>
 		        <KeyResults data={this.props.item.keyResults} />
 		    </div>        
