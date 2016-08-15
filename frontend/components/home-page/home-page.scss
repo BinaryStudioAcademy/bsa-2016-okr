@@ -130,6 +130,8 @@
 
         }
          .score{
+              display: inline-block;
+               width: 20px;
               text-align: center;
               background: lighten($color-blue-grey, 50%);;
             border: 1px solid $color-blue-grey;
