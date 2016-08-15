@@ -65,12 +65,22 @@
 		.userInfo{
 			display: inline-block;
 			position: absolute;
-			top: 15px;
+			top: 10px;
 			width: 30%;
 
+			div{
+				margin-top: 5px;
+				position: relative;
+				.mentorName{
+					position: absolute;
+					top: 5px;
+					font-size: 12px;
+					padding-left: 5px;
+				}
+
+			}
 			.mentor{
-				font-size: 12px;
-				margin-top: 10px;
+				font-size:22px;
 			}
 		}
 		.progress-bar{
