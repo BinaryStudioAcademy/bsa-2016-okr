@@ -6,9 +6,9 @@
   background: #CFD8DC;
   color: #555;
   text-align: center;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+  border-radius: $border-radius;
   border: none;
   -webkit-transition: all .1s;
   -moz-transition: all .1s;

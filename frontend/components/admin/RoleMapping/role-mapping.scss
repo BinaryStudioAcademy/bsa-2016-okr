@@ -42,10 +42,10 @@
 	width: 100px;
 	height: 100px;
 	height: 40px;
-	background: #03A9F4;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+	background: $color-blue;
+    -webkit-border-radius: $border-radius;
+    -moz-border-radius: $border-radius;
+    border-radius: $border-radius;
     -webkit-transition: all .2s;
     -moz-transition: all .2s;
     -o-transition: all .2s;
