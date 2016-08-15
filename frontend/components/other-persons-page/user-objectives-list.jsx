@@ -9,7 +9,7 @@ class ObjectiveList extends React.Component{
     render(){
         return(
             <div>
-                <div className="project-category" className="user-category">
+                <div className="project-category" className="other-user-category">
                     <p><span>Knowledge</span></p>
                     {
                         this.props.objectives.map((el) => {
@@ -17,7 +17,7 @@ class ObjectiveList extends React.Component{
                         })
                     }
                 </div>
-                <div className="knowledge-category" className="user-category">
+                <div className="knowledge-category" className="other-user-category">
                     <p><span>Expertise</span></p>
                     {
                         this.props.objectives.map((el) => {
@@ -25,7 +25,7 @@ class ObjectiveList extends React.Component{
                         })
                     }
                 </div>
-                <div className="expertise-category" className="user-category">
+                <div className="expertise-category" className="other-user-category">
                     <p><span>Projects</span></p>
                     {
                         this.props.objectives.map((el) => {
