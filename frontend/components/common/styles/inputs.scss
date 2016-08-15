@@ -20,11 +20,11 @@ textarea{
 	}
 }
 textarea{
-  resize: none;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;;
+	resize: none;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;;
 }
 .range {
 	-webkit-appearance: none;
@@ -35,8 +35,8 @@ textarea{
 		outline: none;
 	}
 	&::-webkit-slider-runnable-track{
-    	-webkit-border-radius: 4px;
-    	-moz-border-radius: 3px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 3px;
 		border-radius: 4px;
 		height: 6px;
 		background: #ffffff;
@@ -57,7 +57,7 @@ textarea{
 		border: 1px solid #bdc3c7;
 		width: 18px;
 		height: 18px;
-	  	margin-top: -8px;
+		margin-top: -8px;
 		border-radius: 10px;
 		cursor: pointer;
 	}
@@ -98,29 +98,29 @@ textarea{
 	background: #eee;
 }
 .progress::-webkit-progress-value {
-   	background: #4CAF50;
+	background: #4CAF50;
 }
 .progress::-moz-progress-bar {
-   	background: #4CAF50;
-   	border: none;
+	background: #4CAF50;
+	border: none;
 }
 .progress::-moz-progress-value {
-    background: #7fda57;
+	background: #7fda57;
 }
 
 /* ---=== Custom checkboxes ===--- */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
-  position: absolute;
-  left: -9999px;
+	position: absolute;
+	left: -9999px;
 }
 
 [type="checkbox"]:not(:checked) + label,
 [type="checkbox"]:checked + label {
 	line-height: 2em;
-  position: relative;
-  padding-left: 40px;
-  cursor: pointer;
+	position: relative;
+	padding-left: 40px;
+	cursor: pointer;
 }
 
 [type="checkbox"]:not(:checked) + label {
@@ -139,10 +139,10 @@ textarea{
 
 [type="checkbox"]:not(:checked) + label:before,
 [type="checkbox"]:checked + label:before {
-  font-family: 'Flaticon';
-  font-size: 2em;
-  position: absolute;
-  left: 0;
+	font-family: 'Flaticon';
+	font-size: 2em;
+	position: absolute;
+	left: 0;
 }
 
 [type="checkbox"]:checked + label:before {

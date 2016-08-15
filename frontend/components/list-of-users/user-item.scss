@@ -1,3 +1,4 @@
+@import '../common/variables';
 
 .userItem {
   padding-left: 10px;
@@ -5,7 +6,7 @@
 }
 
 .userItemDiv{
-  background: #fff;
+  background: lighten($color-blue-grey, 52%);
   border: 1px solid #99bce0;
   border-left: 10px solid #607D8B;
   margin-bottom: 10px;

@@ -7,20 +7,20 @@ class ObjectiveItem extends Component {
 		super(props);
 	}
 
-	
-	render() { 
+
+	render() {
 		return (
 			<div className='objective'>
 				<Progress data={this.props.item.keyResults}/>
          		<div className='name'>{this.props.item.objTitle}</div>
-         		<span className="fi flaticon-plus plus-icon"></span>
+         		<button className="btn btn-blue-hover clone" title="Clone"><i className="fi flaticon-send"></i></button>
          		<div className='description'>{this.props.item.objDescription}</div>
 		        <div className="objective-info">
 		            <span className='fi flaticon-users co-workers'></span>4
-		            <span className='fi flaticon-like followed'></span>10
+		            <span className='fi flaticon-like-1 followed'></span>10
 		        </div>
 		        <KeyResults data={this.props.item.keyResults} />
-		    </div>        
+		    </div>
 		)
 	}
 }

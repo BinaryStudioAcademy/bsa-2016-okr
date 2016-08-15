@@ -5,7 +5,7 @@
 		margin: 20px 5%;
 	  	margin-top: 10px;
 		padding: 5px 15px;
-		background-color: lighten($color-blue-grey, 52%);
+		background: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
 		border-left: 15px solid #607D8B;
 		border-radius: 3px;
@@ -17,11 +17,21 @@
 			font-size: 18px;
 			font-weight: 700;
 		}
+		/*
 		span.plus-icon{
 			clear: both;
 			float: right;
 			font-size: 25px;
 			padding-top: 5px;
+			cursor: pointer;
+		}
+		*/
+		.clone{
+			clear: both;
+			float: right;
+			font-size: 18px;
+			padding-top: 5px;
+			margin-top: 5px;
 			cursor: pointer;
 		}
 		.description {
@@ -50,42 +60,53 @@
 			ul {
 				margin: 5px 0 0;
 				padding-left: 5px;
-
+				display: table;
 				.user-key-result{
-					margin: 10px;
-					display: block;
+					display: table-row;
+					height: 30px;
+					div{
+						background: lighten($color-blue-grey, 50%);;
+						border: 1px solid $color-blue-grey;
+						border-radius: 3px;
+						padding: 2px;
+					}
+					span{
+						display: table-cell;
+
+					}
+					
 				}
 
 				.completed{
-					padding-left: 12px;
 					text-decoration: line-through;
 				}
-			} 
-		} 
+			}
+		}
 		.progress-bar{
 			float: right;
 			padding-top: 10px;
 			width: 30%;
 			position: relative;
 			margin-right: 40px;
-			
 
-			.progressValue { 
+
+			.progressValue {
 				z-index: 0;
 				display: inline-block;
 			    position: absolute;
-			    top: 10px;
-			    width: 24px;
-			    right: -45px;
-			    font-size: 12px;
-			    background-color: #aaa;
-			    color: #fff;
-			    padding: 2px 12px 1px 14px;
-			    border-radius: 0 10px 10px 0;
+			    width: 50px;
+			    height: 16px;
+				right: -42px;
+		          font-size: 12px;
+		          background-color: #aaa;
+		          color: #fff;
+		          box-sizing: border-box;
+		          padding: 1.5px 12px 0 12px;
+		          border-radius: 0 10px 10px 0;
 
 
 			}
-			
+
 			progress[value]{
 				position: relative;
 				z-index:1;
@@ -100,6 +121,7 @@
 	    	background: #eee;
 		}
 		::-webkit-progress-value {
+		border-right: 2px solid #fff;
 			border-radius: 10px;
 	    	background: $color-green;
 		}
@@ -115,10 +137,10 @@
 				margin-right: 15%;
 			}
 			div:last-child{
-				
+
 				margin-right: 0;
 			}
-			
+
 			.co-workers{
 				position: relative;
     			padding-right: 5px;
@@ -143,7 +165,7 @@
 	}
 }
 #quaterPanel{
- 
+
   margin: 10px 5% 0;
 
   #quaterList {
@@ -184,7 +206,7 @@
 }
 }
 
-.user-category {
+.other-user-category {
 
   p {
 	color: #aaaaaa;
@@ -192,7 +214,7 @@
 	text-align: center;
 	position: relative;
 	padding: 4px;
-	width: 100%;
+	width: 90%;
 	margin: 30px 5%;
   }
 
@@ -223,10 +245,10 @@
   width: 100%;
   padding: 15px 8%;
   box-sizing: border-box;
-  background-color: #ECEFF1;
 
     .userInfo{
       position: relative;
+
 
       .logo{
         width: 90px;
@@ -245,19 +267,31 @@
         font-size:18px;
         font-weight: 700;
         display: inline-block;
-        
+
         .lastVisite{
           margin-top: 5px;
           font-size: 12px;
           color: #aaa;
         }
-        .mentor {
-          font-size: 14px;
-        }
+        div{
+        	width: 200px;
+			margin-top: 5px;
+			position: relative;
+			.mentorName{
+				position: absolute;
+				top: 7px;
+				font-weight: 400;
+				font-size: 12px;
+				padding-left: 5px;
+			}
+		}
+		.mentor{
+			font-size:22px;
+		}	
         p{
           font-weight: 400;
         }
       }
-      
+
     }
 }

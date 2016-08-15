@@ -6,9 +6,9 @@
   background: #CFD8DC;
   color: #555;
   text-align: center;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+  border-radius: $border-radius;
   border: none;
   -webkit-transition: all .1s;
   -moz-transition: all .1s;
@@ -81,5 +81,41 @@
   }
 }
 
+.btn-blue-hover:hover,
+.btn-green-hover:hover,
+.btn-purple-hover:hover,
+.btn-red-hover:hover,
+.btn-blue-grey-hover:hover {
+  color: #fff;
+}
 
+.btn-blue-grey-hover {
+    &:hover {
+      background-color: darken($color-blue-grey, 10%);
+  }
+}
+
+.btn-blue-hover {
+    &:hover {
+      background-color: darken($color-blue, 10%);
+  }
+}
+
+.btn-green-hover {
+    &:hover {
+      background-color: darken($color-green, 10%);
+  }
+}
+
+.btn-red-hover {
+    &:hover {
+      background-color: darken($color-red, 10%);
+  }
+}
+
+.btn-purple-hover {
+    &:hover {
+      background-color: darken($color-purple, 10%);
+  }
+}
 

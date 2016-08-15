@@ -7,7 +7,7 @@
 	}
 
 	tbody {
-        background-color: #fff;
+		background-color: #fff;
 		display: table-row-group;
 		vertical-align: middle;
 		border-color: inherit;
@@ -29,27 +29,43 @@
 
 	tr {
 		display: table-row;
-        border: 1px solid #99BCE0;
+		border: 1px solid #99BCE0;
 		vertical-align: inherit;
 
-        &:hover {
-          background-color: #ECEFF1;
-        }
+		&:hover {
+			background-color: #ECEFF1;
+		}
 	}
 
-    thead {
-      tr {
-        border-color: #607D8B;
-      }
-    }
+	thead {
+		tr {
+			border-color: #607D8B;
+		}
+	}
 
 	.controls {
-		.btn {
-			margin-left: 5px;
-			font-size: 1.3em;
+		tr {
+			border: 0;
+			padding: 0;
+		}
 
-			&:first-child {
-				margin-left: 0;
+		td {
+			padding: 0;
+			margin: 0;
+
+			.btn {
+				font-size: 1.3em;
+				border-radius: 0;
+			}
+
+			&:first-child .btn {
+				border-top-left-radius: $border-radius;
+				border-bottom-left-radius: $border-radius;
+			}
+
+			&:last-child .btn {
+				border-top-right-radius: $border-radius;
+				border-bottom-right-radius: $border-radius;
 			}
 		}
 	}
