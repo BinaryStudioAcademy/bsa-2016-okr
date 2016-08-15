@@ -16,7 +16,7 @@ class KeyResult extends React.Component{
       return(
          <li className="keyresult-group">
             <input type="text" placeholder="Key result name"/>
-            <button type="button" className="del-keyres" onClick={this.handleDelKeyRes}>
+            <button type="button" className="btn btn-red-hover del-keyres" onClick={this.handleDelKeyRes}>
                <i className="fi flaticon-garbage-2" aria-hidden="true"></i>
             </button>
          </li>

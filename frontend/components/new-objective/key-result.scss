@@ -9,13 +9,14 @@
   /* key result input */
   input[type=text] {
     padding: 10px;
+    padding-right: 48px;
     width: 100%;
     box-sizing: border-box;
   }
 
   .del-keyres{
-    @extend .btn;
-    @extend .btn-red;
+/*     @extend .btn;
+    @extend .btn-red; */
     display: block;
     position: absolute;
     right: 0;
@@ -24,10 +25,10 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background: #dddddd;
-    font-size: 19px;
-    color: #777777;
+    font-size: 20px;
+/*     color: #777777;
     &:hover{
       color: #ffffff;
-    }
+    } */
   }
 }
