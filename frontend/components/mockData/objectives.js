@@ -14,7 +14,7 @@ let objectives = [{
 		},
 		{
 			"created": "2016-05-22T10:51:12.643Z",
-			"title": "Sutup env for coding",
+			"title": "Setup env for coding",
 			"completed": "false",
 			"completedDate": "",
 			"score": "0.1"

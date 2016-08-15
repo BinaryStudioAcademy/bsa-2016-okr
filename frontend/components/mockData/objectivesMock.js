@@ -14,7 +14,7 @@ let Objective = [{
 		},
 		{
 			"created": "2016-05-22T10:51:12.643Z",
-			"title": "Sutup env for coding",
+			"title": "Setup env for coding",
 			"completed": "false",
 			"completedDate": "",
 			"score": "0.1"
@@ -89,21 +89,21 @@ let Objective = [{
 },
 {
 	"id": "5791f8847ed517bc028e730a",
-	"objTitle": "Learn something else",
-	"objDescription": "Learn something important",
+	"objTitle": "Learn German",
+	"objDescription": "Learn German for meetup in Berlin",
 	"category": "Knowledge",
 	"ownerName": "Grigoriy Skovoroda",
 	"keyResults": [
 		{
 			"created": "2016-11-22T10:50:12.643Z",
-			"title": "Read something else",
+			"title": "Learn some grammar",
 			"completed": "false",
 			"completedDate": "2016-11-22T10:50:12.643Z",
 			"score": "0.5"
 		},
 		{
 			"created": "2016-11-22T10:51:12.643Z",
-			"title": "Sutup env for coding",
+			"title": "Watch 5 films in German",
 			"completed": "false",
 			"completedDate": "",
 			"score": "0.1"
@@ -115,7 +115,7 @@ let Objective = [{
 {
 	"id": "5791f8847ed517bc028e730a",
 	"objTitle": "Take a vacation",
-	"objDescription": "Learn something important",
+	"objDescription": "Take a relax",
 	"category": "Knowledge",
 	"ownerName": "Grigoriy Skovoroda",
 	"keyResults": [
