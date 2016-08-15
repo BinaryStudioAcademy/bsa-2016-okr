@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
 	localRole: String,
-	mentor: {type: Schema.Types.ObjectId, ref: 'User'
+	mentor: {type: Schema.Types.ObjectId, ref: 'User'}
 	// followObjectives: [
 	// 	{userId: {type: Schema.Types.ObjectId, ref: 'User'},
 	// 	objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'}
