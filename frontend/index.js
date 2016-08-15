@@ -12,22 +12,14 @@ import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.js"
 import RecycleBin from './components/admin/RecycleBin/RecycleBin'
 import ListOfUsers from './components/list-of-users/list-of-users.jsx'
 
-import DevTools from './shared/devtools/DevTools';
+import configureStore from './store/configureStore';
 
-import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import logger from 'redux-logger'
-import thunk from 'redux-thunk'
 
 import reducer from './reducers/commonReducer'
 
-const middleware = [ thunk ]
-
-const store = createStore(
-	reducer,
-	applyMiddleware(...middleware),
-	DevTools.instrument()
-)
+const store = configureStore();
 
 render(
 		(<Provider store={store}>
