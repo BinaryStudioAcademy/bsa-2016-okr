@@ -5,8 +5,6 @@ import history from './historyReducer'
 import users from './otherPersonReducer.js'
 
 export default combineReducers({
-  message,
-  counter,
   history,
   users
 })

@@ -7,18 +7,18 @@
 	}
 
 	tbody {
+        background-color: #fff;
 		display: table-row-group;
 		vertical-align: middle;
 		border-color: inherit;
 	}
 
 	th, td {
-		border: 1px solid #99bce0;
 		padding: 10px;
 	}
 
 	th {
-		background-color: #34495e;
+		background-color: #607D8B;
 		color: #fff;
 		font-size: 18px;
 	}
@@ -29,9 +29,19 @@
 
 	tr {
 		display: table-row;
+        border: 1px solid #99BCE0;
 		vertical-align: inherit;
-		border-color: inherit;
+
+        &:hover {
+          background-color: #ECEFF1;
+        }
 	}
+
+    thead {
+      tr {
+        border-color: #607D8B;
+      }
+    }
 
 	.controls {
 		.btn {

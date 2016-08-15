@@ -1,0 +1,23 @@
+@import "_variables";
+
+.history-filter-bar-container {
+	
+}
+
+.history-filter-bar-input {
+	width: auto;
+}
+
+.history-filter-table {
+
+	width: 100%;
+
+	td {
+		vertical-align: middle !important;
+		padding: 2px;
+	}
+
+	.cell-right-align {
+		text-align: right;
+	}
+}
