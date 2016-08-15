@@ -79,7 +79,7 @@ let users = [
             },
             {
                 "created": "2016-11-22T10:51:12.643Z",
-                "title": "Sutup env for coding",
+                "title": "Setup env for coding",
                 "completed": "false",
                 "completedDate": "",
                 "score": "0.2"
@@ -138,7 +138,7 @@ let users = [
             },
             {
                 "created": "2016-05-22T10:51:12.643Z",
-                "title": "Sutup env for coding",
+                "title": "Setup env for coding",
                 "completed": "false",
                 "completedDate": "",
                 "score": "0.6"
@@ -253,7 +253,7 @@ let users = [
             },
             {
                 "created": "2016-05-22T10:51:12.643Z",
-                "title": "Sutup env for coding",
+                "title": "Setup env for coding",
                 "completed": "false",
                 "completedDate": "",
                 "score": "0.1"
@@ -310,7 +310,7 @@ let users = [
             },
             {
                 "created": "2016-11-22T10:51:12.643Z",
-                "title": "Sutup env for coding",
+                "title": "Setup env for coding",
                 "completed": "false",
                 "completedDate": "",
                 "score": "0.1"
@@ -426,7 +426,7 @@ let users = [
             },
             {
                 "created": "2016-11-22T10:51:12.643Z",
-                "title": "Sutup env for coding",
+                "title": "Setup env for coding",
                 "completed": "false",
                 "completedDate": "",
                 "score": "0.3"

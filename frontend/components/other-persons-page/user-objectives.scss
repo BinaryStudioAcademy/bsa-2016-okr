@@ -17,11 +17,21 @@
 			font-size: 18px;
 			font-weight: 700;
 		}
+		/*
 		span.plus-icon{
 			clear: both;
 			float: right;
 			font-size: 25px;
 			padding-top: 5px;
+			cursor: pointer;
+		}
+		*/
+		.clone{
+			clear: both;
+			float: right;
+			font-size: 18px;
+			padding-top: 5px;
+			margin-top: 5px;
 			cursor: pointer;
 		}
 		.description {
@@ -70,8 +80,8 @@
 				.completed{
 					text-decoration: line-through;
 				}
-			} 
-		} 
+			}
+		}
 		.progress-bar{
 			float: right;
 			padding-top: 10px;
@@ -79,7 +89,8 @@
 			position: relative;
 			margin-right: 40px;
 
-			.progressValue { 
+
+			.progressValue {
 				z-index: 0;
 				display: inline-block;
 			    position: absolute;
@@ -95,7 +106,7 @@
 
 
 			}
-			
+
 			progress[value]{
 				position: relative;
 				z-index:1;
@@ -126,10 +137,10 @@
 				margin-right: 15%;
 			}
 			div:last-child{
-				
+
 				margin-right: 0;
 			}
-			
+
 			.co-workers{
 				position: relative;
     			padding-right: 5px;
@@ -154,7 +165,7 @@
 	}
 }
 #quaterPanel{
- 
+
   margin: 10px 5% 0;
 
   #quaterList {
@@ -256,7 +267,7 @@
         font-size:18px;
         font-weight: 700;
         display: inline-block;
-        
+
         .lastVisite{
           margin-top: 5px;
           font-size: 12px;
@@ -281,6 +292,6 @@
           font-weight: 400;
         }
       }
-      
+
     }
 }

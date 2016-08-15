@@ -25,7 +25,7 @@ export default class Dashboard extends React.Component {
                             rows={[["To learn Angular", "67"], ["Read the book", "63"], ["To do task", "51"], ["To start running in the morning", "48"], ["To prepare the cake", "41"]]}/>
                     </Tab>
                     <Tab label="Templates">
-                        <DashboardStats count="78" counterName="Tampletes have been forked"
+                        <DashboardStats count="78" counterName="Templates have been forked"
                             caption="Top 5 Templates by number of forks" columns={["Title", "Forks"]}
                             rows={[["Read the book", "43"], ["Learn React", "36"], ["Get fit", "32"], ["Lern salsa", "29"], ["Get a new job", "21"]]}/>
                     </Tab>

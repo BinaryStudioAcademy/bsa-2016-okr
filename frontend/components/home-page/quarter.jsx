@@ -37,16 +37,16 @@ class Quarter extends Component {
              </div>
              <div id="quarter-bar">
                  <ul id='quarter-list' >
-                     <li className="tab active" onClick={this.handleTabClick}>1-st quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>2-nd quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>3-rd quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>4-th quarter</li>
                      <li>
                          <select className='business-year'>
                              <option>2016</option>
                              <option>2017</option>
                          </select>
                      </li>
+                     <li className="tab active" onClick={this.handleTabClick}>1-st quarter</li>
+                     <li className="tab" onClick={this.handleTabClick}>2-nd quarter</li>
+                     <li className="tab" onClick={this.handleTabClick}>3-rd quarter</li>
+                     <li className="tab" onClick={this.handleTabClick}>4-th quarter</li>
                  </ul>
              </div>
          </div>
