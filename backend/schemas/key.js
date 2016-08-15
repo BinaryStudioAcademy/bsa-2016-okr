@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var keyResultSchema = new Schema({
-	title: String
+	title: String,
 	// objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'},
 	// title: String,
 	// forks: Number,
 	// difficulty: String,
-	// isApproved: Boolean,
+	 isApproved: Boolean
 	// isDeleted: Boolean
 }, {
     timestamps: true
