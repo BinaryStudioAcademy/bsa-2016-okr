@@ -38,3 +38,13 @@
   border-bottom-left-radius: 0 !important;
   border-top-left-radius: 0 !important;
 }
+
+.btn-filter {
+  margin-left: 12px;
+}
+
+.active-button {
+  -webkit-box-shadow: inset 0 3px 2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: inset 0 3px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 3px 2px rgba(0, 0, 0, 0.15);
+}

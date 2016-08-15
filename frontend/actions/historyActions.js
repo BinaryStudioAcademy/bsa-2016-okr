@@ -5,3 +5,11 @@ export function search(value) {
 	};
 	return action;
 }
+
+export function showFilters(show) {
+	const action = {
+		type: 'SHOW_FILTERS',
+		showHistoryFilters: show
+	};
+	return action;
+}

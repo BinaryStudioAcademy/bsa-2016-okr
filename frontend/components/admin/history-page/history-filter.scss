@@ -4,13 +4,37 @@
 	
 }
 
+.history-filter-bar {
+	padding: 12px;
+	background-color: #fff;
+	border: 1px solid #99BCE0;
+	color: #777777;
+}
+
 .history-filter-bar-input {
 	width: auto;
 }
 
+.date-from {
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	float: left;
+	width: 70px;
+}
+
+.date-to {
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-left-width: 0 !important;
+	float: left;
+	width: 70px;
+}
+
 .history-filter-table {
 
-	width: 100%;
+	width: auto;
+	margin-left: auto;
+	margin-right: auto;
 
 	td {
 		vertical-align: middle !important;
@@ -20,4 +44,21 @@
 	.cell-right-align {
 		text-align: right;
 	}
+}
+
+.label {
+	display: block;
+	width: 100%;
+	font-family: "Fira Sans", sans-serif;
+	font-size: 20px;
+	color: #777777;
+	margin-bottom: 10px;
+}
+
+.show-container {
+	display: block;
+}
+
+.hide-container {
+	display: none;
 }

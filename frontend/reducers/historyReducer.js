@@ -2,7 +2,8 @@ import historyMock from '../components/mockData/historyPageMock.js'
 
 const initialState = {
     historyItems: historyMock,
-	searchValue: ''
+	searchValue: '',
+	showHistoryFilters: true
 };
 
 export default function historyReducer(state = initialState, action) {
@@ -13,6 +14,13 @@ export default function historyReducer(state = initialState, action) {
 				searchValue
 			})
         }
+
+		case "SHOW_FILTERS": {
+			const {showHistoryFilters} = action;
+			return Object.assign({}, state, {
+				showHistoryFilters
+			})
+		}
 
         default: {
             return state;

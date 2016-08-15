@@ -1,12 +1,32 @@
-import React from 'react'
+import React, {Component} from 'react'
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../../actions/historyActions";
 
 import '../../common/styles/commonStyles.scss'
 import './history-search.scss'
 
-class HistorySearch extends React.Component {
+class HistorySearch extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		this.filterButtonState = this.filterButtonState.bind(this);
+		this.handleFilterButton = this.handleFilterButton.bind(this);
+	}
+
+	filterButtonState(show) {
+		if (show) {
+			return 'active-button'
+		} else {
+			return ''
+		}
+	}
+
+	handleFilterButton() {
+		let show = this.props.stateFromReducer.history.showHistoryFilters;
+		this.props.showFilters(!show);
 	}
 
 	render() {
@@ -15,9 +35,21 @@ class HistorySearch extends React.Component {
 			<div className="history-search-bar">
 				<input type="text" id="history-search-bar-input" placeholder="Search..."/>
 				<button className="btn btn-green btn-search"><i className="fa fa-search"/> Search</button>
+				<button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.stateFromReducer.history.showHistoryFilters)} onClick={this.handleFilterButton}><i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button>
 			</div>
 		)
 	}
 }
 
-export default HistorySearch
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+	return {
+		stateFromReducer: state
+	};
+}
+
+const HistorySearchConnected = connect(mapStateToProps, mapDispatchToProps)(HistorySearch);
+export default HistorySearchConnected

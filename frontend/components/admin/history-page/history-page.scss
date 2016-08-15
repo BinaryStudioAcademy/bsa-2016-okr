@@ -32,7 +32,7 @@
 .history-search-bar-container {
   width: 70%;
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
 }
 
 .history-filter-bar-container {
