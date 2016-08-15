@@ -18,27 +18,49 @@ class Objectives extends Component {
       })
    }
    render() {  
+      var ObjectiveItems = [];
       if (this.state.currentTab == 1) {
-      var ObjectiveItems = this.state.data.map((item, index) => {
-            return <ObjectiveItem index={index} key={item.id} item={item} />
+            let array = this.state.data.filter((item) => {
+               if(item.startDate <= this.props.first)
+                  return true;
+            })
+            ObjectiveItems = array.map((item, index) => {
+               console.log('item' + item);
+               
+                  return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
          }) 
       }
       else if (this.state.currentTab == 2) {
-         var ObjectiveItems = this.state.data.map((item, index) => {
-            if (item.startDate < this.props.second && item.startDate > this.props.first)
-            return <ObjectiveItem index={index} key={item.id} item={item} />
+            let array = this.state.data.filter((item) => {
+               if (item.startDate <= this.props.second && item.startDate > this.props.first)
+                  return true;
+            })
+            ObjectiveItems = array.map((item, index) => {
+               console.log('item' + item);
+               
+                  return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
          }) 
       }
       else if (this.state.currentTab == 3) {
-         var ObjectiveItems = this.state.data.map((item, index) => {
-            if (item.startDate < this.props.third && item.startDate > this.props.second)
-            return <ObjectiveItem index={index} key={item.id} item={item} />
+            let array = this.state.data.filter((item) => {
+               if (item.startDate <= this.props.third && item.startDate > this.props.second)
+                  return true;
+            })
+            ObjectiveItems = array.map((item, index) => {
+               console.log('item' + item);
+               
+                  return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
          }) 
       }
       else if (this.state.currentTab == 4) {
-         var ObjectiveItems = this.state.data.map((item, index) => {             
-            if (item.startDate > this.props.third)
-            return <ObjectiveItem index={index} key={item.id} item={item} />
+            let array = this.state.data.filter((item) => {
+                  if (item.startDate > this.props.third)
+                     return true;
+            })
+            ObjectiveItems = array.map((item, index) => {             
+               console.log('item' + item);
+               
+                  return <ObjectiveItem index={index} key={item.id} item={item} />
          }) 
       }
       
