@@ -9,27 +9,33 @@ class ObjectiveList extends React.Component{
     render(){
         return(
             <div>
-                <div className="project-category" className="other-user-category">
+                <div id="project-category" className="other-user-category">
                     <p><span>Knowledge</span></p>
-                    {
-                        this.props.objectives.map((el) => {
-                            return el;
+                    {   
+                        this.props.objectives.filter((el) => {
+                            if( el.props.category == "Projects")
+                                // console.log( el);
+                                return true;
                         })
                     }
                 </div>
-                <div className="knowledge-category" className="other-user-category">
+                <div id="knowledge-category" className="other-user-category">
                     <p><span>Expertise</span></p>
-                    {
-                        this.props.objectives.map((el) => {
-                            return el;
+                    {   
+                        this.props.objectives.filter((el) => {
+                            if( el.props.category == "Knowledge" )
+                                // console.log( el);
+                                return true;
                         })
                     }
                 </div>
-                <div className="expertise-category" className="other-user-category">
+                <div id="expertise-category" className="other-user-category">
                     <p><span>Projects</span></p>
-                    {
-                        this.props.objectives.map((el) => {
-                            return el;
+                    {   
+                        this.props.objectives.filter((el) => {
+                            if( el.props.category == "Expertise")
+                                // console.log( el);
+                                return true;
                         })
                     }
                 </div>
