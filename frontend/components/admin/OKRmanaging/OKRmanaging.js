@@ -89,11 +89,15 @@ export default class App extends Component {
     this.state = {
       data: objectives,
       active: 0,
-      term: ''
+      term: '',
+      editing: false
     }
 
     this.updateData= this.updateData.bind(this);
     this.removeData= this.removeData.bind(this);
+    this.editData= this.editData.bind(this);
+    this.editingDone= this.editingDone.bind(this);
+    this.editingChange= this.editingChange.bind(this);
   }
 
 	updateData(config) {
@@ -110,6 +114,21 @@ export default class App extends Component {
 
             this.setState({data: objectiveList})
         }		
+	}
+
+	editData (event) {
+		this.setState({editing: true})
+	}
+
+	editingDone(event) {
+		if (event.keyCode === 13) {
+			this.setState({editing: false});
+		}
+	}
+
+	editingChange (event) {
+		let _changedText = event.target.value;
+		this.setState({changedText:_changedText})
 	}
 
 render() {
@@ -139,8 +158,12 @@ render() {
 			<div className="OKR-managing user-list">
 				<UserList 
 					data={this.state.data} 
-					update={this.updateData} 
-					remove={this.removeData.bind(null)} />
+					update={this.updateData}
+					edit={this.editData}
+					editingDone={this.editingDone}
+					editingChange ={this.editingChange} 
+					remove={this.removeData.bind(null)} 
+					editing={this.state.editing} />
 			</div>
 
 		</div>
