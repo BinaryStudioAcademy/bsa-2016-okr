@@ -94,12 +94,13 @@
     }
     .key-results {
       margin: 0px 0px 5px 10px;
-      span {
+      .key-results-arrow {
         padding-left: 5px;
       }
       .change {
-        color: #0080ff;
+        color: $color-blue;
         cursor: pointer;
+        font-weight: bold;
       }
 
       .key-result-details span {
@@ -202,9 +203,9 @@
         }
       }
     }
-      
-  .objective-info {
-    margin-left: 40%;
+
+    .objective-info {
+      margin-left: 40%;
 
       div {
         display: inline-block;

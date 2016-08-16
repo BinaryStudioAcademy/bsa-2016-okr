@@ -33,12 +33,13 @@
 
 		.users-key-results{
 			margin: -20px 0 5px 10px;
-			span{
+			.key-results-arrow {
 				padding-left: 5px;
 			}
-			.change{
-				color: #0080ff;
+			.change {
+				color: $color-blue;
 				cursor: pointer;
+				font-weight: bold;
 			}
 			.key-result-details span{
 				color: #000;
