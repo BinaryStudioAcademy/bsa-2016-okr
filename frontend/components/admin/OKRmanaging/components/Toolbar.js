@@ -28,7 +28,8 @@ export default class Toolbar extends Component {
     this.props.update({
       data: this.props.objectives,
       term: '',
-      active: 0
+      active: 0,
+      editing: false
     });
   }
 
