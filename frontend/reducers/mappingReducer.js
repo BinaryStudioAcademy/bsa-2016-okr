@@ -10,13 +10,29 @@ const initialState = {
     {
        id: 1,
        avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
+       firstName: "myName",
+       lastName: "myLastName",
+       email: "default@default.com",
        localRole: "Default"
     },
     {
        id: 2,
+       avatar: "avatar1.png",
+       firstName: "Vasya",
+       lastName: "Pupkin",
+       email: "vasya@vasya.com",
+       localRole: "User"
+    },
+    {
+       id: 3,
+       avatar: "avatar1.png",
+       firstName: "Napoleon",
+       lastName: "Bonaparte",
+       email: "nepoleon@bonaparte",
+       localRole: "Admin"
+    },
+    {
+       id: 4,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -24,11 +40,60 @@ const initialState = {
        localRole: "Admin"
     },
     {
-       id: 3,
+       id: 5,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
        email: "admin@admin.com",
+       localRole: "Admin"
+    },
+    {
+       id: 6,
+       avatar: "avatar1.png",
+       firstName: "admin",
+       lastName: "admin",
+       email: "admin@admin.com",
+       localRole: "Admin"
+    },
+    {
+       id: 7,
+       avatar: "avatar1.png",
+       firstName: "admin",
+       lastName: "admin",
+       email: "admin@admin.com",
+       localRole: "Admin"
+    }
+    ],
+visibleUsers : [{
+       id: 0,
+       avatar: "avatar1.png",
+       firstName: "admin",
+       lastName: "admin",
+       email: "admin@admin.com",
+       localRole: "Admin"
+    },
+    {
+       id: 1,
+       avatar: "avatar1.png",
+       firstName: "myName",
+       lastName: "myLastName",
+       email: "default@default.com",
+       localRole: "Default"
+    },
+    {
+       id: 2,
+       avatar: "avatar1.png",
+       firstName: "Vasya",
+       lastName: "Pupkin",
+       email: "vasya@vasya.com",
+       localRole: "User"
+    },
+    {
+       id: 3,
+       avatar: "avatar1.png",
+       firstName: "Napoleon",
+       lastName: "Bonaparte",
+       email: "nepoleon@bonaparte",
        localRole: "Admin"
     },
     {
@@ -89,8 +154,30 @@ const initialState = {
        globalRole: "Tech Lead",
        localRole: "Admin"
     }
-    ]
+    ],
+    filter: ""
 };
+
+
+function updateVisibleUsers(users, filter) {
+
+    
+    let visibleUsers = [];
+
+    if (filter === "")
+        visibleUsers = JSON.parse(JSON.stringify(users));
+    else 
+        {
+        for (let i = 0; i < users.length; i++) {
+
+            if ((users[i].firstName.toUpperCase() + " " + users[i].lastName.toUpperCase()).indexOf(filter.toUpperCase()) === 0) {
+                visibleUsers.push(users[i]);
+              }
+        }
+    }
+
+    return visibleUsers;
+}
 
 function updateLocRole(array, id, localRole) {
 
@@ -113,6 +200,18 @@ export default function mappingReducer(state = initialState, action = {}) {
 
     switch (action.type) {
 
+        case "USERS_ROLES_FILTER": {
+
+            const {filter} = action;
+
+             return Object.assign({}, state, {
+                users: state.users,
+                visibleUsers: updateVisibleUsers(state.users, filter),
+                roles: state.roles,
+                filter: filter,
+            })
+        }
+
         case "UPDATE_ROLES_LOCAL_ROLE": {
 
             const {localRole} = action;
@@ -122,7 +221,9 @@ export default function mappingReducer(state = initialState, action = {}) {
 
              return Object.assign({}, state, {
                 users: state.users,
-                roles: updateLocRole(roles, id, localRole)
+                visibleUsers: state.visibleUsers,
+                roles: updateLocRole(roles, id, localRole),
+                filter: state.filter
             })
         }
 
@@ -135,7 +236,9 @@ export default function mappingReducer(state = initialState, action = {}) {
 
              return Object.assign({}, state, {
                 users: updateLocRole(users, id, localRole),
-                roles: state.roles
+                visibleUsers: updateVisibleUsers(state.users, state.filter),
+                roles: state.roles,
+                filter: state.filter
             })
         }
 

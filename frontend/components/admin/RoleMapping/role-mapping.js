@@ -15,7 +15,7 @@ class RoleMapping extends React.Component {
 
    render() {
 
-      const { users } = this.props.stateFromReducer.mapping;
+      const { visibleUsers } = this.props.stateFromReducer.mapping;
       const { roles } = this.props.stateFromReducer.mapping;
 
       return (
@@ -42,7 +42,7 @@ class RoleMapping extends React.Component {
           <div id="central-window">
            
                  <div id="user-role-mapping-header-wrapper">
-                   <input type="text" placeholder="Search it" id="role-mapping-search"/><button id="search-button"><i className="fa fa-search fa-2x" aria-hidden="true"></i></button>
+                   <input type="text" placeholder="Search it" id="role-mapping-search" ref="filterInput"/><button id="search-button" onClick={this.filter.bind(this)}><i className="fa fa-search fa-2x" aria-hidden="true"></i></button>
                  </div>
 
                     <p><span>Personal roles</span></p>
@@ -56,7 +56,7 @@ class RoleMapping extends React.Component {
                              <h3 className="fifth-column">Local role</h3>
                        </div>
 
-                      {users.map(function(user) {
+                      {visibleUsers.map(function(user) {
                           return  <UserRoleMappingItem key={user.id} user={user}/>;
                        })}
 
@@ -66,6 +66,18 @@ class RoleMapping extends React.Component {
 
 
       )
+   }
+
+   filter(event) {
+
+      event.preventDefault();
+
+      const filterInput = this.refs.filterInput;
+      const filter = filterInput.value;
+
+      //console.log(this.props);
+
+      this.props.filterUsersRoles(filter);
    }
 }
 
