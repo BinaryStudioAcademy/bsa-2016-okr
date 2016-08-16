@@ -63,6 +63,7 @@
     "mongoose": "^4.1.10",
     "normalize.css": "^4.2.0",
     "react": "^0.14.3",
+    "react-date-picker": "^5.3.27",
     "react-dom": "^0.14.3",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",

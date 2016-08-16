@@ -1,4 +1,6 @@
 import React from 'react'
+import { DateField } from 'react-date-picker'
+import 'react-date-picker/index.css'
 import StatPanel from '../../../containers/statistic-panel.jsx';
 import Dashboard from "../../dashboard/dashboard.jsx";
 import CentralWindow from "../../../containers/central-window.jsx";
@@ -28,6 +30,7 @@ class HistoryPage extends React.Component {
 								<div className="history-page-title">
 									History
 								</div>
+                <div className="date-picker"><DateField dateFormat="YYYY-MM-DD"/></div>
 								<div className="history-search-bar-container">
 									<HistorySearch/>
 								</div>
