@@ -42,7 +42,7 @@ class RoleMapping extends React.Component {
           <div id="central-window">
            
                  <div id="user-role-mapping-header-wrapper">
-                   <input type="text" placeholder="Search it" id="role-mapping-search" ref="filterInput"/><button id="search-button" onClick={this.filter.bind(this)}><i className="fa fa-search fa-2x" aria-hidden="true"></i></button>
+                   <input type="text" placeholder="Search it" id="role-mapping-search" ref="filterInput" onKeyUp={this.submitFilter.bind(this)}/><button id="search-button" onClick={this.filter.bind(this)}><i className="fa fa-search fa-2x" aria-hidden="true"></i></button>
                  </div>
 
                     <p><span>Personal roles</span></p>
@@ -68,9 +68,17 @@ class RoleMapping extends React.Component {
       )
    }
 
-   filter(event) {
-
+   submitFilter(event) {
+    
       event.preventDefault();
+    
+      if (event.keyCode === 13) {
+        this.filter();
+      }
+
+   }
+
+   filter() {
 
       const filterInput = this.refs.filterInput;
       const filter = filterInput.value;
