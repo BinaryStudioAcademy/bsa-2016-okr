@@ -15,3 +15,11 @@ export function updateRolesLocRole(id, localRole) {
 	};
 	return action;
 }
+
+export function filterUsersRoles(filter) {
+    const action = {
+        type: "USERS_ROLES_FILTER",
+        filter
+    };
+    return action;
+}
