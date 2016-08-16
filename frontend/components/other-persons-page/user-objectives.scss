@@ -21,9 +21,10 @@
 		.clone{
 			clear: both;
 			float: right;
-			font-size: 18px;
-			padding-top: 5px;
-			margin-top: 5px;
+			font-size: 14px;
+			padding: 5px 10px;
+			margin-top: 12px;
+			margin-right: -2px;
 			cursor: pointer;
 		}
 		.description {
@@ -203,7 +204,7 @@
 #topPanel {
   display: inline-block;
   width: 100%;
-  padding: 15px 8%;
+  padding: 15px 5%;
   box-sizing: border-box;
 
     .userInfo{
@@ -222,7 +223,7 @@
 
       .credentials{
         position: absolute;
-        top: 12%;
+        top: 0;
         left: 110px;
         font-size:18px;
         font-weight: 700;
@@ -235,7 +236,7 @@
         }
         div{
         	width: 200px;
-			margin-top: 5px;
+			margin: 5px 0 15px;
 			position: relative;
 			.mentorName{
 				position: absolute;
@@ -250,7 +251,8 @@
 			font-size:22px;
 		}	
         p{
-          font-weight: 400;
+        	padding-left: 0;
+          	font-weight: 400;
         }
       }
 
