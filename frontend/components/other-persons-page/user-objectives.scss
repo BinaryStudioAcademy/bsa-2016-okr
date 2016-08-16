@@ -67,7 +67,21 @@
 					}
 					span{
 						display: table-cell;
-					}	
+
+					}
+					.score {
+						display: inline-block;
+						background: $color-green;
+						border: 1px solid $color-green;
+						border-radius: .3em;
+						padding: 1px 2px 3px 2px;
+						height: 1.2em;
+						width: 2em;
+						line-height: 1.5em;
+						text-align: center;
+						font-weight: bold;
+						color: $color-white;
+					}
 				}
 				.completed{
 					text-decoration: line-through;
