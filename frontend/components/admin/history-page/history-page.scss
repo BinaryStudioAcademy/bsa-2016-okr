@@ -59,13 +59,3 @@
   display: flex;
   flex-direction: row;
 }
-
-.date-picker {
-  margin-right: 10px;
-}
-
-@-moz-document url-prefix() {
-    .date-picker{
-        margin-right: 50px;
-    }
-}

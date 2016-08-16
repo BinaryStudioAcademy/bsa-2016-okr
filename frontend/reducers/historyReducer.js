@@ -22,6 +22,19 @@ export default function historyReducer(state = initialState, action) {
 			})
 		}
 
+    case "SET_HISTORY_FILTER_DATE_FROM": {
+			const {setHistoryFilterDateFrom} = action;
+			return Object.assign({}, state, {
+				setHistoryFilterDateFrom
+			})
+		}
+
+    case "SET_HISTORY_FILTER_DATE_TO": {
+      const {setHistoryFilterDateTo} = action;
+      return Object.assign({}, state, {
+        setHistoryFilterDateTo
+      })
+    }
         default: {
             return state;
         }
