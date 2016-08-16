@@ -15,12 +15,6 @@ class ListOfUsers extends Component {
 		super(props);
 
 		this.search = this.search.bind(this);
-		this.takeUser = this.takeUser.bind(this);
-	}
-
-	takeUser(id) {
-		this.props.sendRequest(id);
-	//	this.props.takeUserId(id);
 	}
 
 	search(e) {
@@ -35,8 +29,7 @@ class ListOfUsers extends Component {
 				return;
 			else
 				return (
-					<UserItem takeUser={this.takeUser} key={index}
-								id={user.userId} name={user.userName} mentor={user.mentor}/>
+					<UserItem key={index} user={user} />
 				);
 		}.bind(this));
 

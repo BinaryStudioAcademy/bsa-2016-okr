@@ -16,7 +16,9 @@ class OtherPersonsPage extends Component {
 		super(props);
 	}
 
-
+	componentWillMount(){
+		this.props.sendRequest(this.props.id);
+	}
 	render() {
 		const {user, id} = this.props.stateFromReducer.users;
 
@@ -41,8 +43,9 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
+		id: ownProps.params.userId,
 		stateFromReducer: state
 	};
 }
