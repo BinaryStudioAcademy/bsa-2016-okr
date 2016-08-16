@@ -19,7 +19,8 @@ class ListOfUsers extends Component {
 	}
 
 	takeUser(id) {
-		this.props.takeUserId(id);
+		this.props.sendRequest(id);
+	//	this.props.takeUserId(id);
 	}
 
 	search(e) {
