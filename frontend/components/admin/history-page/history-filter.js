@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 
+import { DateField } from 'react-date-picker'
+import 'react-date-picker/index.css'
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -13,16 +16,27 @@ class HistoryFilter extends Component {
 	constructor(props) {
 		super(props);
 		this.showFiltersContainer = this.showFiltersContainer.bind(this);
+		this.onChangeFrom = this.onChangeFrom.bind(this);
+		this.onChangeTo = this.onChangeTo.bind(this);
 	}
 
 	showFiltersContainer() {
-		// console.log(this.props);
 		if (this.props.stateFromReducer.history.showHistoryFilters) {
 			return "show-container"
 		} else {
 			return "hide-container"
 		}
 		return "hide-container";
+	}
+
+	onChangeFrom(dateString, { dateMoment, timestamp }) {
+		  console.log(dateString);
+			this.props.setFilterDateFrom(dateString);
+	}
+
+	onChangeTo(dateString, { dateMoment, timestamp }) {
+			console.log(dateString);
+			this.props.setFilterDateTo(dateString);
 	}
 
 	render() {
@@ -44,8 +58,8 @@ class HistoryFilter extends Component {
 							</td>
 							<td className="cell-right-align">Date: </td>
 							<td>
-								<input className="history-filter-bar-input date-from" type="text" placeholder="From"/>
-								<input className="history-filter-bar-input date-to" type="text" placeholder="To"/>
+								<DateField className="date-field" placeholder="From" dateFormat="YYYY-MM-DD" onChange={this.onChangeFrom} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
+								<DateField className="date-field" placeholder="To" dateFormat="YYYY-MM-DD" onChange={this.onChangeTo} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
 							</td>
 							<td>Sort by: </td>
 							<td>
