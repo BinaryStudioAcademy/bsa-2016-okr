@@ -31,9 +31,11 @@ class UserItem extends Component {
 			<li className='userItem' onClick={this.takeUser}>
 				<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
 				<div className='userInfo'>
-				<div>{this.props.name}</div>
+				<div className='userName'>{this.props.name}</div>
 				<div><span className='fi flaticon-user-6 mentor'></span>
-				<span className='mentorName'> {this.props.mentor}</span></div>
+				<span className='mentorName'> Mentor: 
+				<br />
+				{this.props.mentor}</span></div>
 				</div>
 				<UserProgress />
 			</li>

@@ -65,15 +65,19 @@
 		.userInfo{
 			display: inline-block;
 			position: absolute;
-			top: 10px;
+			top: 5px;
 			width: 30%;
 
+			.userName {
+				font-weight: 700;
+			}
 			div{
 				margin-top: 5px;
 				position: relative;
 				.mentorName{
 					position: absolute;
-					top: 5px;
+					top: 0px;
+					line-height: 15px;
 					font-size: 12px;
 					padding-left: 5px;
 				}
@@ -83,9 +87,14 @@
 				font-size:22px;
 			}
 		}
+		.progressTitle {
+			margin-left: 30%;
+			margin-bottom: 5px;
+			font-size: 14px;
+		}
 		.progress-bar{
 			float: right;
-			padding-top: 10px;
+			padding-top: 5px;
 			width: 30%;
 			position: relative;
 			margin-right: 40px;
