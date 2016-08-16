@@ -27,19 +27,20 @@ class UserItem extends Component {
 	render() {
 		return (
 			<Link to={`/user/${this.props.id}`}>
-			<div className="userItemDiv">
-			<li className='userItem' onClick={this.takeUser}>
-				<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
-				<div className='userInfo'>
-				<div className='userName'>{this.props.name}</div>
-				<div><span className='fi flaticon-user-6 mentor'></span>
-				<span className='mentorName'> Mentor: 
-				<br />
-				{this.props.mentor}</span></div>
+				<div className="userItemDiv">
+					<li className='userItem' onClick={this.takeUser}>
+						<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
+						<div className='userInfo'>
+							<div className='userName'>{this.props.name}</div>
+							<div><span className='fi flaticon-user-6 mentor'></span>
+								<span className='mentorName'> Mentor: 
+									<br /> {this.props.mentor}
+								</span>
+							</div>
+						</div>
+						<UserProgress />
+					</li>
 				</div>
-				<UserProgress />
-			</li>
-			</div>
 			</Link>
 		)
 	}

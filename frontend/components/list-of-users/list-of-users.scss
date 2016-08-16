@@ -5,38 +5,37 @@
 	.users-title {
 	clear: both;
 
-  p {
-	color: #aaaaaa;
-	font-size: 20px;
-	text-align: center;
-	position: relative;
-	padding: 4px;
-    width: 98%;
-    margin: 0 5px;
-  }
+	p {
+		color: #aaaaaa;
+		font-size: 20px;
+		text-align: center;
+		position: relative;
+		padding: 4px;
+	    width: 98%;
+	    margin: 0 5px;
+	}
 
-  p > span {
-	display: inline-block;
-	padding: 10px;
-	position: relative;
-	background: lighten($color-blue-grey, 50%);
-	z-index: 10;
-  }
+	p > span {
+		display: inline-block;
+		padding: 10px;
+		position: relative;
+		background: lighten($color-blue-grey, 50%);
+		z-index: 10;
+	}
 
-  p:after {
-	content: '';
-	display: block;
-	position: absolute;
-	top: 28px;
-	left: 0;
-	height: 0;
-	width: 100%;
-	border-top: 1px solid #aaaaaa;
-	z-index: 0;
-  }
-
-}
-		.searchBar {
+	p:after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 28px;
+		left: 0;
+		height: 0;
+		width: 100%;
+		border-top: 1px solid #aaaaaa;
+		z-index: 0;
+	}
+	}
+	.searchBar {
 		float: right;
 		width: 30%;
 		padding: 10px;
