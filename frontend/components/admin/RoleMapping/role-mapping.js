@@ -28,8 +28,8 @@ class RoleMapping extends React.Component {
 
                  <div id="roles-table">
                       <div className="table-head">
-                            <h3 className="first-column">Global role</h3>
-                            <h3 className="second-column">Local role</h3>
+                            <h3 className="col-1">Global role</h3>
+                            <h3 className="col-2">Local role</h3>
                       </div>
 
                        {roles.map(function(role) {
@@ -42,18 +42,18 @@ class RoleMapping extends React.Component {
           <div id="central-window">
            
                  <div id="user-role-mapping-header-wrapper">
-                   <input type="text" placeholder="Search it" id="role-mapping-search" ref="filterInput" onKeyUp={this.submitFilter.bind(this)}/><button id="search-button" onClick={this.filter.bind(this)}><i className="fa fa-search fa-2x" aria-hidden="true"></i></button>
+                   <input type="text" placeholder="Search it" id="role-mapping-search" ref="filterInput" onKeyUp={this.filter.bind(this)}/>
                  </div>
 
                     <p><span>Personal roles</span></p>
 
                     <div className="table">
                        <div className="table-head">
-                             <h3 className="first-column">Avatar</h3>
-                             <h3 className="second-column">First name</h3>
-                             <h3 className="third-column">Last name</h3>
-                             <h3 className="fourth-column">E-mail</h3>
-                             <h3 className="fifth-column">Local role</h3>
+                             <h3 className="col-1">Avatar</h3>
+                             <h3 className="col-2">First name</h3>
+                             <h3 className="col-3">Last name</h3>
+                             <h3 className="col-4">E-mail</h3>
+                             <h3 className="col-5">Local role</h3>
                        </div>
 
                       {visibleUsers.map(function(user) {
@@ -68,25 +68,22 @@ class RoleMapping extends React.Component {
       )
    }
 
-   submitFilter(event) {
-    
-      event.preventDefault();
-    
-      if (event.keyCode === 13) {
-        this.filter();
-      }
-
-   }
-
    filter() {
 
       const filterInput = this.refs.filterInput;
       const filter = filterInput.value;
 
-      //console.log(this.props);
-
       this.props.filterUsersRoles(filter);
    }
+
+  componentDidMount()  {
+
+    if (this.props.stateFromReducer.mapping.filter != "" && this.refs.filterInput.value === "") {
+       this.refs.filterInput.value = this.props.stateFromReducer.mapping.filter;
+    }
+
+  }
+
 }
 
 function mapDispatchToProps(dispatch) {

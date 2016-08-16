@@ -14,13 +14,13 @@ class UserRoleMappingItem extends React.Component {
 
    	        return (
 	            <div className="table-row">
-	                   <div className="first-column">
+	                   <div className="col-1">
 	                      <img/>
 	                   </div>
-	                   <h4 className="second-column">{this.props.user.firstName}</h4>
-	                   <h4 className="third-column">{this.props.user.lastName}</h4>
-	                   <h4 className="fourth-column">{this.props.user.email}</h4>
-	                   <select className="fifth-column" id={"user-roles" + this.props.user.id} onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
+	                   <h4 className="col-2">{this.props.user.firstName}</h4>
+	                   <h4 className="col-3">{this.props.user.lastName}</h4>
+	                   <h4 className="col-4">{this.props.user.email}</h4>
+	                   <select className="col-5" id={"user-roles" + this.props.user.id} onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
 		                 <option value="Default">Default</option>
 		                 <option value="Mentor">Mentor</option>
 	                     <option value="Admin">Admin</option>
@@ -35,6 +35,10 @@ class UserRoleMappingItem extends React.Component {
    }
 
    componentDidMount()  {
+
+   	if (this.props.stateFromReducer.mapping.filter != "" && this.refs.userLocalRole.value === "") {
+   		this.refs.userLocalRole.value = this.props.stateFromReducer.mapping.filter;
+   	}
 
    	 let defaultOption = document.querySelector("select#user-roles" + this.props.user.id + " option[value=Default]");
 	 let adminOption = document.querySelector("select#user-roles" + this.props.user.id + " option[value=Admin]");
