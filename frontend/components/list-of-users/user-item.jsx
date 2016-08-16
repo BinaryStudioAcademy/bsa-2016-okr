@@ -33,7 +33,8 @@ class UserItem extends Component {
 						<div className='userInfo'>
 							<div className='userName'>{this.props.name}</div>
 							<div><span className='fi flaticon-user-6 mentor'></span>
-								<span className='mentorName'> Mentor: 
+								<span className='mentorName'>
+									<span className='mentorTitle'>Mentor:</span> 
 									<br /> {this.props.mentor}
 								</span>
 							</div>
