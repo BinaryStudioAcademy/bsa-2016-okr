@@ -14,7 +14,9 @@ class PersonsInfo extends Component {
                <div className='credentials'>{user}
                   <p className='lastVisite'>Last visit: {this.props.data.lastVisitDate}</p>
                   <div><span className='fi flaticon-user-6 mentor'></span>
-                  <span className='mentorName'>{this.props.data.mentor}</span></div>
+                  <span className='mentorName'> Mentor: 
+                  <br />
+                  {this.props.data.mentor}</span></div>
                </div>
             </div>      
          </div>
