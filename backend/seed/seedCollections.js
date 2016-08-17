@@ -25,6 +25,9 @@ function randomUser(i) {
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 	
 	return new User({
+		userName: chance.string({ min: 0, max: 10 }),
+		mentor: chance.string({ min: 0, max: 10 }),
+		userId: chance.integer({ min: 0, max: 10000000 }),
 		followObjectives: [],
 		objectives: [],
 		lastVisitDate: chance.date({ year: 2016 }),

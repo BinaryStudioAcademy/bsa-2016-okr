@@ -19,27 +19,22 @@ class OtherPersonsPage extends Component {
 	componentWillMount(){
 		var urlArray = this.props.routing.pathname.split('/');
 		var id = urlArray[urlArray.length - 1]
-		this.props.sendRequest(id);
+		this.props.getUser(id);
 	}
 	render() {
-		console.log( this.props.users.waiting)
-		if (this.props.users.waiting){
+		console.log( this.props.user.waiting)
+		if (this.props.user.waiting){
 			return <div></div>
 		}
 		else {
-		
-		var id = this.props.users.id;
-		const {user} = this.props.users;
 
-		var userItem = user.find(function(user, index) {
-			if (user.userId == id)
-				return true;
-		})
+		const {user} = this.props.user;
+		console.log(user)
 		return (
 			<div>
 				<CentralWindow>
-					<PersonInfo data={userItem} />
-					<UserOjectives data={userItem}/>
+					<PersonInfo data={user} />
+					<UserOjectives data={user}/>
 				</CentralWindow>
 				<StatPanel>
 					<Dashboard></Dashboard>
@@ -55,7 +50,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		users: state.users,
+		user: state.users,
 		routing: state.routing.locationBeforeTransitions
 	};
 }

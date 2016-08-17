@@ -1,19 +1,23 @@
 var axios = require('axios');
 
-export const SEND_REQUEST = 'SEND_REQUEST'
-export const RECEIVED_DATA = 'RECEIVED_DATA'
+export const GET_USER = 'GET_USER'
+export const RECEIVED_USER = 'RECEIVED_USER'
 export const SEARCH_USER = 'SEARCH_USER'
+export const GET_USERS_LIST = 'GET_USERS_LIST'
+export const RECEIVED_USERS_LIST = 'RECEIVED_USERS_LIST'
+export const USERS_LIST_ERROR = 'USERS_LIST_ERROR'
 
 
-export function sendRequest(userId) {
+export function getUser(id) {
+
 	return (dispatch, getStore) => {
 
 	dispatch({
-		type: SEND_REQUEST
+		type: GET_USER
 	});
 
-	return axios.get('http://localhost:4444/user/'+userId)
-		.then(dispatch(receivedData(userId)))
+	return axios.get('api/user/'+id)
+		.then(response => dispatch(receivedData(response.data)))
 		.catch(response => dispatch(receivedError(response.data)));
 	};
 }
@@ -25,13 +29,38 @@ export function receivedError(data) {
 	};
 }
 
-export function receivedData(id) {
+export function receivedData(data) {
 	return {
-		type: RECEIVED_DATA,
-		id
+		type: RECEIVED_USER,
+		data
+	};
+}
+export function getUsersList(){
+	return(dispatch, getStore) => {
+
+		dispatch({
+			type: GET_USERS_LIST
+		});
+
+		return axios.get('api/user/')
+			.then(response => dispatch(receivedUsersList(response.data)))
+			.catch(response => dispatch(userslistError(response.data)));
 	};
 }
 
+export function userslistError(data) {
+	return {
+		type: USER_LISTS_ERROR,
+		data
+	};
+}
+
+export function receivedUsersList(data) {
+	return {
+		type: RECEIVED_USERS_LIST,
+		data
+	};
+}
 export function search(value) {
 	const action = {
 		type: SEARCH_USER,

@@ -20,10 +20,13 @@ class ListOfUsers extends Component {
 	search(e) {
 		this.props.search(e.target.value);
 	}
+	componentWillMount(){
+		this.props.getUsersList();
+	}
 
 	render() {
 		const {user, searchValue} = this.props.users;
-
+		
 		var userNodes = user.map(function (user, index) {
 			if(user.userName.toLowerCase().indexOf(searchValue.toLowerCase()) === -1)
 				return;
