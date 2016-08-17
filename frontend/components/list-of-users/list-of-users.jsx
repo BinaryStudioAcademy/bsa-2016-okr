@@ -22,7 +22,7 @@ class ListOfUsers extends Component {
 	}
 
 	render() {
-		const {user, searchValue} = this.props.stateFromReducer.users;
+		const {user, searchValue} = this.props.users;
 
 		var userNodes = user.map(function (user, index) {
 			if(user.userName.toLowerCase().indexOf(searchValue.toLowerCase()) === -1)
@@ -57,7 +57,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        stateFromReducer: state
+        users: state.users
     };
 }
 

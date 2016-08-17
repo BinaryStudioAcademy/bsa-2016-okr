@@ -7,7 +7,7 @@ export function sendRequest(userId) {
 		type: 'SEND_REQUEST'
 	});
 
-	return axios.get('http://localhost:4444/${userId}')
+	return axios.get('http://localhost:4444/user/'+userId)
 		.then(dispatch(receivedData(userId)))
 		.catch(response => dispatch(receivedError(response.data)));
 	};
