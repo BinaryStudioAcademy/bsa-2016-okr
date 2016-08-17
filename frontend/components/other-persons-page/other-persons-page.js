@@ -22,7 +22,7 @@ class OtherPersonsPage extends Component {
 
 		var userItem = user.filter(function(user, index) {
 			if (user.userId == id)
-				return user
+				return true;
 		})
 		return (
 			<div>
