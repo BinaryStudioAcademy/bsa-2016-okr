@@ -1,9 +1,9 @@
 import React from 'react'
-
+import ReactList from 'react-list';
 import './history-item-list.scss'
-import  '../../common/styles/table.scss'
-
-import historyMock from '../../../components/mockData/historyPageMock.js'
+import '../../common/styles/table.scss'
+import $ from 'jquery';
+//import historyMock from '../../../components/mockData/historyPageMock.js'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -12,12 +12,37 @@ import * as actions from "../../../actions/historyActions";
 
 class HistoryItemList extends React.Component {
 
+	state ={
+		historyItems: []
+	}
     constructor() {
         super();
-		this.historyItems = historyMock;
+		//this.historyItems = [];
 		// console.log(this.historyItems);
         this.getActionColor = this.getActionColor.bind(this);
-		this.displayList = this.displayList.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this)
+		//this.displayList = this.displayList.bind(this);
+		this.url = '/api/history';
+    }
+
+    getHistoryItems() {
+    	$.ajax({
+    		url: this.url,
+    		dataType: 'json',
+    		type: 'GET',
+    		cache: false,
+    		success: function(historyItems){
+    			this.setState({historyItems});
+    		}.bind(this),
+    		error: function(xhr, status, err){
+				console.error(this.props.url, status, err.toString());
+			}.bind(this)
+    	});
+    }
+
+    componentWillMount() {
+    	this.getHistoryItems.call(this);
+    	//this.forceUpdate.call(this)
     }
 
     getActionColor(actionType) {
@@ -37,22 +62,25 @@ class HistoryItemList extends React.Component {
         }
     }
 
-	displayList(item, i) {
-		return(<tr key={item._id}>
-			<td>
-				<img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/> {item.authorId}
-			</td>
-			<td className={this.getActionColor(item.type)}>{item.type}</td>
-			<td><a href="#">{item.typeId}</a></td>
-			<td>{item.createdAt}</td>
-		</tr>)
-	}
+	renderItem(index, key) {
+		let item = this.state.historyItems[index];
+   		return(
+   			<tr key={item._id}>
+				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
+				<td>{item.type}</td>
+				<td><a href="#">{item.typeId}</a></td>
+				<td>{item.createdAt}</td>
+			</tr>)
+  	}
+
+  	renderItems(items, ref) {
+  		return ( <tr ref={ref}>{items}</tr> )
+  	}
 
     render() {
-
         return(
             <div className="history-item-list">
-            	<table className="table">
+            	<table className="table" id="historyTable">
 					<thead>
 						<tr>
 							<th>User</th>
@@ -62,10 +90,14 @@ class HistoryItemList extends React.Component {
 						</tr>
 					</thead>
 					<tbody>
-	                {
-	                	this.historyItems.map(this.displayList)
-					}
-                    </tbody>
+	               		<ReactList
+							itemRenderer={::this.renderItem}
+							itemsRenderer={::this.renderItems}
+							length={this.state.historyItems.length}
+							type='simple'
+							pageSize={20}
+						/>
+						</tbody>
 				</table>	
             </div>
         )
