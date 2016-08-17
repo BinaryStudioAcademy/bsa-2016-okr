@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactList from 'react-list';
-import './history-item-list.scss'
-import '../../common/styles/table.scss'
-import $ from 'jquery';
+import './history-item-list.scss';
+import '../../common/styles/table.scss';
+import axios from 'axios';
 //import historyMock from '../../../components/mockData/historyPageMock.js'
 
 import { bindActionCreators } from 'redux';
@@ -26,18 +26,26 @@ class HistoryItemList extends React.Component {
     }
 
     getHistoryItems() {
-    	$.ajax({
-    		url: this.url,
-    		dataType: 'json',
-    		type: 'GET',
-    		cache: false,
-    		success: function(historyItems){
-    			this.setState({historyItems});
-    		}.bind(this),
-    		error: function(xhr, status, err){
-				console.error(this.props.url, status, err.toString());
-			}.bind(this)
-    	});
+        axios.get('/api/history')
+        .then(function (response){
+           // console.log(historyItems);
+            this.setState({historyItems: response.data});
+        }.bind(this))
+   //  	$.ajax({
+    .catch(function (err) {
+        console.log(err);
+    })
+   //  		url: this.url,
+   //  		dataType: 'json',
+   //  		type: 'GET',
+   //  		cache: false,
+   //  		success: function(historyItems){
+   //  			this.setState({historyItems});
+   //  		}.bind(this),
+   //  		error: function(xhr, status, err){
+			// 	console.error(this.props.url, status, err.toString());
+			// }.bind(this)
+   //  	});
     }
 
     getObjectId(item) {
