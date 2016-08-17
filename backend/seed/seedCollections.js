@@ -6,13 +6,17 @@ var User = require('../schemas/user');
 var Objective = require('../schemas/objective');
 var Key = require('../schemas/key');
 var Category = require('../schemas/category');
-var Comment = require('../schemas/comment');
-var History = require('../schemas/history');
-var Plan = require('../schemas/plan');
-var UserMentor = require('../schemas/userMentor');
+// var Comment = require('../schemas/comment');
+// var History = require('../schemas/history');
+// var Plan = require('../schemas/plan');
+// var UserMentor = require('../schemas/userMentor');
+// var UserObjective = require('../schemas/userObjective');
+
+var Role = require('../schemas/role');
 
 var Chance = require('chance');
 var mongoose = require('mongoose');
+var CONST = require('../config/constants');
 
 var chance = new Chance();
 function getRandomId(set) {
@@ -21,66 +25,48 @@ function getRandomId(set) {
 }
 
 function randomUser(i) {
-	var createdAt = chance.date({ year: 2016 });
-	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+	var createdAt = chance.date({ year: 2016, month: 4 });
+	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 200000000 }));
 	
 	return new User({
-		followObjectives: [],
-		objectives: [],
-		lastVisitDate: chance.date({ year: 2016 }),
-		historyWatchDate: chance.date({ year: 2016 }),
-		isDeleted: i % 10 === 0,
+		localRole: i % 10 === 0 ? 'admin' : '',
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
 }
 
-function randomObjective(users, i) {
+function randomObjective(users, categories, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 	
 	return new Objective({
-		createdBy: getRandomId(users),
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
-		keys: [],
-		cheers: [
-			getRandomId(users),
-			getRandomId(users)
-		],
-		views: [
-			getRandomId(users),
-			getRandomId(users),
-			getRandomId(users),
-			getRandomId(users),
-			getRandomId(users)
-		],
-		forks: chance.integer({ min: 0, max: 50 }),
-		isApproved: i % 5 === 0,
+		category: getRandomId(categories),
+		keyResults: [],
+		creator: getRandomId(users),
+		isApproved: i % 5 !== 0,
 		isDeleted: i % 10 === 0,
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
 }
 
-function randomKey(objectives, i) {
-	var createdAt = chance.date({ year: 2016 });
+function randomKey(objectives, users, i) {
+	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 	
 	return new Key({
-		objectiveId: getRandomId(objectives),
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
-		score: chance.integer({ min: 0, max: 100 }) / 100,
-		forks: chance.integer({ min: 0, max: 50 }),
-		difficulty: chance.pickset(['low', 'intermediate', 'high']),
-		isApproved: i % 5 === 0,
-		isDeleted: i % 10 === 0,
+		creator: getRandomId(users),
+		objectiveId: getRandomId(objectives),
+		difficulty: chance.pickone(Key.schema.path('difficulty').enumValues),
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
 }
 
-function randomComment(users, objectives, i) {
+/*function randomComment(users, objectives, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
@@ -92,31 +78,41 @@ function randomComment(users, objectives, i) {
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
-}
-
-function randomCategory(i) {
-	return new Category({
-		title: chance.pickset(['Knowledge', 'Expertise', 'Projects']),
-		isDeleted: i % 3 === 0
-	});
-}
+}*/
 
 function baseCategories() {
 	var res = [];
-	var categories = ['Knowledge', 'Expertise', 'Projects'];
+	var categories = [CONST.objective.PROJECTS];
 	
-	categories.forEach(categoryName => {
+	Object.getOwnPropertyNames(CONST.objective).forEach(categoryName => {
 		var category = new Category({
-			title: categoryName,
+			title: CONST.objective[categoryName],
 			isDeleted: false
 		});
+		
 		res.push(category.toObject());
 	});
 
 	return res;
 }
 
-function randomPlan(users, objectives, i) {
+function setDefaultKeysForObjectives(objectives, keys) {
+	objectives.forEach((objective) => {
+		var objectiveKeys = keys.filter((key) => {
+			return key.objectiveId.equals(objective._id);
+		});
+
+		var defaultKeys = chance.pickset(objectiveKeys, 3).map((key) => {
+			return key._id;
+		});
+
+		objective.keyResults = defaultKeys;
+	});
+
+	return objectives;
+}
+
+/*function randomPlan(users, objectives, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 	
@@ -133,16 +129,16 @@ function randomPlan(users, objectives, i) {
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
-}
+}*/
 
-function randomUserMentor(users, i) {
+/*function randomUserMentor(users, i) {
 	return new UserMentor({
 		userId: getRandomId(users),
 		mentorId: getRandomId(users)
 	});
-}
+}*/
 
-function randomHistory(users, keys, i) {
+/*function randomHistory(users, keys, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 100000, max: 2000000 }));
 	
@@ -153,27 +149,39 @@ function randomHistory(users, keys, i) {
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
-}
+}*/
 
 module.exports = function () {
 		//toObject to avoid bulk insert crashes
 		var users = new Array(100).fill(0).map((_, i) => randomUser(i).toObject());
-		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, i).toObject());
-		var keys = new Array(10000).fill(0).map((_, i) => randomKey(objectives, i).toObject());
-		var comments = new Array(10000).fill(0).map((_, i) => randomComment(users, objectives, i).toObject());
 		var categories = baseCategories();
-		var plans = new Array(100).fill(0).map((_, i) => randomPlan(users, objectives, i).toObject());
-		var usersMentors = new Array(100).fill(0).map((_, i) => randomUserMentor(users, i).toObject());
-		var histories = new Array(10000).fill(0).map((_, i) => randomHistory(users, keys, i).toObject());
+		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
+		var keys = new Array(10000).fill(0).map((_, i) => randomKey(objectives, users, i).toObject());
+
+		objectives = setDefaultKeysForObjectives(objectives, keys);
+
+		var roles = [];
+
+		roles.push({globalRole: "ADMIN", localRole: "Admin"});
+		roles.push({globalRole: "DEVELOPER", localRole: "User"});
+		roles.push({globalRole: "HR", localRole: "User"});
+		roles.push({globalRole: "CEO", localRole: "Admin"});
+		roles.push({globalRole: "Tech Lead", localRole: "Admin"});
+
+		// var comments = new Array(10000).fill(0).map((_, i) => randomComment(users, objectives, i).toObject());
+		// var plans = new Array(100).fill(0).map((_, i) => randomPlan(users, objectives, i).toObject());
+		// var usersMentors = new Array(100).fill(0).map((_, i) => randomUserMentor(users, i).toObject());
+		// var histories = new Array(10000).fill(0).map((_, i) => randomHistory(users, keys, i).toObject());
 
 		return {
 			users: users,
 			objectives: objectives,
 			keys: keys,
-			comments: comments,
 			categories: categories,
-			plans: plans,
-			usermentors: usersMentors,
-			histories: histories
+			roles: roles
+			// comments: comments,
+			// plans: plans,
+			// usermentors: usersMentors,
+			// histories: histories
 		};
 	}

@@ -24,10 +24,8 @@ class Objectives extends Component {
                if(item.startDate <= this.props.first)
                   return true;
             })
-            ObjectiveItems = array.map((item, index) => {
-               console.log('item' + item);
-               
-                  return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
+            ObjectiveItems = array.map((item, index) => {               
+               return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
          }) 
       }
       else if (this.state.currentTab == 2) {

@@ -17,11 +17,15 @@ router.post('/', adminOnly, (req, res, next) => {
 	var description = req.body.description || '';
 	var keys = req.body.keys || [];
 
+	keys.forEach((key) => {
+		key.difficulty = ValidateService.getValidDifficulty(key.difficulty);
+	});
+
 	var isKeysInvalid = keys.some((key) => {
 		return !ValidateService.isObject(key)
 		|| ValidateService.isEmpty(key.title)
 		|| ValidateService.isEmpty(key.difficulty)
-		|| !ValidateService.isValidDifficulty(key.difficulty);
+		|| !key.difficulty;
 	});
 
 	if( ValidateService.isEmpty(title)
@@ -85,11 +89,15 @@ router.post('/me/', (req, res, next) => {
 		}
 	}
 
+	keys.forEach((key) => {
+		key.difficulty = ValidateService.getValidDifficulty(key.difficulty);
+	});
+
 	var isKeysInvalid = keys.some((key) => {
 		return !ValidateService.isObject(key)
 		|| ValidateService.isEmpty(key.title)
 		|| ValidateService.isEmpty(key.difficulty)
-		|| !ValidateService.isValidDifficulty(key.difficulty);
+		|| !key.difficulty;
 	});
 
 	if( ValidateService.isEmpty(title)

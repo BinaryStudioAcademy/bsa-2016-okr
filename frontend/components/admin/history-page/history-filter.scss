@@ -1,7 +1,7 @@
 @import "_variables";
 
 .history-filter-bar-container {
-	
+
 }
 
 .history-filter-bar {
@@ -18,7 +18,7 @@
 .date-from {
 	border-top-right-radius: 0 !important;
 	border-bottom-right-radius: 0 !important;
-	float: left;
+	float: right;
 	width: 70px;
 }
 
@@ -26,8 +26,13 @@
 	border-top-left-radius: 0 !important;
 	border-bottom-left-radius: 0 !important;
 	border-left-width: 0 !important;
-	float: left;
+	float: right;
 	width: 70px;
+}
+
+.date-field {
+	float: left;
+	margin: 5px;
 }
 
 .history-filter-table {

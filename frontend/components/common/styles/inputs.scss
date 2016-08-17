@@ -80,33 +80,56 @@ textarea{
 		box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
 	}
 }
-.progress{
-	width: 200px;
-	-webkit-appearance: none;
-	appearance: none;
-	-moz-appearance: none;
+.progress-bar{
+	float: right;
+    padding-top: 10px;
+    width: 30%;
+    position: relative;
+    margin-right: 40px;
 
-	progress[value]{
-		width: 100%;
-		-webkit-appearance: none;
-		appearance: none;
-		-moz-appearance: none;
-	}
+    .progressValue {
+	    z-index: 0;
+        display: inline-block;
+        position: absolute;
+        top: 14px;
+        width: 50px;
+        height: 16px;
+        right: -42px;
+        font-size: 12px;
+        background-color: #aaa;
+        color: #fff;
+        box-sizing: border-box;
+        padding: 1.5px 12px 0 12px;
+        border-radius: 0 10px 10px 0;
+      }
+
+    progress[value]{
+	    position: relative;
+        z-index:1;
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+    }
 }
-.progress::-webkit-progress-bar {
-	border: none;
-	background: #eee;
+::-webkit-progress-bar {
+    border: none;
+    border: 4px solid lighten($color-blue-grey, 52%);
+    border-radius: 12px ;
+    background: #eee;
+    height: 24px;
+    box-sizing: border-box;
 }
-.progress::-webkit-progress-value {
-	background: #4CAF50;
+::-webkit-progress-value {
+    border-radius: 12px;
+    background: #4CAF50;
 }
-.progress::-moz-progress-bar {
-	background: #4CAF50;
-	border: none;
+::-moz-progress-bar {
+    background: #4CAF50;
+    border: none;
 }
-.progress::-moz-progress-value {
-	background: #7fda57;
-}
+::-moz-progress-value {
+    background: #7fda57;
+ }
 
 /* ---=== Custom checkboxes ===--- */
 [type="checkbox"]:not(:checked),

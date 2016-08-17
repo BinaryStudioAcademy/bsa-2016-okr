@@ -15,7 +15,7 @@ const enhancer = compose(
 );
 
 export default function configureStore(initialState) {
-	const store = createStore(rootReducer, initialState, enhancer);
+	const store = createStore(rootReducer, initialState, enhancer, window.devToolsExtension && window.devToolsExtension());
 
 	if (module.hot) {
 		module.hot.accept('../reducers/commonReducer', () =>

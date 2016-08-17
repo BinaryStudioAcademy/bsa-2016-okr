@@ -58,7 +58,7 @@ let Objective = [{
 {
 	"id": "57aa17fcf53e3058174f4de9",
 	"objTitle": "Improve JavaScript skills",
-	"objDescription": "Impeove JS to become 'middle'",
+	"objDescription": "Improve JS to become 'middle'",
 	"category": "Knowledge",
 	"ownerName": "John Dou",
 	"keyResults": [

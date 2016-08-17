@@ -11,10 +11,14 @@ class PersonsInfo extends Component {
                <div className='logo'>
                   <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
                </div>
-               <div className='credentials'>{user}
-                  <p className='lastVisite'>Last visit: {this.props.data.lastVisitDate}</p>
+               <div className='credentials'>
                   <div><span className='fi flaticon-user-6 mentor'></span>
-                  <span className='mentorName'>{this.props.data.mentor}</span></div>
+                     <span className='mentorName'> Mentor: 
+                     <br />
+                     {this.props.data.mentor}</span>
+                  </div>
+                  {user}
+                  <p className='lastVisite'>Last visit: {this.props.data.lastVisitDate}</p>
                </div>
             </div>      
          </div>

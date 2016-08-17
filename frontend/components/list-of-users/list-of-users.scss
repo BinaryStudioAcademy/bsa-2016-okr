@@ -5,38 +5,37 @@
 	.users-title {
 	clear: both;
 
-  p {
-	color: #aaaaaa;
-	font-size: 20px;
-	text-align: center;
-	position: relative;
-	padding: 4px;
-    width: 98%;
-    margin: 0 5px;
-  }
+	p {
+		color: #aaaaaa;
+		font-size: 20px;
+		text-align: center;
+		position: relative;
+		padding: 4px;
+	    width: 98%;
+	    margin: 0 5px;
+	}
 
-  p > span {
-	display: inline-block;
-	padding: 10px;
-	position: relative;
-	background: lighten($color-blue-grey, 50%);
-	z-index: 10;
-  }
+	p > span {
+		display: inline-block;
+		padding: 10px;
+		position: relative;
+		background: lighten($color-blue-grey, 50%);
+		z-index: 10;
+	}
 
-  p:after {
-	content: '';
-	display: block;
-	position: absolute;
-	top: 28px;
-	left: 0;
-	height: 0;
-	width: 100%;
-	border-top: 1px solid #aaaaaa;
-	z-index: 0;
-  }
-
-}
-		.searchBar {
+	p:after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 28px;
+		left: 0;
+		height: 0;
+		width: 100%;
+		border-top: 1px solid #aaaaaa;
+		z-index: 0;
+	}
+	}
+	.searchBar {
 		float: right;
 		width: 30%;
 		padding: 10px;
@@ -54,6 +53,27 @@
 	padding: 5px;
 	margin-top: 10px;
 
+	.userItemDiv{
+		background: lighten($color-blue-grey, 52%);
+		border: 1px solid #99bce0;
+		border-left: 10px solid #607D8B;
+		margin-bottom: 10px;
+		padding: 5px;
+		padding-left: 25px;
+		padding-right: 75px;
+		-webkit-transition: all .15s;
+		-moz-transition: all .15s;
+		-o-transition: all .15s;
+		transition: all .15s;
+		
+		&:hover{
+			background-color: #fff;
+		}
+		&:hover ::-webkit-progress-bar{
+			border: 4px solid #fff;
+		}
+	}
+	
 	.userItem{
 		position: relative;
 		color: $primary-color;
@@ -65,17 +85,25 @@
 		.userInfo{
 			display: inline-block;
 			position: absolute;
-			top: 10px;
+			top: 5px;
 			width: 30%;
 
+			.userName {
+				font-weight: 700;
+			}
 			div{
 				margin-top: 5px;
 				position: relative;
 				.mentorName{
 					position: absolute;
-					top: 5px;
+					top: -1px;
+					line-height: 15px;
 					font-size: 12px;
 					padding-left: 5px;
+
+					.mentorTitle{
+						color: #aaa;
+					}
 				}
 
 			}
@@ -83,53 +111,19 @@
 				font-size:22px;
 			}
 		}
+		.progressTitle {
+			margin-left: 30%;
+			margin-bottom: 5px;
+			font-size: 14px;
+		}
 		.progress-bar{
-			float: right;
-			padding-top: 10px;
-			width: 30%;
-			position: relative;
-			margin-right: 40px;
+		    padding-top: 5px;
 
-
-			.progressValue {
-				z-index: 0;
-				display: inline-block;
-			    position: absolute;
-			    width: 50px;
-			    height: 16px;
-			    right: -42px;
-		          font-size: 12px;
-		          background-color: #aaa;
-		          color: #fff;
-		          box-sizing: border-box;
-		          padding: 1.5px 12px 0 12px;
-		          border-radius: 0 10px 10px 0;
-
-			}
-
-			progress[value]{
-				position: relative;
-				z-index:1;
-				width: 100%;
-				-webkit-appearance: none;
-				appearance: none;
-			}
-		}
-		::-webkit-progress-bar {
-			border-radius: 10px ;
-	    	background: #eee;
-		}
-		::-webkit-progress-value {
-			border-radius: 10px;
-	    	background: #4CAF50;
-		}
-		::-moz-progress-bar {
-	    	background: #4CAF50;
-	    	border: none;
-		}
-		::-moz-progress-value {
-		    background: #7fda57;
-		}
+		    .progressValue {
+		        top: 30px;
+		      }
+		}	
+		    
 			img{
 				margin: 5px 10px 2px;
 				width: 50px;

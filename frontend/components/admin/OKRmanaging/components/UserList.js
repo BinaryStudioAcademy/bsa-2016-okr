@@ -1,11 +1,11 @@
 import React from 'react';
 import UserData from './UserData';
 
-export default ({ data, update, remove }) => {
+export default ({ data, update, remove, editing, edit, editingDone, editingChange }) => {
   if (!data) { return (<p>Loading...</p>); }
 
   const objectives = data.map((objective, index) => {
-    return (<UserData objective={objective} key={index} index={index} update={update} remove={remove} />);
+    return (<UserData objective={objective} key={index} index={index} update={update} remove={remove} editing={editing} edit={edit} editingDone={editingDone} editingChange={editingChange}/>);
   });
 
   return (
@@ -16,6 +16,7 @@ export default ({ data, update, remove }) => {
           <th>Name</th>
           <th>Objective</th>
           <th>Category</th>
+          <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
