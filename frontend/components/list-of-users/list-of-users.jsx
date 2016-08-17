@@ -15,11 +15,6 @@ class ListOfUsers extends Component {
 		super(props);
 
 		this.search = this.search.bind(this);
-		this.takeUser = this.takeUser.bind(this);
-	}
-
-	takeUser(id) {
-		this.props.takeUserId(id);
 	}
 
 	search(e) {
@@ -27,15 +22,14 @@ class ListOfUsers extends Component {
 	}
 
 	render() {
-		const {user, searchValue} = this.props.stateFromReducer.users;
+		const {user, searchValue} = this.props.users;
 
 		var userNodes = user.map(function (user, index) {
 			if(user.userName.toLowerCase().indexOf(searchValue.toLowerCase()) === -1)
 				return;
 			else
 				return (
-					<UserItem takeUser={this.takeUser} key={index}
-								id={user.userId} name={user.userName} mentor={user.mentor}/>
+					<UserItem key={index} user={user} />
 				);
 		}.bind(this));
 
@@ -63,7 +57,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        stateFromReducer: state
+        users: state.users
     };
 }
 

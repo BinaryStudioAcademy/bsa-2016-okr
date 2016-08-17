@@ -16,14 +16,16 @@ import configureStore from './store/configureStore';
 
 import { Provider } from 'react-redux'
 import logger from 'redux-logger'
+import { syncHistoryWithStore } from 'react-router-redux'
 
 import reducer from './reducers/commonReducer'
 
 const store = configureStore();
+const history = syncHistoryWithStore(browserHistory, store)
 
 render(
 		(<Provider store={store}>
-			<Router history={browserHistory}>
+			<Router history={history}>
 				<Route path="/" component={App}>
 					<IndexRoute component={HomePage} />
 					<Route path="users" component={ListOfUsers} />

@@ -17,20 +17,30 @@ class OtherPersonsPage extends Component {
 	}
 
 	componentWillMount(){
-		this.props.sendRequest(this.props.id);
+		var urlArray = this.props.routing.pathname.split('/');
+		var id = urlArray[urlArray.length - 1]
+		this.props.sendRequest(id);
 	}
 	render() {
-		const {user, id} = this.props.stateFromReducer.users;
-		console.log(user, id)
-		var userItem = user.filter(function(user, index) {
+		console.log( this.props.users.waiting)
+		if (this.props.users.waiting){
+			return <div></div>
+		}
+		else {
+		
+		var urlArray = this.props.routing.pathname.split('/');
+		var id = urlArray[urlArray.length - 1]
+		const {user} = this.props.users;
+
+		var userItem = user.find(function(user, index) {
 			if (user.userId == id)
 				return true;
 		})
 		return (
 			<div>
 				<CentralWindow>
-					<PersonInfo data={userItem[0]} />
-					<UserOjectives data={userItem[0]}/>
+					<PersonInfo data={userItem} />
+					<UserOjectives data={userItem}/>
 				</CentralWindow>
 				<StatPanel>
 					<Dashboard></Dashboard>
@@ -39,14 +49,15 @@ class OtherPersonsPage extends Component {
 		)
 	}
 }
+}
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }
 
 function mapStateToProps(state, ownProps) {
 	return {
-		id: ownProps.params.userId,
-		stateFromReducer: state
+		users: state.users,
+		routing: state.routing.locationBeforeTransitions
 	};
 }
 
