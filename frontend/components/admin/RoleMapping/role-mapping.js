@@ -13,6 +13,11 @@ import * as actions from "../../../actions/mappingActions";
 
 class RoleMapping extends React.Component {
 
+    constructor(props) {
+        
+        super(props);
+    }
+
    render() {
 
       const { visibleUsers } = this.props.stateFromReducer.mapping;
@@ -33,7 +38,7 @@ class RoleMapping extends React.Component {
                       </div>
 
                        {roles.map(function(role) {
-                            return  <RoleMappingItem key={role.id} role={role}/>;
+                            return  <RoleMappingItem key={role._id} role={role}/>;
                        })}
 
                   </div>
@@ -57,7 +62,7 @@ class RoleMapping extends React.Component {
                        </div>
 
                       {visibleUsers.map(function(user) {
-                          return  <UserRoleMappingItem key={user.id} user={user}/>;
+                          return  <UserRoleMappingItem key={user._id} user={user}/>;
                        })}
 
                   </div>
@@ -75,6 +80,10 @@ class RoleMapping extends React.Component {
 
       this.props.filterUsersRoles(filter);
    }
+
+  componentWillMount() {
+     this.props.getGlobalRoles();
+  }
 
   componentDidMount()  {
 

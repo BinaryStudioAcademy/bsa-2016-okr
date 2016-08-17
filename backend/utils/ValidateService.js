@@ -7,7 +7,7 @@ module.exports = {
 	isEmpty: isEmpty,
 	isArray: isArray,
 	isObject: isObject,
-	isValidDifficulty: isValidDifficulty,
+	isValidDifficulty: getValidDifficulty,
 	isStringBoolean: isStringBoolean
 };
 

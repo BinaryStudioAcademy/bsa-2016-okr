@@ -12,6 +12,8 @@ var Category = require('../schemas/category');
 // var UserMentor = require('../schemas/userMentor');
 // var UserObjective = require('../schemas/userObjective');
 
+var Role = require('../schemas/role');
+
 var Chance = require('chance');
 var mongoose = require('mongoose');
 var CONST = require('../config/constants');
@@ -156,7 +158,15 @@ module.exports = function () {
 		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
 		var keys = new Array(10000).fill(0).map((_, i) => randomKey(objectives, users, i).toObject());
 
-		objectives = setDefaultKeysForObjectives(objectives);
+		//objectives = setDefaultKeysForObjectives(objectives);
+
+		var roles = [];
+
+		roles.push({globalRole: "ADMIN", localRole: "Admin"});
+		roles.push({globalRole: "DEVELOPER", localRole: "User"});
+		roles.push({globalRole: "HR", localRole: "User"});
+		roles.push({globalRole: "CEO", localRole: "Admin"});
+		roles.push({globalRole: "Tech Lead", localRole: "Admin"});
 
 		// var comments = new Array(10000).fill(0).map((_, i) => randomComment(users, objectives, i).toObject());
 		// var plans = new Array(100).fill(0).map((_, i) => randomPlan(users, objectives, i).toObject());
@@ -168,6 +178,7 @@ module.exports = function () {
 			objectives: objectives,
 			keys: keys,
 			categories: categories,
+			roles: roles
 			// comments: comments,
 			// plans: plans,
 			// usermentors: usersMentors,
