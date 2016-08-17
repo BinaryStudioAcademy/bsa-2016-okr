@@ -41,7 +41,7 @@ ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
 ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 	var model = this.model;
 	var query = model.find({ 
-		createdBy: userId
+		creator: userId
 	});
 	
 	query.exec(callback);
@@ -50,7 +50,7 @@ ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 ObjectiveRepository.prototype.getAllApprovedByTitle = function(title, callback) {
 	var model = this.model;
 	var query = model.find({
-		title: title,
+		title: new RegExp(title, 'i'),
 		isApproved: true,
 		isDeleted: false
 	});

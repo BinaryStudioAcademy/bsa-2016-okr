@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
+var CONST = require('../config/constants');
 
 module.exports = {
 	isCorrectId: isCorrectId,
@@ -36,12 +37,8 @@ function isObject(value) {
   return typeof value === 'object';
 }
 
-function isValidDifficulty(value) {
-	var difficulties = ['low', 'intermediate', 'high'];
-
-  return difficulties.some((difficulty) => {
-  	return value.indexOf(difficulty) !== -1;
-  });
+function getValidDifficulty(value) {
+	return CONST.key[value.toUpperCase()];
 }
 
 function isStringBoolean(value) {
