@@ -96,7 +96,7 @@ function baseCategories() {
 	return res;
 }
 
-function setDefaultKeysForObjectives(objective, keys) {
+function setDefaultKeysForObjectives(objectives, keys) {
 	objectives.forEach((objective) => {
 		var objectiveKeys = keys.filter((key) => {
 			return key.objectiveId.equals(objective._id);
@@ -158,7 +158,7 @@ module.exports = function () {
 		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
 		var keys = new Array(10000).fill(0).map((_, i) => randomKey(objectives, users, i).toObject());
 
-		//objectives = setDefaultKeysForObjectives(objectives);
+		objectives = setDefaultKeysForObjectives(objectives, keys);
 
 		var roles = [];
 
