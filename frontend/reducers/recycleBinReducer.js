@@ -1,9 +1,9 @@
 import data_for_recycle from '../components/mockData/data_for_recycle_bin.js'
 
 const initialState = {
-    historyItems: data_for_recycle,
+    recycleBinItems: data_for_recycle,
 	searchValue: '',
-	showHistoryFilters: false
+	showRecycleBinFilters: false
 };
 
 export default function historyReducer(state = initialState, action) {
@@ -16,23 +16,23 @@ export default function historyReducer(state = initialState, action) {
         }
 
 		case "SHOW_FILTERS": {
-			const {showHistoryFilters} = action;
+			const {showRecycleBinFilters} = action;
 			return Object.assign({}, state, {
-				showHistoryFilters
+				showRecycleBinFilters
 			})
 		}
 
-    case "SET_HISTORY_FILTER_DATE_FROM": {
-			const {setHistoryFilterDateFrom} = action;
+    case "SET_RECYCLE_BIN_FILTER_DATE_FROM": {
+			const {setRecycleBinFilterDateFrom} = action;
 			return Object.assign({}, state, {
-				setHistoryFilterDateFrom
+				setRecycleBinFilterDateFrom
 			})
 		}
 
-    case "SET_HISTORY_FILTER_DATE_TO": {
-      const {setHistoryFilterDateTo} = action;
+    case "SET_RECYCLE_BIN_FILTER_DATE_TO": {
+      const {setRecycleBinFilterDateTo} = action;
       return Object.assign({}, state, {
-        setHistoryFilterDateTo
+        setRecycleBinFilterDateTo
       })
     }
         default: {

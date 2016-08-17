@@ -9,23 +9,23 @@ export function search(value) {
 export function showFilters(show) {
 	const action = {
 		type: 'SHOW_FILTERS',
-		showHistoryFilters: show
+		showRecycleBinFilters: show
 	};
 	return action;
 }
 
 export function setFilterDateFrom(value) {
 	const action = {
-		type: 'SET_HISTORY_FILTER_DATE_FROM',
-		setHistoryFilterDateFrom: value
+		type: 'SET_RECYCLE_BIN_FILTER_DATE_FROM',
+		setRecycleBinFilterDateFrom: value
 	};
 	return action;
 }
 
 export function setFilterDateTo(value) {
 	const action = {
-		type: 'SET_HISTORY_FILTER_DATE_TO',
-		setHistoryFilterDateTo: value
+		type: 'SET_RECYCLE_BIN_FILTER_DATE_TO',
+		setRecyleFilterDateTo: value
 	};
 	return action;
 }
