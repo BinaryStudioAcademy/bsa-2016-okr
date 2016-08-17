@@ -85,14 +85,6 @@ class RoleMapping extends React.Component {
      this.props.getGlobalRoles();
   }
 
-  componentDidMount()  {
-
-    if (this.props.stateFromReducer.mapping.filter != "" && this.refs.filterInput.value === "") {
-       this.refs.filterInput.value = this.props.stateFromReducer.mapping.filter;
-    }
-
-  }
-
 }
 
 function mapDispatchToProps(dispatch) {
