@@ -1,9 +1,9 @@
 import React from 'react'
-
-import './history-item-list.scss'
-import  '../../common/styles/table.scss'
-
-import historyMock from '../../../components/mockData/historyPageMock.js'
+import ReactList from 'react-list';
+import './history-item-list.scss';
+import '../../common/styles/table.scss';
+import axios from 'axios';
+//import historyMock from '../../../components/mockData/historyPageMock.js'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -12,20 +12,59 @@ import * as actions from "../../../actions/historyActions";
 
 class HistoryItemList extends React.Component {
 
+	state ={
+		historyItems: []
+	}
     constructor() {
         super();
-		this.historyItems = historyMock;
+		//this.historyItems = [];
 		// console.log(this.historyItems);
         this.getActionColor = this.getActionColor.bind(this);
-		this.displayList = this.displayList.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this)
+		//this.displayList = this.displayList.bind(this);
+		this.url = '/api/history';
+    }
+
+    getHistoryItems() {
+        axios.get('/api/history')
+        .then(function (response){
+           // console.log(historyItems);
+            this.setState({historyItems: response.data});
+        }.bind(this))
+   //  	$.ajax({
+    .catch(function (err) {
+        console.log(err);
+    })
+   //  		url: this.url,
+   //  		dataType: 'json',
+   //  		type: 'GET',
+   //  		cache: false,
+   //  		success: function(historyItems){
+   //  			this.setState({historyItems});
+   //  		}.bind(this),
+   //  		error: function(xhr, status, err){
+			// 	console.error(this.props.url, status, err.toString());
+			// }.bind(this)
+   //  	});
+    }
+
+    getObjectId(item) {
+        return item.keyId || item.commentId || item.categoryId || item.userId || item.objectiveId;
+    }
+    componentWillMount() {
+    	this.getHistoryItems.call(this);
+    	//this.forceUpdate.call(this)
     }
 
     getActionColor(actionType) {
-        switch(actionType) {
-            case 'create': 
+        switch(actionType.split(' ')[0]) {
+            case 'add': 
                 return 'actionCreate';
                 break;
             case 'update': 
+                return 'actionUpdate';
+                break;
+            case 'change': 
                 return 'actionUpdate';
                 break;
             case 'delete': 
@@ -37,22 +76,25 @@ class HistoryItemList extends React.Component {
         }
     }
 
-	displayList(item, i) {
-		return(<tr key={item._id}>
-			<td>
-				<img className="history-item-user-avatar" src="https://pp.vk.me/c633829/v633829341/4566f/o8DWh-yGR5U.jpg"/> {item.authorId}
-			</td>
-			<td className={this.getActionColor(item.type)}>{item.type}</td>
-			<td><a href="#">{item.typeId}</a></td>
-			<td>{item.createdAt}</td>
-		</tr>)
-	}
+	renderItem(index, key) {
+		let item = this.state.historyItems[index];
+   		return(
+   			<tr key={item._id}>
+				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
+				<td className={this.getActionColor(item.type)}>{item.type}</td>
+				<td><a href="#">{this.getObjectId(item)}</a></td>
+				<td>{item.createdAt}</td>
+			</tr>)
+  	}
+
+  	renderItems(items, ref) {
+  		return ( <tr ref={ref}>{items}</tr> )
+  	}
 
     render() {
-
         return(
             <div className="history-item-list">
-            	<table className="table">
+            	<table className="table" id="historyTable">
 					<thead>
 						<tr>
 							<th>User</th>
@@ -62,10 +104,14 @@ class HistoryItemList extends React.Component {
 						</tr>
 					</thead>
 					<tbody>
-	                {
-	                	this.historyItems.map(this.displayList)
-					}
-                    </tbody>
+	               		<ReactList
+							itemRenderer={::this.renderItem}
+							itemsRenderer={::this.renderItems}
+							length={this.state.historyItems.length}
+							type='simple'
+							pageSize={20}
+						/>
+						</tbody>
 				</table>	
             </div>
         )

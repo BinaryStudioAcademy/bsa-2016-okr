@@ -28,12 +28,6 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
 
-	if( !typeof (req.body.isDeleted) === 'boolean'
-		|| !session.isAdmin )
-	{
-		return res.forbidden();
-	}
-
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
@@ -53,29 +47,29 @@ router.get('/me/:id', (req, res, next) => {
 	else res.forbidden();
 });
 
-router.put('/archive/:id', (req, res, next) => {
-	var id = req.params.id;
-	var objectiveId = req.body.objectiveId;
+// router.put('/archive/:id', (req, res, next) => {
+// 	var id = req.params.id;
+// 	var objectiveId = req.body.objectiveId;
 
-	if(ValidateService.isCorrectId(id) 
-		&& ValidateService.isCorrectId(objectiveId))
-	{
-		return res.badRequest();
-	};
+// 	if(ValidateService.isCorrectId(id) 
+// 		&& ValidateService.isCorrectId(objectiveId))
+// 	{
+// 		return res.badRequest();
+// 	};
 
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	};
+// 	if(!ValidateService.isCorrectId(id)) {
+// 		return res.badRequest();
+// 	};
 
-	if(!session._id === id && !session.isAdmin 
-		&& !userMentorRepository.checkUserMentor(id, session._id))
-	{
-		return res.forbidden();
-	};
+// 	if(!session._id === id && !session.isAdmin 
+// 		&& !userMentorRepository.checkUserMentor(id, session._id))
+// 	{
+// 		return res.forbidden();
+// 	};
 
-	service.changeArchive(session._id, id, objectiveId, res.callback);
+// 	service.changeArchive(session._id, id, objectiveId, res.callback);
 
-})
+// })
 
 router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
