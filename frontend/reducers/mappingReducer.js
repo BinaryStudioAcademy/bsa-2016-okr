@@ -239,7 +239,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 
              return Object.assign({}, state, {
                 users: updateLocRole(users, id, localRole),
-                visibleUsers: updateVisibleUsers(state.users, state.filter),
+                visibleUsers: updateVisibleUsers(users, state.filter),
                 roles: state.roles,
                 filter: state.filter
             })
