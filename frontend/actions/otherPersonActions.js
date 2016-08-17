@@ -1,8 +1,8 @@
 var axios = require('axios');
 
- const SEND_REQUEST = 'SEND_REQUEST'
- const RECEIVED_DATA = 'RECEIVED_DATA'
- const SEARCH_USER = 'SEARCH_USER'
+export const SEND_REQUEST = 'SEND_REQUEST'
+export const RECEIVED_DATA = 'RECEIVED_DATA'
+export const SEARCH_USER = 'SEARCH_USER'
 
 
 export function sendRequest(userId) {
@@ -20,7 +20,7 @@ export function sendRequest(userId) {
 
 export function receivedError(data) {
 	return {
-		type: 'RECEIVED_ERROR',
+		type: RECEIVED_ERROR,
 		data
 	};
 }
