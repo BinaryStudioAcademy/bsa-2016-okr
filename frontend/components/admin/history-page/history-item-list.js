@@ -40,17 +40,23 @@ class HistoryItemList extends React.Component {
     	});
     }
 
+    getObjectId(item) {
+        return item.keyId || item.commentId || item.categoryId || item.userId || item.objectiveId;
+    }
     componentWillMount() {
     	this.getHistoryItems.call(this);
     	//this.forceUpdate.call(this)
     }
 
     getActionColor(actionType) {
-        switch(actionType) {
-            case 'create': 
+        switch(actionType.split(' ')[0]) {
+            case 'add': 
                 return 'actionCreate';
                 break;
             case 'update': 
+                return 'actionUpdate';
+                break;
+            case 'change': 
                 return 'actionUpdate';
                 break;
             case 'delete': 
@@ -67,8 +73,8 @@ class HistoryItemList extends React.Component {
    		return(
    			<tr key={item._id}>
 				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
-				<td>{item.type}</td>
-				<td><a href="#">{item.typeId}</a></td>
+				<td className={this.getActionColor(item.type)}>{item.type}</td>
+				<td><a href="#">{this.getObjectId(item)}</a></td>
 				<td>{item.createdAt}</td>
 			</tr>)
   	}
