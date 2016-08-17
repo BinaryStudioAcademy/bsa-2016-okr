@@ -16,8 +16,8 @@ export function getUser(id) {
 		type: GET_USER
 	});
 
-	return axios.get('api/user/'+id)
-		.then(response => dispatch(receivedData(response.data)))
+	return axios.get('/api/user/'+id)
+		.then(response => dispatch(receivedUser(response.data)))
 		.catch(response => dispatch(receivedError(response.data)));
 	};
 }
@@ -29,7 +29,7 @@ export function receivedError(data) {
 	};
 }
 
-export function receivedData(data) {
+export function receivedUser(data) {
 	return {
 		type: RECEIVED_USER,
 		data
@@ -42,7 +42,7 @@ export function getUsersList(){
 			type: GET_USERS_LIST
 		});
 
-		return axios.get('api/user/')
+		return axios.get('/api/user/')
 			.then(response => dispatch(receivedUsersList(response.data)))
 			.catch(response => dispatch(userslistError(response.data)));
 	};

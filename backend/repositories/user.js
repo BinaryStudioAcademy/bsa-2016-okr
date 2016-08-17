@@ -11,7 +11,7 @@ UserRepository.prototype = new Repository();
 
 UserRepository.prototype.getById = function(id, callback) {
 	User
-		.findOne({ userId: id })
+		.findOne({ _id: id })
 		.populate('objectives.objectiveId')
 		.populate('objectives.keys.keyId')
 		.exec((err, user) => {

@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
 	userName: String,
 	mentor: String,
-	userId: Number,
 	followObjectives: [
 		{userId: {type: Schema.Types.ObjectId, ref: 'User'},
 		objectiveId: {type: Schema.Types.ObjectId, ref: 'Objective'}
