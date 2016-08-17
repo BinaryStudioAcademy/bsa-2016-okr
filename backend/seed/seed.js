@@ -40,6 +40,8 @@ function seed(items) {
 		if (!err) {
 			console.log('All collections dropped and seeded');
 			mongoose.connection.close();
+		} else {
+			console.log(err);
 		}
 	});
 }

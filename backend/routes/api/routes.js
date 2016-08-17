@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const user = require('./user');
 const objective = require('./objective');
-const key = require('./key');
+const keyResult = require('./keyResult');
 const comment = require('./comment');
 const category = require('./category');
 const plan = require('./plan');
@@ -14,7 +14,7 @@ module.exports = function(app) {
 	
 	router.use('/user', user);
 	router.use('/objective', objective);
-	router.use('/key', key);
+	router.use('/keyResult', keyResult);
 	router.use('/category', category);
 	router.use('/role', role);
 	// router.use('/comment', comment);

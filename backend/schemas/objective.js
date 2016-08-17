@@ -19,7 +19,7 @@ var objectiveSchema = new Schema({
 	},
 	keyResults: [{
 			type: ObjectId, 
-			ref: 'Key'
+			ref: 'KeyResult'
 	}],
 	creator: {
 		required: true,

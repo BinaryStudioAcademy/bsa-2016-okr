@@ -1,9 +1,10 @@
 {
 	"title": "No key title in one of keys objects. Should return 400",
-	"description": "Shouldn't work at all. Will return 400", 
-	"keys": [
+	"description": "Shouldn't work at all. Will return 400",
+	"category": "Valid category id (added in code because of dynamic generation of DB)",
+	"keyResults": [
 		{
-			"difficulty": "low"
+			"difficulty": "easy"
 		}
 	]
 }
