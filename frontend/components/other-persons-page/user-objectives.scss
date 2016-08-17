@@ -21,9 +21,10 @@
 		.clone{
 			clear: both;
 			float: right;
-			font-size: 18px;
-			padding-top: 5px;
-			margin-top: 5px;
+			font-size: 14px;
+			padding: 5px 10px;
+			margin-top: 12px;
+			margin-right: -2px;
 			cursor: pointer;
 		}
 		.description {
@@ -32,12 +33,13 @@
 
 		.users-key-results{
 			margin: -20px 0 5px 10px;
-			span{
+			.key-results-arrow {
 				padding-left: 5px;
 			}
-			.change{
-				color: #0080ff;
+			.change {
+				color: $color-blue;
 				cursor: pointer;
+				font-weight: bold;
 			}
 			.key-result-details span{
 				color: #000;
@@ -67,7 +69,21 @@
 					}
 					span{
 						display: table-cell;
-					}	
+
+					}
+					.score {
+						display: inline-block;
+						background: $color-green;
+						border: 1px solid $color-green;
+						border-radius: .3em;
+						padding: 1px 2px 3px 2px;
+						height: 1.2em;
+						width: 2em;
+						line-height: 1.5em;
+						text-align: center;
+						font-weight: bold;
+						color: $color-white;
+					}
 				}
 				.completed{
 					text-decoration: line-through;
@@ -189,7 +205,7 @@
 #topPanel {
   display: inline-block;
   width: 100%;
-  padding: 15px 8%;
+  padding: 15px 5%;
   box-sizing: border-box;
 
     .userInfo{
@@ -208,7 +224,7 @@
 
       .credentials{
         position: absolute;
-        top: 12%;
+        top: 0;
         left: 110px;
         font-size:18px;
         font-weight: 700;
@@ -221,7 +237,7 @@
         }
         div{
         	width: 200px;
-			margin-top: 5px;
+			margin: 5px 0 15px;
 			position: relative;
 			.mentorName{
 				position: absolute;
@@ -236,7 +252,8 @@
 			font-size:22px;
 		}	
         p{
-          font-weight: 400;
+        	padding-left: 0;
+          	font-weight: 400;
         }
       }
 

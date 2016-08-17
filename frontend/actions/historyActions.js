@@ -13,3 +13,19 @@ export function showFilters(show) {
 	};
 	return action;
 }
+
+export function setFilterDateFrom(value) {
+	const action = {
+		type: 'SET_HISTORY_FILTER_DATE_FROM',
+		setHistoryFilterDateFrom: value
+	};
+	return action;
+}
+
+export function setFilterDateTo(value) {
+	const action = {
+		type: 'SET_HISTORY_FILTER_DATE_TO',
+		setHistoryFilterDateTo: value
+	};
+	return action;
+}

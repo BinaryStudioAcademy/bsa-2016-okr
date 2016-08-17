@@ -16,15 +16,15 @@ class RoleMappingItem extends React.Component {
 
 		   		return (
 		   			<div className="table-row">
-			   			<h4 className="first-column">{this.props.role.globalRole}</h4>
-			   			<h4 className="second-column">Admin</h4>
+			   			<h4 className="col-1">{this.props.role.globalRole}</h4>
+			   			<h4 className="col-2">Admin</h4>
 			   		 </div>
 		   		);
 		   	}
 		   	  return (
 	            <div className="table-row" >
-	                   <h4 className="first-column">{this.props.role.globalRole}</h4>
-	                   <select className="second-column" id={"roles" + this.props.role.id}  onChange={this.changeLocalRole.bind(this)} ref="localRole" defaultValue="">
+	                   <h4 className="col-1">{this.props.role.globalRole}</h4>
+	                   <select className="col-2" id={"roles" + this.props.role.id}  onChange={this.changeLocalRole.bind(this)} ref="localRole" defaultValue="">
 			             <option value="User">User</option>
 			             <option value="Admin">Admin</option>
 			           </select>
