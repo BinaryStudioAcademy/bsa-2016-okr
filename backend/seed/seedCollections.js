@@ -16,6 +16,7 @@ var Role = require('../schemas/role');
 
 var Chance = require('chance');
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
 
 var chance = new Chance();
@@ -103,9 +104,9 @@ function setDefaultKeysForObjectives(objectives, keys) {
 		});
 
 		var defaultKeys = chance.pickset(objectiveKeys, 3).map((key) => {
-			return key._id;
+			return ObjectId(key._id);
 		});
-
+		
 		objective.keyResults = defaultKeys;
 	});
 

@@ -11,12 +11,14 @@ ObjectiveRepository.prototype = new Repository();
 
 ObjectiveRepository.prototype.getAll = function(callback) {
 	var model = this.model;
-	var query = model.find({
-		isApproved: true,
-		isDeleted: false
-	});
-
-	query.exec(callback);
+	
+	model
+		.find({
+			isApproved: true,
+			isDeleted: false
+		})
+		.populate('keyResults')
+		.exec(callback);
 };
 
 ObjectiveRepository.prototype.getAllDeleted = function(callback) {
