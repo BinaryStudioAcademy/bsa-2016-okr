@@ -1,3 +1,5 @@
+var axios = require('axios');
+
 export function sendRequest(userId) {
 	return (dispatch, getStore) => {
 
@@ -5,8 +7,8 @@ export function sendRequest(userId) {
 		type: 'SEND_REQUEST'
 	});
 
-	return axios.get('http://localhost:3000/user/' + userId)
-		.then(response => dispatch(receivedData(response.data)))
+	return axios.get('http://localhost:4444/user/'+userId)
+		.then(dispatch(receivedData(userId)))
 		.catch(response => dispatch(receivedError(response.data)));
 	};
 }
@@ -18,11 +20,10 @@ export function receivedError(data) {
 	};
 }
 
-export function receivedData(data) {
-	console.log('d')
+export function receivedData(id) {
 	return {
 		type: 'RECEIVED_DATA',
-		data
+		id
 	};
 }
 
@@ -33,11 +34,4 @@ export function search(value) {
 	};
 	return action;
 }
-
-export function takeUserId(id) {
-	const action = {
-		type: 'TAKE_USER',
-		id: id
-	};
-	return action;
-}  
+ 
