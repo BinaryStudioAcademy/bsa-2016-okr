@@ -7,7 +7,7 @@ const ValidateService = require('../../utils/ValidateService');
 const cloneObjective = require('../../services/cloneObjective');
 
 router.get('/', (req, res, next) => {
-	return repository.getAll(res.callback);
+	return repository.getAllPopulate(res.callback);
 });
 
 router.post('/', adminOnly, (req, res, next) => {
@@ -61,14 +61,10 @@ router.post('/', adminOnly, (req, res, next) => {
 	return service.add(objective, keyResults, res.callback);
 });
 
-router.get('/title/:title', (req, res, next) => {
+router.get('/title/:title*?', (req, res, next) => {
 	var title = req.params.title;
 
-	if(ValidateService.isEmpty(title)) {
-		return res.badRequest();
-	}
-
-	return service.autocomplete(req.params.title, res.callback);
+	return repository.autocomplete(title, res.callback);
 });
 
 // router.post('/me/', (req, res, next) => {

@@ -51,6 +51,9 @@ describe('Server start test', () => {
 			// POST /api/objective/
 			describe('Create objective template', objectiveTests.createTemplate);
 
+			// GET /api/objective/title/:title*?
+			describe('Get objectives by title (autocomplete)', objectiveTests.autocomplete);
+
 			// POST /api/objective/me
 			describe('User creating an objective', objectiveTests.createObjectiveByUser);
 

@@ -94,31 +94,4 @@ ObjectiveService.prototype.add = function(objective, keyResults, callback) {
 // 	});
 // };
 
-// ObjectiveService.prototype.autocomplete = function(title, callback) {
-// 	async.waterfall([
-// 		(callback) => {
-// 			ObjectiveRepository.getAll(function(err, objArr) {
-// 				if (err) {
-// 					return callback(err, null);
-// 				}
-
-// 				return callback(null, objArr);
-// 			});
-// 		}, 
-// 		(objArr, callback) => {
-// 			let objectives = [];
-			
-// 			objArr.forEach((objective) => {
-// 				if (objective.title.toLowerCase().indexOf(title.toLowerCase()) !== -1) {
-// 					objectives.push(objective);
-// 				}
-// 			});
-
-// 			return callback(null, objectives);
-// 		}
-// 	], (err, result) => {
-// 		return callback(err, result);
-// 	});
-// };
-
 module.exports = new ObjectiveService();

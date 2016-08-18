@@ -45,6 +45,7 @@ function randomObjective(users, categories, i) {
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
 		category: getRandomId(categories),
 		keyResults: [],
+		used: chance.integer({ min: 0, max: 15 }),
 		creator: getRandomId(users),
 		isApproved: i % 5 !== 0,
 		isDeleted: i % 10 === 0,
@@ -115,6 +116,24 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 	return objectives;
 }
 
+function setUsedForKeyResults(objectives, keyResults) {
+	var res = [];
+
+	objectives.forEach((objective) => {
+		objectiveKeyResults = keyResults.filter((keyResult) => {
+			return keyResult.objectiveId.equals(objective._id);
+		});
+
+		objectiveKeyResults.forEach((keyResult) => {
+			keyResult.used = chance.integer({ min: 0, max: objective.used });
+		});
+
+		res = res.concat(objectiveKeyResults);
+	});
+	
+	return res;
+}
+
 /*function randomPlan(users, objectives, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
@@ -162,6 +181,7 @@ module.exports = function () {
 		var keyResults = new Array(10000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 
 		objectives = setDefaultKeyResultsForObjectives(objectives, keyResults);
+		keyResults = setUsedForKeyResults(objectives, keyResults);
 
 		var roles = [];
 

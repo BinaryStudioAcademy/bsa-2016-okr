@@ -2,7 +2,6 @@ const request = require('request');
 const expect = require('chai').expect;
 const path = require('path');
 const fs = require('fs');
-const async = require('async');
 
 const CategoryModel = require('../../../../backend/schemas/category');
 const mongoose = require('mongoose');

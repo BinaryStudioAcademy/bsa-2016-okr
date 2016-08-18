@@ -17,48 +17,78 @@ ObjectiveRepository.prototype.getAll = function(callback) {
 			isApproved: true,
 			isDeleted: false
 		})
+		.exec(callback);
+};
+
+ObjectiveRepository.prototype.getAllPopulate = function(callback) {
+	var model = this.model;
+	
+	model
+		.find({
+			isApproved: true,
+			isDeleted: false
+		})
 		.populate('keyResults')
 		.exec(callback);
 };
 
-ObjectiveRepository.prototype.getAllDeleted = function(callback) {
+ObjectiveRepository.prototype.autocomplete = function(title, callback) {
 	var model = this.model;
-	var query = model.find({
-		isDeleted: true
-	});
-
-	query.exec(callback);
-};
-
-ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
-	var model = this.model;
-	var query = model.find({
-		isDeleted: false,
-		isApproved: false
-	});
-
-	query.exec(callback);
-};
-
-ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
-	var model = this.model;
-	var query = model.find({ 
-		creator: userId
-	});
-	
-	query.exec(callback);
-};
-
-ObjectiveRepository.prototype.getAllApprovedByTitle = function(title, callback) {
-	var model = this.model;
-	var query = model.find({
-		title: new RegExp(title, 'i'),
+	var options = {
 		isApproved: true,
 		isDeleted: false
-	});
+	};
+
+	if(title) {
+		options.title = new RegExp(title, 'i');
+	}
+
+	model
+		.find(options)
+		.sort({ used: 'desc' })
+		.limit(10)
+		.populate('keyResults')
+		.exec(callback);
+}
+
+// ObjectiveRepository.prototype.getAllDeleted = function(callback) {
+// 	var model = this.model;
+// 	var query = model.find({
+// 		isDeleted: true
+// 	});
+
+// 	query.exec(callback);
+// };
+
+// ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
+// 	var model = this.model;
+// 	var query = model.find({
+// 		isDeleted: false,
+// 		isApproved: false
+// 	});
+
+// 	query.exec(callback);
+// };
+
+// ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
+// 	var model = this.model;
+// 	var query = model.find({ 
+// 		creator: userId
+// 	});
 	
-	query.exec(callback);
-};
+// 	query.exec(callback);
+// };
+
+// ObjectiveRepository.prototype.getAllApprovedByTitle = function(title, callback) {
+// 	var model = this.model;
+// 	var query = model.find({
+// 		title: new RegExp(title, 'i'),
+// 		isApproved: true,
+// 		isDeleted: false
+// 	});
+	
+// 	query.exec(callback);
+// };
 
 module.exports = new ObjectiveRepository();
 
