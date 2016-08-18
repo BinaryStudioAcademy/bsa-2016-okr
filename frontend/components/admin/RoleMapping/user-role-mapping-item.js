@@ -20,7 +20,7 @@ class UserRoleMappingItem extends React.Component {
 	                   <h4 className="col-2">{this.props.user.firstName}</h4>
 	                   <h4 className="col-3">{this.props.user.lastName}</h4>
 	                   <h4 className="col-4">{this.props.user.email}</h4>
-	                   <select className="col-5" id={"user-roles" + this.props.user.id} onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
+	                   <select className="col-5" id={"user-roles" + this.props.user._id} onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
 		                 <option value="Default">Default</option>
 		                 <option value="Mentor">Mentor</option>
 	                     <option value="Admin">Admin</option>
@@ -31,7 +31,7 @@ class UserRoleMappingItem extends React.Component {
    }
 
    changeLocalRole() {
-	   	this.props.updateUserLocRole(this.props.user.id, this.refs.userLocalRole.value);
+	   	this.props.updateUserLocRole(this.props.user._id, this.refs.userLocalRole.value);
    }
 
    componentDidMount()  {
@@ -40,10 +40,10 @@ class UserRoleMappingItem extends React.Component {
    		this.refs.userLocalRole.value = this.props.stateFromReducer.mapping.filter;
    	}
 
-   	 let defaultOption = document.querySelector("select#user-roles" + this.props.user.id + " option[value=Default]");
-	 let adminOption = document.querySelector("select#user-roles" + this.props.user.id + " option[value=Admin]");
-	 let userOption = document.querySelector("select#user-roles" + this.props.user.id + " option[value=User]");
-	 let mentorOption = document.querySelector("select#user-roles" + this.props.user.id + " option[value=Mentor]");
+   	 let defaultOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=Default]");
+	 let adminOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=Admin]");
+	 let userOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=User]");
+	 let mentorOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=Mentor]");
 
 	 switch(this.props.user.localRole) {
 	 	case "Admin":

@@ -1,6 +1,6 @@
 const initialState = {
     users : [{
-       id: 0,
+       _id: 0,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -8,7 +8,7 @@ const initialState = {
        localRole: "Admin"
     },
     {
-       id: 1,
+       _id: 1,
        avatar: "avatar1.png",
        firstName: "myName",
        lastName: "myLastName",
@@ -16,7 +16,7 @@ const initialState = {
        localRole: "Default"
     },
     {
-       id: 2,
+       _id: 2,
        avatar: "avatar1.png",
        firstName: "Vasya",
        lastName: "Pupkin",
@@ -24,7 +24,7 @@ const initialState = {
        localRole: "User"
     },
     {
-       id: 3,
+       _id: 3,
        avatar: "avatar1.png",
        firstName: "Napoleon",
        lastName: "Bonaparte",
@@ -32,7 +32,7 @@ const initialState = {
        localRole: "Admin"
     },
     {
-       id: 4,
+       _id: 4,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -40,7 +40,7 @@ const initialState = {
        localRole: "Admin"
     },
     {
-       id: 5,
+       _id: 5,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -48,7 +48,7 @@ const initialState = {
        localRole: "Admin"
     },
     {
-       id: 6,
+       _id: 6,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -56,7 +56,7 @@ const initialState = {
        localRole: "Admin"
     },
     {
-       id: 7,
+       _id: 7,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -65,7 +65,7 @@ const initialState = {
     }
     ],
 visibleUsers : [{
-       id: 0,
+       _id: 0,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -73,7 +73,7 @@ visibleUsers : [{
        localRole: "Admin"
     },
     {
-       id: 1,
+       _id: 1,
        avatar: "avatar1.png",
        firstName: "myName",
        lastName: "myLastName",
@@ -81,7 +81,7 @@ visibleUsers : [{
        localRole: "Default"
     },
     {
-       id: 2,
+       _id: 2,
        avatar: "avatar1.png",
        firstName: "Vasya",
        lastName: "Pupkin",
@@ -89,7 +89,7 @@ visibleUsers : [{
        localRole: "User"
     },
     {
-       id: 3,
+       _id: 3,
        avatar: "avatar1.png",
        firstName: "Napoleon",
        lastName: "Bonaparte",
@@ -97,7 +97,7 @@ visibleUsers : [{
        localRole: "Admin"
     },
     {
-       id: 4,
+       _id: 4,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -105,7 +105,7 @@ visibleUsers : [{
        localRole: "Admin"
     },
     {
-       id: 5,
+       _id: 5,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -113,7 +113,7 @@ visibleUsers : [{
        localRole: "Admin"
     },
     {
-       id: 6,
+       _id: 6,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -121,7 +121,7 @@ visibleUsers : [{
        localRole: "Admin"
     },
     {
-       id: 7,
+       _id: 7,
        avatar: "avatar1.png",
        firstName: "admin",
        lastName: "admin",
@@ -129,32 +129,7 @@ visibleUsers : [{
        localRole: "Admin"
     }
     ],
-    roles : [{
-       id: 0,
-       globalRole: "ADMIN",
-       localRole: "Admin"
-    },
-    {
-       id: 1,
-       globalRole: "DEVELOPER",
-       localRole: "User"
-    },
-    {
-        id: 2,
-       globalRole: "HR",
-       localRole: "User"
-    },
-    {
-        id: 3,
-       globalRole: "CEO",
-       localRole: "Admin"
-    },
-    {
-        id: 4,
-       globalRole: "Tech Lead",
-       localRole: "Admin"
-    }
-    ],
+    roles: [],
     filter: ""
 };
 
@@ -183,7 +158,7 @@ function updateLocRole(array, id, localRole) {
 
      for (let i = 0; i < array.length; i++) {
 
-          if (array[i].id === id) {
+          if (array[i]._id === id) {
               if (localRole != array[i].localRole)
                   array[i].localRole = localRole;
 
@@ -199,6 +174,34 @@ function updateLocRole(array, id, localRole) {
 export default function mappingReducer(state = initialState, action = {}) {
 
     switch (action.type) {
+
+
+       case "RECEIVED_ERROR": {
+
+          const {data} = action;
+
+          console.log("RECEIVED_ERROR");
+          console.log(data);
+
+          return Object.assign({}, state, {
+                users: state.users,
+                visibleUsers: state.users,
+                roles: state.roles,
+                filter: state.filter,
+            })
+        }
+
+      case "RECEIVED_GLOBAL_ROLES": {
+
+          const {roles} = action;
+
+          return Object.assign({}, state, {
+                users: state.users,
+                visibleUsers: state.users,
+                roles: roles,
+                filter: state.filter,
+            })
+        }
 
         case "USERS_ROLES_FILTER": {
 
@@ -236,15 +239,15 @@ export default function mappingReducer(state = initialState, action = {}) {
 
              return Object.assign({}, state, {
                 users: updateLocRole(users, id, localRole),
-                visibleUsers: updateVisibleUsers(state.users, state.filter),
+                visibleUsers: updateVisibleUsers(users, state.filter),
                 roles: state.roles,
                 filter: state.filter
             })
         }
-
 
         default: {
             return state;
         }
     }
 }
+

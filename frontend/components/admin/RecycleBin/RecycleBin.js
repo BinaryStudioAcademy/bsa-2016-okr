@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DeletedTmplsItem from './DeletedTmplsItem';
 import StatPanel from '../../../containers/statistic-panel.jsx';
 import CentralWindow from "../../../containers/central-window.jsx";
+import RecycleBinFilter from './RecycleBinFilters';
 import '../../common/styles/table.scss';
 import './recycleBin.scss';
 
@@ -37,6 +38,9 @@ class RecycleBin extends Component {
 						<div>
 							<input type="checkbox" id="cbUser"></input>
 							<label htmlFor="cbUser">User</label>
+						</div>
+						<div className="recucle-bin-filter-bar-container">
+							<RecycleBinFilter/>
 						</div>
 					</div>
 					<div>

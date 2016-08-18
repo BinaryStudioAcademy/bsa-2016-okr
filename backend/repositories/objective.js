@@ -11,12 +11,14 @@ ObjectiveRepository.prototype = new Repository();
 
 ObjectiveRepository.prototype.getAll = function(callback) {
 	var model = this.model;
-	var query = model.find({
-		isApproved: true,
-		isDeleted: false
-	});
-
-	query.exec(callback);
+	
+	model
+		.find({
+			isApproved: true,
+			isDeleted: false
+		})
+		.populate('keyResults')
+		.exec(callback);
 };
 
 ObjectiveRepository.prototype.getAllDeleted = function(callback) {
@@ -41,7 +43,7 @@ ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
 ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 	var model = this.model;
 	var query = model.find({ 
-		createdBy: userId
+		creator: userId
 	});
 	
 	query.exec(callback);
@@ -50,7 +52,7 @@ ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 ObjectiveRepository.prototype.getAllApprovedByTitle = function(title, callback) {
 	var model = this.model;
 	var query = model.find({
-		title: title,
+		title: new RegExp(title, 'i'),
 		isApproved: true,
 		isDeleted: false
 	});

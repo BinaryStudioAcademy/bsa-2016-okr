@@ -24,7 +24,7 @@ class RoleMappingItem extends React.Component {
 		   	  return (
 	            <div className="table-row" >
 	                   <h4 className="col-1">{this.props.role.globalRole}</h4>
-	                   <select className="col-2" id={"roles" + this.props.role.id}  onChange={this.changeLocalRole.bind(this)} ref="localRole" defaultValue="">
+	                   <select className="col-2" id={"roles" + this.props.role._id}  onChange={this.changeLocalRole.bind(this)} ref="localRole" defaultValue="">
 			             <option value="User">User</option>
 			             <option value="Admin">Admin</option>
 			           </select>
@@ -33,14 +33,18 @@ class RoleMappingItem extends React.Component {
    }
 
    changeLocalRole() {
-	   	this.props.updateRolesLocRole(this.props.role.id, this.refs.localRole.value);
-   }
 
+      let reqBody = {};
+      reqBody.globalRole = this.props.role.globalRole;
+      reqBody.localRole = this.refs.localRole.value;
+
+	   	this.props.updateGlobalRole(this.props.role._id, reqBody);
+   }
 
    componentDidMount()  {
 
-   	 let adminOption = document.querySelector("select#roles" + this.props.role.id + " option[value=Admin]");
-   	 let userOption = document.querySelector("select#roles" + this.props.role.id + " option[value=User]");
+   	 let adminOption = document.querySelector("select#roles" + this.props.role._id + " option[value=Admin]");
+   	 let userOption = document.querySelector("select#roles" + this.props.role._id + " option[value=User]");
 
    	 if (this.props.role.localRole === "Admin") {
    	 	if (adminOption != undefined)

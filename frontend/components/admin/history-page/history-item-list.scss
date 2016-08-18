@@ -1,5 +1,22 @@
 @import "_variables";
 
+#historyTable{
+	tbody{
+		display: block;
+		height: 50px;
+		table-layout:fixed;
+    	overflow: auto;
+    	display:block;
+   		height:300px;
+    	overflow-y :auto;
+	}
+	thead, tbody tr {
+	   display:table;
+	  width:99.99%;
+    	table-layout:fixed;/* even columns width , fix width of table too*/
+	}
+}
+
 .history-item-list {
 
 	table {

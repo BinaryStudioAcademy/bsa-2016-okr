@@ -48,7 +48,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
 		user: state.users,
 		routing: state.routing.locationBeforeTransitions

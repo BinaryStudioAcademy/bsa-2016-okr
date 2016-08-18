@@ -23,7 +23,7 @@ describe('Server start test', () => {
 
 		describe('Objective API', () => {
 
-			const suffix = 'api/objective/'
+			const suffix = 'api/objective/';
 			const unitUrl = rootUrl + suffix;
 
 			var objectiveTests = {};
