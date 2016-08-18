@@ -50,7 +50,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		user: state.users,
+		user: state.userPage,
 		routing: state.routing.locationBeforeTransitions
 	};
 }
