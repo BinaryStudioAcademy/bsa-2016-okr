@@ -29,7 +29,7 @@ class RecycleBin extends Component {
 	}
 
 	render() {
-		let deleted_items = this.props.recycleBin.recycleBinItems.map((item) => {
+		let deleted_items = this.props.recycleBin.visibleItems.map((item) => {
 			return <DeletedTmplsItem item={item} key={item.id} />
 		});
 		return (

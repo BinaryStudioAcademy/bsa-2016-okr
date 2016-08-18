@@ -25,7 +25,7 @@ export function setFilterDateFrom(value) {
 export function setFilterDateTo(value) {
 	const action = {
 		type: 'SET_RECYCLE_BIN_FILTER_DATE_TO',
-		setRecyleFilterDateTo: value
+		setRecycleBinFilterDateTo: value
 	};
 	return action;
 }
