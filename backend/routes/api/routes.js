@@ -9,6 +9,7 @@ const plan = require('./plan');
 const history = require('./history');
 const userMentor = require('./userMentor');
 const role = require('./role');
+const userObjective = require('./userObjective');
 
 module.exports = function(app) {
 	
@@ -18,6 +19,7 @@ module.exports = function(app) {
 	router.use('/category', category);
 	router.use('/role', role);
 	router.use('/history', history);
+	router.use('/userObjective', userObjective);
 	// router.use('/comment', comment);
 	// router.use('/plan', plan);
 	// router.use('/userMentor', userMentor);

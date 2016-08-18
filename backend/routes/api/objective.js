@@ -71,6 +71,29 @@ router.get('/title/:title', (req, res, next) => {
 	return service.autocomplete(req.params.title, res.callback);
 });
 
+//
+router.put('/:id', (req, res, next) => {
+	var id = req.params.id;
+	var body = req.body;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.update(id, body, res.callback);
+})
+
+//
+router.delete(':id', (req, res, next) => {
+	var id = req.params.id;
+	
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.delete(id, res.callback);
+})
+
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
 // 	var description = req.body.description || '';

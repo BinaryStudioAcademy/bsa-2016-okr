@@ -10,7 +10,7 @@ var userObjective = new Schema({
 		creator: {type: Schema.Types.ObjectId, ref: 'User'}
 	}]
 }, {
-	timestamps: true;
+	timestamps: true
 });
 
-module.exports = mongoose.model('UserObejctive', userObjective);
+module.exports = mongoose.model('UserObjective', userObjective);

@@ -66,8 +66,8 @@ KeyResultsService.prototype.add = function(userId, keyResult, callback){
 				if(err){
 					return  callback(err, null);
 				};
+				return callback(null, keyResult);
 			});
-			return callback(null, keyResult);
 		},
 		(keyResult, callback) => {
 			HistoryRepository.addKeyResultEvent(userId, keyResult._id, 'add KeyResult', (err) => {
