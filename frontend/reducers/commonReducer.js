@@ -6,10 +6,12 @@ import recycleBin from './recycleBinReducer.js'
 import usersList from './usersListReducer.js'
 import userPage from './otherPersonReducer.js'
 import mapping from './mappingReducer.js'
+import myObjectives from './myObjectivesReducer.js'
 import { routerReducer } from 'react-router-redux';
 
 
 export default combineReducers({
+  myObjectives,
   history,
   userPage,
   usersList,
