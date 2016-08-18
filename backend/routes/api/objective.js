@@ -11,54 +11,55 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', adminOnly, (req, res, next) => {
-	var title = req.body.title || '';
-	var description = req.body.description || '';
-	var keys = req.body.keys || [];
 
-	keys.forEach((key) => {
-		key.difficulty = ValidateService.getValidDifficulty(key.difficulty);
+	var title = '' + req.body.title || '';
+	var description = '' + req.body.description || '';
+	var category = '' + req.body.category || '';
+	var keyResults = req.body.keyResults || [];
+
+	keyResults.forEach((keyResult) => {
+		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty);
 	});
 
-	var isKeysInvalid = keys.some((key) => {
-		return !ValidateService.isObject(key)
-		|| ValidateService.isEmpty(key.title)
-		|| ValidateService.isEmpty(key.difficulty)
-		|| !key.difficulty;
+	var isKeyResultsInvalid = keyResults.some((keyResult) => {
+		return !ValidateService.isObject(keyResult)
+		|| ValidateService.isEmpty(keyResult.title)
+		|| ValidateService.isEmpty(keyResult.difficulty)
+		|| !keyResult.difficulty;
 	});
 
 	if( ValidateService.isEmpty(title)
 		|| ValidateService.isEmpty(description)
-		|| !ValidateService.isArray(keys)
-		|| isKeysInvalid)
+		|| !ValidateService.isCorrectId(category)
+		|| !ValidateService.isArray(keyResults)
+		|| isKeyResultsInvalid)
 	{
 		return res.badRequest();
 	}
 
 	var objective = {
-		createdBy: req.session._id,
 		title: title,
 		description: description,
-		keys: [],
-		cheers: [],
-		views: [],
-		forks: 0,
+		category: category,
+		creator: req.session._id,
+		keyResults: [],
 		isApproved: true,
 		isDeleted: false
 	}
 
-	keys = keys.map((item) => {
-		var key = {
+	keyResults = keyResults.map((item) => {
+		var keyResult = {
 			title: item.title,
 			difficulty: item.difficulty,
-			forks: 0,
+			creator: req.session._id,
 			isApproved: true,
 			isDeleted: false
 		};
 
-		return key;
+		return keyResult;
 	});
 
-	return service.add(objective, keys, res.callback);
+	return service.add(objective, keyResults, res.callback);
 });
 
 // router.post('/me/', (req, res, next) => {

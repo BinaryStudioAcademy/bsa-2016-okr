@@ -35,7 +35,6 @@ CategoryService.prototype.softDelete = function (data, callback) {
 				if(err){
 					return  callback(err, null);
 				};
-        console.log();
 				return callback(null, data);
 			});
 		},

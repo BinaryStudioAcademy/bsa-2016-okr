@@ -1,5 +1,5 @@
 module.exports = {
-	key: {
+	keyResult: {
 		EASY: 'easy',
 		INTERMEDIATE: 'intermediate',
 		ADVANCED: 'advanced'

@@ -19,8 +19,8 @@ var keyResultSchema = new Schema({
 	},
 	difficulty: {
 		type: String,
-		enum: [CONST.key.EASY, CONST.key.INTERMEDIATE, CONST.key.ADVANCED],
-		default: CONST.key.INTERMEDIATE
+		enum: [CONST.keyResult.EASY, CONST.keyResult.INTERMEDIATE, CONST.keyResult.ADVANCED],
+		default: CONST.keyResult.INTERMEDIATE
 	},
 	isApproved: {
 		type: Boolean,
@@ -34,4 +34,4 @@ var keyResultSchema = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Key', keyResultSchema);
+module.exports = mongoose.model('KeyResult', keyResultSchema);
