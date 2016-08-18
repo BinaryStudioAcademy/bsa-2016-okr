@@ -21,6 +21,7 @@ let objectives = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-05-22T10:42:12.643Z",
 	"deleteDate": "2016-07-22T10:42:12.643Z",
 },
@@ -54,6 +55,7 @@ let objectives = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-04-22T10:42:12.643Z",
 	"deleteDate": "2016-05-22T10:42:12.643Z",
 }]
