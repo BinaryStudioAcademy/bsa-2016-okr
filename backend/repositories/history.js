@@ -15,11 +15,11 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 	query.exec(callback);	
 };
 
-HistoryRepository.prototype.addUserEvent = function (authorId, userId, type, callback) {
-	 let model = this.model;
-	 let newEvent = new model({authorId, userId, type});
-	 newEvent.save(callback);
-};
+// HistoryRepository.prototype.addUserEvent = function (authorId, userId, type, callback) {
+// 	 let model = this.model;
+// 	 let newEvent = new model({authorId, userId, type});
+// 	 newEvent.save(callback);
+// };
 
 HistoryRepository.prototype.addKeyEvent = function(authorId, keyId, type, callback) {
 	let model = this.model;
@@ -33,16 +33,16 @@ HistoryRepository.prototype.addObjectiveEvent = function(authorId, objectiveId, 
 	newEvent.save(callback);
 };
 
-HistoryRepository.prototype.addPlanEvent = function (authorId, planId, type, callback) {
-	let model = this.model;
-	let newEvent = new model({authorId, planId, type});
-	newEvent.save(callback);
-};
+// HistoryRepository.prototype.addPlanEvent = function (authorId, planId, type, callback) {
+// 	let model = this.model;
+// 	let newEvent = new model({authorId, planId, type});
+// 	newEvent.save(callback);
+// };
 
-HistoryRepository.prototype.addCommentEvent = function (authorId, commentId, objectiveId, type, callback) {
-	let model = this.model;
-	let newEvent = new model({authorId, commentId, objectiveId, type});
-	newEvent.save(callback);
-};
+// HistoryRepository.prototype.addCommentEvent = function (authorId, commentId, objectiveId, type, callback) {
+// 	let model = this.model;
+// 	let newEvent = new model({authorId, commentId, objectiveId, type});
+// 	newEvent.save(callback);
+// };
 
 module.exports = new HistoryRepository();
