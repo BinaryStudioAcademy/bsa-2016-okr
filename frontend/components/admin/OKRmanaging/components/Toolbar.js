@@ -35,23 +35,30 @@ export default class Toolbar extends Component {
 
   render() {
     return (
-      <div className="toolbar">
-        <button className="btn btn-default" onClick={() => this.sort('ownerName')}>
-          <i className="fa fa-sort"></i>  Sort by name
-        </button>
+		<div className="toolbar">
+			<button type="button" id="add-new-objective"><i className="fi flaticon-add" aria-hidden="true"></i><span>  New objective</span></button>
 
-        <button className="btn btn-default" onClick={() => this.sort('objTitle')}>
-          <i className="fa fa-sort"></i>  Sort by objective
-        </button>
+			<button className="btn btn-reset" onClick={this.reset.bind(this)}>
+			<i className="fa fa-ban"></i>  Reset
+			</button>
+			<table className="OKR-managing toolbar-table">
+				<tr>
+					<th>#</th>
+					<th onClick={() => this.sort('category')}>
+					<i className="fa fa-sort"></i>  Category
+					</th>
 
-        <button className="btn btn-default" onClick={() => this.sort('category')}>
-          <i className="fa fa-sort"></i>  Sort by category
-        </button>
+					<th onClick={() => this.sort('title')}>
+					<i className="fa fa-sort"></i>  Objective
+					</th>
 
-        <button className="btn btn-danger" onClick={this.reset.bind(this)}>
-          <i className="fa fa-ban"></i>  Reset
-        </button>
-      </div>
+					<th onClick={() => this.sort('description')}>
+					<i className="fa fa-sort"></i>  Description
+					</th>
+					<th>Delete</th>
+				</tr>
+			</table>
+		</div>
     )
   }
 }
