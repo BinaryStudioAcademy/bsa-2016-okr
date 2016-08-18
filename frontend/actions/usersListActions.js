@@ -6,6 +6,7 @@ export const RECEIVED_USERS_LIST = 'RECEIVED_USERS_LIST'
 export const USERS_LIST_ERROR = 'USERS_LIST_ERROR'
 
 export function getUsersList(){
+	
 	return(dispatch, getStore) => {
 
 		dispatch({

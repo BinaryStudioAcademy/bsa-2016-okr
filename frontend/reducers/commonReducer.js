@@ -12,7 +12,7 @@ import { routerReducer } from 'react-router-redux';
 export default combineReducers({
   history,
   userPage,
-  usersList
+  usersList,
   mapping,
   recycleBin,
   routing: routerReducer
