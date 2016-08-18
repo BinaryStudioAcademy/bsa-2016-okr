@@ -13,7 +13,8 @@ class PersonsInfo extends Component {
                </div>
                <div className='credentials'>
                   <div><span className='fi flaticon-user-6 mentor'></span>
-                     <span className='mentorName'> Mentor: 
+                     <span className='mentorName'>
+                     <span className='mentorTitle'>Mentor:</span> 
                      <br />
                      {this.props.data.mentor}</span>
                   </div>
