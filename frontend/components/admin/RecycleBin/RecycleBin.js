@@ -54,7 +54,7 @@ class RecycleBin extends Component {
 					</div>
 					
 					<div>
-						<table className='table'>
+						<table className='table filter-table'>
 							<thead>
 								<tr>
 									<th>Type</th>
