@@ -57,7 +57,6 @@ class RecycleBinFilter extends Component {
 							onClick={this.handleFilterButton}>
 			<i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button>
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
-				<div className="label">Filters:</div>
 				<table className="recycle-bin-filter-table">
 					<tbody>
 						<tr>

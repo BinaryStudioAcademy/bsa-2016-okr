@@ -1,6 +1,6 @@
 import users from '../components/mockData/users.js'
 import {SEARCH_USER, GET_USERS_LIST, 
-		USERS_LIST_ERROR, RECEIVED_USERS_LIST} from '../actions/otherPersonActions.js'
+		USERS_LIST_ERROR, RECEIVED_USERS_LIST} from '../actions/usersListActions.js'
 
 const initialState = {
 	user: [],
