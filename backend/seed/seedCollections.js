@@ -6,11 +6,11 @@ var User = require('../schemas/user');
 var Objective = require('../schemas/objective');
 var KeyResult = require('../schemas/keyResult');
 var Category = require('../schemas/category');
+var UserObjective = require('../schemas/userObjective');
 // var Comment = require('../schemas/comment');
 // var History = require('../schemas/history');
 // var Plan = require('../schemas/plan');
 // var UserMentor = require('../schemas/userMentor');
-// var UserObjective = require('../schemas/userObjective');
 
 var Role = require('../schemas/role');
 
@@ -45,7 +45,7 @@ function randomObjective(users, categories, i) {
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
 		category: getRandomId(categories),
 		keyResults: [],
-		used: chance.integer({ min: 0, max: 15 }),
+		used: 0,
 		creator: getRandomId(users),
 		isApproved: i % 5 !== 0,
 		isDeleted: i % 10 === 0,
@@ -69,6 +69,54 @@ function randomKeyResult(objectives, users, i) {
 		updatedAt: updatedAt
 	});
 }
+
+function randomUserObjective(objectives, users, keyResults, i) {
+	var createdAt = chance.date({ year: 2016, month: 7 });
+	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+	var user = getRandomId(users);
+	
+	var objectiveTemplate;
+	var objectiveKeyResults = [];
+
+	while(objectiveKeyResults.length < 1) {
+		objectiveTemplate = chance.pickone(objectives);
+
+		objectiveKeyResults = keyResults.filter((keyResult) => {
+			return keyResult.objectiveId.equals(objectiveTemplate._id);
+		});
+	}
+
+	var userKeyCount = chance.integer({ min: 1, max: objectiveKeyResults.length });
+
+	userKeyResults = chance
+		.pickset(objectiveKeyResults, userKeyCount)
+		.map((userKeyResult) => {
+			var userKeyResultIndex = keyResults.findIndex((keyResult) => {
+				return userKeyResult._id === keyResult._id;
+			});
+
+			keyResults[userKeyResultIndex].used += 1;
+			
+			return {
+				templateId: userKeyResult._id,
+				score: chance.floating({ min: 0, max: 1, fixed: 1 }),
+				creator: user
+			};
+		});
+
+	var userObjectiveIndex = objectives.findIndex((objective) => {
+		return objective._id === objectiveTemplate._id;
+	});
+
+	objectives[userObjectiveIndex].used += 1;
+
+	return new UserObjective({
+		templateId: objectiveTemplate._id,
+		userId: user,
+		creator: user,
+		keyResults: userKeyResults
+	});
+};
 
 /*function randomComment(users, objectives, i) {
 	var createdAt = chance.date({ year: 2016 });
@@ -106,32 +154,22 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 			return keyResult.objectiveId.equals(objective._id);
 		});
 
-		var defaultKeyResults = chance.pickset(objectiveKeyResults, 3).map((keyResult) => {
-			return ObjectId(keyResult._id);
-		});
+		if(objectiveKeyResults.length === 0) {
+			return;
+		}
+
+		var keyResultsCount = chance.integer({ min: 1, max: objectiveKeyResults.length });
+
+		var defaultKeyResults = chance
+			.pickset(objectiveKeyResults, keyResultsCount)
+			.map((keyResult) => {
+				return ObjectId(keyResult._id);
+			});
 		
 		objective.keyResults = defaultKeyResults;
 	});
 
 	return objectives;
-}
-
-function setUsedForKeyResults(objectives, keyResults) {
-	var res = [];
-
-	objectives.forEach((objective) => {
-		objectiveKeyResults = keyResults.filter((keyResult) => {
-			return keyResult.objectiveId.equals(objective._id);
-		});
-
-		objectiveKeyResults.forEach((keyResult) => {
-			keyResult.used = chance.integer({ min: 0, max: objective.used });
-		});
-
-		res = res.concat(objectiveKeyResults);
-	});
-	
-	return res;
 }
 
 /*function randomPlan(users, objectives, i) {
@@ -174,14 +212,16 @@ function setUsedForKeyResults(objectives, keyResults) {
 }*/
 
 module.exports = function () {
-		//toObject to avoid bulk insert crashes
+		// .toObject() to avoid bulk insert crashes
+		// variables are lowercased because they need to be named as collections
+
 		var users = new Array(100).fill(0).map((_, i) => randomUser(i).toObject());
 		var categories = baseCategories();
 		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
-		var keyResults = new Array(10000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
-
-		objectives = setDefaultKeyResultsForObjectives(objectives, keyResults);
-		keyResults = setUsedForKeyResults(objectives, keyResults);
+		var keyresults = new Array(5000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
+		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
+		
+		objectives = setDefaultKeyResultsForObjectives(objectives, keyresults);
 
 		var roles = [];
 
@@ -201,8 +241,9 @@ module.exports = function () {
 		return {
 			users: users,
 			objectives: objectives,
-			keyresults: keyResults,
+			keyresults: keyresults,
 			categories: categories,
+			userobjectives: userobjectives,
 			roles: roles
 			// comments: comments,
 			// plans: plans,
