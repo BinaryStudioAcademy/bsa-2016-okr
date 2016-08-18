@@ -29,7 +29,7 @@ render(
 				<Route path="/" component={App}>
 					<IndexRoute component={HomePage} />
 					<Route path="users" component={ListOfUsers} />
-					<Route path="/user/:userId" component={UserPage} />
+					<Route path="user/:id" component={UserPage} />
 					<Route path="history" component={History} />
 					<Route path="roles" component={RolesPage} />
 					<Route path="objective" component={ObjectiveView} />

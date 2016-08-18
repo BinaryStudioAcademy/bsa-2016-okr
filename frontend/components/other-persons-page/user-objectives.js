@@ -65,8 +65,8 @@ class Objectives extends Component {
 			<div>
 			 	<Quarter changeTab={this.changeTab.bind(this)} currentTab={this.state.currentTab}/>
 				<div id='objectives'>
-	         		<ObjectivesList objectives={ObjectiveItems} />
-			    </div> 
+     		     <ObjectivesList objectives={ObjectiveItems} />
+			   </div> 
 		    </div>       
 		)
 	}

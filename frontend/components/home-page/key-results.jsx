@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import KeyResultItem from './key-result.jsx';
+import KeyResultList from './key-result-list.jsx';
 
 class KeyResults extends Component {
     constructor(props) {
@@ -56,6 +57,8 @@ class KeyResults extends Component {
                     <ul>
                         {item}
                     </ul>
+
+                    <KeyResultList />
                 </div>
             </div>
         )

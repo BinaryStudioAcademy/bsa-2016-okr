@@ -1,18 +1,18 @@
 var axios = require('axios');
 
-export const SEND_REQUEST = 'SEND_REQUEST'
-export const RECEIVED_DATA = 'RECEIVED_DATA'
-export const SEARCH_USER = 'SEARCH_USER'
+export const GET_USER = 'GET_USER'
+export const RECEIVED_USER = 'RECEIVED_USER'
 
-export function sendRequest(userId) {
+export function getUser(id) {
+
 	return (dispatch, getStore) => {
 
 	dispatch({
-		type: SEND_REQUEST
+		type: GET_USER
 	});
 
-	return axios.get('http://localhost:4444/user/'+userId)
-		.then(dispatch(receivedData(userId)))
+	return axios.get('/api/user/'+id)
+		.then(response => dispatch(receivedUser(response.data)))
 		.catch(response => dispatch(receivedError(response.data)));
 	};
 }
@@ -24,18 +24,9 @@ export function receivedError(data) {
 	};
 }
 
-export function receivedData(id) {
+export function receivedUser(data) {
 	return {
-		type: RECEIVED_DATA,
-		id
+		type: RECEIVED_USER,
+		data
 	};
 }
-
-export function search(value) {
-	const action = {
-		type: SEARCH_USER,
-		searchValue: value
-	};
-	return action;
-}
- 

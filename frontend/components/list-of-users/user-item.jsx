@@ -9,12 +9,12 @@ class UserItem extends Component {
 
 	render() {
 		return (
-			<Link to={`/user/${this.props.user.userId}`}>
+			<Link to={`user/${this.props.user._id}`}>
 				<div className="userItemDiv">
 					<li className='userItem'>
 						<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
 						<div className='userInfo'>
-							<div className='userName'>{this.props.user.userName}</div>
+							<div className='userName'>{this.props.user._id}</div>
 							<div><span className='fi flaticon-user-6 mentor'></span>
 								<span className='mentorName'>
 									<span className='mentorTitle'>Mentor:</span> 

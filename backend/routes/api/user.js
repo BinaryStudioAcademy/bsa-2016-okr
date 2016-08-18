@@ -11,8 +11,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-	var id = req.params.id;
 
+	var id = req.params.id;
+	console.log(id)
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
@@ -21,7 +22,6 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-	console.log(req.body);
 	service.add(session._id, req.body, res.callback);
 });
 

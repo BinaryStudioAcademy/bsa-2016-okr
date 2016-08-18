@@ -1,9 +1,10 @@
 {
-	"description": "No objective title. Shouldn return 400", 
-	"keys": [
+	"description": "No objective title. Shouldn return 400",
+	"category": "Valid category id (added in code because of dynamic generation of DB)",
+	"keyResults": [
 		{
 			"title": "Node.js book", 
-			"difficulty": "low"
+			"difficulty": "easy"
 		}, 
 		{
 			"title": "Node.js docs", 
@@ -11,7 +12,7 @@
 		}, 
 		{
 			"title": "Node.js practice", 
-			"difficulty": "high"
+			"difficulty": "advanced"
 		}
 	]
 }

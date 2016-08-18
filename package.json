@@ -17,6 +17,7 @@
   "author": "BSA-2016",
   "scripts": {
     "test": "better-npm-run test",
+    "test:watch": "better-npm-run test:watch",
     "start": "node server",
     "prod": "better-npm-run prod",
     "prod:watch": "better-npm-run prod:watch",
@@ -42,6 +43,13 @@
     },
     "test": {
       "command": "node test/index",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "4444"
+      }
+    },
+    "test:watch": {
+      "command": "nodemon test/index",
       "env": {
         "NODE_ENV": "production",
         "PORT": "4444"

@@ -1,59 +1,31 @@
 import React from 'react'
 import ReactList from 'react-list';
-import './history-item-list.scss';
-import '../../common/styles/table.scss';
-import axios from 'axios';
-//import historyMock from '../../../components/mockData/historyPageMock.js'
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import * as actions from "../../../actions/historyActions";
 
+import axios from 'axios';
+
+import './history-item-list.scss';
+import '../../common/styles/table.scss';
+
 class HistoryItemList extends React.Component {
+    constructor(props) {
+        super(props);
 
-	state ={
-		historyItems: []
-	}
-    constructor() {
-        super();
-		//this.historyItems = [];
-		// console.log(this.historyItems);
         this.getActionColor = this.getActionColor.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this)
-		//this.displayList = this.displayList.bind(this);
-		this.url = '/api/history';
-    }
-
-    getHistoryItems() {
-        axios.get('/api/history')
-        .then(function (response){
-           // console.log(historyItems);
-            this.setState({historyItems: response.data});
-        }.bind(this))
-   //  	$.ajax({
-    .catch(function (err) {
-        console.log(err);
-    })
-   //  		url: this.url,
-   //  		dataType: 'json',
-   //  		type: 'GET',
-   //  		cache: false,
-   //  		success: function(historyItems){
-   //  			this.setState({historyItems});
-   //  		}.bind(this),
-   //  		error: function(xhr, status, err){
-			// 	console.error(this.props.url, status, err.toString());
-			// }.bind(this)
-   //  	});
+        this.componentWillMount = this.componentWillMount.bind(this)
     }
 
     getObjectId(item) {
         return item.keyId || item.commentId || item.categoryId || item.userId || item.objectiveId;
     }
+
     componentWillMount() {
-    	this.getHistoryItems.call(this);
-    	//this.forceUpdate.call(this)
+        this.props.getHistoryItems();
+        console.log(this.props.historyItems);
     }
 
     getActionColor(actionType) {
@@ -77,7 +49,7 @@ class HistoryItemList extends React.Component {
     }
 
 	renderItem(index, key) {
-		let item = this.state.historyItems[index];
+		let item = this.props.historyItems[index];
    		return(
    			<tr key={item._id}>
 				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
@@ -107,9 +79,9 @@ class HistoryItemList extends React.Component {
 	               		<ReactList
 							itemRenderer={::this.renderItem}
 							itemsRenderer={::this.renderItems}
-							length={this.state.historyItems.length}
+							length={this.props.historyItems.length}
 							type='simple'
-							pageSize={20}
+							pageSize={10}
 						/>
 						</tbody>
 				</table>	
@@ -124,7 +96,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		historyItems: state.historyItems
+		historyItems: state.history.historyItems
 	};
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import KeyResult from './key-result.jsx';
+import KeyResultAdd from './key-result-add.jsx';
 import './key-result-list.scss';
 
 class KeyResultList extends React.Component{
@@ -8,7 +8,7 @@ class KeyResultList extends React.Component{
 
       this.state = {
          keyResults: [
-            { id: 1 }
+            //{ id: 1 }
          ]
       };
 
@@ -27,11 +27,10 @@ class KeyResultList extends React.Component{
    render(){
       return(
          <ul id="new-obj-keyresults">
-            <p>Key results</p>
 
             {
                this.state.keyResults.map((el) => {
-                  return <KeyResult id={el.id} key={el.id} onClick={this.handleDelKeyResult}/>
+                  return <KeyResultAdd id={el.id} key={el.id} onClick={this.handleDelKeyResult}/>
                })
             }
 
@@ -44,15 +43,22 @@ class KeyResultList extends React.Component{
 export default KeyResultList;
 
 function add_new_keyres_handler(){
-   var newId = this.state.keyResults[this.state.keyResults.length - 1].id;
+   var newId = 0;
+   if (this.state.keyResults.length == 0){
+      newId = 1;
+   }else{
+      newId = this.state.keyResults[this.state.keyResults.length - 1].id;
+   }
+
    this.setState({
       keyResults: this.state.keyResults.concat({
          id: ++newId
       })
    })
 }
+
 function del_keyresult_handler(id) {
-   if(this.state.keyResults.length > 1){
+   //if(this.state.keyResults.length > 1){
       for(var i = 0, l = this.state.keyResults.length; i < l; i++){
          if(id === this.state.keyResults[i].id){
             this.state.keyResults.splice(i, 1);
@@ -62,5 +68,5 @@ function del_keyresult_handler(id) {
       this.setState({
          keyResults: this.state.keyResults
       })
-   }
+   //}
 }

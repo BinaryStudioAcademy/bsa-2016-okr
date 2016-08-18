@@ -38,7 +38,7 @@ function isObject(value) {
 }
 
 function getValidDifficulty(value) {
-	return CONST.key[value.toUpperCase()];
+	return CONST.keyResult[value.toUpperCase()];
 }
 
 function isStringBoolean(value) {

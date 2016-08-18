@@ -18,15 +18,18 @@ var objectiveSchema = new Schema({
 		required: true,
 	},
 	keyResults: [{
-		keyId: {
 			type: ObjectId, 
-			ref: 'Key'
-		}
+			ref: 'KeyResult'
 	}],
 	creator: {
 		required: true,
 		type: ObjectId, 
 		ref: 'User'
+	},
+	used: {
+		type: Number,
+		default: 0,
+		min: 0
 	},
 	isApproved: {
 		type: Boolean,

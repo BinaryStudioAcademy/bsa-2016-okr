@@ -2,45 +2,59 @@ import React, { Component } from 'react';
 import DeletedTmplsItem from './DeletedTmplsItem';
 import StatPanel from '../../../containers/statistic-panel.jsx';
 import CentralWindow from "../../../containers/central-window.jsx";
+import RecycleBinFilter from './RecycleBinFilters';
 import '../../common/styles/table.scss';
 import './recycleBin.scss';
-
-import data_for_recycle from '../../mockData/data_for_recycle_bin';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from "../../../actions/recycleBinActions.js";
 
 class RecycleBin extends Component {
 
 	constructor(props) {
 		super(props);
+		this.filterButtonState = this.filterButtonState.bind(this);
+		this.handleFilterButton = this.handleFilterButton.bind(this);
+	}
+	handleFilterButton() {
+		let show = this.props.recycleBin.showRecycleBinFilters;
+		this.props.showFilters(!show);
+	}
+	filterButtonState(show) {
+		if (show) {
+			return 'active-button'
+		} else {
+			return ''
+		}
 	}
 
 	render() {
-		let deleted_items = data_for_recycle.map((item) => {
+		let deleted_items = this.props.recycleBin.visibleItems.map((item) => {
 			return <DeletedTmplsItem item={item} key={item.id} />
 		});
 		return (
 			<div>
 				<CentralWindow>
-					<h1>Recycle Bin</h1>
-					<div className="filter-box clearfix">
-						<div>
-							<input type="checkbox" id="cbObjectives" defaultChecked={true}></input>
-							<label htmlFor="cbObjectives">Objectives</label>
+					<div className="recycle-bin-header">
+						<div className="recycle-bin-header-row">
+							<div className="recycle-bin-title">
+								Recycle bin
+							</div>
+							<div className='filter-panel'>
+							<div className='recycle-bin-filter'><button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.recycleBin.showRecycleBinFilters)} 
+										onClick={this.handleFilterButton}>
+						<i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button></div>
+							</div>
 						</div>
-						<div>
-							<input type="checkbox" id="cbKey"></input>
-							<label htmlFor="cbKey">Key</label>
-						</div>
-						<div>
-							<input type="checkbox" id="cbCategory"></input>
-							<label htmlFor="cbCategory">Category</label>
-						</div>
-						<div>
-							<input type="checkbox" id="cbUser"></input>
-							<label htmlFor="cbUser">User</label>
+						<div className="recycle-bin-header-row">
+								<div className="recucle-bin-filter-bar-container">
+									<RecycleBinFilter/>
+								</div>
 						</div>
 					</div>
+					
 					<div>
-						<table className='table'>
+						<table className='table filter-table'>
 							<thead>
 								<tr>
 									<th>Type</th>
@@ -63,5 +77,15 @@ class RecycleBin extends Component {
 		);
 	}
 }
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators(actions, dispatch);
+}
 
-export default RecycleBin
+function mapStateToProps(state) {
+	return {
+		recycleBin: state.recycleBin
+	};
+}
+
+const RecycleBinConnected = connect(mapStateToProps, mapDispatchToProps)(RecycleBin);
+export default RecycleBinConnected

@@ -4,7 +4,7 @@
 
 var User = require('../schemas/user');
 var Objective = require('../schemas/objective');
-var Key = require('../schemas/key');
+var KeyResult = require('../schemas/keyResult');
 var Category = require('../schemas/category');
 // var Comment = require('../schemas/comment');
 // var History = require('../schemas/history');
@@ -16,6 +16,7 @@ var Role = require('../schemas/role');
 
 var Chance = require('chance');
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
 
 var chance = new Chance();
@@ -44,6 +45,7 @@ function randomObjective(users, categories, i) {
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
 		category: getRandomId(categories),
 		keyResults: [],
+		used: chance.integer({ min: 0, max: 15 }),
 		creator: getRandomId(users),
 		isApproved: i % 5 !== 0,
 		isDeleted: i % 10 === 0,
@@ -52,15 +54,17 @@ function randomObjective(users, categories, i) {
 	});
 }
 
-function randomKey(objectives, users, i) {
+function randomKeyResult(objectives, users, i) {
 	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 	
-	return new Key({
+	return new KeyResult({
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		creator: getRandomId(users),
 		objectiveId: getRandomId(objectives),
-		difficulty: chance.pickone(Key.schema.path('difficulty').enumValues),
+		isApproved: i % 5 === 0,
+		isDeleted: i % 10 === 0,
+		difficulty: chance.pickone(KeyResult.schema.path('difficulty').enumValues),
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
@@ -96,20 +100,38 @@ function baseCategories() {
 	return res;
 }
 
-function setDefaultKeysForObjectives(objectives, keys) {
+function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 	objectives.forEach((objective) => {
-		var objectiveKeys = keys.filter((key) => {
-			return key.objectiveId.equals(objective._id);
+		var objectiveKeyResults = keyResults.filter((keyResult) => {
+			return keyResult.objectiveId.equals(objective._id);
 		});
 
-		var defaultKeys = chance.pickset(objectiveKeys, 3).map((key) => {
-			return key._id;
+		var defaultKeyResults = chance.pickset(objectiveKeyResults, 3).map((keyResult) => {
+			return ObjectId(keyResult._id);
 		});
-
-		objective.keyResults = defaultKeys;
+		
+		objective.keyResults = defaultKeyResults;
 	});
 
 	return objectives;
+}
+
+function setUsedForKeyResults(objectives, keyResults) {
+	var res = [];
+
+	objectives.forEach((objective) => {
+		objectiveKeyResults = keyResults.filter((keyResult) => {
+			return keyResult.objectiveId.equals(objective._id);
+		});
+
+		objectiveKeyResults.forEach((keyResult) => {
+			keyResult.used = chance.integer({ min: 0, max: objective.used });
+		});
+
+		res = res.concat(objectiveKeyResults);
+	});
+	
+	return res;
 }
 
 /*function randomPlan(users, objectives, i) {
@@ -156,9 +178,10 @@ module.exports = function () {
 		var users = new Array(100).fill(0).map((_, i) => randomUser(i).toObject());
 		var categories = baseCategories();
 		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
-		var keys = new Array(10000).fill(0).map((_, i) => randomKey(objectives, users, i).toObject());
+		var keyResults = new Array(10000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 
-		objectives = setDefaultKeysForObjectives(objectives, keys);
+		objectives = setDefaultKeyResultsForObjectives(objectives, keyResults);
+		keyResults = setUsedForKeyResults(objectives, keyResults);
 
 		var roles = [];
 
@@ -173,10 +196,12 @@ module.exports = function () {
 		// var usersMentors = new Array(100).fill(0).map((_, i) => randomUserMentor(users, i).toObject());
 		// var histories = new Array(10000).fill(0).map((_, i) => randomHistory(users, keys, i).toObject());
 
+
+		// keys in returned object should be names of collections in DB
 		return {
 			users: users,
 			objectives: objectives,
-			keys: keys,
+			keyresults: keyResults,
 			categories: categories,
 			roles: roles
 			// comments: comments,

@@ -1,5 +1,4 @@
 import React from 'react';
-import KeyResults from './key-result-list.jsx';
 import NewObjCredentials from './credentials.jsx';
 import './new-objective.scss';
 
@@ -25,9 +24,6 @@ class NewObjective extends React.Component{
                   <NewObjCredentials />
                </section>
 
-               <section>
-                  <KeyResults />
-               </section>
                <button type="button" id="new-obj-submit-btn">Add new objective</button>
             </form>
          </div>

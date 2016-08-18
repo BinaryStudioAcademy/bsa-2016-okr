@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/otherPersonActions.js";
+import * as actions from "../../actions/usersListActions.js";
 
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
@@ -20,12 +20,15 @@ class ListOfUsers extends Component {
 	search(e) {
 		this.props.search(e.target.value);
 	}
+	componentWillMount(){
+		this.props.getUsersList();
+	}
 
 	render() {
 		const {user, searchValue} = this.props.users;
-
+		
 		var userNodes = user.map(function (user, index) {
-			if(user.userName.toLowerCase().indexOf(searchValue.toLowerCase()) === -1)
+			if(user._id.toLowerCase().indexOf(searchValue.toLowerCase()) === -1)
 				return;
 			else
 				return (
@@ -57,7 +60,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        users: state.users
+        users: state.usersList
     };
 }
 

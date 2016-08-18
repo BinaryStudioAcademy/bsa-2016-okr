@@ -28,6 +28,7 @@ let Objective = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-05-22T10:42:12.643Z"
 },
 {
@@ -53,6 +54,7 @@ let Objective = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-04-22T10:42:12.643Z"
 },
 {
@@ -78,6 +80,7 @@ let Objective = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-01-22T10:42:12.643Z"
 },
 {
@@ -110,6 +113,7 @@ let Objective = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-10-22T10:42:12.643Z"
 },
 {
@@ -135,6 +139,7 @@ let Objective = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-08-22T10:42:12.643Z"
 },
 {
@@ -160,6 +165,7 @@ let Objective = [{
 		}
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-01-22T10:42:12.643Z"
 },
 {
@@ -239,6 +245,7 @@ let Objective = [{
 
 	],
 	"assignBy": "",
+	"isDeleted": "false",
 	"startDate": "2016-10-22T10:42:12.643Z"
 }]
 export default Objective

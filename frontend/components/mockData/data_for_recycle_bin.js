@@ -6,7 +6,7 @@ let data_for_recycle = [
 		"description": "Learn Ruby for fun",
 		"category": "Knowledge",
 		"deletedBy": {"fullName": "Ostap Bender", "id": "5791f8555ed517bc028e739a"},
-		"deletedDate": "2016-05-22T10:51:12.643Z", 
+		"deletedDate": "2016-07-22T10:51:12.643Z", 
 		"keyResults": [
 			{
 				"title": "Read cool ruby -book name-",

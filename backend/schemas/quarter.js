@@ -1,21 +1,32 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var date = new Date();
+var minYear = date.getFullYear();
+
 var quarterSchema = new Schema({
-	year: Number,
-	index: Number,
-	user: {type: Schema.Types.ObjectId, ref: 'User'}, 
-	userObjective: {
-		templateId: {type: Schema.Types.ObjectId, ref: 'Objective'},
-		creatorId: {type: Schema.Types.ObjectId, ref: 'User'},
-		keyResults: [{
-			templateId: {type: Schema.Types.ObjectId, ref: 'Key'},
-			score: Number,
-			creator: {type: Schema.Types.ObjectId, ref: 'User'}
-		}]
-	}
+	year: {
+		required: true,
+		type: Number,
+		min: minYear,
+		max: minYear + 1
+	},
+	index: {
+		required: true,
+		type: Number,
+		min: 1,
+		max: 4
+	},
+	user: {
+		type: Schema.Types.ObjectId, 
+		ref: 'User'
+	}, 
+	userObjectives: [{
+		type: Schema.Types.ObjectId, 
+		ref: 'Objective'
+	}]
 }, {
 	timestamps: true
 });
 
-module.exports =mongoose.model('Quarter', quarterSchema);
+module.exports = mongoose.model('Quarter', quarterSchema);

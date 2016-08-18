@@ -1,33 +1,34 @@
 import users from '../components/mockData/users.js'
-import {SEND_REQUEST, RECEIVED_DATA, SEARCH_USER} from '../actions/otherPersonActions.js'
+import {GET_USER, RECEIVED_USER} from '../actions/otherPersonActions.js'
 
 const initialState = {
-	user: users,
-	searchValue: '',
-	id: '',
+    objectives: users,
+	user: [],
     waiting: true
 }
 
 export default function patentDetailsReducer(state = initialState, action) {
     
     switch (action.type) {
-        case SEND_REQUEST: 
+        case GET_USER: {
+            console.log("GET_USER");
+            
             return Object.assign({}, state, {
                 waiting: true
             }) 
+        }
+        case RECEIVED_USER: {
 
-        case RECEIVED_DATA: 
+            const {data} = action;
+            console.log("RECEIVED_USER");
+            console.log(data);
             return Object.assign({}, state, {
-                id: action.id,
+                objectives: users,
+                user: data,
                 waiting: false
             })               
-        
-        case SEARCH_USER: 
-            const { searchValue } = action
-            return Object.assign({}, state, {
-                searchValue
-            })               
-        
+        }
+
         default: 
             return state;        
         

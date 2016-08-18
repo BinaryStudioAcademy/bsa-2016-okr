@@ -9,7 +9,7 @@ class DeletedTmplsItem extends Component {
 	render() {
 		let dateObj = new Date(this.props.item.deletedDate);
 		let date = dateObj.getDate();
-		let month = dateObj.getMonth();
+		let month = dateObj.getMonth()+1;
 		let year = dateObj.getFullYear();
 		let hours = dateObj.getHours();
 		let minutes = dateObj.getMinutes();

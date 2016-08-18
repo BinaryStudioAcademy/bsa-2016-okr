@@ -1,12 +1,20 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
-var User = require('../schemas/userObjective');
+var UserObjective = require('../schemas/userObjective');
 
-var UserObjective = function(){
+var UserObjectiveRepository = function(){
 	Repository.prototype.constructor.call(this);
 	this.model = UserObjective;
 };
 
-UserRepository.prototype = new Repository();
+UserObjectiveRepository.prototype = new Repository();
 
-module.exports = new UserRepository();
+UserObjectiveRepository.prototype.getByUserId = function(userId, callback) {
+	var model = this.model;
+
+	model
+		.find({ userId: userId })
+		.exec(callback);
+};
+
+module.exports = new UserObjectiveRepository();

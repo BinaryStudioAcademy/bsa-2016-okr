@@ -1,0 +1,12 @@
+{
+	"templateId": "Correct template id (should be added programatically)",
+	"keyResults": [
+		{
+			"title": "Node.js book",
+			"difficulty": "easy"
+		},
+		{
+			"templateId": "Correct template id (should be added programatically)"
+		}
+	]
+}

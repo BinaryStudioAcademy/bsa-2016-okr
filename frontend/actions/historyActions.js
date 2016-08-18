@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function search(value) {
 	const action = {
 		type: 'SEARCH_OBJECTS',
@@ -28,4 +30,31 @@ export function setFilterDateTo(value) {
 		setHistoryFilterDateTo: value
 	};
 	return action;
+}
+
+export function getHistoryItems(){
+	return(dispatch, getStore) => {
+			
+		dispatch({
+			type: 'GET_HISTORY_ITEMS',
+		});
+
+		return axios.get('/api/history/')
+			.then( (response) => dispatch(receivedHistoryItems(response.data)))
+			.catch( (response) => dispatch(historyItemsError(response.data)));
+	};
+}
+
+export function receivedHistoryItems(historyItems){
+	return {
+		type: 'RECEIVED_HISTORY_ITEMS',
+		historyItems
+	}
+}
+
+export function historyItemsError(data){
+	return {
+		type: 'HISTORY_ITEMS_ERROR',
+		data
+	}
 }

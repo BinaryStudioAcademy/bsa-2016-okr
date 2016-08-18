@@ -2,10 +2,20 @@ const expect = require('chai').expect;
 const request = require('request');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const rootUrl = 'http://localhost:4444/';
 
 describe('Server start test', () => {
+
+	before((done) => {
+		require('../backend/db/dbConnect');
+		mongoose.set('debug', false);
+
+		mongoose.connection.on('connected', () => {
+			done();
+		});
+	});
 
 	it('Server started', (done) => {
 		var options = {
@@ -23,7 +33,7 @@ describe('Server start test', () => {
 
 		describe('Objective API', () => {
 
-			const suffix = 'api/objective/'
+			const suffix = 'api/objective/';
 			const unitUrl = rootUrl + suffix;
 
 			var objectiveTests = {};
@@ -41,11 +51,18 @@ describe('Server start test', () => {
 			// POST /api/objective/
 			describe('Create objective template', objectiveTests.createTemplate);
 
+			// GET /api/objective/title/:title*?
+			describe('Get objectives by title (autocomplete)', objectiveTests.autocomplete);
+
 			// POST /api/objective/me
-			describe('User creating an objective', objectiveTests.createObjectiveByUser);
+			// describe('User creating an objective', objectiveTests.createObjectiveByUser);
 
 		});
 		// END Objective API ===============================
+	});
+
+	after(() => {
+		mongoose.connection.close();
 	});
 	
 });

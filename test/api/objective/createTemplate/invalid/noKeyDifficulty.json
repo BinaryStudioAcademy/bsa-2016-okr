@@ -1,9 +1,0 @@
-{
-	"title": "No difficulty field in some key from keys. Should return 400",
-	"description": "Shouldn't work at all. Will return 400", 
-	"keys": [
-		{
-			"title": "Node.js docs"
-		}
-	]
-}
