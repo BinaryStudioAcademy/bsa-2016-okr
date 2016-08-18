@@ -62,8 +62,8 @@ function randomKeyResult(objectives, users, i) {
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		creator: getRandomId(users),
 		objectiveId: getRandomId(objectives),
-		isApproved: i % 5 === 0,
-		isDeleted: i % 10 === 0,
+		isApproved: i % 6 !== 0,
+		isDeleted: i % 8 === 0,
 		difficulty: chance.pickone(KeyResult.schema.path('difficulty').enumValues),
 		createdAt: createdAt,
 		updatedAt: updatedAt
