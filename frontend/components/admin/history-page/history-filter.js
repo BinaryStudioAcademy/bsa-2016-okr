@@ -43,7 +43,6 @@ class HistoryFilter extends Component {
 
 		return(
 			<div className={"history-filter-bar " + this.showFiltersContainer()}>
-				<div className="label">Filters:</div>
 				<table className="history-filter-table">
 					<tbody>
 						<tr>

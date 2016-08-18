@@ -7,8 +7,6 @@ const initialState = {
 	visibleItems: data_for_recycle,
 	setRecycleBinFilterDateFrom: '',
 	setRecycleBinFilterDateTo: ''
-
-
 };
 
 export default function historyReducer(state = initialState, action) {
@@ -56,7 +54,7 @@ function filterDate(items, dateFrom, dateTo) {
     }
     else if(dateFrom == '' && dateTo != '') {
     	items = data_for_recycle;
-        for (let i = 0; i < items.length; i++) {
+        for (let i = 0; i < data_for_recycle.length; i++) {
 	       	if (dateTo >= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);
 	       	}
@@ -64,7 +62,7 @@ function filterDate(items, dateFrom, dateTo) {
 	}
     else if(dateFrom != '' && dateTo == ''){
     	items = data_for_recycle;
-    	 for (let i = 0; i < items.length; i++) {
+    	 for (let i = 0; i < data_for_recycle.length; i++) {
 	       	if (dateFrom <= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);
 	       	}
@@ -72,7 +70,7 @@ function filterDate(items, dateFrom, dateTo) {
 	}
 	else {
 		items = data_for_recycle;
-	   for (let i = 0; i < items.length; i++) {
+	   for (let i = 0; i < data_for_recycle.length; i++) {
 	       	if (dateFrom <= data_for_recycle[i].deletedDate && dateTo >= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);
 	       	}

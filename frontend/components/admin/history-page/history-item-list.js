@@ -96,7 +96,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		historyItems: state.history.historyItems
+		historyItems: state.history.visibleItems
 	};
 }
 

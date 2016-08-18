@@ -2,6 +2,9 @@ const initialState = {
     historyItems: [],
 	searchValue: '',
 	showHistoryFilters: false,
+    setRecycleBinFilterDateFrom: '',
+    setRecycleBinFilterDateTo: '',
+    visibleItems: []
 };
 
 export default function historyReducer(state = initialState, action) {
@@ -36,7 +39,8 @@ export default function historyReducer(state = initialState, action) {
             console.log('received');
 
             return Object.assign({}, state, {
-            	historyItems  
+            	historyItems ,
+                visibleItems:  historyItems
             })
         }
             
@@ -52,18 +56,54 @@ export default function historyReducer(state = initialState, action) {
    		case "SET_HISTORY_FILTER_DATE_FROM": {
 			const {setHistoryFilterDateFrom} = action;
 			return Object.assign({}, state, {
-				setHistoryFilterDateFrom
+				setHistoryFilterDateFrom,
+                visibleItems: filterDate(state.visibleItems, setHistoryFilterDateFrom, state.setHistoryFilterDateTo, state.historyItems)
 			})
 		}
 
    		case "SET_HISTORY_FILTER_DATE_TO": {
     		const {setHistoryFilterDateTo} = action;
     		return Object.assign({}, state, {
-    			setHistoryFilterDateTo
+    			setHistoryFilterDateTo,
+                visibleItems: filterDate(state.visibleItems, state.setHistoryFilterDateFrom, setHistoryFilterDateTo, state.historyItems)
     		})
    		}
+
         default: {
             return state;
         }
     }
+}
+
+function filterDate(items, dateFrom, dateTo, historyItems) { 
+    items = historyItems;
+    let visibleItems = [];
+    if(dateFrom == undefined && dateTo == undefined) {
+        visibleItems = historyItems;
+    }
+    else if(dateFrom == undefined && dateTo != undefined) {
+        
+        for (let i = 0; i < historyItems.length; i++) {
+            if (dateTo >= historyItems[i].createdAt) {
+                visibleItems.push(historyItems[i]);
+            }
+        }
+    }
+    else if(dateFrom != undefined && dateTo == undefined){
+
+         for (let i = 0; i < historyItems.length; i++) {
+            if (dateFrom <= historyItems[i].createdAt) {
+                visibleItems.push(historyItems[i]);
+            }
+        }
+    }
+    else {
+
+       for (let i = 0; i < historyItems.length; i++) {
+            if (dateFrom <= historyItems[i].createdAt && dateTo >= historyItems[i].createdAt) {
+                visibleItems.push(historyItems[i]);
+            }
+        }
+    }
+    return visibleItems;
 }
