@@ -20,7 +20,7 @@ var userObjective = new Schema({
 	keyResults: [{
 		templateId: {
 			type: Schema.Types.ObjectId, 
-			ref: 'KeyResults',
+			ref: 'KeyResult',
 			required: true
 		},
 		score: {

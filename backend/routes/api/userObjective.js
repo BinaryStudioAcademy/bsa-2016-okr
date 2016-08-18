@@ -26,7 +26,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/me/', (req, res, next) => {
-	return repository.getByUserId(req.session._id, res.callback);
+	return repository.getByUserIdPopulate(req.session._id, res.callback);
 });
 
 router.get('/:id', (req, res, next) => {
