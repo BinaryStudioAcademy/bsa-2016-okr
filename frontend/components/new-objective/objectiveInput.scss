@@ -1,7 +1,128 @@
+@import '../common/variables';
+@import '../common/styles/commonStyles';
+
+.new-obj-creds{
+  margin-bottom: 30px;
+
+  label{
+    display: block;
+    width: 100%;
+    font-family: $primary-font;
+    font-size: 20px;
+    color: #777777;
+    margin-bottom: 10px;
+  }
+
+  /* Title input */
+
+  .title-group{
+    position: relative;
+  }
+
+  .new-obj-title{
+    display: block;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-right: 135px;
+    margin-bottom: 10px;
+  }
+
+  /* Select category */
+
+  #new-obj-category{
+    padding: 9px;
+    position: absolute;
+    top: 33px;
+    right: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Description Textarea */
+
+  .new-obj-desc{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+    height: 140px;
+  }
+}
+
+#new-objective {
+  position: fixed;
+  padding-top: 35px;
+  padding-bottom: 30px;
+  top: $header-height;
+  right: 0;
+  margin-right: $right-stat-panel-width;
+  left: $left-nav-width;
+  bottom: 0;
+  background: lighten($color-blue-grey, 50%);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: $new-obj-index;
+  display: none;
+
+  &.opened {
+    display: block;
+  }
+
+  form {
+    display: block;
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .close-new-obj-window{
+    display: block;
+    background: none;
+    border: none;
+    position: absolute;
+    font-size: 20px;
+    padding: 7px 10px;
+    background-color: transparent;
+    right: 10px;
+    top: 10px;
+    color: #AAAAAA;
+    &:hover{
+      color: #000000;
+    }
+    &:focus{
+      outline: none;
+    }
+  }
+}
+
+/*
+**    Section for Submit Objective
+*/
+
+button.new-obj-submit-btn {
+  @extend .btn;
+  @extend .btn-green;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  color: #fffde8;
+}
+
+.new-objective-form{
+  margin-bottom: 85px;
+}
+
+.no-after:after{
+  display: none !important;
+}
+
 .hidden{
   display: none;
 }
-#close-new-obj-window{
+.close-new-obj-window{
   border: none;
   background: none;
   font-size: 20px;
@@ -14,6 +135,6 @@
   }
 }
 
-#close-new-obj-window:focus{
+.close-new-obj-window:focus{
   outline:0;
 }

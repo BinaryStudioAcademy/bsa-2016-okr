@@ -1,8 +1,5 @@
 import React from 'react';
 import KeyResult from './key-result.jsx';
-import './credentials.scss'; //needed
-import './new-objective.scss'; //needed
-//import './key-result-list.scss';
 import './objectiveInput.scss';
 
 class ObjectiveInput extends React.Component{
@@ -57,16 +54,16 @@ class ObjectiveInput extends React.Component{
     render(){
         return(
           <div className="new-objective-form">
-            <button ref="closeButton" type="button" id="close-new-obj-window" className="hidden" onClick={this.handleClose}>
+            <button ref="closeButton" type="button" className="hidden close-new-obj-window" onClick={this.handleClose}>
                <i className="fi flaticon-multiply" aria-hidden="true"></i>
             </button>
-            <div id="new-obj-creds">
+            <div className="new-obj-creds">
               <div className="title-group">
-                  <input type="text" placeholder="New objective title" id="new-obj-title" onFocus={this.handleFocus}/>
+                  <input type="text" placeholder="New objective title" className="new-obj-title" onFocus={this.handleFocus}/>
               </div>
               <div ref="objectiveForm" className="desc-group" className="hidden">
                   <label htmlFor="new-obj-desc">Description</label>
-                  <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
+                  <textarea name="new-obj-desc" className="new-obj-desc" placeholder="Description"></textarea>
                 <div>
                   <ul id="new-obj-keyresults">
                     <p className="no-after">Key results</p>
@@ -77,7 +74,7 @@ class ObjectiveInput extends React.Component{
                     }
                     <a id="add-new-keyresult-btn" onClick={this.handleAddNewKeyRes}>+ Add new key result</a>
                   </ul>
-                 <button type="button" id="new-obj-submit-btn">Add new objective</button>
+                 <button type="button" className="new-obj-submit-btn">Add new objective</button>
                 </div>
               </div>
             </div>
