@@ -5,7 +5,6 @@ class Quarter extends Component {
       super();
 
       this.handleTabClick = this.handleTabClick.bind(this);
-      this.handleAddNewObjClick = this.handleAddNewObjClick.bind(this);
    }
 
    handleTabClick(e) {
@@ -21,19 +20,10 @@ class Quarter extends Component {
       this.props.changeTab(++currentTab);
    }
 
-    handleAddNewObjClick(event){
-        add_new_obj_handler.call(this, event);
-
-    }
-
    render() {
       return (
          <div id='top-bar'>
              <div id="manage-bar">
-                 <button type="button" id="add-new-objective" onClick={this.handleAddNewObjClick}>
-                     <i className="fi flaticon-add" aria-hidden="true"></i>
-                     New objective
-                 </button>
              </div>
              <div id="quarter-bar">
                  <ul id='quarter-list' >
@@ -55,12 +45,3 @@ class Quarter extends Component {
 }
 
 export default Quarter
-
-function add_new_obj_handler(event) {
-    var target = event.target,
-        newObjWindow = document.getElementById('new-objective');
-
-    if(!newObjWindow.classList.contains('opened')){
-        newObjWindow.classList.add('opened');
-    } else { newObjWindow.classList.remove('opened') }
-}
