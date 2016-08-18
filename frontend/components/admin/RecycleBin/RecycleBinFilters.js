@@ -16,20 +16,6 @@ class RecycleBinFilter extends Component {
 		this.showFiltersContainer = this.showFiltersContainer.bind(this);
 		this.onChangeFrom = this.onChangeFrom.bind(this);
 		this.onChangeTo = this.onChangeTo.bind(this);
-		this.filterButtonState = this.filterButtonState.bind(this);
-		this.handleFilterButton = this.handleFilterButton.bind(this);
-	}
-	
-	handleFilterButton() {
-		let show = this.props.recycleBin.showRecycleBinFilters;
-		this.props.showFilters(!show);
-	}
-	filterButtonState(show) {
-		if (show) {
-			return 'active-button'
-		} else {
-			return ''
-		}
 	}
 	showFiltersContainer() {
 		if (this.props.recycleBin.showRecycleBinFilters) {
@@ -53,10 +39,28 @@ class RecycleBinFilter extends Component {
 	render() {
 
 		return(
-			<div> <button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.recycleBin.showRecycleBinFilters)} 
-							onClick={this.handleFilterButton}>
-			<i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button>
+			<div>
+			
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
+				<div className="filter-box clearfix">
+						<div>
+							<input type="checkbox" id="cbObjectives" defaultChecked={true}></input>
+							<label htmlFor="cbObjectives">Objectives</label>
+						</div>
+						<div>
+							<input type="checkbox" id="cbKey"></input>
+							<label htmlFor="cbKey">Key</label>
+						</div>
+						<div>
+							<input type="checkbox" id="cbCategory"></input>
+							<label htmlFor="cbCategory">Category</label>
+						</div>
+						<div>
+							<input type="checkbox" id="cbUser"></input>
+							<label htmlFor="cbUser">User</label>
+						</div>
+
+					</div>
 				<table className="recycle-bin-filter-table">
 					<tbody>
 						<tr>
@@ -73,6 +77,7 @@ class RecycleBinFilter extends Component {
 				</table>
 			</div>
 			</div>
+			
 		)
 	}
 }

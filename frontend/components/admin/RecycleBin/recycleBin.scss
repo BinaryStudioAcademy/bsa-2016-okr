@@ -1,5 +1,36 @@
+.recycle-bin-header {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+	.recycle-bin-title {
+	  width: 30%;
+	  display: flex;
+	  justify-content: center;
+	  font-size: 28px;
+	  font-weight: bold;
+	}
+	.recycle-bin-header-row {
+	  width: 100%;
+	  margin-left: auto;
+	  margin-right: auto;
+	  padding: 12px 0 12px 0;
+	  display: flex;
+	  flex-direction: row;
+	  .filter-panel{
+	  	width: 70%;
+	    display: flex;
+	    justify-content: flex-end;
+	  }
+	  .recycle-bin-filter-bar-container {
+    		width: 100%;
+		}
+	}
+}
+
 .filter-box {
-	margin: 50px 0px;
+	margin: 5px 90px;
 
 	& > div {
 		margin: 0 10px;
@@ -9,12 +40,7 @@
 
 .recucle-bin-filter-bar-container{
 	width: 100%;
-
-	.btn-filter{
-		margin: 10px 0 0;
-	}
 	.recycle-bin-filter-bar {
-		margin: 10px 10px 0 -10px;
 		padding: 12px;
 		background-color: #fff;
 		border: 1px solid #99BCE0;

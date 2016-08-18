@@ -13,6 +13,19 @@ class RecycleBin extends Component {
 
 	constructor(props) {
 		super(props);
+		this.filterButtonState = this.filterButtonState.bind(this);
+		this.handleFilterButton = this.handleFilterButton.bind(this);
+	}
+	handleFilterButton() {
+		let show = this.props.recycleBin.showRecycleBinFilters;
+		this.props.showFilters(!show);
+	}
+	filterButtonState(show) {
+		if (show) {
+			return 'active-button'
+		} else {
+			return ''
+		}
 	}
 
 	render() {
@@ -22,28 +35,24 @@ class RecycleBin extends Component {
 		return (
 			<div>
 				<CentralWindow>
-					<h1>Recycle Bin</h1>
-					<div className="filter-box clearfix">
-						<div>
-							<input type="checkbox" id="cbObjectives" defaultChecked={true}></input>
-							<label htmlFor="cbObjectives">Objectives</label>
+					<div className="recycle-bin-header">
+						<div className="recycle-bin-header-row">
+							<div className="recycle-bin-title">
+								Recycle bin
+							</div>
+							<div className='filter-panel'>
+							<div className='recycle-bin-filter'><button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.recycleBin.showRecycleBinFilters)} 
+										onClick={this.handleFilterButton}>
+						<i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button></div>
+							</div>
 						</div>
-						<div>
-							<input type="checkbox" id="cbKey"></input>
-							<label htmlFor="cbKey">Key</label>
-						</div>
-						<div>
-							<input type="checkbox" id="cbCategory"></input>
-							<label htmlFor="cbCategory">Category</label>
-						</div>
-						<div>
-							<input type="checkbox" id="cbUser"></input>
-							<label htmlFor="cbUser">User</label>
-						</div>
-						<div className="recucle-bin-filter-bar-container">
-							<RecycleBinFilter/>
+						<div className="recycle-bin-header-row">
+								<div className="recucle-bin-filter-bar-container">
+									<RecycleBinFilter/>
+								</div>
 						</div>
 					</div>
+					
 					<div>
 						<table className='table'>
 							<thead>
