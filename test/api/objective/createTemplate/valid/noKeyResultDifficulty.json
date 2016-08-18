@@ -1,0 +1,17 @@
+{
+	"title": "Learn React in depth", 
+	"description": "description for Node",
+	"category": "Valid category id (added in code because of dynamic generation of DB)",
+	"keyResults": [
+		{
+			"title": "React.js book", 
+			"difficulty": "easy"
+		}, 
+		{
+			"title": "React.js docs"
+		}, 
+		{
+			"title": "React.js practice"
+		}
+	]
+}

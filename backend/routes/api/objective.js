@@ -12,24 +12,23 @@ router.get('/', (req, res, next) => {
 
 router.post('/', adminOnly, (req, res, next) => {
 
-	var title = '' + req.body.title || '';
-	var description = '' + req.body.description || '';
-	var category = '' + req.body.category || '';
+	var title = req.body.title || '';
+	var description = req.body.description || '';
+	var category = req.body.category || '';
 	var keyResults = req.body.keyResults || [];
 
 	keyResults.forEach((keyResult) => {
-		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty);
+		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
 	});
 
 	var isKeyResultsInvalid = keyResults.some((keyResult) => {
 		return !ValidateService.isObject(keyResult)
 		|| ValidateService.isEmpty(keyResult.title)
-		|| ValidateService.isEmpty(keyResult.difficulty)
-		|| !keyResult.difficulty;
 	});
 
 	if( ValidateService.isEmpty(title)
 		|| ValidateService.isEmpty(description)
+		|| ValidateService.isEmpty(keyResults)
 		|| !ValidateService.isCorrectId(category)
 		|| !ValidateService.isArray(keyResults)
 		|| isKeyResultsInvalid)

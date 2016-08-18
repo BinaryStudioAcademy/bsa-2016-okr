@@ -2,10 +2,20 @@ const expect = require('chai').expect;
 const request = require('request');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const rootUrl = 'http://localhost:4444/';
 
 describe('Server start test', () => {
+
+	before((done) => {
+		require('../backend/db/dbConnect');
+		mongoose.set('debug', false);
+
+		mongoose.connection.on('connected', () => {
+			done();
+		});
+	});
 
 	it('Server started', (done) => {
 		var options = {
@@ -46,6 +56,10 @@ describe('Server start test', () => {
 
 		});
 		// END Objective API ===============================
+	});
+
+	after(() => {
+		mongoose.connection.close();
 	});
 	
 });

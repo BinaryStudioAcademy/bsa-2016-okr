@@ -12,8 +12,6 @@ var randomCategory;
 module.exports = function(unitUrl) {
 	return function() {
 		before((done) => {
-			require('../../../../backend/db/dbConnect');
-
 			CategoryModel.findOne((err, category) => {
 				randomCategory = category;
 				done();
@@ -71,110 +69,114 @@ module.exports = function(unitUrl) {
 			});
 		});
 
-		// it('Should return status 200 and objective without keys', (done) => {
-		// 	var body = fs.readFileSync(path.join(__dirname, 'valid/noKeys.json'), 'utf-8');
-		// 	var options = {
-		// 		url: url,
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		},
-		// 		body: body
-		// 	};
+		it('Should return status 200 for body with no key difficulty', (done) => {
+			var body = JSON.parse(fs.readFileSync(path.join(__dirname, 'valid/noKeyResultDifficulty.json'), 'utf-8'));
+			body.category = randomCategory._id;
 
-		// 	request(options, (err, res, body) => {
-		// 		expect(res.statusCode).to.equal(200);
-		// 		done();
-		// 	});
-		// });
+			var options = {
+				url: url,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			};
 
-		// it('Should return status 400 for body without objective description', (done) => {
-		// 	var body = fs.readFileSync(path.join(__dirname, 'invalid/noDescription.json'), 'utf-8');
-		// 	var options = {
-		// 		url: url,
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		},
-		// 		body: body
-		// 	};
+			request(options, (err, res, body) => {
+				expect(res.statusCode).to.equal(200);
+				done();
+			});
+		});
 
-		// 	request(options, (err, res, body) => {
-		// 		expect(res.statusCode).to.equal(400);
-		// 		done();
-		// 	});
-		// });
+		it('Should return status 400 for objective without keyResults', (done) => {
+			var body = fs.readFileSync(path.join(__dirname, 'invalid/noKeyResults.json'), 'utf-8');
+			var options = {
+				url: url,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: body
+			};
 
-		// it('Should return status 400 for body with error in keys (no key difficulty)', (done) => {
-		// 	var body = fs.readFileSync(path.join(__dirname, 'invalid/noKeyDifficulty.json'), 'utf-8');
-		// 	var options = {
-		// 		url: url,
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		},
-		// 		body: body
-		// 	};
+			request(options, (err, res, body) => {
+				expect(res.statusCode).to.equal(400);
+				done();
+			});
+		});
 
-		// 	request(options, (err, res, body) => {
-		// 		expect(res.statusCode).to.equal(400);
-		// 		done();
-		// 	});
-		// });
+		it('Should return status 400 for body without objective description', (done) => {
+			var body = JSON.parse(fs.readFileSync(path.join(__dirname, 'invalid/noDescription.json'), 'utf-8'));
+			body.category = randomCategory._id;
 
-		// it('Should return status 400 for body with error in keys (no key title)', (done) => {
-		// 	var body = fs.readFileSync(path.join(__dirname, 'invalid/noKeyTitle.json'), 'utf-8');
-		// 	var options = {
-		// 		url: url,
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		},
-		// 		body: body
-		// 	};
+			var options = {
+				url: url,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			};
 
-		// 	request(options, (err, res, body) => {
-		// 		expect(res.statusCode).to.equal(400);
-		// 		done();
-		// 	});
-		// });
+			request(options, (err, res, body) => {
+				expect(res.statusCode).to.equal(400);
+				done();
+			});
+		});
 
-		// it('Should return status 400 for body with no title', (done) => {
-		// 	var body = fs.readFileSync(path.join(__dirname, 'invalid/noTitle.json'), 'utf-8');
-		// 	var options = {
-		// 		url: url,
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		},
-		// 		body: body
-		// 	};
+		it('Should return status 400 for body with error in keys (no key title)', (done) => {
+			var body = JSON.parse(fs.readFileSync(path.join(__dirname, 'invalid/noKeyResultTitle.json'), 'utf-8'));
+			body.category = randomCategory._id;
 
-		// 	request(options, (err, res, body) => {
-		// 		expect(res.statusCode).to.equal(400);
-		// 		done();
-		// 	});
-		// });
+			var options = {
+				url: url,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			};
+
+			request(options, (err, res, body) => {
+				expect(res.statusCode).to.equal(400);
+				done();
+			});
+		});
+
+		it('Should return status 400 for body with no title', (done) => {
+			var body = JSON.parse(fs.readFileSync(path.join(__dirname, 'invalid/noTitle.json'), 'utf-8'));
+			body.category = randomCategory._id;
+
+			var options = {
+				url: url,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			};
+
+			request(options, (err, res, body) => {
+				expect(res.statusCode).to.equal(400);
+				done();
+			});
+		});
 		
-		// it('Should return status 400 for body with wrong key difficulty', (done) => {
-		// 	var body = fs.readFileSync(path.join(__dirname, 'invalid/wrongKeyDifficulty.json'), 'utf-8');
-		// 	var options = {
-		// 		url: url,
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		},
-		// 		body: body
-		// 	};
+		it('Should return status 400 for body with wrong category', (done) => {
+			var body = fs.readFileSync(path.join(__dirname, 'invalid/noOrWrongCategory.json'), 'utf-8');
+			var options = {
+				url: url,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: body
+			};
 
-		// 	request(options, (err, res, body) => {
-		// 		expect(res.statusCode).to.equal(400);
-		// 		done();
-		// 	});
-		// });
-
-		after(() => {
-			mongoose.connection.close();
+			request(options, (err, res, body) => {
+				expect(res.statusCode).to.equal(400);
+				done();
+			});
 		});
 	};
 };
