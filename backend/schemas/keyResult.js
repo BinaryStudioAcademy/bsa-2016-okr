@@ -22,6 +22,11 @@ var keyResultSchema = new Schema({
 		enum: [CONST.keyResult.EASY, CONST.keyResult.INTERMEDIATE, CONST.keyResult.ADVANCED],
 		default: CONST.keyResult.INTERMEDIATE
 	},
+	used: {
+		type: Number,
+		default: 0,
+		min: 0
+	},
 	isApproved: {
 		type: Boolean,
 		default: false

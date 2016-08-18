@@ -61,6 +61,16 @@ router.post('/', adminOnly, (req, res, next) => {
 	return service.add(objective, keyResults, res.callback);
 });
 
+router.get('/title/:title', (req, res, next) => {
+	var title = req.params.title;
+
+	if(ValidateService.isEmpty(title)) {
+		return res.badRequest();
+	}
+
+	return service.autocomplete(req.params.title, res.callback);
+});
+
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
 // 	var description = req.body.description || '';
@@ -149,16 +159,6 @@ router.post('/', adminOnly, (req, res, next) => {
 
 // router.get('/user/:id', (req, res, next) => {
 // 	return repository.getByUserId(req.params.id, res.callback);
-// });
-
-// router.get('/title/:title', (req, res, next) => {
-// 	var title = req.params.title;
-
-// 	if(ValidateService.isEmpty(title)) {
-// 		return res.badRequest();
-// 	}
-
-// 	return service.autocomplete(req.params.title, res.callback);
 // });
 
 // router.get('/deleted/', adminOnly, (req, res, next) => {
