@@ -2,6 +2,7 @@ import users from '../components/mockData/users.js'
 import {GET_USER, RECEIVED_USER} from '../actions/otherPersonActions.js'
 
 const initialState = {
+    objectives: users,
 	user: [],
     waiting: true
 }
@@ -22,6 +23,7 @@ export default function patentDetailsReducer(state = initialState, action) {
             console.log("RECEIVED_USER");
             console.log(data);
             return Object.assign({}, state, {
+                objectives: users,
                 user: data,
                 waiting: false
             })               

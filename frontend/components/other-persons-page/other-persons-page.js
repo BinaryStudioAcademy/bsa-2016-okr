@@ -28,13 +28,12 @@ class OtherPersonsPage extends Component {
 		}
 		else {
 
-		const {user} = this.props.user;
-		console.log(user)
+		const {user, objectives} = this.props.user;
 		return (
 			<div>
 				<CentralWindow>
 					<PersonInfo data={user} />
-					<UserOjectives data={user}/>
+					<UserOjectives data={objectives[0]}/>
 				</CentralWindow>
 				<StatPanel>
 					<Dashboard></Dashboard>

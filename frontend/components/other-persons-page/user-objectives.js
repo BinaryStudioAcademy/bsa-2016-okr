@@ -18,7 +18,7 @@ class Objectives extends Component {
 		})
 	}
 	render() {	
-/*		var ObjectiveItems = [];
+		var ObjectiveItems = [];
 	if (this.state.currentTab == 1) {
             let array =  this.props.data.objectives.filter((item) => {
                if(item.startDate <= this.props.first)
@@ -60,13 +60,13 @@ class Objectives extends Component {
                
                   return <ObjectiveItem index={index} key={item.id} item={item} />
          }) 
-      }*/
+      }
 		return (
 			<div>
 			 	<Quarter changeTab={this.changeTab.bind(this)} currentTab={this.state.currentTab}/>
 				<div id='objectives'>
-	  {/*       		<ObjectivesList objectives={ObjectiveItems} />*/}
-			    </div> 
+     		     <ObjectivesList objectives={ObjectiveItems} />
+			   </div> 
 		    </div>       
 		)
 	}
