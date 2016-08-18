@@ -17,9 +17,9 @@ module.exports = function(app) {
 	router.use('/keyResult', keyResult);
 	router.use('/category', category);
 	router.use('/role', role);
+	router.use('/history', history);
 	// router.use('/comment', comment);
 	// router.use('/plan', plan);
-	// router.use('/history', history);
 	// router.use('/userMentor', userMentor);
 	router.use('/*', (req, res) => {
 		return res.badRequest();
