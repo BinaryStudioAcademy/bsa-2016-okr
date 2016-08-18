@@ -40,17 +40,28 @@ ObjectiveRepository.prototype.autocomplete = function(title, categoryId, callbac
 		category: categoryId 
 	};
 
+	var fields = {
+		title: true,
+		description: true,
+		category: true,
+		used: true,
+		keyResults: true
+	};
+
 	if(title) {
 		options.title = new RegExp(title, 'i');
 	}
 
 	model
-		.find(options)
+		.find(options, fields)
 		.sort({ used: 'desc' })
 		.limit(10)
-		.populate('keyResults')
+		.populate({
+			path: 'keyResults',
+			select: 'title used difficulty'
+		})
 		.exec(callback);
-}
+};
 
 // ObjectiveRepository.prototype.getAllDeleted = function(callback) {
 // 	var model = this.model;
