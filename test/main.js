@@ -55,7 +55,7 @@ describe('Server start test', () => {
 			describe('Get objectives by title (autocomplete)', objectiveTests.autocomplete);
 
 			// POST /api/objective/me
-			describe('User creating an objective', objectiveTests.createObjectiveByUser);
+			// describe('User creating an objective', objectiveTests.createObjectiveByUser);
 
 		});
 		// END Objective API ===============================

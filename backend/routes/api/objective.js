@@ -67,8 +67,7 @@ router.get('/title/:title*?', (req, res, next) => {
 	return repository.autocomplete(title, res.callback);
 });
 
-//
-router.put('/:id', (req, res, next) => {
+router.put('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 	var body = req.body;
 
@@ -77,10 +76,9 @@ router.put('/:id', (req, res, next) => {
 	};
 
 	return repository.update(id, body, res.callback);
-})
+});
 
-//
-router.delete(':id', (req, res, next) => {
+router.delete(':id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 	
 	if(!ValidateService.isCorrectId(id)) {
@@ -88,7 +86,7 @@ router.delete(':id', (req, res, next) => {
 	};
 
 	return repository.delete(id, res.callback);
-})
+});
 
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
