@@ -32,11 +32,12 @@ ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 		.exec(callback);
 };
 
-ObjectiveRepository.prototype.autocomplete = function(title, callback) {
+ObjectiveRepository.prototype.autocomplete = function(title, categoryId, callback) {
 	var model = this.model;
 	var options = {
 		isApproved: true,
-		isDeleted: false
+		isDeleted: false,
+		category: categoryId 
 	};
 
 	if(title) {

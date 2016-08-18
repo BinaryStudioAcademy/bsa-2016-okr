@@ -61,10 +61,15 @@ router.post('/', adminOnly, (req, res, next) => {
 	return service.add(objective, keyResults, res.callback);
 });
 
-router.get('/title/:title*?', (req, res, next) => {
+router.get('/category/:categoryId/:title*?', (req, res, next) => {
 	var title = req.params.title;
+	var categoryId = req.params.categoryId;
 
-	return repository.autocomplete(title, res.callback);
+	if(!ValidateService.isCorrectId(categoryId)) {
+		return res.badRequest();
+	}
+
+	return repository.autocomplete(title, categoryId, res.callback);
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {

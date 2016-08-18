@@ -3,11 +3,19 @@ const expect = require('chai').expect;
 const path = require('path');
 const fs = require('fs');
 
+const CategoryModel = require('../../../../backend/schemas/category');
+var url;
+
 // POST /api/objective/
 module.exports = function(unitUrl) {
 	return function() {
 
-		const url = unitUrl + 'title/';
+		before((done) => {
+			CategoryModel.findOne((err, category) => {
+				url = unitUrl + 'category/' + category._id + '/';
+				done();
+			});
+		});
 		
 		it('Should get top-10 objectives', (done) => {
 
@@ -15,7 +23,7 @@ module.exports = function(unitUrl) {
 				url: url,
 				method: 'GET'
 			};
-					
+
 			request(options, (err, res, body) => {
 				if(!body) {
 					expect(res.statusCode).to.equal(204);
@@ -36,7 +44,7 @@ module.exports = function(unitUrl) {
 				url: url + testTitle,
 				method: 'GET'
 			};
-					
+
 			request(options, (err, res, body) => {
 				if(!body) {
 					expect(res.statusCode).to.equal(204);
