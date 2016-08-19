@@ -26,6 +26,11 @@ var objectiveSchema = new Schema({
 		type: ObjectId, 
 		ref: 'User'
 	},
+	used: {
+		type: Number,
+		default: 0,
+		min: 0
+	},
 	isApproved: {
 		type: Boolean,
 		default: false

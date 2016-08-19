@@ -66,11 +66,11 @@ Repository.prototype.setToNotDeleted = function(id, callback) {
 	query.exec(callback);
 };
 
-Repository.prototype.getCount= function() {
+Repository.prototype.getCount = function() {
 
 	var model = this.model;
 
-	model.count( {}, function( err, count) {
+	model.count({}, function(err, count) {
 		console.log( "Count :", count );
 	});
 }

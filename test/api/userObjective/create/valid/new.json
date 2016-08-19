@@ -1,0 +1,15 @@
+{
+	"title": "Learn Node in depth", 
+	"description": "description for Node",
+	"category": "Valid category id (added in code because of dynamic generation of DB)",
+	"keyResults": [
+		{
+			"title": "Node.js book",
+			"difficulty": "easy"
+		}, 
+		{
+			"title": "Node.js courses",
+			"difficulty": "intermediate"
+		}
+	]
+}

@@ -5,9 +5,10 @@ const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
 const ValidateService = require('../../utils/ValidateService');
 const cloneObjective = require('../../services/cloneObjective');
+const session = require('../../config/session');
 
 router.get('/', (req, res, next) => {
-	return repository.getAll(res.callback);
+	return repository.getAllPopulate(res.callback);
 });
 
 router.post('/', adminOnly, (req, res, next) => {
@@ -15,7 +16,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	var title = req.body.title || '';
 	var description = req.body.description || '';
 	var category = req.body.category || '';
-	var keyResults = req.body.keyResults || [];
+	 var keyResults = req.body.keyResults || [];
 
 	keyResults.forEach((keyResult) => {
 		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
@@ -58,7 +59,39 @@ router.post('/', adminOnly, (req, res, next) => {
 		return keyResult;
 	});
 
-	return service.add(objective, keyResults, res.callback);
+	return service.add(session._id, req.body, keyResults, res.callback);
+});
+
+router.get('/category/:categoryId/:title*?', (req, res, next) => {
+	var title = req.params.title;
+	var categoryId = req.params.categoryId;
+
+	if(!ValidateService.isCorrectId(categoryId)) {
+		return res.badRequest();
+	}
+
+	return repository.autocomplete(title, categoryId, res.callback);
+});
+
+router.put('/:id', adminOnly, (req, res, next) => {
+	var id = req.params.id;
+	var body = req.body;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return service.update(session._id, id, body, res.callback);
+});
+
+router.delete('/:id', adminOnly, (req, res, next) => {
+	var id = req.params.id;
+	
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return service.delete(session._id, id, res.callback);
 });
 
 // router.post('/me/', (req, res, next) => {
@@ -149,16 +182,6 @@ router.post('/', adminOnly, (req, res, next) => {
 
 // router.get('/user/:id', (req, res, next) => {
 // 	return repository.getByUserId(req.params.id, res.callback);
-// });
-
-// router.get('/title/:title', (req, res, next) => {
-// 	var title = req.params.title;
-
-// 	if(ValidateService.isEmpty(title)) {
-// 		return res.badRequest();
-// 	}
-
-// 	return service.autocomplete(req.params.title, res.callback);
 // });
 
 // router.get('/deleted/', adminOnly, (req, res, next) => {

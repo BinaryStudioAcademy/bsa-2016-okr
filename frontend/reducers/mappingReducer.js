@@ -145,7 +145,9 @@ function updateVisibleUsers(users, filter) {
         {
         for (let i = 0; i < users.length; i++) {
 
-            if ((users[i].firstName.toUpperCase() + " " + users[i].lastName.toUpperCase()).indexOf(filter.toUpperCase()) === 0) {
+            if (users[i].firstName.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
+              users[i].lastName.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
+              users[i].email.toUpperCase().indexOf(filter.toUpperCase()) === 0 ) {
                 visibleUsers.push(users[i]);
               }
         }

@@ -3,8 +3,7 @@ import Quarter from './persons-quarter.js'
 
 class PersonsInfo extends Component {
    render() {
-      var user = this.props.data._id;
-
+     var user = this.props.data.userId;
       return (
          <div id='topPanel'>
             <div className='userInfo'>
@@ -16,9 +15,9 @@ class PersonsInfo extends Component {
                      <span className='mentorName'>
                      <span className='mentorTitle'>Mentor:</span> 
                      <br />
-                     {this.props.data.mentor}</span>
+                    {/* {this.props.data.mentor}*/}</span>
                   </div>
-                  {user}
+                  {this.props.data._id}
                   {/*<p className='lastVisite'>Last visit: {this.props.data.lastVisitDate}</p>*/}
                </div>
             </div>      

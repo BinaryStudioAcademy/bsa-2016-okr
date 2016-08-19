@@ -2,11 +2,10 @@ const request = require('request');
 const expect = require('chai').expect;
 const path = require('path');
 const fs = require('fs');
-const async = require('async');
 
 const CategoryModel = require('../../../../backend/schemas/category');
-const mongoose = require('mongoose');
 var randomCategory;
+var url;
 
 // POST /api/objective/
 module.exports = function(unitUrl) {
@@ -14,11 +13,10 @@ module.exports = function(unitUrl) {
 		before((done) => {
 			CategoryModel.findOne((err, category) => {
 				randomCategory = category;
+				url = unitUrl;
 				done();
 			});
 		});
-
-		const url = unitUrl;
 		
 		it('Should return status 200 and objective with keys', (done) => {
 			var body = JSON.parse(fs.readFileSync(path.join(__dirname, 'valid/full.json'), 'utf-8'));
