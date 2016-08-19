@@ -4,6 +4,7 @@ var User = require('../schemas/user');
 var KeyResult = require('../schemas/keyResult');
 var ObjectiveRepository = require('../repositories/objective.js');
 var KeyResultRepository = require('../repositories/keyResult.js');
+var HistoryRepository = require('../repositories/history.js');
 var async = require('async');
 
 var ObjectiveService = function() {};
@@ -30,6 +31,13 @@ ObjectiveService.prototype.add = function(objective, keyResults, callback) {
 				return err ? callback(err) : callback(null, obj);
 			});
 		}, (obj, callback) => {
+			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "update Objective template", (err) => {
+				if(err) {
+					return callback(err, null);
+				}
+				return callback(null, obj);
+			});
+		}, (obj, callback) => {
 			obj = obj.toObject();
 			obj.keyResults = [];
 			async.forEach(keyResults, (keyResult, callback) => {
@@ -47,6 +55,53 @@ ObjectiveService.prototype.add = function(objective, keyResults, callback) {
 		return callback(err, result);	
 	});
 };
+
+ObjectiveService.prototype.update = function (authorId, objectiveId, objective, callback){
+	async.waterfall([
+		(callback) => {
+			ObjectiveRepository.update(objectiveId, objective, (err, objective) => {
+				if (err) {
+					return callback(err, null);
+				}
+				return callback(null, objective);
+			});
+		},
+		(objective, callback) => {
+			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "update Objective template", (err) => {
+				if(err) {
+					return callback(err, null);
+				}
+				return callback(null, objective);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);
+	})
+}
+
+ObjectiveService.prototype.delete = function (authorId, objectiveId, callback){
+	async.waterfall([
+		(callback) => {
+			ObjectiveRepository.delete(objectiveId, (err) => {
+				if (err) {
+					return callback(err, null);
+				}
+				return callback(null);
+			});
+		},
+		(callback) => {
+			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "delete Objective template", (err) => {
+				if(err) {
+					return callback(err, null);
+				}
+				return callback(null, null);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);
+	})
+}
+
 
 // ObjectiveService.prototype.addToUser = function(objective, keys, assignedTo, callback) {
 
