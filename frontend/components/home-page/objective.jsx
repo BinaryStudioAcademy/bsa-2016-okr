@@ -32,7 +32,7 @@ handleDelObj(){
      console.log("hey ", this.state.item.keyResults);
       return (
          <div className='home-objective'>
-
+            <Progress data={this.state.item.keyResults} />
                <div className='name'>{this.state.item.templateId.title}</div>
                <div className='description'>{this.state.item.templateId.description}</div>
                <div>
