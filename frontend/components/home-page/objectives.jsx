@@ -11,9 +11,7 @@ import * as actions from "../../actions/myObjectivesActions";
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
-		this.state={
-			currentYear: this.props.today.getFullYear()
-		}
+
 		this.changeTab = this.changeTab.bind(this);
 		this.changeYear = this.changeYear.bind(this);
 	}
@@ -22,9 +20,7 @@ class Objectives extends Component {
 		this.props.setChangeTab(num);
 	}
 	changeYear(year){
-		this.setState({
-			currentYear: year
-		})
+		this.props.setChangeYear(year)
 	}
 	componentWillMount() {
 		console.log(this.props);
@@ -39,7 +35,7 @@ class Objectives extends Component {
 
 		let quarter = me.quarters.find((quarter) => {
 			
-			return (quarter.year == this.state.currentYear) && (quarter.index == currentTab)
+			return (quarter.year == currentYear) && (quarter.index == currentTab)
 		});
 
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {

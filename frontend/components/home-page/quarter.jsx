@@ -12,17 +12,33 @@ class Quarter extends Component {
       this.props.changeYear(value)
    }
    handleTabClick(e) {
-      var li = document.getElementsByClassName('tab');
-
+      var li = document.getElementsByClassName('quater');
       for (var i=0; i<4; i++) {
-         li[i].classList.remove('active');
          if ( li[i] == e.target)
             var currentTab = i;
-      }
-
-      e.target.classList.add('active');
+      } 
       this.props.changeTab(++currentTab);
    }
+   activeTab1(){
+      if (this.props.currentTab == 1) 
+        return "active"
+      else return ""
+   }
+   activeTab2(){
+      if (this.props.currentTab == 2)     
+         return "active"
+      else return ""
+   }
+   activeTab3(){
+      if (this.props.currentTab == 3) 
+         return "active"
+      else return ""
+   }
+   activeTab4(){
+      if (this.props.currentTab == 4) 
+         return "active"
+      else return ""
+   }  
 
    render() {
       return (
@@ -37,10 +53,10 @@ class Quarter extends Component {
                             <option>{this.props.today.getFullYear()+1}</option>
                          </select>
                      </li>
-                     <li className="tab active" onClick={this.handleTabClick}>1-st quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>2-nd quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>3-rd quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>4-th quarter</li>
+                     <li className={"quater " + this.activeTab1()} onClick={this.handleTabClick}>1-st quarter</li>
+                     <li className={"quater " + this.activeTab2()} onClick={this.handleTabClick}>2-nd quarter</li>
+                     <li className={"quater " + this.activeTab3()} onClick={this.handleTabClick}>3-rd quarter</li>
+                     <li className={"quater " + this.activeTab4()} onClick={this.handleTabClick}>4-th quarter</li>
                  </ul>
              </div>
          </div>

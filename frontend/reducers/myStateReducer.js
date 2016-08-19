@@ -1,8 +1,8 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
 
 const initialState = {
-	currentTab : 1,
-	currentYear: 2016,
+    currentTab: getQuarter(),
+    currentYear: getYear(),
 	me: {
 		"localRole": "",
 		"quarters": [
@@ -72,7 +72,9 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 			
 			return Object.assign({}, state, {
-				me: isEmpty(data) ? state.me : data
+				me: isEmpty(data) ? state.me : data,
+				currentTab: getQuarter(),
+                currentYear: getYear()
 			});
 		}
 
@@ -96,4 +98,23 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return state;
 		}
 	}
+}
+function getYear(){
+    let today = new Date();   
+    return today.getFullYear() 
+}
+
+function getQuarter(){
+    let today = new Date();
+    let first = new Date('2016-03-31T10:42:12.643Z'),
+        second = new Date('2016-06-30T10:42:12.643Z'),
+        third = new Date('2016-09-30T10:42:12.643Z');
+    if (today < first)
+        return 1;
+    else if (today >= first && today <= second)
+        return 2;
+    else if(today > second && today <= third)
+        return 3;
+    else if(today > third)
+        return 4;
 }

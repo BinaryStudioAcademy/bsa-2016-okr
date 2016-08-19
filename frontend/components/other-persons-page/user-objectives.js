@@ -12,32 +12,21 @@ import './user-objectives.scss'
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state={
-			currentYear: this.props.today.getFullYear(),
-			currentTab: 1
-		}
-		
 	}
 	
 	changeTab(num) {
-		this.setState({
-			currentTab: num
-		})
+		this.props.changeTab(num)
 	}
 	changeYear(year){
-		this.setState({
-			currentYear: year
-		})
+		this.props.changeYear(year)
 	}
 
 	render() {	
-      	const { user } = this.props.user;
+      	const { user, currentYear, currentTab} = this.props.user;
     	var ObjectiveItems = [];
-    	console.log(user.quarters)
 
 		let quarter = user.quarters.find((quarter) => {
-			return (quarter.year == this.state.currentYear) && (quarter.index == this.state.currentTab)
+			return (quarter.year == currentYear) && (quarter.index == currentTab)
 		});
 
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {
@@ -49,7 +38,7 @@ class Objectives extends Component {
 		return (
 			<div>
 			 	<Quarter changeTab={this.changeTab.bind(this)} changeYear={this.changeYear.bind(this)} 
-			 				currentYear={this.state.currentYear} currentTab={this.state.currentTab}/>
+			 				currentYear={currentYear} currentTab={currentTab}/>
 				<div id='objectives'>
      		    	<ObjectivesList objectives={ObjectiveItems} />
 				</div> 
@@ -58,7 +47,6 @@ class Objectives extends Component {
 		
 	}
 }
-Objectives.defaultProps = { today: new Date() };
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }
