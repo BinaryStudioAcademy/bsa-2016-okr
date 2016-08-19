@@ -11,6 +11,9 @@ import * as actions from "../../actions/myObjectivesActions";
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
+		this.state={
+			currentYear: this.props.today.getFullYear()
+		}
 		this.changeTab = this.changeTab.bind(this);
 		this.changeYear = this.changeYear.bind(this);
 	}
@@ -19,7 +22,9 @@ class Objectives extends Component {
 		this.props.setChangeTab(num);
 	}
 	changeYear(year){
-		this.props.changeYear(year);
+		this.setState({
+			currentYear: year
+		})
 	}
 	componentWillMount() {
 		console.log(this.props);
@@ -33,8 +38,8 @@ class Objectives extends Component {
 		var ObjectiveItems = [];
 
 		let quarter = me.quarters.find((quarter) => {
-			console.log(quarter.year, quarter.index)
-			return (quarter.year == currentYear) && (quarter.index === currentTab)
+			
+			return (quarter.year == this.state.currentYear) && (quarter.index == currentTab)
 		});
 
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {
@@ -45,7 +50,8 @@ class Objectives extends Component {
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear} currentTab={ currentTab }/>
+				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear} 
+						currentTab={ currentTab } />
 				<div id='objectives'>
 					<ObjectivesList objectives={ ObjectiveItems } />
 				</div>
@@ -53,6 +59,7 @@ class Objectives extends Component {
 		)
 	}
 }
+Objectives.defaultProps = { today: new Date() };
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(actions, dispatch);

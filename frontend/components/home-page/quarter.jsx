@@ -33,8 +33,8 @@ class Quarter extends Component {
                  <ul id='quarter-list' >
                      <li>
                          <select onChange={this.hendleYearChange} className='business-year'>
-                             <option>2016</option>
-                             <option>2017</option>
+                            <option>{this.props.today.getFullYear()}</option>
+                            <option>{this.props.today.getFullYear()+1}</option>
                          </select>
                      </li>
                      <li className="tab active" onClick={this.handleTabClick}>1-st quarter</li>
@@ -47,5 +47,7 @@ class Quarter extends Component {
       )
    }
 }
-
+Quarter.defaultProps = { 
+   today: new Date()
+};
 export default Quarter
