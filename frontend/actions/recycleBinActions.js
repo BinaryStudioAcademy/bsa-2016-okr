@@ -6,6 +6,75 @@ export function search(value) {
 	return action;
 }
 
+export function updateAll(dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, categoryType, userName) {
+	const action = {
+		type: 'UPDATE-ALL',
+		dateFrom: dateFrom,
+		dateTo: dateTo,
+		categoryOrTypeFilter: categoryOrTypeFilter,
+		objectiveType: objectiveType,
+		keyType: keyType,
+		sortByDate: sortByDate,
+		categoryType: categoryType,
+		userName: userName
+	};
+	return action;
+}
+
+export function setUserName(value) {
+	
+	const action = {
+		type: 'SET-USER-NAME',
+		value: value
+	};
+	return action;
+}
+
+export function typeOrCategoryFilter(value) {
+	
+	const action = {
+		type: 'CATEGORY-TYPE-FILTER',
+		value: value
+	};
+	return action;
+}
+
+export function setSortingByDate(value) {
+	
+	const action = {
+		type: 'SET_SORTING_BY_DATE',
+		value: value
+	};
+	return action;
+}
+
+export function setObjectiveType(value) {
+	
+	const action = {
+		type: 'SET_OBJECTIVE_TYPE',
+		value: value
+	};
+	return action;
+}
+
+export function setCategoryType(value) {
+
+	const action = {
+		type: 'SET_CATEGORY_TYPE',
+		value: value
+	};
+	return action;
+}
+
+export function setKeyType(value) {
+	
+	const action = {
+		type: 'SET_KEY_TYPE',
+		value: value
+	};
+	return action;
+}
+
 export function showFilters(show) {
 	const action = {
 		type: 'SHOW_FILTERS',
