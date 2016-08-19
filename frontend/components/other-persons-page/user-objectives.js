@@ -14,7 +14,7 @@ class Objectives extends Component {
 		super(props);
 
 		this.state={
-			currentYear: 2016,
+			currentYear: this.props.today.getFullYear(),
 			currentTab: 1
 		}
 		
@@ -58,7 +58,7 @@ class Objectives extends Component {
 		
 	}
 }
-
+Objectives.defaultProps = { today: new Date() };
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }
