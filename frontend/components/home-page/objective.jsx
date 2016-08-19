@@ -29,11 +29,12 @@ handleDelObj(){
 }
 
    render() {
+     console.log("hey ", this.state.item.keyResults);
       return (
          <div className='home-objective'>
-            <Progress data={this.state.item.keyResults} />
-               <div className='name'>{this.state.item.objTitle}</div>
-               <div className='description'>{this.state.item.objDescription}</div>
+
+               <div className='name'>{this.state.item.templateId.title}</div>
+               <div className='description'>{this.state.item.templateId.description}</div>
                <div>
                  <button type="button" className="btn btn-red-hover delete-button-objective"
                          onClick={this.handleDelObj}>

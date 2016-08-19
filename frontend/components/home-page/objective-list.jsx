@@ -15,7 +15,7 @@ class ObjectiveList extends React.Component{
                     <ObjectiveInput/>
                     {
                         this.props.objectives.filter((el) => {
-                        	if( el.props.category == "Projects")
+                        	if( el.props.category == "projects")
                         		// console.log( el);
                            		return true;
                         })
@@ -26,7 +26,7 @@ class ObjectiveList extends React.Component{
                     <ObjectiveInput/>
                     {
                         this.props.objectives.filter((el) => {
-                        	if( el.props.category == "Knowledge" )
+                        	if( el.props.category == "knowledge" )
                         		// console.log( el);
                             	return true;
                         })
@@ -37,7 +37,7 @@ class ObjectiveList extends React.Component{
                     <ObjectiveInput/>
                     {
                         this.props.objectives.filter((el) => {
-                        	if( el.props.category == "Expertise")
+                        	if( el.props.category == "expertise")
                         		// console.log( el);
                             	return true;
                         })
