@@ -25,12 +25,11 @@ class Objectives extends Component {
 
 	render() {
 		const data = this.props.stateFromReducer.myObjectives
-		const { objectives, currentYear, currentTab } = data;
-		console.log('Reducer state');
-		console.log(this.props.stateFromReducer);
+		const { me, currentYear, currentTab } = data;
+		
 		var ObjectiveItems = [];
 
-		let quarter = objectives.quarters.find((quarter) => {
+		let quarter = me.quarters.find((quarter) => {
 			return (quarter.year === currentYear) && (quarter.index === currentTab)
 		});
 

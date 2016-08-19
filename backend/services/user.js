@@ -14,6 +14,12 @@ UserService.prototype.getById = function(id, callback) {
 					return callback(err, null);
 				};
 
+				if(!user) {
+					var err = new Error('User not found');
+					err.status = 400;
+					return callback(err);
+				}
+
 				return callback(err, user);
 			});
 		}, 
