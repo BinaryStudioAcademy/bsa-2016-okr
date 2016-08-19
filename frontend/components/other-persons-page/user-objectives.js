@@ -12,22 +12,32 @@ import './user-objectives.scss'
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state={
+			currentYear: 2016,
+			currentTab: 1
+		}
 		
 	}
 	
 	changeTab(num) {
-		this.props.changeTab(num);
+		this.setState({
+			currentTab: num
+		})
 	}
 	changeYear(year){
-		this.props.changeYear(year);
+		this.setState({
+			currentYear: year
+		})
 	}
 
 	render() {	
-      	const { user, currentYear, currentTab } = this.props.user;
+      	const { user } = this.props.user;
     	var ObjectiveItems = [];
-    	console.log(user, currentYear, currentTab)
+    	console.log(user.quarters)
+
 		let quarter = user.quarters.find((quarter) => {
-			return (quarter.year === currentYear) && (quarter.index === currentTab)
+			return (quarter.year == this.state.currentYear) && (quarter.index == this.state.currentTab)
 		});
 
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {
@@ -38,7 +48,8 @@ class Objectives extends Component {
 		
 		return (
 			<div>
-			 	<Quarter changeTab={this.changeTab.bind(this)} changeYear={this.changeYear.bind(this)} currentTab={currentTab}/>
+			 	<Quarter changeTab={this.changeTab.bind(this)} changeYear={this.changeYear.bind(this)} 
+			 				currentYear={this.state.currentYear} currentTab={this.state.currentTab}/>
 				<div id='objectives'>
      		    	<ObjectivesList objectives={ObjectiveItems} />
 				</div> 

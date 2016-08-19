@@ -5,8 +5,12 @@ class Quarter extends Component {
       super();
 
       this.handleTabClick = this.handleTabClick.bind(this);
+      this.hendleYearChange = this.hendleYearChange.bind(this);
    }
-
+   hendleYearChange(e){
+      let value = e.target.value;
+      this.props.changeYear(value)
+   }
    handleTabClick(e) {
       var li = document.getElementsByClassName('tab');
 
@@ -28,7 +32,7 @@ class Quarter extends Component {
              <div id="quarter-bar">
                  <ul id='quarter-list' >
                      <li>
-                         <select className='business-year'>
+                         <select onChange={this.hendleYearChange} className='business-year'>
                              <option>2016</option>
                              <option>2017</option>
                          </select>

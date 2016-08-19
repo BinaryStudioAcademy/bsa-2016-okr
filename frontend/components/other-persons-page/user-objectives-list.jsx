@@ -10,7 +10,8 @@ class ObjectiveList extends React.Component{
         return(
             <div>
                 <div id="project-category" className="other-user-category">
-                    <p><span>Knowledge</span></p>
+                    {this.props.objectives}
+                    {/*<p><span>Knowledge</span></p>
 
                     {   
                         this.props.objectives.filter((el) => {
@@ -39,7 +40,7 @@ class ObjectiveList extends React.Component{
                                 // console.log( el);
                                 return true;
                         })
-                    }
+                    }*/}
                 </div>
             </div>
         )

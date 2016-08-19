@@ -12,12 +12,15 @@ class Objectives extends Component {
 	constructor(props) {
 		super(props);
 		this.changeTab = this.changeTab.bind(this);
+		this.changeYear = this.changeYear.bind(this);
 	}
 
 	changeTab(num) {
 		this.props.setChangeTab(num);
 	}
-
+	changeYear(year){
+		this.props.changeYear(year);
+	}
 	componentWillMount() {
 		console.log(this.props);
 		this.props.getMe();
@@ -30,7 +33,8 @@ class Objectives extends Component {
 		var ObjectiveItems = [];
 
 		let quarter = me.quarters.find((quarter) => {
-			return (quarter.year === currentYear) && (quarter.index === currentTab)
+			console.log(quarter.year, quarter.index)
+			return (quarter.year == currentYear) && (quarter.index === currentTab)
 		});
 
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {
@@ -41,7 +45,7 @@ class Objectives extends Component {
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab.bind(this) } currentTab={ currentTab }/>
+				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear} currentTab={ currentTab }/>
 				<div id='objectives'>
 					<ObjectivesList objectives={ ObjectiveItems } />
 				</div>

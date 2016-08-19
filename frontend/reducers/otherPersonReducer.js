@@ -4,8 +4,8 @@ import {GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR} from '../actions/other
 const initialState = {
 	user: [],
     waiting: true,
-    currentTab : 1,
-    currentYear: 2016
+    /*currentTab: 1,
+    currentYear: 2016*/
 }
 
 export default function patentDetailsReducer(state = initialState, action) {
@@ -29,11 +29,11 @@ export default function patentDetailsReducer(state = initialState, action) {
             })               
         }
 
-        case CHANGE_TAB: {
+/*        case CHANGE_TAB: {
             const { currentTab } = action;
 
             return Object.assign({}, state, {
-                currentTab: currentTab
+                currentTab
             });
         }
 
@@ -43,7 +43,7 @@ export default function patentDetailsReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 currentYear
             });
-        }
+        }*/
 
         default: 
             return state;        

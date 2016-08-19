@@ -34,7 +34,7 @@ export function receivedUser(data) {
 	};
 }
 
-export function changeTab(num) {
+/*export function changeTab(num) {
 	 return {
 		  type: CHANGE_TAB,
 		  currentTab: num
@@ -45,4 +45,4 @@ export function changeYear(year) {
 		  type: CHANGE_YEAR,
 		  currentYear: year
 	 };
-}
+}*/
