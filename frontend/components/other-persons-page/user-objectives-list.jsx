@@ -11,9 +11,11 @@ class ObjectiveList extends React.Component{
             <div>
                 <div id="project-category" className="other-user-category">
                     <p><span>Knowledge</span></p>
+
                     {   
                         this.props.objectives.filter((el) => {
-                            if( el.props.category == "Projects")
+                            console.log(el._id)
+                            if( el.props.category == "57b6ce0bf11e89481ec119eb")
                                 // console.log( el);
                                 return true;
                         })
@@ -23,7 +25,7 @@ class ObjectiveList extends React.Component{
                     <p><span>Expertise</span></p>
                     {   
                         this.props.objectives.filter((el) => {
-                            if( el.props.category == "Knowledge" )
+                            if( el.props.category == "57b6ce0bf11e89481ec119eb" )
                                 // console.log( el);
                                 return true;
                         })
@@ -33,7 +35,7 @@ class ObjectiveList extends React.Component{
                     <p><span>Projects</span></p>
                     {   
                         this.props.objectives.filter((el) => {
-                            if( el.props.category == "Expertise")
+                            if( el.props.category == "57b6ce0bf11e89481ec119eb")
                                 // console.log( el);
                                 return true;
                         })

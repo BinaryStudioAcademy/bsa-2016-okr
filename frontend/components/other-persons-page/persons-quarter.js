@@ -5,6 +5,12 @@ class Quarter extends Component {
       super();
 
       this.hendleClick = this.hendleClick.bind(this);
+      this.hendleChange = this.hendleChange.bind(this);
+   }
+
+   hendleChange(e){
+      let value = e.target.value;
+      this.props.changeYear(value)
    }
 
    hendleClick(e) {
@@ -24,7 +30,7 @@ class Quarter extends Component {
       return (
          <div id='quaterPanel'>
             <ul id='quaterList'>
-            <select className='year'>
+            <select onChange={this.hendleChange} className='year'>
                <option>2016</option>
                <option>2017</option>
             </select> 
