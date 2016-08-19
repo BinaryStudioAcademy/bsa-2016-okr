@@ -7,6 +7,7 @@ var Objective = require('../schemas/objective');
 var KeyResult = require('../schemas/keyResult');
 var Category = require('../schemas/category');
 var UserObjective = require('../schemas/userObjective');
+var Quarter = require('../schemas/quarter');
 // var Comment = require('../schemas/comment');
 // var History = require('../schemas/history');
 // var Plan = require('../schemas/plan');
@@ -89,20 +90,20 @@ function randomUserObjective(objectives, users, keyResults, i) {
 	var userKeyCount = chance.integer({ min: 1, max: objectiveKeyResults.length });
 
 	userKeyResults = chance
-		.pickset(objectiveKeyResults, userKeyCount)
-		.map((userKeyResult) => {
-			var userKeyResultIndex = keyResults.findIndex((keyResult) => {
-				return userKeyResult._id === keyResult._id;
-			});
-
-			keyResults[userKeyResultIndex].used += 1;
-			
-			return {
-				templateId: userKeyResult._id,
-				score: chance.floating({ min: 0, max: 1, fixed: 1 }),
-				creator: user
-			};
+	.pickset(objectiveKeyResults, userKeyCount)
+	.map((userKeyResult) => {
+		var userKeyResultIndex = keyResults.findIndex((keyResult) => {
+			return userKeyResult._id === keyResult._id;
 		});
+
+		keyResults[userKeyResultIndex].used += 1;
+
+		return {
+			templateId: userKeyResult._id,
+			score: chance.floating({ min: 0, max: 1, fixed: 1 }),
+			creator: user
+		};
+	});
 
 	var userObjectiveIndex = objectives.findIndex((objective) => {
 		return objective._id === objectiveTemplate._id;
@@ -117,20 +118,6 @@ function randomUserObjective(objectives, users, keyResults, i) {
 		keyResults: userKeyResults
 	});
 };
-
-/*function randomComment(users, objectives, i) {
-	var createdAt = chance.date({ year: 2016 });
-	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-
-	return new Comment({
-		userId: getRandomId(users),
-		objectiveId: getRandomId(objectives),
-		text: chance.paragraph({ sentences: 3 }),
-		isDeleted: i % 10 === 0,
-		createdAt: createdAt,
-		updatedAt: updatedAt
-	});
-}*/
 
 function baseCategories() {
 	var res = [];
@@ -161,10 +148,10 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 		var keyResultsCount = chance.integer({ min: 1, max: objectiveKeyResults.length });
 
 		var defaultKeyResults = chance
-			.pickset(objectiveKeyResults, keyResultsCount)
-			.map((keyResult) => {
-				return ObjectId(keyResult._id);
-			});
+		.pickset(objectiveKeyResults, keyResultsCount)
+		.map((keyResult) => {
+			return ObjectId(keyResult._id);
+		});
 		
 		objective.keyResults = defaultKeyResults;
 	});
@@ -172,31 +159,53 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 	return objectives;
 }
 
-/*function randomPlan(users, objectives, i) {
-	var createdAt = chance.date({ year: 2016 });
-	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-	
-	return new Plan({
-		userId: getRandomId(users),
-		objectives: {
-			1: [getRandomId(objectives), getRandomId(objectives)],
-			2: [getRandomId(objectives), getRandomId(objectives)],
-			3: [getRandomId(objectives), getRandomId(objectives)],
-			4: [getRandomId(objectives), getRandomId(objectives)]
-		},
-		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
-		isDeleted: i % 10 === 0,
-		createdAt: createdAt,
-		updatedAt: updatedAt
-	});
-}*/
+function getQuarters(users, userObjectives) {
+	var currentYear = CONST.currentYear;
+	var quarters = [1, 2, 3, 4];
+	var years = [currentYear, currentYear + 1];
+	var res = [];
 
-/*function randomUserMentor(users, i) {
-	return new UserMentor({
-		userId: getRandomId(users),
-		mentorId: getRandomId(users)
+	users.forEach((user) => {
+		var objectives = userObjectives.filter((userObjective) => {
+			return userObjective.userId.equals(user._id);
+		});
+
+		objectiveIds = objectives.map((objective) => {
+			return objective._id
+		});
+
+		years.forEach((year) => {
+			quarters.forEach((index) => {
+				var quarterObjectives;
+				
+				if((index !== 4) && (year !== currentYear + 1)) {
+					quarterObjectives = chance.pickset(objectiveIds, chance.integer({ min: 0, max: objectiveIds.length }));
+				} else {
+					quarterObjectives = objectiveIds;
+				}
+				
+				objectiveIds = objectiveIds.filter((objectiveId) => {
+					return quarterObjectives.indexOf(objectiveId) === -1;
+				});
+
+				var createdAt = chance.date({ year: currentYear });
+				var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+				var quarter = new Quarter({
+					year: year,
+					index: index,
+					userId: user._id,
+					userObjectives: quarterObjectives,
+					createdAt: createdAt,
+					updatedAt: updatedAt
+				});
+				
+				res.push(quarter.toObject());
+			});
+		});
 	});
-}*/
+
+	return res;
+}
 
 /*function randomHistory(users, keys, i) {
 	var createdAt = chance.date({ year: 2016 });
@@ -220,6 +229,7 @@ module.exports = function () {
 		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
 		var keyresults = new Array(5000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
+		var quarters = getQuarters(users, userobjectives);
 		
 		objectives = setDefaultKeyResultsForObjectives(objectives, keyresults);
 
@@ -231,9 +241,6 @@ module.exports = function () {
 		roles.push({globalRole: "CEO", localRole: "Admin"});
 		roles.push({globalRole: "Tech Lead", localRole: "Admin"});
 
-		// var comments = new Array(10000).fill(0).map((_, i) => randomComment(users, objectives, i).toObject());
-		// var plans = new Array(100).fill(0).map((_, i) => randomPlan(users, objectives, i).toObject());
-		// var usersMentors = new Array(100).fill(0).map((_, i) => randomUserMentor(users, i).toObject());
 		// var histories = new Array(10000).fill(0).map((_, i) => randomHistory(users, keys, i).toObject());
 
 
@@ -244,10 +251,8 @@ module.exports = function () {
 			keyresults: keyresults,
 			categories: categories,
 			userobjectives: userobjectives,
+			quarters: quarters,
 			roles: roles
-			// comments: comments,
-			// plans: plans,
-			// usermentors: usersMentors,
 			// histories: histories
 		};
 	}

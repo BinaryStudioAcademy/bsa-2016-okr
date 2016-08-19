@@ -1,3 +1,6 @@
+var date = new Date();
+var currentYear = date.getFullYear();
+
 module.exports = {
 	keyResult: {
 		EASY: 'easy',
@@ -8,5 +11,6 @@ module.exports = {
 		KNOWLEDGE: 'knowledge',
 		EXPERTIZE: 'expertize',
 		PROJECTS: 'projects'
-	}
-}
+	},
+		currentYear: currentYear
+};

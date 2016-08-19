@@ -1,15 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var CONST = require('../config/constants');
 
 var date = new Date();
-var minYear = date.getFullYear();
 
 var quarterSchema = new Schema({
 	year: {
 		required: true,
 		type: Number,
-		min: minYear,
-		max: minYear + 1
+		min: CONST.currentYear,
+		max: CONST.currentYear + 1
 	},
 	index: {
 		required: true,
@@ -17,13 +17,13 @@ var quarterSchema = new Schema({
 		min: 1,
 		max: 4
 	},
-	user: {
+	userId: {
 		type: Schema.Types.ObjectId, 
 		ref: 'User'
 	}, 
 	userObjectives: [{
 		type: Schema.Types.ObjectId, 
-		ref: 'Objective'
+		ref: 'UserObjective'
 	}]
 }, {
 	timestamps: true

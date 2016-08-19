@@ -4,10 +4,31 @@ var Quarter = require('../schemas/quarter');
 
 var QuarterRepository = function(){
 	Repository.prototype.constructor.call(this);
-	this.model = Key;
+	this.model = Quarter;
 };
 
 QuarterRepository.prototype = new Repository();
 
+QuarterRepository.prototype.getByUserId = function(id, callback) {
+	var model = this.model;
 
-module.exports = new KeyRepository();
+	model
+		.find({ userId: id })
+		.exec(callback);
+};
+
+QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
+	var model = this.model;
+
+	model
+		.find({ userId: id })
+		.populate({
+			path: 'userObjectives',
+			populate: {
+				path: 'templateId keyResults.templateId'
+			}
+		})
+		.exec(callback);
+};
+
+module.exports = new QuarterRepository();
