@@ -25,7 +25,10 @@ QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
 		.populate({
 			path: 'userObjectives',
 			populate: {
-				path: 'templateId keyResults.templateId'
+				path: 'templateId keyResults.templateId',
+				populate: {
+						path:	'category'
+				}
 			}
 		})
 		.exec(callback);
