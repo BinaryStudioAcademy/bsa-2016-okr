@@ -24,9 +24,9 @@ class Objectives extends Component {
 	}
 
 	render() {
-		const data = this.props.stateFromReducer.myObjectives
+		const data = this.props.stateFromReducer.myState;
 		const { me, currentYear, currentTab } = data;
-		
+
 		var ObjectiveItems = [];
 
 		let quarter = me.quarters.find((quarter) => {
