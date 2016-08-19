@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './quarter-bar.scss';
 
 class Quarter extends Component {
    constructor() {
@@ -22,23 +23,17 @@ class Quarter extends Component {
 
    render() {
       return (
-         <div id='top-bar'>
-             <div id="manage-bar">
-             </div>
-             <div id="quarter-bar">
-                 <ul id='quarter-list' >
-                     <li>
-                         <select className='business-year'>
-                             <option>2016</option>
-                             <option>2017</option>
-                         </select>
-                     </li>
-                     <li className="tab active" onClick={this.handleTabClick}>1-st quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>2-nd quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>3-rd quarter</li>
-                     <li className="tab" onClick={this.handleTabClick}>4-th quarter</li>
-                 </ul>
-             </div>
+         <div id="quarter-bar">
+            <select name="" id="business-year">
+               <option value="">2016</option>
+               <option value="">2017</option>
+            </select>
+            <ul>
+               <li className="tab exist selected" onClick={this.handleTabClick}>1-st quarter</li>
+               <li className="tab" onClick={this.handleTabClick}><a href="">+ Q2</a></li>
+               <li className="tab" onClick={this.handleTabClick}><a href="">+ Q3</a></li>
+               <li className="tab" onClick={this.handleTabClick}><a href="">+ Q4</a></li>
+            </ul>
          </div>
       )
    }
