@@ -82,6 +82,7 @@ class RoleMapping extends React.Component {
    }
 
   componentWillMount() {
+     this.props.getUsers();
      this.props.getGlobalRoles();
   }
 
