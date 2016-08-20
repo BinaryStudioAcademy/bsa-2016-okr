@@ -6,7 +6,12 @@ import Searchbar from './components/SearchBar';
 import Toolbar from './components/Toolbar';
 import './OKRmanaging.scss';
 
-var objectives = [{
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../../actions/okrManagingActions.js";
+
+/*var objectives = [{
 	"title": "Improve technology infrastructure efficiency",
 	"description": "Operation Efficiency Improvements for IT Infrastructure through Runbook Automation Technology",
 	"category": "Projects",
@@ -183,14 +188,14 @@ var objectives = [{
 	"category": "Projects",
 	"creator": "Son Gossage"
 
-}];
+}];*/
 
-export default class App extends Component {
+class ObjectivesList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: objectives,
+ //     data: this.props.objectivesList,
       active: 0,
       term: '',
       editing: false
@@ -202,7 +207,9 @@ export default class App extends Component {
     this.editingDone= this.editingDone.bind(this);
     this.editingChange= this.editingChange.bind(this);
   }
-
+	componentWillMount(){
+  	this.props.getObjectivesList();
+  }
 	updateData(config) {
 		this.setState(config);
 	}
@@ -237,6 +244,8 @@ export default class App extends Component {
 	}
 
 render() {
+	const { objectives } = this.props.objectivesList;
+	console.log(objectives)
     return (
 
     	<CentralWindow>
@@ -247,14 +256,14 @@ render() {
 					<div className="OKR-managing search">
 							<Searchbar
 							term={this.state.term}
-							data={this.state.data}
+							data={objectives}
 							update={this.updateData}
 							/>
 						</div>
 
 						<div className="OKR-managing toolbar">
 							<Toolbar 
-								data={this.state.data} 
+								data={objectives} 
 								objectives={objectives} 
 								update={this.updateData} />
 						</div>
@@ -262,7 +271,7 @@ render() {
 
 				<div className="OKR-mnaging active objective">
 					<ActiveObjective 
-						data={this.state.data} 
+						data={objectives} 
 						active={this.state.active}
 						edit={this.editData}
 						editing={this.state.editing}
@@ -272,7 +281,7 @@ render() {
 
 				<div className="OKR-managing objective-list">
 					<ObjectiveList 
-						data={this.state.data} 
+						data={objectives} 
 						update={this.updateData}
 						edit={this.editData}
 						editingDone={this.editingDone}
@@ -288,3 +297,15 @@ render() {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+        objectivesList: state.okrManaging
+    };
+}
+const ObjectivesListConnect = connect(mapStateToProps, mapDispatchToProps)(ObjectivesList);
+export default ObjectivesListConnect

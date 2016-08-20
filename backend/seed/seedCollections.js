@@ -33,7 +33,7 @@ function randomUser(i) {
 	return new User({
 		localRole: i % 10 === 0 ? 'admin' : '',
 		createdAt: createdAt,
-		updatedAt: updatedAt
+		updatedAt: updatedAt,
 	});
 }
 

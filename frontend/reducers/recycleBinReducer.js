@@ -247,41 +247,24 @@ function filterDate(items, dateFrom, dateTo) {
 
     }
     else if(dateFrom == '' && dateTo != '') {
-<<<<<<< HEAD
-    	items = data_for_recycle;
-        for (let i = 0; i < data_for_recycle.length; i++) {
-=======
-
     	items = JSON.parse(JSON.stringify(data_for_recycle));
-
         for (let i = 0; i < items.length; i++) {
->>>>>>> develop
 	       	if (dateTo >= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);
 	       	}
 	    }
 	}
     else if(dateFrom != '' && dateTo == ''){
-<<<<<<< HEAD
-    	items = data_for_recycle;
-    	 for (let i = 0; i < data_for_recycle.length; i++) {
-=======
     	items = JSON.parse(JSON.stringify(data_for_recycle));
     	 for (let i = 0; i < items.length; i++) {
->>>>>>> develop
 	       	if (dateFrom <= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);
 	       	}
 	    }
 	}
 	else {
-<<<<<<< HEAD
-		items = data_for_recycle;
-	   for (let i = 0; i < data_for_recycle.length; i++) {
-=======
 		items = JSON.parse(JSON.stringify(data_for_recycle));
 	   for (let i = 0; i < items.length; i++) {
->>>>>>> develop
 	       	if (dateFrom <= data_for_recycle[i].deletedDate && dateTo >= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);
 	       	}

@@ -9,7 +9,7 @@ export default ({ objective, update, index, remove, editing, edit, editingDone, 
 
 		<td>
 			<select>
-				<option selected value={objective.category}>{objective.category}</option>
+				<option selected value={objective.category.title}>{objective.category.title}</option>
 				<option>Knowledge</option>
 				<option>Expertise</option>
 				<option>Projects</option>
@@ -31,7 +31,7 @@ export default ({ objective, update, index, remove, editing, edit, editingDone, 
 		
 		<td>{index+1}</td>
 
-		<td>{objective.category}</td>
+		<td>{objective.category.title}</td>
 
 		<td className="OKR-managing objective-title">{objective.title}</td>
 
