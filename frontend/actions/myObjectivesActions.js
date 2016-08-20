@@ -14,6 +14,7 @@ export function getMe() {
 }
 
 export function receivedError(data) {
+  console.log(data);
 	 return {
 	  type: "RECEIVED_ERROR",
 	  data: data

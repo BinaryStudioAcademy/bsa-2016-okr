@@ -30,14 +30,15 @@ class Objectives extends Component {
 	render() {
 		const data = this.props.stateFromReducer.myState;
 		const { me, currentYear, currentTab } = data;
+		console.log("ME +++", me);
 
 		var ObjectiveItems = [];
 
 		let quarter = me.quarters.find((quarter) => {
-			
+
 			return (quarter.year == currentYear) && (quarter.index == currentTab)
 		});
-
+		console.log("quarter +++", quarter);
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {
 				console.log('item -> ' + item.templateId.category.title);
 
@@ -46,7 +47,7 @@ class Objectives extends Component {
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear} 
+				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear}
 						currentTab={ currentTab } />
 				<div id='objectives'>
 					<ObjectivesList objectives={ ObjectiveItems } />
