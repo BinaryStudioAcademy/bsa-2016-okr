@@ -6,7 +6,7 @@ import './objective.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-//import * as actions from "../../../actions/myObjectivesActions.js";
+import * as actions from "../../actions/myObjectivesActions.js";
 
 class ObjectiveItem extends Component {
    constructor(props) {
@@ -24,16 +24,18 @@ changeScore(){
   })
 }
 
-handleDelObj(){
-  console.log("TODO add real soft deletion");
+handleDelObj(e){
+  //this.props.softDeleteMyObjectiveByIdApi(this.state.item._id);
+  this.props.softDeleteMyObjectiveById(this.state.item._id);
 }
 
    render() {
+     console.log("hey ", this.state.item.keyResults);
       return (
          <div className='home-objective'>
             <Progress data={this.state.item.keyResults} />
-               <div className='name'>{this.state.item.objTitle}</div>
-               <div className='description'>{this.state.item.objDescription}</div>
+               <div className='name'>{this.state.item.templateId.title}</div>
+               <div className='description'>{this.state.item.templateId.description}</div>
                <div>
                  <button type="button" className="btn btn-red-hover delete-button-objective"
                          onClick={this.handleDelObj}>
@@ -58,4 +60,4 @@ function mapStateToProps(state) {
 
 const ObjectiveItemConnected = connect(mapStateToProps, mapDispatchToProps)(ObjectiveItem);
 
-export default ObjectiveItem
+export default ObjectiveItemConnected

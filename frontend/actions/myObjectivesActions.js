@@ -3,7 +3,6 @@ var axios = require('axios')
 export function getMe() {
 
      return (dispatch, getStore) => {
-			console.log("getMyObjectives hit");
 		  dispatch({
 		   type: "GET_MY_OBJECTIVES"
 		  });
@@ -15,6 +14,7 @@ export function getMe() {
 }
 
 export function receivedError(data) {
+  console.log(data);
 	 return {
 	  type: "RECEIVED_ERROR",
 	  data: data
@@ -40,4 +40,27 @@ export function changeYear(year) {
 		  type: "CHANGE_YEAR",
 		  currentYear: year
 	 };
+}
+
+export function softDeleteMyObjectiveById(id) {
+  return {
+     type: "SOFT_DELETE_MY_OBJECTIVE_BY_ID",
+     id: id
+  };
+}
+
+export function softDeleteMyObjectiveByIdApi(id) {
+  return (dispatch, getStore) => {
+   dispatch({
+    type: "SOFT_DELETE_MY_OBJECTIVE_BY_ID_API"
+   });
+   /*TODO Add body for put
+   body = {
+     "isDeleted" : "true"
+   }
+   */
+ return axios.put('api/userObjective/' + id)
+  .then(response => dispatch(softDeleteMyObjectiveById(id)))
+  .catch(response => dispatch(receivedError(response.data)));
+  };
 }

@@ -11,6 +11,7 @@ import * as actions from "../../actions/myObjectivesActions";
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
+
 		this.changeTab = this.changeTab.bind(this);
 		this.changeYear = this.changeYear.bind(this);
 	}
@@ -19,7 +20,7 @@ class Objectives extends Component {
 		this.props.setChangeTab(num);
 	}
 	changeYear(year){
-		this.props.changeYear(year);
+		this.props.setChangeYear(year)
 	}
 	componentWillMount() {
 		console.log(this.props);
@@ -29,23 +30,25 @@ class Objectives extends Component {
 	render() {
 		const data = this.props.stateFromReducer.myState;
 		const { me, currentYear, currentTab } = data;
+		console.log("ME +++", me);
 
 		var ObjectiveItems = [];
 
 		let quarter = me.quarters.find((quarter) => {
-			console.log(quarter.year, quarter.index)
-			return (quarter.year == currentYear) && (quarter.index === currentTab)
+
+			return (quarter.year == currentYear) && (quarter.index == currentTab)
 		});
-
+		console.log("quarter +++", quarter);
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {
-				console.log('item' + item);
+				console.log('item -> ' + item.templateId.category.title);
 
-				return <ObjectiveItem index={ index } key={ item.id } category={ item.category } item={ item } />
+				return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
 			});
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear} currentTab={ currentTab }/>
+				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear}
+						currentTab={ currentTab } />
 				<div id='objectives'>
 					<ObjectivesList objectives={ ObjectiveItems } />
 				</div>
@@ -53,6 +56,7 @@ class Objectives extends Component {
 		)
 	}
 }
+Objectives.defaultProps = { today: new Date() };
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(actions, dispatch);
