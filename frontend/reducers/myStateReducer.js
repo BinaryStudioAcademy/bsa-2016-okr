@@ -68,9 +68,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 		case "RECEIVED_MY_OBJECTIVES": {
 			const { data } = action;
-			console.log("RECEIVED_MY_OBJECTIVES hit", data);
 
-			
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
 				currentTab: getQuarter(),
@@ -94,14 +92,24 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
+    case "SOFT_DELETE_MY_OBJECTIVE_BY_ID": {
+			const { id } = action;
+			console.log(state);
+			return Object.assign({}, state, {
+				me: deleteObjectiveFromMe(state.me, id)
+			})
+
+		}
+
 		default: {
 			return state;
 		}
 	}
 }
+
 function getYear(){
-    let today = new Date();   
-    return today.getFullYear() 
+    let today = new Date();
+    return today.getFullYear()
 }
 
 function getQuarter(){
@@ -117,4 +125,16 @@ function getQuarter(){
         return 3;
     else if(today > third)
         return 4;
+}
+
+function deleteObjectiveFromMe(me, id) {
+	var meCopy = Object.assign({}, me);
+	meCopy.quarters.forEach((quarter) => {
+		for(var i=0 ; i<quarter.userObjectives.length; i++) {
+    	if(quarter.userObjectives[i]._id == id) {
+        quarter.userObjectives.splice(i, 1);
+			}
+		}
+	});
+	return meCopy
 }
