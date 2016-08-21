@@ -2,8 +2,11 @@ import users from '../components/mockData/users.js'
 import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST} from '../actions/okrManagingActions.js'
 
 const initialState = {
-	objectives: [],
-    waiting: true
+    objectives: [],
+    waiting: true,
+    active: 0,
+    term: '',
+    editing: false
 }
 
 export default function patentDetailsReducer(state = initialState, action) {
@@ -26,19 +29,19 @@ export default function patentDetailsReducer(state = initialState, action) {
             console.log(data);
 
             return Object.assign({}, state, {
-                objectives
+                data
             })
         }
 
       case RECEIVED_OBJECTIVES_LIST: {
 
-            const {data} = action;
+            const {objectives} = action;
 
             console.log("RECEIVED_OBJECTIVES_LIST");
-            console.log(data);
+            console.log(objectives);
 
             return Object.assign({}, state, {
-                objectives: data,
+                objectives,
                 waiting: true   
             })
         }

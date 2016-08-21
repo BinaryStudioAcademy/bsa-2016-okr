@@ -226,7 +226,7 @@ module.exports = function () {
 
 		var users = new Array(100).fill(0).map((_, i) => randomUser(i).toObject());
 		var categories = baseCategories();
-		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
+		var objectives = new Array(100).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
 		var keyresults = new Array(5000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);

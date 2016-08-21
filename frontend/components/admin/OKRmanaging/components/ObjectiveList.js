@@ -1,7 +1,12 @@
 import React from 'react';
 import ObjectiveData from './ObjectiveData';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export default ({ data, update, remove, editing, edit, editingDone, editingChange }) => {
+import * as actions from "../../../../actions/okrManagingActions.js";
+
+
+/*export default ({ data, update, remove, editing, edit, editingDone, editingChange }) => {
   if (!data) { return (<p>Loading...</p>); }
 
   const objectives = data.map((objective, index) => {
@@ -15,4 +20,40 @@ export default ({ data, update, remove, editing, edit, editingDone, editingChang
       </tbody>
     </table>
   );
-};
+};*/
+
+class ObjectiveList extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  componentWillMount(){
+    this.props.getObjectivesList()
+  }
+  render(){
+    var objectives = [];
+    objectives = this.props.objectivesList.map((objective) => {
+      return <ObjectiveData objective={objective} key={objective._id}/>
+  })
+    console.log(objectives)
+    return (
+    <table className="OKR-managing objective-list-table">
+      <tbody>
+        {objectives}
+      </tbody>
+    </table>
+  )
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    objectivesList: state.okrManaging.objectives
+  };
+}
+
+const ObjectiveListConnected = connect(mapStateToProps, mapDispatchToProps)(ObjectiveList);
+export default ObjectiveListConnected

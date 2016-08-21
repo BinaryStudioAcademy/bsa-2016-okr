@@ -1,45 +1,24 @@
 import React from 'react';
 
-export default ({ objective, update, index, remove, editing, edit, editingDone, editingChange}) => {
+class ObjectiveData extends React.Component{
+  constructor(props){
+    super(props);
+  }
 
-	if(editing) {
+  render(){
+  	console.log(this.props.objective.category.title)
+  	console.log(this.props.objective.title)
 
-		return <tr onClick={() => update({ active: index})}>
-		<td>{index+1}</td>
+		return 
+			<tr>
+				<td></td>
+				<td>{this.props.objective.category.title}</td>
+				<td className="OKR-managing objective-title">{this.props.objective.title}</td>
+				<td>{this.props.objective.description}</td>
+				<td><i className="fi flaticon-edit" aria-hidden="true" ></i></td>
+				<td><i className="fi flaticon-garbage-2" aria-hidden="true" ></i></td>
+    		</tr> 
+  }
+}
 
-		<td>
-			<select>
-				<option selected value={objective.category.title}>{objective.category.title}</option>
-				<option>Knowledge</option>
-				<option>Expertise</option>
-				<option>Projects</option>
-			</select>
-		</td>
-
-		<td>
-		<input type="text" value={objective.title}/>
-		</td>
-
-		<td><input type = "text" value={objective.description} /></td>
-		<td><i className="fi flaticon-edit" aria-hidden="true" onClick={edit}></i></td>
-
-		<td><i className="fi flaticon-garbage-2" aria-hidden="true" onClick={remove}></i></td>
-    </tr>
-		
-	} else {
-		return <tr onClick={() => update({ active: index })}>
-		
-		<td>{index+1}</td>
-
-		<td>{objective.category.title}</td>
-
-		<td className="OKR-managing objective-title">{objective.title}</td>
-
-		<td>{objective.description}</td>
-
-		<td><i className="fi flaticon-edit" aria-hidden="true" onClick={edit}></i></td>
-
-		<td><i className="fi flaticon-garbage-2" aria-hidden="true" onClick={remove}></i></td>
-    </tr>
-	}  
-};
+export default ObjectiveData
