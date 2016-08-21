@@ -96,7 +96,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		historyItems: state.history.historyItems
+		keyResultItems: state.keyResults.keyResultItems
 	};
 }
 
