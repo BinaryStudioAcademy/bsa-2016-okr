@@ -55,6 +55,7 @@ export default class Toolbar extends Component {
 					<th onClick={() => this.sort('description')}>
 					<i className="fa fa-sort"></i>  Description
 					</th>
+          <th>Edit</th>
 					<th>Delete</th>
 				</tr>
 			</table>

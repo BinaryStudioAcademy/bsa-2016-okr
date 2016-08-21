@@ -3,7 +3,17 @@ const repository = require('../../repositories/keyResult');
 const service = require('../../services/keyResult');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
-const session = require('../../config/session');
+
+router.get('/objective/:objectiveId/:title*?', (req, res, next) => {
+    var title = req.params.title;
+    var objectiveId = req.params.objectiveId;
+
+    if(!ValidateService.isCorrectId(objectiveId)) {
+        return res.badRequest();
+    }
+
+    return repository.autocomplete(title, objectiveId, res.callback);
+});
 
 router.post('/', (req, res, next) => {
 	return service.add(session._id, key, res.callback);
@@ -40,14 +50,14 @@ router.post('/', (req, res, next) => {
 // });
 
 
-// router.get('/title/:title', (req, res, next) => {
-// 	var title = req.params.title.trim();
-// 	if(ValidateService.isEmpty(title)){
-// 		return res.badRequest();
-// 	};
-
-// 	return service.autocomplete(title, res.callback);
-// });
+ //router.get('/title/:title', (req, res, next) => {
+ //	var title = req.params.title.trim();
+ //	if(ValidateService.isEmpty(title)){
+ //		return res.badRequest();
+ //	};
+ //
+ //	return service.autocomplete(title, res.callback);
+ //});
 
 // router.put('/:id/approve', adminOnly, (req, res, next) => {
 // 	var id = req.params.id;

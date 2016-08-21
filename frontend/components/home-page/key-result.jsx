@@ -22,14 +22,15 @@ class KeyResult extends Component {
         else
             e.target.previousElementSibling.classList.remove('completed')
         this.props.changeScore(this.state.keyResult);
-
+        console.log('E > ', e);
+        console.log('e.target.value ', e.target.value);
     }
 
     render() {
         if (this.state.keyResult.score == 1)
             return (
                 <li className="key-result">
-                    <div><span className='completed'>{this.props.item.title}</span></div>
+                    <div><span className='completed'>{this.props.item.templateId.title}</span></div>
 
                     <input type="range" min="0" max="1" step="0.1" className="keyScore"
                            value={this.state.keyResult.score} onChange={this.changeScore}/>
@@ -39,7 +40,7 @@ class KeyResult extends Component {
         else
             return (
                 <li className="key-result">
-                    <div><span>{this.props.item.title}</span></div>
+                    <div><span>{this.props.item.templateId.title}</span></div>
 
                     <input type="range" min="0" max="1" step="0.1" className="keyScore"
                            value={this.state.keyResult.score} onChange={this.changeScore}/>

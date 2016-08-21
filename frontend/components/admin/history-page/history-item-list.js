@@ -104,7 +104,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 	return {
 		historyItems: state.history.historyItems,
-        sortBy: state.history.sortBy
+        sortBy: state.history.sortBy,
+		keyResultItems: state.keyResults.keyResultItems
 	};
 }
 

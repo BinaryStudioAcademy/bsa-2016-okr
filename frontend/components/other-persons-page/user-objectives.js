@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../actions/otherPersonActions.js";
+
 import ObjectiveItem from './user-objective-item.js';
 import Quarter from './persons-quarter.js';
 import ObjectivesList from './user-objectives-list.jsx';
@@ -7,73 +12,50 @@ import './user-objectives.scss'
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			currentTab : 1,
+	}
+	
+	changeTab(num) {
+		this.props.changeTab(num)
+	}
+	changeYear(year){
+		this.props.changeYear(year)
+	}
 
-		}
-	}
-	changeTab(tab) {
-		this.setState({
-			currentTab: tab
-		})
-	}
 	render() {	
-		var ObjectiveItems = [];
-	if (this.state.currentTab == 1) {
-            let array =  this.props.data.objectives.filter((item) => {
-               if(item.startDate <= this.props.first)
-                  return true;
-            })
-            ObjectiveItems = array.map((item, index) => {               
-               return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
-         }) 
-      }
-      else if (this.state.currentTab == 2) {
-            let array =  this.props.data.objectives.filter((item) => {
-               if (item.startDate <= this.props.second && item.startDate > this.props.first)
-                  return true;
-            })
-            ObjectiveItems = array.map((item, index) => {
-               console.log('item' + item);
-               
-                  return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
-         }) 
-      }
-      else if (this.state.currentTab == 3) {
-            let array =  this.props.data.objectives.filter((item) => {
-               if (item.startDate <= this.props.third && item.startDate > this.props.second)
-                  return true;
-            })
-            ObjectiveItems = array.map((item, index) => {
-               console.log('item' + item);
-               
-                  return <ObjectiveItem index={index} key={item.id} category= {item.category}item={item} />
-         }) 
-      }
-      else if (this.state.currentTab == 4) {
-            let array =  this.props.data.objectives.filter((item) => {
-                  if (item.startDate > this.props.third)
-                     return true;
-            })
-            ObjectiveItems = array.map((item, index) => {             
-               console.log('item' + item);
-               
-                  return <ObjectiveItem index={index} key={item.id} item={item} />
-         }) 
-      }
+      	const { user, currentYear, currentTab} = this.props.user;
+    	var ObjectiveItems = [];
+
+		let quarter = user.quarters.find((quarter) => {
+			return (quarter.year == currentYear) && (quarter.index == currentTab)
+		});
+
+		ObjectiveItems = quarter.userObjectives.map((item, index) => {
+				console.log('item' + item);
+
+				return <ObjectiveItem key={item._id} item={item} />
+			});
+		
 		return (
 			<div>
-			 	<Quarter changeTab={this.changeTab.bind(this)} currentTab={this.state.currentTab}/>
+			 	<Quarter changeTab={this.changeTab.bind(this)} changeYear={this.changeYear.bind(this)} 
+			 				currentYear={currentYear} currentTab={currentTab}/>
 				<div id='objectives'>
-     		     <ObjectivesList objectives={ObjectiveItems} />
-			   </div> 
+     		    	<ObjectivesList objectives={ObjectiveItems} />
+				</div> 
 		    </div>       
 		)
+		
 	}
 }
-Objectives.defaultProps = {
-	first: '2016-03-31T10:42:12.643Z',
-	second: '2016-06-30T10:42:12.643Z',
-	third: '2016-09-30T10:42:12.643Z'
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
 }
-export default Objectives
+
+function mapStateToProps(state, ownProps) {
+	return {
+		user: state.userPage
+	};
+}
+
+const ObjectivesConnected = connect(mapStateToProps, mapDispatchToProps)(Objectives);
+export default ObjectivesConnected

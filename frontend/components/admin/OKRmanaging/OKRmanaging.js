@@ -4,6 +4,10 @@ import ObjectiveList from './components/ObjectiveList';
 import ActiveObjective from './components/ActiveObjective';
 import Searchbar from './components/SearchBar';
 import Toolbar from './components/Toolbar';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../../actions/okrManagingActions.js";
 import './OKRmanaging.scss';
 
 var objectives = [{
@@ -185,7 +189,7 @@ var objectives = [{
 
 }];
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -211,6 +215,8 @@ export default class App extends Component {
 
 		if(confirm('Are you sure you want to delete this item?')) {
 
+			console.log(item)
+
             let index = this.state.data.indexOf(item);
             let objectiveList = this.state.data.slice();
             objectiveList.splice(index, 1);
@@ -233,8 +239,12 @@ export default class App extends Component {
 		let _changedText = event.target.value;
 		this.setState({changedText:_changedText})
 	}
+	componentWillMount(){
+		this.props.getObjectivesList();
+	}
 
 render() {
+	console.log(this.props.objectivesList.objectives)
     return (
 
     	<CentralWindow>
@@ -259,7 +269,13 @@ render() {
 				</div>			
 
 				<div className="OKR-mnaging active objective">
-					<ActiveObjective data={this.state.data} active={this.state.active} />
+					<ActiveObjective 
+						data={this.state.data} 
+						active={this.state.active}
+						edit={this.editData}
+						editing={this.state.editing}
+						remove={this.removeData} 
+					/>
 				</div>
 
 				<div className="OKR-managing objective-list">
@@ -269,8 +285,9 @@ render() {
 						edit={this.editData}
 						editingDone={this.editingDone}
 						editingChange ={this.editingChange} 
-						remove={this.removeData.bind(null)} 
-						editing={this.state.editing} />
+						remove={this.removeData} 
+						editing={this.state.editing} 
+					/>
 				</div>
 
 			</div>
@@ -279,3 +296,16 @@ render() {
     );
   }
 }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state, ownProps) {
+	return {
+		objectivesList: state.okrManaging,
+		routing: state.routing.locationBeforeTransitions
+	};
+}
+
+const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);
+export default AppConnected

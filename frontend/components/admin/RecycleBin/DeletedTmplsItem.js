@@ -25,10 +25,12 @@ class DeletedTmplsItem extends Component {
 				<td>{ dateStr }</td>
 				<td>
 					<table className="controls">
-						<tr>
-							<td><button className="btn btn-blue-hover" title="Restore"><i className="fi flaticon-repeat-1"></i></button></td>
-							<td><button className="btn btn-red-hover" title="Hard delete"><i className="fi flaticon-garbage-2"></i></button></td>
-						</tr>
+					    <tbody>
+							<tr>
+								<td><button className="btn btn-blue-hover" title="Restore"><i className="fi flaticon-repeat-1"></i></button></td>
+								<td><button className="btn btn-red-hover" title="Hard delete"><i className="fi flaticon-garbage-2"></i></button></td>
+							</tr>
+						</tbody>
 					</table>
 				</td>
 			</tr>

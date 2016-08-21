@@ -1,6 +1,28 @@
-.thumbnail {
+.OKR-managing.thumbnail {
   text-align: center;
   padding: 2rem 1rem;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    height: 0;
+    width: 40%;
+    border-top: 1px solid #aaaaaa;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    height: 0;
+    width: 40%;
+    border-top: 1px solid #aaaaaa;
+  }
 }
 
 .toolbar {
@@ -144,6 +166,14 @@ table.OKR-managing.toolbar-table {
     background-color: #F3F6F7;
     margin-top: -38px;
 }
+.OKR-managing.thumbnail i{
+  cursor: pointer;
+}
+
+.OKR-managing.thumbnail i:first-child {
+  margin-right: 10px;
+}
+
 
 .OKR-managing input.searchbar-input {
     padding: 10px;

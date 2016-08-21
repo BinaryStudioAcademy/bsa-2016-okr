@@ -12,11 +12,12 @@ class ObjectiveItem extends Component {
 		return (
 			<div className='objective'>
 				<Progress data={this.props.item.keyResults}/>
-         		<div className='name'>{this.props.item.objTitle}</div>
+         		<div className='name'>{this.props.item.templateId.title}</div>
          		<button className="btn btn-blue-hover clone" title="Clone">Add to my objectives</button>
-         		<div className='description'>{this.props.item.objDescription}</div>
+         		<div className='description'>{this.props.item.templateId.description}</div>
 		        <div className="objective-info">
-		            <span className='fi flaticon-users co-workers'></span>4
+		            <span className='fi flaticon-users co-workers'></span>
+		            {this.props.item.templateId.used}
 		        </div>
 		        <KeyResults data={this.props.item.keyResults} />
 		    </div>
