@@ -10,7 +10,6 @@ export default class Dashboard extends React.Component {
     constructor() {
         super();
     }
-
     render() {
         return (
             <div className="dashboard">
@@ -18,7 +17,7 @@ export default class Dashboard extends React.Component {
                     <Tab label="Users">
                         <DashboardStats count="64% " counterName="Medium progress by all users"
                             caption="Top 5 Users by performance" columns={["Name", "Completed"]}
-                            rows={[["Peter", "78%"], ["Elma", "50%"], ["Ronaldo", "45%"], ["Grigory", "39%"], ["Ricardo", "28%"]]}/>
+                            url="api/stats/users"/>
                     </Tab>
                     <Tab label="Categories">
                         <ChartStats data = {[['Category', 'Count'], ['Knowledge', 145], ['Expertise', 87], ["Projects", 123]]} title = "Chart by categories"/>

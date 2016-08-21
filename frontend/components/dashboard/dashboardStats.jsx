@@ -1,8 +1,10 @@
 import React from 'react';
+import axios from 'axios';
 
 export default class DashboardStats extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { rows: [] };
     }
 
     renderHeader(column) {
@@ -11,14 +13,14 @@ export default class DashboardStats extends React.Component {
         )
     }
     renderRow(row) {
-        var renderCell = (cell) => {
-            return (
-                <td>{cell}</td>
-            )
-        }
         return (
-            <tr>{row.map(renderCell) }</tr>
+            <tr><td>{row.user}</td><td>{row.totalScore * 100 + '%'}</td></tr>
         )
+    }
+
+    componentDidMount() {
+        axios.get(this.props.url)
+            .then(response => { this.setState({ rows: response.data }); });
     }
 
     render() {
@@ -32,7 +34,7 @@ export default class DashboardStats extends React.Component {
                     <table>
                         <caption>{this.props.caption}</caption>
                         {this.props.columns.map(this.renderHeader) }
-                        {this.props.rows.map(this.renderRow) }
+                        {this.state.rows.map(this.renderRow) }
                     </table>
                 </div>
             </div>
