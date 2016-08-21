@@ -12,13 +12,13 @@ class KeyResult extends React.Component {
         super(props);
 
         this.state={
-            data: [
-            ],
-            selected: null
+            data: [],
+            selectedItem: {}
         }
 
         this.handleDelKeyRes = this.handleDelKeyRes.bind(this);
         this.getAutocompleteData = this.getAutocompleteData.bind(this);
+        this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
     }
 
     handleDelKeyRes() {
@@ -26,8 +26,15 @@ class KeyResult extends React.Component {
     }
 
     getAutocompleteData(title){
-        let objectId='57b75e5a9b3eae4c20ade2f8';
+        let objectId='57b9fab54bcc42841b7d0d72';
+        console.log('-----Debounce-----');
         this.props.getAutocompleteKeyResults(objectId, title);
+    }
+
+    setAutocompleteSelectedItem(item){
+        this.setState({
+            selectedItem: item
+        });
     }
 
     render() {
@@ -37,6 +44,7 @@ class KeyResult extends React.Component {
 
                     <AutocompleteInput
                         getAutocompleteData={this.getAutocompleteData}
+                        setAutocompleteSelectedItem={this.setAutocompleteSelectedItem}
                         autocompleteData = {this.props.stateFromReducer.keyResults.data}
                         autocompleteType = 'key result'
                     />
@@ -73,4 +81,3 @@ function mapStateToProps(state) {
 const KeyResultConnected = connect(mapStateToProps, mapDispatchToProps)(KeyResult);
 
 export default KeyResultConnected;
-

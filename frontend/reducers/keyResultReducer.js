@@ -22,7 +22,6 @@ export default function keyResultReducer(state = initialState, action = {}) {
         case "RECEIVED_KEY_RESULTS": {
 
             const {data} = action;
-            console.log('-----3-----',data);
             return Object.assign({}, state, {
                 data
             })
