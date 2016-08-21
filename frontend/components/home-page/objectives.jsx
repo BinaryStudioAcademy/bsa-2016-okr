@@ -30,20 +30,19 @@ class Objectives extends Component {
 	render() {
 		const data = this.props.stateFromReducer.myState;
 		const { me, currentYear, currentTab } = data;
-		console.log("ME +++", me);
-
 		var ObjectiveItems = [];
 
-		let quarter = me.quarters.find((quarter) => {
-
-			return (quarter.year == currentYear) && (quarter.index == currentTab)
-		});
-		console.log("quarter +++", quarter);
-		ObjectiveItems = quarter.userObjectives.map((item, index) => {
-				console.log('item -> ' + item.templateId.category.title);
-
-				return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
+		if (me.quarters != undefined) {
+			let quarter = me.quarters.find((quarter) => {
+				return (quarter.year == currentYear) && (quarter.index == currentTab)
 			});
+
+			ObjectiveItems = quarter.userObjectives.map((item, index) => {
+					console.log('item -> ' + item.templateId.category.title);
+
+					return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
+			});
+		}
 
 		return (
 			<div id="home-page-wrapper">

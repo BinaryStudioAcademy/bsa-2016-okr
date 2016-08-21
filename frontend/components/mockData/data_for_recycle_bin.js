@@ -19,10 +19,19 @@ let data_for_recycle = [
 		]
 	},
 	{
+		"type": "category",
+		"id": "5710f8847ed517bc028e739a",
+		"title": "Test category1",
+		"description": "category",
+		"category": "categories",
+		"deletedBy": {"fullName": "Fname Lname", "id": "5791f8555ed517bc028e739a"},
+		"deletedDate": "2016-04-22T10:51:12.643Z"
+	},
+	{
 		"type": "objective",
 		"id": "0000f8847ed517bc028e739a",
 		"title": "Socket io chat",
-		"description": "Get familiar with sorting algorithm",
+		"description": "Get familiar with socket.io library",
 		"category": "Projects",
 		"deletedBy": {"fullName": "Ivan Susanin", "id": "5791f8666ed517bc028e739a"},
 		"deletedDate": "2016-06-22T10:51:12.643Z", 
@@ -54,7 +63,7 @@ let data_for_recycle = [
 		"type": "objective",
 		"id": "1191f8847ed517bc028e739a",
 		"title": "Learn PHP",
-		"description": "Learn Ruby for fun",
+		"description": "Learn PHP for fun",
 		"category": "Knowledge",
 		"deletedBy": {"fullName": "Kakoyto Mujik", "id": "5791f8555ed517bc028e739a"},
 		"deletedDate": "2016-08-01T13:05:12.643Z", 
@@ -63,7 +72,7 @@ let data_for_recycle = [
 		"type": "objective",
 		"id": "1991f8847ed517bc028e739a",
 		"title": "Create sorting filter",
-		"description": "Learn Ruby for fun",
+		"description": "Get familiar with sorting algorithm",
 		"category": "Projects",
 		"deletedBy": {"fullName": "Owen Astrachan", "id": "5791f8555ed517bc028e739a"},
 		"deletedDate": "2016-05-11T07:05:12.643Z", 
