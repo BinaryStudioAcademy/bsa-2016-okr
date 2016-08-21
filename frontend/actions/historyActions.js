@@ -71,13 +71,24 @@ export function setTypeFilter (typeFilter) {
 // 	} 
 // }
 
-export function setSort (sort) {
-	const action = {
-		type: "SET_SORT",
-		sort
-	};
+export function setSort (sortField) {
+	// const action = {
+	// 	type: "SET_SORT",
+	// 	sort: {sortField}
+	// };
 
-	return action;
+	// return action;
+	return (dispatch, getStore) => {
+		let store = getStore().history;
+		console.log(sortField);
+		dispatch({
+			type: 'SET_SORT',
+			sort: {
+				sortField,
+				up: !store.sort.up
+			}
+		})
+	}
 }
 
 export function resetFilters () {

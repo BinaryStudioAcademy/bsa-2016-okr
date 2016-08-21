@@ -15,14 +15,13 @@ router.put('/', (req, res, next) => {
 	var sort = req.body.sort || null;
 	var eventList = [];
 
-	console.log(req.body);
-	console.log(sort);
 	async.waterfall([
 		(callback) => {
 			repository.getAll((err, result) => {
 				if(err) {
 					return callback(err, result);
 				}
+
 				return callback(null, result.slice());	
 			});
 		},
@@ -30,22 +29,16 @@ router.put('/', (req, res, next) => {
 			if(filters !== null )
 				service.filterBy(result, filters, (res) => {
 					result = res.slice();
-					//return callback(null, result);
-					console.log('-----------after filtering------------');
-					console.log(res);
 				})
+
 			return callback(null, result);
 		},
 		(result, callback) => {
-			if(sort !== null && sort !== '')
-				service.sortBy(result, sort, (res) => {
-					console.log('-----------after sorting------------');
-					console.log(res);
-
-					result = res.slice();
-					//return callback(null, result);
-					
+			if(sort !== null && sort.sortField !== '')
+				service.sortBy(result, sort.sortField, sort.up, (res) => {
+					result = res.slice();				
 				})
+
 			return callback(null, result)
 		}
 	], (err, result) => {

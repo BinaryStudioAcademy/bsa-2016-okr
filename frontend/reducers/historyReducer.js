@@ -4,7 +4,10 @@ const initialState = {
 	showHistoryFilters: false,
     nameFilter: '',
     typeFilter: '',
-    sort:'',
+    sort:{
+        up: true,
+        sortField: ''
+    },
     setHistoryFilterDateFrom:'',
     setHistoryFilterDateTo:''
 
