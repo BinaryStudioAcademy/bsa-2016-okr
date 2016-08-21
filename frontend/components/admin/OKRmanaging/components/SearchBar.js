@@ -6,7 +6,7 @@ export default ({ term, data, update }) => {
     const value = e.target.value.toLowerCase();
 
     const filter = data.filter(objective => {
-      return objective.ownerName.toLowerCase().includes(value);
+      return objective.title.toLowerCase().includes(value);
     });
 
     update({
@@ -18,12 +18,12 @@ export default ({ term, data, update }) => {
   };
 
   return (
-    <div className="searchbar form-group">
+    <div className="OKR-managing searchbar">
       <input
         value={term}
         type="text"
-        className="form-control"
-        placeholder="Search user by name..."
+        className="searchbar-input"
+        placeholder="Search objective..."
         onChange={dataSearch}
       /> 
     </div>

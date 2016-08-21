@@ -1,5 +1,3 @@
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
 
 module.exports = {

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../actions/otherPersonActions.js";
 
-import ListOfUsers from '../list-of-users/list-of-users.jsx';
 import PersonInfo from './persons-info.js';
 import UserOjectives from './user-objectives.js';
 import CentralWindow from "../../containers/central-window.jsx";
@@ -27,21 +26,20 @@ class OtherPersonsPage extends Component {
 			return <div></div>
 		}
 		else {
-
-		const {user, objectives} = this.props.user;
-		return (
-			<div>
-				<CentralWindow>
-					<PersonInfo data={user} />
-					<UserOjectives data={objectives[0]}/>
-				</CentralWindow>
-				<StatPanel>
-					<Dashboard></Dashboard>
-				</StatPanel>
-			</div>
-		)
+			const {user} = this.props.user;
+			return (
+				<div>
+					<CentralWindow>
+						<PersonInfo data={user} />
+						<UserOjectives />
+					</CentralWindow>
+					<StatPanel>
+						<Dashboard></Dashboard>
+					</StatPanel>
+				</div>
+			)
+		}
 	}
-}
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);

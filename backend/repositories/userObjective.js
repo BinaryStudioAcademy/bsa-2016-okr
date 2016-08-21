@@ -17,4 +17,14 @@ UserObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 		.exec(callback);
 };
 
+UserObjectiveRepository.prototype.getByUserIdPopulate = function(userId, callback) {
+	var model = this.model;
+
+	model
+		.find({ userId: userId })
+		.populate('templateId')
+		.populate('keyResults.templateId')
+		.exec(callback);
+};
+
 module.exports = new UserObjectiveRepository();

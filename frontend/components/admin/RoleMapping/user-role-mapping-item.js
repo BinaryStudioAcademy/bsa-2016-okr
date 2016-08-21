@@ -20,18 +20,26 @@ class UserRoleMappingItem extends React.Component {
 	                   <h4 className="col-2">{this.props.user.firstName}</h4>
 	                   <h4 className="col-3">{this.props.user.lastName}</h4>
 	                   <h4 className="col-4">{this.props.user.email}</h4>
-	                   <select className="col-5" id={"user-roles" + this.props.user._id} onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
-		                 <option value="Default">Default</option>
-		                 <option value="Mentor">Mentor</option>
-	                     <option value="Admin">Admin</option>
-	                     <option value="User">User</option>
+	                   <select className="col-5" id={"user-roles" + this.props.user._id} ref="userLocalRole"
+	                   onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
+		                 <option value="">Default</option>
+		                 <option value="mentor">Mentor</option>
+	                     <option value="admin">Admin</option>
+	                     <option value="user">User</option>
 	                   </select>
 	            </div>
             );
    }
 
    changeLocalRole() {
-	   	this.props.updateUserLocRole(this.props.user._id, this.refs.userLocalRole.value);
+
+
+	    let reqBody = {};
+	    reqBody.localRole = this.refs.userLocalRole.value;
+	    reqBody.createAt = this.props.user.createAt;
+	    reqBody.updatedAt = this.props.user.updatedAt;
+
+	   	this.props.updateUserRole(this.props.user._id, this.refs.userLocalRole.value);
    }
 
    componentDidMount()  {
@@ -40,25 +48,25 @@ class UserRoleMappingItem extends React.Component {
    		this.refs.userLocalRole.value = this.props.stateFromReducer.mapping.filter;
    	}
 
-   	 let defaultOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=Default]");
-	 let adminOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=Admin]");
-	 let userOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=User]");
-	 let mentorOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=Mentor]");
+   	 let defaultOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value='']");
+	 let adminOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=admin]");
+	 let userOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=user]");
+	 let mentorOption = document.querySelector("select#user-roles" + this.props.user._id + " option[value=mentor]");
 
-	 switch(this.props.user.localRole) {
-	 	case "Admin":
+	 switch(this.props.user.localRole.toUpperCase()) {
+	 	case "ADMIN":
 			if (adminOption != undefined)
 		   	 	adminOption.selected = true;
 	 	break;
-	 	case "Default":
+	 	case "":
    	 	if (defaultOption != undefined)
 	   	 	defaultOption.selected = true;
 	 	break;
-	 	case "Mentor":
+	 	case "MENTOR":
    	 	 if (mentorOption != undefined)
 	   	 	  mentorOption.selected = true;
 	 	break;
-	 	case "User":
+	 	case "USER":
    	 	if (userOption != undefined)
 	   	 	userOption.selected = true;
 	 	break;

@@ -3,24 +3,25 @@ var Schema = mongoose.Schema;
 
 var userObjective = new Schema({
 	templateId: {
-		type: Schema.Types.ObjectId, 
+		type: Schema.Types.ObjectId,
 		ref: 'Objective',
 		required: true
 	},
 	userId: {
-		type: Schema.Types.ObjectId, 
+		type: Schema.Types.ObjectId,
 		ref: 'User',
 		required: true
 	},
 	creator: {
-		type: Schema.Types.ObjectId, 
+		type: Schema.Types.ObjectId,
 		ref: 'User',
 		required: true
 	},
+	isDeleted: Boolean,
 	keyResults: [{
 		templateId: {
-			type: Schema.Types.ObjectId, 
-			ref: 'KeyResults',
+			type: Schema.Types.ObjectId,
+			ref: 'KeyResult',
 			required: true
 		},
 		score: {
@@ -30,7 +31,7 @@ var userObjective = new Schema({
 			default: 0
 		},
 		creator: {
-			type: Schema.Types.ObjectId, 
+			type: Schema.Types.ObjectId,
 			ref: 'User',
 			required: true
 		}
