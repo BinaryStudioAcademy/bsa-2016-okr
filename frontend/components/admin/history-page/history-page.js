@@ -7,6 +7,7 @@ import HistoryItemList from './history-item-list';
 // import HistoryQurterBar from './history-quarter-bar'
 import HistorySearch from './history-search';
 import HistoryFilter from './history-filter';
+import HistorySort from './history-sort';
 import './history-page.scss'
 
 import { bindActionCreators } from 'redux';

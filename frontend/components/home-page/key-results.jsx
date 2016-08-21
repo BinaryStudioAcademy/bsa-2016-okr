@@ -54,7 +54,7 @@ class KeyResults extends Component {
                 <span className="change" onClick={this.textHandleShow}>Key results</span>
                 <span className="fa fa-angle-double-down fa-lg key-results-arrow change" onClick={this.handleShow}></span>
                 <div className='key-result-details undisplay'>
-                    <ul>
+                    <ul className='key-result-details-ul'>
                         {item}
                     </ul>
 
