@@ -44,15 +44,14 @@ export default KeyResultList;
 
 function add_new_keyres_handler(){
    var newId = 0;
-   if (this.state.keyResults.length == 0){
-      newId = 1;
-   }else{
+   if (this.state.keyResults.length !== 0){
       newId = this.state.keyResults[this.state.keyResults.length - 1].id;
    }
 
    this.setState({
       keyResults: this.state.keyResults.concat({
-         id: ++newId
+         id: ++newId,
+         myautocompdata: [{'qwerty':'123'},{'qwerty':'321'}]
       })
    })
 }

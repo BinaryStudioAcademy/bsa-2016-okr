@@ -32,7 +32,96 @@ export function setFilterDateTo(value) {
 	return action;
 }
 
-export function getHistoryItems(){
+export function setNameFilter (nameFilter) {
+	const action = {
+		type: 'SET_NAME_FILTER',
+		nameFilter
+	} 
+	return action;
+}
+
+export function setTypeFilter (typeFilter) {
+	console.log(typeFilter);
+	const action = {
+		type: 'SET_TYPE_FILTER',
+		typeFilter
+	} 
+	return action;
+}
+
+// export function getSortedItems(sort) {
+// 	return(dispatch, getStore) => {
+	
+// 		dispatch({
+// 	 		type: 'GET_SORTED_ITEMS',
+// 		});
+
+// 	 	return axios.put('/api/history/', {
+// 	 		sort
+// 	 	})
+// 			.then( (response) => dispatch(receivedFilteredItems(response.data)))
+// 			.catch( (response) => dispatch(historyItemsError(response.data)));
+// 	};
+// }
+
+// export  function receivedSortedItems (historyItems) {
+// 	 return {
+// 		type: 'RECEIVED_SORTED_ITEMS',
+// 		historyItems
+// 	} 
+// }
+
+export function setSort (sort) {
+	const action = {
+		type: "SET_SORT",
+		sort
+	};
+
+	return action;
+}
+
+export function resetFilters () {
+	 const action = {
+	 	type: 'RESET_FILTERS'
+	 }
+
+	 return action;
+}
+
+export function getFilteredItems () {
+	return(dispatch, getStore) => {
+		let store = getStore().history;
+
+		dispatch({
+	 		type: 'GET_FILTERED_ITEMS',
+		});
+
+
+		console.log(getStore());
+	 	return axios.put('/api/history/', { 
+	 		sort: store.sort,
+	 		filters: {
+	 			type: store.typeFilter,
+	 			name: store.nameFilter,
+	 			date: {
+	 				from: store.setHistoryFilterDateFrom,
+	 				to: store.setHistoryFilterDateTo
+	 			}
+	 		}
+	 	})
+			.then( (response) => dispatch(receivedFilteredItems(response.data)))
+			.catch( (response) => dispatch(historyItemsError(response.data)));
+	};
+}
+
+export function receivedFilteredItems (historyItems) {
+	 return {
+		type: 'RECEIVED_FILTERED_ITEMS',
+		historyItems
+	} 
+}
+
+export function getHistoryItems(filter, sprt){
 	return(dispatch, getStore) => {
 			
 		dispatch({
