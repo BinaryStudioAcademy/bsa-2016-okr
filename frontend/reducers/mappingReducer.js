@@ -1,137 +1,119 @@
 const initialState = {
-    users : [{
-       _id: 0,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 1,
-       avatar: "avatar1.png",
-       firstName: "myName",
-       lastName: "myLastName",
-       email: "default@default.com",
-       localRole: "Default"
-    },
-    {
-       _id: 2,
-       avatar: "avatar1.png",
-       firstName: "Vasya",
-       lastName: "Pupkin",
-       email: "vasya@vasya.com",
-       localRole: "User"
-    },
-    {
-       _id: 3,
-       avatar: "avatar1.png",
-       firstName: "Napoleon",
-       lastName: "Bonaparte",
-       email: "nepoleon@bonaparte",
-       localRole: "Admin"
-    },
-    {
-       _id: 4,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 5,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 6,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 7,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    }
-    ],
-visibleUsers : [{
-       _id: 0,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 1,
-       avatar: "avatar1.png",
-       firstName: "myName",
-       lastName: "myLastName",
-       email: "default@default.com",
-       localRole: "Default"
-    },
-    {
-       _id: 2,
-       avatar: "avatar1.png",
-       firstName: "Vasya",
-       lastName: "Pupkin",
-       email: "vasya@vasya.com",
-       localRole: "User"
-    },
-    {
-       _id: 3,
-       avatar: "avatar1.png",
-       firstName: "Napoleon",
-       lastName: "Bonaparte",
-       email: "nepoleon@bonaparte",
-       localRole: "Admin"
-    },
-    {
-       _id: 4,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 5,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 6,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    },
-    {
-       _id: 7,
-       avatar: "avatar1.png",
-       firstName: "admin",
-       lastName: "admin",
-       email: "admin@admin.com",
-       localRole: "Admin"
-    }
-    ],
+    users : [],
+    visibleUsers : [],
     roles: [],
     filter: ""
 };
+
+
+export default function mappingReducer(state = initialState, action = {}) {
+
+    switch (action.type) {
+
+       case "MAPPING_RECEIVED_USERS": {
+
+            const {data} = action;
+
+            console.log(data);
+            
+
+            for (let i = 0; i < data.length; i++) {
+
+                data[i].avatar = "avatar1.png";
+                data[i].firstName = "fname";
+                data[i].lastName = "lname";
+                data[i].email = "default@email.com";
+
+            }
+
+            return Object.assign({}, state, {
+                users: JSON.parse(JSON.stringify(data)),
+                visibleUsers: JSON.parse(JSON.stringify(data)) 
+            })
+      }
+
+        case "MAPPING_UPDATE_USER_ERROR": {
+
+          const {data} = action;
+
+          console.log(data);
+
+          console.log("MAPPING_UPDATE_USER_ERROR");
+
+          return state;
+        }
+
+        case "GET_USERS_ERROR": {
+
+          const {data} = action;
+
+          console.log(data);
+
+          console.log("GET_USERS_ERROR");
+
+          return state;
+        }
+
+
+       case "MAPPING_RECEIVED_ERROR": {
+
+          const {data} = action;
+
+          console.log("RECEIVED_ERROR");
+
+          return state;
+        }
+
+      case "MAPPING_RECEIVED_GLOBAL_ROLES": {
+
+          const {roles} = action;
+
+          return Object.assign({}, state, {
+                roles: roles
+            })
+        }
+
+        case "MAPPING_USERS_ROLES_FILTER": {
+
+            const {filter} = action;
+
+             return Object.assign({}, state, {
+                visibleUsers: updateVisibleUsers(state.users, filter),
+                filter: filter
+            })
+        }
+
+        case "MAPPING_UPDATE_ROLES_LOCAL_ROLE": {
+
+            const {localRole} = action;
+            const {id} = action;
+
+            let roles = JSON.parse(JSON.stringify(state.roles));
+
+             return Object.assign({}, state, {
+                roles: updateLocRole(roles, id, localRole)
+
+            })
+        }
+
+         case "MAPPING_UPDATE_USERS_LOCAL_ROLE": {
+
+            const {localRole} = action;
+            const {id} = action;
+
+            let users = JSON.parse(JSON.stringify(state.users));   
+
+             return Object.assign({}, state, {
+                users: updateLocRole(users, id, localRole),
+                visibleUsers: updateVisibleUsers(users, state.filter)
+            })
+        }
+
+        default: {
+            return state;
+        }
+    }
+}
 
 
 function updateVisibleUsers(users, filter) {
@@ -172,84 +154,3 @@ function updateLocRole(array, id, localRole) {
     return array;
 
 }
-
-export default function mappingReducer(state = initialState, action = {}) {
-
-    switch (action.type) {
-
-
-       case "RECEIVED_ERROR": {
-
-          const {data} = action;
-
-          console.log("RECEIVED_ERROR");
-          console.log(data);
-
-          return Object.assign({}, state, {
-                users: state.users,
-                visibleUsers: state.users,
-                roles: state.roles,
-                filter: state.filter,
-            })
-        }
-
-      case "RECEIVED_GLOBAL_ROLES": {
-
-          const {roles} = action;
-
-          return Object.assign({}, state, {
-                users: state.users,
-                visibleUsers: state.users,
-                roles: roles,
-                filter: state.filter,
-            })
-        }
-
-        case "USERS_ROLES_FILTER": {
-
-            const {filter} = action;
-
-             return Object.assign({}, state, {
-                users: state.users,
-                visibleUsers: updateVisibleUsers(state.users, filter),
-                roles: state.roles,
-                filter: filter,
-            })
-        }
-
-        case "UPDATE_ROLES_LOCAL_ROLE": {
-
-            const {localRole} = action;
-            const {id} = action;
-
-            let roles = JSON.parse(JSON.stringify(state.roles));
-
-             return Object.assign({}, state, {
-                users: state.users,
-                visibleUsers: state.visibleUsers,
-                roles: updateLocRole(roles, id, localRole),
-                filter: state.filter
-            })
-        }
-
-         case "UPDATE_USERS_LOCAL_ROLE": {
-
-            const {localRole} = action;
-            const {id} = action;
-
-            let users = JSON.parse(JSON.stringify(state.users));   
-
-             return Object.assign({}, state, {
-                users: updateLocRole(users, id, localRole),
-                visibleUsers: updateVisibleUsers(users, state.filter),
-                roles: state.roles,
-                filter: state.filter
-            })
-        }
-
-        default: {
-            return state;
-        }
-    }
-}
-

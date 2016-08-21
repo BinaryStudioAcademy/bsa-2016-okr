@@ -22,7 +22,7 @@ router.get('/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return repository.getById(id, res.callback);
+	return service.getById(id, res.callback);
 });
 
 

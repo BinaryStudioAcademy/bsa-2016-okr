@@ -5,9 +5,9 @@ const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 const session = require('../../config/session');
 
-// router.post('/', (req, res, next) => {
-// 	return service.add(session._id, key, res.callback);
-// });
+router.post('/', (req, res, next) => {
+	return service.add(session._id, key, res.callback);
+});
 
 // router.put('/:id', (req, res, next) => {
 // 	var id = req.params.id;

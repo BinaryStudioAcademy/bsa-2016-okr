@@ -57,9 +57,10 @@ $main-color: #607D8B;
     }
   }
 
-  li.selected{
+  li.current{
     background: $main-color;
     color: #ffffff;
+    border-color: $main-color;
   }
 
   /* for none existed */
