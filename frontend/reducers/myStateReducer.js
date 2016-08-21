@@ -30,7 +30,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
 				currentTab: getQuarter(),
-                currentYear: getYear()
+        currentYear: getYear()
 			});
 		}
 

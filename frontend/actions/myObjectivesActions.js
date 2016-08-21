@@ -35,7 +35,7 @@ export function setChangeTab(num) {
 	 };
 }
 
-export function changeYear(year) {
+export function setChangeYear(year) {
 	 return {
 		  type: "CHANGE_YEAR",
 		  currentYear: year

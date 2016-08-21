@@ -25,9 +25,9 @@ export function objectivesListError(data) {
 	};
 }
 
-export function receivedObjectivesList(data) {
+export function receivedObjectivesList(objectives) {
 	return {
 		type: RECEIVED_OBJECTIVES_LIST,
-		data
+		objectives
 	};
 }

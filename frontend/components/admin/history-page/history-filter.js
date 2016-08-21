@@ -79,7 +79,7 @@ class HistoryFilter extends Component {
 							<td><input className="history-filter-bar-input" type="text" placeholder="Username" onChange={this.onChangeName}/></td>
 							<td>
 								<select onChange={this.onChangeType}>
-									<option value="">Action</option>
+									<option selected value="">Action</option>
 									<option value="add">Create</option>
 									<option value="update">Update</option>
 									<option value="delete">Delete</option>
