@@ -47,13 +47,15 @@ $main-color: #607D8B;
 
   li.exist{
     border: 1px solid $main-color;
+    border-left: none;
     color: $main-color;
     background: #fff;
     cursor: pointer;
-
+  }
+  
+  li.exist:not(.current){
     &:hover{
-      background: $main-color;
-      color: #fff;
+      background: lighten($color-blue-grey, 45%);
     }
   }
 
@@ -62,14 +64,23 @@ $main-color: #607D8B;
     color: #ffffff;
     border-color: $main-color;
   }
+  
+  li.selected{
+    background: lighten($color-blue-grey, 30%);
+    color: #ffffff;
+
+  }
 
   /* for none existed */
   li:not(.exist){
     color: #bbbbbb;
     background: lighten(#bbb, 22%);
+    border: 1px solid #bbb;
+    border-left: none;
     &:hover{
       color: $color-green;
-      background: transparent;
+      background: #fff;
+      border-color: $color-green;
       cursor: pointer;
     }
   }

@@ -7,6 +7,7 @@ class Quarter extends Component {
 
       this.handleTabClick = this.handleTabClick.bind(this);
       this.handleYearChange = this.handleYearChange.bind(this);
+      this.handleAddingNewQuarter = this.handleAddingNewQuarter.bind(this);
    }
 
    handleYearChange(e){
@@ -23,9 +24,13 @@ class Quarter extends Component {
    }
    activeTab(num){
       if (this.props.currentTab == num)
-        return "current exist"
-      else return ""
+        return "current";
+      else return "";
    }
+   handleAddingNewQuarter(){
+      console.log('working');
+   }
+
 
    render() {
       function getQuarters(){
@@ -33,9 +38,9 @@ class Quarter extends Component {
 
          for(var i = 1; i <= 4; i++){
             if(this.props.existedQuarters.includes(i)){
-               quarters.push( <li className={"quater " + this.activeTab(i)} onClick={this.handleTabClick}>{i}-st quarter</li> )
+               quarters.push( <li className={this.props.currentTab == i ? "quater current exist" : "quater exist"} onClick={this.handleTabClick}>{i}-st quarter</li> )
             } else {
-               quarters.push( <li className={"quater " + this.activeTab(i)} onClick={this.handleTabClick}>+ Q{i}</li> )
+               quarters.push( <li className={"quater"} onClick={this.handleAddingNewQuarter}>+ Q{i}</li> )
             }
          }
 
