@@ -8,21 +8,58 @@ const service = require('../../services/userObjective');
 // TODO: Body validation and separate logic for adding by templateId and new
 // NOT ready yet!
 router.post('/', (req, res, next) => {
-	var title = req.body.title;
-	var description = req.body.description;
-	var keyResults = req.body.keyResults;
-	var userId = req.session._id;
-	var creator = req.session._id;
+	var title = req.body.title || '';
+	var description = req.body.description || '';
+	var keyResults = req.body.keyResults || [];
+	var category = req.body.category || '';
+	var userId = req.session._id || '';
+	var creator = req.session._id || '';
+	var quarterId = req.body.quarterId || '';
+
+	keyResults.forEach((keyResult) => {
+		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
+	});
+
+	var isKeyResultsInvalid = keyResults.some((keyResult) => {
+		return !ValidateService.isObject(keyResult)
+		|| ValidateService.isEmpty(keyResult.title)
+	});
+
+	if( ValidateService.isEmpty(title)
+		|| ValidateService.isEmpty(description)
+		|| ValidateService.isEmpty(keyResults)
+		|| !ValidateService.isCorrectId(category)
+		|| !ValidateService.isArray(keyResults)
+		|| isKeyResultsInvalid)
+	{
+		return res.badRequest();
+	}
+
+	var keyResultsF = keyResults.map((item) => {
+		var keyResult = {
+			title: item.title,
+			difficulty: item.difficulty,
+			creator: req.session._id,
+			isApproved: true,
+			isDeleted: false
+		};
+
+		return keyResult;
+	});
 
 	var data = {
 		title: title,
 		description: description,
-		userId: userId,
+		category: category,
 		creator: creator,
-		keyResults: keyResults
+		keyResults: keyResultsF,
+		isApproved: true,
+		isDeleted: false
 	};
 
-	return service.add(req.session._id, data, res.callback)
+
+	console.log("YI");
+	return service.add(data, quarterId, res.callback)
 });
 
 router.get('/me/', (req, res, next) => {
@@ -35,13 +72,13 @@ router.get('/user/:id', (req, res, next) => {
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	}
-	
+
 	return repository.getByUserIdPopulate(id, res.callback);
 });
 
 router.get('/:id', (req, res, next) => {
 	var id = req.params.id;
-	
+
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
@@ -63,7 +100,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
 	var id = req.params.id;
-	
+
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};

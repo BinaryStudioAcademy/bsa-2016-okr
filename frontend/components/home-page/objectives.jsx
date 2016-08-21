@@ -34,6 +34,8 @@ class Objectives extends Component {
 	}
 
 	componentWillMount() {
+		console.log(this.props);
+		this.props.getAllCategories();
 		this.props.getMe();
 	}
 
@@ -50,7 +52,7 @@ class Objectives extends Component {
 
 			ObjectiveItems = quarter.userObjectives.map((item, index) => {
 					console.log('item -> ' + item.templateId.category.title);
-					
+
 					return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
 			});
 		}

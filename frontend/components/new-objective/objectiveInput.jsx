@@ -3,26 +3,37 @@ import KeyResult from './key-result.jsx';
 import './objectiveInput.scss';
 import AutocompleteInput from '../autocomplete-input/autocomplete-input.jsx';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../actions/myObjectivesActions";
+
 class ObjectiveInput extends React.Component{
     constructor(props){
         super(props);
-
+/*
         this.state = {
            keyResults: [
               { id: 1 }
            ]
         };
 
+        this.state ={
+          item: props.item
+        }
+*/
         this.handleAddNewKeyRes = this.handleAddNewKeyRes.bind(this);
         this.handleDelKeyResult = this.handleDelKeyResult.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.getAutocompleteData = this.getAutocompleteData.bind(this);
+        this.handleAddNewObjective = this.handleAddNewObjective.bind(this);
     }
 
     handleFocus(){
       this.refs.objectiveForm.classList.remove("hidden");
       this.refs.closeButton.classList.remove("hidden");
+      console.log("THIS >>>", this);
     }
 
     handleClose(){
@@ -37,6 +48,49 @@ class ObjectiveInput extends React.Component{
             id: ++newId
          })
       })
+    }
+
+    handleAddNewObjective() {
+      var title = this.refs.title.value
+      var description = this.refs.description.value
+      if(title.length == 0 || description.length == 0){alert("Please fill title and description");}
+      var quarters = this.props.stateFromReducer.myState.me.quarters;
+      var currentYear = this.props.stateFromReducer.myState.currentYear;
+      var currentTab = this.props.stateFromReducer.myState.currentTab;
+      var quarterId = '';
+      var categoryId = '';
+      var handlerCategory = this.props.category;
+
+      console.log("this.props.stateFromReducer >>> ", this.props.stateFromReducer);
+
+      quarters.forEach((quarter) => {
+          	if(quarter.index == currentTab && quarter.year == currentYear) {
+              quarterId = quarter._id;
+      			}
+      	});
+
+        this.props.stateFromReducer.myState.allCategories.forEach((category) => {
+              if(category.title == handlerCategory) {
+                categoryId = category._id;
+              }
+          });
+
+      var body =  {
+        "title": title,
+        "description":description,
+        "category": categoryId,
+        "quarterId": quarterId,
+        "keyResults": [
+          {"title":"template key Result 1", "difficulty":"easy"},
+          {"title":"template key Result 2", "difficulty":"intermediate"},
+          {"title":"template key Result 2", "difficulty":"advanced"}
+        ]
+      }
+
+      this.handleClose();
+      this.refs.title.value = "";
+      this.refs.description.value = "";
+      this.props.addNewObjective(body);
     }
 
     handleDelKeyResult(id){
@@ -59,6 +113,7 @@ class ObjectiveInput extends React.Component{
     }
 
     render(){
+      var keyResults =  [ { id: 1 } ];
         return(
           <div className="new-objective-form">
             <button ref="closeButton" type="button" className="hidden close-new-obj-window" onClick={this.handleClose}>
@@ -66,7 +121,7 @@ class ObjectiveInput extends React.Component{
             </button>
             <div className="new-obj-creds">
               <div className="title-group">
-                  <input type="text" placeholder="New objective title" className="new-obj-title" onFocus={this.handleFocus}/>
+                  <input type="text" placeholder="New objective title" ref="title" className="new-obj-title" onFocus={this.handleFocus}/>
                   <section>
                       <AutocompleteInput
                           getAutocompleteData={this.getAutocompleteData}
@@ -77,18 +132,19 @@ class ObjectiveInput extends React.Component{
               </div>
               <div ref="objectiveForm" className="desc-group" className="hidden">
                   <label htmlFor="new-obj-desc">Description</label>
-                  <textarea name="new-obj-desc" className="new-obj-desc" placeholder="Description"></textarea>
+                  <textarea name="new-obj-desc" ref="description" className="new-obj-desc" placeholder="Description" ></textarea>
                 <div>
                   <ul id="new-obj-keyresults">
                     <p className="no-after">Key results</p>
                     {
-                       this.state.keyResults.map((el) => {
+                      //this.state.keyResults.map((el) => {
+                       keyResults.map((el) => {
                           return <KeyResult id={el.id} key={el.id} onClick={this.handleDelKeyResult}/>
                        })
                     }
                     <a id="add-new-keyresult-btn" onClick={this.handleAddNewKeyRes}>+ Add new key result</a>
                   </ul>
-                 <button type="button" className="new-obj-submit-btn">Add new objective</button>
+                 <button type="button" className="new-obj-submit-btn" onClick={this.handleAddNewObjective}>Add new objective</button>
                 </div>
               </div>
             </div>
@@ -97,4 +153,15 @@ class ObjectiveInput extends React.Component{
     }
 }
 
-export default ObjectiveInput;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+        stateFromReducer: state
+    };
+}
+const ObjectiveInputConnected = connect(mapStateToProps, mapDispatchToProps)(ObjectiveInput);
+
+export default ObjectiveInputConnected;

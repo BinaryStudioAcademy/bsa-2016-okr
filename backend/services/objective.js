@@ -14,14 +14,12 @@ var ObjectiveService = function() {};
 // 3) Push keyResult ids to objective.keyResults
 // 4) Save objective and keyResults in DB
 // 5) Profit =)
-ObjectiveService.prototype.add = function(objective, keyResults, callback) {
+ObjectiveService.prototype.add = function(authorId, objective, keyResults, callback) {
 	objective = new Objective(objective);
-
 	keyResults = keyResults.map((keyResult) => {
 		keyResult.objectiveId = objective._id;
 		keyResult = new KeyResult(keyResult);
 		objective.keyResults.push(keyResult._id);
-
 		return keyResult;
 	});
 
@@ -31,7 +29,7 @@ ObjectiveService.prototype.add = function(objective, keyResults, callback) {
 				return err ? callback(err) : callback(null, obj);
 			});
 		}, (obj, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "update Objective template", (err) => {
+			HistoryRepository.addObjectiveEvent(authorId, obj._id, "update Objective template", (err) => {
 				if(err) {
 					return callback(err, null);
 				}
@@ -43,7 +41,6 @@ ObjectiveService.prototype.add = function(objective, keyResults, callback) {
 			async.forEach(keyResults, (keyResult, callback) => {
 				keyResult.save((err, keyResult) => {
 					if(err) { return callback(err); }
-					
 					obj.keyResults.push(keyResult.toObject());
 					return callback(null);
 				});
@@ -52,7 +49,7 @@ ObjectiveService.prototype.add = function(objective, keyResults, callback) {
 			});
 		}
 	], (err, result) => {
-		return callback(err, result);	
+		return callback(err, result);
 	});
 };
 
@@ -140,7 +137,7 @@ ObjectiveService.prototype.delete = function (authorId, objectiveId, callback){
 // 				var objective = user.objectives.find((objective) => {
 // 					return objective.objectiveId._id.equals(objectiveId);
 // 				});
-				
+
 // 				return callback(err, objective);
 // 			});
 // 		}

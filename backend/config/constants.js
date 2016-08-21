@@ -9,7 +9,7 @@ module.exports = {
 	},
 	objective: {
 		KNOWLEDGE: 'knowledge',
-		EXPERTIZE: 'expertize',
+		EXPERTIZE: 'expertise',
 		PROJECTS: 'projects'
 	},
 		currentYear: currentYear
