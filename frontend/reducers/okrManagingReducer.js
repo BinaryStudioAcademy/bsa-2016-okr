@@ -29,19 +29,19 @@ export default function patentDetailsReducer(state = initialState, action) {
             console.log(data);
 
             return Object.assign({}, state, {
-                objectives
+                data
             })
         }
 
       case RECEIVED_OBJECTIVES_LIST: {
 
-            const {data} = action;
+            const {objectives} = action;
 
             console.log("RECEIVED_OBJECTIVES_LIST");
-            console.log(data);
+            console.log(objectives);
 
             return Object.assign({}, state, {
-                objectives: data,
+                objectives,
                 waiting: true   
             })
         }

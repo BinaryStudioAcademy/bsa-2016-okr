@@ -234,9 +234,7 @@ function filterDate(items, dateFrom, dateTo) {
 
     }
     else if(dateFrom == '' && dateTo != '') {
-
     	items = JSON.parse(JSON.stringify(data_for_recycle));
-
         for (let i = 0; i < items.length; i++) {
 	       	if (dateTo >= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);
