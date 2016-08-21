@@ -34,12 +34,13 @@ class Objectives extends Component {
 
 		if (me.quarters != undefined) {
 			let quarter = me.quarters.find((quarter) => {
+				console.log(currentYear, currentTab)
 				return (quarter.year == currentYear) && (quarter.index == currentTab)
 			});
 
 			ObjectiveItems = quarter.userObjectives.map((item, index) => {
 					console.log('item -> ' + item.templateId.category.title);
-
+					
 					return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
 			});
 		}
