@@ -1,6 +1,10 @@
 @import "normalize";
 @import "_variables";
 
+.history-sort-bar-caontainer{
+  clear: both;
+}
+
 .history-page {
   height: 100%;
   display: flex;
