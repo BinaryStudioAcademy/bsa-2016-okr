@@ -1,6 +1,48 @@
 import React, { Component } from 'react';
 
-export default class Toolbar extends Component {
+class Toolbar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onSort = this.onSort.bind(this);
+  }
+
+  onSort(sort) {
+      this.props.setSort(sort);
+      this.props.getFilteredItems();
+    }
+  render(){
+        return (
+    <div className="toolbar">
+      <button type="button" id="add-new-objective"><i className="fi flaticon-add" aria-hidden="true"></i><span>New objective</span></button>
+
+      <button className="btn btn-reset" >
+      <i className="fa fa-ban"></i>  Reset
+      </button>
+      <table className="OKR-managing toolbar-table">
+        <tr>
+          <th>#</th>
+          <th >
+          <i className="fa fa-sort"> </i>  Category
+          </th>
+
+          <th>
+          <i className="fa fa-sort"></i>  Objective
+          </th>
+
+          <th>
+          <i className="fa fa-sort"></i>  Description
+          </th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </table>
+    </div>
+    )
+  }
+}
+  export default Toolbar
+/*export default class Toolbar extends Component {
   constructor(props) {
     super(props);
     this.sorted = { ownerName: true, objTitle: true };
@@ -63,3 +105,5 @@ export default class Toolbar extends Component {
     )
   }
 }
+*/
+
