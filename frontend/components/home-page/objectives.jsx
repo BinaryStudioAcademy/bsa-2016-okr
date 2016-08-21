@@ -29,7 +29,7 @@ class Objectives extends Component {
 
 	render() {
 		const data = this.props.stateFromReducer.myState;
-		const { me, currentYear, currentTab } = data;
+		const { me, currentYear, currentTab, existedQuarters } = data;
 		var ObjectiveItems = [];
 
 		if (me.quarters != undefined) {
@@ -46,8 +46,8 @@ class Objectives extends Component {
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear}
-						currentTab={ currentTab } />
+				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
+						currentTab={ currentTab } existedQuarters={ existedQuarters }/>
 				<div id='objectives'>
 					<ObjectivesList objectives={ ObjectiveItems } />
 				</div>

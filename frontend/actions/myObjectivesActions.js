@@ -42,6 +42,13 @@ export function changeYear(year) {
 	 };
 }
 
+export function createQuarter(quarter){
+	return{
+		type: "CREATE_QUARTER",
+		payload: quarter
+	}
+}
+
 export function softDeleteMyObjectiveById(id) {
   return {
      type: "SOFT_DELETE_MY_OBJECTIVE_BY_ID",

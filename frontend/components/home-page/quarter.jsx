@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import './quarter-bar.scss';
 
 class Quarter extends Component {
-   constructor() {
-      super();
+   constructor(props) {
+      super(props);
 
       this.handleTabClick = this.handleTabClick.bind(this);
       this.handleYearChange = this.handleYearChange.bind(this);
    }
+
    handleYearChange(e){
       let value = e.target.value;
       this.props.changeYear(value)
@@ -20,28 +21,27 @@ class Quarter extends Component {
       } 
       this.props.changeTab(++currentTab);
    }
-   activeTab1(){
-      if (this.props.currentTab == 1) 
+   activeTab(num){
+      if (this.props.currentTab == num)
         return "current exist"
       else return ""
    }
-   activeTab2(){
-      if (this.props.currentTab == 2)     
-         return "current exist"
-      else return ""
-   }
-   activeTab3(){
-      if (this.props.currentTab == 3) 
-         return "current exist"
-      else return ""
-   }
-   activeTab4(){
-      if (this.props.currentTab == 4) 
-         return "current exist"
-      else return ""
-   }  
 
    render() {
+      function getQuarters(){
+         var quarters = [];
+
+         for(var i = 1; i <= 4; i++){
+            if(this.props.existedQuarters.includes(i)){
+               quarters.push( <li className={"quater " + this.activeTab(i)} onClick={this.handleTabClick}>{i}-st quarter</li> )
+            } else {
+               quarters.push( <li className={"quater " + this.activeTab(i)} onClick={this.handleTabClick}>+ Q{i}</li> )
+            }
+         }
+
+         return quarters;
+      }
+
       return (
          <div id="quarter-bar">
             <select name="" id="business-year" onChange={this.handleYearChange}>
@@ -49,10 +49,11 @@ class Quarter extends Component {
                <option value="">{this.props.today.getFullYear()+1}</option>
             </select>
             <ul>
-               <li className={"quater " + this.activeTab1()} onClick={this.handleTabClick}>1-st quarter</li>
-               <li className={"quater " + this.activeTab2()} onClick={this.handleTabClick}><a href="">+ Q2</a></li>
-               <li className={"quater " + this.activeTab3()} onClick={this.handleTabClick}><a href="">+ Q3</a></li>
-               <li className={"quater " + this.activeTab4()} onClick={this.handleTabClick}><a href="">+ Q4</a></li>
+               {
+                  getQuarters.call(this).map((quarter) => {
+                     return quarter;
+                  })
+               }
             </ul>
          </div>
       )

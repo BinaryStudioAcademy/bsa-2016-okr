@@ -31,18 +31,18 @@ $main-color: #607D8B;
 
   li{
     flex: 1 0 100px;
-    border: 1px solid #bbb;
+    border: 1px solid $main-color;
     padding: 7px 10px;
     text-align: center;
+    border-left: none;
+    span{
+      pointer-events: none;
+    }
 
     &:last-child{
       border-radius: 0 3px 3px 0;
     }
 
-    &:not(:first-child),
-    &.exist:not(:first-child){
-      border-left: none;
-    }
   }
 
   li.exist{
@@ -65,13 +65,13 @@ $main-color: #607D8B;
 
   /* for none existed */
   li:not(.exist){
-  }
-  li:not(.exist) a{
-    color: #bbb;
-    text-decoration: none;
+    color: #bbbbbb;
+    background: lighten(#bbb, 22%);
     &:hover{
-      color: #2196F3;
-      text-decoration: underline;
+      color: $color-green;
+      background: transparent;
+      cursor: pointer;
     }
   }
+  
 }

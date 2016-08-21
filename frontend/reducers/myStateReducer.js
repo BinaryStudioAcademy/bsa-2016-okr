@@ -3,6 +3,7 @@ import { isEmpty } from '../../backend/utils/ValidateService';
 const initialState = {
     currentTab: getQuarter(),
     currentYear: getYear(),
+	 existedQuarters: getExistedQuarters(),
 	me: {
 		"localRole": ""
 	}
@@ -49,6 +50,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
+		case "CREATE_QUARTER": {
+			const { payload } = action;
+
+			return Object.assign({}, state, {
+				existedQuarters: this.state.existedQuarters.concat(payload)
+			})
+		}
+
     case "SOFT_DELETE_MY_OBJECTIVE_BY_ID": {
 			const { id } = action;
 			console.log(state);
@@ -82,6 +91,15 @@ function getQuarter(){
         return 3;
     else if(today > third)
         return 4;
+}
+
+function getExistedQuarters(){
+	let quarters = [];
+	for(let i = 1, currentQuarter = getQuarter(); i <= currentQuarter; i++){
+		quarters.push(i);
+	}
+
+	return quarters;
 }
 
 function deleteObjectiveFromMe(me, id) {
