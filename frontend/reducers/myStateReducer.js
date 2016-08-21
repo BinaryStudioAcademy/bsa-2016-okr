@@ -3,6 +3,7 @@ import { isEmpty } from '../../backend/utils/ValidateService';
 const initialState = {
     currentTab: getQuarter(),
     currentYear: getYear(),
+    allCategories: {},
 	me: {
 		"localRole": ""
 	}
@@ -20,6 +21,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
       console.log("ME +++", state.me);
 			return Object.assign({}, state, {
 				me: state.me
+			});
+		}
+
+    case "RECEIVED_ALL_CATEGORIES": {
+			const { data } = action;
+      console.log("RECEIVED_ALL_CATEGORIES hit ", data);
+			return Object.assign({}, state, {
+				allCategories: isEmpty(data) ? allCategories : data
 			});
 		}
 
@@ -57,6 +66,15 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			})
 
 		}
+
+    case "ADDED_NEW_OBJECTIVE": {
+      const { id } = action;
+      console.log(state);
+      return Object.assign({}, state, {
+        me: deleteObjectiveFromMe(state.me, id)
+      })
+
+    }
 
 		default: {
 			return state;

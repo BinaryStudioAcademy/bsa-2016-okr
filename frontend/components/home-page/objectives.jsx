@@ -24,6 +24,7 @@ class Objectives extends Component {
 	}
 	componentWillMount() {
 		console.log(this.props);
+		this.props.getAllCategories();
 		this.props.getMe();
 	}
 

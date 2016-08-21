@@ -25,10 +25,13 @@ changeScore(){
 }
 
 handleDelObj(e){
-  var body = {
-    "isDeleted" : "true"
-  }
-  this.props.softDeleteMyObjectiveByIdApi(this.state.item._id, body);
+  var confirmation = confirm("Do you really want to delete this objective?");
+  if (confirmation == true) {
+    var body = {
+      "isDeleted" : "true"
+    }
+    this.props.softDeleteMyObjectiveByIdApi(this.state.item._id, body);
+  };
 }
 
    render() {
