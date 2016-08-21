@@ -1,6 +1,6 @@
 // Timestamp from mongoose schema options not working because of
-// using native mongoDb driver collection.insertMany function 
-// for high performance in ./seed.js 
+// using native mongoDb driver collection.insertMany function
+// for high performance in ./seed.js
 
 var User = require('../schemas/user');
 var Objective = require('../schemas/objective');
@@ -29,7 +29,7 @@ function getRandomId(set) {
 function randomUser(i) {
 	var createdAt = chance.date({ year: 2016, month: 4 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 200000000 }));
-	
+
 	return new User({
 		localRole: i % 10 === 0 ? 'admin' : '',
 		createdAt: createdAt,
@@ -40,7 +40,7 @@ function randomUser(i) {
 function randomObjective(users, categories, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-	
+
 	return new Objective({
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
@@ -58,7 +58,7 @@ function randomObjective(users, categories, i) {
 function randomKeyResult(objectives, users, i) {
 	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-	
+
 	return new KeyResult({
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		creator: getRandomId(users),
@@ -75,7 +75,7 @@ function randomUserObjective(objectives, users, keyResults, i) {
 	var createdAt = chance.date({ year: 2016, month: 7 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 	var user = getRandomId(users);
-	
+
 	var objectiveTemplate;
 	var objectiveKeyResults = [];
 
@@ -115,6 +115,7 @@ function randomUserObjective(objectives, users, keyResults, i) {
 		templateId: objectiveTemplate._id,
 		userId: user,
 		creator: user,
+		isDeleted: i % 10 === 0,
 		keyResults: userKeyResults
 	});
 };
@@ -122,13 +123,13 @@ function randomUserObjective(objectives, users, keyResults, i) {
 function baseCategories() {
 	var res = [];
 	var categories = [CONST.objective.PROJECTS];
-	
+
 	Object.getOwnPropertyNames(CONST.objective).forEach(categoryName => {
 		var category = new Category({
 			title: CONST.objective[categoryName],
 			isDeleted: false
 		});
-		
+
 		res.push(category.toObject());
 	});
 
@@ -152,7 +153,7 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 		.map((keyResult) => {
 			return ObjectId(keyResult._id);
 		});
-		
+
 		objective.keyResults = defaultKeyResults;
 	});
 
@@ -177,13 +178,13 @@ function getQuarters(users, userObjectives) {
 		years.forEach((year) => {
 			quarters.forEach((index) => {
 				var quarterObjectives;
-				
+
 				if((index !== 4) && (year !== currentYear + 1)) {
 					quarterObjectives = chance.pickset(objectiveIds, chance.integer({ min: 0, max: objectiveIds.length }));
 				} else {
 					quarterObjectives = objectiveIds;
 				}
-				
+
 				objectiveIds = objectiveIds.filter((objectiveId) => {
 					return quarterObjectives.indexOf(objectiveId) === -1;
 				});
@@ -198,7 +199,7 @@ function getQuarters(users, userObjectives) {
 					createdAt: createdAt,
 					updatedAt: updatedAt
 				});
-				
+
 				res.push(quarter.toObject());
 			});
 		});
@@ -210,7 +211,7 @@ function getQuarters(users, userObjectives) {
 /*function randomHistory(users, keys, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 100000, max: 2000000 }));
-	
+
 	return new History({
 		authorId: getRandomId(users),
 		typeId: getRandomId(keys),
@@ -230,7 +231,7 @@ module.exports = function () {
 		var keyresults = new Array(5000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
-		
+
 		objectives = setDefaultKeyResultsForObjectives(objectives, keyresults);
 
 		var roles = [];

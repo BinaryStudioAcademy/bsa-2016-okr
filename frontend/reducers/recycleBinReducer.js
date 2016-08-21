@@ -212,25 +212,12 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		if (initVisibleItems[i].type === "key" && keyType) {
 			visibleItems.push(initVisibleItems[i]);
 		}
+		if (initVisibleItems[i].type === "category" && categoryType) {
+			visibleItems.push(initVisibleItems[i]);
+		}
 	}
 
-	if (categoryType && sortByDate) {
-
-		visibleItems.sort(function(a, b) { return b.category < a.category;});
-
-		visibleItems.sort(function(a, b) { 
-			
-			if (b.category === a.category) {
-				return b.deletedDate < a.deletedDate;
-			}
-
-			return 0;
-		});
-	}
-	else if (categoryType) {
-		visibleItems.sort(function(a, b) { return b.category < a.category;});
-	}
-	else if (sortByDate) {
+	if (sortByDate) {
 		visibleItems.sort(function(a, b) { return b.deletedDate < a.deletedDate;});
 	}
 

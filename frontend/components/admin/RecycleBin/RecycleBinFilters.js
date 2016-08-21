@@ -56,11 +56,6 @@ class RecycleBinFilter extends Component {
 							<input type="checkbox" id="cbCategory" onClick={this.setCategoryType.bind(this)}></input>
 							<label htmlFor="cbCategory">Category</label>
 						</div>
-						<div>
-							<input type="checkbox" id="cbSorting" onClick={this.setSortingByDate.bind(this)}></input>
-							<label htmlFor="cbSorting">Sorting by Date</label>
-						</div>
-
 					</div>
 				<table className="recycle-bin-filter-table">
 					<tbody>
@@ -135,10 +130,6 @@ class RecycleBinFilter extends Component {
 
     setObjectiveType() {
 		this.props.setObjectiveType(document.querySelector("#cbObjectives").checked);
-	}
-
-	setSortingByDate() {
-		this.props.setSortingByDate(document.querySelector("#cbSorting").checked);
 	}
 }
 

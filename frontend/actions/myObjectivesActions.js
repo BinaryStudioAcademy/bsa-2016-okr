@@ -49,17 +49,13 @@ export function softDeleteMyObjectiveById(id) {
   };
 }
 
-export function softDeleteMyObjectiveByIdApi(id) {
+export function softDeleteMyObjectiveByIdApi(id, body) {
   return (dispatch, getStore) => {
    dispatch({
     type: "SOFT_DELETE_MY_OBJECTIVE_BY_ID_API"
    });
-   /*TODO Add body for put
-   body = {
-     "isDeleted" : "true"
-   }
-   */
- return axios.put('api/userObjective/' + id)
+
+ return axios.put(('api/userObjective/' + id), body)
   .then(response => dispatch(softDeleteMyObjectiveById(id)))
   .catch(response => dispatch(receivedError(response.data)));
   };
