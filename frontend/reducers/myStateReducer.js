@@ -53,12 +53,15 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case "CREATE_QUARTER": {
 			const { payload } = action;
 
+			var new_exQuarters = state.existedQuarters.concat(payload);
+			new_exQuarters.sort();
+
 			return Object.assign({}, state, {
-				existedQuarters: this.state.existedQuarters.concat(payload)
+				existedQuarters: new_exQuarters
 			})
 		}
 
-    case "SOFT_DELETE_MY_OBJECTIVE_BY_ID": {
+    	case "SOFT_DELETE_MY_OBJECTIVE_BY_ID": {
 			const { id } = action;
 			console.log(state);
 			return Object.assign({}, state, {

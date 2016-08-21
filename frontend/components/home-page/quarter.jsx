@@ -27,8 +27,9 @@ class Quarter extends Component {
         return "current";
       else return "";
    }
-   handleAddingNewQuarter(){
-      console.log('working');
+   handleAddingNewQuarter(event){
+      let quarter_id = parseInt(event.target.dataset.id);
+      this.props.addNewQuarter(quarter_id);
    }
 
 
@@ -38,9 +39,9 @@ class Quarter extends Component {
 
          for(var i = 1; i <= 4; i++){
             if(this.props.existedQuarters.includes(i)){
-               quarters.push( <li className={this.props.currentTab == i ? "quater current exist" : "quater exist"} onClick={this.handleTabClick}>{i}-st quarter</li> )
+               quarters.push( <li className={this.props.currentTab == i ? "quater current exist" : "quater exist"} onClick={this.handleTabClick} data-id={i}>{i}-st quarter</li> )
             } else {
-               quarters.push( <li className={"quater"} onClick={this.handleAddingNewQuarter}>+ Q{i}</li> )
+               quarters.push( <li className={"quater"} onClick={this.handleAddingNewQuarter} data-id={i}>+ Q{i}</li> )
             }
          }
 
