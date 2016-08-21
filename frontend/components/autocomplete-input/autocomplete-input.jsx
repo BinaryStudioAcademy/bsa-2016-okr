@@ -6,7 +6,8 @@ class AutocompleteInput extends React.Component {
         super(props);
 
         this.state={
-            autocompleteInput: {}
+            autocompleteInput: {},
+            item: {}
         };
 
         this.onFocus = this.onFocus.bind(this);
@@ -18,9 +19,9 @@ class AutocompleteInput extends React.Component {
     onFocus(event){
         this.setState({
             autocompleteInput: event.target
-        })
+        });
 
-        let title = event.target.value;
+        let title = this.state.autocompleteInput.value;
         this.props.getAutocompleteData(title);
 
         let autocompleteResultElement = event.target.nextElementSibling;
@@ -31,7 +32,6 @@ class AutocompleteInput extends React.Component {
     }
 
     onBlur(event){
-        console.log("BLUR");
         let autocompleteResultElement = this.state.autocompleteInput.nextElementSibling;
         if (autocompleteResultElement.classList.contains('display')) {
             autocompleteResultElement.classList.add('undisplay');
@@ -42,16 +42,14 @@ class AutocompleteInput extends React.Component {
     onChange(event){
         let title = event.target.value;
         this.props.getAutocompleteData(title);
+
     }
 
     onClickLi(item){
+        // return function for create closure
         return (event)=> {
-            console.log("CLICK");
-            let e = event.target;
-            let title = item.title;
-            console.log('-----E-----', e);
-            console.log('-----TITLE-----', title);
-            this.state.autocompleteInput.value=title;
+            this.props.setAutocompleteSelectedItem(item);
+            this.state.autocompleteInput.value=item.title;
         }
     }
 
@@ -94,4 +92,3 @@ class AutocompleteInput extends React.Component {
 }
 
 export default AutocompleteInput;
-

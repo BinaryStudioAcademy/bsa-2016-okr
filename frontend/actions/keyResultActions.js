@@ -16,7 +16,6 @@ export function getAutocompleteKeyResults(objectId, title) {
 }
 
 export function receivedError(data) {
-    console.log('-----2-----',data);
     return {
         type: "RECEIVED_ERROR",
         data
@@ -24,7 +23,6 @@ export function receivedError(data) {
 }
 
 export function receivedKeyResults(data) {
-    console.log('-----1-----',data);
     return {
         type: "RECEIVED_KEY_RESULTS",
         data
