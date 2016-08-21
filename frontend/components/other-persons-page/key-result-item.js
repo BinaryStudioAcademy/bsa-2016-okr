@@ -16,7 +16,7 @@ class KeyResult extends Component {
 		else
 			return (
 				<li className="user-key-result">
-					{this.props.item.title}
+					{this.props.item.templateId.title}
 	         		<div className='score'>{this.props.item.score}</div>
 			    </li>        
 			)

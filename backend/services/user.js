@@ -1,11 +1,44 @@
-var _ = require('lodash');
 var UserRepository = require('../repositories/user');
-var UserMentorRepository = require('../repositories/userMentor');
+var QuarterRepository = require('../repositories/quarter');
 var HistoryRepository = require('../repositories/history');
 var async = require('async');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 var UserService = function() {};
+
+UserService.prototype.getById = function(id, callback) {
+	async.waterfall([
+		(callback) => {
+			UserRepository.getById(id, function(err, user) {
+				if(err) {
+					return callback(err, null);
+				};
+
+				if(!user) {
+					var err = new Error('User not found');
+					err.status = 400;
+					return callback(err);
+				}
+
+				return callback(err, user);
+			});
+		}, 
+		(user, callback) => {
+			user = user.toObject();
+			QuarterRepository.getByUserIdPopulate(id, (err, quarters) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				user.quarters = quarters;
+
+				return callback(null, user);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
 
 // UserService.prototype.add = function(authorId, user, callback){
 //  	console.log('user default '+ user.objectives[0].keys[0].keyId );
@@ -13,7 +46,7 @@ var UserService = function() {};
 //  	newUser.objectives[0].keys[0].keyId = ObjectId(user.objectives[0].keys[0].keyId);
 //  	newUser.objectives[0].category = ObjectId(user.objectives[0].category);
 //  	newUser.objectives[0].objectiveId = ObjectId(user.objectives[0].objectiveId);
- 	
+
 //  	console.log('============ \n' + newUser);
 // 	async.waterfall([
 // 	(callback) => {
@@ -91,16 +124,6 @@ var UserService = function() {};
 // 		return callback(err, result);
 // 	});
 // }
-
-// UserService.prototype.getMe = function(id, callback){
-// 	UserRepository.getById(id, function(err, user){
-// 		if(err){
-// 			return callback(err, null);
-// 		};
-
-// 		return callback(err, user);
-// 	});
-// };
 
 //not used yet
 // UserService.prototype.setToDeleted = function(id, callback){

@@ -5,6 +5,7 @@ const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
 const ValidateService = require('../../utils/ValidateService');
 const cloneObjective = require('../../services/cloneObjective');
+const session = require('../../config/session');
 
 router.get('/', (req, res, next) => {
 	return repository.getAllPopulate(res.callback);
@@ -15,7 +16,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	var title = req.body.title || '';
 	var description = req.body.description || '';
 	var category = req.body.category || '';
-	var keyResults = req.body.keyResults || [];
+	 var keyResults = req.body.keyResults || [];
 
 	keyResults.forEach((keyResult) => {
 		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
@@ -58,7 +59,7 @@ router.post('/', adminOnly, (req, res, next) => {
 		return keyResult;
 	});
 
-	return service.add(objective, keyResults, res.callback);
+	return service.add(session._id, req.body, keyResults, res.callback);
 });
 
 router.get('/category/:categoryId/:title*?', (req, res, next) => {
@@ -80,17 +81,17 @@ router.put('/:id', adminOnly, (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return repository.update(id, body, res.callback);
+	return service.update(session._id, id, body, res.callback);
 });
 
-router.delete(':id', adminOnly, (req, res, next) => {
+router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 	
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
 
-	return repository.delete(id, res.callback);
+	return service.delete(session._id, id, res.callback);
 });
 
 // router.post('/me/', (req, res, next) => {

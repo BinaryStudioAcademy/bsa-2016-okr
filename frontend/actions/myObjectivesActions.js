@@ -1,14 +1,14 @@
 var axios = require('axios')
 
-export function getMyObjectives(){
+export function getMe() {
 
      return (dispatch, getStore) => {
-console.log("getMyObjectives hit");
+			console.log("getMyObjectives hit");
 		  dispatch({
 		   type: "GET_MY_OBJECTIVES"
 		  });
 
-	  return axios.get('api/userObjective/me')
+	  return axios.get('api/user/me/')
 	   .then(response => dispatch(receivedMyObjectives(response.data)))
 	   .catch(response => dispatch(receivedError(response.data)));
 	 };
@@ -17,14 +17,14 @@ console.log("getMyObjectives hit");
 export function receivedError(data) {
 	 return {
 	  type: "RECEIVED_ERROR",
-	  data
+	  data: data
 	 };
 }
 
 export function receivedMyObjectives(data) {
 	 return {
 		  type: "RECEIVED_MY_OBJECTIVES",
-		  data
+		  data: data
 	 };
 }
 
@@ -32,5 +32,12 @@ export function setChangeTab(num) {
 	 return {
 		  type: "CHANGE_TAB",
 		  currentTab: num
+	 };
+}
+
+export function changeYear(year) {
+	 return {
+		  type: "CHANGE_YEAR",
+		  currentYear: year
 	 };
 }
