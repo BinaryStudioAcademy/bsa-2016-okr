@@ -70,7 +70,6 @@ HistoryService.prototype.filterBy = function (eventList, filters, callback) {
 		if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
 			if(item.type.indexOf(filters[key]) === -1)
 				{
-					console.log('123');
 					isFiltered = false;
 				}
 			};
