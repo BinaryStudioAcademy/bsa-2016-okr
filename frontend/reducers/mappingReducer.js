@@ -12,10 +12,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 
        case "MAPPING_RECEIVED_USERS": {
 
-            const {data} = action;
-
-            console.log(data);
-            
+            const {data} = action;   
 
             for (let i = 0; i < data.length; i++) {
 
@@ -25,7 +22,7 @@ export default function mappingReducer(state = initialState, action = {}) {
                 data[i].email = "default@email.com";
 
             }
-
+            
             return Object.assign({}, state, {
                 users: JSON.parse(JSON.stringify(data)),
                 visibleUsers: JSON.parse(JSON.stringify(data)) 

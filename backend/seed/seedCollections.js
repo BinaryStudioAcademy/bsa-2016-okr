@@ -21,20 +21,85 @@ var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
 
 var chance = new Chance();
+
 function getRandomId(set) {
 	var index = chance.integer({ min: 0, max: set.length - 1 });
 	return set[index]._id;
 }
 
-function randomUser(i) {
+function randomUser() {
+
 	var createdAt = chance.date({ year: 2016, month: 4 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 200000000 }));
+	
+	var randomValue = chance.integer({ min: 1, max: 100 });
+	
+	var localRole;
+
+	if (randomValue <= 10)
+		localRole = "admin";
+	else if (randomValue > 10 && randomValue < 26)
+		localRole = "mentor";
+	else if (randomValue > 25 && randomValue < 36)
+		localRole = "default";
+	else
+		localRole = "user";
 
 	return new User({
-		localRole: i % 10 === 0 ? 'admin' : '',
+		localRole: localRole,
 		createdAt: createdAt,
 		updatedAt: updatedAt,
+		mentor: null
 	});
+}
+
+function generateMentors(users) {
+
+	let apprenticeIndex;
+	let isCompleted;
+
+	for (let i = 0; i < users.length; i++) {
+
+		if (users[i].localRole === "mentor" && users[i].mentor === null) {
+
+			isCompleted = false;
+
+			apprenticeIndex = 0;
+
+			while (!isCompleted) {
+
+				if (apprenticeIndex === users.length)
+					break;
+
+				if (apprenticeIndex === i || users[apprenticeIndex].localRole != "user") {
+					++apprenticeIndex;
+					continue;
+				}
+
+				let isFound = false;
+
+				for (let j = 0; j < users.length; j++) {
+					if (users[j].mentor === ObjectId(users[apprenticeIndex]._id)) {
+						isFound = true;
+						break;
+					}
+				}
+
+				if (isFound) {
+					++apprenticeIndex;
+					continue;
+				}
+
+				users[i].mentor = ObjectId(users[apprenticeIndex]._id);
+
+				isCompleted = true;
+
+			}
+
+		}
+
+	}
+
 }
 
 function randomObjective(users, categories, i) {
@@ -225,7 +290,8 @@ module.exports = function () {
 		// .toObject() to avoid bulk insert crashes
 		// variables are lowercased because they need to be named as collections
 
-		var users = new Array(100).fill(0).map((_, i) => randomUser(i).toObject());
+		var users = new Array(100).fill(0).map((_, i) => randomUser().toObject());
+		generateMentors(users);
 		var categories = baseCategories();
 		var objectives = new Array(100).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
 		var keyresults = new Array(5000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());

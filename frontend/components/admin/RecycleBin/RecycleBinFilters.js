@@ -95,7 +95,6 @@ class RecycleBinFilter extends Component {
 		document.querySelector("#cbObjectives").checked = true;
 		document.querySelector("#cbCategory").checked = false;
 		document.querySelector("#cbKey").checked = false;
-		document.querySelector("#cbSorting").checked = false;
 
 		document.querySelector("#reset-option").selected = true;
 
