@@ -47,7 +47,7 @@ class Objectives extends Component {
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={this.changeYear}
+				<Quarter changeTab={ this.changeTab} changeYear={this.changeYear}
 						currentTab={ currentTab } />
 				<div id='objectives'>
 					<ObjectivesList objectives={ ObjectiveItems } />
