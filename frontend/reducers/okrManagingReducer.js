@@ -1,7 +1,7 @@
 import users from '../components/mockData/users.js'
 import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
         SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE,
-        DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, RECEIVED_DELETE_OBJECTIVE} from '../actions/okrManagingActions.js'
+        DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
@@ -49,7 +49,7 @@ export default function patentDetailsReducer(state = initialState, action) {
                 active: 0,
                 objectives,
                 visibleObjectives: objectives,
-                waiting: true   
+                waiting: false   
             })
         }
 
@@ -61,16 +61,16 @@ export default function patentDetailsReducer(state = initialState, action) {
             })
         }
 
-        case RECEIVED_DELETE_OBJECTIVE: {
+        case SOFT_DELETE_OBJECTIVE: {
 
-            const {id} = action;
-
-            console.log("RECEIVED_DELETE_OBJECTIVE");
+            console.log("SOFT_DELETE_OBJECTIVE");
+            const{id} = action;
+            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
 
             return Object.assign({}, state, {
                 active: 0,
-                visibleObjectives: objectives,
-                waiting: true   
+                visibleObjectives: update(objectives, id),
+                waiting: false   
             })
         }
 
@@ -118,4 +118,17 @@ function updateVisibleItems(visibleObjectives, objectives, searchValue){
         }
     }
     return objectivesAfterInputFilter;
+}
+function update(objectives, id) {
+     for (let i = 0; i < objectives.length; i++) {
+
+          if (objectives[i]._id == id) {
+            console.log(i, id)
+            objectives.splice(i, 1);
+
+          }
+    }
+
+    return objectives;
+
 }

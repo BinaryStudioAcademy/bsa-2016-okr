@@ -8,7 +8,7 @@ export const SEARCH_OBJECTIVE = 'SEARCH_OBJECTIVE'
 export const ACTIVE_OBJECTIVE = 'ACTIVE_OBJECTIVE'
 export const DELETE_OBJECTIVE = 'DELETE_OBJECTIVE'
 export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
-export const RECEIVED_DELETE_OBJECTIVE = 'RECEIVED_DELETE_OBJECTIVE'
+export const SOFT_DELETE_OBJECTIVE = 'SOFT_DELETE_OBJECTIVE'
 
 export function getObjectivesList(){
 	
@@ -38,15 +38,15 @@ export function receivedObjectivesList(objectives) {
 	};
 }
 
-export function deleteObjective(id, body){
+export function deleteObjective(id){
 	return(dispatch, getStore) => {
 
 		dispatch({
 			type: DELETE_OBJECTIVE
 		});
 
-		return axios.put('/api/objective/'+id, body)
-			.then(response => dispatch(receivedDeleteObjective(id, JSON.parse(response.config.data).isDeleted))))
+		return axios.put('/api/objective/softDelete/'+id)
+			.then(response => dispatch(softDeleteObjective(id)))
 			.catch(response => dispatch(deleteObjectiveError(response.data)));
 	};
 }
@@ -58,10 +58,10 @@ export function deleteObjectiveError(data) {
 	};
 }
 
-export function receivedDeleteObjective(objectives) {
+export function softDeleteObjective(id) {
 	return {
-		type: RECEIVED_DELETE_OBJECTIVE,
-		objectives
+		type: SOFT_DELETE_OBJECTIVE,
+		id
 	};
 }
 

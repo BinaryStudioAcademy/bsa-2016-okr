@@ -94,6 +94,16 @@ router.delete('/:id', adminOnly, (req, res, next) => {
 	return service.delete(session._id, id, res.callback);
 });
 
+router.put('/softDelete/:id', adminOnly, (req, res, next) => {
+	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.setToDeleted(id, res.callback);
+});
+
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
 // 	var description = req.body.description || '';
