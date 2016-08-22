@@ -48,14 +48,26 @@ export default function patentDetailsReducer(state = initialState, action) {
             console.log("RECEIVED_USERS_LIST");
             console.log(data);
 
-
+         
             return Object.assign({}, state, {
                 user: data,
-                waiting: true   
+                waiting: true
             })
         }
         default: 
             return state;        
         
     }
+}
+function makeName()
+{
+    var name = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    var nameLength = 5 + Math.floor(Math.random()*5);
+
+    for( var i = 0; i < nameLength; i++ )
+        name += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return name;
 }
