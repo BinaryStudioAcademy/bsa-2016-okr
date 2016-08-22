@@ -7,7 +7,21 @@ import * as actions from "../../../../actions/okrManagingActions.js";
 class ActiveObjective extends React.Component{
   constructor(props){
     super(props);
+
+    this.deleteObjective = this.deleteObjective.bind(this)
+    this.editObjective = this.editObjective.bind(this)
   }
+
+  editObjective(){
+
+  }
+
+  deleteObjective(){
+  	let i = this.props.objectivesList.active;
+ //	console.log(this.props.objectivesList.visibleObjectives[i]._id)
+  	this.props.deleteObjective(this.props.objectivesList.visibleObjectives[i]._id, true)
+  }
+
   componentWillMount(){
   	this.props.getObjectivesList()
   }
@@ -15,17 +29,17 @@ class ActiveObjective extends React.Component{
 
   	const{visibleObjectives, active} = this.props.objectivesList;
   	if (!visibleObjectives || !visibleObjectives[active]) { 
-  		return <h3>Nothing found :(</h3>; 
+  		return <h3>Nothing found</h3>; 
   	}
   		else {
   	var objective = visibleObjectives[active];
   	let keyResults = objective.keyResults.map((item) => {
-  		return <p>{item.title}</p>
+  		return <p key={item._id}>{item.title}</p>
   	})
 		return (
 			<div className="OKR-managing thumbnail">
-				<i className="fi flaticon-edit" aria-hidden="true"></i>
-				<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
+				<i className="fi flaticon-edit" aria-hidden="true" onClick={this.editObjective}></i>
+				<i className="fi flaticon-garbage-2" aria-hidden="true" onClick={this.deleteObjective}></i>
 
 				<div className="thumbnail-caption">
 

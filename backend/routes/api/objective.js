@@ -16,7 +16,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	var title = req.body.title || '';
 	var description = req.body.description || '';
 	var category = req.body.category || '';
-	 var keyResults = req.body.keyResults || [];
+	var keyResults = req.body.keyResults || [];
 
 	keyResults.forEach((keyResult) => {
 		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
@@ -59,7 +59,7 @@ router.post('/', adminOnly, (req, res, next) => {
 		return keyResult;
 	});
 
-	return service.add(session._id, req.body, keyResults, res.callback);
+	return service.add(req.session._id, objective, keyResults, res.callback);
 });
 
 router.get('/category/:categoryId/:title*?', (req, res, next) => {
@@ -86,7 +86,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 
 router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
-	
+
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
@@ -113,8 +113,8 @@ router.delete('/:id', adminOnly, (req, res, next) => {
 // 		// If assignedTo is correct ObjectId,
 // 		// but it doesn't equal to current userId
 // 		// then check current user to be a mentor for assinedTo or admin
-// 		if(assignedTo !== req.session._id 
-// 			&& ( !userMentorRepository.checkUserMentor(assignedTo, req.session._id) || !req.session.isAdmin) ) 
+// 		if(assignedTo !== req.session._id
+// 			&& ( !userMentorRepository.checkUserMentor(assignedTo, req.session._id) || !req.session.isAdmin) )
 // 		{
 // 			return res.forbidden();
 // 		}

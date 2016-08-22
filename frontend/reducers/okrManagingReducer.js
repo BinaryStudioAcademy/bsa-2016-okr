@@ -1,6 +1,7 @@
 import users from '../components/mockData/users.js'
 import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
-        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE} from '../actions/okrManagingActions.js'
+        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE,
+        DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, RECEIVED_DELETE_OBJECTIVE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
@@ -51,6 +52,29 @@ export default function patentDetailsReducer(state = initialState, action) {
                 waiting: true   
             })
         }
+
+        case DELETE_OBJECTIVE: {
+            console.log("DELETE_OBJECTIVE");
+
+            return Object.assign({}, state, {
+                waiting: true
+            })
+        }
+
+        case RECEIVED_DELETE_OBJECTIVE: {
+
+            const {id} = action;
+
+            console.log("RECEIVED_DELETE_OBJECTIVE");
+
+            return Object.assign({}, state, {
+                active: 0,
+                visibleObjectives: objectives,
+                waiting: true   
+            })
+        }
+
+
         case SET_SORT: {
             const sort = action.sort;
             console.log(sort);

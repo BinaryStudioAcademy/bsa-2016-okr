@@ -6,6 +6,9 @@ export const RECEIVED_OBJECTIVES_LIST = 'RECEIVED_OBJECTIVES_LIST'
 export const SET_SORT =  "SET_SORT"
 export const SEARCH_OBJECTIVE = 'SEARCH_OBJECTIVE'
 export const ACTIVE_OBJECTIVE = 'ACTIVE_OBJECTIVE'
+export const DELETE_OBJECTIVE = 'DELETE_OBJECTIVE'
+export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
+export const RECEIVED_DELETE_OBJECTIVE = 'RECEIVED_DELETE_OBJECTIVE'
 
 export function getObjectivesList(){
 	
@@ -31,6 +34,33 @@ export function objectivesListError(data) {
 export function receivedObjectivesList(objectives) {
 	return {
 		type: RECEIVED_OBJECTIVES_LIST,
+		objectives
+	};
+}
+
+export function deleteObjective(id, body){
+	return(dispatch, getStore) => {
+
+		dispatch({
+			type: DELETE_OBJECTIVE
+		});
+
+		return axios.put('/api/objective/'+id, body)
+			.then(response => dispatch(receivedDeleteObjective(id, JSON.parse(response.config.data).isDeleted))))
+			.catch(response => dispatch(deleteObjectiveError(response.data)));
+	};
+}
+
+export function deleteObjectiveError(data) {
+	return {
+		type: DELETE_OBJECTIVE_ERROR,
+		data
+	};
+}
+
+export function receivedDeleteObjective(objectives) {
+	return {
+		type: RECEIVED_DELETE_OBJECTIVE,
 		objectives
 	};
 }
