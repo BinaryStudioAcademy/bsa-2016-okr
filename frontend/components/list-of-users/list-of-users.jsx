@@ -20,6 +20,7 @@ class ListOfUsers extends Component {
 	search(e) {
 		this.props.search(e.target.value);
 	}
+	
 	componentWillMount(){
 		this.props.getUsersList();
 	}
@@ -43,8 +44,8 @@ class ListOfUsers extends Component {
 					<div id='usersList'>
 					<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
 						<div className="users-title">
-                    		<p><span>Users</span></p>
-                    	</div>
+							<p><span>Users</span></p>
+							</div>
 						<ul className='listOfUsers'>{userNodes}</ul>
 					</div>
 				</CentralWindow>
@@ -56,13 +57,13 @@ class ListOfUsers extends Component {
 	}
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
+	return bindActionCreators(actions, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {
-        users: state.usersList
-    };
+	return {
+		users: state.usersList
+	};
 }
 
 const ListOfUsersConnected = connect(mapStateToProps, mapDispatchToProps)(ListOfUsers);

@@ -11,14 +11,14 @@ class KeyResult extends Component {
 			<li className="user-key-result">
 				<span className='completed'>{this.props.item.title}</span>
 				<div className='score'>{this.props.item.score}</div>
-		    </li>        
+			</li>
 		)
 		else
 			return (
 				<li className="user-key-result">
 					{this.props.item.templateId.title}
-	         		<div className='score'>{this.props.item.score}</div>
-			    </li>        
+					<div className='score'>{this.props.item.score}</div>
+				</li>
 			)
 	}
 }

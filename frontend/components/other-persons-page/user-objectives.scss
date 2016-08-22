@@ -3,7 +3,7 @@
 #objectives{
 	.objective{
 		margin: 20px 5%;
-	  	margin-top: 10px;
+		margin-top: 10px;
 		padding: 5px 15px;
 		background: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
@@ -106,22 +106,22 @@
 
 			.co-workers{
 				position: relative;
-    			padding-right: 5px;
-    			font-size: 20px;
+				padding-right: 5px;
+				font-size: 20px;
 				span {
-				    position: absolute;
-			    	top: 5px;
-			   		left: 30px;
+					position: absolute;
+					top: 5px;
+					left: 30px;
 				}
 			}
 			.followed{
 				position: relative;
-    			padding: 0 5px 0 30px;
-    			font-size: 20px;
+				padding: 0 5px 0 30px;
+				font-size: 20px;
 				span {
-				    position: absolute;
-			    	top: 5px;
-			   		left: 30px;
+					position: absolute;
+					top: 5px;
+					left: 30px;
 				}
 			}
 		}
@@ -138,13 +138,13 @@
  	padding: 0;
 
   .quater{
-    border: 2px solid $color-blue-grey;
+    border: 1px solid #607D8B;
     display: inline-block;
     text-align: center;
     margin-left: -2px;
-    padding: 5px;
+    padding: 7px;
     width: 21%;
-    color: #2c3e50;
+    color: $color-blue-grey;
     cursor: pointer;
     box-sizing: border-box;
     background-color: #fff;
@@ -154,18 +154,18 @@
   }
    .year{
    		width: 16.6%;
-   		border: 2px solid #607D8B;
-   		padding: 4px 10px;
+   		border: 1px solid #607D8B;
+   		padding: 6px 10px;
     	display: inline-block;
     }
 
   .active{
    background-color: $color-blue-grey;
-    color: #fff;
+   color: #fff;
   }
   .quater:hover{
-    background-color: $color-blue-grey;
-    color: #fff;
+    background: #e4eaec;
+    color: $color-blue-grey;
   }
 }
 }
@@ -206,7 +206,7 @@
 #topPanel {
   display: inline-block;
   width: 100%;
-  padding: 15px 5%;
+  padding: 0px 5% 10px;
   box-sizing: border-box;
 
     .userInfo{

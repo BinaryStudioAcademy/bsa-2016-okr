@@ -9,10 +9,10 @@ class UserItem extends Component {
 
 	render() {
 		var mentor = '';
-		      console.log(this.props.user.userId.mentor)
-      	if(this.props.user.userId.mentor == null)
-        	mentor = 'Is not assigned';
-    	else mentor = (this.props.user.userId.mentor.userInfo.firstName +' '+ this.props.user.userId.mentor.userInfo.lastName)
+		if(this.props.user.userId.mentor == null)
+			mentor = 'Is not assigned';
+		else mentor = (this.props.user.userId.mentor.userInfo.firstName +' '+ this.props.user.userId.mentor.userInfo.lastName)
+		
 		return (
 			<Link to={`user/${this.props.user.userId._id}`}>
 				<div className="userItemDiv">
