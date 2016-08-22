@@ -38,6 +38,29 @@ export default function historyReducer(state = initialState, action) {
 			})
         }
 
+        case "REC_BYN_DELETE_ITEM_FROM_STATE": {
+    		
+    		const {id} = action;
+
+    		console.log("SRABOTALO");
+
+    		for (let i = 0; i < state.recycleBinItems.length; i++) {
+
+    			if (id === state.recycleBinItems[i].id) {
+
+    				state.recycleBinItems.splice(i, 1);
+    				break;
+    			}
+    		}
+
+			return Object.assign({}, state, {
+				recycleBinItems: state.recycleBinItems,
+				visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
+					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
+					state.keyType, state.sortByDate, state.categoryType, state.userName)
+			})
+        }
+
     	case "SEARCH_OBJECTS": {
     		const {searchValue} = action;
 			return Object.assign({}, state, {
@@ -234,9 +257,7 @@ function filterDate(items, dateFrom, dateTo) {
 
     }
     else if(dateFrom == '' && dateTo != '') {
-
     	items = JSON.parse(JSON.stringify(data_for_recycle));
-
         for (let i = 0; i < items.length; i++) {
 	       	if (dateTo >= data_for_recycle[i].deletedDate) {
 	            visibleItems.push(data_for_recycle[i]);

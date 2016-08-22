@@ -1,5 +1,25 @@
 var axios = require('axios')
 
+export function getAllCategories() {
+
+     return (dispatch, getStore) => {
+		  dispatch({
+		   type: "GET_ALL_CATEGORIES"
+		  });
+
+	  return axios.get('api/category/')
+	   .then(response => dispatch(receivedAllCategories(response.data)))
+	   .catch(response => dispatch(receivedError(response.data)));
+	 };
+}
+
+export function receivedAllCategories(data) {
+	 return {
+		  type: "RECEIVED_ALL_CATEGORIES",
+		  data: data
+	 };
+}
+
 export function getMe() {
 
      return (dispatch, getStore) => {
@@ -35,11 +55,18 @@ export function setChangeTab(num) {
 	 };
 }
 
-export function changeYear(year) {
+export function setChangeYear(year) {
 	 return {
 		  type: "CHANGE_YEAR",
 		  currentYear: year
 	 };
+}
+
+export function createQuarter(quarter){
+	return{
+		type: "CREATE_QUARTER",
+		payload: quarter
+	}
 }
 
 export function softDeleteMyObjectiveById(id) {
@@ -58,5 +85,24 @@ export function softDeleteMyObjectiveByIdApi(id, body) {
  return axios.put(('api/userObjective/' + id), body)
   .then(response => dispatch(softDeleteMyObjectiveById(id)))
   .catch(response => dispatch(receivedError(response.data)));
+  };
+}
+
+export function addNewObjective(body) {
+  return (dispatch, getStore) => {
+   dispatch({
+    type: "ADD_NEW_OBJECTIVE"
+   });
+
+ return axios.post(('api/userObjective/'), body)
+  .then(response => dispatch(AddedNewObjective(response.data)))
+  .catch(response => dispatch(receivedError(response.data)));
+  };
+}
+
+export function AddedNewObjective(data) {
+  return {
+     type: "ADDED_NEW_OBJECTIVE",
+     data: data
   };
 }

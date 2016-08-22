@@ -18,10 +18,24 @@ class HistoryFilter extends Component {
 		this.showFiltersContainer = this.showFiltersContainer.bind(this);
 		this.onChangeFrom = this.onChangeFrom.bind(this);
 		this.onChangeTo = this.onChangeTo.bind(this);
+		this.onChangeName = this.onChangeName.bind(this);
+		this.onChangeType = this.onChangeType.bind(this);
+		this.setFilters = this.setFilters.bind(this);
+		this.onReset = this.onReset.bind(this);
+	}
+
+	setFilters() {
+		console.log(`type: ${type}\n name: ${name}\n date: ${date}\n`)
+		this.props.getFilteredItems();
+	}
+
+	onReset(){
+		this.props.resetFilters();
+		this.props.getFilteredItems();
 	}
 
 	showFiltersContainer() {
-		if (this.props.stateFromReducer.history.showHistoryFilters) {
+		if (this.props.history.showHistoryFilters) {
 			return "show-container"
 		} else {
 			return "hide-container"
@@ -30,30 +44,45 @@ class HistoryFilter extends Component {
 	}
 
 	onChangeFrom(dateString, { dateMoment, timestamp }) {
-		  console.log(dateString);
-			this.props.setFilterDateFrom(dateString);
+		console.log(dateString);
+		this.props.setFilterDateFrom(dateString);
+		this.props.getFilteredItems();
 	}
 
 	onChangeTo(dateString, { dateMoment, timestamp }) {
-			console.log(dateString);
-			this.props.setFilterDateTo(dateString);
+		console.log(dateString);
+		this.props.setFilterDateTo(dateString);
+		this.props.getFilteredItems();
+	}
+
+	onChangeName(event) {
+		var value = event.target.value;
+		console.log(value);
+		this.props.setNameFilter(value);
+		//this.props.getFilteredItems();
+	}
+
+	onChangeType(event) {
+		var value = event.target.value;
+		console.log(value);
+		this.props.setTypeFilter(value);
+		this.props.getFilteredItems();
 	}
 
 	render() {
 
 		return(
 			<div className={"history-filter-bar " + this.showFiltersContainer()}>
-				<div className="label">Filters:</div>
 				<table className="history-filter-table">
 					<tbody>
 						<tr>
-							<td><input className="history-filter-bar-input" type="text" placeholder="Username"/></td>
+							<td><input className="history-filter-bar-input" type="text" placeholder="Username" onChange={this.onChangeName}/></td>
 							<td>
-								<select>
-									<option value="date">Action</option>
-									<option value="user">Create</option>
-									<option value="type">Update</option>
-									<option value="object">Delete</option>
+								<select onChange={this.onChangeType}>
+									<option selected value="">Action</option>
+									<option value="add">Create</option>
+									<option value="update">Update</option>
+									<option value="delete">Delete</option>
 								</select>
 							</td>
 							<td className="cell-right-align">Date: </td>
@@ -61,17 +90,8 @@ class HistoryFilter extends Component {
 								<DateField className="date-field" placeholder="From" dateFormat="YYYY-MM-DD" onChange={this.onChangeFrom} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
 								<DateField className="date-field" placeholder="To" dateFormat="YYYY-MM-DD" onChange={this.onChangeTo} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
 							</td>
-							<td>Sort by: </td>
-							<td>
-								<select value="date">
-									<option value="user">User</option>
-									<option value="type">Action</option>
-									<option value="object">Object</option>
-									<option value="date">Date</option>
-								</select>
-							</td>
-							<td className="cell-right-align" colSpan="2">
-								<button className="btn btn-filter">Reset</button>
+							<td className="cell-right-align" colSpan="3">
+								<button onClick={this.onReset} className="btn btn-filter">Reset</button>
 							</td>
 						</tr>
 					</tbody>
@@ -87,7 +107,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		stateFromReducer: state
+		history: state.history
 	};
 }
 

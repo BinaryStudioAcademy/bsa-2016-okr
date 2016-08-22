@@ -30,6 +30,17 @@ export function setUserName(value) {
 	return action;
 }
 
+export function deleteItemFromState(id) {
+
+	console.log(id);
+	
+	const action = {
+		type: 'REC_BYN_DELETE_ITEM_FROM_STATE',
+		id: id
+	};
+	return action;
+}
+
 export function typeOrCategoryFilter(value) {
 	
 	const action = {

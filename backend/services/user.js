@@ -7,9 +7,10 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var UserService = function() {};
 
 UserService.prototype.getById = function(id, callback) {
+
 	async.waterfall([
 		(callback) => {
-			UserRepository.getById(id, function(err, user) {
+			UserRepository.getByIdPopulate(id, function(err, user) {
 				if(err) {
 					return callback(err, null);
 				};
@@ -40,6 +41,21 @@ UserService.prototype.getById = function(id, callback) {
 	});
 };
 
+UserService.prototype.getAll = function(callback) {
+	async.waterfall([
+		(callback) => {
+			QuarterRepository.getCurrentQuarter((err, quarters) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, quarters);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
 // UserService.prototype.add = function(authorId, user, callback){
 //  	console.log('user default '+ user.objectives[0].keys[0].keyId );
 //  	var newUser = Object.assign({}, user);

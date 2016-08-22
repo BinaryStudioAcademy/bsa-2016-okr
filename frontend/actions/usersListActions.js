@@ -13,7 +13,7 @@ export function getUsersList(){
 			type: GET_USERS_LIST
 		});
 
-		return axios.get('/api/user/')
+		return axios.get('/api/user/quarter')
 			.then(response => dispatch(receivedUsersList(response.data)))
 			.catch(response => dispatch(userslistError(response.data)));
 	};

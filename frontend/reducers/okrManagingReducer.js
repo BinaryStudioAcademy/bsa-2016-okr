@@ -1,11 +1,15 @@
 import users from '../components/mockData/users.js'
-import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST} from '../actions/okrManagingActions.js'
+import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
+        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
     waiting: true,
+    visibleObjectives: [],
     active: 0,
     term: '',
+    sort: '',
+    searchValue: '',
     editing: false
 }
 
@@ -29,24 +33,66 @@ export default function patentDetailsReducer(state = initialState, action) {
             console.log(data);
 
             return Object.assign({}, state, {
-                objectives
+                data
             })
         }
 
       case RECEIVED_OBJECTIVES_LIST: {
 
-            const {data} = action;
+            const {objectives} = action;
 
             console.log("RECEIVED_OBJECTIVES_LIST");
-            console.log(data);
+            console.log(objectives);
 
             return Object.assign({}, state, {
-                objectives: data,
+                active: 0,
+                objectives,
+                visibleObjectives: objectives,
                 waiting: true   
             })
         }
+        case SET_SORT: {
+            const sort = action.sort;
+            console.log(sort);
+
+            return Object.assign({}, state, {
+                sort
+            })
+        }
+        case ACTIVE_OBJECTIVE: {
+            const {active} = action;
+
+            return Object.assign({}, state, {
+                active
+            })
+        }
+        case SEARCH_OBJECTIVE: {
+            const {searchValue} = action;
+            return Object.assign({}, state, {
+                active: 0,
+                visibleObjectives: updateVisibleItems(state.visibleObjectives, state.objectives, searchValue)
+
+            })
+        }
+
         default: 
             return state;        
         
     }
+}
+
+function updateVisibleItems(visibleObjectives, objectives, searchValue){
+    let objectivesAfterInputFilter = [];
+
+    if (searchValue === "") {
+        objectivesAfterInputFilter = objectives;
+    }
+    else {
+        for (let i = 0; i < objectives.length; i++) {
+            if (objectives[i].title.toUpperCase().indexOf(searchValue.toUpperCase()) !== -1) {
+                objectivesAfterInputFilter.push(objectives[i])
+            }
+        }
+    }
+    return objectivesAfterInputFilter;
 }

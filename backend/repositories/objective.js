@@ -28,6 +28,7 @@ ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 			isApproved: true,
 			isDeleted: false
 		})
+		.limit(10)
 		.populate('keyResults')
 		.populate('category')
 		.exec(callback);

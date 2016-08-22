@@ -10,6 +10,7 @@ export function updateUserLocRole(id, localRole) {
 	return action;
 }
 
+
 export function updateUserRole(id, body) {
 
 	 return (dispatch, getStore) => {
@@ -25,6 +26,7 @@ export function updateUserRole(id, body) {
 	};
 }
 
+
 export function getUsers(){
 	
 	return(dispatch, getStore) => {
@@ -33,7 +35,7 @@ export function getUsers(){
 			type: "MAPPING_GET_USERS"
 		});
 
-		return axios.get('/api/user/')
+		return axios.get('api/user/')
 			.then(response => dispatch(receivedUsers(response.data)))
 			.catch(response => dispatch(receivedUsersError(response.data)));
 	};

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
 var Quarter = require('../schemas/quarter');
+var CONST = require('../config/constants');
 
 var QuarterRepository = function(){
 	Repository.prototype.constructor.call(this);
@@ -35,4 +36,31 @@ QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
 		.exec(callback);
 };
 
+QuarterRepository.prototype.getCurrentQuarter = function(callback) {
+	var model = this.model;
+	var today = new Date();
+
+	model
+		.find({'index': CONST.currentQuarter, 'year': CONST.currentYear})
+		.populate({
+			path: 'userObjectives',
+			match: { isDeleted: false},
+			populate: {
+				path: 'templateId keyResults.templateId',
+				populate: {
+						path:	'category'
+				}
+			}
+		})
+		.populate({
+			path: 'userId',
+			populate: {
+				path: 'userInfo mentor',
+				populate: {
+					path: 'userInfo'
+				}
+			}
+		})
+		.exec(callback);
+};
 module.exports = new QuarterRepository();

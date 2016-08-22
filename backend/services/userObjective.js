@@ -1,13 +1,17 @@
 const async = require('async');
+const ObjectiveService = require('./objective');
 const UserObjectiveRepository = require('../repositories/userObjective');
-var HistoryRepository = require('../repositories/history');
+const QuarterRepository = require('../repositories/quarter');
+const HistoryRepository = require('../repositories/history');
 
 var UserObjectiveService = function() {};
 
-UserObjectiveService.prototype.add = function(authorId, objective, callback){
+UserObjectiveService.prototype.add = function(data, quarterId, callback){
 	async.waterfall([
 		(callback) => {
-			UserObjectiveRepository.add(objective, (err, objective) => {
+			var keyResults = data.keyResults;
+			data.keyResults = [];
+			ObjectiveService.add(data.creator, data, keyResults, (err, objective) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -15,7 +19,42 @@ UserObjectiveService.prototype.add = function(authorId, objective, callback){
 			})
 		},
 		(objective, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objective._id, "add user Objective", (err) => {
+			keys = objective.keyResults.map((item) => {
+				var keyResult = {
+					templateId: item._id,
+					score: 0,
+					creator: item.creator,
+				};
+
+				return keyResult;
+			});
+
+			var data = {
+				templateId: objective._id,
+				userId: objective.creator,
+				creator: objective.creator,
+				isDeleted: false,
+				keyResults: keys
+			}
+
+			UserObjectiveRepository.add(data, (err, objective) => {
+				if(err) {
+					return callback(err, null);
+				};
+				return callback(null, objective);
+			})
+		},
+		(objective, callback) => {
+			var data = {$push: {userObjectives: objective._id}}
+			QuarterRepository.update(quarterId, data, (err, result) => {
+				if(err) {
+					return callback(err, null);
+				};
+				return callback(null, objective);
+			})
+		},
+		(objective, callback) => {
+			HistoryRepository.addObjectiveEvent(objective.creator, objective._id, "add user Objective", (err) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -24,7 +63,7 @@ UserObjectiveService.prototype.add = function(authorId, objective, callback){
 		}
 	], (err, result) => {
 		return callback(err, result)
-	}) 
+	})
 };
 
 UserObjectiveService.prototype.update = function(authorId, objectiveId, objective, callback){
@@ -47,7 +86,7 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 		}
 	], (err, result) => {
 		return callback(err, result)
-	}) 
+	})
 };
 
 UserObjectiveService.prototype.delete = function(authorId, objectiveId, callback){

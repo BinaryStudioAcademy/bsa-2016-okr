@@ -23,7 +23,6 @@ export default function patentDetailsReducer(state = initialState, action) {
             const {data} = action;
 
             console.log("GET_USERS_LIST");
-            console.log(data);
 
             return Object.assign({}, state, {
                 waiting: true
@@ -49,9 +48,10 @@ export default function patentDetailsReducer(state = initialState, action) {
             console.log("RECEIVED_USERS_LIST");
             console.log(data);
 
+         
             return Object.assign({}, state, {
                 user: data,
-                waiting: true   
+                waiting: true
             })
         }
         default: 

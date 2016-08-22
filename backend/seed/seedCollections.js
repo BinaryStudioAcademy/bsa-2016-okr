@@ -8,6 +8,7 @@ var KeyResult = require('../schemas/keyResult');
 var Category = require('../schemas/category');
 var UserObjective = require('../schemas/userObjective');
 var Quarter = require('../schemas/quarter');
+var UserInfo = require('../schemas/userInfo');
 // var Comment = require('../schemas/comment');
 // var History = require('../schemas/history');
 // var Plan = require('../schemas/plan');
@@ -21,20 +22,78 @@ var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
 
 var chance = new Chance();
+
 function getRandomId(set) {
 	var index = chance.integer({ min: 0, max: set.length - 1 });
 	return set[index]._id;
 }
 
-function randomUser(i) {
+function randomUser() {
+
 	var createdAt = chance.date({ year: 2016, month: 4 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 200000000 }));
+	
+	var randomValue = chance.integer({ min: 1, max: 100 });
+	
+	var localRole;
+
+	if (randomValue <= 10)
+		localRole = "admin";
+	else if (randomValue > 10 && randomValue < 26)
+		localRole = "mentor";
+	else if (randomValue > 25 && randomValue < 36)
+		localRole = "default";
+	else
+		localRole = "user";
 
 	return new User({
-		localRole: i % 10 === 0 ? 'admin' : '',
+		localRole: localRole,
 		createdAt: createdAt,
-		updatedAt: updatedAt
+		updatedAt: updatedAt,
+		mentor: null
 	});
+}
+
+function generateMentors(users) {
+
+	let isCompleted, apprenticeNumbers;
+
+	for (let i = 0; i < users.length; i++) {
+
+		if (users[i].localRole === "mentor") {
+
+			apprenticeIndex = 0;
+			apprenticeNumbers = chance.integer({ min: 0, max: users.length });
+
+			if (apprenticeNumbers > 3)
+				apprenticeNumbers = 3;
+
+			while (apprenticeIndex < users.length && apprenticeNumbers > 0) {
+
+				if (apprenticeIndex === users.length)
+					break;
+
+				if (apprenticeIndex === i || users[apprenticeIndex].localRole != "user") {
+					++apprenticeIndex;
+					continue;
+				}
+
+				if (users[apprenticeIndex].mentor != null) {
+					++apprenticeIndex;
+					continue;
+				}
+
+				users[apprenticeIndex].mentor = ObjectId(users[i]._id);
+
+				--apprenticeNumbers;
+				++apprenticeIndex
+
+			}
+
+		}
+
+	}
+
 }
 
 function randomObjective(users, categories, i) {
@@ -178,9 +237,10 @@ function getQuarters(users, userObjectives) {
 		years.forEach((year) => {
 			quarters.forEach((index) => {
 				var quarterObjectives;
+				var objectivesCount = objectiveIds.length > 4 ? 4 : objectiveIds.length;
 
 				if((index !== 4) && (year !== currentYear + 1)) {
-					quarterObjectives = chance.pickset(objectiveIds, chance.integer({ min: 0, max: objectiveIds.length }));
+					quarterObjectives = chance.pickset(objectiveIds, chance.integer({ min: 0, max: objectivesCount}));
 				} else {
 					quarterObjectives = objectiveIds;
 				}
@@ -208,6 +268,22 @@ function getQuarters(users, userObjectives) {
 	return res;
 }
 
+function randomUserInfo(users) {
+	var info = {
+		firstName: chance.first(),
+		lastName: chance.last(),
+		email: chance.email()
+	};	
+
+	return new UserInfo(info);
+};
+
+function setInfoToUser(users, userinfos) {
+	users.forEach((user, i) => {
+		user.userInfo = userinfos[i]._id;
+	});
+}
+
 /*function randomHistory(users, keys, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 100000, max: 2000000 }));
@@ -224,11 +300,14 @@ function getQuarters(users, userObjectives) {
 module.exports = function () {
 		// .toObject() to avoid bulk insert crashes
 		// variables are lowercased because they need to be named as collections
-
-		var users = new Array(100).fill(0).map((_, i) => randomUser(i).toObject());
+		var usersCount = 30;
+		var userinfos = new Array(usersCount).fill(0).map((_, i) => randomUserInfo().toObject());
+		var users = new Array(usersCount).fill(0).map((_, i) => randomUser().toObject());
+		generateMentors(users);
+		setInfoToUser(users, userinfos);
 		var categories = baseCategories();
-		var objectives = new Array(1000).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
-		var keyresults = new Array(5000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
+		var objectives = new Array(100).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
+		var keyresults = new Array(500).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
 
@@ -253,7 +332,8 @@ module.exports = function () {
 			categories: categories,
 			userobjectives: userobjectives,
 			quarters: quarters,
-			roles: roles
+			roles: roles,
+			userinfos: userinfos
 			// histories: histories
 		};
 	}

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactList from 'react-list';
-
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -14,7 +14,7 @@ import '../../common/styles/table.scss';
 class HistoryItemList extends React.Component {
     constructor(props) {
         super(props);
-
+        this.onSort = this.onSort.bind(this);
         this.getActionColor = this.getActionColor.bind(this);
         this.componentWillMount = this.componentWillMount.bind(this)
     }
@@ -26,6 +26,10 @@ class HistoryItemList extends React.Component {
     componentWillMount() {
         this.props.getHistoryItems();
         console.log(this.props.historyItems);
+    }
+
+    componentWillUnmount(){
+    	this.props.clearState();
     }
 
     getActionColor(actionType) {
@@ -48,6 +52,13 @@ class HistoryItemList extends React.Component {
         }
     }
 
+    onSort(sort) {
+        //console.log(event.currentTarget);
+        //console.log(event.currentTarget.value);
+        this.props.setSort(sort);
+        this.props.getFilteredItems();
+    }
+
 	renderItem(index, key) {
 		let item = this.props.historyItems[index];
    		return(
@@ -55,7 +66,7 @@ class HistoryItemList extends React.Component {
 				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
 				<td className={this.getActionColor(item.type)}>{item.type}</td>
 				<td><a href="#">{this.getObjectId(item)}</a></td>
-				<td>{item.createdAt}</td>
+				<td>{moment(item.createdAt).format('D MMMM YYYY, h:mm a')}</td>
 			</tr>)
   	}
 
@@ -69,10 +80,10 @@ class HistoryItemList extends React.Component {
             	<table className="table" id="historyTable">
 					<thead>
 						<tr>
-							<th>User</th>
-							<th>Action</th>
-							<th>Object</th>
-							<th>Date</th>
+							<th ><i onClick={() => this.onSort("user")} className="fa fa-sort"></i>User</th>
+							<th ><i onClick={() => this.onSort("action")} className="fa fa-sort"></i>Action</th>
+							<th ><i onClick={() => this.onSort("object")} className="fa fa-sort"></i>Object</th>
+							<th ><i onClick={() => this.onSort("date")} className="fa fa-sort"></i>Date</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -96,7 +107,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		historyItems: state.history.historyItems
+		historyItems: state.history.historyItems,
+        sortBy: state.history.sortBy,
+		keyResultItems: state.keyResults.keyResultItems
 	};
 }
 

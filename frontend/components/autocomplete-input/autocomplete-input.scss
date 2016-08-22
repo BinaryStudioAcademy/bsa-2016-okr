@@ -1,0 +1,45 @@
+@import "../common/variables";
+@import '../common/styles/commonStyles';
+
+.autocomplete {
+  position: relative;
+
+  .input-key-result {
+    width: 100%;
+    padding: .5em 1em;
+    box-sizing: border-box;
+  }
+
+  .autocomplete-result {
+    position: absolute;
+    background: #fff;
+    box-shadow: 2px 1px 4px 1px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    z-index: 11;
+  }
+
+  .autocomplete-result-ul {
+    width: 100%;
+    padding: 0;
+    max-height: 200px;
+    overflow: auto;
+  }
+
+  .autocomplete-result-li {
+    list-style: none;
+  }
+
+  .autocomplete-result-li:hover {
+    background: $color-green;
+  }
+
+  .autocomplete-result-li.active {
+    background: #ddd;
+  }
+
+  .autocomplete-result-item-text{
+    padding-left: 5px;
+    padding-top: 5px;
+  }
+
+}
