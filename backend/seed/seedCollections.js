@@ -8,6 +8,7 @@ var KeyResult = require('../schemas/keyResult');
 var Category = require('../schemas/category');
 var UserObjective = require('../schemas/userObjective');
 var Quarter = require('../schemas/quarter');
+var UserInfo = require('../schemas/userInfo');
 // var Comment = require('../schemas/comment');
 // var History = require('../schemas/history');
 // var Plan = require('../schemas/plan');
@@ -243,9 +244,10 @@ function getQuarters(users, userObjectives) {
 		years.forEach((year) => {
 			quarters.forEach((index) => {
 				var quarterObjectives;
+				var objectivesCount = objectiveIds.length > 4 ? 4 : objectiveIds.length;
 
 				if((index !== 4) && (year !== currentYear + 1)) {
-					quarterObjectives = chance.pickset(objectiveIds, chance.integer({ min: 0, max: objectiveIds.length }));
+					quarterObjectives = chance.pickset(objectiveIds, chance.integer({ min: 0, max: objectivesCount}));
 				} else {
 					quarterObjectives = objectiveIds;
 				}
@@ -273,6 +275,22 @@ function getQuarters(users, userObjectives) {
 	return res;
 }
 
+function randomUserInfo(users) {
+	var info = {
+		firstName: chance.first(),
+		lastName: chance.last(),
+		email: chance.email()
+	};	
+
+	return new UserInfo(info);
+};
+
+function setInfoToUser(users, userinfos) {
+	users.forEach((user, i) => {
+		user.userInfo = userinfos[i]._id;
+	});
+}
+
 /*function randomHistory(users, keys, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 100000, max: 2000000 }));
@@ -289,12 +307,14 @@ function getQuarters(users, userObjectives) {
 module.exports = function () {
 		// .toObject() to avoid bulk insert crashes
 		// variables are lowercased because they need to be named as collections
-
-		var users = new Array(100).fill(0).map((_, i) => randomUser().toObject());
+		var usersCount = 30;
+		var userinfos = new Array(usersCount).fill(0).map((_, i) => randomUserInfo().toObject());
+		var users = new Array(usersCount).fill(0).map((_, i) => randomUser().toObject());
 		generateMentors(users);
+		setInfoToUser(users, userinfos);
 		var categories = baseCategories();
 		var objectives = new Array(100).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
-		var keyresults = new Array(5000).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
+		var keyresults = new Array(500).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
 
@@ -319,7 +339,8 @@ module.exports = function () {
 			categories: categories,
 			userobjectives: userobjectives,
 			quarters: quarters,
-			roles: roles
+			roles: roles,
+			userinfos: userinfos
 			// histories: histories
 		};
 	}

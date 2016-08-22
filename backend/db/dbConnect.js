@@ -1,3 +1,11 @@
+var User = require('../schemas/user');
+var Objective = require('../schemas/objective');
+var KeyResult = require('../schemas/keyResult');
+var Category = require('../schemas/category');
+var UserObjective = require('../schemas/userObjective');
+var Quarter = require('../schemas/quarter');
+var UserInfo = require('../schemas/userInfo');
+
 function dbConnectionHandler() {
 	var mongoose = require('mongoose'),
 		config = require('../config/db');

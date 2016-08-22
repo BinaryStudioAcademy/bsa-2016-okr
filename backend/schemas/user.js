@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
 	localRole: String,
-	mentor: {type: Schema.Types.ObjectId, ref: 'User'}
+	mentor: {type: Schema.Types.ObjectId, ref: 'User'},
+	userInfo: {type: Schema.Types.ObjectId, ref: 'UserInfo'}
 }, {
 	timestamps: true
 });
