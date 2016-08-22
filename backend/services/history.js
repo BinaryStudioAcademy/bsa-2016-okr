@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var HistoryRepository = require('../repositories/history');
+var moment = require('moment');
 
 var HistoryService = function(){
 
@@ -61,10 +62,21 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 return callback(sortedList);
 }
 
-HistoryService.prototype.filterBy = function (eventList, filters, callback) {
+HistoryService.prototype.filterBy = function (eventList, filter, callback) {
+	var filters = filter;
+	console.log(filters.date);
+	if(filters.date.from == ''){
+		filters.date.from = '2000-01-01';
+	}
+
+	if(filters.date.to == ''){
+		filters.date.to = '2020-08-15';
+	}
+
 	var filteredList = eventList.filter( (item) => {
 	let isFiltered = true;
 	
+
 	for (let key in filters)
 	{
 		if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
@@ -81,7 +93,6 @@ HistoryService.prototype.filterBy = function (eventList, filters, callback) {
 				if (!( Date.parse(item.createdAt) >= Date.parse(filters[key].from) )
 				 || !( Date.parse(item.createdAt) <= Date.parse(filters[key].to)) )
 				{
-					console.log(new Date(item.createdAt));
 					isFiltered = false;
 				}	
 			};
