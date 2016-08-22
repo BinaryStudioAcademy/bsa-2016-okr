@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactList from 'react-list';
-
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -66,7 +66,7 @@ class HistoryItemList extends React.Component {
 				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
 				<td className={this.getActionColor(item.type)}>{item.type}</td>
 				<td><a href="#">{this.getObjectId(item)}</a></td>
-				<td>{item.createdAt}</td>
+				<td>{moment(item.createdAt).format('D MMMM YYYY, h:mm a')}</td>
 			</tr>)
   	}
 
