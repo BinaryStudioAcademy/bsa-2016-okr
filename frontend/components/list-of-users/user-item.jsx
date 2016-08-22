@@ -16,7 +16,7 @@ class UserItem extends Component {
 					<li className='userItem'>
 						<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
 						<div className='userInfo'>
-							<div className='userName'>{this.props.user.userId._id}</div>
+							<div className='userName'>{this.props.user.userId.userInfo.firstName} {this.props.user.userId.userInfo.lastName}</div>
 							<div><span className='fi flaticon-user-6 mentor'></span>
 								<span className='mentorName'>
 									<span className='mentorTitle'>Mentor:</span> 

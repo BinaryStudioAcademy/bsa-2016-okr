@@ -28,12 +28,13 @@ class ListOfUsers extends Component {
 		const {user, searchValue, name} = this.props.users;
 		
 		var userNodes = user.map(function (user, index) {
-			if(user._id.toLowerCase().indexOf(searchValue.toLowerCase()) === -1)
-				return;
-			else
-				return (
-					<UserItem key={index} name={name} user={user} />
+			if(user.userId.userInfo.firstName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0 || 
+				user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0 )
+				return(
+					<UserItem key={index} user={user} />
 				);
+			else
+				return ;
 		}.bind(this));
 
 		return (

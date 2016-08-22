@@ -59,15 +59,3 @@ export default function patentDetailsReducer(state = initialState, action) {
         
     }
 }
-function makeName()
-{
-    var name = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    var nameLength = 5 + Math.floor(Math.random()*5);
-
-    for( var i = 0; i < nameLength; i++ )
-        name += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return name;
-}
