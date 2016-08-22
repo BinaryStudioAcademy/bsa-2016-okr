@@ -17,9 +17,9 @@ export default function mappingReducer(state = initialState, action = {}) {
             for (let i = 0; i < data.length; i++) {
 
                 data[i].avatar = "avatar1.png";
-                data[i].firstName = "fname";
-                data[i].lastName = "lname";
-                data[i].email = "default@email.com";
+                data[i].firstName = data[i].userInfo.firstName;
+                data[i].lastName = data[i].userInfo.lastName;
+                data[i].email = data[i].userInfo.email;
 
             }
             
