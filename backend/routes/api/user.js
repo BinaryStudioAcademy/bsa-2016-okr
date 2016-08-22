@@ -8,25 +8,24 @@ const userMentorRepository = require('../../repositories/userMentor');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/', (req, res, next) => {
-	repository.getAll(function(err, data){
-        res.json(data);
-    });
+	repository.getAllPopulate(res.callback);
 });
 
 router.get('/quarter', (req, res, next) => {
 	return service.getAll(res.callback)
 });
+
 router.put('/:id', (req, res, next) => {
 	
 	var id = req.params.id;
 
 	repository.update(id, req.body, function(err, data){
 
-	    if (err) {
-	    	console.log("Error!");
-	    }
+		if (err) {
+			console.log("Error!");
+		}
 
-	    res.json(data);
+		res.json(data);
 
 	});
 

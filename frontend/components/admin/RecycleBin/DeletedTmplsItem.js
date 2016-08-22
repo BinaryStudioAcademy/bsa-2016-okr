@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
- 
+import moment from 'moment';
+
 class DeletedTmplsItem extends Component {
 
 	constructor(props) {
@@ -7,13 +8,7 @@ class DeletedTmplsItem extends Component {
 	}
 
 	render() {
-		let dateObj = new Date(this.props.item.deletedDate);
-		let date = dateObj.getDate();
-		let month = dateObj.getMonth()+1;
-		let year = dateObj.getFullYear();
-		let hours = dateObj.getHours();
-		let minutes = dateObj.getMinutes();
-		let dateStr = `${date}-${month}-${year} ${hours}:${minutes}`;
+		let dateStr = moment(this.props.item.deletedDate).format('D MMMM YYYY, h:mm a');
 		
 		return (
 			<tr className="bin-item-row">

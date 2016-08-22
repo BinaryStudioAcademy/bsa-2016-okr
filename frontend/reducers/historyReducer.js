@@ -15,6 +15,10 @@ const initialState = {
 
 export default function historyReducer(state = initialState, action) {
     switch (action.type) {
+        case 'CLEAR_STATE' : {
+            return Object.assign({}, state, initialState)
+        }
+
     	case "SEARCH_OBJECTS": {
     		const {searchValue} = action;
 			return Object.assign({}, state, {
