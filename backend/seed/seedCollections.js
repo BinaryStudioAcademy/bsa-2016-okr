@@ -56,18 +56,19 @@ function randomUser() {
 
 function generateMentors(users) {
 
-	let apprenticeIndex;
-	let isCompleted;
+	let isCompleted, apprenticeNumbers;
 
 	for (let i = 0; i < users.length; i++) {
 
-		if (users[i].localRole === "mentor" && users[i].mentor === null) {
-
-			isCompleted = false;
+		if (users[i].localRole === "mentor") {
 
 			apprenticeIndex = 0;
+			apprenticeNumbers = chance.integer({ min: 0, max: users.length });
 
-			while (!isCompleted) {
+			if (apprenticeNumbers > 3)
+				apprenticeNumbers = 3;
+
+			while (apprenticeIndex < users.length && apprenticeNumbers > 0) {
 
 				if (apprenticeIndex === users.length)
 					break;
@@ -77,23 +78,15 @@ function generateMentors(users) {
 					continue;
 				}
 
-				let isFound = false;
-
-				for (let j = 0; j < users.length; j++) {
-					if (users[j].mentor === ObjectId(users[apprenticeIndex]._id)) {
-						isFound = true;
-						break;
-					}
-				}
-
-				if (isFound) {
+				if (users[apprenticeIndex].mentor != null) {
 					++apprenticeIndex;
 					continue;
 				}
 
-				users[i].mentor = ObjectId(users[apprenticeIndex]._id);
+				users[apprenticeIndex].mentor = ObjectId(users[i]._id);
 
-				isCompleted = true;
+				--apprenticeNumbers;
+				++apprenticeIndex
 
 			}
 
