@@ -132,6 +132,32 @@ table.OKR-managing.toolbar-table {
   th:not(:last-child)  {
     cursor: pointer;
   }
+
+  @media screen and (device-width: 1440px) {
+    width: 95%;
+  }
+
+  tr th {
+        &:first-child {
+            width: 5%;
+        }
+
+        &:nth-child(2) {
+            width: 15%;
+        }
+
+        &:nth-child(3) {
+            width: 30%;
+        }
+
+        &:nth-child(4) {
+            width: 38%;
+
+            @media screen and (device-width: 1440px) {
+                width: 36%;
+            }
+        }
+    }
 }
 
 .OKR-managing button.btn.btn-reset {
