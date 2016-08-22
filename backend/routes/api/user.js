@@ -6,7 +6,7 @@ const adminOnly = require('../adminOnly');
 const userMentorRepository = require('../../repositories/userMentor');
 
 router.get('/', (req, res, next) => {
-	return repository.getAll(res.callback);
+	return service.getAll(res.callback);
 });
 
 router.get('/me/', (req, res, next) => {
