@@ -17,6 +17,17 @@
 
   .title-group{
     position: relative;
+
+    section {
+      padding-bottom: 10px;
+      width: 100%;
+      display: table;
+
+      div {
+        display: table-cell;
+        width: 100%;
+      }
+    }
   }
 
   .new-obj-title{

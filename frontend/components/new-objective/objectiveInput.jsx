@@ -1,6 +1,7 @@
 import React from 'react';
 import KeyResult from './key-result.jsx';
 import './objectiveInput.scss';
+import AutocompleteInput from '../autocomplete-input/autocomplete-input.jsx';
 
 class ObjectiveInput extends React.Component{
     constructor(props){
@@ -16,6 +17,7 @@ class ObjectiveInput extends React.Component{
         this.handleDelKeyResult = this.handleDelKeyResult.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.getAutocompleteData = this.getAutocompleteData.bind(this);
     }
 
     handleFocus(){
@@ -51,6 +53,11 @@ class ObjectiveInput extends React.Component{
       }
     }
 
+    getAutocompleteData(title){
+        let objectId='57b75e5a9b3eae4c20ade2f8';
+        //this.props.getAutocompleteKeyResults(objectId, title);
+    }
+
     render(){
         return(
           <div className="new-objective-form">
@@ -60,6 +67,13 @@ class ObjectiveInput extends React.Component{
             <div className="new-obj-creds">
               <div className="title-group">
                   <input type="text" placeholder="New objective title" className="new-obj-title" onFocus={this.handleFocus}/>
+                  <section>
+                      <AutocompleteInput
+                          getAutocompleteData={this.getAutocompleteData}
+                          autocompleteData = {[{"_id":"1", "title": "1"}]}
+                          autocompleteType = 'objective'
+                      />
+                  </section>
               </div>
               <div ref="objectiveForm" className="desc-group" className="hidden">
                   <label htmlFor="new-obj-desc">Description</label>

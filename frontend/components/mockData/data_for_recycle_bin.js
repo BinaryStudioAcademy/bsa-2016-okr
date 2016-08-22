@@ -19,6 +19,15 @@ let data_for_recycle = [
 		]
 	},
 	{
+		"type": "category",
+		"id": "5710f8847ed517bc028e739a",
+		"title": "Test category1",
+		"description": "category",
+		"category": "categories",
+		"deletedBy": {"fullName": "Fname Lname", "id": "5791f8555ed517bc028e739a"},
+		"deletedDate": "2016-04-22T10:51:12.643Z"
+	},
+	{
 		"type": "objective",
 		"id": "0000f8847ed517bc028e739a",
 		"title": "Socket io chat",
@@ -40,6 +49,34 @@ let data_for_recycle = [
 				"score": "0.1"
 			}
 		]
+	},
+	{
+		"type": "key",
+		"id": "0000f1147ed512bc028e739a",
+		"title": "Test key1",
+		"description": "Just key for test",
+		"category": "Test1",
+		"deletedBy": {"fullName": "Fname Lname", "id": "5791f8666ed517bc028e739a"},
+		"deletedDate": "2016-06-14T10:51:12.643Z", 
+	},
+	{
+		"type": "objective",
+		"id": "1191f8847ed517bc028e739a",
+		"title": "Learn PHP",
+		"description": "Learn PHP for fun",
+		"category": "Knowledge",
+		"deletedBy": {"fullName": "Kakoyto Mujik", "id": "5791f8555ed517bc028e739a"},
+		"deletedDate": "2016-08-01T13:05:12.643Z", 
+	},
+	{
+		"type": "objective",
+		"id": "1991f8847ed517bc028e739a",
+		"title": "Create sorting filter",
+		"description": "Get familiar with sorting algorithm",
+		"category": "Projects",
+		"deletedBy": {"fullName": "Owen Astrachan", "id": "5791f8555ed517bc028e739a"},
+		"deletedDate": "2016-05-11T07:05:12.643Z", 
 	}
 ];
-	export default data_for_recycle
+
+export default data_for_recycle

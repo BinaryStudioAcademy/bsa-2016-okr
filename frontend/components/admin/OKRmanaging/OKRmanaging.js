@@ -4,9 +4,12 @@ import ObjectiveList from './components/ObjectiveList';
 import ActiveObjective from './components/ActiveObjective';
 import Searchbar from './components/SearchBar';
 import Toolbar from './components/Toolbar';
+
 import './OKRmanaging.scss';
 
-var objectives = [{
+
+
+/*var objectives = [{
 	"title": "Improve technology infrastructure efficiency",
 	"description": "Operation Efficiency Improvements for IT Infrastructure through Runbook Automation Technology",
 	"category": "Projects",
@@ -183,14 +186,16 @@ var objectives = [{
 	"category": "Projects",
 	"creator": "Son Gossage"
 
-}];
+}];*/
 
-export default class App extends Component {
+
+class App extends Component {
+
   constructor(props) {
     super(props);
 
     this.state = {
-      data: objectives,
+    //  data: objectives,
       active: 0,
       term: '',
       editing: false
@@ -202,7 +207,7 @@ export default class App extends Component {
     this.editingDone= this.editingDone.bind(this);
     this.editingChange= this.editingChange.bind(this);
   }
-
+	
 	updateData(config) {
 		this.setState(config);
 	}
@@ -236,7 +241,9 @@ export default class App extends Component {
 		this.setState({changedText:_changedText})
 	}
 
+
 render() {
+
     return (
 
     	<CentralWindow>
@@ -246,40 +253,41 @@ render() {
 				<div className="OKR-managing fixed-header">
 					<div className="OKR-managing search">
 							<Searchbar
-							term={this.state.term}
-							data={this.state.data}
-							update={this.updateData}
+							/*term={this.state.term}
+							data={objectives}
+							update={this.updateData}*/
 							/>
 						</div>
 
 						<div className="OKR-managing toolbar">
 							<Toolbar 
-								data={this.state.data} 
+								/*data={objectives} 
 								objectives={objectives} 
-								update={this.updateData} />
+								update={this.updateData}*/ />
 						</div>
 				</div>			
 
 				<div className="OKR-mnaging active objective">
 					<ActiveObjective 
-						data={this.state.data} 
+						/*data={objectives} 
 						active={this.state.active}
 						edit={this.editData}
 						editing={this.state.editing}
-						remove={this.removeData} 
+						remove={this.removeData} */
 					/>
 				</div>
 
 				<div className="OKR-managing objective-list">
 					<ObjectiveList 
-						data={this.state.data} 
-						update={this.updateData}
+					//	data={this.props.objectivesList.objectives} 
+						
+					/>
+					{/*update={this.updateData}
 						edit={this.editData}
 						editingDone={this.editingDone}
 						editingChange ={this.editingChange} 
 						remove={this.removeData} 
-						editing={this.state.editing} 
-					/>
+						editing={this.state.editing} */}
 				</div>
 
 			</div>
@@ -288,3 +296,5 @@ render() {
     );
   }
 }
+
+export default App

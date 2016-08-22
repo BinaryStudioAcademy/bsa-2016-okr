@@ -1,4 +1,83 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../../../../actions/okrManagingActions.js";
+
+class ActiveObjective extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  componentWillMount(){
+  	this.props.getObjectivesList()
+  }
+  render(){
+
+  	const{visibleObjectives, active} = this.props.objectivesList;
+  	if (!visibleObjectives || !visibleObjectives[active]) { 
+  		return <h3>Nothing found :(</h3>; 
+  	}
+  		else {
+  	var objective = visibleObjectives[active];
+  	let keyResults = objective.keyResults.map((item) => {
+  		return <p>{item.title}</p>
+  	})
+		return (
+			<div className="OKR-managing thumbnail">
+				<i className="fi flaticon-edit" aria-hidden="true"></i>
+				<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
+
+				<div className="thumbnail-caption">
+
+					<h3>{objective.title}</h3>
+					<table className="OKR-managing objective-info-table">
+						<tbody>
+							<tr>
+								<td>Objective:</td>
+								<td>{objective.title}</td>
+							</tr>
+							<tr>
+								<td>Description:</td>
+								<td>{objective.description}</td>
+							</tr>
+							<tr>
+								<td>Category:</td>
+								<td>{objective.category.title}</td>
+							</tr>
+							<tr>
+								<td>Start date:</td>
+								<td>01/07/2016</td>
+							</tr>
+							<tr>
+								<td>Due date:</td>
+								<td>10/11/2016</td>
+							</tr>
+							<tr>
+								<td>Key results:</td>
+								<td>{keyResults}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		)
+  }
+}
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    objectivesList: state.okrManaging
+  };
+}
+
+const ActiveObjectiveConnected = connect(mapStateToProps, mapDispatchToProps)(ActiveObjective);
+export default ActiveObjectiveConnected
+
+/*import React from 'react';
 
 export default ({ data, active, edit, remove, editing}) => {
   if (!data || !data[active]) { return <h3>Nothing found :(</h3>; }
@@ -96,3 +175,4 @@ export default ({ data, active, edit, remove, editing}) => {
 		)
 	}
 };
+*/

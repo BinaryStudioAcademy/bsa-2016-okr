@@ -62,7 +62,7 @@ class RecycleBin extends Component {
 									<th>Title</th>
 									<th>Description</th>
 									<th>Deleted By</th>
-									<th>Date</th>
+									<th className="cursor-pointer" onClick={this.setSortingByDate.bind(this)}><i className="fa fa-sort" ></i><span className="margin-left-3px">Date</span></th>
 									<th className="actions">actions</th>
 								</tr>
 							</thead>
@@ -76,6 +76,11 @@ class RecycleBin extends Component {
 			</div>
 		);
 	}
+
+	setSortingByDate() {
+		this.props.setSortingByDate(!this.props.recycleBin.sortByDate);
+	}
+
 }
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(actions, dispatch);
