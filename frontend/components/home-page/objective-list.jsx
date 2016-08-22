@@ -8,7 +8,6 @@ class ObjectiveList extends React.Component{
     }
 
     render(){
-      console.log("THISEEE >>> ", this);
         return(
 
             <div>
@@ -18,9 +17,7 @@ class ObjectiveList extends React.Component{
                     {
                         this.props.objectives.filter((el) => {
                         	if( el.props.category == "knowledge")
-                        		// console.log( el);
                            		return true;
-                            //console.log("category id >>", el.props.category.id);
                         })
                     }
                 </div>
@@ -30,9 +27,7 @@ class ObjectiveList extends React.Component{
                     {
                         this.props.objectives.filter((el) => {
                         	if( el.props.category == "expertise" )
-                        		// console.log( el);
                             	return true;
-                            //console.log("category id >>", el.props.category.id);
                         })
                     }
                 </div>
@@ -42,9 +37,7 @@ class ObjectiveList extends React.Component{
                     {
                         this.props.objectives.filter((el) => {
                         	if( el.props.category == "projects")
-                        		// console.log( el);
                             	return true;
-                            //console.log("category id >>", el.props.category.id);
                         })
                     }
                 </div>

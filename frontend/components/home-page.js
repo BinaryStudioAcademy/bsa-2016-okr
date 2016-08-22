@@ -8,6 +8,11 @@ import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
 import Dashboard from "./dashboard/dashboard.jsx";
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from "../actions/categoriesListActions";
+
 class Home extends React.Component {
    constructor() {
       super();
@@ -29,6 +34,10 @@ class Home extends React.Component {
       }
    }
 
+   componentWillMount() {
+     this.props.getAllCategories();
+   }
+
    render() {
       return (
          <div>
@@ -43,4 +52,16 @@ class Home extends React.Component {
    }
 }
 
-export default Home;
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+	return {
+		stateFromReducer: state
+	};
+}
+
+const HomeConnected = connect(mapStateToProps, mapDispatchToProps)(Home);
+
+export default HomeConnected;

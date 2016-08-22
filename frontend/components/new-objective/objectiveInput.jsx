@@ -51,17 +51,15 @@ class ObjectiveInput extends React.Component{
     }
 
     handleAddNewObjective() {
-      var title = this.refs.title.value
-      var description = this.refs.description.value
+      var title = this.refs.title.value;
+      var description = this.refs.description.value;
       if(title.length == 0 || description.length == 0){alert("Please fill title and description");}
-      var quarters = this.props.stateFromReducer.myState.me.quarters;
-      var currentYear = this.props.stateFromReducer.myState.currentYear;
-      var currentTab = this.props.stateFromReducer.myState.currentTab;
+      var quarters = myState.me.quarters;
+      var currentYear = myState.currentYear;
+      var currentTab = myState.currentTab;
       var quarterId = '';
       var categoryId = '';
       var handlerCategory = this.props.category;
-
-      console.log("this.props.stateFromReducer >>> ", this.props.stateFromReducer);
 
       quarters.forEach((quarter) => {
           	if(quarter.index == currentTab && quarter.year == currentYear) {
@@ -69,21 +67,20 @@ class ObjectiveInput extends React.Component{
       			}
       	});
 
-        this.props.stateFromReducer.myState.allCategories.forEach((category) => {
-              if(category.title == handlerCategory) {
-                categoryId = category._id;
-              }
-          });
+      this.props.stateFromReducer.categoriesList.categories.forEach((category) => {
+        if(category.title == handlerCategory) {
+          categoryId = category._id;
+        }
+      });
 
-      var body =  {
+      var body = {
         "title": title,
         "description":description,
         "category": categoryId,
         "quarterId": quarterId,
         "keyResults": [
           {"title":"template key Result 1", "difficulty":"easy"},
-          {"title":"template key Result 2", "difficulty":"intermediate"},
-          {"title":"template key Result 2", "difficulty":"advanced"}
+          {"title":"template key Result 2", "difficulty":"intermediate"}
         ]
       }
 
@@ -113,6 +110,7 @@ class ObjectiveInput extends React.Component{
     }
 
     render(){
+      const myState = this.props.stateFromReducer.myState;
       var keyResults =  [ { id: 1 } ];
         return(
           <div className="new-objective-form">

@@ -34,8 +34,6 @@ class Objectives extends Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props);
-		this.props.getAllCategories();
 		this.props.getMe();
 	}
 
@@ -46,13 +44,10 @@ class Objectives extends Component {
 
 		if (me.quarters != undefined) {
 			let quarter = me.quarters.find((quarter) => {
-				console.log(currentYear, currentTab)
 				return (quarter.year == currentYear) && (quarter.index == currentTab)
 			});
 
 			ObjectiveItems = quarter.userObjectives.map((item, index) => {
-					console.log('item -> ' + item.templateId.category.title);
-
 					return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
 			});
 		}
@@ -68,6 +63,7 @@ class Objectives extends Component {
 		)
 	}
 }
+
 Objectives.defaultProps = { today: new Date() };
 
 function mapDispatchToProps(dispatch) {

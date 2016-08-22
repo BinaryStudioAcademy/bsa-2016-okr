@@ -18,24 +18,23 @@ class ObjectiveItem extends Component {
       this.handleDelObj = this.handleDelObj.bind(this);
    }
 
-changeScore(){
-  this.setState({
-    item: this.state.item
-  })
-}
+  changeScore(){
+    this.setState({
+      item: this.state.item
+    })
+  }
 
-handleDelObj(e){
-  var confirmation = confirm("Do you really want to delete this objective?");
-  if (confirmation == true) {
-    var body = {
-      "isDeleted" : "true"
-    }
-    this.props.softDeleteMyObjectiveByIdApi(this.state.item._id, body);
-  };
-}
+  handleDelObj(e){
+    var confirmation = confirm("Do you really want to delete this objective?");
+    if (confirmation == true) {
+      var body = {
+        "isDeleted" : "true"
+      }
+      this.props.softDeleteMyObjectiveByIdApi(this.state.item._id, body);
+    };
+  }
 
    render() {
-     console.log("hey ", this.state.item.keyResults);
       return (
          <div className='home-objective'>
             <Progress data={this.state.item.keyResults} />
