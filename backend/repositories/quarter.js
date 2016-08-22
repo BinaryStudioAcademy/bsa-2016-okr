@@ -55,7 +55,10 @@ QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 		.populate({
 			path: 'userId',
 			populate: {
-				path: 'userInfo'
+				path: 'userInfo mentor',
+				populate: {
+					path: 'userInfo'
+				}
 			}
 		})
 		.exec(callback);

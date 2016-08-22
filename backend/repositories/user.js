@@ -15,6 +15,12 @@ UserRepository.prototype.getAllPopulate = function(callback) {
 	model
 		.find()
 		.populate('userInfo')
+		.populate({
+			path: 'mentor',
+			populate: {
+				path: 'userInfo'
+			}
+		})
 		.exec(callback);
 };
 
@@ -24,6 +30,12 @@ UserRepository.prototype.getByIdPopulate = function(id, callback) {
 	model
 		.findOne({ _id: id })
 		.populate('userInfo')
+		.populate({
+			path: 'mentor',
+			populate: {
+				path: 'userInfo'
+			}
+		})
 		.exec(callback);
 };
 
