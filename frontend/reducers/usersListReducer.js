@@ -48,10 +48,6 @@ export default function patentDetailsReducer(state = initialState, action) {
             console.log("RECEIVED_USERS_LIST");
             console.log(data);
 
-            for (let i = 0; i < data.length; i++) {
-                data[i].userObjectives = [];
-            }
-
 
             return Object.assign({}, state, {
                 user: data,

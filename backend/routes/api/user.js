@@ -13,6 +13,9 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.get('/quarter', (req, res, next) => {
+	return service.getAll(res.callback)
+});
 router.put('/:id', (req, res, next) => {
 	
 	var id = req.params.id;

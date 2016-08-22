@@ -19,6 +19,7 @@ class UserProgress extends Component {
 			progress = 0;
 		else
 			progress = Math.round(100*sum/count);
+		console.log(progress)
 		return (
 			<div className='progress-bar'>
 				<div className='progressTitle'>Current OKR score</div>

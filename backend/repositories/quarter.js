@@ -58,8 +58,12 @@ QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 		.find({'index': currentQuarter, 'year': currentYear})
 		.populate({
 			path: 'userObjectives',
+			match: { isDeleted: false},
 			populate: {
-				path: 'templateId keyResults.templateId'
+				path: 'templateId keyResults.templateId',
+				populate: {
+						path:	'category'
+				}
 			}
 		})
 		.populate('userId')
