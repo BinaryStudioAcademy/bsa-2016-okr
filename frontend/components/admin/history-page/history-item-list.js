@@ -28,6 +28,10 @@ class HistoryItemList extends React.Component {
         console.log(this.props.historyItems);
     }
 
+    componentWillUnmount(){
+    	this.props.clearState();
+    }
+
     getActionColor(actionType) {
         switch(actionType.split(' ')[0]) {
             case 'add': 

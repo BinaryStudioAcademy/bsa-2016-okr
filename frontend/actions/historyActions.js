@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+export function  clearState() {
+	const action = {
+		type: 'CLEAR_STATE'
+	}
+	return action;
+}
+
 export function search(value) {
 	const action = {
 		type: 'SEARCH_OBJECTS',
