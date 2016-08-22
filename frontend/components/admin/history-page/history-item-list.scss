@@ -15,6 +15,10 @@
 	 	width:99.99%;
     	table-layout:fixed;/* even columns width , fix width of table too*/
 	}
+
+	thead tr th i{
+		cursor: pointer;
+	}
 }
 
 .history-item-list {

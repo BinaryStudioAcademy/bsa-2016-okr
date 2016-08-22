@@ -74,7 +74,6 @@ export default function patentDetailsReducer(state = initialState, action) {
             })
         }
 
-
         case SET_SORT: {
             const sort = action.sort;
             console.log(sort);

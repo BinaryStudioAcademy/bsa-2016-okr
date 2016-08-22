@@ -1,0 +1,88 @@
+@import '../common/styles/commonStyles';
+
+$main-color: #607D8B;
+
+/*
+**    Quarter bar
+*/
+
+#quarter-bar{
+
+  #business-year{
+    float: left;
+    padding: 6px 10px;
+    width: 120px;
+    border-radius: 3px 0 0 3px;
+    border: 1px solid $main-color;
+  }
+}
+
+#quarter-bar ul {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  margin-left: 90px;
+  padding: 0;
+
+  li{
+    flex: 1 0 100px;
+    border: 1px solid $main-color;
+    padding: 7px 10px;
+    text-align: center;
+    border-left: none;
+    span{
+      pointer-events: none;
+    }
+
+    &:last-child{
+      border-radius: 0 3px 3px 0;
+    }
+
+  }
+
+  li.exist{
+    border: 1px solid $main-color;
+    border-left: none;
+    color: $main-color;
+    background: #fff;
+    cursor: pointer;
+  }
+  
+  li.exist:not(.current){
+    &:hover{
+      background: lighten($color-blue-grey, 45%);
+    }
+  }
+
+  li.current{
+    background: $main-color;
+    color: #ffffff;
+    border-color: $main-color;
+  }
+  
+  li.selected{
+    background: lighten($color-blue-grey, 30%);
+    color: #ffffff;
+
+  }
+
+  /* for none existed */
+  li:not(.exist){
+    color: #bbbbbb;
+    background: lighten(#bbb, 22%);
+    border: 1px solid #bbb;
+    border-left: none;
+    &:hover{
+      color: $color-green;
+      background: #fff;
+      border-color: $color-green;
+      cursor: pointer;
+    }
+  }
+  
+}

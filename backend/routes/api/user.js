@@ -5,8 +5,30 @@ const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 const userMentorRepository = require('../../repositories/userMentor');
 
+const ObjectId = require('mongoose').Types.ObjectId;
+
 router.get('/', (req, res, next) => {
-	return service.getAll(res.callback);
+	repository.getAllPopulate(res.callback);
+});
+
+router.get('/quarter', (req, res, next) => {
+	return service.getAll(res.callback)
+});
+
+router.put('/:id', (req, res, next) => {
+	
+	var id = req.params.id;
+
+	repository.update(id, req.body, function(err, data){
+
+		if (err) {
+			console.log("Error!");
+		}
+
+		res.json(data);
+
+	});
+
 });
 
 router.get('/me/', (req, res, next) => {

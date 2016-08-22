@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
+import './quarter-bar.scss';
 
 class Quarter extends Component {
-   constructor() {
-      super();
+   constructor(props) {
+      super(props);
 
       this.handleTabClick = this.handleTabClick.bind(this);
-      this.hendleYearChange = this.hendleYearChange.bind(this);
+      this.handleYearChange = this.handleYearChange.bind(this);
+      this.handleAddingNewQuarter = this.handleAddingNewQuarter.bind(this);
    }
-   hendleYearChange(e){
+
+   handleYearChange(e){
       let value = e.target.value;
       this.props.changeYear(value)
    }
@@ -19,51 +22,51 @@ class Quarter extends Component {
       } 
       this.props.changeTab(++currentTab);
    }
-   activeTab1(){
-      if (this.props.currentTab == 1) 
-        return "active"
-      else return ""
+   activeTab(num){
+      if (this.props.currentTab == num)
+        return "current";
+      else return "";
    }
-   activeTab2(){
-      if (this.props.currentTab == 2)     
-         return "active"
-      else return ""
+   handleAddingNewQuarter(event){
+      let quarter_id = parseInt(event.target.dataset.id);
+      this.props.addNewQuarter(quarter_id);
    }
-   activeTab3(){
-      if (this.props.currentTab == 3) 
-         return "active"
-      else return ""
-   }
-   activeTab4(){
-      if (this.props.currentTab == 4) 
-         return "active"
-      else return ""
-   }  
+
 
    render() {
+      function getQuarters(){
+         var quarters = [];
+
+         for(var i = 1; i <= 4; i++){
+            if(this.props.existedQuarters.includes(i)){
+               quarters.push( <li className={this.props.currentTab == i ? "quater current exist" : "quater exist"} onClick={this.handleTabClick} data-id={i}>{i}-st quarter</li> )
+            } else {
+               quarters.push( <li className={"quater"} onClick={this.handleAddingNewQuarter} data-id={i}>+ Q{i}</li> )
+            }
+         }
+
+         return quarters;
+      }
+
       return (
-         <div id='top-bar'>
-             <div id="manage-bar">
-             </div>
-             <div id="quarter-bar">
-                 <ul id='quarter-list' >
-                     <li>
-                         <select onChange={this.hendleYearChange} className='business-year'>
-                            <option>{this.props.today.getFullYear()}</option>
-                            <option>{this.props.today.getFullYear()+1}</option>
-                         </select>
-                     </li>
-                     <li className={"quater " + this.activeTab1()} onClick={this.handleTabClick}>1-st quarter</li>
-                     <li className={"quater " + this.activeTab2()} onClick={this.handleTabClick}>2-nd quarter</li>
-                     <li className={"quater " + this.activeTab3()} onClick={this.handleTabClick}>3-rd quarter</li>
-                     <li className={"quater " + this.activeTab4()} onClick={this.handleTabClick}>4-th quarter</li>
-                 </ul>
-             </div>
+         <div id="quarter-bar">
+            <select name="" id="business-year" onChange={this.handleYearChange}>
+               <option value="">{this.props.today.getFullYear()}</option>
+               <option value="">{this.props.today.getFullYear()+1}</option>
+            </select>
+            <ul>
+               {
+                  getQuarters.call(this).map((quarter) => {
+                     return quarter;
+                  })
+               }
+            </ul>
          </div>
       )
    }
 }
+
 Quarter.defaultProps = { 
    today: new Date()
 };
-export default Quarter
+export default Quarter;

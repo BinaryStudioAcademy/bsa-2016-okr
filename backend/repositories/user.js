@@ -9,4 +9,34 @@ var UserRepository = function(){
 
 UserRepository.prototype = new Repository();
 
+UserRepository.prototype.getAllPopulate = function(callback) {
+	var model = this.model;
+
+	model
+		.find()
+		.populate('userInfo')
+		.populate({
+			path: 'mentor',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
+UserRepository.prototype.getByIdPopulate = function(id, callback) {
+	var model = this.model;
+
+	model
+		.findOne({ _id: id })
+		.populate('userInfo')
+		.populate({
+			path: 'mentor',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
 module.exports = new UserRepository();

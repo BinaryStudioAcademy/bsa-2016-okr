@@ -20,20 +20,22 @@ class ListOfUsers extends Component {
 	search(e) {
 		this.props.search(e.target.value);
 	}
+	
 	componentWillMount(){
 		this.props.getUsersList();
 	}
 
 	render() {
-		const {user, searchValue} = this.props.users;
+		const {user, searchValue, name} = this.props.users;
 		
 		var userNodes = user.map(function (user, index) {
-			if(user._id.toLowerCase().indexOf(searchValue.toLowerCase()) === -1)
-				return;
-			else
-				return (
+			if(user.userId.userInfo.firstName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0 || 
+				user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0 )
+				return(
 					<UserItem key={index} user={user} />
 				);
+			else
+				return ;
 		}.bind(this));
 
 		return (
@@ -42,8 +44,8 @@ class ListOfUsers extends Component {
 					<div id='usersList'>
 					<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
 						<div className="users-title">
-                    		<p><span>Users</span></p>
-                    	</div>
+							<p><span>Users</span></p>
+							</div>
 						<ul className='listOfUsers'>{userNodes}</ul>
 					</div>
 				</CentralWindow>
@@ -55,13 +57,13 @@ class ListOfUsers extends Component {
 	}
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
+	return bindActionCreators(actions, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {
-        users: state.usersList
-    };
+	return {
+		users: state.usersList
+	};
 }
 
 const ListOfUsersConnected = connect(mapStateToProps, mapDispatchToProps)(ListOfUsers);

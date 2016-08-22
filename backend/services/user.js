@@ -7,9 +7,10 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var UserService = function() {};
 
 UserService.prototype.getById = function(id, callback) {
+
 	async.waterfall([
 		(callback) => {
-			UserRepository.getById(id, function(err, user) {
+			UserRepository.getByIdPopulate(id, function(err, user) {
 				if(err) {
 					return callback(err, null);
 				};

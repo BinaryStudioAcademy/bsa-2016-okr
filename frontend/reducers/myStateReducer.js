@@ -3,6 +3,8 @@ import { isEmpty } from '../../backend/utils/ValidateService';
 const initialState = {
     currentTab: getQuarter(),
     currentYear: getYear(),
+	 existedQuarters: getExistedQuarters(),
+    allCategories: {},
 	me: {
 		"localRole": ""
 	}
@@ -20,6 +22,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
       console.log("ME +++", state.me);
 			return Object.assign({}, state, {
 				me: state.me
+			});
+		}
+
+    case "RECEIVED_ALL_CATEGORIES": {
+			const { data } = action;
+      console.log("RECEIVED_ALL_CATEGORIES hit ", data);
+			return Object.assign({}, state, {
+				allCategories: isEmpty(data) ? allCategories : data
 			});
 		}
 
@@ -49,7 +59,18 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-    case "SOFT_DELETE_MY_OBJECTIVE_BY_ID": {
+		case "CREATE_QUARTER": {
+			const { payload } = action;
+
+			var new_exQuarters = state.existedQuarters.concat(payload);
+			new_exQuarters.sort();
+
+			return Object.assign({}, state, {
+				existedQuarters: new_exQuarters
+			})
+		}
+
+    	case "SOFT_DELETE_MY_OBJECTIVE_BY_ID": {
 			const { id } = action;
 			console.log(state);
 			return Object.assign({}, state, {
@@ -57,6 +78,15 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			})
 
 		}
+
+    case "ADDED_NEW_OBJECTIVE": {
+      const { id } = action;
+      console.log(state);
+      return Object.assign({}, state, {
+        me: deleteObjectiveFromMe(state.me, id)
+      })
+
+    }
 
 		default: {
 			return state;
@@ -82,6 +112,15 @@ function getQuarter(){
         return 3;
     else if(today > third)
         return 4;
+}
+
+function getExistedQuarters(){
+	let quarters = [];
+	for(let i = 1, currentQuarter = getQuarter(); i <= currentQuarter; i++){
+		quarters.push(i);
+	}
+
+	return quarters;
 }
 
 function deleteObjectiveFromMe(me, id) {

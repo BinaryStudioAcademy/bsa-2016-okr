@@ -42,7 +42,7 @@ class OtherPersonsPage extends Component {
 	}
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
+	return bindActionCreators(actions, dispatch);
 }
 
 function mapStateToProps(state, ownProps) {

@@ -1,75 +1,12 @@
 @import '../common/variables';
 @import '../common/styles/commonStyles';
 
+/*
+**    Content Wrapper
+*/
 #home-page-wrapper {
   width: 85%;
   margin: 0 auto;
-}
-
-/*
-** Quarter section
-*/
-#top-bar {
-  margin-bottom: 30px;
-
-  .business-year {
-    padding: 5px 33px;
-    border: 2px solid #607D8B;
-    display: inline-block;
-  }
-}
-
-#quarter-bar {
-  @extend .clearfix;
-}
-
-#manage-bar {
-  @extend .clearfix;
-  margin-bottom: 20px;
-
-  button#add-new-objective {
-    @extend .btn;
-    @extend .btn-green;
-    display: block;
-    float: right;
-    color: #ffffff;
-    padding: 10px 15px;
-    i {
-      margin-right: 10px;
-    }
-  }
-}
-
-#quarter-list {
-  background-color: transparent;
-  list-style-type: none;
-  float: right;
-  padding: 0;
-  li:not(:first-child) {
-    display: inline-block;
-    border: 2px solid #607D8B;
-    padding: 6px 35px;
-    text-align: center;
-    white-space: nowrap;
-    margin-left: -2px;
-    cursor: pointer;
-    &:last-child {
-      -webkit-border-radius: 0 4px 4px 0;
-      -moz-border-radius: 0 4px 4px 0;
-      border-radius: 0 4px 4px 0;
-    }
-    &:hover {
-      background-color: #607D8B;
-      color: #fff;
-    }
-    &.active {
-      background-color: #607D8B;
-      color: #fff;
-    }
-  }
-  li:first-child {
-    display: inline-block;
-  }
 }
 
 /*
@@ -93,7 +30,7 @@
       margin-bottom: 10px;
     }
     .key-results {
-      margin: 0px 0px 5px 10px;
+      margin: 0 0 5px 10px;
       .key-results-arrow {
         padding-left: 5px;
       }
