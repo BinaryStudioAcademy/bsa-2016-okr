@@ -11,7 +11,7 @@ import Dashboard from "./dashboard/dashboard.jsx";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../actions/categoriesActions";
+// import * as actions from "../actions/categoriesActions";
 
 class Home extends React.Component {
 	constructor() {
@@ -19,33 +19,34 @@ class Home extends React.Component {
 	}
 
 	componentWillMount() {
-		this.props.getAllCategories();
+		// this.props.getAllCategories();
 	}
 
 	render() {
+		// <Dashboard />
 		return (
 			<div>
 				<CentralWindow>
 				<UserObjectives />
 				</CentralWindow>
 				<StatPanel>
-				<Dashboard />
 				</StatPanel>
 			</div>
 			)
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
+// function mapDispatchToProps(dispatch) {
+// 	return bindActionCreators(actions, dispatch);
+// }
 
-function mapStateToProps(state) {
-	return {
-		stateFromReducer: state
-	};
-}
+// function mapStateToProps(state) {
+// 	return {
+// 		stateFromReducer: state
+// 	};
+// }
 
-const HomeConnected = connect(mapStateToProps, mapDispatchToProps)(Home);
+// const HomeConnected = connect(mapStateToProps, mapDispatchToProps)(Home);
 
-export default HomeConnected;
+// export default HomeConnected;
+export default Home;

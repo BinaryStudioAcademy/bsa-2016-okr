@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Quarter from './quarter.jsx';
-import ObjectivesList from './objective-list.jsx';
+import ObjectiveItem from './objective.jsx';
+import ObjectivesList from '../common/objective/objective-list.jsx';
 
 import { isEmpty } from '../../../backend/utils/ValidateService';
 
@@ -43,6 +44,7 @@ class Objectives extends Component {
 		const { me, currentYear, currentTab, existedQuarters } = myState;
 		
 		const categories = this.props.categories;
+		console.log('categories', categories.list);
 
 		var objectiveItems = [];
 		var quarter = {};
@@ -56,14 +58,13 @@ class Objectives extends Component {
 			objectives = quarter.userObjectives;
 		}
 
-		console.log('userObjectives', quarter.userObjectives);
-
 		return (
 			<div id="home-page-wrapper">
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
 				currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
 				<div id='objectives'>
-					<ObjectivesList objectives={ objectives } categories={ categories.list } />
+					<ObjectivesList objectives={ objectives } categories={ categories.list } 
+					my={ true } ObjectiveItem={ ObjectiveItem } />
 				</div>
 			</div>
 		)
