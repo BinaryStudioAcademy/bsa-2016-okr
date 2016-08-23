@@ -54,9 +54,9 @@ class ObjectiveInput extends React.Component{
       var title = this.refs.title.value;
       var description = this.refs.description.value;
       if(title.length == 0 || description.length == 0){alert("Please fill title and description");}
-      var quarters = myState.me.quarters;
-      var currentYear = myState.currentYear;
-      var currentTab = myState.currentTab;
+      var quarters = this.props.stateFromReducer.myState.me.quarters;
+      var currentYear = this.props.stateFromReducer.myState.currentYear;
+      var currentTab = this.props.stateFromReducer.myState.currentTab;
       var quarterId = '';
       var categoryId = '';
       var handlerCategory = this.props.category;
@@ -119,7 +119,7 @@ class ObjectiveInput extends React.Component{
             </button>
             <div className="new-obj-creds">
               <div className="title-group">
-                  
+
                   <section>
                       <AutocompleteInput
                           getAutocompleteData={this.getAutocompleteData}

@@ -57,7 +57,7 @@ class Objectives extends Component {
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
 						currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
 				<div id='objectives'>
-					<ObjectivesList objectives={ ObjectiveItems } />
+					<ObjectivesList objectives={ ObjectiveItems } stateFromReducer={this.props.stateFromReducer} />
 				</div>
 			</div>
 		)

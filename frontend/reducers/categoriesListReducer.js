@@ -1,7 +1,7 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
 
 const initialState = {
-  categories: {}
+  categories: undefined
 };
 
 export default function categoriesReducer(state = initialState, action = {}) {
