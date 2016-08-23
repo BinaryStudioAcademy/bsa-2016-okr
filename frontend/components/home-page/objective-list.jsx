@@ -22,8 +22,6 @@ var ObjectiveList = (props) => {
 				.map((item, index) => {
 					return <ObjectiveItem index={ index } key={ item._id } item={ item } />
 				});
-
-			console.log('objectiveItems', objectiveItems);
 			
 			return (
 				<div key={ index }>
@@ -33,8 +31,6 @@ var ObjectiveList = (props) => {
 				</div>
 				)
 		});
-
-		console.log('Category items', categoryItems);
 	}
 
 	return (
