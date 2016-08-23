@@ -33,8 +33,6 @@ class HistorySearch extends Component {
 
 		return(
 			<div className="history-search-bar">
-				<input type="text" id="history-search-bar-input" placeholder="Search..."/>
-				<button className="btn btn-green btn-search"><i className="fa fa-search"/> Search</button>
 				<button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.stateFromReducer.history.showHistoryFilters)} onClick={this.handleFilterButton}><i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button>
 			</div>
 		)
