@@ -21,9 +21,6 @@ export default function patentDetailsReducer(state = initialState, action) {
          case GET_USERS_LIST: {
 
             const {data} = action;
-
-            console.log("GET_USERS_LIST");
-
             return Object.assign({}, state, {
                 waiting: true
             })
@@ -32,9 +29,6 @@ export default function patentDetailsReducer(state = initialState, action) {
         case USERS_LIST_ERROR: {
             
             const {data} = action;
-
-            console.log("USERS_LIST_ERROR");
-            console.log(data);
 
             return Object.assign({}, state, {
                 user
@@ -45,10 +39,6 @@ export default function patentDetailsReducer(state = initialState, action) {
 
             const {data} = action;
 
-            console.log("RECEIVED_USERS_LIST");
-            console.log(data);
-
-         
             return Object.assign({}, state, {
                 user: data,
                 waiting: true

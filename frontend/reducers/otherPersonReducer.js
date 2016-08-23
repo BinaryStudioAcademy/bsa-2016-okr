@@ -12,7 +12,6 @@ export default function patentDetailsReducer(state = initialState, action) {
     
     switch (action.type) {
         case GET_USER: {
-            console.log("GET_USER");
             
             return Object.assign({}, state, {
                 waiting: true
@@ -21,8 +20,6 @@ export default function patentDetailsReducer(state = initialState, action) {
         case RECEIVED_USER: {
 
             const {data} = action;
-            console.log("RECEIVED_USER");
-            console.log(data);
             return Object.assign({}, state, {
                 user: data,
                 waiting: false,
