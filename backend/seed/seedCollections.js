@@ -272,6 +272,7 @@ function randomUserInfo(users) {
 	var info = {
 		firstName: chance.first(),
 		lastName: chance.last(),
+		globalRole: chance.pickone(['ADMIN', 'DEVELOPER', 'HR', 'CEO', 'Tech Lead']),
 		email: chance.email()
 	};	
 

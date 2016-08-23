@@ -10,6 +10,10 @@ var userInfo = new Schema({
 		type: String,
 		required: true
 	},
+	globalRole: {
+		type: String,
+		required: true
+	},
 	email: {
 		type: String,
 		required: true,

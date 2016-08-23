@@ -17,9 +17,9 @@ class UserRoleMappingItem extends React.Component {
 	                   <div className="col-1">
 	                      <img/>
 	                   </div>
-	                   <h4 className="col-2">{this.props.user.firstName}</h4>
-	                   <h4 className="col-3">{this.props.user.lastName}</h4>
-	                   <h4 className="col-4">{this.props.user.email}</h4>
+	                   <h4 className="col-2">{this.props.user.name}</h4>
+	                   <h4 className="col-3">{this.props.user.email}</h4>
+	                    <h4 className="col-4">{this.props.user.globalRole}</h4>
 	                   <select className="col-5" id={"user-roles" + this.props.user._id} ref="userLocalRole"
 	                   onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
 		                 <option value="default">Default</option>
