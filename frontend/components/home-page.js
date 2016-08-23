@@ -11,7 +11,7 @@ import Dashboard from "./dashboard/dashboard.jsx";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../actions/categoriesListActions";
+import * as actions from "../actions/categoriesActions";
 
 class Home extends React.Component {
 	constructor() {

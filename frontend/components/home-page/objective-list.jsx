@@ -1,37 +1,45 @@
 import React from 'react';
 import ObjectiveItem from './objective.jsx';
 import ObjectiveInput from '../new-objective/objectiveInput.jsx';
+import { isEmpty } from '../../../backend/utils/ValidateService';
 
-class ObjectiveList extends React.Component{
-    constructor(props){
-        super(props);
-    }
+var ObjectiveList = (props) => {
+	const categories = props.categories || [];
+	const objectives = props.objectives || [];
 
-    render() {
-      const categories = this.props.stateFromReducer.categoriesList.categories;
-      var objectives = this.props.objectives;
-      var categoryItems = [];
-      if(categories != undefined){
-        categoryItems = categories.map((category, index) => {
-          return (
-            <div key={ index }>
-              <p><span>{category.title}</span></p>
-              <ObjectiveInput category={category.title}/>
-              {
-                  objectives.filter((el) => {
-                    if( el.props.category == category.title)
-                        return true;
-                  })
-              }
-            </div>
-          )
-        });
-      }
-      return (
-        <div id="project-category" className="category">{ categoryItems }</div>
-      )
+	console.log('categories in Objective List', props.categories);
+	console.log('objectives in Objective List', props.objectives);
 
-    }
+	var categoryItems = [];
+
+	if(!isEmpty(categories)) {
+
+		categoryItems = categories.map((category, index) => {
+			var objectiveItems = objectives
+				.filter((objective) => {
+					return objective.templateId.category == category._id
+				})
+				.map((item, index) => {
+					return <ObjectiveItem index={ index } key={ item._id } item={ item } />
+				});
+
+			console.log('objectiveItems', objectiveItems);
+			
+			return (
+				<div key={ index }>
+				<p><span className="category-title">{ category.title }</span></p>
+					<ObjectiveInput category={ category.title }/>
+					{ objectiveItems }
+				</div>
+				)
+		});
+
+		console.log('Category items', categoryItems);
+	}
+
+	return (
+		<div id="project-category" className="category">{ categoryItems }</div>
+		);
 }
 
 export default ObjectiveList

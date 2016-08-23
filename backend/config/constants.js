@@ -33,9 +33,11 @@ module.exports = {
 		ADVANCED: 'advanced'
 	},
 	objective: {
-		KNOWLEDGE: 'knowledge',
-		EXPERTIZE: 'expertise',
-		PROJECTS: 'projects'
+		categories: {
+			KNOWLEDGE: 'knowledge',
+			EXPERTIZE: 'expertise',
+			PROJECTS: 'projects'
+		}
 	},
 		currentYear: currentYear,
 		currentQuarter: currentQuarter

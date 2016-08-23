@@ -11,9 +11,11 @@ import * as actions from "../../actions/myObjectivesActions.js";
 class ObjectiveItem extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			item: props.item
 		}
+
 		this.changeScore = this.changeScore.bind(this);
 		this.handleDelObj = this.handleDelObj.bind(this);
 	}
@@ -29,40 +31,28 @@ class ObjectiveItem extends Component {
 		if (confirmation == true) {
 			var body = {
 				"isDeleted": "true"
-			}
+			};
+
 			this.props.softDeleteMyObjectiveByIdApi(this.state.item._id, body);
 		}
-		;
 	}
 
 	render() {
 		return (
 			<div className='home-objective'>
-				<Progress data={this.state.item.keyResults}/>
-				<div className='name'>{this.state.item.templateId.title}</div>
-				<div className='description'>{this.state.item.templateId.description}</div>
+				<Progress data={ this.state.item.keyResults } />
+				<div className='name'>{ this.state.item.templateId.title }</div>
+				<div className='description'>{ this.state.item.templateId.description }</div>
 				<div>
 					<button type="button" className="btn btn-red-hover delete-button-objective"
-					        onClick={this.handleDelObj}>
+					        onClick={ this.handleDelObj }>
 						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
 					</button>
 				</div>
-				<KeyResults data={this.state.item.keyResults} changeScore={this.changeScore}/>
+				<KeyResults data={ this.state.item.keyResults } changeScore={ this.changeScore } />
 			</div>
 		)
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
-function mapStateToProps(state) {
-	return {
-		stateFromReducer: state
-	};
-}
-
-const ObjectiveItemConnected = connect(mapStateToProps, mapDispatchToProps)(ObjectiveItem);
-
-export default ObjectiveItemConnected
+export default ObjectiveItem;

@@ -28,9 +28,6 @@ QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
 			match: { isDeleted: false},
 			populate: {
 				path: 'templateId keyResults.templateId',
-				populate: {
-						path:	'category'
-				}
 			}
 		})
 		.exec(callback);

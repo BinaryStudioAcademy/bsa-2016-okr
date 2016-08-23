@@ -7,12 +7,12 @@ import userPage from './otherPersonReducer.js'
 import mapping from './mappingReducer.js' 
 import myState from './myStateReducer.js'
 import keyResults from './keyResultReducer'
-import categoriesList from './categoriesListReducer'
+import categories from './categoriesReducer'
 
 import { routerReducer } from 'react-router-redux';
 
 export default combineReducers({
-  categoriesList,
+  categories,
   myState,
   history,
   userPage,
