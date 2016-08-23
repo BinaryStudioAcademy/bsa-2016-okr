@@ -48,7 +48,7 @@ class Objectives extends Component {
 			});
 
 			ObjectiveItems = quarter.userObjectives.map((item, index) => {
-					return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
+				return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
 			});
 		}
 
@@ -57,7 +57,7 @@ class Objectives extends Component {
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
 						currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
 				<div id='objectives'>
-					<ObjectivesList objectives={ ObjectiveItems } />
+					<ObjectivesList objectives={ ObjectiveItems } stateFromReducer={this.props.stateFromReducer} />
 				</div>
 			</div>
 		)

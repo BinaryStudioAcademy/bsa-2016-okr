@@ -54,9 +54,9 @@ class ObjectiveInput extends React.Component{
       var title = this.refs.title.value;
       var description = this.refs.description.value;
       if(title.length == 0 || description.length == 0){alert("Please fill title and description");}
-      var quarters = myState.me.quarters;
-      var currentYear = myState.currentYear;
-      var currentTab = myState.currentTab;
+      var quarters = this.props.stateFromReducer.myState.me.quarters;
+      var currentYear = this.props.stateFromReducer.myState.currentYear;
+      var currentTab = this.props.stateFromReducer.myState.currentTab;
       var quarterId = '';
       var categoryId = '';
       var handlerCategory = this.props.category;
@@ -119,12 +119,13 @@ class ObjectiveInput extends React.Component{
             </button>
             <div className="new-obj-creds">
               <div className="title-group">
-                  <input type="text" placeholder="New objective title" ref="title" className="new-obj-title" onFocus={this.handleFocus}/>
+
                   <section>
                       <AutocompleteInput
                           getAutocompleteData={this.getAutocompleteData}
-                          autocompleteData = {[{"_id":"1", "title": "1"}]}
+                          autocompleteData = {[]} //{"_id":"1", "title": "1"}
                           autocompleteType = 'objective'
+                          onFocus={this.handleFocus}
                       />
                   </section>
               </div>
@@ -135,7 +136,6 @@ class ObjectiveInput extends React.Component{
                   <ul id="new-obj-keyresults">
                     <p className="no-after">Key results</p>
                     {
-                      //this.state.keyResults.map((el) => {
                        keyResults.map((el) => {
                           return <KeyResult id={el.id} key={el.id} onClick={this.handleDelKeyResult}/>
                        })
