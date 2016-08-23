@@ -8,74 +8,71 @@ import { bindActionCreators } from 'redux';
 import * as actions from "../../actions/keyResultActions";
 
 class KeyResult extends React.Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.state={
-            data: [],
-            selectedItem: {}
-        }
+		this.state = {};
 
-        this.handleDelKeyRes = this.handleDelKeyRes.bind(this);
-        this.getAutocompleteData = this.getAutocompleteData.bind(this);
-        this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
-    }
+		this.onAddKeyResultClick = this.onAddKeyResultClick.bind(this);
+		this.onDeleteKeyResultClick = this.onDeleteKeyResultClick.bind(this);
+		this.getAutocompleteData = this.getAutocompleteData.bind(this);
+		this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
+	}
 
-    handleDelKeyRes() {
-        this.props.onClick(this.props.id);
-    }
+	onAddKeyResultClick() {
+		console.log('-----ADD----');
+	}
 
-    getAutocompleteData(title){
-        let objectId='57b9fab54bcc42841b7d0d72';
-        console.log('-----Debounce-----');
-        this.props.getAutocompleteKeyResults(objectId, title);
-    }
+	onDeleteKeyResultClick() {
+		this.props.onDeleteKeyResultClick();
+	}
 
-    setAutocompleteSelectedItem(item){
-        this.setState({
-            selectedItem: item
-        });
-    }
+	getAutocompleteData(title) {
+		let objectId = '57bb32bec952e814079d4213';
+		this.props.getAutocompleteKeyResults(objectId, title);
+	}
 
-    render() {
-        return (
-            <li className="keyresult-group">
-                <section>
+	setAutocompleteSelectedItem(item) {
+		this.props.setAutocompleteKeyResultsSelectedItem(item);
+	}
 
-                    <AutocompleteInput
-                        getAutocompleteData={this.getAutocompleteData}
-                        setAutocompleteSelectedItem={this.setAutocompleteSelectedItem}
-                        autocompleteData = {this.props.stateFromReducer.keyResults.data}
-                        autocompleteType = 'key result'
-                    />
+	render() {
+		return (
+			<section className="undisplay">
 
-                    <div>
-                        <button type="button" className="btn btn-blue-hover add-button-key-result"
-                                onClick={this.handleDelKeyRes}>
-                            <i className="fi flaticon-add" aria-hidden="true"></i>
-                        </button>
-                    </div>
+				<AutocompleteInput
+					getAutocompleteData={this.getAutocompleteData}
+					setAutocompleteSelectedItem={this.setAutocompleteSelectedItem}
+					autocompleteData={this.props.keyResultsReducer.data}
+					autocompleteType='key result'
+				/>
 
-                    <div>
-                        <button type="button" className="btn btn-red-hover delete-button-key-result"
-                                onClick={this.handleDelKeyRes}>
-                            <i className="fi flaticon-garbage-2" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </section>
-            </li>
-        )
-    }
+				<div>
+					<button type="button" className="btn btn-blue-hover add-button-key-result"
+					        onClick={this.onAddKeyResultClick}>
+						<i className="fi flaticon-add" aria-hidden="true"></i>
+					</button>
+				</div>
+
+				<div>
+					<button type="button" className="btn btn-red-hover delete-button-key-result"
+					        onClick={this.onDeleteKeyResultClick}>
+						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
+					</button>
+				</div>
+			</section>
+		)
+	}
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
+	return bindActionCreators(actions, dispatch);
 }
 
 function mapStateToProps(state) {
-    return {
-        stateFromReducer: state
-    };
+	return {
+		keyResultsReducer: state.keyResults
+	};
 }
 
 const KeyResultConnected = connect(mapStateToProps, mapDispatchToProps)(KeyResult);

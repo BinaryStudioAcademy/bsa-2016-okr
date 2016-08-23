@@ -1,17 +1,18 @@
-@import '../common/variables';
+@import "../common/variables";
+@import '../common/styles/commonStyles';
 
-#new-obj-keyresults{
+#new-obj-keyresults {
   margin: 0;
   margin-bottom: 25px;
   list-style-type: none;
   padding: 0;
   width: 100%;
 
-  a#add-new-keyresult-btn{
+  .add-new-keyresult-btn {
     display: inline-block;
     cursor: pointer;
     color: $color-green;
-    &:hover{
+    &:hover {
       color: darken($color-green, 10%);
       text-decoration: underline;
     }

@@ -119,12 +119,13 @@ class ObjectiveInput extends React.Component{
             </button>
             <div className="new-obj-creds">
               <div className="title-group">
-                  <input type="text" placeholder="New objective title" ref="title" className="new-obj-title" onFocus={this.handleFocus}/>
+                  
                   <section>
                       <AutocompleteInput
                           getAutocompleteData={this.getAutocompleteData}
-                          autocompleteData = {[{"_id":"1", "title": "1"}]}
+                          autocompleteData = {[]} //{"_id":"1", "title": "1"}
                           autocompleteType = 'objective'
+                          onFocus={this.handleFocus}
                       />
                   </section>
               </div>
@@ -135,7 +136,6 @@ class ObjectiveInput extends React.Component{
                   <ul id="new-obj-keyresults">
                     <p className="no-after">Key results</p>
                     {
-                      //this.state.keyResults.map((el) => {
                        keyResults.map((el) => {
                           return <KeyResult id={el.id} key={el.id} onClick={this.handleDelKeyResult}/>
                        })
