@@ -34,6 +34,7 @@ class ActiveObjective extends React.Component{
   		else {
   	var objective = visibleObjectives[active];
   	let keyResults = objective.keyResults.map((item) => {
+  		console.log(item)
   		return <p key={item._id}>{item.title}</p>
   	})
 		return (

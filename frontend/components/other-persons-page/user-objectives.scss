@@ -2,14 +2,13 @@
 
 #objectives{
 	.objective{
-		margin: 20px 5%;
-		margin-top: 10px;
-		padding: 5px 15px;
+		margin: 0px 5% 20px;
+		padding: 5px 15px 30px;
 		background: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
 		border-left: 10px solid #607D8B;
 		border-radius: 3px;
-		min-height: 80px;
+		min-height: 100px;
 		box-sizing: border-box;
 
 		.name{
@@ -25,15 +24,37 @@
 			font-size: 14px;
 			padding: 5px 10px;
 			margin-top: 20px;
-			margin-right: -2px;
+			margin-right: 0px;
 			cursor: pointer;
+		}
+		.progress-bar{
+			padding-top: 6px;
+			margin-right: 40px;
+			.progressValue {
+				top: 10px;
+			}
 		}
 		.description {
 			margin-bottom: 10px;
 		}
+		
+		.objective-info {
+			margin-left: 40%;
 
+			div	{
+				display: inline-block;
+				margin-right: 15%;
+			}
+			div:last-child{
+				margin-right: 0;
+			}
+
+		}
+	}
+	.otherUserKR{
+		margin: -50px 5% 0;
 		.users-key-results{
-			margin: -20px 0 5px 10px;
+			margin-left: 25px;
 			.key-results-arrow {
 				padding-left: 5px;
 			}
@@ -54,32 +75,37 @@
 				display: none;
 			}
 			ul {
-				margin: 5px 0 0;
-				padding-left: 5px;
-				display: table;
+				width: 100%;
+				margin: 12px 0 0;
+				padding: 0px;
+				list-style: none;
 
 				.user-key-result{
-					display: table-row;
-					height: 30px;
+					padding: 20px 15px;
+					background: lighten($color-blue-grey, 49%);
+					border: 1px solid #ddd;
+					border-top: none;
+					
 
 					div{
-						background: lighten($color-blue-grey, 50%);;
-						border: 1px solid $color-blue-grey;
-						border-radius: 3px;
-						padding: 2px;
-					}
-					span{
-						display: table-cell;
-
-					}
-					.score {
 						display: inline-block;
+					}
+					.name{
+						width: 45%;
+					}
+					.difficulty{
+						font-size: 14px;
+						width: calc(53% - 2.1em);
+					}
+
+					.score {
+						box-sizing: border-box;					
 						background: $color-green;
 						border: 1px solid $color-green;
 						border-radius: .3em;
-						padding: 1px 2px 3px 2px;
-						height: 1.2em;
-						width: 2em;
+						padding: 2px;
+						height: 1.7em;
+						width: 2.1em;
 						line-height: 1.5em;
 						text-align: center;
 						font-weight: bold;
@@ -91,40 +117,7 @@
 				}
 			}
 		}
-		
-		.objective-info {
-			margin-left: 40%;
 
-			div	{
-				display: inline-block;
-				margin-right: 15%;
-			}
-			div:last-child{
-
-				margin-right: 0;
-			}
-
-			.co-workers{
-				position: relative;
-				padding-right: 5px;
-				font-size: 20px;
-				span {
-					position: absolute;
-					top: 5px;
-					left: 30px;
-				}
-			}
-			.followed{
-				position: relative;
-				padding: 0 5px 0 30px;
-				font-size: 20px;
-				span {
-					position: absolute;
-					top: 5px;
-					left: 30px;
-				}
-			}
-		}
 	}
 }
 #quaterPanel{
@@ -144,7 +137,6 @@
     margin-left: -2px;
     padding: 7px;
     width: 21%;
-    color: $color-blue-grey;
     cursor: pointer;
     box-sizing: border-box;
     background-color: #fff;
@@ -165,7 +157,7 @@
   }
   .quater:hover{
     background: #e4eaec;
-    color: $color-blue-grey;
+    color: #000;
   }
 }
 }
@@ -178,7 +170,7 @@
 	text-align: center;
 	position: relative;
 	padding: 4px;
-	margin: 30px 5%;
+	margin: 20px 5%;
   }
 
   p > span {
@@ -212,6 +204,13 @@
     .userInfo{
       position: relative;
 
+	.apprentice{
+		float: right;
+		font-size: 14px;
+		padding: 5px 10px;
+		margin-right: 6px;
+		cursor: pointer;
+	}
 
       .logo{
         width: 90px;
@@ -219,37 +218,37 @@
 
         img {
           width: 100%;
-          border-radius: 3px;
+          border-radius: 5px;
         }
       }
 
       .credentials{
         position: absolute;
-        top: 0;
+        top: -2px;
         left: 110px;
-        font-size:18px;
+        font-size:22px;
         font-weight: 700;
         display: inline-block;
 
-        .lastVisite{
-          margin-top: 5px;
-          font-size: 12px;
-          color: #aaa;
-        }
         div{
         	width: 200px;
-			margin: 5px 0 15px;
+			margin: 10px 0;
 			position: relative;
+			img{
+    				width: 40px;
+				    border-radius: 50%;
+				    margin: 0px;
+    		}
 			.mentorName{
 				.mentorTitle{
 					color: #aaa;
 				}
-				position: absolute;
-				top: 0px;
-				line-height: 15px;
-				font-size: 12px;
-				font-weight: 400;
-				padding-left: 5px;
+				    position: absolute;
+				    top: -2px;
+				    line-height: 20px;
+				    font-size: 14px;
+				    font-weight: 400;
+				    padding-left: 7px;
 			}
 		}
 		.mentor{

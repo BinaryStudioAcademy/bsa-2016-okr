@@ -10,18 +10,19 @@ class PersonsInfo extends Component {
 		return (
 			<div id='topPanel'>
 				<div className='userInfo'>
+				<button className="btn btn-blue-hover apprentice" title="apprentice">Take apprentice</button>
 					<div className='logo'>
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
 					</div>
 					<div className='credentials'>
+					{this.props.data.userInfo.firstName} {this.props.data.userInfo.lastName}
 						<div>
-							<span className='fi flaticon-user-6 mentor'></span>
+							<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>
 							<span className='mentorName'>
 								<span className='mentorTitle'>Mentor:</span> 
 								<br />{mentor}
 							</span>
 						</div>
-					{this.props.data.userInfo.firstName} {this.props.data.userInfo.lastName}
 					</div>
 				</div>
 			</div>

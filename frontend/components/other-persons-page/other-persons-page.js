@@ -21,7 +21,6 @@ class OtherPersonsPage extends Component {
 		this.props.getUser(id);
 	}
 	render() {
-		console.log( this.props.user.waiting)
 		if (this.props.user.waiting){
 			return <div></div>
 		}
@@ -34,7 +33,7 @@ class OtherPersonsPage extends Component {
 						<UserOjectives />
 					</CentralWindow>
 					<StatPanel>
-						<Dashboard></Dashboard>
+						{/*<Dashboard></Dashboard>*/}
 					</StatPanel>
 				</div>
 			)

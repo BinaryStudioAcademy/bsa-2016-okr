@@ -30,8 +30,6 @@ class Objectives extends Component {
 		});
 
 		ObjectiveItems = quarter.userObjectives.map((item, index) => {
-				console.log('item' + item);
-
 				return <ObjectiveItem key={item._id} item={item} />
 			});
 		
