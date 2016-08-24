@@ -49,7 +49,11 @@ class ObjectiveItem extends Component {
 						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
 					</button>
 				</div>
-				<KeyResults data={ this.state.item.keyResults } changeScore={ this.changeScore } />
+				<KeyResults 
+					data={ this.state.item.keyResults } 
+					objectiveId={ this.state.item.templateId._id } 
+					changeScore={ this.changeScore } 
+				/>
 			</div>
 		)
 	}

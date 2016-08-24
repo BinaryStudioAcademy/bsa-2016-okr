@@ -3,7 +3,21 @@ var util = require('util');
 var mongoose = require('mongoose');
 var async = require('async');
 
+// ---=== LOCAL DB ===---
 mongoose.connect('mongodb://localhost:27017/okr-app');
+
+// ---=== REMOTE DB ===---
+// var uri= 'mongodb://dbuser:111111@ds029565.mlab.com:29565/okr';
+// var opts= {
+//  server: {
+//   socketOptions: {
+//    keepAlive: 1,
+//    connectTimeoutMS: 30000
+//   }
+//  }
+// };
+
+mongoose.connect(uri, opts);
 
 mongoose.connection.once('open', () => {
 	var items = seedCollections();

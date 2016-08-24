@@ -6,6 +6,7 @@ import Header from "./header.jsx";
 import NavMenu from "../components/common/nav-menu.jsx";
 import MainPage from './main-page.jsx';
 import LoadingScreen from '../components/common/LoadingScreen.jsx';
+import LoadingModal from '../components/common/LoadingModal.jsx';
 
 import * as categoriesActions from '../actions/categoriesActions.js';
 
@@ -24,33 +25,34 @@ class App extends Component {
 		this.props.actions.categories.getAllCategories(); 
 	}
 
-	// <LoadingScreen show={ true } />
 	render() {
+
 		return (
 			<div id="application">
-			<Header />
-			<NavMenu />
-			<MainPage>
-			{ this.props.children }
-			{
-				(() => {
-					if (process.env.NODE_ENV !== 'production') {
-						const DevTools = require('../shared/devtools/DevTools').default;
-						return <DevTools />;
-					}
-				})()
-			}
-			</MainPage>
+				<LoadingModal show={ this.props.isLoading } />
+				<Header />
+				<NavMenu />
+				<MainPage>
+				{ this.props.children }
+				{
+					(() => {
+						if (process.env.NODE_ENV !== 'production') {
+							const DevTools = require('../shared/devtools/DevTools').default;
+							return <DevTools />;
+						}
+					})()
+				}
+				</MainPage>
 			</div>
 			);
 	}
 }
 
-// function mapStateToProps(state) {
-// 	return {
-// 		stateFromReducer: state
-// 	};
-// }
+function mapStateToProps(state) {
+	return {
+		isLoading: state.app.isLoading
+	};
+}
 
 function mapDispatchToProps(dispatch) {
 	return {
@@ -60,6 +62,6 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-const AppConnected = connect(null, mapDispatchToProps)(App);
+const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default AppConnected;
