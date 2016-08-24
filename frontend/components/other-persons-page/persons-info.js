@@ -15,6 +15,7 @@ class PersonsInfo extends Component {
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
 					</div>
 					<div className='credentials'>
+					{this.props.data.userInfo.firstName} {this.props.data.userInfo.lastName}
 						<div>
 							<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>
 							<span className='mentorName'>
@@ -22,7 +23,6 @@ class PersonsInfo extends Component {
 								<br />{mentor}
 							</span>
 						</div>
-					{this.props.data.userInfo.firstName} {this.props.data.userInfo.lastName}
 					</div>
 				</div>
 			</div>
