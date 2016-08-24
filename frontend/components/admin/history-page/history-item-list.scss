@@ -3,7 +3,7 @@
 #historyTable{
 	tbody{
 		display: block;
-		height: 60vh;
+		height: 56vh;
 		table-layout:fixed;
     	overflow: auto;
     	display:block;
@@ -14,7 +14,11 @@
 	   	display:table;
 	 	width:99.99%;
     	table-layout:fixed;/* even columns width , fix width of table too*/
+		border-color:#E0E0E0;
+	}
 
+	thead tr {
+		border: none;
 	}
 	
 	tr {
@@ -22,13 +26,17 @@
 	}
 
 	th {
+		border:none;
 		text-align: left;
 		padding-left: 15px;
 	}
-
+	
 	thead tr th i{
+		padding-right: 5px;
 		cursor: pointer;
 	}
+
+
 }
 
 .history-item-list {
@@ -64,6 +72,14 @@
 
 	.actionDelete {
 		color: red;
+	}
+
+	.grey-text{
+		color:#A4A3A3;
+	}
+	
+	.black-text{
+		color: black;
 	}
 
 	.actionDefault {

@@ -25,7 +25,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 		case "RECEIVED_MY_OBJECTIVES": {
 			const { data } = action;
-      console.log("RECEIVED_MY_OBJECTIVES hit", data);
+	
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
 				currentTab: getQuarter(),

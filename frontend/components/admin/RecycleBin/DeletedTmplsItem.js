@@ -12,7 +12,6 @@ class DeletedTmplsItem extends Component {
 	constructor(props) {
 		super(props);
 		this.restoreItem = this.restoreItem.bind(this);
-		this.deleteItem = this.deleteItem.bind(this);
 	}
 
 	render() {
@@ -32,7 +31,6 @@ class DeletedTmplsItem extends Component {
 					    <tbody>
 							<tr>
 								<td><button className="btn btn-blue-hover"  title="Restore" onClick={this.restoreItem}><i className="fi flaticon-repeat-1"></i></button></td>
-								<td><button className="btn btn-red-hover"  title="Hard delete" onClick = {this.deleteItem}><i className="fi flaticon-garbage-2"></i></button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -42,12 +40,15 @@ class DeletedTmplsItem extends Component {
 	}
 
 	restoreItem(id) {
-		this.props.deleteItemFromState(this.props.item.id);
+
+		if (this.props.item.type === "objective") {
+			let body = {};
+			body.isDeleted = false;
+			this.props.updateUserObjectivesRequest(this.props.item.id, body);
+		}
+
 	}
 
-	deleteItem(id) {
-		this.props.deleteItemFromState(this.props.item.id);
-	}
 }
 
 function mapDispatchToProps(dispatch) {

@@ -44,13 +44,15 @@ class HistoryPage extends React.Component {
 						{/*historyItems: {console.log(this.props.historyItems)}*/}
 						<div className="history-page-header">
 							<div className="history-page-header-row">
+
 								<div className="history-page-title">
-									History
+									<p><span>History</span></p>
 								</div>
 								<div className="history-filter-container">
 									<button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.history.showHistoryFilters)} onClick={this.handleFilterButton}><i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button>
 								</div>
 							</div>
+							
 							<div className="history-page-header-row">
 								<div className="history-filter-bar-container">
 									<HistoryFilter/>

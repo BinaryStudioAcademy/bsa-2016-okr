@@ -23,7 +23,7 @@ export default function keyResultReducer(state = initialState, action = {}) {
 			console.log(data);
 
 			return Object.assign({}, state, {
-				keyResults: keyResults
+				data
 			})
 		}
 

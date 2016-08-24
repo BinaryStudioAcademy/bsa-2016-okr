@@ -12,7 +12,9 @@ export default function mappingReducer(state = initialState, action = {}) {
 
        case "MAPPING_RECEIVED_USERS": {
 
-            const {data} = action;   
+            const {data} = action; 
+
+            console.log(data);  
 
             for (let i = 0; i < data.length; i++) {
 
