@@ -28,7 +28,7 @@ class KeyResult extends React.Component {
 	}
 
 	getAutocompleteData(title) {
-		let objectId = '57bb32bec952e814079d4213';
+		let objectId = this.props.objectiveId;
 		this.props.getAutocompleteKeyResults(objectId, title);
 	}
 

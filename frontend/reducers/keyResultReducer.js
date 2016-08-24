@@ -12,8 +12,6 @@ const initialState = {
 export default function keyResultReducer(state = initialState, action = {}) {
 
 	switch (action.type) {
-
-
 		case RECEIVED_ERROR:
 		{
 

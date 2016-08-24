@@ -52,7 +52,7 @@ KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callba
 	}
 
 	model
-			.find(options,{title:true})
+			.find(options, { title: true })
 			.sort({ used: 'desc' })
 			.limit(10)
 			.populate('keyResults')
