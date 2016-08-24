@@ -181,11 +181,11 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 function baseCategories() {
 	var res = [];
-	var categories = [CONST.objective.PROJECTS];
+	var categories = [CONST.objective.categories.PROJECTS];
 
-	Object.getOwnPropertyNames(CONST.objective).forEach(categoryName => {
+	Object.getOwnPropertyNames(CONST.objective.categories).forEach(categoryName => {
 		var category = new Category({
-			title: CONST.objective[categoryName],
+			title: CONST.objective.categories[categoryName],
 			isDeleted: false
 		});
 
@@ -272,6 +272,7 @@ function randomUserInfo(users) {
 	var info = {
 		firstName: chance.first(),
 		lastName: chance.last(),
+		globalRole: chance.pickone(['ADMIN', 'DEVELOPER', 'HR', 'CEO', 'Tech Lead']),
 		email: chance.email()
 	};	
 

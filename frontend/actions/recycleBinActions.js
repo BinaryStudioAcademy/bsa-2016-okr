@@ -1,7 +1,16 @@
+var axios = require('axios');
+
 export function search(value) {
 	const action = {
 		type: 'SEARCH_OBJECTS',
 		searchValue: value
+	};
+	return action;
+}
+
+export function clearRecycleBin() {
+	const action = {
+		type: 'REC_BYN_CLEAR',
 	};
 	return action;
 }
@@ -31,14 +40,62 @@ export function setUserName(value) {
 }
 
 export function deleteItemFromState(id) {
-
-	console.log(id);
 	
 	const action = {
 		type: 'REC_BYN_DELETE_ITEM_FROM_STATE',
 		id: id
 	};
 	return action;
+}
+
+export function updateUserObjectivesRequest(id, body) {
+
+	 return (dispatch, getStore) => {
+
+		  dispatch({
+		   type: "REC_BYN_UPDATE_USER_OBJECTIVES_REQUEST"
+		  });
+
+	   return axios.put(('/api/userObjective/' + id), body)
+		  .then(response => dispatch(deleteItemFromState(id)))
+		  .catch(response => dispatch(updateUserObjectivesError(response.data)));
+	};
+}
+
+export function getUserObjectivesRequest() {
+
+	 return (dispatch, getStore) => {
+
+		  dispatch({
+		   type: "REC_BYN_GET_USER_OBJECTIVES_REQUEST"
+		  });
+
+	   return axios.get('/api/userObjective/me/deleted')
+		  .then(response => dispatch(receivedUserObjectives(response.data)))
+		  .catch(response => dispatch(receivedGetUserObjectivesError(response.data)));
+	};
+}
+
+export function updateUserObjectivesError(data) {
+	 return {
+	  type: "REC_BYN_UPDATE_USER_OBJECTIVES_REQUEST_ERROR",
+	  data
+	 };
+}
+
+export function receivedUserObjectives(data) {
+     return {
+	  type: "REC_BYN_RECEIVED_USER_OBJECTIVES",
+	  data
+	 };
+}
+
+
+export function receivedGetUserObjectivesError(data) {
+	 return {
+	  type: "REC_BYN_GET_USER_OBJECTIVES_REQUEST_ERROR",
+	  data
+	 };
 }
 
 export function typeOrCategoryFilter(value) {

@@ -1,5 +1,27 @@
 @import "normalize";
 @import "_variables";
+@import '../../common/variables';
+@import '../../common/styles/images';
+.history-page-window {
+   position: absolute;
+   top: 0;
+   right: 0;
+   left: 0;
+   bottom: 0;
+   overflow-y: auto;
+   overflow-x: hidden;
+   &.full-screen {
+      margin-right: 0;
+   }
+   
+   .main-content {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 3%;
+   }
+
+}
 
 .history-sort-bar-caontainer{
   clear: both;
@@ -23,14 +45,50 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  
+}
+
+.history-filter-container {
+
 }
 
 .history-page-title {
-  width: 30%;
-  display: flex;
+  width: 100%;
+  
   justify-content: center;
   font-size: 28px;
   font-weight: bold;
+  clear: both;
+
+  p {
+    color: #aaaaaa;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    padding: 4px;
+    width: 98%;
+    margin: 0 5px;
+  }
+
+  p > span {
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    background: lighten($color-blue-grey, 50%);
+    z-index: 10;
+  }
+
+  p:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 28px;
+    left: 0;
+    height: 0;
+    width: 100%;
+    border-top: 1px solid #aaaaaa;
+    z-index: 0;
+  }
 }
 
 .history-search-bar-container {

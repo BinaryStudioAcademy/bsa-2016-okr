@@ -2,7 +2,7 @@
 
 #objectives{
 	.objective{
-		margin: 0px 5% 20px;
+		margin: 20px 5% 20px;
 		padding: 5px 15px 30px;
 		background: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
@@ -58,6 +58,15 @@
 			.key-results-arrow {
 				padding-left: 5px;
 			}
+			.easy{
+				display: inline-block;
+			}
+			.intermediate{
+
+			}
+			.advanced{
+
+			}
 			.change {
 				color: $color-blue;
 				cursor: pointer;
@@ -112,12 +121,8 @@
 						color: $color-white;
 					}
 				}
-				.completed{
-					text-decoration: line-through;
-				}
 			}
 		}
-
 	}
 }
 #quaterPanel{

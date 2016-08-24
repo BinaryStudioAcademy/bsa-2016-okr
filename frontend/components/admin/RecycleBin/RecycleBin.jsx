@@ -16,10 +16,12 @@ class RecycleBin extends Component {
 		this.filterButtonState = this.filterButtonState.bind(this);
 		this.handleFilterButton = this.handleFilterButton.bind(this);
 	}
+
 	handleFilterButton() {
 		let show = this.props.recycleBin.showRecycleBinFilters;
 		this.props.showFilters(!show);
 	}
+
 	filterButtonState(show) {
 		if (show) {
 			return 'active-button'
@@ -77,11 +79,17 @@ class RecycleBin extends Component {
 		);
 	}
 
+	componentWillMount() {
+		this.props.clearRecycleBin();
+		this.props.getUserObjectivesRequest();
+	}
+
 	setSortingByDate() {
 		this.props.setSortingByDate(!this.props.recycleBin.sortByDate);
 	}
 
 }
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(actions, dispatch);
 }

@@ -19,7 +19,6 @@ export default function patentDetailsReducer(state = initialState, action) {
     switch (action.type) {             
         
          case GET_OBJECTIVES_LIST: {
-            console.log("GET_OBJECTIVES_LIST");
 
             return Object.assign({}, state, {
                 waiting: true
@@ -30,9 +29,6 @@ export default function patentDetailsReducer(state = initialState, action) {
             
             const {data} = action;
 
-            console.log("OBJECTIVES_LIST_ERROR");
-            console.log(data);
-
             return Object.assign({}, state, {
                 data
             })
@@ -41,9 +37,6 @@ export default function patentDetailsReducer(state = initialState, action) {
       case RECEIVED_OBJECTIVES_LIST: {
 
             const {objectives} = action;
-
-            console.log("RECEIVED_OBJECTIVES_LIST");
-            console.log(objectives);
 
             return Object.assign({}, state, {
                 active: 0,
@@ -54,16 +47,13 @@ export default function patentDetailsReducer(state = initialState, action) {
         }
 
         case DELETE_OBJECTIVE: {
-            console.log("DELETE_OBJECTIVE");
-
+       
             return Object.assign({}, state, {
                 waiting: true
             })
         }
 
         case SOFT_DELETE_OBJECTIVE: {
-
-            console.log("SOFT_DELETE_OBJECTIVE");
             const{id} = action;
             let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
 
@@ -76,7 +66,6 @@ export default function patentDetailsReducer(state = initialState, action) {
 
         case SET_SORT: {
             const sort = action.sort;
-            console.log(sort);
 
             return Object.assign({}, state, {
                 sort
@@ -123,7 +112,6 @@ function update(objectives, id) {
      for (let i = 0; i < objectives.length; i++) {
 
           if (objectives[i]._id == id) {
-            console.log(i, id)
             objectives.splice(i, 1);
 
           }

@@ -70,6 +70,7 @@
 }
 
 #role-mapping-wrapper .table {
+    box-sizing: border-box;
     background-color: #FFF;
     min-width: 535px;
 	width: 85%;
@@ -95,7 +96,7 @@
 }
 
 #role-mapping-wrapper .col-2 {
-	width: 19%;
+	width: 24%;
 }
 
 #role-mapping-wrapper .col-3 {
@@ -103,7 +104,7 @@
 }
 
 #role-mapping-wrapper .col-4 {
-	width: 23%;
+	width: 18%;
 }
 
 #role-mapping-wrapper .col-5 {
@@ -175,13 +176,21 @@
 	border-bottom: solid 1px #99BCE0;
 }
 
+#role-mapping-wrapper #global-roles-p {
+    width: 300px;
+    min-width: 300px;
+}
+
 #role-mapping-wrapper  p {
+    box-sizing: border-box;
     color: #aaaaaa;
     font-size: 16px;
     text-align: center;
     position: relative;
-    padding: 4px;
-    width: 100%;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 85%;
+    min-width: 535px;
     margin: 0 auto;
     margin-bottom: 29px;
 }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import ObjectiveItem from './objective.jsx';
 import Quarter from './quarter.jsx';
-import ObjectivesList from './objective-list.jsx';
+import ObjectiveItem from './objective.jsx';
+import ObjectivesList from '../common/objective/objective-list.jsx';
+
+import { isEmpty } from '../../../backend/utils/ValidateService';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,54 +22,55 @@ class Objectives extends Component {
 	changeTab(num) {
 		this.props.setChangeTab(num);
 	}
-	changeYear(year){
+
+	changeYear(year) {
 		this.props.setChangeYear(year);
 	}
-	handleAddingNewQuarter(new_quarter){
+
+	handleAddingNewQuarter(newQuarter){
 		let confirmation = confirm("Do you really want to create new quarter?");
 
-		if(confirmation){
-
-			// call action
-			this.props.createQuarter(new_quarter);
+		if(confirmation) {
+			this.props.createQuarter(newQuarter);
 		}
 	}
 
 	componentWillMount() {
-		console.log(this.props);
-		this.props.getAllCategories();
 		this.props.getMe();
 	}
 
 	render() {
-		const data = this.props.stateFromReducer.myState;
-		const { me, currentYear, currentTab, existedQuarters } = data;
-		var ObjectiveItems = [];
+		const myState = this.props.myState;
+		const { me, currentYear, currentTab, existedQuarters } = myState;
+		
+		const categories = this.props.categories;
+		console.log('categories', categories.list);
+
+		var objectiveItems = [];
+		var quarter = {};
+		var objectives = [];
 
 		if (me.quarters != undefined) {
-			let quarter = me.quarters.find((quarter) => {
-				console.log(currentYear, currentTab)
+			quarter = me.quarters.find((quarter) => {
 				return (quarter.year == currentYear) && (quarter.index == currentTab)
 			});
 
-			ObjectiveItems = quarter.userObjectives.map((item, index) => {
-					console.log('item -> ' + item.templateId.category.title);
-
-					return <ObjectiveItem index={ index } key={ item._id } category={ item.templateId.category.title } item={ item } />
-			});
+			objectives = quarter.userObjectives;
 		}
 
 		return (
 			<div id="home-page-wrapper">
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
-						currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
+				currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
 				<div id='objectives'>
-					<ObjectivesList objectives={ ObjectiveItems } />
+					<ObjectivesList objectives={ objectives } categories={ categories.list } 
+					my={ true } ObjectiveItem={ ObjectiveItem } />
 				</div>
 			</div>
 		)
 	}
 }
+
 Objectives.defaultProps = { today: new Date() };
 
 function mapDispatchToProps(dispatch) {
@@ -76,10 +79,11 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		stateFromReducer: state
+		myState: state.myState,
+		categories: state.categories
 	};
 }
 
 const ObjectivesConnected = connect(mapStateToProps, mapDispatchToProps)(Objectives);
 
-export default ObjectivesConnected
+export default ObjectivesConnected;

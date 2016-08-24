@@ -12,14 +12,16 @@ export default function mappingReducer(state = initialState, action = {}) {
 
        case "MAPPING_RECEIVED_USERS": {
 
-            const {data} = action;   
+            const {data} = action; 
+
+            console.log(data);  
 
             for (let i = 0; i < data.length; i++) {
 
                 data[i].avatar = "avatar1.png";
-                data[i].firstName = data[i].userInfo.firstName;
-                data[i].lastName = data[i].userInfo.lastName;
+                data[i].name = data[i].userInfo.firstName + " " + data[i].userInfo.lastName;;
                 data[i].email = data[i].userInfo.email;
+                data[i].globalRole = data[i].userInfo.globalRole;
 
             }
             
@@ -124,8 +126,7 @@ function updateVisibleUsers(users, filter) {
         {
         for (let i = 0; i < users.length; i++) {
 
-            if (users[i].firstName.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-              users[i].lastName.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
+            if (users[i].name.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
               users[i].email.toUpperCase().indexOf(filter.toUpperCase()) === 0 ) {
                 visibleUsers.push(users[i]);
               }

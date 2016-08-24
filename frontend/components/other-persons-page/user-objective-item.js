@@ -20,7 +20,6 @@ class ObjectiveItem extends Component {
 		    <div className='otherUserKR'><KeyResults data={this.props.item.keyResults} /></div>
 		    </div>
 		)
-	}
-}
+	}}
 
 export default ObjectiveItem

@@ -29,7 +29,7 @@ class RoleMapping extends React.Component {
 
             <aside id="inter-panel">
 
-                 <p><span>Global roles</span></p>
+                 <p id="global-roles-p"><span>Global roles</span></p>
 
                  <div id="roles-table">
                       <div className="table-head">
@@ -55,9 +55,9 @@ class RoleMapping extends React.Component {
                     <div className="table">
                        <div className="table-head">
                              <h3 className="col-1">Avatar</h3>
-                             <h3 className="col-2">First name</h3>
-                             <h3 className="col-3">Last name</h3>
-                             <h3 className="col-4">E-mail</h3>
+                             <h3 className="col-2">Name</h3>
+                             <h3 className="col-3">E-mail</h3>
+                             <h3 className="col-4">Global role</h3>
                              <h3 className="col-5">Local role</h3>
                        </div>
 

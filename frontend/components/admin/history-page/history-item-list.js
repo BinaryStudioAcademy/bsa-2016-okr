@@ -53,8 +53,6 @@ class HistoryItemList extends React.Component {
     }
 
     onSort(sort) {
-        //console.log(event.currentTarget);
-        //console.log(event.currentTarget.value);
         this.props.setSort(sort);
         this.props.getFilteredItems();
     }
@@ -64,14 +62,14 @@ class HistoryItemList extends React.Component {
    		return(
    			<tr key={item._id}>
 				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
-				<td className={this.getActionColor(item.type)}>{item.type}</td>
-				<td><a href="#">{this.getObjectId(item)}</a></td>
-				<td>{moment(item.createdAt).format('D MMMM YYYY, h:mm a')}</td>
+				<td>{item.type}</td>
+				<td><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getObjectId(item)}</span></td>
+				<td className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</td>
 			</tr>)
   	}
 
   	renderItems(items, ref) {
-  		return ( <tr ref={ref}>{items}</tr> )
+  		return ( <tr className="no-hover"ref={ref}>{items}</tr> )
   	}
 
     render() {

@@ -23,8 +23,7 @@ class OtherPersonsPage extends Component {
 	render() {
 		if (this.props.user.waiting){
 			return <div></div>
-		}
-		else {
+		} else {
 			const {user} = this.props.user;
 			return (
 				<div>
@@ -47,7 +46,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
 	return {
 		user: state.userPage,
-		routing: state.routing.locationBeforeTransitions
+		routing: state.routing.locationBeforeTransitions,
+		categories: state.categories
 	};
 }
 

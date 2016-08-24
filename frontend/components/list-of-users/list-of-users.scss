@@ -50,21 +50,24 @@
 
 .listOfUsers {
 	list-style: none;
-	padding: 5px;
-	margin-top: 10px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-left: -3%;
 
 	.userItemDiv{
-		background: lighten($color-blue-grey, 52%);
-		border: 1px solid #99bce0;
-		border-left: 10px solid #607D8B;
-		margin-bottom: 10px;
-		padding: 5px;
-		padding-left: 25px;
-		padding-right: 75px;
-		-webkit-transition: all .15s;
-		-moz-transition: all .15s;
-		-o-transition: all .15s;
-		transition: all .15s;
+		background: #f9fafb;
+	    border: 1px solid #dddddd;
+	    border-left: 10px solid #607D8B;
+	    margin-bottom: 15px;
+    	padding: 10px 5px;
+	    -webkit-transition: all .15s;
+	    -moz-transition: all .15s;
+	    -o-transition: all .15s;
+	    transition: all .15s;
+	    width: 47%;
+	    margin-left: 3%;
+	    box-sizing: border-box;
+	    display: inline-block;
 		
 		&:hover{
 			background-color: #fff;
@@ -84,22 +87,28 @@
 		}
 		.userInfo{
 			display: inline-block;
-			position: absolute;
-			top: 5px;
-			width: 30%;
+		    position: absolute;
+		    top: 0;
+		    width: 38%;
 
 			.userName {
-				font-weight: 700;
+				font-weight: bold;
 			}
 			div{
-				margin-top: 5px;
-				position: relative;
+				margin: 6px 0;
+    			position: relative;
+
+    			img{
+    				width: 35px;
+				    border-radius: 50%;
+				    margin: 0px;
+    			}
 				.mentorName{
 					position: absolute;
-					top: -1px;
-					line-height: 15px;
-					font-size: 12px;
-					padding-left: 5px;
+				    top: 0px;
+				    line-height: 18px;
+				    font-size: 12px;
+				    padding-left: 5px;
 
 					.mentorTitle{
 						color: #aaa;
@@ -112,21 +121,23 @@
 			}
 		}
 		.progressTitle {
-			margin-left: 30%;
-			margin-bottom: 5px;
-			font-size: 14px;
+			margin-left: 2%;
+    		font-size: 14px;
 		}
 		.progress-bar{
-			padding-top: 5px;
+			margin-right: 10%; 
+			width: 37%;
+		    padding-top: 20px;
 			
 			.progressValue {
-				top: 30px;
+				top: 40px;
 			}
 		}	
 
 			img{
-				margin: 5px 10px 2px;
-				width: 50px;
+				margin: 0 10px;
+    			width: 60px;
+    			border-radius: 5px;
 			}
 		}
 
@@ -135,3 +146,29 @@
 	}
 }
 
+@media all 
+    and (max-width: 1440px)
+    and (min-width: 900px)
+{
+	.listOfUsers {
+		.userItemDiv{
+		    width: 97%;
+		    margin-left: 3%;
+		    display: block;
+
+			.progressTitle {
+				margin-left: 2%;
+	    		font-size: 14px;
+			}
+			.progress-bar{
+				margin-right: 50px; 
+				width: 30%;
+			    padding-top: 10px;
+				
+				.progressValue {
+					top: 30px;
+				}
+			}	
+		}
+	}
+}

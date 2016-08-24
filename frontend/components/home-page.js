@@ -8,39 +8,45 @@ import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
 import Dashboard from "./dashboard/dashboard.jsx";
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+// import * as actions from "../actions/categoriesActions";
+
 class Home extends React.Component {
-   constructor() {
-      super();
+	constructor() {
+		super();
+	}
 
-      this.menu_handle_click = this.menu_handle_click.bind(this);
-   }
+	componentWillMount() {
+		// this.props.getAllCategories();
+	}
 
-
-   menu_handle_click(event) {
-      var target = event.target,
-         menu = document.getElementById('navbar');
-
-      if (!target.classList.contains('active')) {
-         target.classList.add('active');
-         menu.classList.add('opened');
-      } else {
-         target.classList.remove('active');
-         menu.classList.remove('opened');
-      }
-   }
-
-   render() {
-      return (
-         <div>
-               <CentralWindow>
-                  <UserObjectives />
-               </CentralWindow>
-               <StatPanel>
-                  <Dashboard />
-               </StatPanel>
-         </div>
-      )
-   }
+	render() {
+		// <Dashboard />
+		return (
+			<div>
+				<CentralWindow>
+				<UserObjectives />
+				</CentralWindow>
+				<StatPanel>
+				</StatPanel>
+			</div>
+			)
+	}
 }
 
+// function mapDispatchToProps(dispatch) {
+// 	return bindActionCreators(actions, dispatch);
+// }
+
+// function mapStateToProps(state) {
+// 	return {
+// 		stateFromReducer: state
+// 	};
+// }
+
+// const HomeConnected = connect(mapStateToProps, mapDispatchToProps)(Home);
+
+// export default HomeConnected;
 export default Home;

@@ -1,178 +1,197 @@
+import {
+	CLEAR_STATE,
+	SEARCH_OBJECTS,
+	SHOW_FILTERS,
+	SET_HISTORY_FILTER_DATE_FROM,
+	SET_HISTORY_FILTER_DATE_TO,
+	SET_NAME_FILTER,
+	SET_TYPE_FILTER,
+	GET_SORTED_ITEMS,
+	RECEIVED_SORTED_ITEMS,
+	SET_SORT,
+	RESET_FILTERS,
+	GET_FILTERED_ITEMS,
+	RECEIVED_FILTERED_ITEMS,
+	GET_HISTORY_ITEMS,
+	RECEIVED_HISTORY_ITEMS,
+	HISTORY_ITEMS_ERROR,
+} from '../actions/historyActions';
+
 const initialState = {
-    historyItems: [],
+	historyItems: [],
 	searchValue: '',
 	showHistoryFilters: false,
-    nameFilter: '',
-    typeFilter: '',
-    sort:{
-        up: true,
-        sortField: ''
-    },
-    setHistoryFilterDateFrom:'',
-    setHistoryFilterDateTo:''
+	nameFilter: '',
+	typeFilter: '',
+	sort:{
+		up: true,
+		sortField: ''
+	},
+	setHistoryFilterDateFrom:'',
+	setHistoryFilterDateTo:''
 
 };
 
 export default function historyReducer(state = initialState, action) {
-    switch (action.type) {
-        case 'CLEAR_STATE' : {
-            return Object.assign({}, state, initialState)
-        }
+	switch (action.type) {
+		case CLEAR_STATE: {
+			return Object.assign({}, state, initialState)
+		}
 
-    	case "SEARCH_OBJECTS": {
-    		const {searchValue} = action;
+		case SEARCH_OBJECTS: {
+			const {searchValue} = action;
 			return Object.assign({}, state, {
 				searchValue
 			})
-        }
+		}
 
-        case "GET_HISTORY_ITEMS": {
-            console.log("get historyItems");
-            return Object.assign({}, state)
-        }
+		case GET_HISTORY_ITEMS: {
+			console.log("get historyItems");
+			return Object.assign({}, state)
+		}
 
-        case "RESET_FILTERS": {
-            console.log("reset");
-            return Object.assign({}, state, {
-                nameFilter: '',
-                typeFilter: '',
-                setHistoryFilterDateFrom: '',
-                setHistoryFilterDateTo: ''
-            })
-        }
-        // case "GET_SORTED_ITEMS": {
-        //     console.log("get sortedItems");
-        //     return Object.assign({}, state)
-        // }
+		case RESET_FILTERS: {
+			console.log("reset");
+			return Object.assign({}, state, {
+				nameFilter: '',
+				typeFilter: '',
+				setHistoryFilterDateFrom: '',
+				setHistoryFilterDateTo: ''
+			})
+		}
+		// case GET_SORTED_ITEMS: {
+		//     console.log("get sortedItems");
+		//     return Object.assign({}, state)
+		// }
 
-        case "GET_FILTERED_ITEMS": {
-            console.log("get filteredItems");
-            return Object.assign({}, state)
-        }
+		case GET_FILTERED_ITEMS: {
+			console.log("get filteredItems");
+			return Object.assign({}, state)
+		}
 
-        case "HISTORY_ITEMS_ERROR": {
-            
-            const {data} = action;
+		case HISTORY_ITEMS_ERROR: {
 
-            console.log("HISTORY_ITEMS_ERROR");
-            console.log(data);
+			const {data} = action;
 
-            return Object.assign({}, state)
-        }
+			console.log("HISTORY_ITEMS_ERROR");
+			console.log(data);
 
-        // case "RECEIVED_SORTED_ITEMS": {
+			return Object.assign({}, state)
+		}
 
-        //     const historyItems = action.historyItems;
-        //     console.log('received');
+		// case RECEIVED_SORTED_ITEMS: {
 
-        //     return Object.assign({}, state, {
-        //         historyItems  
-        //     })
-        // }
+		//     const historyItems = action.historyItems;
+		//     console.log('received');
 
-        case "RECEIVED_FILTERED_ITEMS": {
+		//     return Object.assign({}, state, {
+		//         historyItems  
+		//     })
+		// }
 
-            const historyItems = action.historyItems;
-            console.log('received');
+		case RECEIVED_FILTERED_ITEMS: {
 
-            return Object.assign({}, state, {
-                historyItems  
-            })
-        }
+			const historyItems = action.historyItems;
+			console.log('received');
 
-        case "RECEIVED_HISTORY_ITEMS": {
+			return Object.assign({}, state, {
+				historyItems  
+			})
+		}
 
-            const historyItems = action.historyItems;
-            console.log('received');
+		case RECEIVED_HISTORY_ITEMS: {
 
-            return Object.assign({}, state, {
-            	historyItems ,
-                visibleItems:  historyItems
-            })
-        }
+			const historyItems = action.historyItems;
+			console.log('received');
 
-        case "SET_SORT": {
-            const sort = action.sort;
-            console.log(sort);
+			return Object.assign({}, state, {
+				historyItems ,
+				visibleItems:  historyItems
+			})
+		}
 
-            return Object.assign({}, state, {
-                sort
-            })
-        }
-            
-        case "SET_NAME_FILTER": {
-            const {nameFilter} = action;
-            return Object.assign({}, state, {
-                nameFilter
-            })
-        }   
+		case SET_SORT: {
+			const sort = action.sort;
+			console.log(sort);
 
-        case "SET_TYPE_FILTER": {
-            const {typeFilter} = action;
-            console.log('reduser: ' + typeFilter);
-            return Object.assign({}, state, {
-                typeFilter
-            })
-        }   
+			return Object.assign({}, state, {
+				sort
+			})
+		}
 
-		case "SHOW_FILTERS": {
+		case SET_NAME_FILTER: {
+			const {nameFilter} = action;
+			return Object.assign({}, state, {
+				nameFilter
+			})
+		}   
+
+		case SET_TYPE_FILTER: {
+			const {typeFilter} = action;
+			console.log('reduser: ' + typeFilter);
+			return Object.assign({}, state, {
+				typeFilter
+			})
+		}   
+
+		case SHOW_FILTERS: {
 			const {showHistoryFilters} = action;
 			return Object.assign({}, state, {
 				showHistoryFilters
 			})
 		}
 
-   		case "SET_HISTORY_FILTER_DATE_FROM": {
+		case SET_HISTORY_FILTER_DATE_FROM: {
 			const {setHistoryFilterDateFrom} = action;
 			return Object.assign({}, state, {
 				setHistoryFilterDateFrom,
-                visibleItems: filterDate(state.visibleItems, setHistoryFilterDateFrom, state.setHistoryFilterDateTo, state.historyItems)
+				visibleItems: filterDate(state.visibleItems, setHistoryFilterDateFrom, state.setHistoryFilterDateTo, state.historyItems)
 			})
 		}
 
-   		case "SET_HISTORY_FILTER_DATE_TO": {
-    		const {setHistoryFilterDateTo} = action;
-    		return Object.assign({}, state, {
-    			setHistoryFilterDateTo,
-                visibleItems: filterDate(state.visibleItems, state.setHistoryFilterDateFrom, setHistoryFilterDateTo, state.historyItems)
-    		})
-   		}
+		case SET_HISTORY_FILTER_DATE_TO: {
+			const {setHistoryFilterDateTo} = action;
+			return Object.assign({}, state, {
+				setHistoryFilterDateTo,
+				visibleItems: filterDate(state.visibleItems, state.setHistoryFilterDateFrom, setHistoryFilterDateTo, state.historyItems)
+			})
+		}
 
-        default: {
-            return state;
-        }
-    }
+		default: {
+			return state;
+		}
+	}
 }
 
 function filterDate(items, dateFrom, dateTo, historyItems) { 
-    items = historyItems;
-    let visibleItems = [];
-    if(dateFrom == undefined && dateTo == undefined) {
-        visibleItems = historyItems;
-    }
-    else if(dateFrom == undefined && dateTo != undefined) {
-        
-        for (let i = 0; i < historyItems.length; i++) {
-            if (dateTo >= historyItems[i].createdAt) {
-                visibleItems.push(historyItems[i]);
-            }
-        }
-    }
-    else if(dateFrom != undefined && dateTo == undefined){
+	items = historyItems;
+	let visibleItems = [];
+	if(dateFrom == undefined && dateTo == undefined) {
+		visibleItems = historyItems;
+	}
+	else if(dateFrom == undefined && dateTo != undefined) {
 
-         for (let i = 0; i < historyItems.length; i++) {
-            if (dateFrom <= historyItems[i].createdAt) {
-                visibleItems.push(historyItems[i]);
-            }
-        }
-    }
-    else {
+		for (let i = 0; i < historyItems.length; i++) {
+			if (dateTo >= historyItems[i].createdAt) {
+				visibleItems.push(historyItems[i]);
+			}
+		}
+	}
+	else if(dateFrom != undefined && dateTo == undefined){
 
-       for (let i = 0; i < historyItems.length; i++) {
-            if (dateFrom <= historyItems[i].createdAt && dateTo >= historyItems[i].createdAt) {
-                visibleItems.push(historyItems[i]);
-            }
-        }
-    }
-    return visibleItems;
+		for (let i = 0; i < historyItems.length; i++) {
+			if (dateFrom <= historyItems[i].createdAt) {
+				visibleItems.push(historyItems[i]);
+			}
+		}
+	}
+	else {
+
+		for (let i = 0; i < historyItems.length; i++) {
+			if (dateFrom <= historyItems[i].createdAt && dateTo >= historyItems[i].createdAt) {
+				visibleItems.push(historyItems[i]);
+			}
+		}
+	}
+	return visibleItems;
 }

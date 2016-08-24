@@ -31,3 +31,19 @@ a {
 h1 {
   padding-left: 10%;
 }
+
+.show {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.hidden {
+  display: none;
+}
