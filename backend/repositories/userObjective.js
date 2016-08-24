@@ -27,4 +27,25 @@ UserObjectiveRepository.prototype.getByUserIdPopulate = function(userId, callbac
 		.exec(callback);
 };
 
+UserObjectiveRepository.prototype.getDeletedByUserIdPopulate = function(userId, callback) {
+	
+	var model = this.model;
+
+	model
+		.find({ userId: userId, isDeleted: true})
+		.populate({
+			path: "templateId",
+			populate: {
+				path: 'category'
+			}
+		})
+		.populate({
+			path: "creator",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+}
+
 module.exports = new UserObjectiveRepository();

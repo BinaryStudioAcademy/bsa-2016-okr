@@ -66,6 +66,12 @@ router.get('/me/', (req, res, next) => {
 	return repository.getByUserIdPopulate(req.session._id, res.callback);
 });
 
+router.get('/me/deleted', (req, res, next) => {
+
+	return repository.getDeletedByUserIdPopulate(req.session._id, res.callback);
+});
+
+
 router.get('/user/:id', (req, res, next) => {
 	var id = req.params.id;
 

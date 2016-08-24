@@ -79,6 +79,11 @@ class RecycleBin extends Component {
 		);
 	}
 
+	componentWillMount() {
+		this.props.clearRecycleBin();
+		this.props.getUserObjectivesRequest();
+	}
+
 	setSortingByDate() {
 		this.props.setSortingByDate(!this.props.recycleBin.sortByDate);
 	}
