@@ -48,7 +48,7 @@ export function deleteItemFromState(id) {
 	return action;
 }
 
-export function updateUserObjectivesRequest(id, body) {
+export function updateUserObjectivesRequest(id, body, idItem) {
 
 	 return (dispatch, getStore) => {
 
@@ -57,9 +57,16 @@ export function updateUserObjectivesRequest(id, body) {
 		  });
 
 	   return axios.put(('/api/userObjective/' + id), body)
-		  .then(response => dispatch(deleteItemFromState(id)))
+		  .then(response => dispatch(deleteItemFromState(idItem)))
 		  .catch(response => dispatch(updateUserObjectivesError(response.data)));
 	};
+}
+
+export function updateUserObjectivesError(data) {
+	 return {
+	  type: "REC_BYN_UPDATE_USER_OBJECTIVES_REQUEST_ERROR",
+	  data
+	 };
 }
 
 export function getUserObjectivesRequest() {
@@ -70,17 +77,10 @@ export function getUserObjectivesRequest() {
 		   type: "REC_BYN_GET_USER_OBJECTIVES_REQUEST"
 		  });
 
-	   return axios.get('/api/userObjective/me/deleted')
+	   return axios.get('/api/userObjective/me/')
 		  .then(response => dispatch(receivedUserObjectives(response.data)))
 		  .catch(response => dispatch(receivedGetUserObjectivesError(response.data)));
 	};
-}
-
-export function updateUserObjectivesError(data) {
-	 return {
-	  type: "REC_BYN_UPDATE_USER_OBJECTIVES_REQUEST_ERROR",
-	  data
-	 };
 }
 
 export function receivedUserObjectives(data) {
@@ -94,6 +94,36 @@ export function receivedUserObjectives(data) {
 export function receivedGetUserObjectivesError(data) {
 	 return {
 	  type: "REC_BYN_GET_USER_OBJECTIVES_REQUEST_ERROR",
+	  data
+	 };
+}
+
+
+export function getUserDeletedObjectivesRequest() {
+
+	 return (dispatch, getStore) => {
+
+		  dispatch({
+		   type: "REC_BYN_GET_USER_DELETED_OBJECTIVES_REQUEST"
+		  });
+
+	   return axios.get('/api/userObjective/me/deleted')
+		  .then(response => dispatch(receivedUserDeletedObjectives(response.data)))
+		  .catch(response => dispatch(receivedGetUserDeletedObjectivesError(response.data)));
+	};
+}
+
+export function receivedUserDeletedObjectives(data) {
+     return {
+	  type: "REC_BYN_RECEIVED_USER_DELETED_OBJECTIVES",
+	  data
+	 };
+}
+
+
+export function receivedGetUserDeletedObjectivesError(data) {
+	 return {
+	  type: "REC_BYN_GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR",
 	  data
 	 };
 }

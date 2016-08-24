@@ -21,9 +21,9 @@ export function receivedError(data) {
 	 };
 }
 
-export function receivedMyObjectives(data) {
+export function receivedMyDeletedObjectives(data) {
 	 return {
-		  type: "RECEIVED_MY_OBJECTIVES",
+		  type: "RECEIVED_MY_DELETED_OBJECTIVES",
 		  data: data
 	 };
 }

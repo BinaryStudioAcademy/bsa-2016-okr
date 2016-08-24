@@ -40,7 +40,14 @@ var userObjective = new Schema({
 			type: Schema.Types.ObjectId,
 			ref: 'User',
 			required: true
-		}
+		},
+		deletedBy: {
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+			required: false
+		},
+		deletedDate: {},
+		isDeleted: Boolean
 	}]
 }, {
 	timestamps: true

@@ -183,10 +183,35 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 		keyResults[userKeyResultIndex].used += 1;
 
+	    let keyIsDeleted =  chance.pickone([false, false, false, true]);
+		let keyDeletedDate = null;
+		let keyDeletedBy = null;
+
+	    if (keyIsDeleted) {
+		
+			keyDeletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+			
+			let isDone = false;
+
+			let userWhoDidDeletionIndex;
+
+			while(!isDone) {
+				userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
+				if (users[userWhoDidDeletionIndex].localRole === "admin")
+					isDone = true;
+			}
+
+			keyDeletedBy = users[userWhoDidDeletionIndex]._id;
+
+	    }
+
 		return {
 			templateId: userKeyResult._id,
 			score: chance.floating({ min: 0, max: 1, fixed: 1 }),
-			creator: user
+			creator: user,
+			deletedBy: keyDeletedBy,
+			deletedDate: keyDeletedDate,
+			isDeleted: keyIsDeleted
 		};
 	});
 
