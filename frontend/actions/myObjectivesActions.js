@@ -21,9 +21,9 @@ export function receivedError(data) {
 	 };
 }
 
-export function receivedMyDeletedObjectives(data) {
+export function receivedMyObjectives(data) {
 	 return {
-		  type: "RECEIVED_MY_DELETED_OBJECTIVES",
+		  type: "RECEIVED_MY_OBJECTIVES",
 		  data: data
 	 };
 }
@@ -31,7 +31,7 @@ export function receivedMyDeletedObjectives(data) {
 export function setChangeTab(num) {
 	 return {
 		  type: "CHANGE_TAB",
-		  currentTab: num
+		  currentTab: numa
 	 };
 }
 
