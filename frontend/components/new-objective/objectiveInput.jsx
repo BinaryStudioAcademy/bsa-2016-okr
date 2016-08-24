@@ -50,43 +50,32 @@ class ObjectiveInput extends React.Component{
       })
     }
 
-    handleAddNewObjective() {
-      var title = this.refs.title.value;
-      var description = this.refs.description.value;
-      if(title.length == 0 || description.length == 0){alert("Please fill title and description");}
+    handleAddNewObjective(title) {
+      var handlerCategory = this.props.category;
       var quarters = this.props.stateFromReducer.myState.me.quarters;
       var currentYear = this.props.stateFromReducer.myState.currentYear;
       var currentTab = this.props.stateFromReducer.myState.currentTab;
       var quarterId = '';
       var categoryId = '';
-      var handlerCategory = this.props.category;
 
-      quarters.forEach((quarter) => {
-          	if(quarter.index == currentTab && quarter.year == currentYear) {
-              quarterId = quarter._id;
-      			}
-      	});
-
-      this.props.stateFromReducer.categoriesList.categories.forEach((category) => {
+      this.props.stateFromReducer.categories.list.forEach((category) => {
         if(category.title == handlerCategory) {
           categoryId = category._id;
         }
       });
 
+      quarters.forEach((quarter) => {
+        if(quarter.index == currentTab && quarter.year == currentYear) {
+          quarterId = quarter._id;
+      	}
+      });
+
       var body = {
         "title": title,
-        "description":description,
         "category": categoryId,
-        "quarterId": quarterId,
-        "keyResults": [
-          {"title":"template key Result 1", "difficulty":"easy"},
-          {"title":"template key Result 2", "difficulty":"intermediate"}
-        ]
+        "quarterId": quarterId
       }
 
-      this.handleClose();
-      this.refs.title.value = "";
-      this.refs.description.value = "";
       this.props.addNewObjective(body);
     }
 
@@ -122,6 +111,7 @@ class ObjectiveInput extends React.Component{
 
                   <section>
                       <AutocompleteInput
+                          handleAddNewObjective={this.handleAddNewObjective}
                           getAutocompleteData={this.getAutocompleteData}
                           autocompleteData = {[]} //{"_id":"1", "title": "1"}
                           autocompleteType = 'objective'

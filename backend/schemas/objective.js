@@ -9,8 +9,7 @@ var objectiveSchema = new Schema({
 		required: true
 	},
 	description: {
-		type: String,
-		required: true
+		type: String
 	},
 	category: {
 		type: ObjectId,
@@ -18,12 +17,12 @@ var objectiveSchema = new Schema({
 		required: true,
 	},
 	keyResults: [{
-			type: ObjectId, 
+			type: ObjectId,
 			ref: 'KeyResult'
 	}],
 	creator: {
 		required: true,
-		type: ObjectId, 
+		type: ObjectId,
 		ref: 'User'
 	},
 	used: {

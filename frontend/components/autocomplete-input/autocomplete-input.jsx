@@ -7,6 +7,7 @@ class AutocompleteInput extends React.Component {
 
         this.state = {};
 
+        this.handleEnterPress = this.handleEnterPress.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -71,6 +72,20 @@ class AutocompleteInput extends React.Component {
         }
     }
 
+    handleEnterPress(e){
+      if (e.key === 'Enter') {
+        if (this.refs.autocompleteInput.value.length == 0) {
+          return alert("Please fill out " + this.props.autocompleteType + " it can't be empty");
+        }
+        if(this.props.autocompleteType == "objective") {
+          this.props.handleAddNewObjective(this.refs.autocompleteInput.value);
+        } else if (this.props.autocompleteType == "key result") {
+          console.log("add key result call");
+        }
+        this.refs.autocompleteInput.value = "";
+      }
+    }
+
     render() {
         let data = this.props.autocompleteData;
         return (
@@ -83,6 +98,7 @@ class AutocompleteInput extends React.Component {
                     onFocus={this.onFocus}
                     onChange={this.onChange}
                     onBlur={this.onBlur}
+                    onKeyPress={this.handleEnterPress}
                 />
 
                 {(data.length!==0)?(

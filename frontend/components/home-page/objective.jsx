@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import KeyResults from './key-results.jsx';
 import Progress from './progress-bar.jsx';
+import ObjectiveDescription from './objective-description.jsx';
 import './objective.scss';
 
 import { bindActionCreators } from 'redux';
@@ -42,7 +43,7 @@ class ObjectiveItem extends Component {
 			<div className='home-objective'>
 				<Progress data={ this.state.item.keyResults } />
 				<div className='name'>{ this.state.item.templateId.title }</div>
-				<div className='description'>{ this.state.item.templateId.description }</div>
+				<ObjectiveDescription description={ this.state.item.templateId.description } />
 				<div>
 					<button type="button" className="btn btn-red-hover delete-button-objective"
 					        onClick={ this.handleDelObj }>
