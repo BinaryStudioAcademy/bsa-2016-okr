@@ -31,7 +31,7 @@ export function receivedMyObjectives(data) {
 export function setChangeTab(num) {
 	 return {
 		  type: "CHANGE_TAB",
-		  currentTab: numa
+		  currentTab: num
 	 };
 }
 
