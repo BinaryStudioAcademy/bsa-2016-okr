@@ -97,6 +97,7 @@ function generateMentors(users) {
 }
 
 function randomObjective(users, categories, i) {
+
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
@@ -115,6 +116,7 @@ function randomObjective(users, categories, i) {
 }
 
 function randomKeyResult(objectives, users, i) {
+	
 	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
@@ -123,7 +125,7 @@ function randomKeyResult(objectives, users, i) {
 		creator: getRandomId(users),
 		objectiveId: getRandomId(objectives),
 		isApproved: i % 6 !== 0,
-		isDeleted: i % 8 === 0,
+		isDeleted: i % 8 !== 0,
 		difficulty: chance.pickone(KeyResult.schema.path('difficulty').enumValues),
 		createdAt: createdAt,
 		updatedAt: updatedAt
@@ -131,8 +133,32 @@ function randomKeyResult(objectives, users, i) {
 }
 
 function randomUserObjective(objectives, users, keyResults, i) {
+	
 	var createdAt = chance.date({ year: 2016, month: 7 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+
+	let isDeleted =  i % 10 === 0;
+	let deletedDate = null;
+	let deletedBy = null;
+
+	if (isDeleted) {
+		
+		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+		
+		let isDone = false;
+
+		let userWhoDidDeletionIndex;
+
+		while(!isDone) {
+			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
+			if (users[userWhoDidDeletionIndex].localRole === "admin")
+				isDone = true;
+		}
+
+		deletedBy = users[userWhoDidDeletionIndex]._id;
+
+	}
+
 	var user = getRandomId(users);
 
 	var objectiveTemplate;
@@ -174,6 +200,8 @@ function randomUserObjective(objectives, users, keyResults, i) {
 		templateId: objectiveTemplate._id,
 		userId: user,
 		creator: user,
+		deletedBy: deletedBy,
+		deletedDate: deletedDate,
 		isDeleted: i % 10 === 0,
 		keyResults: userKeyResults
 	});

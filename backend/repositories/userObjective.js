@@ -40,7 +40,7 @@ UserObjectiveRepository.prototype.getDeletedByUserIdPopulate = function(userId, 
 			}
 		})
 		.populate({
-			path: "creator",
+			path: "deletedBy",
 			populate: {
 				path: 'userInfo'
 			}

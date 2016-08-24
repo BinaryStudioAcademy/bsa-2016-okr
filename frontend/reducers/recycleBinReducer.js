@@ -43,6 +43,8 @@ export default function historyReducer(state = initialState, action) {
 
     		let objective = {};
 
+    		console.log(data);
+
     		objective.type = "objective";
 
     		for (let i = 0; i < data.length; i++) {
@@ -51,13 +53,23 @@ export default function historyReducer(state = initialState, action) {
     			objective.category = data[i].templateId.category.title;
     			objective.title = data[i].templateId.title;
     			objective.description = data[i].templateId.description;
-    			objective.deletedBy = {fullName: "Incognito"};
-    			objective.deletedDate = "2016-04-22T10:51:12.643Z";
+
+    			if (data[i].deletedBy == null) 
+    				objective.deletedBy = "default";
+    			else
+	    			objective.deletedBy = data[i].deletedBy.userInfo.firstName + " " + data[i].deletedBy.userInfo.lastName;
+
+	    		if (data[i].deletedDate == null)
+	    			objective.deletedDate = "2016-07-22T10:51:12.643Z";
+	    		else
+	    			objective.deletedDate = data[i].deletedDate;
 
     			let copy = Object.assign({}, objective);
 
     			newRecycleBinItems.push(copy);
+
     		}
+
 
 			return Object.assign({}, state, {
 				recycleBinItems: newRecycleBinItems,
@@ -249,13 +261,13 @@ function getAllNames(items) {
 		found = false;
 
 		for (let j = 0; j < names.length; j++) {
-			if (names[j].name.indexOf(items[i].deletedBy.fullName) != -1) {
+			if (names[j].name.indexOf(items[i].deletedBy) != -1) {
 				found = true;
 			}
 		}
 
 		if (!found) {
-			names.push({name: items[i].deletedBy.fullName, id: names.length});
+			names.push({name: items[i].deletedBy, id: names.length});
 		}
 	}
 

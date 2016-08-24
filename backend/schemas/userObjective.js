@@ -12,6 +12,12 @@ var userObjective = new Schema({
 		ref: 'User',
 		required: true
 	},
+	deletedBy: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+		required: false
+	},
+	deletedDate: {},
 	creator: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',

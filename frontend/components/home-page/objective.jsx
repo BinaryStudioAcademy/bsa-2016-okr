@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actions from "../../actions/myObjectivesActions.js";
+const session = require('../../../backend/config/session');
 
 class ObjectiveItem extends Component {
 	constructor(props) {
@@ -27,11 +28,16 @@ class ObjectiveItem extends Component {
 	}
 
 	handleDelObj(e) {
+		
 		var confirmation = confirm("Do you really want to delete this objective?");
+		
 		if (confirmation == true) {
 			var body = {
-				"isDeleted": "true"
+				"isDeleted": "true",
+				"deletedBy": session._id,
+				"deletedDate": new Date()
 			};
+
 
 			this.props.softDeleteMyObjectiveByIdApi(this.state.item._id, body);
 		}

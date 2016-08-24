@@ -24,7 +24,7 @@ class DeletedTmplsItem extends Component {
 				<td className="item-category">{ this.props.item.category }</td>
 				<td>{ this.props.item.title }</td>
 				<td>{ this.props.item.description }</td>
-				<td className="item-deleted-by">{ this.props.item.deletedBy.fullName }</td>
+				<td className="item-deleted-by">{ this.props.item.deletedBy}</td>
 				<td>{ dateStr }</td>
 				<td>
 					<table className="controls">
