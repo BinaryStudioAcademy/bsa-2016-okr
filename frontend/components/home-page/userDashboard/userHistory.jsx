@@ -1,6 +1,6 @@
 import React from 'react';
-//import './userDashboard.scss';
-
+import './userHistory.scss';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -9,6 +9,9 @@ import * as actions from "../../../actions/userDashboardActions.js";
 class UserHistory extends React.Component{
 	constructor(props){
 		super(props);
+
+		this.getHistory = this.getHistory.bind(this);
+		this.getHistoryType= this.getHistoryType.bind(this);
 	}
 
 	getHistory() {
@@ -23,22 +26,39 @@ class UserHistory extends React.Component{
 		})
 	}
 
-	render() {
+	getHistoryType(item) {
+		let object = item.type.split(' ')[1];
+		if(item.type.indexOf('add') != -1)
+			return (
+				<p>{item.author} added {object}</p>
+			)
+		else if (item.type.indexOf('update') != -1)
+			return (
+				<p>{item.author} updated {object}</p>
+			)
+		else if (item.type.indexOf('delete') != -1)
+			return (
+				<p>{item.author} deleted {object}</p>
+			)
+	}
 
+	render() {
+		let itemList = this.props.userDashboard.historyList.map((item, i) => {
+			return (
+				<div key={item._id} className="historyEvent">
+					{this.getHistoryType(item)}
+					<div className="eventDate"> 
+						{moment(item.createdAt).format('D MMMM YYYY, H:mm')}
+					</div>
+				</div>
+			)
+		})
 		return (
-			<div className="userDashboard">
-				<table>
-					<thead>
-						<tr>
-							<th>Object</th>
-							<th>Action</th>
-							<th>Time</th>
-						</tr>
-					</thead>
-					<tbody>
-						{this.getHistory}
-					</tbody>
-				</table>
+			<div className="userHistory">
+				<div className="title">
+					<h1><span>Recently events</span></h1>
+				</div>
+				{itemList}
 			</div>
 		)
 	}

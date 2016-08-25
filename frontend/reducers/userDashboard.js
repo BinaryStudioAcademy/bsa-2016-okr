@@ -1,8 +1,10 @@
 import {SET_TAB, CHANGE_SHOW_TABS} from '../actions/userDashboardActions.js';
+import historyItemsLol from '../components/home-page/userDashboard/history.js'
+
 
 const initialState = {
 	tabIndex: 1,
-	historyList: [],
+	historyList: historyItemsLol,
 	showTopTabs: false
 }
 

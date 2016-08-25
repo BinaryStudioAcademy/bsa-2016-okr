@@ -15,17 +15,25 @@ class UserDashboard extends React.Component{
 
 		this.getView = this.getView.bind(this);
 		this.componentWillMount = this.componentWillMount.bind(this);
+		this.isVisibleContent = this.isVisibleContent.bind(this);
 	}
 
 	componentWillMount() {
 		console.log(this.props.userDashboard);
 	}
 
+	isVisibleContent() {
+		console.log('done');
+		if(this.props.userDashboard.tabIndex === 1)
+			return "showContent"
+		else return "hideContent"
+	}
+
 	getView() {
 		console.log('-----------mounted-----------');
 		switch (this.props.userDashboard.tabIndex) {
 			case 1:
-				return <UserHistory/>
+				//return <UserHistory/>
 				break;
 			case 2:
 				return //<UserList/>
@@ -51,6 +59,9 @@ class UserDashboard extends React.Component{
 				<Tabs/>
 				<div className="content"> 
 					{this.getView()}
+				</div>
+				<div className={this.isVisibleContent()}>
+					<UserHistory />
 				</div>
 			</div>
 		)

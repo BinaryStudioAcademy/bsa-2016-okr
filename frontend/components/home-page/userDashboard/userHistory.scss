@@ -1,0 +1,45 @@
+@import "../../common/variables";
+@import '../../common/styles/commonStyles';
+
+.userHistory{
+	
+
+	.historyEvent{
+		padding: 10px;
+		margin: 5px, 0;
+		border-bottom: 1px solid #AAAAAA;
+		border-left: 1px solid #AAAAAA;
+	}
+	.eventDate{
+		text-align: right;
+		color: #A4A3A3;
+	}
+
+	h1 {
+		color:#AAAAAA;
+		padding:0;
+    	position: relative;
+    	overflow: hidden;
+    	font-size: 18px;
+    	font-weight: normal;
+    	text-align: center;
+ 	}
+  	h1 > span {
+    	display: inline-block;
+    	margin: 0 .4em;
+	}
+  	h1 > span:before,
+  	h1 > span:after {
+    	content: '';
+    	position: absolute;
+   		width: 100%;
+    	border-top: 2px solid #AAAAAA;
+    	margin-top: .6em;
+  	}
+  	h1 > span:before {
+    	margin-left: -102%;
+  	}
+  	h1 > span:after {
+    	margin-left: 2%;
+  	}
+}
