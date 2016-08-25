@@ -30,22 +30,42 @@ class UserHistory extends React.Component{
 		let object = item.type.split(' ')[1];
 		if(item.type.indexOf('add') != -1)
 			return (
-				<p>{item.author} added {object}</p>
+				<div>
+					<p className="author-name">{item.author}</p>
+					<p className="action-description">added {object}</p>
+				</div>
 			)
 		else if (item.type.indexOf('update') != -1)
 			return (
-				<p>{item.author} updated {object}</p>
+				<div>
+					<p className="author-name">{item.author}</p>
+					<p className="action-description">updated {object}</p>
+				</div>
 			)
 		else if (item.type.indexOf('delete') != -1)
 			return (
-				<p>{item.author} deleted {object}</p>
+				<div>
+					<p className="author-name">{item.author}</p>
+					<p className="action-description">deleted {object}</p>
+				</div>
 			)
+	}
+
+	getIconType(item){
+		if(item.type.indexOf('add') != -1)
+			return "fa fa-plus-square typeIcon green"
+		else if (item.type.indexOf('update') != -1)
+			return "fa fa-pencil-square typeIcon orange"
+		else if (item.type.indexOf('delete') != -1)
+			return "fa fa-minus-square typeIcon red"
 	}
 
 	render() {
 		let itemList = this.props.userDashboard.historyList.map((item, i) => {
 			return (
 				<div key={item._id} className="historyEvent">
+					<i className={this.getIconType(item)} aria-hidden="true"></i>
+					<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
 					{this.getHistoryType(item)}
 					<div className="eventDate"> 
 						{moment(item.createdAt).format('D MMMM YYYY, H:mm')}
