@@ -51,6 +51,11 @@ class ObjectiveInput extends React.Component{
     }
 
     addNewItemByKeyPressEnter(title) {
+      var title = title.trim();
+      if (title.length < 4) {
+        this.refs.input.refs.autocompleteInput.classList.add('red-border');
+        return
+      };
       var handlerCategory = this.props.category;
       var quarters = this.props.stateFromReducer.myState.me.quarters;
       var currentYear = this.props.stateFromReducer.myState.currentYear;
@@ -77,6 +82,11 @@ class ObjectiveInput extends React.Component{
       }
 
       this.props.addNewObjective(body);
+
+      if (this.refs.input.refs.autocompleteInput.classList.contains('red-border')) {
+        this.refs.input.refs.autocompleteInput.classList.remove('red-border');
+      }
+
     }
 
     handleDelKeyResult(id){
@@ -117,6 +127,7 @@ class ObjectiveInput extends React.Component{
                           autocompletePlaceholder = 'objective'
                           onFocus={this.handleFocus}
                           addNewItemByKeyPressEnter={this.addNewItemByKeyPressEnter}
+                          ref={"input"}
                       />
                   </section>
               </div>
