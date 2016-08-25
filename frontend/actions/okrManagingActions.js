@@ -1,4 +1,5 @@
-var axios = require('axios');
+import axios from 'axios';
+import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const GET_OBJECTIVES_LIST = 'GET_OBJECTIVES_LIST'
 export const OBJECTIVES_LIST_ERROR = 'OBJECTIVES_LIST_ERROR'
@@ -7,20 +8,27 @@ export const SET_SORT =  "SET_SORT"
 export const SEARCH_OBJECTIVE = 'SEARCH_OBJECTIVE'
 export const ACTIVE_OBJECTIVE = 'ACTIVE_OBJECTIVE'
 export const DELETE_OBJECTIVE = 'DELETE_OBJECTIVE'
+export const EDIT_OBJECTIVE = 'EDIT_OBJECTIVE'
 export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
 export const SOFT_DELETE_OBJECTIVE = 'SOFT_DELETE_OBJECTIVE'
+export const EDIT_OBJECTIVE_TEMPLATE = 'EDIT_OBJECTIVE_TEMPLATE'
+export const RECIVED_EDIT_OBJECTIVE_TEMPLATE ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
 
 export function getObjectivesList(){
 	
 	return(dispatch, getStore) => {
-
-		dispatch({
-			type: GET_OBJECTIVES_LIST
-		});
+		dispatch({ type: GET_OBJECTIVES_LIST });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.get('/api/objective/')
-			.then(response => dispatch(receivedObjectivesList(response.data)))
-			.catch(response => dispatch(objectivesListError(response.data)));
+			.then(response => {
+				dispatch(receivedObjectivesList(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(objectivesListError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
 	};
 }
 
@@ -40,14 +48,18 @@ export function receivedObjectivesList(objectives) {
 
 export function deleteObjective(id){
 	return(dispatch, getStore) => {
-
-		dispatch({
-			type: DELETE_OBJECTIVE
-		});
+		dispatch({ type: DELETE_OBJECTIVE });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.put('/api/objective/softDelete/'+id)
-			.then(response => dispatch(softDeleteObjective(id)))
-			.catch(response => dispatch(deleteObjectiveError(response.data)));
+			.then(response => {
+				dispatch(softDeleteObjective(id));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(deleteObjectiveError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
 	};
 }
 
@@ -74,7 +86,6 @@ export function setSort (sort) {
 	return action;
 }
 export function searchObjective(value) {
-	console.log('fd')
 	const action = {
 		type: SEARCH_OBJECTIVE,
 		searchValue: value
@@ -88,4 +99,46 @@ export function activeObjective (active) {
 	};
 
 	return action;
+}
+export function editObjective (value) {
+	const action = {
+		type: EDIT_OBJECTIVE,
+		value
+	};
+
+	return action;
+}
+
+export function editObjectiveTemplate (id, reqBody) {
+	return(dispatch, getStore) => {
+		dispatch({ type: EDIT_OBJECTIVE_TEMPLATE });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put('/api/objective/'+id, reqBody)
+			.then(response => {
+				dispatch(recivedEditObjectiveTemplate(id, reqBody));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(editObjectiveTemplateError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
+	};
+
+	return action;
+}
+
+export function recivedEditObjectiveTemplate(id, objective) {
+	return {
+		type: RECIVED_EDIT_OBJECTIVE_TEMPLATE,
+		objective,
+		id
+	};
+}
+
+export function editObjectiveTemplateError(data) {
+	return {
+		type: EDIT_OBJECTIVE_TEMPLATE_ERROR,
+		data
+	};
 }

@@ -2,14 +2,13 @@
 
 #objectives{
 	.objective{
-		margin: 20px 5%;
-		margin-top: 10px;
-		padding: 5px 15px;
+		margin: 30px 5% 20px;
+		padding: 5px 15px 30px;
 		background: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
 		border-left: 10px solid #607D8B;
 		border-radius: 3px;
-		min-height: 80px;
+		min-height: 100px;
 		box-sizing: border-box;
 
 		.name{
@@ -38,9 +37,24 @@
 		.description {
 			margin-bottom: 10px;
 		}
+		
+		.objective-info {
+			margin-left: 40%;
 
+			div	{
+				display: inline-block;
+				margin-right: 15%;
+			}
+			div:last-child{
+				margin-right: 0;
+			}
+
+		}
+	}
+	.otherUserKR{
+		margin: -50px 5% 0;
 		.users-key-results{
-			margin: 0px 0 5px;
+			margin-left: 25px;
 			.key-results-arrow {
 				padding-left: 5px;
 			}
@@ -70,57 +84,46 @@
 				display: none;
 			}
 			ul {
-				margin: 5px 0 0;
-				padding-left: 5px;
-				display: table;
+				width: 100%;
+				margin: 12px 0 0;
+				padding: 0px;
+				list-style: none;
 
 				.user-key-result{
-					display: table-row;
-					height: 30px;
+					padding: 20px 15px;
+					background: lighten($color-blue-grey, 49%);
+					border: 1px solid #ddd;
+					border-top: none;
+					
 
 					div{
-						background: lighten($color-blue-grey, 50%);;
-						border: 1px solid $color-blue-grey;
-						border-radius: 3px;
-						padding: 2px;
-					}
-					span{
-						display: table-cell;
-
-					}
-					.score {
 						display: inline-block;
+					}
+					.name{
+						width: 45%;
+					}
+					.difficulty{
+						font-size: 14px;
+						width: calc(53% - 2.1em);
+					}
+
+					.score {
+						box-sizing: border-box;					
 						background: $color-green;
 						border: 1px solid $color-green;
 						border-radius: .3em;
-						padding: 1px 2px 3px 2px;
-						height: 1.2em;
-						width: 2em;
+						padding: 2px;
+						height: 1.7em;
+						width: 2.1em;
 						line-height: 1.5em;
 						text-align: center;
 						font-weight: bold;
 						color: $color-white;
 					}
 				}
-				.completed{
-					text-decoration: line-through;
-				}
 			}
 		}
 		
-		.objective-info {
-			margin-left: 40%;
-
-			div	{
-				display: inline-block;
-				margin-right: 15%;
-			}
-			div:last-child{
-
-				margin-right: 0;
-			}
-
-		}
 	}
 }
 #quaterPanel{
@@ -173,7 +176,7 @@
 	text-align: center;
 	position: relative;
 	padding: 4px;
-	margin: 30px 5%;
+	margin: 20px 5% 0 0;
   }
 
   p > span {

@@ -1,0 +1,2 @@
+export const ADD_REQUEST = 'APP.ADD_REQUEST';
+export const REMOVE_REQUEST = 'APP.REMOVE_REQUEST';

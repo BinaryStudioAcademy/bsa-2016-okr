@@ -1,3 +1,46 @@
+#OKR-managing-title {
+    p{
+        box-sizing: border-box;
+        color: #aaaaaa;
+        font-size: 20px;
+        text-align: center;
+        position: relative;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        width: 100%;
+        min-width: 535px;
+        margin: 10px auto;
+        
+        span{
+            display: inline-block;
+            padding: 10px;
+            position: relative;
+            background: #f3f6f7;
+            z-index: 10;
+        }
+    }
+    p:after{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 23px;
+        left: 0;
+        height: 0;
+        width: 100%;
+        border-top: 1px solid #aaaaaa;
+        z-index: 0;
+    }
+}
+.OKR-mnaging.active.objective{
+    margin: 20px;
+    background-color: #fff;
+    border-left: 5px solid #6aa84f;
+
+    input, textarea, select{
+        box-sizing: border-box;
+        width: 100%;
+    }
+}
 .OKR-managing.thumbnail {
   text-align: center;
   padding: 2rem 1rem;
@@ -6,10 +49,10 @@
     content: '';
     display: block;
     position: absolute;
-    top: 40px;
-    left: 0;
+    top: 60px;
+    left: 25px;
     height: 0;
-    width: 40%;
+    width: 35%;
     border-top: 1px solid #aaaaaa;
   }
 
@@ -17,10 +60,10 @@
     content: '';
     display: block;
     position: absolute;
-    top: 40px;
-    right: 0;
+    top: 60px;
+    right: 20px;
     height: 0;
-    width: 40%;
+    width: 35%;
     border-top: 1px solid #aaaaaa;
   }
 }
@@ -36,84 +79,31 @@
 
 }
 
-.objective-list {
-  border: 1px solid #ddd;
-  tbody tr {
-    cursor: pointer;
-    transition: background-color 100ms;
 
-    &:hover {
-      background-color: #eee;
-    }
-  }
-}
 
-.rc-intro {
-  background-color: #222;
-  padding: 2rem;
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.rc-img {
-  display: inline-block;
-  max-width: 50px;
-  margin: 0;
-}
-
-.rc-title {
-  font-size: 5rem;
-  margin-top: 3rem;
-  color: #fff;
-  font-family: 'Open Sans';
-  font-weight: 700;
-  letter-spacing: -2px;
-}
-
-.rc-description {
-  margin-top: 2rem;
-  font-size: 2rem;
-  color: #ccc;
-}
-
-.OKR-mnaging.active.objective {
-	width: 22%;
-	float: right;
-	background-color: #d4d8dc;
-	position: fixed;
-	top: 164px;
-	right: 403px;
+.OKR-mnaging.active.objective .keyResults {
+	margin-bottom: 10px;
 }
 
 .OKR-managing.objective-info-table {
     text-align: left;
-
+    .admin-save-objective{
+        
+    }
+    textarea{
+        resize: vertical;
+        min-height: 80px;
+    }
     td {
     	vertical-align: top;
     	padding: 0 5px 15px;
     }
 }
 
-table.OKR-managing.objective-list-table {
-    width: 65%;
-    margin-top: 125px;
+table.OKR-managing {
     
-    th {
-		height: 50px;
-		background-color: #e9ebed;
-    }
-
-    td {
-		max-width: 200px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	    padding: 0 10px 15px 0;
-
-	    &:first-child, &:last-child {
-	    	text-align: center;
-	    }
-
+    tr {
+		  text-align: left;
     }
 }
 
@@ -121,48 +111,10 @@ table.OKR-managing.objective-list-table {
     margin-top: 20px;
 }
 
-table.OKR-managing.toolbar-table {
-
-    height: 50px;
-    width: 100%;
-    background-color: #E9EBED;
-    margin-bottom: -22px;
-    margin-top: 33px;
-
-  th:not(:last-child)  {
-    cursor: pointer;
-  }
-
-  @media screen and (device-width: 1440px) {
-    width: 95%;
-  }
-
-  tr th {
-        &:first-child {
-            width: 5%;
-        }
-
-        &:nth-child(2) {
-            width: 15%;
-        }
-
-        &:nth-child(3) {
-            width: 30%;
-        }
-
-        &:nth-child(4) {
-            width: 38%;
-
-            @media screen and (device-width: 1440px) {
-                width: 36%;
-            }
-        }
-    }
-}
 
 .OKR-managing button.btn.btn-reset {
     float: right;
-    margin-top: -73px;
+    margin-top: -55px;
     margin-right: -2px;
 }
 
@@ -175,7 +127,7 @@ table.OKR-managing.toolbar-table {
     text-align: center;
     border: none;
     outline:none;
-    margin-top: -73px;
+    margin-top: -55px;
     margin-right: 139px;
     border-radius: 3px;
 
@@ -186,12 +138,6 @@ table.OKR-managing.toolbar-table {
     }
 }
 
-.OKR-managing.fixed-header {
-    position: fixed;
-    width: 45%;
-    background-color: #F3F6F7;
-    margin-top: -38px;
-}
 .OKR-managing.thumbnail i{
   cursor: pointer;
 }
@@ -203,6 +149,7 @@ table.OKR-managing.toolbar-table {
 
 .OKR-managing input.searchbar-input {
     padding: 10px;
+    width: 250px;
     margin-right: 5px;
     padding-left: 30px;
     font-size: 16px;

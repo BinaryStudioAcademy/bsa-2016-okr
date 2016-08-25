@@ -18,7 +18,7 @@ export default class Dashboard extends React.Component {
 
 
 	componentDidMount() {
-		axios.get('api/stats/kresults').then((response) => { this.setState({ keyResults: response.data }); });
+		/*axios.get('api/stats/kresults').then((response) => { this.setState({ keyResults: response.data }); });*/
 	};
 
 	render() {

@@ -22,8 +22,19 @@ UserObjectiveRepository.prototype.getByUserIdPopulate = function(userId, callbac
 
 	model
 		.find({ userId: userId })
-		.populate('templateId')
+		.populate({
+			path: "templateId",
+			populate: {
+				path: 'category'
+			}
+		})
 		.populate('keyResults.templateId')
+		.populate({
+			path: "keyResults.deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
 		.exec(callback);
 };
 
@@ -40,7 +51,7 @@ UserObjectiveRepository.prototype.getDeletedByUserIdPopulate = function(userId, 
 			}
 		})
 		.populate({
-			path: "creator",
+			path: "deletedBy",
 			populate: {
 				path: 'userInfo'
 			}

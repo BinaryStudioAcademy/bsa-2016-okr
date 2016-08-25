@@ -44,7 +44,14 @@ class ObjectiveList extends React.Component{
                             index={index} key={objective._id}/>
       })
     return (
-      <table className="OKR-managing objective-list-table">
+      <table className="OKR-managing table">
+        <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                </tr>
+            </thead>
         <tbody>
           {objectives}
         </tbody>

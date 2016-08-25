@@ -29,6 +29,7 @@ ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 			isDeleted: false
 		})
 		.populate('keyResults')
+		.populate('category')
 		.exec(callback);
 };
 

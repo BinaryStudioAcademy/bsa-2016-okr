@@ -1,4 +1,13 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
+import {
+  RECEIVED_MY_OBJECTIVES_ERROR,
+  RECEIVED_MY_OBJECTIVES,
+  CHANGE_TAB,
+  CHANGE_YEAR,
+  CREATE_QUARTER,
+  SOFT_DELETE_MY_OBJECTIVE_BY_ID,
+  ADDED_NEW_OBJECTIVE
+} from '../actions/myObjectivesActions';
 
 const initialState = {
     currentTab: getQuarter(),
@@ -12,7 +21,7 @@ const initialState = {
 export default function myObjectivesReducer(state = initialState, action = {}) {
 
 	switch (action.type) {
-		case "RECEIVED_ERROR": {
+		case RECEIVED_MY_OBJECTIVES_ERROR: {
 
 			const { data } = action;
 
@@ -23,9 +32,9 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-		case "RECEIVED_MY_OBJECTIVES": {
+		case RECEIVED_MY_OBJECTIVES: {
 			const { data } = action;
-	
+
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
 				currentTab: getQuarter(),
@@ -33,7 +42,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-		case "CHANGE_TAB": {
+		case CHANGE_TAB: {
 			const { currentTab } = action;
 
 			return Object.assign({}, state, {
@@ -41,7 +50,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-		case "CHANGE_YEAR": {
+		case CHANGE_YEAR: {
 			const { currentYear } = action;
 
 			return Object.assign({}, state, {
@@ -49,7 +58,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-		case "CREATE_QUARTER": {
+		case CREATE_QUARTER: {
 			const { payload } = action;
 
 			var new_exQuarters = state.existedQuarters.concat(payload);
@@ -60,7 +69,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			})
 		}
 
-    	case "SOFT_DELETE_MY_OBJECTIVE_BY_ID": {
+    	case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
 			const { id } = action;
 			console.log(state);
 			return Object.assign({}, state, {
@@ -69,13 +78,28 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 		}
 
-    case "ADDED_NEW_OBJECTIVE": {
-      const { id } = action;
-      console.log(state);
-      return Object.assign({}, state, {
-        me: deleteObjectiveFromMe(state.me, id)
-      })
+    case ADDED_NEW_OBJECTIVE: {
+      const { response, request } = action;
 
+      var objective = {
+        _id: response._id,
+        createdAt: response.createdAt,
+        creator: response.creator,
+        isDeleted: response.isDeleted,
+        keyResults: [],
+        templateId: {
+          _id: response.templateId,
+          category: request.category,
+          description: request.description,
+          title: request.title
+        },
+        updatedAt: response.updatedAt,
+        userId: response.updatedAt
+      }
+
+      return Object.assign({}, state, {
+        me: addNewObjectiveToMe(state.me, request.quarterId, objective)
+      })
     }
 
 		default: {
@@ -120,6 +144,16 @@ function deleteObjectiveFromMe(me, id) {
     	if(quarter.userObjectives[i]._id == id) {
         quarter.userObjectives.splice(i, 1);
 			}
+		}
+	});
+	return meCopy
+}
+
+function addNewObjectiveToMe(me, quarterId, objective) {
+	var meCopy = Object.assign({}, me);
+	meCopy.quarters.forEach((quarter) => {
+    if (quarter._id = quarterId) {
+      quarter.userObjectives.push(objective);
 		}
 	});
 	return meCopy

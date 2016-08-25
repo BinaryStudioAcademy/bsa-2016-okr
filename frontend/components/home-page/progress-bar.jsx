@@ -8,20 +8,24 @@ class Progress extends Component {
 		}
 	}
 
-	
+
 	render() {
 		var score = 0;
-		let item = this.state.data.forEach((item, index) => {
-			score += +item.score;
-		})
-		var value = Math.round(100*score/this.state.data.length);
+		var value = 0;
+
+		if(this.state.data.length != 0) {
+			let item = this.state.data.forEach((item, index) => {
+				score += +item.score;
+			})
+			value = Math.round(100*score/this.state.data.length);
+		}
 
 		return (
 			<div className='progress-bar'>
 		    	<progress max="100" value={value}></progress>
 		    	<div className='progressValue'>{value}%</div>
 		    </div>
-         		       
+
 		)
 	}
 }

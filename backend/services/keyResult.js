@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var KeyResultRepository = require('../repositories/keyResult');
+var UserObjectiveRepository = require('../repositories/userObjective');
 var HistoryRepository = require('../repositories/history');
 var async = require('async');
 
@@ -32,7 +33,6 @@ KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, ca
 	], (err, result) => {
 		return callback(err, result);
 	});
-
 };
 
 
@@ -60,6 +60,8 @@ KeyResultsService.prototype.delete =function(userId, keyResultId, callback){
 };
 
 KeyResultsService.prototype.add = function(userId, keyResult, callback){
+	console.log('-----ENTER PRESSED-----', keyResult);
+
 	async.waterfall([
 		(callback) => {
 			KeyResultRepository.add(keyResult, (err, keyResult) => {
@@ -68,60 +70,53 @@ KeyResultsService.prototype.add = function(userId, keyResult, callback){
 				};
 				return callback(null, keyResult);
 			});
-		},
-		(keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(userId, keyResult._id, 'add KeyResult', (err) => {
-				if(err){
-					return callback(err, null);
-				};
-				return callback(null, keyResult);
-			});
 		}
+		//,
+		//(keyResult, callback) => {
+		//	HistoryRepository.addKeyResultEvent(userId, keyResult._id, 'add KeyResult', (err) => {
+		//		if(err){
+		//			return callback(err, null);
+		//		};
+		//		return callback(null, keyResult);
+		//	});
+		//}
 	], (err, result) => {
 		return callback(err, result);
 	});
 };
 
-KeyResultsService.prototype.autocomplete = function(title, callback){
+KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback){
 	let keyResults = [];
 
 	async.waterfall([
 		(callback) => {
-			KeyResultRepository.getAllNotDeleted(function(err, keyResultsArr){
+			UserObjectiveRepository.getById(objectiveId, (err, userObjective) => {
+				if (err){
+					return callback(err, null);
+				}
+				return callback(null, userObjective);
+			})
+		},
+		(userObjective, callback) => {
+			KeyResultRepository.autocomplete(title, userObjective.templateId, (err, keyResultsArr) => {
 				if (err){
 					return callback(err, null);
 				};	
-				return callback(null, keyResultsArr);
+				return callback(null, keyResultsArr, userObjective);
 			});
 		},
-		(keyResultsArr, callback) => {
-			keyResultsArr.forEach(function(result, index){
-				if ((result['title'].toLowerCase().indexOf(title.toLowerCase()) !== -1) &&
-					(result['isApproved'] === true))
-				{
-					keyResults.push(result);
-				};
-			});
-			return callback (null, keyResults);
+		(keyResultsArr, userObjective, callback) => {
+			keyResultsArr = keyResultsArr.filter((keyResult) => {
+				return !(userObjective.keyResults.some((objectiveKeyResult) => {
+					return (objectiveKeyResult.templateId.equals(keyResult._id))
+				}))
+			}).slice(0,10);
+
+			return callback (null, keyResultsArr);
 		}
-	], (err, callback) => {
-			return callback(err, result);
+	], (err, results) => {
+			return callback(err, results);
 	});
-//	KeyResultRepository.getAllN =>otDeleted(function(err, keyResultsArr){
-//			if (err){
-//				return callback(err, null);
-//			};	
-//
-//		keyResultsArr.forEach(function(result, index){
-//			if ((result['title'].toLowerCase().indexOf(title.toLowerCase()) == 0) &&
-//				(result['isApproved'] === true))
-//			{
-//				keyResults.push(result);
-//			}
-//		});
-//
-//		callback(err, keyResults);
-//	});
 }
 
 KeyResultsService.prototype.changeApprove = function(userId, keyResultId, callback){

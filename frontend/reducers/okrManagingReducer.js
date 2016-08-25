@@ -1,7 +1,8 @@
 import users from '../components/mockData/users.js'
 import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
-        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE,
-        DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE} from '../actions/okrManagingActions.js'
+        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE, EDIT_OBJECTIVE,
+        DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
+        RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
@@ -42,7 +43,8 @@ export default function patentDetailsReducer(state = initialState, action) {
                 active: 0,
                 objectives,
                 visibleObjectives: objectives,
-                waiting: false   
+                waiting: false,
+                editing: false 
             })
         }
 
@@ -59,8 +61,9 @@ export default function patentDetailsReducer(state = initialState, action) {
 
             return Object.assign({}, state, {
                 active: 0,
-                visibleObjectives: update(objectives, id),
-                waiting: false   
+                visibleObjectives: softdelete(objectives, id),
+                waiting: false,
+                editing: false
             })
         }
 
@@ -75,9 +78,18 @@ export default function patentDetailsReducer(state = initialState, action) {
             const {active} = action;
 
             return Object.assign({}, state, {
-                active
+                active,
+                editing: false
             })
         }
+
+        case EDIT_OBJECTIVE: {
+            const {value} = action
+            return Object.assign({}, state, {
+                editing: value
+            })
+        }
+
         case SEARCH_OBJECTIVE: {
             const {searchValue} = action;
             return Object.assign({}, state, {
@@ -87,12 +99,30 @@ export default function patentDetailsReducer(state = initialState, action) {
             })
         }
 
+        case RECIVED_EDIT_OBJECTIVE_TEMPLATE: {
+            const {objective, id} = action;
+            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+
+            return Object.assign({}, state, {
+                visibleObjectives: update(objectives, objective, id),
+                editing: false
+            })
+        }
+
         default: 
             return state;        
         
     }
 }
-
+function update(objectives, objective, id){
+    for (let i = 0; i < objectives.length; i++) {
+        if (objectives[i]._id == id) {
+            objectives[i].title =objective.title;
+            objectives[i].description =objective.description;
+          }
+    }
+    return objectives
+}
 function updateVisibleItems(visibleObjectives, objectives, searchValue){
     let objectivesAfterInputFilter = [];
 
@@ -108,7 +138,7 @@ function updateVisibleItems(visibleObjectives, objectives, searchValue){
     }
     return objectivesAfterInputFilter;
 }
-function update(objectives, id) {
+function softdelete(objectives, id) {
      for (let i = 0; i < objectives.length; i++) {
 
           if (objectives[i]._id == id) {

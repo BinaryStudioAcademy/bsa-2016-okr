@@ -24,24 +24,6 @@ class Toolbar extends Component {
 		      <i className="fa fa-ban"></i>  Reset
 		      </button>
 		      
-		      <table className="OKR-managing toolbar-table">
-		        <tr>
-		          <th>#</th>
-		          <th >
-		          <i className="fa fa-sort"> </i>  Category
-		          </th>
-
-		          <th>
-		          <i className="fa fa-sort"></i>  Objective
-		          </th>
-
-		          <th>
-		          <i className="fa fa-sort"></i>  Description
-		          </th>
-		          <th>Edit</th>
-		          <th>Delete</th>
-		        </tr>
-		      </table>
 		    </div>
     	)
   	}

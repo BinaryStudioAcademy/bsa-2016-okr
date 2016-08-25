@@ -1,3 +1,4 @@
+
 import { combineReducers } from 'redux'
 import history from './historyReducer'
 import recycleBin from './recycleBinReducer.js'
@@ -9,10 +10,14 @@ import myState from './myStateReducer.js'
 import keyResults from './keyResultReducer'
 import categories from './categoriesReducer'
 import userDashboard from './userDashboard'
+import app from './appReducer';
+
+
 
 import { routerReducer } from 'react-router-redux';
 
 export default combineReducers({
+  app,
   categories,
   myState,
   history,

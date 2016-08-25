@@ -1,40 +1,40 @@
 const router = require('express').Router();
 const UserObjectives = require('../../schemas/userObjective');
 
-router.get('/users', (req, res, next) => {
-    UserObjectives.collection.aggregate([
-        {
-            $match: {
-                isDeleted: false
-            }
-        },
-        {
-            $project: {
-                userId: "$userId",
-                avgScore: { $avg: "$keyResults.score" },
-            }
-        },
-        {
-            $group: {
-                _id: "$userId",
-                avgByAllObjectives: { $avg: "$avgScore" }
-            }
-        },
-        {
-            $sort: {
-                avgByAllObjectives: -1
-            }
-        },
-        {
-            $limit: 5
-        },
-         {
-            $project: {
-                user: "$_id",
-                totalScore:  "$avgByAllObjectives" ,
-            }
-        }
-    ], (err, data) => res.send(data));
+// router.get('/users', (req, res, next) => {
+//     UserObjectives.collection.aggregate([
+//         {
+//             $match: {
+//                 isDeleted: false
+//             }
+//         },
+//         {
+//             $project: {
+//                 userId: "$userId",
+//                 avgScore: { $avg: "$keyResults.score" },
+//             }
+//         },
+//         {
+//             $group: {
+//                 _id: "$userId",
+//                 avgByAllObjectives: { $avg: "$avgScore" }
+//             }
+//         },
+//         {
+//             $sort: {
+//                 avgByAllObjectives: -1
+//             }
+//         },
+//         {
+//             $limit: 5
+//         },
+//          {
+//             $project: {
+//                 user: "$_id",
+//                 totalScore:  "$avgByAllObjectives" ,
+//             }
+//         }
+//     ], (err, data) => res.send(data));
     // res.send([
     //     {
     //         user: "Peter",
@@ -57,9 +57,9 @@ router.get('/users', (req, res, next) => {
     //         totalScore: 0.28
     //     }
     // ]);
-});
+// });
 
-router.get('/progress', (req, res, next) => {
+/*router.get('/progress', (req, res, next) => {
     UserObjectives.collection.aggregate(
         [
             {
@@ -80,9 +80,9 @@ router.get('/progress', (req, res, next) => {
                 }
             }
         ], (err, data) => res.send({ progress: data[0].progress }));
-});
+});*/
 
-router.get('/categories', (req, res, next) => {
+/*router.get('/categories', (req, res, next) => {
     res.send([
         {
             category: 'Knowledge',
@@ -97,9 +97,9 @@ router.get('/categories', (req, res, next) => {
             count: 49
         }
     ]);
-})
+})*/
 
-router.get('/kresults', (req, res, next) => {
+/*router.get('/kresults', (req, res, next) => {
     res.send([
         {
             category: 'Beginner',
@@ -114,6 +114,6 @@ router.get('/kresults', (req, res, next) => {
             count: 105
         }
     ]);
-})
+})*/
 
 module.exports = router;

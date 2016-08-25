@@ -81,6 +81,7 @@ class RecycleBin extends Component {
 
 	componentWillMount() {
 		this.props.clearRecycleBin();
+		this.props.getUserDeletedObjectivesRequest();
 		this.props.getUserObjectivesRequest();
 	}
 
