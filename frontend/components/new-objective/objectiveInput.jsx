@@ -27,7 +27,7 @@ class ObjectiveInput extends React.Component{
         this.handleFocus = this.handleFocus.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.getAutocompleteData = this.getAutocompleteData.bind(this);
-        this.handleAddNewObjective = this.handleAddNewObjective.bind(this);
+        this.addNewItemByKeyPressEnter = this.addNewItemByKeyPressEnter.bind(this);
     }
 
     handleFocus(){
@@ -50,7 +50,7 @@ class ObjectiveInput extends React.Component{
       })
     }
 
-    handleAddNewObjective(title) {
+    addNewItemByKeyPressEnter(title) {
       var handlerCategory = this.props.category;
       var quarters = this.props.stateFromReducer.myState.me.quarters;
       var currentYear = this.props.stateFromReducer.myState.currentYear;
@@ -114,8 +114,9 @@ class ObjectiveInput extends React.Component{
                           handleAddNewObjective={this.handleAddNewObjective}
                           getAutocompleteData={this.getAutocompleteData}
                           autocompleteData = {[]} //{"_id":"1", "title": "1"}
-                          autocompleteType = 'objective'
+                          autocompletePlaceholder = 'objective'
                           onFocus={this.handleFocus}
+                          addNewItemByKeyPressEnter={this.addNewItemByKeyPressEnter}
                       />
                   </section>
               </div>

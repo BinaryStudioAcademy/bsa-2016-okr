@@ -58,7 +58,7 @@ class ObjectiveItem extends Component {
 				</div>
 				<KeyResults 
 					data={ this.state.item.keyResults } 
-					objectiveId={ this.state.item.templateId._id } 
+					objectiveId={ this.state.item._id }
 					changeScore={ this.changeScore } 
 				/>
 			</div>
