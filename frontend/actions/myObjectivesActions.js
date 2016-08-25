@@ -20,7 +20,7 @@ export function getMe() {
 
 	  return axios.get('api/user/me/')
 	   .then(response => dispatch(receivedMyObjectives(response.data)))
-	   .catch(response => dispatch(receivedObjectivesError(response.data)));
+	   .catch(response => dispatch(receivedMyObjectivesError(response.data)));
 	 };
 }
 
