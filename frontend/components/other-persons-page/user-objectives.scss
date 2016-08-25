@@ -1,12 +1,16 @@
 @import '../common/variables';
 
-#objectives{
+#user-objectives{
+	margin: 0 5%;
+	p{
+		padding-left: 0;
+		padding-right: 0;
+	}
 	.objective{
-		margin: 30px 5% 20px;
+		margin: 30px 0 20px;
 		padding: 5px 15px 30px;
 		background: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
-		border-left: 10px solid #607D8B;
 		border-radius: 3px;
 		min-height: 100px;
 		box-sizing: border-box;
@@ -52,9 +56,9 @@
 		}
 	}
 	.otherUserKR{
-		margin: -50px 5% 0;
+		margin-top: -50px;
 		.users-key-results{
-			margin-left: 25px;
+			margin-left: 17px;
 			.key-results-arrow {
 				padding-left: 5px;
 			}
@@ -83,19 +87,24 @@
 			.undisplay{
 				display: none;
 			}
+			.key-result-details{
+				margin-left: -17px;
+			}
 			ul {
 				width: 100%;
-				margin: 12px 0 0;
+				margin: 10px 0 0;
 				padding: 0px;
 				list-style: none;
-
+				li:last-child{
+					border-bottom: 1px solid #ddd;
+				}
 				.user-key-result{
-					padding: 20px 15px;
-					background: lighten($color-blue-grey, 49%);
+					padding: 10px 15px;
+					background: lighten($color-blue-grey, 52%);
 					border: 1px solid #ddd;
+					border-bottom: none; 
 					border-top: none;
-					
-
+				
 					div{
 						display: inline-block;
 					}
@@ -137,6 +146,7 @@
  	padding: 0;
 
   .quater{
+  	color: $color-blue-grey;
     border: 1px solid #607D8B;
     display: inline-block;
     text-align: center;
@@ -162,8 +172,8 @@
    color: #fff;
   }
   .quater:hover{
+  	color: $color-blue-grey;
     background: #e4eaec;
-    color: #000;
   }
 }
 }
@@ -219,19 +229,19 @@
 	}
 
       .logo{
-        width: 90px;
+        width: 75px;
         display: inline-block;
 
         img {
           width: 100%;
-          border-radius: 5px;
+          border-radius: 3px;
         }
       }
 
       .credentials{
         position: absolute;
         top: -2px;
-        left: 110px;
+        left: 90px;
         font-size:22px;
         font-weight: 700;
         display: inline-block;

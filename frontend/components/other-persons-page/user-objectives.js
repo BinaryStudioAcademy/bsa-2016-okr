@@ -42,7 +42,7 @@ class Objectives extends Component {
 			<div>
 				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) } 
 				currentYear={ currentYear } currentTab={ currentTab } />
-				<div id='objectives'>
+				<div id='user-objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list } my={ false } 
 					ObjectiveItem={ ObjectiveItem }/>
 				</div> 
