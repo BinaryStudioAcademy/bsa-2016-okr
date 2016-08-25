@@ -4,6 +4,7 @@ const service = require('../../services/user');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 const userMentorRepository = require('../../repositories/userMentor');
+const quarterRepository = require('../../repositories/quarter');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -12,7 +13,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/quarter', (req, res, next) => {
-	return service.getAll(res.callback)
+	return quarterRepository.getCurrentQuarter(res.callback)
 });
 
 router.put('/:id', (req, res, next) => {

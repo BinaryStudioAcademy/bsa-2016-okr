@@ -2,7 +2,7 @@
 
 #objectives{
 	.objective{
-		margin: 20px 5% 20px;
+		margin: 30px 5% 20px;
 		padding: 5px 15px 30px;
 		background: lighten($color-blue-grey, 52%);
 		border: 1px solid #dddddd;
@@ -123,6 +123,7 @@
 				}
 			}
 		}
+		
 	}
 }
 #quaterPanel{
@@ -175,7 +176,7 @@
 	text-align: center;
 	position: relative;
 	padding: 4px;
-	margin: 20px 5%;
+	margin: 20px 5% 0 0;
   }
 
   p > span {

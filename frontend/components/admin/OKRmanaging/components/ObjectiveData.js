@@ -11,13 +11,10 @@ class ObjectiveData extends React.Component{
 
 		return (
 			<tr onClick={this.activeObjective.bind(this)}>
-				<td>{this.props.index + 1}</td>
-				<td>{this.props.objective.category.title}</td>
 				<td className="OKR-managing objective-title">{this.props.objective.title}</td>
 				<td>{this.props.objective.description}</td>
-				<td><i className="fi flaticon-edit" aria-hidden="true" ></i></td>
-				<td><i className="fi flaticon-garbage-2" aria-hidden="true" ></i></td>
-    		</tr> 
+        <td>{this.props.objective.category.title}</td>
+    	</tr> 
     	)
   }
 }

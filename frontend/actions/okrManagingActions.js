@@ -7,8 +7,11 @@ export const SET_SORT =  "SET_SORT"
 export const SEARCH_OBJECTIVE = 'SEARCH_OBJECTIVE'
 export const ACTIVE_OBJECTIVE = 'ACTIVE_OBJECTIVE'
 export const DELETE_OBJECTIVE = 'DELETE_OBJECTIVE'
+export const EDIT_OBJECTIVE = 'EDIT_OBJECTIVE'
 export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
 export const SOFT_DELETE_OBJECTIVE = 'SOFT_DELETE_OBJECTIVE'
+export const EDIT_OBJECTIVE_TEMPLATE = 'EDIT_OBJECTIVE_TEMPLATE'
+export const RECIVED_EDIT_OBJECTIVE_TEMPLATE ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
 
 export function getObjectivesList(){
 	
@@ -74,7 +77,6 @@ export function setSort (sort) {
 	return action;
 }
 export function searchObjective(value) {
-	console.log('fd')
 	const action = {
 		type: SEARCH_OBJECTIVE,
 		searchValue: value
@@ -88,4 +90,42 @@ export function activeObjective (active) {
 	};
 
 	return action;
+}
+export function editObjective (value) {
+	const action = {
+		type: EDIT_OBJECTIVE,
+		value
+	};
+
+	return action;
+}
+
+export function editObjectiveTamplate (id, reqBody) {
+	return(dispatch, getStore) => {
+
+		dispatch({
+			type: EDIT_OBJECTIVE_TEMPLATE
+		});
+
+		return axios.put('/api/objective/'+id, reqBody)
+			.then(response => dispatch(recivedEditObjectiveTemplate(id, reqBody)))
+			.catch(response => dispatch(editObjectiveTemplateError(response.data)));
+	};
+
+	return action;
+}
+
+export function recivedEditObjectiveTemplate(id, objective) {
+	return {
+		type: RECIVED_EDIT_OBJECTIVE_TEMPLATE,
+		objective,
+		id
+	};
+}
+
+export function editObjectiveTemplateError(data) {
+	return {
+		type: EDIT_OBJECTIVE_TEMPLATE_ERROR,
+		data
+	};
 }
