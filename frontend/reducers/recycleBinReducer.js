@@ -3,6 +3,7 @@ import data_for_recycle from '../components/mockData/data_for_recycle_bin.js'
 const initialState = {
     recycleBinItems: [],
 	searchValue: '',
+	objectiveForUpdate: [],
 	showRecycleBinFilters: false,
 	visibleItems: [],
 	setRecycleBinFilterDateFrom: '',
@@ -16,7 +17,8 @@ const initialState = {
 	userName: ""
 };
 
-export default function historyReducer(state = initialState, action) {
+export default function recBynReducer(state = initialState, action) {
+    
     switch (action.type) {
 
     	case "REC_BYN_CLEAR": {
@@ -26,7 +28,82 @@ export default function historyReducer(state = initialState, action) {
 			});
     	}
 
-    	case "REC_BYN_UPDATE_USER_OBJECTIVES_REQUEST_ERROR": {
+    	case "REC_BYN_GET_USER_OBJECTIVES_REQUEST_ERROR": {
+    		
+    		const {data} = action;
+
+    		console.log("REC_BYN_GET_USER_OBJECTIVES_REQUEST_ERROR");
+
+    		console.log(data);
+
+
+			return Object.assign({}, state, {
+			})
+        }
+
+        case "REC_BYN_RECEIVED_USER_OBJECTIVES": {
+
+    		const {data} = action;
+
+    		//console.log(data);
+
+    		let newRecycleBinItems = JSON.parse(JSON.stringify(state.recycleBinItems));  
+
+
+    		let objectiveForUpdate = [];		
+
+    		let key = {};
+
+    		key.type = "key";
+
+			for (let i = 0; i < data.length; i++) {
+				
+				if (data[i].isDeleted === true)
+					continue;
+
+				for (let j = 0; j < data[i].keyResults.length; j++) {
+
+					if (data[i].keyResults[j].isDeleted) {
+
+						key.id = data[i].keyResults[j]._id;
+
+						key.category = data[i].templateId.category.title;
+
+						key.title = data[i].keyResults[j].templateId.title;
+
+						key.description = data[i].templateId.description;
+
+						if (data[i].keyResults[j].deletedBy == null) 
+		    				key.deletedBy = "default";
+		    			else
+			    			key.deletedBy = data[i].keyResults[j].deletedBy.userInfo.firstName + " " + data[i].keyResults[j].deletedBy.userInfo.lastName;
+
+			    		if (data[i].keyResults[j].deletedDate == null)
+			    			key.deletedDate = "2016-07-22T10:51:12.643Z";
+			    		else
+			    			key.deletedDate = data[i].keyResults[j].deletedDate;
+
+			    		let copy = Object.assign({}, key);
+
+			    		newRecycleBinItems.push(copy);
+
+			    		objectiveForUpdate.push(data[i]);
+			    	}
+					
+				}
+			}
+
+			return Object.assign({}, state, {
+				recycleBinItems: newRecycleBinItems,
+				visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
+					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
+					state.keyType, state.sortByDate, state.categoryType, state.userName),
+					usersNames: getAllNames(newRecycleBinItems),
+				objectiveForUpdate: objectiveForUpdate
+			})
+        }
+
+    	case "REC_BYN_UPDATE_USER_DELETED_OBJECTIVES_REQUEST_ERROR": {
     		
     		const {data} = action;
 
@@ -35,7 +112,7 @@ export default function historyReducer(state = initialState, action) {
 	    	return Object.assign({}, state);
     	}
 
-    	case "REC_BYN_RECEIVED_USER_OBJECTIVES": {
+    	case "REC_BYN_RECEIVED_USER_DELETED_OBJECTIVES": {
 
     		const {data} = action;
 
@@ -51,12 +128,21 @@ export default function historyReducer(state = initialState, action) {
     			objective.category = data[i].templateId.category.title;
     			objective.title = data[i].templateId.title;
     			objective.description = data[i].templateId.description;
-    			objective.deletedBy = {fullName: "Incognito"};
-    			objective.deletedDate = "2016-04-22T10:51:12.643Z";
+
+    			if (data[i].deletedBy == null) 
+    				objective.deletedBy = "default";
+    			else
+	    			objective.deletedBy = data[i].deletedBy.userInfo.firstName + " " + data[i].deletedBy.userInfo.lastName;
+
+	    		if (data[i].deletedDate == null)
+	    			objective.deletedDate = "2016-07-22T10:51:12.643Z";
+	    		else
+	    			objective.deletedDate = data[i].deletedDate;
 
     			let copy = Object.assign({}, objective);
 
     			newRecycleBinItems.push(copy);
+
     		}
 
 			return Object.assign({}, state, {
@@ -116,11 +202,13 @@ export default function historyReducer(state = initialState, action) {
 			})
         }
 
-    	case "REC_BYN_GET_USER_OBJECTIVES_REQUEST_ERROR": {
+
+
+    	case "REC_BYN_GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR": {
     		
     		const {data} = action;
 
-    		console.log("REC_BYN_GET_USER_OBJECTIVES_REQUEST_ERROR");
+    		console.log("REC_BYN_GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR");
 
     		console.log(data);
 
@@ -249,13 +337,13 @@ function getAllNames(items) {
 		found = false;
 
 		for (let j = 0; j < names.length; j++) {
-			if (names[j].name.indexOf(items[i].deletedBy.fullName) != -1) {
+			if (names[j].name.indexOf(items[i].deletedBy) != -1) {
 				found = true;
 			}
 		}
 
 		if (!found) {
-			names.push({name: items[i].deletedBy.fullName, id: names.length});
+			names.push({name: items[i].deletedBy, id: names.length});
 		}
 	}
 

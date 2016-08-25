@@ -7,6 +7,7 @@ var ObjectiveList = (props) => {
 	const objectives = props.objectives || [];
 	const my = props.my;
 	const ObjectiveItem = props.ObjectiveItem;
+	const softDeleteMyObjectiveByIdApi = props.softDeleteMyObjectiveByIdApi;
 
 	var categoryItems = [];
 
@@ -20,13 +21,13 @@ var ObjectiveList = (props) => {
 					return objective.templateId.category == category._id
 				})
 				.map((item, index) => {
-					return <ObjectiveItem index={ index } key={ item._id } item={ item } />
+					return <ObjectiveItem index={ index } key={ item._id } item={ item } softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } />
 				});
 
 			if(my) {
 				input = <ObjectiveInput category={ category.title }/>
 			}
-			
+
 			return (
 				<div key={ index }>
 				<p><span className="category-title">{ category.title }</span></p>

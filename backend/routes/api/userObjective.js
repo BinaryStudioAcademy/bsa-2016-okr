@@ -9,13 +9,13 @@ const service = require('../../services/userObjective');
 // NOT ready yet!
 router.post('/', (req, res, next) => {
 	var title = req.body.title || '';
-	var description = req.body.description || '';
-	var keyResults = req.body.keyResults || [];
+	//var description = req.body.description || '';
+	//var keyResults = req.body.keyResults || [];
 	var category = req.body.category || '';
 	var userId = req.session._id || '';
 	var creator = req.session._id || '';
 	var quarterId = req.body.quarterId || '';
-
+/*
 	keyResults.forEach((keyResult) => {
 		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
 	});
@@ -24,17 +24,13 @@ router.post('/', (req, res, next) => {
 		return !ValidateService.isObject(keyResult)
 		|| ValidateService.isEmpty(keyResult.title)
 	});
+*/
+	if( ValidateService.isEmpty(title) || !ValidateService.isCorrectId(category))
 
-	if( ValidateService.isEmpty(title)
-		|| ValidateService.isEmpty(description)
-		|| ValidateService.isEmpty(keyResults)
-		|| !ValidateService.isCorrectId(category)
-		|| !ValidateService.isArray(keyResults)
-		|| isKeyResultsInvalid)
 	{
 		return res.badRequest();
 	}
-
+/*
 	var keyResultsF = keyResults.map((item) => {
 		var keyResult = {
 			title: item.title,
@@ -46,19 +42,17 @@ router.post('/', (req, res, next) => {
 
 		return keyResult;
 	});
-
+*/
 	var data = {
 		title: title,
-		description: description,
+		description: '',
 		category: category,
 		creator: creator,
-		keyResults: keyResultsF,
+		keyResults: [],
 		isApproved: true,
 		isDeleted: false
 	};
 
-
-	console.log("YI");
 	return service.add(data, quarterId, res.callback)
 });
 

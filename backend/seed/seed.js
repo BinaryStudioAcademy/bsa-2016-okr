@@ -2,8 +2,9 @@ var seedCollections = require('./seedCollections');
 var util = require('util');
 var mongoose = require('mongoose');
 var async = require('async');
+var dbConfig = require('../config/db');
 
-mongoose.connect('mongodb://localhost:27017/okr-app');
+mongoose.connect(dbConfig.uri, dbConfig.opts);
 
 mongoose.connection.once('open', () => {
 	var items = seedCollections();

@@ -42,7 +42,7 @@ class Objectives extends Component {
 	render() {
 		const myState = this.props.myState;
 		const { me, currentYear, currentTab, existedQuarters } = myState;
-		
+
 		const categories = this.props.categories;
 		console.log('categories', categories.list);
 
@@ -63,8 +63,8 @@ class Objectives extends Component {
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
 				currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
 				<div id='objectives'>
-					<ObjectivesList objectives={ objectives } categories={ categories.list } 
-					my={ true } ObjectiveItem={ ObjectiveItem } />
+					<ObjectivesList objectives={ objectives } categories={ categories.list }
+					my={ true } ObjectiveItem={ ObjectiveItem } softDeleteMyObjectiveByIdApi={ this.props.softDeleteMyObjectiveByIdApi }/>
 				</div>
 			</div>
 		)

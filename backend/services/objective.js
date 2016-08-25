@@ -53,6 +53,27 @@ ObjectiveService.prototype.add = function(authorId, objective, keyResults, callb
 	});
 };
 
+ObjectiveService.prototype.addBlank = function(authorId, objective, callback) {
+	objective = new Objective(objective);
+
+	async.waterfall([
+		(callback) => {
+			objective.save((err, obj) => {
+				return err ? callback(err) : callback(null, obj);
+			});
+		}, (obj, callback) => {
+			HistoryRepository.addObjectiveEvent(authorId, obj._id, "add Objective template", (err) => {
+				if(err) {
+					return callback(err, null);
+				}
+				return callback(null, obj);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
+
 ObjectiveService.prototype.update = function (authorId, objectiveId, objective, callback){
 	async.waterfall([
 		(callback) => {

@@ -1,13 +1,19 @@
-var axios = require('axios')
+import axios from 'axios';
 
-export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES';
-export const RECEIVED_ALL_CATEGORIES = 'RECEIVED_ALL_CATEGORIES';
-export const RECEIVED_ERROR = 'RECEIVED_ERROR';
+import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
+
+export const GET_ALL_CATEGORIES = 'CATEGORIES.GET_ALL';
+export const RECEIVED_ALL_CATEGORIES = 'CATEGORIES.RECEIVED_ALL';
+export const RECEIVED_ERROR = 'CATEGORIES.RECEIVED_ERROR';
 
 export function getAllCategories() {
 	return (dispatch, getStore) => {
 		dispatch({
 			type: GET_ALL_CATEGORIES
+		});
+
+		dispatch({
+			type: ADD_REQUEST
 		});
 
 		axios.get('/api/category/')
@@ -17,15 +23,27 @@ export function getAllCategories() {
 }
 
 export function receivedAllCategories(data) {
-	return {
-		type: RECEIVED_ALL_CATEGORIES,
-		data: data
-	};
+	return (dispatch, getStore) => {
+		dispatch({
+			type: RECEIVED_ALL_CATEGORIES,
+			data: data
+		});
+		
+		dispatch({
+			type: REMOVE_REQUEST
+		});
+	}
 }
 
 export function receivedError(data) {
-	return {
-		type: RECEIVED_ERROR,
-		data: data
-	};
+	return (dispatch, getStore) => {
+		dispatch({
+			type: RECEIVED_ERROR,
+			data: data
+		});
+
+		dispatch({
+			type: REMOVE_REQUEST
+		});
+	}
 }

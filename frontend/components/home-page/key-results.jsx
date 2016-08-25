@@ -6,9 +6,11 @@ import './key-results.scss';
 class KeyResults extends Component {
 	constructor(props) {
 		super(props);
+		
 		this.state = {
 			keyResults: props.data
 		};
+		
 		this.handleShow = this.handleShow.bind(this);
 		this.textHandleShow = this.textHandleShow.bind(this);
 		this.changeScore = this.changeScore.bind(this);
@@ -81,23 +83,24 @@ class KeyResults extends Component {
 	}
 
 	render() {
-		let item = this.state.keyResults.map((item, index) => {
+		let items = this.state.keyResults.map((item, index) => {
 			return <KeyResultItem index={index} key={index} item={item} changeScore={this.changeScore}/>
-		})
+		});
+
 		return (
 			<div className='key-results'>
 				<span className="change" onClick={this.textHandleShow}>Key results</span>
 				<span className="fa fa-angle-double-down fa-lg key-results-arrow change" onClick={this.handleShow}></span>
 				<div className='key-result-details undisplay'>
 					<ul className='key-result-details-ul'>
-						{item}
+						{ items }
 					</ul>
 
 					<div id="new-obj-keyresults">
 						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={this.onAddNewKeyResultClick}>+
 							Add new key result</a>
 
-						<KeyResultAdd onDeleteKeyResultClick={this.onDeleteKeyResultClick}/>
+						<KeyResultAdd objectiveId={ this.props.objectiveId } onDeleteKeyResultClick={this.onDeleteKeyResultClick}/>
 					</div>
 				</div>
 			</div>

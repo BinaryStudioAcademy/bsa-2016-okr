@@ -9,9 +9,7 @@ var UserObjectiveService = function() {};
 UserObjectiveService.prototype.add = function(data, quarterId, callback){
 	async.waterfall([
 		(callback) => {
-			var keyResults = data.keyResults;
-			data.keyResults = [];
-			ObjectiveService.add(data.creator, data, keyResults, (err, objective) => {
+			ObjectiveService.addBlank(data.creator, data, (err, objective) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -19,22 +17,12 @@ UserObjectiveService.prototype.add = function(data, quarterId, callback){
 			})
 		},
 		(objective, callback) => {
-			keys = objective.keyResults.map((item) => {
-				var keyResult = {
-					templateId: item._id,
-					score: 0,
-					creator: item.creator,
-				};
-
-				return keyResult;
-			});
-
 			var data = {
 				templateId: objective._id,
 				userId: objective.creator,
 				creator: objective.creator,
 				isDeleted: false,
-				keyResults: keys
+				keyResults: objective.keyResults
 			}
 
 			UserObjectiveRepository.add(data, (err, objective) => {
