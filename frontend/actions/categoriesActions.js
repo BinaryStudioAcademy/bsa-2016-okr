@@ -8,17 +8,18 @@ export const RECEIVED_ERROR = 'CATEGORIES.RECEIVED_ERROR';
 
 export function getAllCategories() {
 	return (dispatch, getStore) => {
-		dispatch({
-			type: GET_ALL_CATEGORIES
-		});
-
-		dispatch({
-			type: ADD_REQUEST
-		});
+		dispatch({ type: GET_ALL_CATEGORIES	});
+		dispatch({ type: ADD_REQUEST });
 
 		axios.get('/api/category/')
-		.then( response =>	dispatch(receivedAllCategories(response.data)) )
-		.catch( response => dispatch(receivedError(response.data)) );
+		.then( response =>	{
+			dispatch(receivedAllCategories(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		})
+		.catch( response => {
+			dispatch(receivedError(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		});
 	};
 }
 
@@ -28,10 +29,6 @@ export function receivedAllCategories(data) {
 			type: RECEIVED_ALL_CATEGORIES,
 			data: data
 		});
-		
-		dispatch({
-			type: REMOVE_REQUEST
-		});
 	}
 }
 
@@ -40,10 +37,6 @@ export function receivedError(data) {
 		dispatch({
 			type: RECEIVED_ERROR,
 			data: data
-		});
-
-		dispatch({
-			type: REMOVE_REQUEST
 		});
 	}
 }

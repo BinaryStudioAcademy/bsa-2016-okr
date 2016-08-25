@@ -17,26 +17,23 @@ export const RECEIVED_ERROR = 'RECEIVED_ERROR';
 
 export function addNewKeyResults(body) {
 	return (dispatch, getStore) => {
-		dispatch({
-			type: ADD_REQUEST
-		});
-
-		dispatch({
-			type: ADD_NEW_KEY_RESULT
-		});
+		dispatch({ type: ADD_NEW_KEY_RESULT });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.post(('api/keyresult/'), body)
-				.then(response => dispatch(receivedAddedNewKeyResult(response.data)))
-				.catch(response => dispatch(receivedError(response.data)));
+				.then(response => {
+					dispatch(receivedAddedNewKeyResult(response.data));
+					dispatch({ type: REMOVE_REQUEST	});
+				})
+				.catch(response => {
+					dispatch(receivedError(response.data));
+					dispatch({ type: REMOVE_REQUEST	});
+				});
 	};
 }
 
 export function receivedAddedNewKeyResult(data) {
 	return (dispatch, getStore) => {
-		dispatch({
-			type: REMOVE_REQUEST
-		});
-
 		dispatch({
 			type: RECEIVED_ADDED_NEW_KEY_RESULT,
 		  data: data
@@ -47,32 +44,27 @@ export function receivedAddedNewKeyResult(data) {
 export function getAutocompleteKeyResults(objectId, title) {
 
 	return (dispatch, getStore) => {
-		dispatch({
-			type: ADD_REQUEST
-		});
-
-		dispatch({
-			type: GET_AUTOCOMPLETE_KEY_RESULTS
-		});
+		dispatch({ type: GET_AUTOCOMPLETE_KEY_RESULTS });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.get('api/keyresult/objective/' + objectId + '/' + title)
-		.then(response => dispatch(receivedKeyResults(response.data)))
-		.catch(response => dispatch(receivedError(response.data)));
+		.then(response => {
+			dispatch(receivedKeyResults(response.data))
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			dispatch(receivedError(response.data))
+			dispatch({ type: REMOVE_REQUEST	});
+		});
 
 	};
 }
 
 export function receivedKeyResults(data) {
 	// If nothing received - replace to empty array
-	if ((data === '') || ((data === undefined))){
-		data=[];
-	}
+	data = data || [];
 
 	return (dispatch, getStore) => {
-		dispatch({
-			type: REMOVE_REQUEST
-		});
-
 		dispatch({
 			type: RECEIVED_KEY_RESULTS,
 			data
@@ -88,15 +80,9 @@ export function setAutocompleteKeyResultsSelectedItem(selectedItem) {
 }
 
 export function receivedError(data) {
-	if ((data === '') || ((data === undefined))){
-		data=[];
-	}
+	data = data || [];
 
 	return (dispatch, getStore) => {
-		dispatch({
-			type: REMOVE_REQUEST
-		});
-
 		dispatch({
 			type: RECEIVED_ERROR,
 			data
