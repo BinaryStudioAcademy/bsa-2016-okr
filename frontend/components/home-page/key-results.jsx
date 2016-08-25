@@ -97,8 +97,8 @@ class KeyResults extends Component {
 					</ul>
 
 					<div id="new-obj-keyresults">
-						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={this.onAddNewKeyResultClick}>+
-							Add new key result</a>
+						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={this.onAddNewKeyResultClick}>
+							+Add new key result</a>
 
 						<KeyResultAdd objectiveId={ this.props.objectiveId } onDeleteKeyResultClick={this.onDeleteKeyResultClick}/>
 					</div>

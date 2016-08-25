@@ -1,4 +1,5 @@
-var axios = require('axios');
+import axios from 'axios';
+import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const GET_OBJECTIVES_LIST = 'GET_OBJECTIVES_LIST'
 export const OBJECTIVES_LIST_ERROR = 'OBJECTIVES_LIST_ERROR'
@@ -19,14 +20,18 @@ export const SOFT_DELETE_KEY_RESULT = 'SOFT_DELETE_KEY_RESULT'
 export function getObjectivesList(){
 	
 	return(dispatch, getStore) => {
-
-		dispatch({
-			type: GET_OBJECTIVES_LIST
-		});
+		dispatch({ type: GET_OBJECTIVES_LIST });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.get('/api/objective/')
-			.then(response => dispatch(receivedObjectivesList(response.data)))
-			.catch(response => dispatch(objectivesListError(response.data)));
+			.then(response => {
+				dispatch(receivedObjectivesList(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(objectivesListError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
 	};
 }
 
@@ -46,14 +51,18 @@ export function receivedObjectivesList(objectives) {
 
 export function deleteObjective(id){
 	return(dispatch, getStore) => {
-
-		dispatch({
-			type: DELETE_OBJECTIVE
-		});
+		dispatch({ type: DELETE_OBJECTIVE });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.put('/api/objective/softDelete/'+id)
-			.then(response => dispatch(softDeleteObjective(id)))
-			.catch(response => dispatch(deleteObjectiveError(response.data)));
+			.then(response => {
+				dispatch(softDeleteObjective(id));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(deleteObjectiveError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
 	};
 }
 
@@ -122,16 +131,20 @@ export function editObjective (value) {
 	return action;
 }
 
-export function editObjectiveTamplate (id, reqBody) {
+export function editObjectiveTemplate (id, reqBody) {
 	return(dispatch, getStore) => {
-
-		dispatch({
-			type: EDIT_OBJECTIVE_TEMPLATE
-		});
+		dispatch({ type: EDIT_OBJECTIVE_TEMPLATE });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.put('/api/objective/'+id, reqBody)
-			.then(response => dispatch(recivedEditObjectiveTemplate(id, reqBody)))
-			.catch(response => dispatch(editObjectiveTemplateError(response.data)));
+			.then(response => {
+				dispatch(recivedEditObjectiveTemplate(id, reqBody));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(editObjectiveTemplateError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
 	};
 
 	return action;

@@ -1,4 +1,5 @@
-var axios = require('axios');
+import axios from 'axios';
+import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const GET_MY_OBJECTIVES = 'GET_MY_OBJECTIVES';
 export const RECEIVED_MY_OBJECTIVES_ERROR = 'RECEIVED_MY_OBJECTIVES_ERROR';
@@ -13,87 +14,102 @@ export const ADDED_NEW_OBJECTIVE = 'ADDED_NEW_OBJECTIVE';
 
 export function getMe() {
 
-     return (dispatch, getStore) => {
-		  dispatch({
-		   type: GET_MY_OBJECTIVES
-		  });
+	return (dispatch, getStore) => {
+		dispatch({ type: GET_MY_OBJECTIVES });
+		dispatch({ type: ADD_REQUEST });
 
-	  return axios.get('api/user/me/')
-	   .then(response => dispatch(receivedMyObjectives(response.data)))
-	   .catch(response => dispatch(receivedMyObjectivesError(response.data)));
-	 };
+		return axios.get('api/user/me/')
+		.then(response => {
+			dispatch(receivedMyObjectives(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			dispatch(receivedMyObjectivesError(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+	};
 }
 
 export function receivedMyObjectivesError(data) {
-	 return {
-	  type: RECEIVED_MY_OBJECTIVES_ERROR,
-	  data: data
-	 };
+	return {
+		type: RECEIVED_MY_OBJECTIVES_ERROR,
+		data: data
+	};
 }
 
 export function receivedMyObjectives(data) {
-	 return {
-		  type: RECEIVED_MY_OBJECTIVES,
-		  data: data
-	 };
+	return {
+		type: RECEIVED_MY_OBJECTIVES,
+		data: data
+	};
 }
 
 export function setChangeTab(num) {
-	 return {
-		  type: CHANGE_TAB,
-		  currentTab: num
-	 };
+	return {
+		type: CHANGE_TAB,
+		currentTab: num
+	};
 }
 
 export function setChangeYear(year) {
-	 return {
-		  type: CHANGE_YEAR,
-		  currentYear: year
-	 };
+	return {
+		type: CHANGE_YEAR,
+		currentYear: year
+	};
 }
 
 export function createQuarter(quarter){
-	return{
+	return {
 		type: CREATE_QUARTER,
 		payload: quarter
 	}
 }
 
 export function softDeleteMyObjectiveById(id) {
-  return {
-     type: SOFT_DELETE_MY_OBJECTIVE_BY_ID,
-     id: id
-  };
+	return {
+		type: SOFT_DELETE_MY_OBJECTIVE_BY_ID,
+		id: id
+	};
 }
 
 export function softDeleteMyObjectiveByIdApi(id, body) {
-  return (dispatch, getStore) => {
-   dispatch({
-    type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API
-   });
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST	});
+		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
 
- return axios.put(('api/userObjective/' + id), body)
-  .then(response => dispatch(softDeleteMyObjectiveById(id)))
-  .catch(response => dispatch(receivedMyObjectivesError(response.data)));
-  };
+		return axios.put(('api/userObjective/' + id), body)
+		.then(response => {
+			dispatch(softDeleteMyObjectiveById(id));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			dispatch(receivedMyObjectivesError(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+	};
 }
 
 export function addNewObjective(body) {
-  return (dispatch, getStore) => {
-   dispatch({
-    type: ADD_NEW_OBJECTIVE
-   });
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_NEW_OBJECTIVE });
+		dispatch({ type: ADD_REQUEST	});
 
- return axios.post(('api/userObjective/'), body)
-  .then(response => dispatch(AddedNewObjective(response.data, body)))
-  .catch(response => dispatch(receivedMyObjectivesError(response.data)));
-  };
+		return axios.post(('api/userObjective/'), body)
+		.then(response => {
+			dispatch(AddedNewObjective(response.data, body));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			dispatch(receivedMyObjectivesError(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+	};
 }
 
 export function AddedNewObjective(data, body) {
-  return {
-     type: ADDED_NEW_OBJECTIVE,
-     response: data,
-     request: body
-  };
+	return {
+		type: ADDED_NEW_OBJECTIVE,
+		response: data,
+		request: body
+	};
 }

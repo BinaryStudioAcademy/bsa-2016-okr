@@ -1,0 +1,51 @@
+@import "../../common/variables";
+@import '../../common/styles/commonStyles';
+
+.dashboard-tabs{
+
+	ul{
+		list-style-type: none;
+		padding: 0 3px;
+		overflow: hidden;
+		margin: 10px 0 0 0;
+	}
+	
+	.tab{
+		margin-right: 5px;
+		float: left;
+		border-bottom: 1px solid #E0E0E0;
+		padding: 10px 8px;
+		border-radius: 3px;
+		cursor: pointer;
+		-webkit-transition:0.3s;
+	}
+
+	.mainTabs{
+		font-size: 1.3em;
+		.tab{
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+	}
+
+	.tab:hover{
+		background-color: #F3F6F7;
+		-webkit-transition: 0.3s;
+	}
+
+	.hideTab{
+		height: 0;
+		-webkit-transition:0.3s;
+	}
+
+	.showTab{
+		height: 33px;
+		-webkit-transition:0.3s;
+	}
+
+	.tabLine{
+		display: flex;
+		justify-content: center;
+	}
+	
+}
