@@ -125,7 +125,7 @@ function randomKeyResult(objectives, users, i) {
 		creator: getRandomId(users),
 		objectiveId: getRandomId(objectives),
 		isApproved: i % 6 !== 0,
-		isDeleted: i % 8 !== 0,
+		isDeleted: i % 8 === 0,
 		difficulty: chance.pickone(KeyResult.schema.path('difficulty').enumValues),
 		createdAt: createdAt,
 		updatedAt: updatedAt

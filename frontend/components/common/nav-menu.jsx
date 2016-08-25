@@ -42,8 +42,8 @@ class NavMenu extends React.Component {
 							</Link>
 						</li>
 						<li>
-							<Link to="okr-managing">
-								<i className="fi flaticon-settings-4" aria-hidden="true"></i>
+							<Link to="/okr-managing">
+								<i className="fi flaticon-folder-19" aria-hidden="true"></i>
 								OKR managing
 							</Link>
 						</li>

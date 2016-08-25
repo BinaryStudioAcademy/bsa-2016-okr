@@ -12,6 +12,9 @@ export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
 export const SOFT_DELETE_OBJECTIVE = 'SOFT_DELETE_OBJECTIVE'
 export const EDIT_OBJECTIVE_TEMPLATE = 'EDIT_OBJECTIVE_TEMPLATE'
 export const RECIVED_EDIT_OBJECTIVE_TEMPLATE ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
+export const DELETE_KEY_RESULT_TEMPLATE = 'DELETE_KEY_RESULT_TEMPLATE'
+export const DELETE_KEY_RESULT_ERROR = 'DELETE_KEY_RESULT_ERROR'
+export const SOFT_DELETE_KEY_RESULT = 'SOFT_DELETE_KEY_RESULT'
 
 export function getObjectivesList(){
 	
@@ -68,14 +71,33 @@ export function softDeleteObjective(id) {
 	};
 }
 
-export function setSort (sort) {
-	const action = {
-		type: SET_SORT,
-		sort
-	};
+export function deleteKeyResult(id){
+	return(dispatch, getStore) => {
 
-	return action;
+		dispatch({
+			type: DELETE_KEY_RESULT_TEMPLATE
+		});
+
+		return axios.put('/api/keyResult/softDelete/'+id)
+			.then(response => dispatch(softDeleteKyeResult(id)))
+			.catch(response => dispatch(deleteObjectiveError(response.data)));
+	};
 }
+
+export function deleteKeyResultError(data) {
+	return {
+		type: DELETE_KEY_RESULT_ERROR,
+		data
+	};
+}
+
+export function softDeleteKyeResult(id) {
+	return {
+		type: SOFT_DELETE_KEY_RESULT,
+		id
+	};
+}
+
 export function searchObjective(value) {
 	const action = {
 		type: SEARCH_OBJECTIVE,

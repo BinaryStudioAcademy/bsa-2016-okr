@@ -19,6 +19,16 @@ router.post('/', (req, res, next) => {
 	return service.add(session._id, key, res.callback);
 });
 
+router.put('/softDelete/:id', adminOnly, (req, res, next) => {
+    var id = req.params.id;
+
+    if(!ValidateService.isCorrectId(id)) {
+        return res.badRequest();
+    };
+
+    return repository.setToDeleted(id, res.callback);
+});
+
 // router.put('/:id', (req, res, next) => {
 // 	var id = req.params.id;
 	

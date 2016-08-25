@@ -2,7 +2,8 @@ import users from '../components/mockData/users.js'
 import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
         SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE, EDIT_OBJECTIVE,
         DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
-        RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE} from '../actions/okrManagingActions.js'
+        RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE,
+        SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
@@ -67,6 +68,23 @@ export default function patentDetailsReducer(state = initialState, action) {
             })
         }
 
+        case DELETE_KEY_RESULT_TEMPLATE: {
+       
+            return Object.assign({}, state, {
+                waiting: true
+            })
+        }
+
+        case SOFT_DELETE_KEY_RESULT: {
+            const{id} = action;
+            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+
+            return Object.assign({}, state, {
+                visibleObjectives: softDeleteKeyResult(objectives, id),
+                waiting: false,
+                editing: false
+            })
+        }        
         case SET_SORT: {
             const sort = action.sort;
 
@@ -83,19 +101,19 @@ export default function patentDetailsReducer(state = initialState, action) {
             })
         }
 
-        case EDIT_OBJECTIVE: {
-            const {value} = action
-            return Object.assign({}, state, {
-                editing: value
-            })
-        }
-
         case SEARCH_OBJECTIVE: {
             const {searchValue} = action;
             return Object.assign({}, state, {
                 active: 0,
                 visibleObjectives: updateVisibleItems(state.visibleObjectives, state.objectives, searchValue)
 
+            })
+        }
+
+        case EDIT_OBJECTIVE: {
+            const {value} = action
+            return Object.assign({}, state, {
+                editing: value
             })
         }
 
@@ -148,5 +166,14 @@ function softdelete(objectives, id) {
     }
 
     return objectives;
+}
 
+function softDeleteKeyResult(objectives, id) {
+    for (let i = 0; i < objectives.length; i++) 
+        for (let j = 0; j < objectives[i].keyResults.length; j++){
+            if (objectives[i].keyResults[j]._id == id) {
+                objectives[i].keyResults.splice(j, 1);
+          }
+    }
+    return objectives;
 }

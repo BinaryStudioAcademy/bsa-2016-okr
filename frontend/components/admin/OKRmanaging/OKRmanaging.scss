@@ -1,3 +1,4 @@
+@import '../../common/variables';
 #OKR-managing-title {
     p{
         box-sizing: border-box;
@@ -7,9 +8,8 @@
         position: relative;
         padding-top: 4px;
         padding-bottom: 4px;
-        width: 100%;
         min-width: 535px;
-        margin: 10px auto;
+        margin: 10px 5%;
         
         span{
             display: inline-block;
@@ -30,6 +30,106 @@
         border-top: 1px solid #aaaaaa;
         z-index: 0;
     }
+}
+#tamplates{
+    margin: 0 5%;
+
+    .objective-template{
+        margin: 25px 0;
+        padding: 17px 17px 40px;
+        background: lighten($color-blue-grey, 52%);
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        min-height: 90px;
+        box-sizing: border-box;
+
+        .name{
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .description {
+            margin-bottom: 10px;
+            width: 84%;
+            line-height: 18px;
+        }
+        .category{
+            clear: both;
+            float: right;
+            display: inline-block;
+            border-radius: 3px;
+            background-color: $color-blue-grey;
+            color: #fff;
+            margin-top: 8px;
+            padding: 4px 8px;
+        }
+        .edit-objective{
+            float: right;
+            i{  
+                display: inline-block;
+                margin-left: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+            .key-results{
+            margin-top: -65px;
+            margin-left: 15px;
+            .change {
+                cursor: pointer;
+                padding: 5px 10px;
+            }
+            .key-result-list{
+                margin-left: 10px;
+            }
+            .key-result-details span{
+                color: #000;
+                cursor: inherit;
+                padding: 0 15px 0 0;
+            }
+            .display{
+                display: block;
+            }
+            .undisplay{
+                display: none;
+            }
+            ul {
+                width: 100%;
+                margin: 12px 0 0;
+                padding: 0px;
+                list-style: none;
+
+                .key-result-item{
+                    border: 1px solid #ddd;
+                    border-top: none;
+                    background-color:  lighten($color-blue-grey, 50%);
+                    padding: 10px 15px;
+
+                    div{
+                        display: inline-block;
+                    }
+                    .name{
+                        width: 45%;
+                    }
+                    .difficulty{
+                        padding: 1px 6px;
+                        background-color:  $color-blue-grey;
+                        color: #fff;
+                        border-radius: 2px;
+                    }
+                    .edit-key-result{
+                        display: inline-block;
+                        float: right;
+                        i{
+                            cursor: pointer;
+                            padding-left: 10px;
+                        }
+                    }
+                }
+            }
+        }
 }
 .OKR-mnaging.active.objective{
     margin: 20px;
@@ -106,7 +206,9 @@ table.OKR-managing {
 		  text-align: left;
     }
 }
-
+.OKR-managing.searchbar{
+    margin: 0 5%;
+}
 .OKR-managing.search {
     margin-top: 20px;
 }
