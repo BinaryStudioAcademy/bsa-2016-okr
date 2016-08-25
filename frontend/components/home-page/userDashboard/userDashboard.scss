@@ -10,13 +10,9 @@
 	box-sizing: border-box;
 
 	.showContent{
-		height: 370px;
-		-webkit-transition:0.5s;
-		overflow: hidden;
+		height: 100%;
 	}
 	.hideContent{
 		height: 0;
-		-webkit-transition:0.5s;
-		overflow:hidden;
 	}
 }

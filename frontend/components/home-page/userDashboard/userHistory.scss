@@ -2,7 +2,17 @@
 @import '../../common/styles/commonStyles';
 
 .userHistory{
-	
+	padding-left: 10px;
+  
+  .typeIcon{
+    
+    background-color: white;
+    font-size: 24px;
+    position: relative;
+    float: left;
+    left: -18px;
+    top: 16px;
+  }
 
 	.historyEvent{
 		padding: 10px;
@@ -10,10 +20,24 @@
 		border-bottom: 1px solid #AAAAAA;
 		border-left: 1px solid #AAAAAA;
 	}
+
 	.eventDate{
 		text-align: right;
 		color: #A4A3A3;
+    font-size: 12px;
 	}
+
+  .author-name { font-weight: bold;}
+  .action-description {  display:inline-block; margin-left: 10px;}
+
+  .user-avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    float:left;
+    position: relative;
+    left: -7px;
+  }
 
 	h1 {
 		color:#AAAAAA;
@@ -42,4 +66,8 @@
   	h1 > span:after {
     	margin-left: 2%;
   	}
+
+    .green{ color: green; }
+    .orange{ color: orange; }
+    .red{ color: red; }
 }
