@@ -20,7 +20,7 @@ export function addNewKeyResults(body) {
 		dispatch({ type: ADD_NEW_KEY_RESULT });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post(('api/keyresult/'), body)
+		return axios.post((`api/userobjective/${body.objectiveId}/keyresult/`), body)
 				.then(response => {
 					dispatch(receivedAddedNewKeyResult(response.data));
 					dispatch({ type: REMOVE_REQUEST	});

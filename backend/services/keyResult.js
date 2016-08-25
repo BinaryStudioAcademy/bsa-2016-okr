@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var KeyResultRepository = require('../repositories/keyResult');
 var UserObjectiveRepository = require('../repositories/userObjective');
+var UserObjectiveService = require('../services/userObjective');
 var HistoryRepository = require('../repositories/history');
 var async = require('async');
 
@@ -18,7 +19,7 @@ KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, ca
 			KeyResultRepository.update(keyResultId, keyResult, (err, keyResult) => {
 				if(err){
 					return  callback(err, null);
-				};
+				}
 				return callback(null, keyResult);
 			});
 		},
@@ -26,7 +27,7 @@ KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, ca
 			HistoryRepository.addKeyResultEvent(userId, keyResultId, 'update KeyResult', (err, keyResult) => {
 					if(err){
 					return  callback(err, null);
-				};
+				}
 				return callback(null, keyResult);
 			});
 		}
@@ -42,7 +43,7 @@ KeyResultsService.prototype.delete =function(userId, keyResultId, callback){
 			KeyResultRepository.delete(keyResultId, (err, keyResult) => {
 				if(err){
 					return callback(err, null);
-				};
+				}
 				return callback(null, keyResult);
 			});
 		},
@@ -50,7 +51,7 @@ KeyResultsService.prototype.delete =function(userId, keyResultId, callback){
 			HistoryRepository.addKeyResultEvent(userId, keyResultId, 'delete KeyResult', (err, keyResult) => {
 					if(err){
 					return callback(err, null);
-				};
+				}
 				return callback(null, keyResult);
 			});	
 		}
@@ -59,35 +60,7 @@ KeyResultsService.prototype.delete =function(userId, keyResultId, callback){
 	});
 };
 
-KeyResultsService.prototype.add = function(userId, keyResult, callback){
-	console.log('-----ENTER PRESSED-----', keyResult);
-
-	async.waterfall([
-		(callback) => {
-			KeyResultRepository.add(keyResult, (err, keyResult) => {
-				if(err){
-					return  callback(err, null);
-				};
-				return callback(null, keyResult);
-			});
-		}
-		//,
-		//(keyResult, callback) => {
-		//	HistoryRepository.addKeyResultEvent(userId, keyResult._id, 'add KeyResult', (err) => {
-		//		if(err){
-		//			return callback(err, null);
-		//		};
-		//		return callback(null, keyResult);
-		//	});
-		//}
-	], (err, result) => {
-		return callback(err, result);
-	});
-};
-
 KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback){
-	let keyResults = [];
-
 	async.waterfall([
 		(callback) => {
 			UserObjectiveRepository.getById(objectiveId, (err, userObjective) => {
@@ -101,7 +74,7 @@ KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback
 			KeyResultRepository.autocomplete(title, userObjective.templateId, (err, keyResultsArr) => {
 				if (err){
 					return callback(err, null);
-				};	
+				}
 				return callback(null, keyResultsArr, userObjective);
 			});
 		},

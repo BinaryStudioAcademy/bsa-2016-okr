@@ -108,4 +108,21 @@ router.delete('/:id', (req, res, next) => {
 	return service.delete(session._id, id, res.callback);
 });
 
+router.post('/:id/keyresult/', (req, res, next) => {
+	let objectiveId = req.body.objectiveId || '';
+	if(!ValidateService.isCorrectId(objectiveId)) {
+		return res.badRequest();
+	}
+
+	let selectedItem = req.body.selectedItem || '';
+	if(selectedItem !== ''){
+		if(!ValidateService.isCorrectId(selectedItem._id)) {
+			return res.badRequest();
+		}
+		return service.addKeyResultById(req.session._id, objectiveId, selectedItemId, res.callback);
+	} else {
+		return service.addKeyResultByTitle(req.session._id, objectiveId, req.body.title, res.callback);
+	}
+});
+
 module.exports = router;

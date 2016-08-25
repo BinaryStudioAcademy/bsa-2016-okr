@@ -20,11 +20,14 @@ class KeyResult extends React.Component {
 	}
 
 	addNewItemByKeyPressEnter(title){
-		let body = {
-			title : title,
-			objectiveId: this.props.objectiveId
-		};
-		this.props.addNewKeyResults(body);
+		if (title !== '') {
+			const body = {
+				title: title,
+				objectiveId: this.props.objectiveId,
+				selectedItemId: this.props.keyResultsReducer.selectedItem._id || ''
+			};
+			this.props.addNewKeyResults(body);
+		}
 	};
 
 	onDeleteKeyResultClick() {

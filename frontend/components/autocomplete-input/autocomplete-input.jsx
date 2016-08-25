@@ -60,8 +60,10 @@ class AutocompleteInput extends React.Component {
 	}
 
 	onChange(event) {
-		let title = event.target.value;
+		const title = event.target.value;
 		this.getData(title);
+		const item = {};
+		this.props.setAutocompleteSelectedItem(item);
 	}
 
 	onClickLi(item) {

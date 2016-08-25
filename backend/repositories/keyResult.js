@@ -28,4 +28,16 @@ KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callba
 			.exec(callback);
 };
 
+KeyResultRepository.prototype.getByTitle = function(title, callback) {
+	var model = this.model;
+
+	var options =	{
+		title: new RegExp(title, 'i')
+	};
+
+	model
+			.find(options)
+			.exec(callback);
+};
+
 module.exports = new KeyResultRepository();
