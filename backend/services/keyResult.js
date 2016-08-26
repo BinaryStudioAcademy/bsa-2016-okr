@@ -9,11 +9,11 @@ var KeyResultsService = function(){
 
 };
 
-KeyResultsService.prototype.generateNotification = function(){
+KeyResultsService.prototype.generateNotification = function() {
 
 };
 
-KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, callback){
+KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, callback) {
 	async.waterfall([
 		(callback) => {
 			KeyResultRepository.update(keyResultId, keyResult, (err, keyResult) => {
@@ -37,7 +37,7 @@ KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, ca
 };
 
 
-KeyResultsService.prototype.delete =function(userId, keyResultId, callback){
+KeyResultsService.prototype.delete = function(userId, keyResultId, callback) {
 	async.waterfall([
 		(callback) => {
 			KeyResultRepository.delete(keyResultId, (err, keyResult) => {
@@ -64,17 +64,19 @@ KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback
 	async.waterfall([
 		(callback) => {
 			UserObjectiveRepository.getById(objectiveId, (err, userObjective) => {
-				if (err){
+				if (err) {
 					return callback(err, null);
 				}
+
 				return callback(null, userObjective);
 			})
 		},
 		(userObjective, callback) => {
 			KeyResultRepository.autocomplete(title, userObjective.templateId, (err, keyResultsArr) => {
-				if (err){
+				if (err) {
 					return callback(err, null);
 				}
+
 				return callback(null, keyResultsArr, userObjective);
 			});
 		},
@@ -83,7 +85,7 @@ KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback
 				return !(userObjective.keyResults.some((objectiveKeyResult) => {
 					return (objectiveKeyResult.templateId.equals(keyResult._id))
 				}))
-			}).slice(0,10);
+			}).slice(0, 10);
 
 			return callback (null, keyResultsArr);
 		}

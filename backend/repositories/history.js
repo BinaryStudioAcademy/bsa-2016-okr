@@ -22,7 +22,7 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 // 	 newEvent.save(callback);
 // };
 
-HistoryRepository.prototype.addKeyEvent = function(body, type, callback) {
+HistoryRepository.prototype.addKeyResultEvent = function(body, type, callback) {
 	let model = this.model;
 	body.type = type + ' ' + CONST.history.target.KEY_RESULT;
 	

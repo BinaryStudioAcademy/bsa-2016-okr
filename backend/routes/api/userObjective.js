@@ -76,6 +76,32 @@ router.get('/user/:id', (req, res, next) => {
 	return repository.getByUserIdPopulate(id, res.callback);
 });
 
+router.post('/:id/keyresult/', (req, res, next) => {
+	let objectiveId = req.body.objectiveId || '';
+	let userId = req.session._id;
+	let isAdmin = req.session.isAdmin;
+	let title = req.body.title || '';
+	let keyResultId = req.body.keyResultId || '';
+
+	title = title.trim();
+	
+	if(!ValidateService.isCorrectId(objectiveId)
+	|| (ValidateService.isEmpty(title) && ValidateService.isEmpty(keyResultId))
+	|| (!ValidateService.isEmpty(keyResultId) && !ValidateService.isCorrectId(keyResultId))) {
+		return res.badRequest();
+	}
+
+	let data = {
+		userId: userId,
+		objectiveId: objectiveId,
+		keyResultId: keyResultId,
+		keyResultTitle: title,
+		isAdmin: isAdmin
+	};
+
+	service.addKeyResult(data, res.callback);
+});
+
 router.get('/:id', (req, res, next) => {
 	var id = req.params.id;
 
@@ -106,23 +132,6 @@ router.delete('/:id', (req, res, next) => {
 	};
 
 	return service.delete(session._id, id, res.callback);
-});
-
-router.post('/:id/keyresult/', (req, res, next) => {
-	let objectiveId = req.body.objectiveId || '';
-	if(!ValidateService.isCorrectId(objectiveId)) {
-		return res.badRequest();
-	}
-
-	let selectedItem = req.body.selectedItem || '';
-	if(selectedItem !== ''){
-		if(!ValidateService.isCorrectId(selectedItem._id)) {
-			return res.badRequest();
-		}
-		return service.addKeyResultById(req.session._id, objectiveId, selectedItemId, res.callback);
-	} else {
-		return service.addKeyResultByTitle(req.session._id, objectiveId, req.body.title, res.callback);
-	}
 });
 
 module.exports = router;

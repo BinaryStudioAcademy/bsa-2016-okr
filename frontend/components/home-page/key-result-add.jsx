@@ -19,13 +19,14 @@ class KeyResult extends React.Component {
 		this.addNewItemByKeyPressEnter = this.addNewItemByKeyPressEnter.bind(this);
 	}
 
-	addNewItemByKeyPressEnter(title){
+	addNewItemByKeyPressEnter(title) {
 		if (title !== '') {
 			const body = {
 				title: title,
 				objectiveId: this.props.objectiveId,
-				selectedItemId: this.props.keyResultsReducer.selectedItem._id || ''
+				keyResultId: this.props.keyResultsReducer.selectedItem._id || '',
 			};
+
 			this.props.addNewKeyResults(body);
 		}
 	};
