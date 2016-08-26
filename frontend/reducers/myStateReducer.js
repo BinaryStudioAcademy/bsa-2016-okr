@@ -9,6 +9,10 @@ import {
   ADDED_NEW_OBJECTIVE
 } from '../actions/myStateActions';
 
+import {
+	ADD_NEW_KEY_RESULT_TO_OBJECTIVE
+} from '../actions/keyResultActions';
+
 const initialState = {
     currentTab: getQuarter(),
     currentYear: getYear(),
@@ -102,6 +106,32 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
       })
     }
 
+		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE: {
+			const { response, request} = action;
+
+			let keyResult = {
+				_id: response._id,
+				creator: response.creator,
+				score: 0,
+				templateId: {
+					_id: response._id,
+					createdAt: response.createdAt,
+					creator: response.creator,
+					difficulty: response.difficulty,
+					isApproved: response.isApproved,
+					isDeleted: response.isDeleted,
+					objectiveId: response.objectiveId,
+					title: response.title,
+					updatedAt: response.updatedAt,
+					used: response.used
+				}
+			};
+
+			return Object.assign({}, state, {
+				me: addNewKeyResultToMe(state.me, request.objectiveId, keyResult)
+			})
+		}
+
 		default: {
 			return state;
 		}
@@ -152,9 +182,25 @@ function deleteObjectiveFromMe(me, id) {
 function addNewObjectiveToMe(me, quarterId, objective) {
 	var meCopy = Object.assign({}, me);
 	meCopy.quarters.forEach((quarter) => {
-    if (quarter._id = quarterId) {
+    if (quarter._id == quarterId) {
       quarter.userObjectives.push(objective);
 		}
 	});
+	return meCopy
+}
+
+function addNewKeyResultToMe(me, objectiveId, keyResult) {
+	var meCopy = Object.assign({}, me);
+
+	meCopy.quarters.forEach((quarter) => {
+		let index = quarter.userObjectives.findIndex((userObjective) => {
+			return userObjective._id == objectiveId
+		});
+
+		if (index !== -1) {
+			quarter.userObjectives[index].keyResults.push(keyResult);
+		}
+	});
+
 	return meCopy
 }
