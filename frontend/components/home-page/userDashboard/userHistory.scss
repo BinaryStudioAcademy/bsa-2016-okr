@@ -23,13 +23,19 @@
 	}
 
 	.eventDate{
+    display:inline-block;
+    float:right;
+    position:relative;
+    top: 3px;
+    background-color:white;
 		text-align: right;
 		color: #A4A3A3;
     font-size: 12px;
 	}
 
   .author-name { font-weight: bold;}
-  .action-description {  display:inline-block; margin-left: 10px;}
+  .action-description {  display:inline-block; font-size:14px;}
+  .action-text { margin-left: 65px;}
 
   .user-avatar{
     width: 40px;

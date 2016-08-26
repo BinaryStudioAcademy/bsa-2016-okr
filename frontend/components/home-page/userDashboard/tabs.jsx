@@ -61,7 +61,7 @@ class Tabs extends React.Component{
 				<div className="tab-wrapper mainTabs">
 					<ul className="tabLine">
 						<li className={this.activeTab(1)+" tab"} onClick={()=>this.handleTabClick(1)}>History</li>
-						<li className={this.activeTab(5)+" tab"} onClick={()=>this.handleTopClick(5)}>Top</li>
+						<li className={this.activeTab(5)+" tab"} onClick={()=>this.handleTopClick(5)}>Statistic</li>
 					</ul>
 				</div>
 				<div className="tab-wrapper">

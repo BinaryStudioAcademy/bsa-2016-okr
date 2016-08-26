@@ -30,21 +30,21 @@ class UserHistory extends React.Component{
 		let object = item.type.split(' ')[1];
 		if(item.type.indexOf('add') != -1)
 			return (
-				<div>
+				<div className="action-text">
 					<p className="author-name">{item.author}</p>
 					<p className="action-description">added {object}</p>
 				</div>
 			)
 		else if (item.type.indexOf('update') != -1)
 			return (
-				<div>
+				<div className="action-text">
 					<p className="author-name">{item.author}</p>
 					<p className="action-description">updated {object}</p>
 				</div>
 			)
 		else if (item.type.indexOf('delete') != -1)
 			return (
-				<div>
+				<div className="action-text">
 					<p className="author-name">{item.author}</p>
 					<p className="action-description">deleted {object}</p>
 				</div>

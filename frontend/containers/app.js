@@ -27,28 +27,30 @@ class App extends Component {
 		this.props.actions.app.init();
 	}
 
-	// componentWillMount() {
-	// }
-
 	render() {
-
-		return (
+		let contentInlineStyle = {
+			display: this.props.isInitializing ? 'none' : 'block'
+		};
+		
+		return (	
 			<div id="application">
 				<LoadingScreen show={ this.props.isInitializing } />
-				<LoadingModal show={ this.props.isLoading } />
-				<Header />
-				<NavMenu />
-				<MainPage>
-				{ this.props.children }
-				{
-					(() => {
-						if (process.env.NODE_ENV !== 'production') {
-							const DevTools = require('../shared/devtools/DevTools').default;
-							return <DevTools />;
-						}
-					})()
-				}
-				</MainPage>
+				<div style={ contentInlineStyle } >
+					<LoadingModal show={ this.props.isLoading } />
+					<Header />
+					<NavMenu />
+					<MainPage>
+					{ this.props.children }
+					{
+						(() => {
+							if (process.env.NODE_ENV !== 'production') {
+								const DevTools = require('../shared/devtools/DevTools').default;
+								return <DevTools />;
+							}
+						})()
+					}
+					</MainPage>
+				</div>
 			</div>
 			);
 	}
