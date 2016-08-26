@@ -2,18 +2,18 @@ import users from '../components/mockData/users.js'
 import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
         SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE, EDIT_OBJECTIVE,
         DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
-        RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE,
-        SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE} from '../actions/okrManagingActions.js'
+        RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE, ACTIVE_KEY_RESULT,
+        SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE, RECIVED_EDIT_KEY_RESULT,
+        EDIT_KEY_RESULT} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
     waiting: true,
     visibleObjectives: [],
-    active: 0,
-    term: '',
-    sort: '',
+    active: '',
     searchValue: '',
-    editing: false
+    editing: false,
+    activeKeyResult: ''
 }
 
 export default function patentDetailsReducer(state = initialState, action) {
@@ -41,7 +41,7 @@ export default function patentDetailsReducer(state = initialState, action) {
             const {objectives} = action;
 
             return Object.assign({}, state, {
-                active: 0,
+                active: '',
                 objectives,
                 visibleObjectives: objectives,
                 waiting: false,
@@ -61,7 +61,7 @@ export default function patentDetailsReducer(state = initialState, action) {
             let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
 
             return Object.assign({}, state, {
-                active: 0,
+                active: '',
                 visibleObjectives: softdelete(objectives, id),
                 waiting: false,
                 editing: false
@@ -99,11 +99,17 @@ export default function patentDetailsReducer(state = initialState, action) {
                 active
             })
         }
+        case ACTIVE_KEY_RESULT: {
+            const {activeKeyResult} = action;
 
+            return Object.assign({}, state, {
+                activeKeyResult
+            })
+        }
         case SEARCH_OBJECTIVE: {
             const {searchValue} = action;
             return Object.assign({}, state, {
-                active: 0,
+                active: '',
                 visibleObjectives: updateVisibleItems(state.visibleObjectives, state.objectives, searchValue)
 
             })
@@ -126,10 +132,30 @@ export default function patentDetailsReducer(state = initialState, action) {
             })
         }
 
+        case RECIVED_EDIT_KEY_RESULT: {
+            const {keyResult, id} = action;
+            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+
+            return Object.assign({}, state, {
+                visibleObjectives: updateKeyResult(objectives, keyResult, id),
+                editing: false
+            })
+        }
+
         default: 
             return state;        
         
     }
+}
+function updateKeyResult(objectives, keyResult, id){
+    for (let i = 0; i < objectives.length; i++) 
+        for (let j = 0; j < objectives[i].keyResults.length; j++){
+            if (objectives[i].keyResults[j]._id == id) {
+                objectives[i].keyResults[j].title = keyResult.title;
+                objectives[i].keyResults[j].difficulty = keyResult.difficulty;
+          }
+    }
+    return objectives;
 }
 function update(objectives, objective, id){
     for (let i = 0; i < objectives.length; i++) {

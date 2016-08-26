@@ -25,15 +25,15 @@ router.put('/softDelete/:id', adminOnly, (req, res, next) => {
     return repository.setToDeleted(id, res.callback);
 });
 
-// router.put('/:id', (req, res, next) => {
-// 	var id = req.params.id;
+router.put('/:id', (req, res, next) => {
+ 	var id = req.params.id;
 
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
+ 	if(!ValidateService.isCorrectId(id)) {
+ 		return res.badRequest();
+ 	};
 
-// 	return service.update(session._id, id, req.body, res.callback);
-// });
+ 	return service.update(req.session._id, id, req.body, res.callback);
+});
 
 // router.delete('/:id', adminOnly, (req, res, next) => {
 // 	var id = req.params.id;

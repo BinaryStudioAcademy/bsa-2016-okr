@@ -4,18 +4,24 @@ import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 export const GET_OBJECTIVES_LIST = 'GET_OBJECTIVES_LIST'
 export const OBJECTIVES_LIST_ERROR = 'OBJECTIVES_LIST_ERROR'
 export const RECEIVED_OBJECTIVES_LIST = 'RECEIVED_OBJECTIVES_LIST'
-export const SET_SORT =  "SET_SORT"
+
 export const SEARCH_OBJECTIVE = 'SEARCH_OBJECTIVE'
 export const ACTIVE_OBJECTIVE = 'ACTIVE_OBJECTIVE'
+
 export const DELETE_OBJECTIVE = 'DELETE_OBJECTIVE'
-export const EDIT_OBJECTIVE = 'EDIT_OBJECTIVE'
 export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
 export const SOFT_DELETE_OBJECTIVE = 'SOFT_DELETE_OBJECTIVE'
+
+export const EDIT_OBJECTIVE = 'EDIT_OBJECTIVE'
 export const EDIT_OBJECTIVE_TEMPLATE = 'EDIT_OBJECTIVE_TEMPLATE'
 export const RECIVED_EDIT_OBJECTIVE_TEMPLATE ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
 export const DELETE_KEY_RESULT_TEMPLATE = 'DELETE_KEY_RESULT_TEMPLATE'
 export const DELETE_KEY_RESULT_ERROR = 'DELETE_KEY_RESULT_ERROR'
 export const SOFT_DELETE_KEY_RESULT = 'SOFT_DELETE_KEY_RESULT'
+export const EDIT_KEY_RESULT = 'EDIT_KEY_RESULT'
+export const RECIVED_EDIT_KEY_RESULT ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
+export const RECIVED_EDIT_KEY_RESULT_ERROR = 'RECIVED_EDIT_KEY_RESULT_ERROR'
+export const ACTIVE_KEY_RESULT = 'ACTIVE_KEY_RESULT'
 
 export function getObjectivesList(){
 	
@@ -163,4 +169,47 @@ export function editObjectiveTemplateError(data) {
 		type: EDIT_OBJECTIVE_TEMPLATE_ERROR,
 		data
 	};
+}
+
+export function editKeyResult (id, reqBody) {
+	return(dispatch, getStore) => {
+		dispatch({ type: EDIT_KEY_RESULT });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put('/api/keyResult/'+id, reqBody)
+			.then(response => {
+				dispatch(recivedEditKeyResult(id, reqBody));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(editKeyResultError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
+	};
+
+	return action;
+}
+
+export function recivedEditKeyResult(id, keyResult) {
+	return {
+		type: RECIVED_EDIT_KEY_RESULT,
+		keyResult,
+		id
+	};
+}
+
+export function editKeyResultError(data) {
+	return {
+		type: RECIVED_EDIT_KEY_RESULT_ERROR,
+		data
+	};
+}
+
+export function activeKeyResult(activeKeyResult) {
+	const action = {
+		type: ACTIVE_KEY_RESULT,
+		activeKeyResult
+	};
+
+	return action;
 }

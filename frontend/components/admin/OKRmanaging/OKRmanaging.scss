@@ -137,6 +137,15 @@
                     .edit-key-result{
                         display: inline-block;
                         float: right;
+                         .editing{
+                            color: $color-blue;
+                        }
+                        .edit:hover{
+                            color: $color-blue;
+                        }
+                        .delete:hover{
+                            color: $color-red;
+                        }
                         i{
                             cursor: pointer;
                             padding-left: 10px;
