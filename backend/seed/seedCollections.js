@@ -105,7 +105,7 @@ function randomObjective(users, categories, i) {
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
 		category: getRandomId(categories),
-		keyResults: [],
+		defaultKeyResults: [],
 		used: 0,
 		creator: getRandomId(users),
 		isApproved: i % 5 !== 0,
@@ -258,15 +258,18 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 			return;
 		}
 
-		var keyResultsCount = chance.integer({ min: 1, max: objectiveKeyResults.length });
+		const keyResultsCount = objectiveKeyResults.length;
+		const maxDefaultKeyResultsCount = keyResultsCount > 4 ? 4 : keyResultsCount;
+
+		var defaultKeyResultsCount = chance.integer({ min: 1, max: maxDefaultKeyResultsCount });
 
 		var defaultKeyResults = chance
-		.pickset(objectiveKeyResults, keyResultsCount)
+		.pickset(objectiveKeyResults, defaultKeyResultsCount)
 		.map((keyResult) => {
 			return ObjectId(keyResult._id);
 		});
 
-		objective.keyResults = defaultKeyResults;
+		objective.defaultKeyResults = defaultKeyResults;
 	});
 
 	return objectives;

@@ -10,6 +10,17 @@ var KeyResultRepository = function(){
 
 KeyResultRepository.prototype = new Repository();
 
+KeyResultRepository.prototype.getAll = function(callback) {
+	var model = this.model;
+
+	model
+		.find({
+			isApproved: true,
+			isDeleted: false
+		})
+		.exec(callback);
+};
+
 KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callback) {
 	var model = this.model;
 	var options = {
