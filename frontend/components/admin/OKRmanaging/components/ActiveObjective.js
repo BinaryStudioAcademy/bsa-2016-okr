@@ -55,7 +55,7 @@ render(){
 			return (
 				<div className="OKR-managing thumbnail">
 					<i className="fi flaticon-edit" aria-hidden="true" onClick={this.editObjective}></i>
-					<i className="fi flaticon-garbage-2" aria-hidden="true" onClick={this.deleteObjective}></i>
+					<i className="fi flaticon-garbage-2 " aria-hidden="true" onClick={this.deleteObjective}></i>
 
 					<div className="thumbnail-caption">
 						<h3>{objective.title}</h3>

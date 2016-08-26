@@ -96,8 +96,7 @@ export default function patentDetailsReducer(state = initialState, action) {
             const {active} = action;
 
             return Object.assign({}, state, {
-                active,
-                editing: false
+                active
             })
         }
 

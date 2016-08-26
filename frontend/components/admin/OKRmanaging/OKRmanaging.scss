@@ -43,6 +43,12 @@
         min-height: 90px;
         box-sizing: border-box;
 
+        .template-description{
+            resize: vertical;
+            width: 80%;
+            margin: 10px 0;
+        }
+
         .name{
             display: inline-block;
             margin-bottom: 10px;
@@ -67,6 +73,15 @@
         }
         .edit-objective{
             float: right;
+            .editing{
+                color: $color-blue;
+            }
+            .edit:hover{
+                color: $color-blue;
+            }
+            .delete:hover{
+                color: $color-red;
+            }
             i{  
                 display: inline-block;
                 margin-left: 10px;
@@ -185,20 +200,6 @@
 	margin-bottom: 10px;
 }
 
-.OKR-managing.objective-info-table {
-    text-align: left;
-    .admin-save-objective{
-        
-    }
-    textarea{
-        resize: vertical;
-        min-height: 80px;
-    }
-    td {
-    	vertical-align: top;
-    	padding: 0 5px 15px;
-    }
-}
 
 
 .OKR-managing.searchbar{
