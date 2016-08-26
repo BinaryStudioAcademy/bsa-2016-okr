@@ -27,16 +27,15 @@ class App extends Component {
 		this.props.actions.app.init();
 	}
 
-	// componentWillMount() {
-	// }
-
 	render() {
-		let contentVisibility = this.props.isInitializing ? 'hidden' : '';
+		let contentStyle = {
+			visibility: this.props.isInitializing ? 'hidden' : 'visible'
+		};
 		
 		return (	
 			<div id="application">
 				<LoadingScreen show={ this.props.isInitializing } />
-				<div className={ contentVisibility }>
+				<div style={ contentStyle } >
 					<LoadingModal show={ this.props.isLoading } />
 					<Header />
 					<NavMenu />
