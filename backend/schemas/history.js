@@ -8,7 +8,7 @@ var historySchema = new Schema({
 	//commentId: {type: mongoose.Schema.Types.ObjectId, ref: 'Comment'},
 	//userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	//planId: {type: mongoose.Schema.Types.ObjectId, ref: 'Plan'},
-	//categoryId: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
+	categoryId: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
 	type: String,
 	updateFrom: {},
 	updateTo: {}

@@ -31,12 +31,8 @@ KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callba
 KeyResultRepository.prototype.getByTitle = function(title, callback) {
 	var model = this.model;
 
-	var options =	{
-		title: new RegExp(title, 'i')
-	};
-
 	model
-			.find(options)
+			.findOne({ title: title })
 			.exec(callback);
 };
 

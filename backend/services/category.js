@@ -1,125 +1,168 @@
-var CategoryRepository = require('../repositories/category'),
-  HistoryRepository = require('../repositories/history'),
-  ObjectId = require('mongoose').Types.ObjectId,
-  async = require('async');
+var async = require('async');
+var ObjectId = require('mongoose').Types.ObjectId;
+var CategoryRepository = require('../repositories/category');
+var Category = require('../schemas/category');
+var HistoryRepository = require('../repositories/history');
+
+var ValidateService = require('../utils/ValidateService');
+var CONST = require('../config/constants');
 
 var CategoryService = function() {};
-//Done
-CategoryService.prototype.add = function (userId, data, callback) {
+
+CategoryService.prototype.add = function(userId, data, callback) {
 	 async.waterfall([
 		(callback) => {
-			CategoryRepository.add(data, (err, data) => {
-				if(err){
-					return  callback(err, null);
-				};
-				return callback(null, data);
+			CategoryRepository.getByTitle(data.title, (err, category) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(!ValidateService.isEmpty(category)) {
+					let err = new Error('Category already exists');
+					return callback(err, null);
+				}
+
+				return callback(null);
 			});
 		},
-		(data, callback) =>{
-      var body = {
-        authorId: ObjectId(userId),
-        categoryId: ObjectId(data._id),
-        type: "add Category"
-      }
-      HistoryRepository.add(body, callback);
-    },
+		(callback) => {
+			CategoryRepository.add(data, (err, category) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, category);
+			});
+		},
+		(category, callback) =>{
+			var historyEvent = {
+				authorId: userId,
+				categoryId: category._id,
+			};
+
+			HistoryRepository.addCategoryEvent(historyEvent, CONST.history.type.ADD, (err, history) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null);
+			});
+		},
 	], (err, result) => {
 		return callback(err, result);
 	});
-}
-//Done
-CategoryService.prototype.softDelete = function (data, callback) {
+};
+
+CategoryService.prototype.softDelete = function(userId, categoryId, data, callback) {
 	 async.waterfall([
 		(callback) => {
-			CategoryRepository.update(data.categoryId, data.body, (err, result) => {
-				if(err){
-					return  callback(err, null);
-				};
-				return callback(null, data);
+			Category.findOneAndUpdate({ _id: categoryId }, data, (err, category) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(ValidateService.isEmpty(category)) {
+					let err = new Error('Category does not exists');
+					return callback(err, null);
+				}
+
+				return callback(null, category);
 			});
 		},
-		(data, callback) =>{
-      var type = "restore Category";
-      if(data.body.isDeleted == 1){
-        type = "soft delete Category";
-      }
-      var body = {
-        authorId: ObjectId(data.userId),
-        categoryId: ObjectId(data.categoryId),
-        type: type
-      }
-      HistoryRepository.add(body, callback);
-    },
+		(category, callback) => {
+			if(category.isDeleted === data.isDeleted) {
+				return callback(null);
+			}
+			
+			let type = data.isDeleted ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
+			
+			var historyEvent = {
+				authorId: userId,
+				categoryId: category._id,
+			};
+
+			HistoryRepository.addCategoryEvent(historyEvent, type, (err, history) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, history);
+			});
+		},
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
+
+CategoryService.prototype.delete = function (userId, categoryId, callback) {
+	async.waterfall([
+		(callback) => {
+			Category.findOneAndRemove({ _id: categoryId }, (err, category, result) => {
+				if(err) {
+					return callback(err, null);
+				};
+
+				if(ValidateService.isEmpty(category)) {
+					let err = new Error('Category does not exists');
+					return callback(err, null);
+				}
+
+				return callback(null, result);
+			 });
+		},
+		(result, callback) =>{
+			var historyEvent = {
+				authorId: userId,
+				categoryId: categoryId,
+			};
+			
+			let type = CONST.history.type.HARD_DELETE;
+			
+			HistoryRepository.addCategoryEvent(historyEvent, type, (err, history) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, history);
+			});
+		},
 	], (err, result) => {
 		return callback(err, result);
 	});
 }
 
-CategoryService.prototype.delete = function (data, callback) {
-	 async.waterfall([
-     (callback) => {
-       CategoryRepository.getById(data.categoryId, (err, result) => {
-         if(err){
-           return  callback(err, null);
-         };
-         return callback(null, result, data);
-       });
-     },
-		(result, data, callback) => {
-      if(result.isDeleted == false){
-        return callback(true);
-      }
-			CategoryRepository.delete(data.categoryId, (err, end) => {
-				if(err){
-					return  callback(err, null);
-				};
-				return callback(null, result, data);
-			});
-		},
-		(result, data, callback) =>{
-      var type = 'hard delete Category "' + result.title + '"';
-      var body = {
-        authorId: ObjectId(data.userId),
-        categoryId: ObjectId(data.categoryId),
-        type: type
-      }
-      HistoryRepository.add(body, callback);
-    },
-	], (err, result) => {
-		return callback(err, result);
-	});
-}
-//Done
-CategoryService.prototype.update = function (data, callback) {
+CategoryService.prototype.update = function (userId, categoryId, data, callback) {
 	 async.waterfall([
 		(callback) => {
-      var fields = Object.assign({}, data.body);
-      fields._id = 0;
-      CategoryRepository.getFieldsById(data.categoryId, fields, (err, original) => {
-        if(err){
-          return  callback(err, null);
-        };
-        return callback(null, original);
-      });
-    },
-    (original, callback) =>{
-			CategoryRepository.update(data.categoryId, data.body, (err, result) => {
-				if(err){
-					return  callback(err, null);
-				};
-				return callback(null, result, original);
+			Category.findOneAndUpdate({ _id: categoryId }, data, (err, category) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(ValidateService.isEmpty(category)) {
+					let err = new Error('Category does not exists');
+					return callback(err, null);
+				}
+
+				return callback(null, category);
 			});
 		},
-		(result, original, callback) =>{
-      var body = {
-        authorId: ObjectId(data.userId),
-        categoryId: ObjectId(data.categoryId),
-        type: "update Category",
-        updateFrom: original,
-        updateTo: data.body
-      }
-      HistoryRepository.add(body, callback);
-    },
+		(category, callback) => {
+			var historyEvent = {
+				authorId: userId,
+				categoryId: category._id,
+			};
+
+			let type = CONST.history.type.UPDATE;
+
+			HistoryRepository.addCategoryEvent(historyEvent, type, (err, history) => {
+				if(err) {
+					return callback(err, null)
+				}
+
+				return callback(null, history);
+			});
+		},
 	], (err, result) => {
 		return callback(err, result);
 	});

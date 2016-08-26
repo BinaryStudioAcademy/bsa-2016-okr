@@ -50,5 +50,6 @@ function isStringBoolean(value) {
 	    default:
 	        var result = false;
 	}
+	
 	return result
 }

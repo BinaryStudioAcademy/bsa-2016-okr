@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
 var History = require('../schemas/history');
+var CONST = require('../config/constants');
 
-var HistoryRepository = function(){
+var HistoryRepository = function() {
 	Repository.prototype.constructor.call(this);
 	this.model = History;
 };
@@ -21,9 +22,19 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 // 	 newEvent.save(callback);
 // };
 
-HistoryRepository.prototype.addKeyEvent = function(authorId, keyId, type, callback) {
+HistoryRepository.prototype.addKeyEvent = function(body, type, callback) {
 	let model = this.model;
-	let newEvent = new model({authorId, keyId, type});
+	body.type = type + ' ' + CONST.history.target.KEY_RESULT;
+	
+	let newEvent = new model(body);
+	newEvent.save(callback);
+};
+
+HistoryRepository.prototype.addCategoryEvent = function(body, type, callback) {
+	let model = this.model;
+	body.type = type + ' ' + CONST.history.target.CATEGORY;
+	
+	let newEvent = new model(body);
 	newEvent.save(callback);
 };
 

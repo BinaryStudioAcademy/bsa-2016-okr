@@ -7,7 +7,7 @@ import './objective.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/myObjectivesActions.js";
+import * as actions from "../../actions/myStateActions.js";
 const session = require('../../../backend/config/session');
 
 class ObjectiveItem extends Component {

@@ -7,7 +7,7 @@ import {
   CREATE_QUARTER,
   SOFT_DELETE_MY_OBJECTIVE_BY_ID,
   ADDED_NEW_OBJECTIVE
-} from '../actions/myObjectivesActions';
+} from '../actions/myStateActions';
 
 const initialState = {
     currentTab: getQuarter(),

@@ -9,4 +9,12 @@ var CategoryRepository = function(){
 
 CategoryRepository.prototype = new Repository();
 
+CategoryRepository.prototype.getByTitle = function(title, callback) {
+	var model = this.model;
+
+	model
+		.findOne({ title: title })
+		.exec(callback);
+};
+
 module.exports = new CategoryRepository();

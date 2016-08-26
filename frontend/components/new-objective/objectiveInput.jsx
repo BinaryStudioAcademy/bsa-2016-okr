@@ -6,7 +6,7 @@ import AutocompleteInput from '../autocomplete-input/autocomplete-input.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/myObjectivesActions";
+import * as actions from "../../actions/myStateActions";
 
 class ObjectiveInput extends React.Component{
     constructor(props){

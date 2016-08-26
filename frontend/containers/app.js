@@ -8,7 +8,9 @@ import MainPage from './main-page.jsx';
 import LoadingScreen from '../components/common/LoadingScreen.jsx';
 import LoadingModal from '../components/common/LoadingModal.jsx';
 
-import * as categoriesActions from '../actions/categoriesActions.js';
+import * as categoriesActions from '../actions/categoriesActions';
+import * as myStateActions from '../actions/myStateActions';
+import * as appActions from '../actions/appActions';
 
 import "normalize.css";
 import '../components/common/fonts/flaticon/_flaticon.scss';
@@ -19,16 +21,20 @@ import './app.scss';
 class App extends Component {
 	constructor(props) {
 		super(props);
+		
+		this.props.actions.categories.getAllCategories();
+		this.props.actions.myState.getMe();
+		this.props.actions.app.init();
 	}
 
-	componentWillMount() {
-		this.props.actions.categories.getAllCategories(); 
-	}
+	// componentWillMount() {
+	// }
 
 	render() {
 
 		return (
 			<div id="application">
+				<LoadingScreen show={ this.props.isInitializing } />
 				<LoadingModal show={ this.props.isLoading } />
 				<Header />
 				<NavMenu />
@@ -50,14 +56,17 @@ class App extends Component {
 
 function mapStateToProps(state) {
 	return {
-		isLoading: state.app.isLoading
+		isLoading: state.app.isLoading,
+		isInitializing: state.app.isInitializing,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
 		actions: {
-			categories: bindActionCreators(categoriesActions, dispatch)
+			categories: bindActionCreators(categoriesActions, dispatch),
+			myState: bindActionCreators(myStateActions, dispatch),
+			app: bindActionCreators(appActions, dispatch)
 		}
 	};
 }

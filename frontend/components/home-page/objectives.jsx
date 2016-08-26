@@ -8,7 +8,7 @@ import { isEmpty } from '../../../backend/utils/ValidateService';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/myObjectivesActions";
+import * as actions from "../../actions/myStateActions";
 
 class Objectives extends Component {
 	constructor(props) {
