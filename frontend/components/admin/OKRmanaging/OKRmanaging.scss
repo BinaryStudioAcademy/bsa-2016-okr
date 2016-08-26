@@ -200,12 +200,7 @@
     }
 }
 
-table.OKR-managing {
-    
-    tr {
-		  text-align: left;
-    }
-}
+
 .OKR-managing.searchbar{
     margin: 0 5%;
 }
@@ -223,15 +218,7 @@ table.OKR-managing {
 .OKR-managing button#add-new-objective {
     display: block;
     float: right;
-    color: #ffffff;
-    padding: 10px 15px;
-    background-color: #4caf50;
-    text-align: center;
-    border: none;
-    outline:none;
-    margin-top: -55px;
-    margin-right: 139px;
-    border-radius: 3px;
+    margin-right: 5%;
 
     &:hover, &:active {
     	background-color: #357a38;
@@ -251,7 +238,7 @@ table.OKR-managing {
 
 .OKR-managing input.searchbar-input {
     padding: 10px;
-    width: 250px;
+    width: 75%;
     margin-right: 5px;
     padding-left: 30px;
     font-size: 16px;
@@ -259,6 +246,10 @@ table.OKR-managing {
     background-size: contain;
     background-color: white;
 }
-
+@media all and (max-width: 1300px) {
+    .OKR-managing input.searchbar-input {
+        width: 65%; 
+    }
+}
 
 
