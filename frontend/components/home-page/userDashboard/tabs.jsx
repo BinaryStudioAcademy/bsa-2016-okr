@@ -27,6 +27,12 @@ class Tabs extends React.Component{
 		this.props.changeShowTopTabs();
 	}
 
+	activeTab(index){
+		if(index === this.props.userDashboard.tabIndex)
+			return "active"
+		else return ""
+	}
+
 	isVisibleTab() {
 		if(this.props.userDashboard.showTopTabs)
 			return "showTab"
@@ -52,17 +58,19 @@ class Tabs extends React.Component{
 
 		return (
 			<div className="dashboard-tabs">
-				<ul className="tabLine mainTabs">
-					<li className="tab" onClick={()=>this.handleTabClick(1)}>History</li>
-					<li className="tab" onClick={()=>this.handleTopClick()}>Top</li>
-				</ul>
-
-				<ul className={this.isVisibleTab() + " tabLine"}>
-					<li className="tab" onClick={()=>this.handleTabClick(2)}>Users</li>
-					<li className="tab" onClick={()=>this.handleTabClick(3)}>Objectives</li>
-					<li className="tab" onClick={()=>this.handleTabClick(4)}>Key Results</li>
-				</ul>
-				
+				<div className="tab-wrapper mainTabs">
+					<ul className="tabLine">
+						<li className={this.activeTab(1)+" tab"} onClick={()=>this.handleTabClick(1)}>History</li>
+						<li className={this.activeTab(5)+" tab"} onClick={()=>this.handleTopClick(5)}>Top</li>
+					</ul>
+				</div>
+				<div className="tab-wrapper">
+					<ul className={this.isVisibleTab() + " tabLine"}>
+						<li className={this.activeTab(2)+" tab"} onClick={()=>this.handleTabClick(2)}>Users</li>
+						<li className={this.activeTab(3)+" tab"} onClick={()=>this.handleTabClick(3)}>Objectives</li>
+						<li className={this.activeTab(4)+" tab"} onClick={()=>this.handleTabClick(4)}>Key Results</li>
+					</ul>
+				</div>	
 			</div>
 		)
 	}

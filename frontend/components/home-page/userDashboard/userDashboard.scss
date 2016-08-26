@@ -2,17 +2,17 @@
 @import '../../common/styles/commonStyles';
 
 .userDashboard{
-	background-color: white;
-	margin: 20px;
+
 	padding: 10px;
 	min-height: 50px;
-	border-left: 5px solid #6aa84f;
 	box-sizing: border-box;
 
 	.showContent{
 		height: 100%;
+		overflow:hidden;
 	}
 	.hideContent{
 		height: 0;
+		overflow:hidden;
 	}
 }

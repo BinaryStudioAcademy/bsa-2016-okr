@@ -5,47 +5,53 @@
 
 	ul{
 		list-style-type: none;
-		padding: 0 3px;
 		overflow: hidden;
 		margin: 10px 0 0 0;
 	}
 	
 	.tab{
-		margin-right: 5px;
-		float: left;
-		border-bottom: 1px solid #E0E0E0;
-		padding: 10px 8px;
-		border-radius: 3px;
+		display: table-cell;
+		width:100px;
+		border: 1px solid #2c3e50;
+		padding: 4px;
 		cursor: pointer;
-		-webkit-transition:0.3s;
 	}
 
 	.mainTabs{
-		font-size: 1.3em;
-		.tab{
-			margin-left: 10px;
-			margin-right: 10px;
-		}
+		width: 200px;
+		margin: 0 auto;
 	}
 
 	.tab:hover{
-		background-color: #F3F6F7;
-		-webkit-transition: 0.3s;
+		background: #2C3E50;
+   		color: #fff;
 	}
 
 	.hideTab{
-		height: 0;
-		-webkit-transition:0.3s;
+		visibility: hidden;
+		overflow:hidden;
 	}
 
 	.showTab{
-		height: 33px;
-		-webkit-transition:0.3s;
+		visibility:visible;
+		height: 100%;
+		overflow:hidden;
 	}
 
 	.tabLine{
-		display: flex;
-		justify-content: center;
+		display:table-row;
+		text-align: center;
+	}
+
+	.tab-wrapper {
+		display:table;
+		margin-bottom: 10px;
+		border-collapse: collapse;
+	}
+
+	.active {
+		background: #2C3E50;
+   		color: #fff;
 	}
 	
 }
