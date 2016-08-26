@@ -1,6 +1,6 @@
 import users from '../components/mockData/users.js'
 import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
-        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE, EDIT_OBJECTIVE,
+        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE,
         DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
         RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE, ACTIVE_KEY_RESULT,
         SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE, RECIVED_EDIT_KEY_RESULT,
@@ -13,7 +13,8 @@ const initialState = {
     active: '',
     searchValue: '',
     editing: false,
-    activeKeyResult: ''
+    activeKeyResult: '',
+    editingKeyResult: false
 }
 
 export default function patentDetailsReducer(state = initialState, action) {
@@ -44,8 +45,7 @@ export default function patentDetailsReducer(state = initialState, action) {
                 active: '',
                 objectives,
                 visibleObjectives: objectives,
-                waiting: false,
-                editing: false 
+                waiting: false
             })
         }
 
@@ -82,7 +82,8 @@ export default function patentDetailsReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 visibleObjectives: softDeleteKeyResult(objectives, id),
                 waiting: false,
-                editing: false
+                editing: false,
+                editingKeyResult:false
             })
         }        
         case SET_SORT: {
@@ -92,20 +93,7 @@ export default function patentDetailsReducer(state = initialState, action) {
                 sort
             })
         }
-        case ACTIVE_OBJECTIVE: {
-            const {active} = action;
 
-            return Object.assign({}, state, {
-                active
-            })
-        }
-        case ACTIVE_KEY_RESULT: {
-            const {activeKeyResult} = action;
-
-            return Object.assign({}, state, {
-                activeKeyResult
-            })
-        }
         case SEARCH_OBJECTIVE: {
             const {searchValue} = action;
             return Object.assign({}, state, {
@@ -115,10 +103,22 @@ export default function patentDetailsReducer(state = initialState, action) {
             })
         }
 
-        case EDIT_OBJECTIVE: {
-            const {value} = action
+        case ACTIVE_OBJECTIVE: {
+            const {active} = action;
+
             return Object.assign({}, state, {
-                editing: value
+                active,
+                editing: true,
+                editingKeyResult: false
+            })
+        }
+        case ACTIVE_KEY_RESULT: {
+            const {activeKeyResult} = action;
+
+            return Object.assign({}, state, {
+                activeKeyResult,
+                editingKeyResult: true,
+                editing: false
             })
         }
 
@@ -128,7 +128,8 @@ export default function patentDetailsReducer(state = initialState, action) {
 
             return Object.assign({}, state, {
                 visibleObjectives: update(objectives, objective, id),
-                editing: false
+                editing: false,
+                editingKeyResult: false
             })
         }
 
@@ -138,21 +139,25 @@ export default function patentDetailsReducer(state = initialState, action) {
 
             return Object.assign({}, state, {
                 visibleObjectives: updateKeyResult(objectives, keyResult, id),
-                editing: false
+                editing: false,
+                editingKeyResult: false
             })
         }
 
+        
         default: 
             return state;        
         
     }
 }
+
 function updateKeyResult(objectives, keyResult, id){
     for (let i = 0; i < objectives.length; i++) 
         for (let j = 0; j < objectives[i].keyResults.length; j++){
             if (objectives[i].keyResults[j]._id == id) {
                 objectives[i].keyResults[j].title = keyResult.title;
                 objectives[i].keyResults[j].difficulty = keyResult.difficulty;
+
           }
     }
     return objectives;

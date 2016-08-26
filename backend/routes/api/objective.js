@@ -75,7 +75,7 @@ router.get('/category/:categoryId/:title*?', (req, res, next) => {
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
-	let objectiveId = req.params.id || '';
+	let objectiveId = req.params.id;
 	let title = req.body.title || '';
 	let description = req.body.description || '';
 	let userId = req.session._id;
@@ -83,7 +83,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	title = title.trim();
 	description = description.trim();
 
-	if(!ValidateService.isCorrectId(id)
+	if(!ValidateService.isCorrectId(objectiveId)
 	|| (isEmpty(title) && isEmpty(description))) {
 		return res.badRequest();
 	};
