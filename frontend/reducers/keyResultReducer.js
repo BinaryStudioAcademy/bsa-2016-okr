@@ -1,9 +1,8 @@
 import {
 	GET_AUTOCOMPLETE_KEY_RESULTS,
 	SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM,
-	RECEIVED_ADDED_NEW_KEY_RESULT,
 	RECEIVED_ERROR,
-	RECEIVED_KEY_RESULTS } from '../actions/keyResultActions';
+	RECEIVED_KEY_RESULTS} from '../actions/keyResultActions';
 
 const initialState = {
 	data: [],
@@ -38,14 +37,6 @@ export default function keyResultReducer(state = initialState, action = {}) {
 		return Object.assign({}, state, {
 			selectedItem
 		})
-	}
-
-	case RECEIVED_ADDED_NEW_KEY_RESULT: {
-		const { data } = action;
-
-		console.log(data);
-
-		return Object.assign({}, state, {});
 	}
 
 	default:
