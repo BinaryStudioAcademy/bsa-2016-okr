@@ -1,33 +1,36 @@
+var async = require('async');
 var _ = require('lodash');
 var KeyResultRepository = require('../repositories/keyResult');
 var UserObjectiveRepository = require('../repositories/userObjective');
 var UserObjectiveService = require('../services/userObjective');
 var HistoryRepository = require('../repositories/history');
-var async = require('async');
 
-var KeyResultsService = function(){
+const CONST = require('../config/constants');
 
-};
+var KeyResultsService = function(){};
 
-KeyResultsService.prototype.generateNotification = function() {
 
-};
-
-KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, callback) {
+KeyResultsService.prototype.update = function(userId, keyResultId, data, callback) {
 	async.waterfall([
 		(callback) => {
-			KeyResultRepository.update(keyResultId, keyResult, (err, keyResult) => {
-				if(err){
+			KeyResultRepository.update(keyResultId, data, (err, keyResult) => {
+				if(err) {
 					return  callback(err, null);
 				}
 				return callback(null, keyResult);
 			});
 		},
 		(keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(userId, keyResultId, 'update KeyResult', (err, keyResult) => {
-					if(err){
+			let historyEvent = {
+				authorId: userId,
+				keyResultId: keyResultId
+			};
+
+			HistoryRepository.addKeyResultEvent(historyEvent, CONST.history.type.UPDATE, (err, keyResult) => {
+				if(err) {
 					return  callback(err, null);
 				}
+
 				return callback(null, keyResult);
 			});
 		}
@@ -35,7 +38,6 @@ KeyResultsService.prototype.update = function(userId, keyResultId, keyResult, ca
 		return callback(err, result);
 	});
 };
-
 
 KeyResultsService.prototype.delete = function(userId, keyResultId, callback) {
 	async.waterfall([
@@ -133,29 +135,8 @@ KeyResultsService.prototype.changeApprove = function(userId, keyResultId, callba
 	], (err, keyResult) => {
 		return callback(err, keyResult);
 	});
-
-	/*KeyResultRepository.getById(id, function(err, keyResult){
-		if (err){
-			return callback(err, null);
-		};	
-
-		if(keyResult.isApproved){
-			KeyResultRepository.setIsApprovedToFalse(id, function(err, keyResult){
-				if (err){
-					return callback(err, null);
-				};	
-			});
-		}
-		else{
-			KeyResultRepository.setIsApprovedToTrue(id, function(err, keyResult){
-				if (err){
-					return callback(err, null);
-				};	
-			});
-		};
-
-		callback(err, keyResult);
-	});*/
 };
+
+// KeyResultsService.prototype.generateNotification = function() {};
 
 module.exports = new KeyResultsService();

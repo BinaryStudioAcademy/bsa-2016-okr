@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var historySchema = new Schema({
 	authorId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-	keyResult: {type: mongoose.Schema.Types.ObjectId, ref: 'KeyResult'},
+	keyResultId: {type: mongoose.Schema.Types.ObjectId, ref: 'KeyResult'},
 	objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
 	//commentId: {type: mongoose.Schema.Types.ObjectId, ref: 'Comment'},
 	//userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
