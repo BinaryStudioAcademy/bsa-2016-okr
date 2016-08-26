@@ -31,24 +31,27 @@ class App extends Component {
 	// }
 
 	render() {
-
-		return (
+		let contentVisibility = this.props.isInitializing ? 'hidden' : '';
+		
+		return (	
 			<div id="application">
 				<LoadingScreen show={ this.props.isInitializing } />
-				<LoadingModal show={ this.props.isLoading } />
-				<Header />
-				<NavMenu />
-				<MainPage>
-				{ this.props.children }
-				{
-					(() => {
-						if (process.env.NODE_ENV !== 'production') {
-							const DevTools = require('../shared/devtools/DevTools').default;
-							return <DevTools />;
-						}
-					})()
-				}
-				</MainPage>
+				<div className={ contentVisibility }>
+					<LoadingModal show={ this.props.isLoading } />
+					<Header />
+					<NavMenu />
+					<MainPage>
+					{ this.props.children }
+					{
+						(() => {
+							if (process.env.NODE_ENV !== 'production') {
+								const DevTools = require('../shared/devtools/DevTools').default;
+								return <DevTools />;
+							}
+						})()
+					}
+					</MainPage>
+				</div>
 			</div>
 			);
 	}
