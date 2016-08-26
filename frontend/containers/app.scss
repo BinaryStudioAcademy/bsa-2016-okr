@@ -33,17 +33,20 @@ h1 {
 }
 
 .show {
-  visibility: visible;
+  visibility: visible !important;
   opacity: 1;
   transition: visibility 0s 2s, opacity 2s linear;
 }
 
 .hide {
-  visibility: hidden;
+  visibility: hidden !important;
   opacity: 0;
   transition: visibility 0s 2s, opacity 2s linear;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+#application {
 }

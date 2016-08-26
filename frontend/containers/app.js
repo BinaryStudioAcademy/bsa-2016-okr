@@ -28,14 +28,14 @@ class App extends Component {
 	}
 
 	render() {
-		let contentStyle = {
-			visibility: this.props.isInitializing ? 'hidden' : 'visible'
+		let contentInlineStyle = {
+			display: this.props.isInitializing ? 'none' : 'block'
 		};
 		
 		return (	
 			<div id="application">
 				<LoadingScreen show={ this.props.isInitializing } />
-				<div style={ contentStyle } >
+				<div style={ contentInlineStyle } >
 					<LoadingModal show={ this.props.isLoading } />
 					<Header />
 					<NavMenu />
