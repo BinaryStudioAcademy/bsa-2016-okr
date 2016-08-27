@@ -2,11 +2,12 @@
 @import '../common/styles/commonStyles';
 
 #new-obj-keyresults {
-  margin: 0;
   margin-bottom: 25px;
   list-style-type: none;
-  padding: 0;
-  width: 100%;
+  border: 1px solid #c5c5c5;
+  border-top: none;
+  background-color: #eaeaea;
+  padding: 10px 15px;
 
   .add-new-keyresult-btn {
     display: inline-block;

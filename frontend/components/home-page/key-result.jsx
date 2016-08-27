@@ -34,9 +34,10 @@ class KeyResult extends Component {
 		return (
 			<li className="key-result">
 				<div><span className='completed'>{ item.templateId.title }</span></div>
-				<input type="range" min="0" max="1" step="0.1" className="keyScore"
+				<input type="range" min="0" max="1" step="0.1" className="range keyScore"
 				       value={ score } onChange={ this.changeScore }/>
 				<div><span className='score'>{ score }</span></div>
+				<div className='difficulty'>{item.templateId.difficulty}</div>
 			</li>
 		)
 	}
