@@ -47,7 +47,7 @@ class KeyResult extends React.Component {
 
 	render() {
 		return (
-			<section className="undisplay">
+			<section className="autocomplete undisplay">
 
 				<AutocompleteInput
 					getAutocompleteData={this.getAutocompleteData}
@@ -57,7 +57,7 @@ class KeyResult extends React.Component {
 				  addNewItemByKeyPressEnter={this.addNewItemByKeyPressEnter}
 				/>
 
-				<div>
+				<div className="autocomplete-button">
 					<button type="button" className="btn btn-red-hover delete-button-key-result"
 					        onClick={this.onDeleteKeyResultClick}>
 						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>

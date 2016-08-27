@@ -1,11 +1,11 @@
 @import "../common/variables";
 @import '../common/styles/commonStyles';
 
-section {
+.autocomplete {
   width: 100%;
   display: table;
 
-  div {
+  .autocomplete-button {
     display: table-cell;
     width: 100%;
 
