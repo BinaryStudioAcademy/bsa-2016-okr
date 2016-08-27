@@ -10,7 +10,7 @@ class RecycleBinItem extends Component {
 
 	render() {
 
-		let dateStr = moment(this.props.item.deletedDate).format('D MMMM YYYY, h:mm a');
+		let dateStr = moment(this.props.item.deletedDate).format('D MMMM YYYY, H:mm a');
 		
 		return (
 			<tr key={this.props.item.id} className="bin-item-row">

@@ -4,7 +4,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from "../../../actions/userDashboardActions.js";
+import * as actions from "../../actions/userDashboardActions.js";
 
 class UserHistory extends React.Component{
 	constructor(props){

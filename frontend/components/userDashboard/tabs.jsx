@@ -4,7 +4,7 @@ import './tabs.scss';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from "../../../actions/userDashboardActions.js";
+import * as actions from "../../actions/userDashboardActions.js";
 
 class Tabs extends React.Component{
 	constructor(props){

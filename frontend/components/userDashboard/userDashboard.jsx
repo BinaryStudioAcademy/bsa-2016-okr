@@ -7,7 +7,7 @@ import Tabs from './tabs.jsx';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from "../../../actions/userDashboardActions";
+import * as actions from "../../actions/userDashboardActions";
 
 class UserDashboard extends React.Component{
 	constructor(props){

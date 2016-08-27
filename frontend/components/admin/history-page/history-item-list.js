@@ -15,7 +15,7 @@ class HistoryItemList extends React.Component {
     constructor(props) {
         super(props);
         this.onSort = this.onSort.bind(this);
-        this.componentWillMount = this.componentWillMount.bind(this)
+       // this.componentWillMount = this.componentWillMount.bind(this)
     }
 
     getObjectId(item) {
