@@ -31,19 +31,29 @@ class Quarter extends Component {
    handleAddingNewQuarter(event){
       let quarter_id = parseInt(event.target.dataset.id);
       this.props.addNewQuarter(quarter_id);
-      this.props.changeTab(quarter_id);
    }
 
 
    render() {
+      var quarters_prefixes = [
+         "st",
+         "nd",
+         "rd",
+         "th"
+      ];
+
       function getQuarters(){
          var quarters = [];
 
-         for(var i = 1; i <= 4; i++){
+         for(let i = 1; i <= 4; i++){
             if(this.props.existedQuarters.includes(i)){
-               quarters.push( <li key={i} className={this.props.currentTab == i ? "quater current exist" : "quater exist"} onClick={this.handleTabClick} data-id={i}>{i}-st quarter</li> )
+               quarters.push( <li key={i} className={this.props.currentTab == i
+               ? "quater current exist" : "quater exist"}
+               onClick={this.handleTabClick} data-id={i}>{i + '-' + quarters_prefixes[i - 1]} quarter</li> )
             } else {
-               quarters.push( <li key={i} className={"quater"} onClick={this.handleAddingNewQuarter} data-id={i}>+ Q{i}</li> )
+               quarters.push( <li key={i}
+               className={"quater"}
+               onClick={this.handleAddingNewQuarter} data-id={i}>Open {i + '-' + quarters_prefixes[i - 1]} quarter</li> )
             }
          }
 
@@ -53,8 +63,8 @@ class Quarter extends Component {
       return (
          <div id="quarter-bar">
             <select name="" id="business-year" onChange={this.handleYearChange}>
-               <option value="">{this.props.today.getFullYear()}</option>
-               <option value="">{this.props.today.getFullYear()+1}</option>
+               <option value="">{ this.props.today.getFullYear() }</option>
+               <option value="">{ this.props.today.getFullYear()+1 }</option>
             </select>
             <ul>
                {
