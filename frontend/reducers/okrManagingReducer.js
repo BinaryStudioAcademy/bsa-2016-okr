@@ -176,8 +176,7 @@ export default function okrManagingReducer(state = initialState, action) {
 
 function addNewTemplate(visibleObjectives, objective){
     let objectives = JSON.parse(JSON.stringify(visibleObjectives));
-    objectives.push(objective)
-    console.log(objectives)
+    objectives.push(objective);
     return objectives;
 }
 function updateKeyResult(objectives, keyResult, id){

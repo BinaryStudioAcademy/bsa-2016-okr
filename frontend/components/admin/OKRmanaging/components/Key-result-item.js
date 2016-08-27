@@ -42,6 +42,8 @@ class KeyResult extends Component {
     let titleEl;
     let difficultyEl;
     let edit;
+    let editSaveIcon;
+    let editSaveTitle;
 
     if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
       titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
@@ -50,17 +52,21 @@ class KeyResult extends Component {
 												<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 												<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 											</select>);
+      editSaveIcon = 'flaticon-success';
       edit = 'editing';
+      editSaveTitle = 'Save';
     } else {
       titleEl = (<div className='name'>{this.props.item.title}</div>);
       difficultyEl = (<div className='difficulty'>{this.props.item.difficulty}</div>);
+      editSaveIcon = 'flaticon-edit';
+      editSaveTitle = 'Edit'
       edit = 'edit';
     }
 			return (
 				<li className="key-result-item" >
 					{titleEl}
 					<div className='edit-key-result'>
-						<i className={"fi flaticon-edit " + edit} aria-hidden="true" title='Edit' onClick={this.editKeyResult}></i>
+						<i className={`fi ${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editKeyResult}></i>
 						<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>
 					</div>
 					{difficultyEl}
