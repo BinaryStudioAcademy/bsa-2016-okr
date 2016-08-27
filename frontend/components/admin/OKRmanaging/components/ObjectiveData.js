@@ -53,6 +53,10 @@ class ObjectiveData extends React.Component{
     let descriptionEl;
     let categoryEl;
     let edit;
+    let editSaveIcon;
+    let deleteCancelIcon;
+    let editSaveTitle;
+    let deleteCancelTitle;
 
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
       titleEl = (<input type='text' className='template-title' defaultValue={this.props.objective.title} />);
@@ -62,11 +66,19 @@ class ObjectiveData extends React.Component{
                           return <option key={index} value={category._id}>{category.title}</option>
                         })}
                       </select>);
-      edit = 'editing';
+      editSaveIcon = 'flaticon-success';
+      deleteCancelIcon = 'flaticon-garbage-2';
+      editSaveTitle = 'Save';
+      deleteCancelTitle = 'Delete';
+      edit = 'editing'
     } else {
       titleEl = (<div className='name'>{this.props.objective.title}</div>);
       descriptionEl = (<div className='description'>{this.props.objective.description}</div>);
       categoryEl = (<div className='category'>{ category.title }</div>);
+      editSaveIcon = 'flaticon-edit';
+      deleteCancelIcon = 'flaticon-garbage-2';
+      editSaveTitle = 'Edit'
+      deleteCancelTitle = 'Delete';
       edit = 'edit';
     }
 
@@ -75,8 +87,8 @@ class ObjectiveData extends React.Component{
         <div className='objective-template'>
               <form onSubmit={this.editObjective}>
               <div className='edit-objective'>
-                    <i className={"fi flaticon-edit " + edit} aria-hidden="true" title='Edit' onClick={this.editObjective}></i>
-                    <i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>
+                    <i className={`fi ${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editObjective}></i>
+                    <i className={`fi ${deleteCancelIcon} delete`} aria-hidden="true" title={ deleteCancelTitle } onClick={this.deleteObjective}></i>
               </div>
               { categoryEl }
               { titleEl }

@@ -20,7 +20,7 @@ class ObjectiveList extends React.Component{
       return <ObjectiveData objective={objective} index={index} key={objective._id}/>
       })
     return (
-        <div id='tamplates'>
+        <div id='templates'>
           {objectives}
         </div>  
     )
