@@ -4,36 +4,24 @@ import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../../actions/recycleBinActions.js";
+import * as actions from "../../actions/recycleBinActions.js";
 
-class DeletedTmplsItem extends Component {
-
-
-	constructor(props) {
-		super(props);
-		this.restoreItem = this.restoreItem.bind(this);
-	}
+class RecycleBinItem extends Component {
 
 	render() {
 
 		let dateStr = moment(this.props.item.deletedDate).format('D MMMM YYYY, H:mm a');
 		
 		return (
-			<tr className="bin-item-row">
+			<tr key={this.props.item.id} className="bin-item-row">
+				<td className="width-20perc">{ this.props.item.title }</td>
+				<td className="width-30perc">{ this.props.item.description }</td>
 				<td className="item-title">{ this.props.item.type }</td>
-				<td className="item-category">{ this.props.item.category }</td>
-				<td>{ this.props.item.title }</td>
-				<td>{ this.props.item.description }</td>
+				<td> <span className="item-category">{ this.props.item.category }</span></td>
 				<td className="item-deleted-by">{ this.props.item.deletedBy}</td>
-				<td>{ dateStr }</td>
-				<td>
-					<table className="controls">
-					    <tbody>
-							<tr>
-								<td><button className="btn btn-blue-hover"  title="Restore" onClick={this.restoreItem}><i className="fi flaticon-repeat-1"></i></button></td>
-							</tr>
-						</tbody>
-					</table>
+				<td className="width-15perc">{ dateStr }</td>
+				<td className="width-5perc">
+					<button className="btn btn-blue-hover"  title="Restore" onClick={this.restoreItem.bind(this)}><i className="fi flaticon-repeat-1"></i></button>
 				</td>
 			</tr>
 		);
@@ -41,7 +29,6 @@ class DeletedTmplsItem extends Component {
 
 	restoreItem(id) {
 
-		
 
 		if (this.props.item.type === "objective") {
 			let body = {};
@@ -94,5 +81,5 @@ function mapStateToProps(state) {
 	};
 }
 
-const DeletedTmplsItemConnected = connect(mapStateToProps, mapDispatchToProps)(DeletedTmplsItem);
-export default DeletedTmplsItemConnected
+const RecycleBinItemConnected = connect(mapStateToProps, mapDispatchToProps)(RecycleBinItem);
+export default RecycleBinItemConnected

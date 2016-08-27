@@ -101,15 +101,40 @@ function randomObjective(users, categories, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
+	let isDeleted =  i % 10 === 0;
+	let deletedDate = null;
+	let deletedBy = null;
+
+	if (isDeleted) {
+		
+		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+		
+		let isDone = false;
+
+		let userWhoDidDeletionIndex;
+
+		while(!isDone) {
+			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
+			if (users[userWhoDidDeletionIndex].localRole === "admin")
+				isDone = true;
+		}
+
+		deletedBy = users[userWhoDidDeletionIndex]._id;
+
+	}
+
 	return new Objective({
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
 		category: getRandomId(categories),
-		keyResults: [],
+		defaultKeyResults: [],
 		used: 0,
 		creator: getRandomId(users),
 		isApproved: i % 5 !== 0,
 		isDeleted: i % 10 === 0,
+		isDeleted: isDeleted,
+		deletedBy: deletedBy,
+		deletedDate: deletedDate,
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
@@ -120,12 +145,37 @@ function randomKeyResult(objectives, users, i) {
 	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
+	let isDeleted =  i % 8 === 0;
+	let deletedDate = null;
+	let deletedBy = null;
+
+	if (isDeleted) {
+		
+		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
+		
+		let isDone = false;
+
+		let userWhoDidDeletionIndex;
+
+		while(!isDone) {
+			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
+			if (users[userWhoDidDeletionIndex].localRole === "admin")
+				isDone = true;
+		}
+
+		deletedBy = users[userWhoDidDeletionIndex]._id;
+
+	}
+
 	return new KeyResult({
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		creator: getRandomId(users),
 		objectiveId: getRandomId(objectives),
 		isApproved: i % 6 !== 0,
 		isDeleted: i % 8 === 0,
+		isDeleted: isDeleted,
+		deletedBy: deletedBy,
+		deletedDate: deletedDate,
 		difficulty: chance.pickone(KeyResult.schema.path('difficulty').enumValues),
 		createdAt: createdAt,
 		updatedAt: updatedAt
@@ -183,12 +233,12 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 		keyResults[userKeyResultIndex].used += 1;
 
-	    let keyIsDeleted =  chance.pickone([false, false, false, true]);
+		let keyIsDeleted =  chance.pickone([false, false, false, true]);
 		let keyDeletedDate = null;
 		let keyDeletedBy = null;
 
-	    if (keyIsDeleted) {
-		
+		if (keyIsDeleted) {
+
 			keyDeletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 			
 			let isDone = false;
@@ -203,7 +253,7 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 			keyDeletedBy = users[userWhoDidDeletionIndex]._id;
 
-	    }
+		}
 
 		return {
 			templateId: userKeyResult._id,
@@ -232,7 +282,7 @@ function randomUserObjective(objectives, users, keyResults, i) {
 	});
 };
 
-function baseCategories() {
+function baseCategories(users) {
 	var res = [];
 	var categories = [CONST.objective.categories.PROJECTS];
 
@@ -244,6 +294,25 @@ function baseCategories() {
 
 		res.push(category.toObject());
 	});
+
+	let isDone = false;
+
+	let userWhoDidDeletionIndex;
+
+	while(!isDone) {
+		userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
+		if (users[userWhoDidDeletionIndex].localRole === "admin")
+			isDone = true;
+	}
+
+	var myCategory = new Category({
+		title: "science",
+		isDeleted: true,
+		deletedBy: users[userWhoDidDeletionIndex]._id,
+		deletedDate: new Date()
+	})
+
+	res.push(myCategory.toObject());
 
 	return res;
 }
@@ -258,15 +327,18 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 			return;
 		}
 
-		var keyResultsCount = chance.integer({ min: 1, max: objectiveKeyResults.length });
+		const keyResultsCount = objectiveKeyResults.length;
+		const maxDefaultKeyResultsCount = keyResultsCount > 4 ? 4 : keyResultsCount;
+
+		var defaultKeyResultsCount = chance.integer({ min: 1, max: maxDefaultKeyResultsCount });
 
 		var defaultKeyResults = chance
-		.pickset(objectiveKeyResults, keyResultsCount)
+		.pickset(objectiveKeyResults, defaultKeyResultsCount)
 		.map((keyResult) => {
 			return ObjectId(keyResult._id);
 		});
 
-		objective.keyResults = defaultKeyResults;
+		objective.defaultKeyResults = defaultKeyResults;
 	});
 
 	return objectives;
@@ -321,6 +393,27 @@ function getQuarters(users, userObjectives) {
 	return res;
 }
 
+function setArchivedToUserObjectives(userObjectives, quarters) {
+	let currentYear = CONST.currentYear;
+	let currentQuarter = CONST.currentQuarter;
+
+	let pastQuarters = quarters.filter((quarter) => {
+		return quarter.year <= currentYear && quarter.index < currentQuarter
+	});
+
+	pastQuarters.forEach((quarter) => {
+		quarter.userObjectives.forEach((userObjectiveId) => {
+			let index = userObjectives.findIndex((userObjective) => {
+				return userObjective._id.equals(userObjectiveId);
+			});
+
+			userObjectives[index].isArchived = true;
+		});
+	});
+
+	return userObjectives;
+}
+
 function randomUserInfo(users) {
 	var info = {
 		firstName: chance.first(),
@@ -359,12 +452,13 @@ module.exports = function () {
 		var users = new Array(usersCount).fill(0).map((_, i) => randomUser().toObject());
 		generateMentors(users);
 		setInfoToUser(users, userinfos);
-		var categories = baseCategories();
+		var categories = baseCategories(users);
 		var objectives = new Array(100).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
 		var keyresults = new Array(500).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
 
+		userobjectives = setArchivedToUserObjectives(userobjectives, quarters);
 		objectives = setDefaultKeyResultsForObjectives(objectives, keyresults);
 
 		var roles = [];

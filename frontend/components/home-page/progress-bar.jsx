@@ -1,33 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Progress extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: props.data
-		}
+const Progress = (props) => {
+	let keyResults = props.data;
+	let score = 0;
+	let value = 0;
+
+	if(keyResults.length !== 0) {
+		score = keyResults.reduce((prev, keyResult) => {
+			return prev += +keyResult.score;
+		}, 0);
+
+		value = Math.round(100 * score / keyResults.length);
 	}
 
-
-	render() {
-		var score = 0;
-		var value = 0;
-
-		if(this.state.data.length != 0) {
-			let item = this.state.data.forEach((item, index) => {
-				score += +item.score;
-			})
-			value = Math.round(100*score/this.state.data.length);
-		}
-
-		return (
-			<div className='progress-bar'>
-		    	<progress max="100" value={value}></progress>
-		    	<div className='progressValue'>{value}%</div>
-		    </div>
-
-		)
-	}
+	return (
+		<div className="progress-bar">
+			<progress max="100" value={ value }></progress>
+			<div className="progressValue">{ value }%</div>
+		</div>
+	)
 }
 
 export default Progress

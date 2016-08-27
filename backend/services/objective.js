@@ -9,14 +9,55 @@ var async = require('async');
 
 var ObjectiveService = function() {};
 
+ObjectiveService.prototype.getAll = function(callback) {
+	async.waterfall([
+		(callback) => {
+			ObjectiveRepository.getAll((err, objectives) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, objectives);
+			});
+		},
+		(objectives, callback) => {
+			KeyResultRepository.getAll((err, keyResults) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, objectives, keyResults);
+			});
+		},
+		(objectives, keyResults, callback) => {
+			objectives = objectives.map((objective) => {
+				let objectiveKeyResults = keyResults.filter((keyResult) => {
+					return keyResult.objectiveId.equals(objective._id);
+				});
+
+				objective = objective.toObject();
+
+				objective.keyResults = objectiveKeyResults;
+
+				return objective;
+			});
+
+			callback(null, objectives);
+		},
+	], (err, result) => {
+		return callback(err, result);
+	}
+	);
+}
+
 // 1) Create new objective with empty keyResults array
 // 2) Create all keyResults with corresponding objectiveId
 // 3) Push keyResult ids to objective.keyResults
 // 4) Save objective and keyResults in DB
 // 5) Profit =)
-ObjectiveService.prototype.add = function(authorId, objective, keyResults, callback) {
+ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults, callback) {
 	objective = new Objective(objective);
-	keyResults = keyResults.map((keyResult) => {
+	defaultKeyResults = defaultKeyResults.map((keyResult) => {
 		keyResult.objectiveId = objective._id;
 		keyResult = new KeyResult(keyResult);
 		objective.keyResults.push(keyResult._id);
@@ -37,11 +78,11 @@ ObjectiveService.prototype.add = function(authorId, objective, keyResults, callb
 			});
 		}, (obj, callback) => {
 			obj = obj.toObject();
-			obj.keyResults = [];
-			async.forEach(keyResults, (keyResult, callback) => {
+			obj.defaultKeyResults = [];
+			async.forEach(defaultKeyResults, (keyResult, callback) => {
 				keyResult.save((err, keyResult) => {
 					if(err) { return callback(err); }
-					obj.keyResults.push(keyResult.toObject());
+					obj.defaultKeyResults.push(keyResult.toObject());
 					return callback(null);
 				});
 			}, (err) => {

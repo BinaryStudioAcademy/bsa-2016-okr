@@ -11,6 +11,8 @@ export const SOFT_DELETE_MY_OBJECTIVE_BY_ID = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID';
 export const SOFT_DELETE_MY_OBJECTIVE_BY_ID_API = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID_API';
 export const ADD_NEW_OBJECTIVE = 'ADD_NEW_OBJECTIVE';
 export const ADDED_NEW_OBJECTIVE = 'ADDED_NEW_OBJECTIVE';
+export const CHANGED_KEYRESULT_SCORE = 'CHANGED_KEYRESULT_SCORE';
+export const CHANGED_KEYRESULT_SCORE_ERROR = 'CHANGED_KEYRESULT_SCORE_ERROR';
 
 export function getMe() {
 
@@ -18,7 +20,7 @@ export function getMe() {
 		dispatch({ type: GET_MY_OBJECTIVES });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('api/user/me/')
+		return axios.get('/api/user/me/')
 		.then(response => {
 			dispatch(receivedMyObjectives(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -77,7 +79,7 @@ export function softDeleteMyObjectiveByIdApi(id, body) {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
 
-		return axios.put(('api/userObjective/' + id), body)
+		return axios.put(('/api/userObjective/' + id), body)
 		.then(response => {
 			dispatch(softDeleteMyObjectiveById(id));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -94,9 +96,9 @@ export function addNewObjective(body) {
 		dispatch({ type: ADD_NEW_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST	});
 
-		return axios.post(('api/userObjective/'), body)
+		return axios.post(('/api/userObjective/'), body)
 		.then(response => {
-			dispatch(AddedNewObjective(response.data, body));
+			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
 		})
 		.catch(response => {
@@ -106,10 +108,42 @@ export function addNewObjective(body) {
 	};
 }
 
-export function AddedNewObjective(data, body) {
+export function addedNewObjective(data, body) {
 	return {
 		type: ADDED_NEW_OBJECTIVE,
 		response: data,
 		request: body
+	};
+}
+
+export function changeKeyResultScore(objectiveId, body) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/score/`, body)
+		.then(response => {
+			console.log('Got success response');
+			dispatch(keyResultScoreChanged(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			console.log('Got error response');
+			dispatch(keyResultScoreChangedError(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+	};
+}
+
+export function keyResultScoreChanged(data) {
+	return {
+		type: CHANGED_KEYRESULT_SCORE,
+		data,
+	};
+}
+
+export function keyResultScoreChangedError(data) {
+	return {
+		type: CHANGED_KEYRESULT_SCORE_ERROR,
+		data,
 	};
 }

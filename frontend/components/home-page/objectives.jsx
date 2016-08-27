@@ -3,7 +3,7 @@ import Quarter from './quarter.jsx';
 import ObjectiveItem from './objective.jsx';
 import ObjectivesList from '../common/objective/objective-list.jsx';
 
-import { isEmpty } from '../../../backend/utils/ValidateService';
+import { isEmpty, isCorrectId } from '../../../backend/utils/ValidateService';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -17,6 +17,7 @@ class Objectives extends Component {
 		this.changeTab = this.changeTab.bind(this);
 		this.changeYear = this.changeYear.bind(this);
 		this.handleAddingNewQuarter = this.handleAddingNewQuarter.bind(this);
+		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 	}
 
 	changeTab(num) {
@@ -35,8 +36,26 @@ class Objectives extends Component {
 		}
 	}
 
-	componentWillMount() {
-		this.props.getMe();
+	changeKeyResultScore(objectiveId) {
+		let apiCall = this.props.changeKeyResultScore;
+		
+		return (keyResultId) => {
+			return (score) => {
+				if(!isCorrectId(objectiveId) 
+				|| !isCorrectId(keyResultId)) {
+					return;
+				}
+
+				let body = {
+					keyResultId: keyResultId,
+					score: score
+				};
+
+				console.log('Ready to API call');
+		
+				apiCall(objectiveId, body);
+			};
+		};
 	}
 
 	render() {
@@ -64,7 +83,8 @@ class Objectives extends Component {
 				currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
 				<div id='objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list }
-					my={ true } ObjectiveItem={ ObjectiveItem } softDeleteMyObjectiveByIdApi={ this.props.softDeleteMyObjectiveByIdApi }/>
+					my={ true } ObjectiveItem={ ObjectiveItem } softDeleteMyObjectiveByIdApi={ this.props.softDeleteMyObjectiveByIdApi }
+					changeKeyResultScore={ this.changeKeyResultScore }/>
 				</div>
 			</div>
 		)

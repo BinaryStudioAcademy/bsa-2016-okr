@@ -87,8 +87,24 @@ class HistoryFilter extends Component {
 							</td>
 							<td className="cell-right-align">Date: </td>
 							<td>
-								<DateField className="date-field" placeholder="From" dateFormat="YYYY-MM-DD" onChange={this.onChangeFrom} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
-								<DateField className="date-field" placeholder="To" dateFormat="YYYY-MM-DD" onChange={this.onChangeTo} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
+								<DateField
+									className="date-field"
+									placeholder="From"
+									dateFormat="YYYY-MM-DD"
+									onChange={this.onChangeFrom}
+									footer={false}
+									updateOnDateClick={true}
+									collapseOnDateClick={true}
+									theme={false}/>
+								<DateField 
+									className="date-field"
+									placeholder="To"
+									dateFormat="YYYY-MM-DD"
+									onChange={this.onChangeTo}
+									footer={false}
+									updateOnDateClick={true}
+									collapseOnDateClick={true}
+									theme={false}/>
 							</td>
 							<td className="cell-right-align" colSpan="3">
 								<button onClick={this.onReset} className="btn btn-filter">Reset</button>

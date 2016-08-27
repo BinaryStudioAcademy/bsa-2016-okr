@@ -8,7 +8,8 @@ import UserPage from "./components/other-persons-page/other-persons-page.js"
 import {IndexRoute, Route, Router, browserHistory} from 'react-router'
 import ObjectiveView from "./components/objectiveView/objectiveView.js"
 import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.js"
-import RecycleBin from './components/admin/RecycleBin/RecycleBin.jsx'
+import UserRecycleBin from './components/user-recycle-bin/recycle-bin.jsx'
+import AdminRecycleBin from './components/admin/admin-recycle-bin/recycle-bin.jsx'
 import ListOfUsers from './components/list-of-users/list-of-users.jsx'
 
 import configureStore from './store/configureStore';
@@ -33,7 +34,8 @@ render(
 					<Route path="roles" component={RolesPage} />
 					<Route path="objective" component={ObjectiveView} />
 					<Route path="okr-managing" component={OKRmanaging} />
-					<Route path="recycle-bin" component={RecycleBin} />
+					<Route path="recycle-bin" component={UserRecycleBin} />
+					<Route path="admin-recycle-bin" component={AdminRecycleBin} />
 				</Route>
 			</Router>
 		</Provider>)

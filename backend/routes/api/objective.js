@@ -3,12 +3,17 @@ const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/objective');
 const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
-const ValidateService = require('../../utils/ValidateService');
 const cloneObjective = require('../../services/cloneObjective');
 const session = require('../../config/session');
+const ValidateService = require('../../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
 
 router.get('/', (req, res, next) => {
-	return repository.getAllPopulate(res.callback);
+	return service.getAll(res.callback);
+});
+
+router.get('/deleted', (req, res, next) => {
+	return repository.getAllDeletedPopulate(res.callback);
 });
 
 router.post('/', adminOnly, (req, res, next) => {
@@ -24,12 +29,12 @@ router.post('/', adminOnly, (req, res, next) => {
 
 	var isKeyResultsInvalid = keyResults.some((keyResult) => {
 		return !ValidateService.isObject(keyResult)
-		|| ValidateService.isEmpty(keyResult.title)
+		|| isEmpty(keyResult.title)
 	});
 
-	if( ValidateService.isEmpty(title)
-		|| ValidateService.isEmpty(description)
-		|| ValidateService.isEmpty(keyResults)
+	if( isEmpty(title)
+		|| isEmpty(description)
+		|| isEmpty(keyResults)
 		|| !ValidateService.isCorrectId(category)
 		|| !ValidateService.isArray(keyResults)
 		|| isKeyResultsInvalid)
@@ -42,12 +47,12 @@ router.post('/', adminOnly, (req, res, next) => {
 		description: description,
 		category: category,
 		creator: req.session._id,
-		keyResults: [],
+		defaultKeyResults: [],
 		isApproved: true,
 		isDeleted: false
 	}
 
-	keyResults = keyResults.map((item) => {
+	defaultKeyResults = keyResults.map((item) => {
 		var keyResult = {
 			title: item.title,
 			difficulty: item.difficulty,
@@ -59,7 +64,7 @@ router.post('/', adminOnly, (req, res, next) => {
 		return keyResult;
 	});
 
-	return service.add(req.session._id, objective, keyResults, res.callback);
+	return service.add(req.session._id, objective, defaultKeyResults, res.callback);
 });
 
 router.get('/category/:categoryId/:title*?', (req, res, next) => {
@@ -74,6 +79,34 @@ router.get('/category/:categoryId/:title*?', (req, res, next) => {
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
+	let objectiveId = req.params.id;
+	let title = req.body.title || '';
+	let description = req.body.description || '';
+	let userId = req.session._id;
+
+	title = title.trim();
+	description = description.trim();
+
+	if(!ValidateService.isCorrectId(objectiveId)
+	|| (isEmpty(title) && isEmpty(description))) {
+		return res.badRequest();
+	};
+
+	let data = {};
+	
+	if(!isEmpty(title)) {
+		data.title = title;
+	}
+
+	if(!isEmpty(description)) {
+		data.description = description;
+	}
+
+	return service.update(userId, objectiveId, data, res.callback);
+});
+
+router.put('/myupdate/:id', (req, res, next) => {
+
 	var id = req.params.id;
 	var body = req.body;
 
@@ -81,7 +114,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return service.update(session._id, id, body, res.callback);
+	return repository.update(id, body, res.callback);
 });
 
 router.delete('/:id', adminOnly, (req, res, next) => {

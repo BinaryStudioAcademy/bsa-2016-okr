@@ -14,6 +14,9 @@ class ObjectiveData extends React.Component{
   }
 
   editObjective(e){
+    let index = this.props.objectivesList.active;
+    let objective = this.props.objectivesList.visibleObjectives[index];
+
     if(this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index){
       event.preventDefault();
       let reqBody = {};
@@ -23,9 +26,11 @@ class ObjectiveData extends React.Component{
       reqBody.description = objectiveDesctiption;
       reqBody.title = objectiveTitle;
 
-      this.props.editObjectiveTemplate(this.props.objectivesList.visibleObjectives[this.props.objectivesList.active]._id, reqBody);
+      this.props.editObjectiveTemplate(objective._id, reqBody);
     }
-    else this.props.editObjective(true);
+    else {
+      this.props.activeObjective(this.props.index);
+    }
   }
 
   deleteObjective(){
@@ -36,45 +41,43 @@ class ObjectiveData extends React.Component{
     }
   }
 
-  activeObjective(){
-  	this.props.activeObjective(this.props.index)
-  }
+  render() {
+    let categoryId = this.props.objective.category;
+    let category = this.props.categories.list.find((category) => {
+      return category._id === categoryId;
+    });
+    
+    let titleEl;
+    let descriptionEl;
+    let categoryEl;
+    let edit;
 
-  render(){
-    if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index){
-  		return (
-        <div>
-          <div className='objective-template' onClick={this.activeObjective.bind(this)}>
-                <form onSubmit={this.editObjective}>
-                <div className='edit-objective'>
-                      <i className="fi flaticon-edit editing" aria-hidden="true" onClick={this.editObjective}></i>
-                      <i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
-                </div>
-                <div className='category'>{this.props.objective.category.title}</div>
-                <input type='text' className='template-title' defaultValue={this.props.objective.title} />
-                <textarea className='template-description' defaultValue={this.props.objective.description} />  
-              </form>     
-          </div>
-          <div className='key-result'><KeyResults data={this.props.objective.keyResults} /></div>
-        </div>
-      )
+    if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
+      titleEl = (<input type='text' className='template-title' defaultValue={this.props.objective.title} />);
+      descriptionEl = (<textarea className='template-description' defaultValue={this.props.objective.description} />);
+      edit = 'editing';
+    } else {
+      titleEl = (<div className='name'>{this.props.objective.title}</div>);
+      descriptionEl = (<div className='description'>{this.props.objective.description}</div>);
+      edit = 'edit';
     }
-    else {
-      return (
+
+		return (
       <div>
-        <div className='objective-template' onClick={this.activeObjective.bind(this)}>
-            <div className='edit-objective'>
-                  <i className="fi flaticon-edit edit" aria-hidden="true" onClick={this.editObjective}></i>
-                  <i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
-            </div>
-            <div className='category'>{this.props.objective.category.title}</div>
-            <div className='name'>{this.props.objective.title}</div>
-            <div className='description'>{this.props.objective.description}</div>       
+        <div className='objective-template'>
+              <form onSubmit={this.editObjective}>
+              <div className='edit-objective'>
+                    <i className={"fi flaticon-edit " + edit} aria-hidden="true" onClick={this.editObjective}></i>
+                    <i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
+              </div>
+              <div className='category'>{ category.title }</div>
+              { titleEl }
+              { descriptionEl }
+            </form>     
         </div>
         <div className='key-result'><KeyResults data={this.props.objective.keyResults} /></div>
       </div>
-      )
-    }
+    )
   }
 }
 function mapDispatchToProps(dispatch) {
@@ -83,7 +86,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    objectivesList: state.okrManaging
+    objectivesList: state.okrManaging,
+    categories: state.categories,
   };
 }
 

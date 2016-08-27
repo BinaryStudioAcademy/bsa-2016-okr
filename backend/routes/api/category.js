@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/deleted', adminOnly, (req, res, next) => {
-	repository.getAllDeleted(res.callback);
+	repository.getAllDeletedPopulate(res.callback);
 });
 
 router.post('/', adminOnly, (req, res, next) => {
@@ -67,6 +67,10 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	};
 
 	categoryService.update(userId, categoryId, data, res.callback);
+});
+
+router.put('/myupdate/:id', adminOnly, (req, res, next) => {
+	repository.update(req.params.id, req.body, res.callback);
 });
 
 router.delete('/:id', adminOnly, (req, res, next) => {

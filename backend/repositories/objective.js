@@ -20,6 +20,24 @@ ObjectiveRepository.prototype.getAll = function(callback) {
 		.exec(callback);
 };
 
+ObjectiveRepository.prototype.getAllDeletedPopulate = function(callback) {
+	
+	var model = this.model;
+	
+	model
+		.find({
+			isDeleted: true
+		})
+		.populate('category')
+		.populate({
+			path: "deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
 ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 	var model = this.model;
 	
@@ -28,7 +46,7 @@ ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 			isApproved: true,
 			isDeleted: false
 		})
-		.populate('keyResults', null, {isDeleted: false})
+		.populate('defaultKeyResults', null, {isDeleted: false})
 		.populate('category')
 		.exec(callback);
 };
@@ -46,7 +64,7 @@ ObjectiveRepository.prototype.autocomplete = function(title, categoryId, callbac
 		description: true,
 		category: true,
 		used: true,
-		keyResults: true
+		defaultKeyResults: true
 	};
 
 	if(title) {
@@ -58,7 +76,7 @@ ObjectiveRepository.prototype.autocomplete = function(title, categoryId, callbac
 		.sort({ used: 'desc' })
 		.limit(10)
 		.populate({
-			path: 'keyResults',
+			path: 'defaultKeyResults',
 			select: 'title used difficulty'
 		})
 		.exec(callback);

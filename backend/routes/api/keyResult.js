@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const repository = require('../../repositories/keyResult');
 const service = require('../../services/keyResult');
-const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
+const ValidateService = require('../../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
 
 router.get('/objective/:objectiveId/:title*?', (req, res, next) => {
 	var title = req.params.title;
@@ -13,6 +14,10 @@ router.get('/objective/:objectiveId/:title*?', (req, res, next) => {
 	}
 
 	return service.autocomplete(title, objectiveId, res.callback);
+});
+
+router.get('/deleted', (req, res, next) => {
+	return repository.getAllDeletedPopulate(res.callback);
 });
 
 router.put('/softDelete/:id', adminOnly, (req, res, next) => {
@@ -26,14 +31,43 @@ router.put('/softDelete/:id', adminOnly, (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
+ 	let userId = req.session._id
+ 	let keyResultId = req.params.id;
+ 	let title = req.body.title || '';
+ 	let difficulty = req.body.difficulty || '';
+
+ 	title = title.trim();
+ 	difficulty = ValidateService.getValidDifficulty(difficulty.trim());
+
+ 	if(!ValidateService.isCorrectId(keyResultId)
+ 	|| (isEmpty(title) && isEmpty(difficulty))) {
+ 		return res.badRequest();
+ 	};
+
+ 	let data = {};
+
+ 	if(!isEmpty(title)) {
+ 		data.title = title;
+ 	}
+
+ 	if(!isEmpty(difficulty)) {
+ 		data.difficulty = difficulty;
+ 	}
+
+ 	return service.update(userId, keyResultId, data, res.callback);
+});
+
+router.put('/myupdate/:id', (req, res, next) => {
+
  	var id = req.params.id;
 
  	if(!ValidateService.isCorrectId(id)) {
  		return res.badRequest();
  	};
 
- 	return service.update(req.session._id, id, req.body, res.callback);
+ 	repository.update(id, req.body, res.callback);
 });
+
 
 // router.delete('/:id', adminOnly, (req, res, next) => {
 // 	var id = req.params.id;

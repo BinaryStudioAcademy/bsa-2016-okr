@@ -5,6 +5,7 @@ const KeyResultRepository = require('../repositories/keyResult');
 const QuarterRepository = require('../repositories/quarter');
 const HistoryRepository = require('../repositories/history');
 const ValidateService = require('../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
 
 
 var UserObjectiveService = function() {};
@@ -124,7 +125,7 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 		(userObjective, callback) => {
 			data.userObjective = userObjective;
 			
-			if(!ValidateService.isEmpty(data.keyResultId)) {
+			if(!isEmpty(data.keyResultId)) {
 				console.log('Trying to add key result by id');
 				this.addKeyResultById(data, callback);
 			} else {
@@ -198,7 +199,7 @@ UserObjectiveService.prototype.addKeyResultByTitle = function(data, callback) {
 			})
 		},
 		(keyResult, callback) => {
-			if (ValidateService.isEmpty(keyResult)) {
+			if (isEmpty(keyResult)) {
 				let keyResultData = {
 					title: data.keyResultTitle,
 					creator: data.userId,
@@ -214,7 +215,7 @@ UserObjectiveService.prototype.addKeyResultByTitle = function(data, callback) {
 						return callback(err, null);
 					}
 
-					if (ValidateService.isEmpty(createdKeyResult)) {
+					if (isEmpty(createdKeyResult)) {
 						err = new Error(`Can not create key result`);
 						return callback(err, null);
 					}
@@ -225,6 +226,59 @@ UserObjectiveService.prototype.addKeyResultByTitle = function(data, callback) {
 				return callback(null, keyResult)
 			}
 		},
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
+
+UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveId, keyResultId, score, callback) {
+	async.waterfall([
+		(callback) => {
+			UserObjectiveRepository.getById(objectiveId, (err, userObjective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(userObjective)) {
+					let err = new Error('Objective not found');
+					return callback(err, null);
+				}
+
+				if(!userObjective.userId.equals(userId)
+				|| userObjective.isArchived) {
+					let err = new Error('You are not allowed to do this');
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective);
+			});
+		},
+		(userObjective, callback) => {
+			let index = userObjective.keyResults.findIndex((keyResult) => {
+				return keyResult._id.equals(keyResultId);
+			});
+
+			if(index === -1) {
+				let err = new Error('Key result not found');
+				return callback(err, null);
+			}
+
+			userObjective.keyResults[index].score = score;
+
+			userObjective.save((err, userObjective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				console.log(userObjective);
+
+				return callback(null, {
+					objectiveId: userObjective._id,
+					keyResultId: userObjective.keyResults[index]._id,
+					score: userObjective.keyResults[index].score
+				});
+			});
+		}
 	], (err, result) => {
 		return callback(err, result);
 	});

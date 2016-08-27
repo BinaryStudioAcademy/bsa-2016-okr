@@ -9,7 +9,13 @@ var categorySchema = new Schema({
 	},
 	isDeleted: {
 		type: Boolean
-	}
+	},
+	deletedBy: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+		required: false
+	},
+	deletedDate: {}
 });
 
 module.exports = mongoose.model('Category', categorySchema);
