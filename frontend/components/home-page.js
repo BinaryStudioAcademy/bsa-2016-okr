@@ -7,7 +7,7 @@ import UserObjectives from './home-page/objectives.jsx';
 import CentralWindow from '../containers/central-window.jsx';
 import StatPanel from "../containers/statistic-panel.jsx";
 import Dashboard from "./dashboard/dashboard.jsx";
-import UserDashboard from "./home-page/userDashboard/userDashboard.jsx"
+import UserDashboard from "./userDashboard/userDashboard.jsx"
 
 
 import { bindActionCreators } from 'redux';

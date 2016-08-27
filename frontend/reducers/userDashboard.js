@@ -1,5 +1,5 @@
 import {SET_TAB, CHANGE_SHOW_TABS} from '../actions/userDashboardActions.js';
-import historyItemsLol from '../components/home-page/userDashboard/history.js'
+import historyItemsLol from '../components/userDashboard/history.js'
 
 
 const initialState = {

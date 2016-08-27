@@ -16,7 +16,7 @@ class DeletedTmplsItem extends Component {
 
 	render() {
 
-		let dateStr = moment(this.props.item.deletedDate).format('D MMMM YYYY, h:mm a');
+		let dateStr = moment(this.props.item.deletedDate).format('D MMMM YYYY, H:mm a');
 		
 		return (
 			<tr className="bin-item-row">

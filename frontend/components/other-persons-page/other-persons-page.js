@@ -9,6 +9,7 @@ import UserOjectives from './user-objectives.js';
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
+import UserDashboard from "../userDashboard/userDashboard.jsx";
 
 class OtherPersonsPage extends Component {
 	constructor(props) {
@@ -32,6 +33,7 @@ class OtherPersonsPage extends Component {
 						<UserOjectives />
 					</CentralWindow>
 					<StatPanel>
+						<UserDashboard />
 						{/*<Dashboard></Dashboard>*/}
 					</StatPanel>
 				</div>
