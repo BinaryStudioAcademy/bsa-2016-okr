@@ -53,6 +53,12 @@ class NavMenu extends React.Component {
 								Recycle Bin
 							</Link>
 						</li>
+						<li>
+							<Link to="/admin-recycle-bin">
+								<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
+								Admin Recycle Bin
+							</Link>
+						</li>
 					</ul>
 				</nav>
 			</aside>

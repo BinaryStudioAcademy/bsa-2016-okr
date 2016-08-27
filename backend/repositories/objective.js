@@ -20,6 +20,24 @@ ObjectiveRepository.prototype.getAll = function(callback) {
 		.exec(callback);
 };
 
+ObjectiveRepository.prototype.getAllDeletedPopulate = function(callback) {
+	
+	var model = this.model;
+	
+	model
+		.find({
+			isDeleted: true
+		})
+		.populate('category')
+		.populate({
+			path: "deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
 ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 	var model = this.model;
 	

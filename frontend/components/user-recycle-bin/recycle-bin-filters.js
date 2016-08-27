@@ -6,7 +6,7 @@ import 'react-date-picker/index.css'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../../actions/recycleBinActions.js";
+import * as actions from "../../actions/recycleBinActions.js";
 
 class RecycleBinFilter extends Component {
 
@@ -40,21 +40,16 @@ class RecycleBinFilter extends Component {
 		const { usersNames } = this.props.recycleBin;
 
 		return(
-			<div>
-
+			
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
 				<div className="filter-box clearfix">
-						<div>
+						<div className="margin-left-4px">
 							<input type="checkbox" id="cbObjectives" defaultChecked={true} onClick={this.setObjectiveType.bind(this)}></input>
 							<label htmlFor="cbObjectives">Objectives</label>
 						</div>
 						<div>
-							<input type="checkbox" id="cbKey" onClick={this.setKeyType.bind(this)}></input>
+							<input type="checkbox" id="cbKey" defaultChecked={true}  onClick={this.setKeyType.bind(this)}></input>
 							<label htmlFor="cbKey">Key</label>
-						</div>
-						<div>
-							<input type="checkbox" id="cbCategory" onClick={this.setCategoryType.bind(this)}></input>
-							<label htmlFor="cbCategory">Category</label>
 						</div>
 					</div>
 				<table className="recycle-bin-filter-table">
@@ -64,8 +59,8 @@ class RecycleBinFilter extends Component {
 							    <input type="text" id="type-category-filter" placeholder="Enter type or category" ref="inputFilter" onChange={this.typeOrCategoryFilter.bind(this)}/>
 						    </td>
 							<td className="cell-right-align">Date: </td>
-							<td>
-								<DateField
+							<td className="no-wrap">
+							<DateField
 									className="date-field"
 									id="date-from"
 									ref="dateFrom"
@@ -87,10 +82,10 @@ class RecycleBinFilter extends Component {
 									collapseOnDateClick={true}
 									theme={false}/>
 							</td>
-							<td>User Name: </td>
 							<td>
 								<select ref="userName" onChange={this.changeUserName.bind(this)}>
-								   <option value="" id="reset-option">No one</option>
+								   <option id="reset-option" value="" disabled className="not-display">By User Name</option>
+								   <option value="">No one</option>
 								   {usersNames.map(function(name) {
 			                            return <option key={name.id} value={name.name}>{name.name}</option>
 			                       })}
@@ -103,8 +98,7 @@ class RecycleBinFilter extends Component {
 					</tbody>
 				</table>
 			</div>
-			</div>
-
+			
 		)
 	}
 
@@ -112,8 +106,7 @@ class RecycleBinFilter extends Component {
 	reset() {
 
 		document.querySelector("#cbObjectives").checked = true;
-		document.querySelector("#cbCategory").checked = false;
-		document.querySelector("#cbKey").checked = false;
+		document.querySelector("#cbKey").checked = true;
 
 		document.querySelector("#reset-option").selected = true;
 
@@ -126,8 +119,12 @@ class RecycleBinFilter extends Component {
 		document.querySelector("#date-to .react-date-field__clear-icon").click();
 		*/
 
-		this.props.updateAll("", "", "", true, false, false, false, "");
+		this.props.updateAll("", "", "", true, true, false, false, "");
 
+	}
+
+	componentDidMount() {
+		document.querySelector("#reset-option").selected = true;
 	}
 
 	changeUserName() {

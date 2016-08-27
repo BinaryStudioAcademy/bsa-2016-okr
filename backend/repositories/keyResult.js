@@ -11,6 +11,7 @@ var KeyResultRepository = function(){
 KeyResultRepository.prototype = new Repository();
 
 KeyResultRepository.prototype.getAll = function(callback) {
+	
 	var model = this.model;
 
 	model
@@ -20,6 +21,31 @@ KeyResultRepository.prototype.getAll = function(callback) {
 		})
 		.exec(callback);
 };
+
+KeyResultRepository.prototype.getAllDeletedPopulate = function(callback) {
+	
+	var model = this.model;
+
+	model
+		.find({
+			isDeleted: true
+		})
+		.populate('objectiveId')
+		.populate({
+			path: "objectiveId",
+			populate: {
+				path: 'category'
+			}
+		})
+		.populate({
+			path: "deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
 
 KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callback) {
 	var model = this.model;

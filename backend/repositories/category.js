@@ -17,4 +17,16 @@ CategoryRepository.prototype.getByTitle = function(title, callback) {
 		.exec(callback);
 };
 
+Repository.prototype.getAllDeletedPopulate = function(callback) {
+	var model = this.model;
+	model.find({'isDeleted': 'true'})
+	.populate({
+		path: "deletedBy",
+		populate: {
+			path: 'userInfo'
+		}
+	})
+	.exec(callback);
+};
+
 module.exports = new CategoryRepository();

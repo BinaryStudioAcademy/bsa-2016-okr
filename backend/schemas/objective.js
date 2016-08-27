@@ -37,7 +37,13 @@ var objectiveSchema = new Schema({
 	isDeleted: {
 		type: Boolean,
 		default: false
-	}
+	},
+	deletedBy: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+		required: false
+	},
+	deletedDate: {}
 }, {
     timestamps: true
 });

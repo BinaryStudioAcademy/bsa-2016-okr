@@ -12,6 +12,10 @@ router.get('/', (req, res, next) => {
 	return service.getAll(res.callback);
 });
 
+router.get('/deleted', (req, res, next) => {
+	return repository.getAllDeletedPopulate(res.callback);
+});
+
 router.post('/', adminOnly, (req, res, next) => {
 
 	var title = req.body.title || '';
@@ -99,6 +103,18 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	}
 
 	return service.update(userId, objectiveId, data, res.callback);
+});
+
+router.put('/myupdate/:id', (req, res, next) => {
+
+	var id = req.params.id;
+	var body = req.body;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.update(id, body, res.callback);
 });
 
 router.delete('/:id', adminOnly, (req, res, next) => {

@@ -16,6 +16,10 @@ router.get('/objective/:objectiveId/:title*?', (req, res, next) => {
 	return service.autocomplete(title, objectiveId, res.callback);
 });
 
+router.get('/deleted', (req, res, next) => {
+	return repository.getAllDeletedPopulate(res.callback);
+});
+
 router.put('/softDelete/:id', adminOnly, (req, res, next) => {
     var id = req.params.id;
 
@@ -52,6 +56,18 @@ router.put('/:id', (req, res, next) => {
 
  	return service.update(userId, keyResultId, data, res.callback);
 });
+
+router.put('/myupdate/:id', (req, res, next) => {
+
+ 	var id = req.params.id;
+
+ 	if(!ValidateService.isCorrectId(id)) {
+ 		return res.badRequest();
+ 	};
+
+ 	repository.update(id, req.body, res.callback);
+});
+
 
 // router.delete('/:id', adminOnly, (req, res, next) => {
 // 	var id = req.params.id;

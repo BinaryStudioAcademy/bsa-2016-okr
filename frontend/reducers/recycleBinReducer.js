@@ -1,5 +1,3 @@
-import data_for_recycle from '../components/mockData/data_for_recycle_bin.js'
-
 import {
 	SEARCH_OBJECTS,
 	CLEAR,
@@ -22,6 +20,21 @@ import {
 	SHOW_FILTERS,
 	SET_RECYCLE_BIN_FILTER_DATE_FROM,
 	SET_RECYCLE_BIN_FILTER_DATE_TO,
+    GET_OBJECTIVE_TEMPLATES_REQUEST,
+	RECEIVED_OBJECTIVE_TEMPLATES,
+	GET_OBJECTIVE_TEMPLATES_REQUEST_ERROR,
+	GET_KEY_RESULTS_TEMPLATES_REQUEST,
+	RECEIVED_KEY_RESULTS_TEMPLATES,
+	GET_KEY_RESULTS_TEMPLATES_REQUEST_ERROR, 
+	UPDATE_TEMPLATE_OBJECTIVE_REQUEST,
+	UPDATE_TEMPLATE_OBJECTIVE_REQUEST_ERROR,
+    UPDATE_TEMPLATE_KEY_RESULT_REQUEST,
+    UPDATE_TEMPLATE_KEY_RESULT_REQUEST_ERROR,
+    GET_DELETED_CATEGORIES_REQUEST,
+    RECEIVED_DELETED_CATEGORIES,
+    GET_DELETED_CATEGORIES_REQUEST_ERROR,
+    UPDATE_CATEGORY_REQUEST,
+    UPDATE_CATEGORY_REQUEST_ERROR
 } from '../actions/recycleBinActions';
 
 const initialState = {
@@ -34,9 +47,9 @@ const initialState = {
 	setRecycleBinFilterDateTo: '',
 	usersNames: [],
 	objectiveType: true,
-	keyType: false,
+	keyType: true,
 	sortByDate: false,
-	categoryType: false,
+	categoryType: true,
 	categoryOrTypeFilter: "",
 	userName: ""
 };
@@ -45,18 +58,163 @@ export default function recBynReducer(state = initialState, action) {
 	
 	switch (action.type) {
 
+		case RECEIVED_DELETED_CATEGORIES: {
+
+			const {data} = action;
+
+			let newRecycleBinItems = JSON.parse(JSON.stringify(state.recycleBinItems));  
+
+			let category = {};
+
+			category.type = "category";
+			category.category = "categories";
+			category.description = "category";
+
+			for (let i = 0; i < data.length; i++) {
+
+				category.id = data[i]._id;
+				
+				category.title = data[i].title;
+
+				if (data[i].deletedBy == null) 
+					category.deletedBy = "default";
+				else
+					category.deletedBy = data[i].deletedBy.userInfo.firstName + " " + data[i].deletedBy.userInfo.lastName;
+
+				if (data[i].deletedDate == null)
+					category.deletedDate = "2016-07-22T10:51:12.643Z";
+				else
+					category.deletedDate = data[i].deletedDate;
+
+				let copy = Object.assign({}, category);
+
+				newRecycleBinItems.push(copy);
+
+			}
+
+			return Object.assign({}, state, {
+				recycleBinItems: newRecycleBinItems,
+				visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
+					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
+					state.keyType, state.sortByDate, state.categoryType, state.userName),
+				usersNames: getAllNames(newRecycleBinItems)
+
+			});
+		}
+
+		case RECEIVED_OBJECTIVE_TEMPLATES: {
+
+			const {data} = action;
+
+			let newRecycleBinItems = JSON.parse(JSON.stringify(state.recycleBinItems));  
+
+			let objective = {};
+
+			objective.type = "objective";
+
+			for (let i = 0; i < data.length; i++) {
+				
+				objective.id = data[i]._id;
+				objective.category = data[i].category.title;
+				objective.title = data[i].title;
+				objective.description = data[i].description;
+
+				if (data[i].deletedBy == null) 
+					objective.deletedBy = "default";
+				else
+					objective.deletedBy = data[i].deletedBy.userInfo.firstName + " " + data[i].deletedBy.userInfo.lastName;
+
+				if (data[i].deletedDate == null)
+					objective.deletedDate = "2016-07-22T10:51:12.643Z";
+				else
+					objective.deletedDate = data[i].deletedDate;
+
+				let copy = Object.assign({}, objective);
+
+				newRecycleBinItems.push(copy);
+
+			}
+
+		
+			return Object.assign({}, state, {
+				recycleBinItems: newRecycleBinItems,
+				visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
+					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
+					state.keyType, state.sortByDate, state.categoryType, state.userName),
+				usersNames: getAllNames(newRecycleBinItems)
+
+			});
+
+		}
+
+
+		case RECEIVED_KEY_RESULTS_TEMPLATES: {
+
+			const {data} = action;
+
+			let newRecycleBinItems = JSON.parse(JSON.stringify(state.recycleBinItems));  
+
+			let key = {};
+
+			key.type = "key";
+
+			for (let i = 0; i < data.length; i++) {
+				
+				key.id = data[i]._id;
+				key.category = data[i].objectiveId.category.title;
+				key.title = data[i].title;
+				key.description = data[i].objectiveId.description;
+
+
+				if (data[i].deletedBy == null) 
+					key.deletedBy = "default";
+				else
+					key.deletedBy = data[i].deletedBy.userInfo.firstName + " " + data[i].deletedBy.userInfo.lastName;
+
+				if (data[i].deletedDate == null)
+					key.deletedDate = "2016-07-22T10:51:12.643Z";
+				else
+					key.deletedDate = data[i].deletedDate;
+
+				let copy = Object.assign({}, key);
+
+				newRecycleBinItems.push(copy);
+			}
+
+
+			return Object.assign({}, state, {
+				recycleBinItems: newRecycleBinItems,
+				visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
+					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
+					state.keyType, state.sortByDate, state.categoryType, state.userName),
+				usersNames: getAllNames(newRecycleBinItems)
+
+			});
+
+		}
+
 		case CLEAR: {
 			return Object.assign({}, state, {
 				recycleBinItems: [],
-				visibleItems: []
+				searchValue: '',
+				objectiveForUpdate: [],
+				showRecycleBinFilters: false,
+				visibleItems: [],
+				setRecycleBinFilterDateFrom: '',
+				setRecycleBinFilterDateTo: '',
+				usersNames: [],
+				objectiveType: true,
+				keyType: true,
+				sortByDate: false,
+				categoryType: true,
+				categoryOrTypeFilter: "",
+				userName: ""									
 			});
 		}
 
 		case RECEIVED_USER_OBJECTIVES: {
 
 			const {data} = action;
-
-				//console.log(data);
 
 				let newRecycleBinItems = JSON.parse(JSON.stringify(state.recycleBinItems));  
 
@@ -146,6 +304,26 @@ export default function recBynReducer(state = initialState, action) {
 					newRecycleBinItems.push(copy);
 
 				}
+/*
+				
+				const n = newRecycleBinItems.length;
+
+
+				for (let j = 0; j < 15; j++) {
+					
+
+					for (let i = 0; i < n; i++) {
+						
+						let newKey = JSON.parse(JSON.stringify(newRecycleBinItems[i]));
+						newKey.id =  newRecycleBinItems.length;
+
+						console.log(newKey);
+
+						newRecycleBinItems.push(newKey);
+					}
+				}
+				*/
+
 
 				return Object.assign({}, state, {
 					recycleBinItems: newRecycleBinItems,
@@ -309,9 +487,68 @@ export default function recBynReducer(state = initialState, action) {
 				})
 			}
 
-			case GET_USER_OBJECTIVES_REQUEST_ERROR:
-			case GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR: 
+			case GET_USER_OBJECTIVES_REQUEST_ERROR: {
+				
+				console.log(GET_USER_OBJECTIVES_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
+			case GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR: {
+
+				console.log(GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
 			case UPDATE_USER_OBJECTIVES_REQUEST_ERROR: {
+
+				console.log(UPDATE_USER_OBJECTIVES_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
+
+			case GET_OBJECTIVE_TEMPLATES_REQUEST_ERROR: {
+
+				console.log(GET_OBJECTIVE_TEMPLATES_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
+
+			case GET_KEY_RESULTS_TEMPLATES_REQUEST_ERROR: {
+
+				console.log(GET_KEY_RESULTS_TEMPLATES_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
+			case UPDATE_TEMPLATE_OBJECTIVE_REQUEST_ERROR: {
+
+				console.log(UPDATE_TEMPLATE_OBJECTIVE_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
+			case UPDATE_TEMPLATE_KEY_RESULT_REQUEST_ERROR: {
+
+				console.log(UPDATE_TEMPLATE_KEY_RESULT_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
+			case GET_DELETED_CATEGORIES_REQUEST_ERROR: {
+
+				console.log(GET_DELETED_CATEGORIES_REQUEST_ERROR);
+
+				return Object.assign({}, state);
+			}
+
+			case UPDATE_CATEGORY_REQUEST_ERROR: {
+
+				console.log(UPDATE_CATEGORY_REQUEST_ERROR);
+
 				return Object.assign({}, state);
 			}
 
@@ -345,61 +582,64 @@ export default function recBynReducer(state = initialState, action) {
 
 	}
 
-	function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, categoryType, userName) {
+function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, categoryType, userName) {
 
-	//let initVisibleItems = filterDate(items, dateFrom, dateTo);
-
-	let initVisibleItems = JSON.parse(JSON.stringify(items));
+	let initVisibleItems = filterDate(items, dateFrom, dateTo);
 
 	let itemsAfterInputFilter = [];
 
 	if (categoryOrTypeFilter === "") {
 		itemsAfterInputFilter = initVisibleItems;
 	}
-	else {
+		else {
 
-		for (let i = 0; i < initVisibleItems.length; i++) {
-			if (initVisibleItems[i].type.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0 ||
-				initVisibleItems[i].category.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0)  {
-				itemsAfterInputFilter.push(initVisibleItems[i])
+			for (let i = 0; i < initVisibleItems.length; i++) {
+				if (initVisibleItems[i].type.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0 ||
+					initVisibleItems[i].category.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0)  {
+					itemsAfterInputFilter.push(initVisibleItems[i]);
+			}
 		}
 	}
-}
 
-let itemsAfterUserNameFilter = [];
+	let itemsAfterUserNameFilter = [];
 
-if (userName === "") {
-	itemsAfterUserNameFilter = itemsAfterInputFilter;
-}
-else {
-
-	for (let i = 0; i < itemsAfterInputFilter.length; i++) {
-		if (itemsAfterInputFilter[i].deletedBy.fullName === userName)
-			itemsAfterUserNameFilter.push(itemsAfterInputFilter[i]);
+	if (userName === "") {
+		itemsAfterUserNameFilter = itemsAfterInputFilter;
 	}
-}
+	else {
 
-initVisibleItems = itemsAfterUserNameFilter;
-
-let visibleItems = [];
-
-for (let i = 0; i < initVisibleItems.length; i++) {
-	if (initVisibleItems[i].type === "objective" && objectiveType) {
-		visibleItems.push(initVisibleItems[i]);
+		for (let i = 0; i < itemsAfterInputFilter.length; i++) {
+			if (itemsAfterInputFilter[i].deletedBy === userName)
+				itemsAfterUserNameFilter.push(itemsAfterInputFilter[i]);
+		}
 	}
-	if (initVisibleItems[i].type === "key" && keyType) {
-		visibleItems.push(initVisibleItems[i]);
-	}
-	if (initVisibleItems[i].type === "category" && categoryType) {
-		visibleItems.push(initVisibleItems[i]);
-	}
-}
 
-if (sortByDate) {
-	visibleItems.sort(function(a, b) { return b.deletedDate < a.deletedDate;});
-}
+	initVisibleItems = itemsAfterUserNameFilter;
 
-return visibleItems;
+	let visibleItems = [];
+
+	for (let i = 0; i < initVisibleItems.length; i++) {
+		if (initVisibleItems[i].type === "objective" && objectiveType) {
+			visibleItems.push(initVisibleItems[i]);
+		}
+		if (initVisibleItems[i].type === "key" && keyType) {
+			visibleItems.push(initVisibleItems[i]);
+		}
+		if (initVisibleItems[i].type === "category" && categoryType) {
+			visibleItems.push(initVisibleItems[i]);
+		}
+	}
+
+
+
+	if (sortByDate) {
+
+		visibleItems.sort(function(a, b) {
+			return new Date(a.deletedDate) - new Date(b.deletedDate);
+		});
+	}
+
+	return visibleItems;
 }
 
 function filterDate(items, dateFrom, dateTo) { 
@@ -408,30 +648,30 @@ function filterDate(items, dateFrom, dateTo) {
 
 	if(dateFrom == '' && dateTo == '') { 	
 
-		visibleItems = JSON.parse(JSON.stringify(initialState.recycleBinItems));
+		visibleItems = JSON.parse(JSON.stringify(items));
 
 	}
 	else if(dateFrom == '' && dateTo != '') {
-		items = JSON.parse(JSON.stringify(initialState.recycleBinItems));
+		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
-			if (dateTo >= initialState.recycleBinItemse[i].deletedDate) {
-				visibleItems.push(initialState.recycleBinItems[i]);
+			if (dateTo >= items[i].deletedDate) {
+				visibleItems.push(items[i].recycleBinItems[i]);
 			}
 		}
 	}
 	else if(dateFrom != '' && dateTo == ''){
-		items = JSON.parse(JSON.stringify(initialState.recycleBinItems));
+		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
-			if (dateFrom <= initialState.recycleBinItems[i].deletedDate) {
-				visibleItems.push(initialState.recycleBinItems[i]);
+			if (dateFrom <= items[i].deletedDate) {
+				visibleItems.push(items[i]);
 			}
 		}
 	}
 	else {
-		items = JSON.parse(JSON.stringify(initialState.recycleBinItems));
+		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
-			if (dateFrom <= initialState.recycleBinItems[i].deletedDate && dateTo >= initialState.recycleBinItems[i].deletedDate) {
-				visibleItems.push(initialState.recycleBinItems[i]);
+			if (dateFrom <= items[i].deletedDate && dateTo >= items[i].deletedDate) {
+				visibleItems.push(items[i]);
 			}
 		}
 	}
