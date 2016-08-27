@@ -1,94 +1,105 @@
+@import '../common/variables';
+
 .dashboard{
     width: 100%;
     padding: 10px 0;
 }
 
-.dashboard .tabPanel{
-    display:table;
-    width: 90%;
-    margin: 5px 5% 0;
-    border-collapse: collapse;
-}
+.dashboard {
 
-.dashboard .tabs {
-    display: table-row;
-}
-
-.dashboard li {
-    border: 2px solid #2c3e50;;
-    padding: 5px;
-    text-align: center;
-    display: table-cell;
-    color: #2c3e50;;
-    cursor: pointer;
-  }
-
-.dashboard .active, .dashboard li:hover{
-    background: #2c3e50;;
-    color: #fff;
-  }
-  
-.dashboard .main{
+.main{
     position:absolute;
     margin: 0 5%;
-     width: 90%;
-    top:10%;
+    width: 90%;
+    top:25px;
     left:0;    
 }
 
-.dashboard .countInfo, .dashboard .tableInfo{
-    margin: 20px 0;
-    padding: 5px 0px;
+.countInfo, .tableInfo{
+    margin-bottom: 20px;
     border: 1px solid #EDEDED;
     border-left: 5px solid #6aa84f;
     background: white;
     width:100%;
     box-sizing: border-box;
+    padding-right: 8px;
 }
 
-.dashboard .countInfo b{
-    color:#0080ff;
-    padding-left: 15px;
+.countInfo b{
+    color:#99BCE0;
 }
 
-.dashboard table{
+table{
     width:100%;
     font-size: 12px;
     background: white;
     text-align: center;
     border-collapse: collapse;
-    color: #3E4347;
     margin-top:10px;
-    
 }
 
-.dashboard th :first-child, .dashboard td:first-child {
-    color: #3E4347;
+th :first-child, td:first-child {
     border-left: none;
 }
 
-.dashboard th {
+th {
     font-weight: normal;
-    border-bottom: 2px solid #F5E1A6;
+    border-bottom: 2px solid #99BCE0;
     border-right: 20px solid white;
     border-left: 20px solid white;
     padding: 10px 10px;
     text-align: center;
 }
 
-.dashboard td {
+td {
     border-right: 20px solid white;
     border-left: 20px solid white;
     padding: 12px 5px;
-    color: #8b8e91;
 }
 
-.dashboard caption{
+caption{
     font-size: 14px;
-    text-align: center;
-    padding-bottom: 10px;
 }
 
-.dashboard .my{
-    margin-left:-60px;
+.second{
+    margin-top:-10px;
+}
+
+.second tr:first-child{
+    font-size:30px;
+}
+
+.second td{
+    padding-top: 0;
+}
+
+p {
+    color: #aaaaaa;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin: 0px auto;
+}
+
+p > span {
+    font-weight: bold;
+    display: inline-block;
+    padding: 10px 5px;
+    position: relative;
+    background: white;
+    z-index: 10;
+}
+
+p:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 23px;
+    left: 0;
+    height: 0;
+    width: 100%;
+    border-top: 1px solid #aaaaaa;
+    z-index: 0;
+}
+
 }
