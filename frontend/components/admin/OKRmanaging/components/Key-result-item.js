@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actions from "../../../../actions/okrManagingActions.js";
+var CONST = require('../../../../../backend/config/constants');
 
 class KeyResult extends Component {
 	constructor(props) {
@@ -26,7 +27,6 @@ class KeyResult extends Component {
 		}
 		else {
 			this.props.activeKeyResult(this.props.item._id, true);
-//			this.props.editKeyResult(true);
 		}
 	}
 
@@ -46,9 +46,12 @@ class KeyResult extends Component {
     if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
       titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
       difficultyEl = (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
-												<option>easy</option>
-												<option>intermediate</option>
-												<option>advanced</option>
+												{/*CONST.keyResult.map((difficulty, index) => {
+													return <option key={index}>{difficulty}</option>
+												})*/}
+												<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
+												<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
+												<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 											</select>);
       edit = 'editing';
     } else {
@@ -59,11 +62,11 @@ class KeyResult extends Component {
 			return (
 				<li className="key-result-item" >
 					{titleEl}
-					{difficultyEl}
 					<div className='edit-key-result'>
 						<i className={"fi flaticon-edit " + edit} aria-hidden="true" onClick={this.editKeyResult}></i>
 						<i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
 					</div>
+					{difficultyEl}
 				</li>
 			)
 	}

@@ -35,11 +35,11 @@
     margin: 0 5%;
 
     .objective-template{
-        margin: 25px 0;
-        padding: 17px 17px 40px;
+        margin: 0;
+        padding: 17px 17px 45px;
         background: lighten($color-blue-grey, 52%);
         border: 1px solid #ddd;
-        border-radius: 3px;
+        border-radius: 3px 3px 0 3px;
         min-height: 90px;
         box-sizing: border-box;
 
@@ -61,22 +61,25 @@
         }
 
         .description {
-            margin-bottom: 10px;
+            color: #777;
+            font-size: 15px;
+            margin-bottom: 15px;
             width: 84%;
             line-height: 18px;
         }
         .category{
-            clear: both;
             float: right;
             display: inline-block;
             border-radius: 3px;
-            background-color: $color-blue-grey;
+            background-color: $color-green;
             color: #fff;
-            margin-top: 8px;
-            padding: 4px 8px;
+            margin: 0 10px;
+            padding: 3px 8px;
+            font-size: 13px;
         }
         .edit-objective{
             float: right;
+            margin-top: 2px;
             .editing{
                 color: $color-blue;
             }
@@ -94,8 +97,14 @@
         }
     }
             .key-results{
-            margin-top: -65px;
-            margin-left: 15px;
+            margin-top: -48px;
+            position: relative;
+            margin-left: 18px;
+            margin-bottom: 40px;
+            .key-result-details{
+                margin-top: 20px;
+                margin-bottom: -20px;
+            }
             .change {
                 cursor: pointer;
                 padding: 5px 10px;
@@ -104,7 +113,9 @@
                 width: 40%;
             }
             .keyResult-difficulty{
-                margin-left: 5%;
+                margin-right: 10px;
+                float: right;
+                display: inline-block;
                 width: 130px;
             }
             .key-result-list{
@@ -123,14 +134,14 @@
             }
             ul {
                 width: 100%;
-                margin: 12px 0 0;
+                margin: 0;
                 padding: 0px;
                 list-style: none;
 
                 .key-result-item{
-                    border: 1px solid #ddd;
+                    border: 1px solid #c5c5c5;
                     border-top: none;
-                    background-color:  lighten($color-blue-grey, 50%);
+                    background-color: #eaeaea;
                     padding: 10px 15px;
 
                     div{
@@ -140,10 +151,14 @@
                         width: 45%;
                     }
                     .difficulty{
-                        padding: 1px 6px;
+                        font-size: 13px;
+                        padding: 2px 6px;
                         background-color:  $color-blue-grey;
                         color: #fff;
                         border-radius: 2px;
+                        margin-right: 10px;
+                        float: right;
+                        display: inline-block;
                     }
                     .edit-key-result{
                         display: inline-block;
@@ -158,8 +173,8 @@
                             color: $color-red;
                         }
                         i{
+                            margin-left: 10px;
                             cursor: pointer;
-                            padding-left: 10px;
                         }
                     }
                 }

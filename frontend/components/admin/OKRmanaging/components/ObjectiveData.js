@@ -13,7 +13,7 @@ class ObjectiveData extends React.Component{
     this.editObjective = this.editObjective.bind(this);
   }
 
-  editObjective(e){
+  editObjective(event){
     let index = this.props.objectivesList.active;
     let objective = this.props.objectivesList.visibleObjectives[index];
 
@@ -67,8 +67,8 @@ class ObjectiveData extends React.Component{
         <div className='objective-template'>
               <form onSubmit={this.editObjective}>
               <div className='edit-objective'>
-                    <i className={"fi flaticon-edit " + edit} aria-hidden="true" onClick={this.editObjective}></i>
-                    <i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
+                    <i className={"fi flaticon-edit " + edit} aria-hidden="true" alt='Edit' onClick={this.editObjective}></i>
+                    <i className="fi flaticon-garbage-2 delete" aria-hidden="true" alt='Delete' onClick={this.deleteObjective}></i>
               </div>
               <div className='category'>{ category.title }</div>
               { titleEl }
