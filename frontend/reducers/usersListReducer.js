@@ -8,7 +8,7 @@ const initialState = {
     waiting: true
 }
 
-export default function patentDetailsReducer(state = initialState, action) {
+export default function usersListReducer(state = initialState, action) {
     
     switch (action.type) {
 

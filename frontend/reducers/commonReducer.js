@@ -10,7 +10,6 @@ import myState from './myStateReducer.js'
 import keyResults from './keyResultReducer'
 import categories from './categoriesReducer'
 import userDashboard from './userDashboard'
-import newTemplateReducer from './newTemplateReducer.js'
 import app from './appReducer';
 
 

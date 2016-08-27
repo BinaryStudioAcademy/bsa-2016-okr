@@ -21,7 +21,7 @@ class NewObjective extends React.Component{
                <i className="fi flaticon-multiply" aria-hidden="true"></i>
             </button>
             <form action="">
-               <NewObjCredentials />
+               <NewObjCredentials handleCloseNewObjView={this.handleCloseNewObjView} />
             </form>
          </div>
       )
