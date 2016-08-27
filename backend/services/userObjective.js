@@ -270,8 +270,6 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 					return callback(err, null);
 				}
 
-				console.log(userObjective);
-
 				return callback(null, {
 					objectiveId: userObjective._id,
 					keyResultId: userObjective.keyResults[index]._id,

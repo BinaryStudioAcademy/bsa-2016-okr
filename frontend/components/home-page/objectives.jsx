@@ -33,6 +33,7 @@ class Objectives extends Component {
 
 		if(confirmation) {
 			this.props.createQuarter(newQuarter);
+			this.changeTab(newQuarter);
 		}
 	}
 
@@ -51,8 +52,6 @@ class Objectives extends Component {
 					score: score
 				};
 
-				console.log('Ready to API call');
-		
 				apiCall(objectiveId, body);
 			};
 		};
@@ -63,7 +62,6 @@ class Objectives extends Component {
 		const { me, currentYear, currentTab, existedQuarters } = myState;
 
 		const categories = this.props.categories;
-		console.log('categories', categories.list);
 
 		var objectiveItems = [];
 		var quarter = {};

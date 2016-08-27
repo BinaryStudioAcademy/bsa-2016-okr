@@ -112,7 +112,7 @@ export function addedNewObjective(data, body) {
 	return {
 		type: ADDED_NEW_OBJECTIVE,
 		response: data,
-		request: body
+		request: body,
 	};
 }
 
@@ -122,12 +122,10 @@ export function changeKeyResultScore(objectiveId, body) {
 
 		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/score/`, body)
 		.then(response => {
-			console.log('Got success response');
 			dispatch(keyResultScoreChanged(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
 		})
 		.catch(response => {
-			console.log('Got error response');
 			dispatch(keyResultScoreChangedError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
 		});
