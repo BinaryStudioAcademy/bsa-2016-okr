@@ -22,9 +22,12 @@ class ObjectiveData extends React.Component{
       let reqBody = {};
       let objectiveDesctiption = document.querySelector("textarea.template-description").value;
       let objectiveTitle = document.querySelector("input.template-title").value;
+      let objectiveCategory = document.querySelector("select.template-category").value;
 
       reqBody.description = objectiveDesctiption;
       reqBody.title = objectiveTitle;
+      reqBody.category = objectiveCategory
+      console.log(reqBody)
 
       this.props.editObjectiveTemplate(objective._id, reqBody);
     }
@@ -55,10 +58,16 @@ class ObjectiveData extends React.Component{
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
       titleEl = (<input type='text' className='template-title' defaultValue={this.props.objective.title} />);
       descriptionEl = (<textarea className='template-description' defaultValue={this.props.objective.description} />);
+      categoryEl = (<select className='template-category' defaultValue={categoryId}>
+                        { this.props.categories.list.map((category, index) => {
+                          return <option key={index} value={category._id}>{category.title}</option>
+                        })}
+                      </select>);
       edit = 'editing';
     } else {
       titleEl = (<div className='name'>{this.props.objective.title}</div>);
       descriptionEl = (<div className='description'>{this.props.objective.description}</div>);
+      categoryEl = (<div className='category'>{ category.title }</div>);
       edit = 'edit';
     }
 
@@ -70,7 +79,7 @@ class ObjectiveData extends React.Component{
                     <i className={"fi flaticon-edit " + edit} aria-hidden="true" title='Edit' onClick={this.editObjective}></i>
                     <i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>
               </div>
-              <div className='category'>{ category.title }</div>
+              { categoryEl }
               { titleEl }
               { descriptionEl }
             </form>     

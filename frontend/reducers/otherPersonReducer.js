@@ -1,4 +1,3 @@
-import users from '../components/mockData/users.js'
 import {GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR} from '../actions/otherPersonActions.js'
 
 const initialState = {

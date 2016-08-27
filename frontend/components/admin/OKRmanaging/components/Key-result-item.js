@@ -46,9 +46,6 @@ class KeyResult extends Component {
     if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
       titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
       difficultyEl = (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
-												{/*CONST.keyResult.map((difficulty, index) => {
-													return <option key={index}>{difficulty}</option>
-												})*/}
 												<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
 												<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 												<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>

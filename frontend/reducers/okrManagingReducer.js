@@ -157,7 +157,6 @@ function updateKeyResult(objectives, keyResult, id){
             if (objectives[i].keyResults[j]._id == id) {
                 objectives[i].keyResults[j].title = keyResult.title;
                 objectives[i].keyResults[j].difficulty = keyResult.difficulty;
-
           }
     }
     return objectives;
@@ -167,6 +166,7 @@ function update(objectives, objective, id){
         if (objectives[i]._id == id) {
             objectives[i].title =objective.title;
             objectives[i].description =objective.description;
+            objectives[i].category =objective.category;
           }
     }
     return objectives

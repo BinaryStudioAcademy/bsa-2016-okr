@@ -45,12 +45,18 @@
 
         .template-description{
             resize: vertical;
-            width: 80%;
+            width: 70%;
             margin: 10px 0;
         }
         .template-title{
-            width: 80%;
+            width: 70%;
             box-sizing: border-box;
+        }
+        .template-category{
+            float: right;
+            display: inline-block;
+            margin: 0 10px;
+            width: 20%;
         }
 
         .name{
