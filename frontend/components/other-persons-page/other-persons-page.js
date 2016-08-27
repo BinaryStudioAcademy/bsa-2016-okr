@@ -24,11 +24,10 @@ class OtherPersonsPage extends Component {
 		if (this.props.user.waiting){
 			return <div></div>
 		} else {
-			const {user} = this.props.user;
 			return (
 				<div>
 					<CentralWindow>
-						<PersonInfo data={user} />
+						<PersonInfo />
 						<UserOjectives />
 					</CentralWindow>
 					<StatPanel>

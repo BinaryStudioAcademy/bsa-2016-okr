@@ -13,19 +13,20 @@ class KeyResult extends Component {
 	}
 
 	editKeyResult(e){
-		if(this.props.objectivesList.editing && this.props.item._id == this.props.objectivesList.activeKeyResult){
+		if(this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult){
 			event.preventDefault();
 			let reqBody = {};
-		//	let keyResultDifficulty = this.refs.keyResultDifficulty.value;
+			let keyResultDifficulty = this.refs.keyResultDifficulty.value;
 			let keyResultTitle = this.refs.keyResultTitle.value;
-			console.log(keyResultTitle)
-		// 	reqBody.difficulty = keyResultDifficulty;
+
+		 	reqBody.difficulty = keyResultDifficulty;
 			reqBody.title = keyResultTitle;
+
 			this.props.editKeyResult(this.props.item._id, reqBody);
 		}
 		else {
-			this.props.activeKeyResult(this.props.item._id);
-			this.props.editObjective(true);
+			this.props.activeKeyResult(this.props.item._id, true);
+//			this.props.editKeyResult(true);
 		}
 	}
 
@@ -38,36 +39,33 @@ class KeyResult extends Component {
 	}
 
 	render() {
-		const {visibleObjectives, active, activeKeyResult, editing} = this.props.objectivesList;
-		if (editing && this.props.item._id == activeKeyResult){
-			console.log(this.props.item._id, activeKeyResult)
+    let titleEl;
+    let difficultyEl;
+    let edit;
+
+    if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
+      titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
+      difficultyEl = (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
+												<option>easy</option>
+												<option>intermediate</option>
+												<option>advanced</option>
+											</select>);
+      edit = 'editing';
+    } else {
+      titleEl = (<div className='name'>{this.props.item.title}</div>);
+      difficultyEl = (<div className='difficulty'>{this.props.item.difficulty}</div>);
+      edit = 'edit';
+    }
 			return (
 				<li className="key-result-item" >
-					<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>
-					<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
-						<option>easy</option>
-						<option>intermediate</option>
-						<option>advanced</option>
-					</select>
+					{titleEl}
+					{difficultyEl}
 					<div className='edit-key-result'>
-						<i className="fi flaticon-edit editing" aria-hidden="true" onClick={this.editKeyResult}></i>
+						<i className={"fi flaticon-edit " + edit} aria-hidden="true" onClick={this.editKeyResult}></i>
 						<i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
 					</div>
 				</li>
 			)
-		}
-		else {
-			return (
-				<li className="key-result-item" >
-					<div className='name'>{this.props.item.title}</div>
-					<div className='difficulty'>{this.props.item.difficulty}</div>
-					<div className='edit-key-result'>
-						<i className="fi flaticon-edit edit" aria-hidden="true" onClick={this.editKeyResult}></i>
-						<i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
-					</div>
-				</li>
-			)
-		}
 	}
 }
 function mapDispatchToProps(dispatch) {

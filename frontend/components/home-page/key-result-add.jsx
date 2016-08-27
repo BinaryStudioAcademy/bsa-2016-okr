@@ -28,6 +28,7 @@ class KeyResult extends React.Component {
 			};
 
 			this.props.addNewKeyResults(body);
+			this.props.onDeleteKeyResultClick();
 		}
 	};
 

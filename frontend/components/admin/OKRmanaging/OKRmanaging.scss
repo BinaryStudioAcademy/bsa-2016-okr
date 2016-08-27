@@ -48,6 +48,10 @@
             width: 80%;
             margin: 10px 0;
         }
+        .template-title{
+            width: 80%;
+            box-sizing: border-box;
+        }
 
         .name{
             display: inline-block;
@@ -95,6 +99,13 @@
             .change {
                 cursor: pointer;
                 padding: 5px 10px;
+            }
+            .keyResult-title{
+                width: 40%;
+            }
+            .keyResult-difficulty{
+                margin-left: 5%;
+                width: 130px;
             }
             .key-result-list{
                 margin-left: 10px;

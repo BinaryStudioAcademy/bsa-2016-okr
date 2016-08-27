@@ -7,21 +7,24 @@ export const RECEIVED_OBJECTIVES_LIST = 'RECEIVED_OBJECTIVES_LIST'
 
 export const SEARCH_OBJECTIVE = 'SEARCH_OBJECTIVE'
 export const ACTIVE_OBJECTIVE = 'ACTIVE_OBJECTIVE'
+export const ACTIVE_KEY_RESULT = 'ACTIVE_KEY_RESULT'
 
 export const DELETE_OBJECTIVE = 'DELETE_OBJECTIVE'
 export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
 export const SOFT_DELETE_OBJECTIVE = 'SOFT_DELETE_OBJECTIVE'
 
-export const EDIT_OBJECTIVE = 'EDIT_OBJECTIVE'
 export const EDIT_OBJECTIVE_TEMPLATE = 'EDIT_OBJECTIVE_TEMPLATE'
 export const RECIVED_EDIT_OBJECTIVE_TEMPLATE ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
+export const EDIT_OBJECTIVE_TEMPLATE_ERROR = 'EDIT_OBJECTIVE_TEMPLATE_ERROR'
+
 export const DELETE_KEY_RESULT_TEMPLATE = 'DELETE_KEY_RESULT_TEMPLATE'
 export const DELETE_KEY_RESULT_ERROR = 'DELETE_KEY_RESULT_ERROR'
 export const SOFT_DELETE_KEY_RESULT = 'SOFT_DELETE_KEY_RESULT'
+
 export const EDIT_KEY_RESULT = 'EDIT_KEY_RESULT'
-export const RECIVED_EDIT_KEY_RESULT ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
+export const RECIVED_EDIT_KEY_RESULT ='RECIVED_EDIT_KEY_RESULT'
 export const RECIVED_EDIT_KEY_RESULT_ERROR = 'RECIVED_EDIT_KEY_RESULT_ERROR'
-export const ACTIVE_KEY_RESULT = 'ACTIVE_KEY_RESULT'
+
 
 export function getObjectivesList(){
 	
@@ -128,14 +131,6 @@ export function activeObjective (active) {
 
 	return action;
 }
-export function editObjective (value) {
-	const action = {
-		type: EDIT_OBJECTIVE,
-		value
-	};
-
-	return action;
-}
 
 export function editObjectiveTemplate (id, reqBody) {
 	return(dispatch, getStore) => {
@@ -213,3 +208,4 @@ export function activeKeyResult(activeKeyResult) {
 
 	return action;
 }
+

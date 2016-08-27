@@ -8,12 +8,6 @@ import * as actions from "../../../../actions/okrManagingActions.js";
 class ObjectiveList extends React.Component{
   constructor(props){
     super(props);
-
-    this.activeObjective = this.activeObjective.bind(this)
-  }
-
-  activeObjective(index){
-    this.props.activeObjective(index)
   }
 
   componentWillMount(){
@@ -23,8 +17,7 @@ class ObjectiveList extends React.Component{
   render(){
     var objectives = [];
     objectives = this.props.objectivesList.map((objective, index) => {
-      return <ObjectiveData activeObjective={this.activeObjective} objective={objective}
-                            index={index} key={objective._id}/>
+      return <ObjectiveData objective={objective} index={index} key={objective._id}/>
       })
     return (
         <div id='tamplates'>

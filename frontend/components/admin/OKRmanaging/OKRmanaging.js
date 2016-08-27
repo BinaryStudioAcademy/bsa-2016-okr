@@ -38,7 +38,7 @@ render() {
 		</CentralWindow>
 		<StatPanel>
 			<div className="OKR-mnaging active objective">
-				<ActiveObjective />
+				{/*<ActiveObjective />*/}
 			</div>
 		</StatPanel>
 		</div>

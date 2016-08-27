@@ -14,6 +14,9 @@ class ObjectiveData extends React.Component{
   }
 
   editObjective(e){
+    let index = this.props.objectivesList.active;
+    let objective = this.props.objectivesList.visibleObjectives[index];
+
     if(this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index){
       event.preventDefault();
       let reqBody = {};
@@ -23,9 +26,11 @@ class ObjectiveData extends React.Component{
       reqBody.description = objectiveDesctiption;
       reqBody.title = objectiveTitle;
 
-      this.props.editObjectiveTemplate(this.props.objectivesList.visibleObjectives[this.props.objectivesList.active]._id, reqBody);
+      this.props.editObjectiveTemplate(objective._id, reqBody);
     }
-    else this.props.editObjective(true);
+    else {
+      this.props.activeObjective(this.props.index);
+    }
   }
 
   deleteObjective(){
@@ -34,10 +39,6 @@ class ObjectiveData extends React.Component{
       let i = this.props.objective._id;
       this.props.deleteObjective(i, true);
     }
-  }
-
-  activeObjective(){
-  	this.props.activeObjective(this.props.index)
   }
 
   render() {
@@ -49,21 +50,24 @@ class ObjectiveData extends React.Component{
     let titleEl;
     let descriptionEl;
     let categoryEl;
+    let edit;
 
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
       titleEl = (<input type='text' className='template-title' defaultValue={this.props.objective.title} />);
       descriptionEl = (<textarea className='template-description' defaultValue={this.props.objective.description} />);
+      edit = 'editing';
     } else {
       titleEl = (<div className='name'>{this.props.objective.title}</div>);
       descriptionEl = (<div className='description'>{this.props.objective.description}</div>);
+      edit = 'edit';
     }
 
 		return (
       <div>
-        <div className='objective-template' onClick={this.activeObjective.bind(this)}>
+        <div className='objective-template'>
               <form onSubmit={this.editObjective}>
               <div className='edit-objective'>
-                    <i className="fi flaticon-edit editing" aria-hidden="true" onClick={this.editObjective}></i>
+                    <i className={"fi flaticon-edit " + edit} aria-hidden="true" onClick={this.editObjective}></i>
                     <i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
               </div>
               <div className='category'>{ category.title }</div>
