@@ -119,7 +119,7 @@ class ObjectiveInput extends React.Component{
             <div className="new-obj-creds">
               <div className="title-group">
 
-                  <section>
+                  <section className="autocomplete undisplay">
                       <AutocompleteInput
                           handleAddNewObjective={this.handleAddNewObjective}
                           getAutocompleteData={this.getAutocompleteData}

@@ -94,6 +94,12 @@ class AutocompleteInput extends React.Component {
 						key={i}
 						data-value={item._id}>
 						<div className="autocomplete-result-item-text">{item.title}</div>
+
+						{(('difficulty' in item) ?
+								(<div className="difficulty">{item.difficulty}</div>)	:
+								('')
+						)}
+
 					</li>;
 				}, this)) :
 				(

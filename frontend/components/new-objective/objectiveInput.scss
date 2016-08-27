@@ -18,14 +18,22 @@
   .title-group{
     position: relative;
 
-    section {
+    .autocomplete {
       padding-bottom: 10px;
       width: 100%;
       display: table;
 
-      div {
-        display: table-cell;
-        width: 100%;
+      //write this style for any div in className (for example button) {
+      //  display: table-cell;
+      //  width: 100%;
+      //}
+
+      .display {
+        display: block;
+      }
+
+      .undisplay {
+        display: none;
       }
     }
   }
