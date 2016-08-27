@@ -30,14 +30,13 @@ class NewObjCredentials extends React.Component{
       reqBody.category = objectiveCategory;
       reqBody.keyResult = [];
 
-      console.log(reqBody)
       this.props.createNewTemplate(reqBody);
       
       document.querySelector("textarea#new-obj-desc").value = '';
       document.querySelector("input#new-obj-title").value = '';
       this.props.handleCloseNewObjView();     
     }
-    
+
    render(){
       return(
          <div id="new-obj-creds">

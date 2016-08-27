@@ -208,9 +208,12 @@ function updateVisibleItems(visibleObjectives, objectives, searchValue){
     }
     else {
         for (let i = 0; i < newObjectivesList.length; i++) {
-            if (newObjectivesList[i].title.toUpperCase().indexOf(searchValue.toUpperCase()) !== -1) {
-                objectivesAfterInputFilter.push(newObjectivesList[i])
-            }
+            let title = newObjectivesList[i].title.split(' ');
+            for (let j=0; j < title.length; j++)
+                if (title[j].toUpperCase().indexOf(searchValue.toUpperCase()) === 0) {
+                    objectivesAfterInputFilter.push(newObjectivesList[i])
+                    break;
+                }
         }
     }
     return objectivesAfterInputFilter;
