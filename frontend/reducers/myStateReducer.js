@@ -1,4 +1,5 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
+import { currentYear, currentQuarter } from '../../backend/config/constants';
 import {
   RECEIVED_MY_OBJECTIVES_ERROR,
   RECEIVED_MY_OBJECTIVES,
@@ -6,7 +7,9 @@ import {
   CHANGE_YEAR,
   CREATE_QUARTER,
   SOFT_DELETE_MY_OBJECTIVE_BY_ID,
-  ADDED_NEW_OBJECTIVE
+  ADDED_NEW_OBJECTIVE,
+  CHANGED_KEYRESULT_SCORE,
+  CHANGED_KEYRESULT_SCORE_ERROR,
 } from '../actions/myStateActions';
 
 import {
@@ -14,8 +17,8 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
-    currentTab: getQuarter(),
-    currentYear: getYear(),
+    currentTab: currentQuarter,
+    currentYear: currentYear,
     existedQuarters: getExistedQuarters(),
     me: {
 		    "localRole": ""
@@ -41,8 +44,8 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
-				currentTab: getQuarter(),
-        currentYear: getYear()
+				currentTab: currentQuarter,
+        currentYear: currentYear
 			});
 		}
 
@@ -132,35 +135,33 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			})
 		}
 
+		case CHANGED_KEYRESULT_SCORE: {
+			let { data } = action;
+			let { objectiveId, keyResultId, score } = data;
+
+			return Object.assign({}, state, {
+				me: setScoreToKeyResult(objectiveId, keyResultId, score),
+			});
+		}
+
+		case CHANGED_KEYRESULT_SCORE_ERROR: {
+			let { data } = action;
+
+			console.log(CHANGED_KEYRESULT_SCORE_ERROR);
+			console.log(data);
+			
+			return state
+		}
+
 		default: {
 			return state;
 		}
 	}
 }
 
-function getYear(){
-    let today = new Date();
-    return today.getFullYear()
-}
-
-function getQuarter(){
-    let today = new Date();
-    let first = new Date('2016-03-31T10:42:12.643Z'),
-        second = new Date('2016-06-30T10:42:12.643Z'),
-        third = new Date('2016-09-30T10:42:12.643Z');
-    if (today < first)
-        return 1;
-    else if (today >= first && today <= second)
-        return 2;
-    else if(today > second && today <= third)
-        return 3;
-    else if(today > third)
-        return 4;
-}
-
 function getExistedQuarters(){
 	let quarters = [];
-	for(let i = 1, currentQuarter = getQuarter(); i <= currentQuarter; i++){
+	for(let i = 1; i <= currentQuarter; i++) {
 		quarters.push(i);
 	}
 
@@ -176,7 +177,55 @@ function deleteObjectiveFromMe(me, id) {
 			}
 		}
 	});
-	return meCopy
+	return meCopy;
+}
+
+function setScoreToKeyResult(objectiveId, keyResultId, score) {
+	const meCopy = Object.assign({}, me);
+
+	let quarterIndex, userObjectiveIndex, keyResultIndex;
+
+	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
+		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
+			return userObjective._id === userObjectiveId 
+		});
+
+		if(userObjectiveFoundedIndex !== -1) {
+			userObjectiveIndex = userObjectiveFoundedIndex;
+			return true;
+		}
+		
+		return false;
+	});
+
+	if(quarterFoundedIndex !== -1) {
+		quarterIndex = quarterFoundedIndex;
+
+		let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
+			return keyResult._id === keyResultId;
+		});
+
+		if(keyResultFoundedIndex !== -1) {
+			keyResultIndex = keyResultFoundedIndex;
+			meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
+		}
+	}
+
+	meCopy.quarters.some((quarter) => {
+		return quarter.userObjectives.some((userObjective) => {
+			if(userObjective._id === objectiveId) {
+				let saved = userObjective.keyResults.some((keyResult) => {
+
+				});
+				
+				return saved;
+			}
+			
+			return false;
+		})
+	});
+
+	return meCopy;
 }
 
 function addNewObjectiveToMe(me, quarterId, objective) {
@@ -194,7 +243,7 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 
 	meCopy.quarters.forEach((quarter) => {
 		let index = quarter.userObjectives.findIndex((userObjective) => {
-			return userObjective._id == objectiveId
+			return userObjective._id == objectiveId;
 		});
 
 		if (index !== -1) {

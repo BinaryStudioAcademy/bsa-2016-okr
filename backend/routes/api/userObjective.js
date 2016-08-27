@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const adminOnly = require('../adminOnly');
-const ValidateService = require('../../utils/ValidateService');
 const repository = require('../../repositories/userObjective');
 const session = require('../../config/session');
 const service = require('../../services/userObjective');
+const ValidateService = require('../../utils/ValidateService');
+const isCorrectId = ValidateService.isCorrectId;
+const isEmpty = ValidateService.isEmpty;
 
 // TODO: Body validation and separate logic for adding by templateId and new
 // NOT ready yet!
@@ -25,7 +27,7 @@ router.post('/', (req, res, next) => {
 		|| ValidateService.isEmpty(keyResult.title)
 	});
 */
-	if( ValidateService.isEmpty(title) || !ValidateService.isCorrectId(category))
+	if( isEmpty(title) || !isCorrectId(category))
 
 	{
 		return res.badRequest();
@@ -85,9 +87,9 @@ router.post('/:id/keyresult/', (req, res, next) => {
 
 	title = title.trim();
 	
-	if(!ValidateService.isCorrectId(objectiveId)
-	|| (ValidateService.isEmpty(title) && ValidateService.isEmpty(keyResultId))
-	|| (!ValidateService.isEmpty(keyResultId) && !ValidateService.isCorrectId(keyResultId))) {
+	if(!isCorrectId(objectiveId)
+	|| (isEmpty(title) && isEmpty(keyResultId))
+	|| (!isEmpty(keyResultId) && !isCorrectId(keyResultId))) {
 		return res.badRequest();
 	}
 
@@ -102,10 +104,37 @@ router.post('/:id/keyresult/', (req, res, next) => {
 	service.addKeyResult(data, res.callback);
 });
 
+router.put('/:id/keyresult/score', (req, res, next) => {
+	console.log('On server in route ', '/:id/keyresult/score');
+	let userId = req.session._id;
+	let objectiveId = req.params.id || '';
+	let keyResultId = req.body.keyResultId || '';
+	let score = req.body.score || '';
+	console.log('Received body', req.body);
+	console.log('-----------------------');
+
+	score = Number.parseFloat(score);
+
+	if(!isCorrectId(objectiveId)
+	|| !isCorrectId(keyResultId)
+	|| Number.isNaN(score)) {
+		return res.badRequest();
+	}
+
+	score = Number.parseFloat(score.toFixed(1));
+	console.log(score);
+
+	if (score < 0 || score > 1) {
+		return res.badRequest('Score should be from 0.1 to 1.0');
+	}
+
+	service.setScoreToKeyResult(userId, objectiveId, keyResultId, score, res.callback);
+});
+
 router.get('/:id', (req, res, next) => {
 	var id = req.params.id;
 
-	if(!ValidateService.isCorrectId(id)) {
+	if(!isCorrectId(id)) {
 		return res.badRequest();
 	};
 
@@ -117,7 +146,7 @@ router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
 	var body = req.body;
 
-	if(!ValidateService.isCorrectId(id)) {
+	if(!isCorrectId(id)) {
 		return res.badRequest();
 	};
 
@@ -127,7 +156,7 @@ router.put('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
 	var id = req.params.id;
 
-	if(!ValidateService.isCorrectId(id)) {
+	if(!isCorrectId(id)) {
 		return res.badRequest();
 	};
 

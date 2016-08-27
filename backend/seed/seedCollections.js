@@ -183,12 +183,12 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 		keyResults[userKeyResultIndex].used += 1;
 
-	    let keyIsDeleted =  chance.pickone([false, false, false, true]);
+		let keyIsDeleted =  chance.pickone([false, false, false, true]);
 		let keyDeletedDate = null;
 		let keyDeletedBy = null;
 
-	    if (keyIsDeleted) {
-		
+		if (keyIsDeleted) {
+
 			keyDeletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 			
 			let isDone = false;
@@ -203,7 +203,7 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 			keyDeletedBy = users[userWhoDidDeletionIndex]._id;
 
-	    }
+		}
 
 		return {
 			templateId: userKeyResult._id,
@@ -324,6 +324,27 @@ function getQuarters(users, userObjectives) {
 	return res;
 }
 
+function setArchivedToUserObjectives(userObjectives, quarters) {
+	let currentYear = CONST.currentYear;
+	let currentQuarter = CONST.currentQuarter;
+
+	let pastQuarters = quarters.filter((quarter) => {
+		return quarter.year <= currentYear && quarter.index < currentQuarter
+	});
+
+	pastQuarters.forEach((quarter) => {
+		quarter.userObjectives.forEach((userObjectiveId) => {
+			let index = userObjectives.findIndex((userObjective) => {
+				return userObjective._id.equals(userObjectiveId);
+			});
+
+			userObjectives[index].isArchived = true;
+		});
+	});
+
+	return userObjectives;
+}
+
 function randomUserInfo(users) {
 	var info = {
 		firstName: chance.first(),
@@ -368,6 +389,7 @@ module.exports = function () {
 		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
 
+		userobjectives = setArchivedToUserObjectives(userobjectives, quarters);
 		objectives = setDefaultKeyResultsForObjectives(objectives, keyresults);
 
 		var roles = [];
