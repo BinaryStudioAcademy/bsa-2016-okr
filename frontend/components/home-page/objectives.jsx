@@ -33,6 +33,7 @@ class Objectives extends Component {
 
 		if(confirmation) {
 			this.props.createQuarter(newQuarter);
+			this.changeTab(newQuarter);
 		}
 	}
 
