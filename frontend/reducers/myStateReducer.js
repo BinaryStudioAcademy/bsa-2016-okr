@@ -102,7 +102,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
         },
         updatedAt: response.updatedAt,
         userId: response.updatedAt
-      }
+      };
 
       return Object.assign({}, state, {
         me: addNewObjectiveToMe(state.me, request.quarterId, objective)
@@ -140,7 +140,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			let { objectiveId, keyResultId, score } = data;
 
 			return Object.assign({}, state, {
-				me: setScoreToKeyResult(objectiveId, keyResultId, score),
+				me: setScoreToKeyResult(state.me, objectiveId, keyResultId, score),
 			});
 		}
 
@@ -180,14 +180,16 @@ function deleteObjectiveFromMe(me, id) {
 	return meCopy;
 }
 
-function setScoreToKeyResult(objectiveId, keyResultId, score) {
+function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
 	const meCopy = Object.assign({}, me);
 
-	let quarterIndex, userObjectiveIndex, keyResultIndex;
+	let quarterIndex = -1;
+	let	userObjectiveIndex = -1;
+	let	keyResultIndex = -1;
 
 	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
 		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
-			return userObjective._id === userObjectiveId 
+			return userObjective._id === objectiveId
 		});
 
 		if(userObjectiveFoundedIndex !== -1) {
@@ -201,29 +203,17 @@ function setScoreToKeyResult(objectiveId, keyResultId, score) {
 	if(quarterFoundedIndex !== -1) {
 		quarterIndex = quarterFoundedIndex;
 
-		let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
-			return keyResult._id === keyResultId;
-		});
+		if (userObjectiveIndex !== -1) {
+			let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
+				return keyResult._id === keyResultId;
+			});
 
-		if(keyResultFoundedIndex !== -1) {
-			keyResultIndex = keyResultFoundedIndex;
-			meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
+			if (keyResultFoundedIndex !== -1) {
+				keyResultIndex = keyResultFoundedIndex;
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
+			}
 		}
 	}
-
-	meCopy.quarters.some((quarter) => {
-		return quarter.userObjectives.some((userObjective) => {
-			if(userObjective._id === objectiveId) {
-				let saved = userObjective.keyResults.some((keyResult) => {
-
-				});
-				
-				return saved;
-			}
-			
-			return false;
-		})
-	});
 
 	return meCopy;
 }

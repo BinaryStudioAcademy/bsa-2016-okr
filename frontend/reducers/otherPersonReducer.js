@@ -7,7 +7,7 @@ const initialState = {
     currentYear: getYear()
 }
 
-export default function patentDetailsReducer(state = initialState, action) {
+export default function otherPersonReducer(state = initialState, action) {
     
     switch (action.type) {
         case GET_USER: {

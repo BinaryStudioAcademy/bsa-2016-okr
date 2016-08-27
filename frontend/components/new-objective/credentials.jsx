@@ -4,7 +4,7 @@ import NewKeyResult from './key-result.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/newTemplateActions.js";
+import * as actions from "../../actions/okrManagingActions.js";
 
 class NewObjCredentials extends React.Component{
    constructor(props){
@@ -28,11 +28,16 @@ class NewObjCredentials extends React.Component{
       reqBody.description = objectiveDesctiption;
       reqBody.title = objectiveTitle;
       reqBody.category = objectiveCategory;
+      reqBody.keyResult = [];
 
-      this.props.editObjectiveTemplate(objective._id, reqBody);
-    
-      this.props.activeObjective(this.props.index);
+      console.log(reqBody)
+      this.props.createNewTemplate(reqBody);
+      
+      document.querySelector("textarea#new-obj-desc").value = '';
+      document.querySelector("input#new-obj-title").value = '';
+      this.props.handleCloseNewObjView();     
     }
+    
    render(){
       return(
          <div id="new-obj-creds">
@@ -66,7 +71,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    newTemplate: state.newTemplate,
+    okrManaging: state.okrManaging,
     categories: state.categories
   };
 }

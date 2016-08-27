@@ -22,13 +22,12 @@ class ObjectiveData extends React.Component{
       let reqBody = {};
       let objectiveDesctiption = document.querySelector("textarea.template-description").value;
       let objectiveTitle = document.querySelector("input.template-title").value;
-      let objectiveCategory = document.querySelector("select.template-category").value;
+      let objectiveCategory = this.refs.selectCategory.value;
 
       reqBody.description = objectiveDesctiption;
       reqBody.title = objectiveTitle;
       reqBody.category = objectiveCategory
-      console.log(reqBody)
-
+      
       this.props.editObjectiveTemplate(objective._id, reqBody);
     }
     else {
@@ -45,6 +44,7 @@ class ObjectiveData extends React.Component{
   }
 
   render() {
+    console.log(this.props.objective)
     let categoryId = this.props.objective.category;
     let category = this.props.categories.list.find((category) => {
       return category._id === categoryId;
@@ -58,7 +58,7 @@ class ObjectiveData extends React.Component{
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
       titleEl = (<input type='text' className='template-title' defaultValue={this.props.objective.title} />);
       descriptionEl = (<textarea className='template-description' defaultValue={this.props.objective.description} />);
-      categoryEl = (<select className='template-category' defaultValue={categoryId}>
+      categoryEl = (<select className='template-category' ref='selectCategory' defaultValue={categoryId}>
                         { this.props.categories.list.map((category, index) => {
                           return <option key={index} value={category._id}>{category.title}</option>
                         })}
