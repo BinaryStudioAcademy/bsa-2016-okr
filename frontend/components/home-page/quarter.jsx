@@ -31,6 +31,7 @@ class Quarter extends Component {
    handleAddingNewQuarter(event){
       let quarter_id = parseInt(event.target.dataset.id);
       this.props.addNewQuarter(quarter_id);
+      this.props.changeTab(quarter_id);
    }
 
 
