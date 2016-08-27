@@ -1,5 +1,6 @@
 import React from 'react';
 import './autocomplete-input.scss';
+import { debounce } from '../../../backend/utils/HelpService';
 
 class AutocompleteInput extends React.Component {
 	constructor(props) {
@@ -12,28 +13,14 @@ class AutocompleteInput extends React.Component {
 		this.onBlur = this.onBlur.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.onClickLi = this.onClickLi.bind(this);
-		this.debounce = this.debounce.bind(this);
-		this.getData = this.debounce(this.getData.bind(this), 500);
+		this.getData = debounce(this.getData.bind(this), 500);
 	}
 
 	// Returns a function, that, as long as it continues to be invoked, will not
 	// be triggered. The function will be called after it stops being called for
 	// N milliseconds. If `immediate` is passed, trigger the function on the
 	// leading edge, instead of the trailing.
-	debounce(func, wait, immediate) {
-		var timeout;
-		return function () {
-			var context = this, args = arguments;
-			var later = function () {
-				timeout = null;
-				if (!immediate) func.apply(context, args);
-			};
-			var callNow = immediate && !timeout;
-			clearTimeout(timeout);
-			timeout = setTimeout(later, wait);
-			if (callNow) func.apply(context, args);
-		};
-	};
+
 
 	getData(title) {
 		this.props.getAutocompleteData(title);
