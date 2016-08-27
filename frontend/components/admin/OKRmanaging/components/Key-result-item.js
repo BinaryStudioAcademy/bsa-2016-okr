@@ -63,8 +63,8 @@ class KeyResult extends Component {
 				<li className="key-result-item" >
 					{titleEl}
 					<div className='edit-key-result'>
-						<i className={"fi flaticon-edit " + edit} aria-hidden="true" onClick={this.editKeyResult}></i>
-						<i className="fi flaticon-garbage-2 delete" aria-hidden="true" onClick={this.deleteObjective}></i>
+						<i className={"fi flaticon-edit " + edit} aria-hidden="true" title='Edit' onClick={this.editKeyResult}></i>
+						<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>
 					</div>
 					{difficultyEl}
 				</li>

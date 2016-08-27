@@ -7,39 +7,45 @@
 		padding-right: 0;
 	}
 	.objective{
-		margin: 30px 0 20px;
-		padding: 5px 15px 30px;
-		background: lighten($color-blue-grey, 52%);
-		border: 1px solid #dddddd;
-		border-radius: 3px;
-		min-height: 100px;
-		box-sizing: border-box;
+		position: relative;
+		margin: 0;
+    padding: 17px 17px 45px;
+    background: lighten($color-blue-grey, 52%);
+    border: 1px solid #ddd;
+    border-radius: 3px 3px 0 3px;
+    min-height: 90px;
+    box-sizing: border-box;
 
 		.name{
 			display: inline-block;
-			margin-bottom: 10px;
-			font-size: 18px;
-			font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: 700;
+
 		}
 
 		.clone{
-			clear: both;
-			float: right;
+			position: absolute;
+			bottom: 20px;
+			right: 15px;
 			font-size: 14px;
 			padding: 5px 10px;
-			margin-top: 20px;
-			margin-right: 0px;
 			cursor: pointer;
+			z-index: 2;
 		}
 		.progress-bar{
-			padding-top: 6px;
+			padding-top: 0px;
 			margin-right: 40px;
 			.progressValue {
-				top: 10px;
+				top: 4px;
 			}
 		}
 		.description {
-			margin-bottom: 10px;
+			color: #777;
+	    font-size: 15px;
+	    margin-bottom: 15px;
+	    width: 75%;
+	    line-height: 18px;
 		}
 		
 		.objective-info {
@@ -56,25 +62,18 @@
 		}
 	}
 	.otherUserKR{
-		margin-top: -50px;
 		.users-key-results{
-			margin-left: 17px;
-			.key-results-arrow {
-				padding-left: 5px;
-			}
-			.easy{
-				display: inline-block;
-			}
-			.intermediate{
-
-			}
-			.advanced{
-
-			}
+			margin-top: -48px;
+    	position: relative;
+    	margin-left: 18px;
+    	margin-bottom: 40px;
+    	.key-result-details{
+        margin-top: 20px;
+        margin-bottom: -20px;
+      }
 			.change {
-				color: $color-blue;
 				cursor: pointer;
-				font-weight: bold;
+        padding: 5px 10px;
 			}
 			.key-result-details span{
 				color: #000;
@@ -87,37 +86,44 @@
 			.undisplay{
 				display: none;
 			}
-			.key-result-details{
-				margin-left: -17px;
-			}
+			
 			ul {
-				width: 100%;
-				margin: 10px 0 0;
-				padding: 0px;
-				list-style: none;
-				li:last-child{
-					border-bottom: 1px solid #ddd;
-				}
+				 width: 100%;
+         margin: 0;
+         padding: 0px;
+         list-style: none;
+				
 				.user-key-result{
-					padding: 10px 15px;
-					background: lighten($color-blue-grey, 52%);
-					border: 1px solid #ddd;
-					border-bottom: none; 
-					border-top: none;
+					position: relative;
+					border: 1px solid #c5c5c5;
+          border-top: none;
+          background-color: #eaeaea;
+          padding: 10px 15px;
 				
 					div{
 						display: inline-block;
 					}
 					.name{
-						width: 45%;
+						width: 65%;
 					}
 					.difficulty{
-						font-size: 14px;
-						width: calc(53% - 2.1em);
-					}
+          	font-size: 13px;
+          	padding: 2px 6px;
+          	background-color:  $color-blue-grey;
+          	color: #fff;
+          	border-radius: 2px;
+          	margin-right: 60px;
+          	float: right;
+          	display: inline-block;
+          }
 
 					.score {
-						box-sizing: border-box;					
+						position: absolute;
+						top: 6px;
+						right: 15px;
+						display: block;
+						box-sizing: border-box;		
+						font-size: 15px;			
 						background: $color-green;
 						border: 1px solid $color-green;
 						border-radius: .3em;
@@ -126,7 +132,6 @@
 						width: 2.1em;
 						line-height: 1.5em;
 						text-align: center;
-						font-weight: bold;
 						color: $color-white;
 					}
 				}
