@@ -41,7 +41,7 @@ class RecycleBinFilter extends Component {
 
 		return(
 			<div>
-			
+
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
 				<div className="filter-box clearfix">
 						<div>
@@ -65,8 +65,27 @@ class RecycleBinFilter extends Component {
 						    </td>
 							<td className="cell-right-align">Date: </td>
 							<td>
-								<DateField className="date-field" id="date-from" ref="dateFrom" placeholder="From" dateFormat="YYYY-MM-DD" onChange={this.onChangeFrom} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
-								<DateField className="date-field" id="date-to" placeholder="To" dateFormat="YYYY-MM-DD" onChange={this.onChangeTo} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
+								<DateField
+									className="date-field"
+									id="date-from"
+									ref="dateFrom"
+									placeholder="From"
+									dateFormat="YYYY-MM-DD"
+									onChange={this.onChangeFrom}
+									footer={false}
+									updateOnDateClick={true}
+									collapseOnDateClick={true}
+									theme={false}/>
+								<DateField
+									className="date-field"
+									id="date-to"
+									placeholder="To"
+									dateFormat="YYYY-MM-DD"
+									onChange={this.onChangeTo}
+									footer={false}
+									updateOnDateClick={true}
+									collapseOnDateClick={true}
+									theme={false}/>
 							</td>
 							<td>User Name: </td>
 							<td>
@@ -85,7 +104,7 @@ class RecycleBinFilter extends Component {
 				</table>
 			</div>
 			</div>
-			
+
 		)
 	}
 
