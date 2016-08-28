@@ -42,7 +42,7 @@ export default class DashboardStats extends React.Component {
                     </table>
                     <table className="second">
                         <tr><td>..........</td><td>...</td></tr>
-                        <tr><td>Bottom result</td><td>{Math.round(this.state.bottom.totalScore*100)+'%'}</td></tr>
+                        <tr><td>Lowest result</td><td>{Math.round(this.state.bottom.totalScore*100)+'%'}</td></tr>
                     </table>
                 </div>
             </div>

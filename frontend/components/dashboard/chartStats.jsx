@@ -8,7 +8,7 @@ export default class ChartStats extends React.Component {
             title: this.props.title,
             backgroundColor: 'transparent',
             hAxis: { title: 'Score', format: 'percent', ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] },
-            colors: ["#99BCE0"]
+            colors: [this.props.color]
         };
     }
 

@@ -34,8 +34,8 @@ export default class BarStats extends React.Component {
     render() {
         return (
             <div className="barStats">
-                <ChartStats title = "Chart by categories" data={[['Category', 'AVG Score']].concat(this.state.categories.map(this.toArray)) } />
-                <ChartStats title = "Chart by difficulty" data = {[['Difficulty', 'AVG Score']].concat(this.state.keyResults.map(this.toArray)) } />
+                <ChartStats title = "Chart by categories" color="#99BCE0" data={[['Category', 'AVG Score']].concat(this.state.categories.map(this.toArray)) } />
+                <ChartStats title = "Chart by difficulty" color="#C5CAFC" data = {[['Difficulty', 'AVG Score']].concat(this.state.keyResults.map(this.toArray)) } />
             </div>
         )
     }
