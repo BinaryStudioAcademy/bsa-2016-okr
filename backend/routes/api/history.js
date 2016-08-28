@@ -7,7 +7,7 @@ const service = require('../../services/history');
 var async = require('async');
 
 router.get('/', (req, res, next) => {
-	repository.getAll(res.callback);
+	repository.getHistory(res.callback);
 });
 
 router.put('/', (req, res, next) => {
@@ -42,7 +42,7 @@ router.put('/', (req, res, next) => {
 			return callback(null, result)
 		}
 	], (err, result) => {
-		res.callback(null, result);
+		return res.callback(null, result);
 	})
 })
 
@@ -57,16 +57,44 @@ router.get('/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	repository.getById(id, res.callback);
+	repository.getHistoryById(id, res.callback);
 });
 
 router.get('/user/:id', (req, res, next) => {
-	var id = req.params.id;
+	var id = session._id;
 
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
 
-	repository.getByAuthorId(id, res.callback);
+	
+	async.waterfall([
+		(callback) => {
+			service.getUserHistory(id, (err, historyList) => {
+				if(err)
+					return callback(err, null);
+				console.log(`----------------------get this shit `);
+				console.log(historyList);
+				return callback(null, historyList)
+			})
+		},
+		(historyList, callback) => {
+			if(historyList.length > 0)
+				service.sortBy(historyList, 'date', true, (err, historyList) => {
+					if(err)
+						return callback(err, null);
+					console.log(`----------------------sorted to this shit ${historyList}`);
+					
+					return callback(null, historyList)
+				})
+			else {
+				historyList = ['empty'];
+				return callback(null, historyList)
+			}
+		}
+
+	], (err, result) => {
+		return res.callback(null, result);
+	})
 });
 module.exports = router;

@@ -19,18 +19,17 @@ class UserDashboard extends React.Component{
 	}
 
 	componentWillMount() {
-		console.log(this.props.userDashboard);
+		this.props.getMyHistory();
 	}
 
 	isVisibleContent() {
-		console.log('done');
+		
 		if(this.props.userDashboard.tabIndex === 1)
 			return "showContent"
 		else return "hideContent"
 	}
 
 	getView() {
-		console.log('-----------mounted-----------');
 		switch (this.props.userDashboard.tabIndex) {
 			case 1:
 				//return <UserHistory/>

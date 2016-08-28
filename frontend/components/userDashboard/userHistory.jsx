@@ -27,36 +27,36 @@ class UserHistory extends React.Component{
 	}
 
 	getHistoryType(item) {
-		let object = item.type.split(' ')[1];
-		if(item.type.indexOf('add') != -1)
+		let object = item.type.slice(item.type.indexOf(' ') + 1);
+		if(item.type.indexOf('ADD') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">{item.author}</p>
+					<p className="author-name">{item.authorId.userInfo.firstName} {item.authorId.userInfo.lastName}</p>
 					<p className="action-description">added {object}</p>
 				</div>
 			)
-		else if (item.type.indexOf('update') != -1)
+		else if (item.type.indexOf('UPDATE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">{item.author}</p>
+					<p className="author-name">{item.authorId.userInfo.firstName} {item.authorId.userInfo.lastName}</p>
 					<p className="action-description">updated {object}</p>
 				</div>
 			)
-		else if (item.type.indexOf('delete') != -1)
+		else if (item.type.indexOf('DELETE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">{item.author}</p>
+					<p className="author-name">{item.authorId.userInfo.firstName} {item.authorId.userInfo.lastName}</p>
 					<p className="action-description">deleted {object}</p>
 				</div>
 			)
 	}
 
 	getIconType(item){
-		if(item.type.indexOf('add') != -1)
+		if(item.type.indexOf('ADD') != -1)
 			return "fa fa-plus-square typeIcon green"
-		else if (item.type.indexOf('update') != -1)
+		else if (item.type.indexOf('UPDATE') != -1)
 			return "fa fa-pencil-square typeIcon orange"
-		else if (item.type.indexOf('delete') != -1)
+		else if (item.type.indexOf('DELETE') != -1)
 			return "fa fa-minus-square typeIcon red"
 	}
 

@@ -46,7 +46,7 @@ UserObjectiveService.prototype.add = function(data, quarterId, callback){
 			})
 		},
 		(objective, callback) => {
-			HistoryRepository.addObjectiveEvent(objective.creator, objective._id, "add user Objective", (err) => {
+			HistoryRepository.addUserObjective(objective.creator, objective._id, CONST.history.type.ADD, (err) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -70,7 +70,7 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 			})
 		},
 		(oldObjective, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "update user Objective", (err) => {
+			HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -94,7 +94,7 @@ UserObjectiveService.prototype.delete = function(authorId, objectiveId, callback
 			})
 		},
 		(objective, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "delete user Objective", (err) => {
+			HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.HARD_DELETE, (err) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -157,7 +157,10 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 			})
 		},
 		(keyResult, callback) => {
-			// Add history userObjective update event
+			HistoryRepository.addUserKeyResult(authorId, keyResult, CONST.history.type.ADD, (err)=>{
+				if(err)
+					return callback(err,null);
+			});
 
 			return callback(null, keyResult);
 		}
@@ -278,6 +281,13 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 					score: userObjective.keyResults[index].score
 				});
 			});
+		},
+		(result, callback) => {
+			HistoryRepository.setScoreToKeyResultPopulate(userId, result, CONST.history.CHANGE_SCORE, (err) =>{
+				if (err)
+					return callback(err, null);
+			})
+			return callback(null, result);
 		}
 	], (err, result) => {
 		return callback(err, result);

@@ -35,17 +35,12 @@ CategoryService.prototype.add = function(userId, data, callback) {
 			});
 		},
 		(category, callback) =>{
-			var historyEvent = {
-				authorId: userId,
-				categoryId: category._id,
-			};
-
-			HistoryRepository.addCategoryEvent(historyEvent, CONST.history.type.ADD, (err, history) => {
+			HistoryRepository.addCategoryEvent(userId, category._id, CONST.history.type.ADD, (err, history) => {
 				if(err) {
 					return callback(err, null);
 				}
 
-				return callback(null);
+				return callback(null, category);
 			});
 		},
 	], (err, result) => {
@@ -75,13 +70,8 @@ CategoryService.prototype.softDelete = function(userId, categoryId, data, callba
 			}
 			
 			let type = data.isDeleted ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
-			
-			var historyEvent = {
-				authorId: userId,
-				categoryId: category._id,
-			};
 
-			HistoryRepository.addCategoryEvent(historyEvent, type, (err, history) => {
+			HistoryRepository.addCategoryEvent(userId, category._id, type, (err, history) => {
 				if(err) {
 					return callback(err, null);
 				}
@@ -110,15 +100,10 @@ CategoryService.prototype.delete = function (userId, categoryId, callback) {
 				return callback(null, result);
 			 });
 		},
-		(result, callback) =>{
-			var historyEvent = {
-				authorId: userId,
-				categoryId: categoryId,
-			};
-			
+		(result, callback) =>{		
 			let type = CONST.history.type.HARD_DELETE;
 			
-			HistoryRepository.addCategoryEvent(historyEvent, type, (err, history) => {
+			HistoryRepository.addCategoryEvent(userId, categoryId, type, (err, history) => {
 				if(err) {
 					return callback(err, null);
 				}
@@ -148,14 +133,9 @@ CategoryService.prototype.update = function (userId, categoryId, data, callback)
 			});
 		},
 		(category, callback) => {
-			var historyEvent = {
-				authorId: userId,
-				categoryId: category._id,
-			};
-
 			let type = CONST.history.type.UPDATE;
 
-			HistoryRepository.addCategoryEvent(historyEvent, type, (err, history) => {
+			HistoryRepository.addCategoryEvent(userId, category._id, type, (err, history) => {
 				if(err) {
 					return callback(err, null)
 				}
