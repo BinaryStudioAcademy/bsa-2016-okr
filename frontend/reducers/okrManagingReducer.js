@@ -255,11 +255,11 @@ function updateVisibleItems(visibleObjectives, objectives, searchValue){
     }
     else {
         for (let i = 0; i < newObjectivesList.length; i++) {
-            let title = newObjectivesList[i].title.split(' ');
-            for (let j=0; j < title.length; j++)
+          /*  let title = newObjectivesList[i].title.split(' ');
+            for (let j=0; j < title.length; j++)*/
                 if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0)
                     objectivesAfterInputFilter.push(newObjectivesList[i])
-                break;
+               /* break;*/
                 
         }
     }
