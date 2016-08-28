@@ -43,7 +43,7 @@ class RecycleBin extends Component {
   	}
 
 	renderItems(items, ref) {
-  		return ( <tr ref={ref}>{items}</tr>)
+  		return ( <tr className="no-hover" ref={ref}>{items}</tr>)
   	}
 
 	render() {
