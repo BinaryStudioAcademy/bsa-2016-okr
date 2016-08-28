@@ -19,7 +19,14 @@ class UserDashboard extends React.Component{
 	}
 
 	componentWillMount() {
-		this.props.getMyHistory();
+		this.props.getMyHistory(this.props.where)
+	}
+	componentDidUpdate() {
+		//this.props.getMyHistory();
+	}
+	componentWillUnmount() {
+		console.log('component unmounted')
+		this.props.clearUserDashboardState();
 	}
 
 	isVisibleContent() {
@@ -75,7 +82,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		userDashboard: state.userDashboard
+		userDashboard: state.userDashboard,
+		myState: state.myState
 	};
 }
 

@@ -99,13 +99,21 @@ HistoryRepository.prototype.getUserObjectiveHistoryPopulate = function (id, call
 
 	model
 		.find({userObjective: id})
-		.populate('userObjective')
 		.populate({
 			path: 'author',
 			populate: {
 				path: 'userInfo'
 			}
 		}) 
+		.populate({
+			path: 'userObjective',
+			populate: [{
+				path: 'templateId'
+			},
+			{
+				path: 'keyResults.templateId'
+			}]
+		})
 		.exec(callback);
 };
 
@@ -113,7 +121,7 @@ HistoryRepository.prototype.addUserObjective = function (author, userObjective, 
 	var model = this.model;
 	var newEvent = new model({
 		author,
-		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
+		type: type + ' ' + CONST.history.target.USER_OBJECTIVE,
 		userObjective
 	})
 
@@ -124,7 +132,7 @@ HistoryRepository.prototype.addUserKeyResult = function (author, key, type, call
 	var model = this.model;
 	var newEvent = new model({
 		author,
-		type: type + ' ' + CONST.history.target.USER_OBJECTIVE,
+		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
 		userObjective: key.userObjective,
 		userKeyResult: key._id
 	})
@@ -139,7 +147,7 @@ HistoryRepository.prototype.setScoreToKeyResult = function (author, key, type, c
 		author,
 		userObjective: key.objectiveId,
 		userKeyResult: key.keyResultId,
-		score: key.score,
+		userKeyResultScore: key.score,
 		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
 	});
 

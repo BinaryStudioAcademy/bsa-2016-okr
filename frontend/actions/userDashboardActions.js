@@ -5,16 +5,30 @@ export const CHANGE_SHOW_TABS ='CHANGE_SHOW_TABS';
 export const GET_MY_HISTORY = 'GET_MY_HISTORY';
 export const RECEIVED_MY_HISTORY = 'RECEIVED_MY_HISTORY';
 export const MY_HISTORY_ERROR = 'MY_HISTORY_ERROR';
+export const CLEAR_USER_DASHBOARD_STATE = 'CLEAR_USER_DASHBOARD_STATE';
 
+export function clearUserDashboardState() {
+	const action = {
+		type: CLEAR_USER_DASHBOARD_STATE
+	}
+	return action;
+}
 
-export function getMyHistory() {
+export function getMyHistory(type) {
 	 return (dispatch, getStore) => {
-	 	let myStore = getStore().myState;
-	 	console.log(getStore());
-	 	dispatch({type: GET_MY_HISTORY});
-	 	return axios.get('/api/history/user/'+ myStore.me._id)
-	 	.then( (response) => dispatch(receivedMyHistory(response.data)))
-		.catch( (response) => dispatch(myHistoryError(response.data)));
+	 	if(type === 'homePage'){
+	 		let myStore = getStore().myState;
+	 		dispatch({type: GET_MY_HISTORY});
+	 		return axios.get('/api/history/user/'+ myStore.me._id)
+	 		.then( (response) => dispatch(receivedMyHistory(response.data)))
+			.catch( (response) => dispatch(myHistoryError(response.data)));
+		} else if (type === "otherPersonPage") {
+			let userStore = getStore().userPage;
+	 		dispatch({type: GET_MY_HISTORY});
+	 		return axios.get('/api/history/user/'+ userStore.user._id)
+	 		.then( (response) => dispatch(receivedMyHistory(response.data)))
+			.catch( (response) => dispatch(myHistoryError(response.data)));
+		}
 	 }
 }
 

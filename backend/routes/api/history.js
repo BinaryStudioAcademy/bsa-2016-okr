@@ -61,7 +61,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/user/:id', (req, res, next) => {
-	var id = session._id;
+	var id = req.params.id;
 
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
@@ -73,8 +73,8 @@ router.get('/user/:id', (req, res, next) => {
 			service.getUserHistory(id, (err, historyList) => {
 				if(err)
 					return callback(err, null);
-				console.log(`----------------------get this shit `);
-				console.log(historyList);
+				//console.log(`----------------------get this shit `);
+				//console.log(historyList);
 				return callback(null, historyList)
 			})
 		},
@@ -83,7 +83,7 @@ router.get('/user/:id', (req, res, next) => {
 				service.sortBy(historyList, 'date', true, (err, historyList) => {
 					if(err)
 						return callback(err, null);
-					console.log(`----------------------sorted to this shit ${historyList}`);
+					//console.log(`----------------------sorted to this shit ${historyList}`);
 					
 					return callback(null, historyList)
 				})

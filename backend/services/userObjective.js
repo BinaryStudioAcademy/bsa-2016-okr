@@ -6,6 +6,7 @@ const QuarterRepository = require('../repositories/quarter');
 const HistoryRepository = require('../repositories/history');
 const ValidateService = require('../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
+const CONST = require('../config/constants.js');
 
 
 var UserObjectiveService = function() {};
@@ -70,13 +71,15 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 			})
 		},
 		(oldObjective, callback) => {
-			HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
-				if(err) {
-					return callback(err, null);
-				};
+			// console.log('update finished');
+			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
+			// 	if(err) {
+			// 		return callback(err, null);
+			// 	};
 				
-				return callback(null, objective);
-			})
+			// 	return callback(null, objective);
+			// })
+			return callback(null, objective);
 		}
 	], (err, result) => {
 		return callback(err, result)
@@ -133,7 +136,7 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 				this.addKeyResultByTitle(data, callback);
 			}
 		},
-		(keyResult, callback) => {			
+		(keyResult, callback) => {		
 			let objective = {
 				$push: {
 					keyResults: {
@@ -157,7 +160,7 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 			})
 		},
 		(keyResult, callback) => {
-			HistoryRepository.addUserKeyResult(authorId, keyResult, CONST.history.type.ADD, (err)=>{
+			HistoryRepository.addUserKeyResult(data.userId, keyResult, CONST.history.type.ADD, (err)=>{
 				if(err)
 					return callback(err,null);
 			});
@@ -281,7 +284,7 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 			});
 		},
 		(result, callback) => {
-			HistoryRepository.setScoreToKeyResultPopulate(userId, result, CONST.history.CHANGE_SCORE, (err) =>{
+			HistoryRepository.setScoreToKeyResult(userId, result, CONST.history.type.CHANGE_SCORE, (err) =>{
 				if (err)
 					return callback(err, null);
 			})

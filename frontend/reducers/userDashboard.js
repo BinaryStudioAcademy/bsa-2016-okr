@@ -3,13 +3,13 @@ import {
 	CHANGE_SHOW_TABS,
 	GET_MY_HISTORY,
 	RECEIVED_MY_HISTORY,
-	MY_HISTORY_ERROR} from '../actions/userDashboardActions.js';
-import historyItemsLol from '../components/userDashboard/history.js'
+	MY_HISTORY_ERROR,
+	CLEAR_USER_DASHBOARD_STATE} from '../actions/userDashboardActions.js';
 
 
 const initialState = {
 	tabIndex: 1,
-	historyList: historyItemsLol,
+	historyList: [],
 	showTopTabs: false
 }
 
@@ -44,6 +44,9 @@ export default function userDashboardReducer(state = initialState, action) {
 			return Object.assign({}, state, {
 				showTopTabs
 			})
+		}
+		case CLEAR_USER_DASHBOARD_STATE: {
+			return Object.assign({}, state, initialState);
 		}
 
         default: {

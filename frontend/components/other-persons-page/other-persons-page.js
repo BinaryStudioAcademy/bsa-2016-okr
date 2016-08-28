@@ -32,7 +32,7 @@ class OtherPersonsPage extends Component {
 						<UserOjectives />
 					</CentralWindow>
 					<StatPanel>
-						<UserDashboard />
+						<UserDashboard where="otherPersonPage"/>
 						{/*<Dashboard></Dashboard>*/}
 					</StatPanel>
 				</div>
