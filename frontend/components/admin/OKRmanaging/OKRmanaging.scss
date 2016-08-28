@@ -88,13 +88,13 @@
             float: right;
             margin-top: 2px;
             .editing{
-                color: $color-blue;
+                color: $color-green;
             }
             .cancel{
                 color: $color-red;
             }
             .edit:hover{
-                color: $color-blue;
+                color: $color-green;
             }
             .delete:hover{
                 color: $color-red;
@@ -233,60 +233,6 @@
             }
         }
 }
-.OKR-mnaging.active.objective{
-    margin: 20px;
-    background-color: #fff;
-    border-left: 5px solid #6aa84f;
-
-    input, textarea, select{
-        box-sizing: border-box;
-        width: 100%;
-    }
-}
-.OKR-managing.thumbnail {
-  text-align: center;
-  padding: 2rem 1rem;
-
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 60px;
-    left: 25px;
-    height: 0;
-    width: 35%;
-    border-top: 1px solid #aaaaaa;
-  }
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    height: 0;
-    width: 35%;
-    border-top: 1px solid #aaaaaa;
-  }
-}
-
-.toolbar {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  .btn {
-    margin-right: 1rem;
-
-  }
-
-}
-
-
-
-.OKR-mnaging.active.objective .keyResults {
-	margin-bottom: 10px;
-}
-
 
 
 .OKR-managing.searchbar{
@@ -294,13 +240,6 @@
 }
 .OKR-managing.search {
     margin-top: 20px;
-}
-
-
-.OKR-managing button.btn.btn-reset {
-    float: right;
-    margin-top: -55px;
-    margin-right: -2px;
 }
 
 .OKR-managing button#add-new-objective {
@@ -314,15 +253,6 @@
     	outline:none;
     }
 }
-
-.OKR-managing.thumbnail i{
-  cursor: pointer;
-}
-
-.OKR-managing.thumbnail i:first-child {
-  margin-right: 10px;
-}
-
 
 .OKR-managing input.searchbar-input {
     padding: 10px;

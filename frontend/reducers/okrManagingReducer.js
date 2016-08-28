@@ -4,12 +4,15 @@ import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
         DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
         RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE, ACTIVE_KEY_RESULT,
         SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE, RECIVED_EDIT_KEY_RESULT,
-        EDIT_KEY_RESULT, RECEIVED_NEW_TEMPLATE, CANCEL_EDIT_TEMPLATE} from '../actions/okrManagingActions.js'
+        EDIT_KEY_RESULT, RECEIVED_NEW_TEMPLATE, CANCEL_EDIT_TEMPLATE, 
+        RECIVED_NEW_KEY_RESULT, REMOVE_KEY_RESULT_FROM_TAMPLATE, ADD_KEY_RESULT_TO_TEMPLATE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
     waiting: true,
     visibleObjectives: [],
+    keyResults: ['0'],
+    count: 1,
     active: '',
     searchValue: '',
     editing: false,
@@ -155,7 +158,7 @@ export default function okrManagingReducer(state = initialState, action) {
             const {data} = action;
             
 
-            var objective ={
+            var objective = {
                 _id: data._id,
                 category: data.category,
                 createdAt: data.createdAt,
@@ -176,10 +179,47 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
         
+        case ADD_KEY_RESULT_TO_TEMPLATE : {
+            const {keyResult} = action;
+            return Object.assign({}, state, {
+                keyResults: keyResult,
+                count: ++state.count
+            })
+        }
+
+        case REMOVE_KEY_RESULT_FROM_TAMPLATE : {
+            const {index} = action;
+            state.keyResults.splice(index, 1)
+            return Object.assign({}, state, {
+                keyResults:  state.keyResults
+            })
+        }
+        
+        case RECIVED_NEW_KEY_RESULT : {
+
+            const {data} = action;
+             console.log(data)
+            return Object.assign({}, state, {
+                visibleObjectives: addKeyResult(state.visibleObjectives, data),
+                objectives: addKeyResult(state.objectives, data)
+            })
+        }
+        
         default: 
             return state;        
         
     }
+}
+
+function addKeyResult(visibleObjectives, keyResult) {
+     console.log(keyResult)
+    let objectives = JSON.parse(JSON.stringify(visibleObjectives));
+    for (let i = 0; i < objectives.length; i++) {
+        if (objectives[i]._id == keyResult.objectiveId) {
+            objectives[i].keyResults.push(keyResult);
+        }
+    }
+    return objectives
 }
 
 function addNewTemplate(visibleObjectives, objective){
@@ -217,12 +257,10 @@ function updateVisibleItems(visibleObjectives, objectives, searchValue){
         for (let i = 0; i < newObjectivesList.length; i++) {
             let title = newObjectivesList[i].title.split(' ');
             for (let j=0; j < title.length; j++)
-
-                if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0 )/*(title[j]+ ' ').toUpperCase().indexOf(searchValue.toUpperCase()) === 0 
-                    && newObjectivesList[i].title.toUpperCase().indexOf(searchValue.toUpperCase()) !== -1)*/ {
+                if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0)
                     objectivesAfterInputFilter.push(newObjectivesList[i])
-                    break;
-                }
+                break;
+                
         }
     }
     return objectivesAfterInputFilter;
