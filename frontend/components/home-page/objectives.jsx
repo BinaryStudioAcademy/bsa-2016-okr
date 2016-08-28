@@ -17,6 +17,7 @@ class Objectives extends Component {
 
 		this.changeTab = this.changeTab.bind(this);
 		this.changeYear = this.changeYear.bind(this);
+		this.handleAddingNewQuarter = this.handleAddingNewQuarter.bind(this);
 		this.createObjective = this.createObjective.bind(this);
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
@@ -35,7 +36,7 @@ class Objectives extends Component {
 
 		if(confirmation) {
 			this.props.myStateActions.createQuarter(newQuarter);
-			this.props.myStateActions.changeTab(newQuarter);
+			this.changeTab(newQuarter);
 		}
 	}
 
