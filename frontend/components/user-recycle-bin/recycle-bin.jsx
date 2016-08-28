@@ -5,7 +5,7 @@ import StatPanel from '../../containers/statistic-panel.jsx';
 import CentralWindow from "../../containers/central-window.jsx";
 import RecycleBinFilter from './recycle-bin-filters';
 import '../common/styles/table.scss';
-import './recycle-bin.scss';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from "../../actions/recycleBinActions.js";
@@ -82,7 +82,7 @@ class RecycleBin extends Component {
 									<th>Category</th>
 									<th>Deleted By</th>
 									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i className="fa fa-sort" ></i><span className="margin-left-3px">Date</span></th>
-									<th className="actions" className="width-5perc">actions</th>
+									<th className="actions" className="width-5perc">Actions</th>
 								</tr>
 							</thead>
 								<ReactList

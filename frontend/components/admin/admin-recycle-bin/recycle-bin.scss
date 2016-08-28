@@ -42,14 +42,12 @@ body {
     font-size: 16px;
     text-align: center;
     position: relative;
-    padding-top: 4px;
+    padding-top: 12px;
     padding-bottom: 4px;
-    width: 85%;
-    min-width: 535px;
+    width: 100%;
     margin: 0 auto;
     font-size: 20px;
-    font-weight: bold;
-    margin-top: 45px;
+    min-width: 1100px;
 }
 
 .recycle-bin-header-row p span {
@@ -64,12 +62,16 @@ body {
 	content: '';
     display: block;
     position: absolute;
-    top: 23px;
+    top: 31px;
     left: 0;
     height: 0;
     width: 100%;
     border-top: 1px solid #aaaaaa;
     z-index: 0;
+}
+
+#rec-bin-wrapper {
+	padding: 3%;
 }
 
 #rec-bin-wrapper .not-display {
@@ -99,9 +101,8 @@ body {
 }
 
 #rec-bin-wrapper .width-85perc {
-	width: 85%;
+	width: 100%;
 	margin: 0 auto;
-	margin-bottom: 25px;
 }
 
 #rec-bin-wrapper .filter-table td button {
@@ -162,18 +163,17 @@ body {
 
 
 #rec-bin-wrapper .filter-table {
-	width: 85%;
+	width: 100%;
 	min-width: 1100px;
 	margin: 0 auto;
-	margin-top: 45px;
+	margin-top: 23px;
 }
 
 #rec-bin-wrapper .filter-table tbody {
-	height: 40vh;
+	height: 56vh;
     table-layout: fixed;
     overflow: auto;
     display: block;
-    /* height: 400px; */
     overflow-y: overlay;
 }
 
@@ -190,6 +190,10 @@ body {
     padding: 4px 8px;
 }
 
+#rec-bin-wrapper .btn-blue {
+	margin-bottom: 12px;
+}
+
 .recucle-bin-filter-bar-container {
 	width: 100%;
 	.recycle-bin-filter-bar {
@@ -198,7 +202,7 @@ body {
 		border: 1px solid #E0E0E0;
 		box-sizing: border-box;
 		color: #777777;
-		width: 85%;
+		width: 100%;
 		margin: 0 auto;
 		min-width: 1100px;
 	}
