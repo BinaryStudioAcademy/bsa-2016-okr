@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './autocomplete-input.scss';
 import { debounce } from '../../../backend/utils/HelpService';
+import { isEmpty } from '../../../backend/utils/ValidateService';
 
 class AutocompleteInput extends React.Component {
 	constructor(props) {
@@ -25,20 +26,22 @@ class AutocompleteInput extends React.Component {
 	}
 
 	onFocus(event) {
-
 		let title = this.refs.autocompleteInput.value;
 		this.props.getAutocompleteData(title);
 
-		if(!this.props.isValid(title) && this.state.isValid) {
-			this.setState({ isValid: false });
+		if (!this.props.isValid(title) && this.state.isValid) {
+			this.setState({isValid: false});
 		}
 
-		this.setState({ selectedLi: false });
+		this.setState({selectedLi: false});
 
-		let autocompleteResultElement = event.target.nextElementSibling;
-		if (autocompleteResultElement.classList.contains('undisplay')) {
-			autocompleteResultElement.classList.remove('undisplay');
-			autocompleteResultElement.classList.add('display');
+		// undisplay autocomplete results when item is selected
+		if (isEmpty(this.props.selectedItem)) {
+			let autocompleteResultElement = event.target.nextElementSibling;
+			if (autocompleteResultElement.classList.contains('undisplay')) {
+				autocompleteResultElement.classList.remove('undisplay');
+				autocompleteResultElement.classList.add('display');
+			}
 		}
 	}
 
@@ -66,6 +69,12 @@ class AutocompleteInput extends React.Component {
 
 		this.getData(title);
 		this.props.setAutocompleteSelectedItem(item);
+
+		let autocompleteResultElement = event.target.nextElementSibling;
+		if (autocompleteResultElement.classList.contains('undisplay')) {
+			autocompleteResultElement.classList.remove('undisplay');
+			autocompleteResultElement.classList.add('display');
+		}
 	}
 
 	onClickLi(item) {

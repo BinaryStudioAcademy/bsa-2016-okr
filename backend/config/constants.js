@@ -47,6 +47,7 @@ module.exports = {
 			HARD_DELETE: 'HARD_DELETE',
 			CHANGE_SCORE: 'CHANGE_SCORE',
 			RESTORE: 'RESTORE',
+			CHANGE_APPROVE: 'CHANGE_APPROVE',
 		},
 		target: {
 			OBJECTIVE: 'OBJECTIVE',
@@ -55,6 +56,7 @@ module.exports = {
 			CATEGORY: 'CATEGORY',
 			USER: 'USER',
 			USER_OBJECTIVE: 'USER_OBJECTIVE',
+			USER_KEY_RESULT: 'USER_KEY_RESULT',
 		},
 	},
 	currentYear: currentYear,

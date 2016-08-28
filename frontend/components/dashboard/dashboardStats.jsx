@@ -6,7 +6,8 @@ export default class DashboardStats extends React.Component {
         super(props);
         this.state = {
             rows: [],
-            score: {}
+            score: {},
+            bottom: {}
         };
     }
 
@@ -20,7 +21,9 @@ export default class DashboardStats extends React.Component {
         axios.get(this.props.urlUsers)
             .then(response => { this.setState({ rows: response.data }); });
         axios.get(this.props.urlProgress)
-            .then(response => { this.setState({ score: response.data }); })
+            .then(response => { this.setState({ score: response.data }); });
+        axios.get(this.props.urlBottom)
+            .then(response => { this.setState({ bottom: response.data[0] }); });
     }
 
 
@@ -29,13 +32,17 @@ export default class DashboardStats extends React.Component {
 
             <div className="main">
                 <div className="countInfo">
-                    <p><b>{Math.round(this.state.score.progress*100)+'%'}</b> Medium progress by all users</p>
+                    <p><span><b>{Math.round(this.state.score.progress * 100) + '%'}</b> Medium progress by all users</span></p>
                 </div>
                 <div className="tableInfo">
                     <table>
-                        <caption>Top 5 Users by performance</caption>
+                        <caption><p><span>Top 5 Users by performance</span></p></caption>
                         <th>Name</th><th>Completed</th>
                         {this.state.rows.map(this.renderRow) }
+                    </table>
+                    <table className="second">
+                        <tr><td>..........</td><td>...</td></tr>
+                        <tr><td>Lowest result</td><td>{Math.round(this.state.bottom.totalScore*100)+'%'}</td></tr>
                     </table>
                 </div>
             </div>

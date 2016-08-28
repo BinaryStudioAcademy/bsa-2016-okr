@@ -40,7 +40,7 @@ class HistoryItemList extends React.Component {
 		let item = this.props.historyItems[index];
    		return(
    			<tr key={item._id}>
-				<td><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>{item.authorId}</td>
+				<td><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>{item.author.userInfo.firstName} {item.author.userInfo.lastName}</td>
 				<td>{item.type.split(' ')[0]}</td>
 				<td><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{item.type.substr(item.type.indexOf(' ')+ 1)}</span></td>
 				<td className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</td>

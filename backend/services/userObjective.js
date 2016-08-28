@@ -6,6 +6,7 @@ const QuarterRepository = require('../repositories/quarter');
 const HistoryRepository = require('../repositories/history');
 const ValidateService = require('../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
+const CONST = require('../config/constants.js');
 
 
 var UserObjectiveService = function() {};
@@ -46,7 +47,7 @@ UserObjectiveService.prototype.add = function(data, quarterId, callback){
 			})
 		},
 		(objective, callback) => {
-			HistoryRepository.addObjectiveEvent(objective.creator, objective._id, "add user Objective", (err) => {
+			HistoryRepository.addUserObjective(objective.creator, objective._id, CONST.history.type.ADD, (err) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -70,13 +71,15 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 			})
 		},
 		(oldObjective, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "update user Objective", (err) => {
-				if(err) {
-					return callback(err, null);
-				};
+			// console.log('update finished');
+			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
+			// 	if(err) {
+			// 		return callback(err, null);
+			// 	};
 				
-				return callback(null, objective);
-			})
+			// 	return callback(null, objective);
+			// })
+			return callback(null, objective);
 		}
 	], (err, result) => {
 		return callback(err, result)
@@ -94,7 +97,7 @@ UserObjectiveService.prototype.delete = function(authorId, objectiveId, callback
 			})
 		},
 		(objective, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "delete user Objective", (err) => {
+			HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.HARD_DELETE, (err) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -126,14 +129,14 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 			data.userObjective = userObjective;
 			
 			if(!isEmpty(data.keyResultId)) {
-				console.log('Trying to add key result by id');
+				//console.log('Trying to add key result by id');
 				this.addKeyResultById(data, callback);
 			} else {
-				console.log('Trying to add key result by title');
+				//console.log('Trying to add key result by title');
 				this.addKeyResultByTitle(data, callback);
 			}
 		},
-		(keyResult, callback) => {			
+		(keyResult, callback) => {		
 			let objective = {
 				$push: {
 					keyResults: {
@@ -157,9 +160,41 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 			})
 		},
 		(keyResult, callback) => {
-			// Add history userObjective update event
+			UserObjectiveRepository.getById(data.objectiveId, (err, userObjective) => {
+				if (err) {
+					return callback(err, null);
+				}
 
-			return callback(null, keyResult);
+				if (!userObjective){
+					err = new Error('Can not find user objective');
+					return callback(err, null);
+				}
+
+				let index = userObjective.keyResults.findIndex((keyResultItem) => {
+					return keyResult._id.equals(keyResultItem.templateId);
+				});
+
+				if(index === -1) {
+					let err = new Error('Key result not found');
+					return callback(err, null);
+				}
+
+				let keyResultIdInObjective = userObjective.keyResults[index]._id;
+
+				responseData = {
+					keyResultId: keyResultIdInObjective,
+					keyResult: keyResult,
+				};
+
+				return callback(null, keyResult, responseData);
+			});
+		},
+		(keyResult, responseData, callback) => {
+			HistoryRepository.addUserKeyResult(data.userId, keyResult, CONST.history.type.ADD, (err)=>{
+				if(err)
+					return callback(err,null);
+			});
+			return callback(null, responseData);
 		}
 	], (err, result) => {
 		return callback(err, result);
@@ -276,6 +311,13 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 					score: userObjective.keyResults[index].score
 				});
 			});
+		},
+		(result, callback) => {
+			HistoryRepository.setScoreToKeyResult(userId, result, CONST.history.type.CHANGE_SCORE, (err) =>{
+				if (err)
+					return callback(err, null);
+			})
+			return callback(null, result);
 		}
 	], (err, result) => {
 		return callback(err, result);

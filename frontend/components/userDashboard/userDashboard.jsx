@@ -1,6 +1,7 @@
 import React from 'react';
 import './userDashboard.scss';
 
+import Dashboard from '../dashboard/dashboard.jsx'
 import UserHistory from './userHistory.jsx';
 import Tabs from './tabs.jsx';
 
@@ -19,18 +20,22 @@ class UserDashboard extends React.Component{
 	}
 
 	componentWillMount() {
-		console.log(this.props.userDashboard);
+		this.props.getMyHistory(this.props.where)
+	}
+	componentDidUpdate() {
+		//this.props.getMyHistory();
+	}
+	componentWillUnmount() {
+		this.props.clearUserDashboardState();
 	}
 
-	isVisibleContent() {
-		console.log('done');
-		if(this.props.userDashboard.tabIndex === 1)
+	isVisibleContent(index) {
+		if(this.props.userDashboard.tabIndex === index)
 			return "showContent"
 		else return "hideContent"
 	}
 
 	getView() {
-		console.log('-----------mounted-----------');
 		switch (this.props.userDashboard.tabIndex) {
 			case 1:
 				//return <UserHistory/>
@@ -57,11 +62,11 @@ class UserDashboard extends React.Component{
 		return (
 			<div className="userDashboard">
 				<Tabs/>
-				<div className="content"> 
-					{this.getView()}
-				</div>
-				<div className={this.isVisibleContent()}>
+				<div className={this.isVisibleContent(1)}>
 					<UserHistory />
+				</div>
+				<div className={this.isVisibleContent(2)}>
+					<Dashboard />
 				</div>
 			</div>
 		)
@@ -76,7 +81,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		userDashboard: state.userDashboard
+		userDashboard: state.userDashboard,
+		myState: state.myState
 	};
 }
 

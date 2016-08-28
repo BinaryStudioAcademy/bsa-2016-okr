@@ -6,6 +6,7 @@ var ObjectiveRepository = require('../repositories/objective.js');
 var KeyResultRepository = require('../repositories/keyResult.js');
 var HistoryRepository = require('../repositories/history.js');
 var async = require('async');
+var CONST = require('../config/constants.js');
 
 var ObjectiveService = function() {};
 
@@ -70,7 +71,7 @@ ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults
 				return err ? callback(err) : callback(null, obj);
 			});
 		}, (obj, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, obj._id, "update Objective template", (err) => {
+			HistoryRepository.addObjectiveEvent(authorId, obj._id, CONST.history.type.ADD, (err) => {
 				if(err) {
 					return callback(err, null);
 				}
@@ -103,7 +104,7 @@ ObjectiveService.prototype.addBlank = function(authorId, objective, callback) {
 				return err ? callback(err) : callback(null, obj);
 			});
 		}, (obj, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, obj._id, "add Objective template", (err) => {
+			HistoryRepository.addObjectiveEvent(authorId, obj._id, CONST.history.type.ADD, (err) => {
 				if(err) {
 					return callback(err, null);
 				}
@@ -126,7 +127,7 @@ ObjectiveService.prototype.update = function (authorId, objectiveId, objective, 
 			});
 		},
 		(objective, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "update Objective template", (err) => {
+			HistoryRepository.addObjectiveEvent(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
 				if(err) {
 					return callback(err, null);
 				}
@@ -149,7 +150,7 @@ ObjectiveService.prototype.delete = function (authorId, objectiveId, callback){
 			});
 		},
 		(callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, "delete Objective template", (err) => {
+			HistoryRepository.addObjectiveEvent(authorId, objectiveId, CONST.history.type.HARD_DELETE, (err) => {
 				if(err) {
 					return callback(err, null);
 				}

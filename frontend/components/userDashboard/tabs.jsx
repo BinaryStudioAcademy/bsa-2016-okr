@@ -12,7 +12,6 @@ class Tabs extends React.Component{
 
 		this.handleTabClick = this.handleTabClick.bind(this);
 		this.handleTopClick = this.handleTopClick.bind(this);
-		this.renderTopTabs= this.renderTopTabs.bind(this);
 		this.isVisibleTab = this.isVisibleTab.bind(this);
 	}
 
@@ -39,21 +38,7 @@ class Tabs extends React.Component{
 		return "hideTab"
 	}
 
-	renderTopTabs() {
-		console.log(this.props.userDashboard.showTopTabs)
-		if(this.props.userDashboard.showTopTabs)
-		{
-			return (
-				<ul className="tabLine">
-					<li className="tab" onClick={()=>this.handleTabClick(2)}>Users</li>
-					<li className="tab" onClick={()=>this.handleTabClick(3)}>Objectives</li>
-					<li className="tab" onClick={()=>this.handleTabClick(4)}>Key Results</li>
-				</ul>
-			)
-		}
-		else return;
-	}
-
+	
 	render() {
 
 		return (
@@ -61,16 +46,9 @@ class Tabs extends React.Component{
 				<div className="tab-wrapper mainTabs">
 					<ul className="tabLine">
 						<li className={this.activeTab(1)+" tab"} onClick={()=>this.handleTabClick(1)}>History</li>
-						<li className={this.activeTab(5)+" tab"} onClick={()=>this.handleTopClick(5)}>Statistic</li>
+						<li className={this.activeTab(2)+" tab"} onClick={()=>this.handleTabClick(2)}>Statistic</li>
 					</ul>
 				</div>
-				<div className="tab-wrapper">
-					<ul className={this.isVisibleTab() + " tabLine"}>
-						<li className={this.activeTab(2)+" tab"} onClick={()=>this.handleTabClick(2)}>Users</li>
-						<li className={this.activeTab(3)+" tab"} onClick={()=>this.handleTabClick(3)}>Objectives</li>
-						<li className={this.activeTab(4)+" tab"} onClick={()=>this.handleTabClick(4)}>Key Results</li>
-					</ul>
-				</div>	
 			</div>
 		)
 	}

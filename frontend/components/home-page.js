@@ -32,7 +32,7 @@ class Home extends React.Component {
 				<UserObjectives />
 				</CentralWindow>
 				<StatPanel>
-					<UserDashboard/>
+					<UserDashboard where="homePage"/>
 				</StatPanel>
 			</div>
 			)

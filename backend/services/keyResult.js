@@ -21,12 +21,7 @@ KeyResultsService.prototype.update = function(userId, keyResultId, data, callbac
 			});
 		},
 		(keyResult, callback) => {
-			let historyEvent = {
-				authorId: userId,
-				keyResultId: keyResultId
-			};
-
-			HistoryRepository.addKeyResultEvent(historyEvent, CONST.history.type.UPDATE, (err, keyResult) => {
+			HistoryRepository.addKeyResultEvent(authorId, keyResultId, CONST.history.type.UPDATE, (err, keyResult) => {
 				if(err) {
 					return  callback(err, null);
 				}
@@ -50,7 +45,7 @@ KeyResultsService.prototype.delete = function(userId, keyResultId, callback) {
 			});
 		},
 		(keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(userId, keyResultId, 'delete KeyResult', (err, keyResult) => {
+			HistoryRepository.addKeyResultEvent(userId, keyResultId, CONST.history.type.HARD_DELETE, (err, keyResult) => {
 					if(err){
 					return callback(err, null);
 				}
@@ -107,7 +102,7 @@ KeyResultsService.prototype.changeApprove = function(userId, keyResultId, callba
 			});
 		},
 		(userId, keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(userId, keyResultId, 'change KeyResult approve to ' + !keyResult.isApproved, (err) =>{
+			HistoryRepository.addKeyResultEvent(userId, keyResultId, CONST.history.type.CHANGE_APPROVE+' '+ !keyResult.isApproved, (err) =>{
 				if (err){
 					return callback(err, null);
 				};	
