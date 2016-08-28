@@ -66,7 +66,7 @@ class KeyResult extends React.Component {
 				<div className="autocomplete-button">
 					<button type="button" className="btn btn-red-hover delete-button-key-result"
 					        onClick={this.onDeleteKeyResultClick}>
-						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
+						<i className="fi flaticon-multiply" aria-hidden="true"></i>
 					</button>
 				</div>
 			</section>
