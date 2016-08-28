@@ -3,16 +3,14 @@
 .dashboard{
     width: 100%;
     padding: 10px 0;
+    height:100%;
+    position:relative;
 }
 
 .dashboard {
 
 .main{
-    position:absolute;
-    margin: 0 5%;
-    width: 90%;
-    top:25px;
-    left:0;    
+
 }
 
 .countInfo, .tableInfo{

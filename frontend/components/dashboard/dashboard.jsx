@@ -10,8 +10,8 @@ export default class Dashboard extends React.Component {
     render() {
         return (
             <div className="dashboard">
-                <DashboardStats urlProgress="api/stats/progress"
-                    urlUsers="api/stats/users"
+                <DashboardStats urlProgress="/api/stats/progress"
+                    urlUsers="/api/stats/users"
                     urlBottom="/api/stats/users?sort=desc&&limit=1"/>
             </div>
         )

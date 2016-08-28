@@ -8,11 +8,13 @@
 	box-sizing: border-box;
 
 	.showContent{
-		height: 100%;
+		display: block;
+		height:100%;
 		overflow:hidden;
 	}
 	.hideContent{
-		height: 0;
+		display: none;
+		height:0;
 		overflow:hidden;
 	}
 }
