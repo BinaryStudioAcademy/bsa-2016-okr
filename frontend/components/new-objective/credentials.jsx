@@ -11,11 +11,11 @@ class NewObjCredentials extends React.Component{
       super(props)
 
       this.createTemplate = this.createTemplate.bind(this);
-   //   this.addNewKeyResult = this.addNewKeyResult.bind(this);
+      this.addNewKeyResult = this.addNewKeyResult.bind(this);
    }
-/*   addNewKeyResult(){
+   addNewKeyResult(){
       
-   }*/
+   }
 
    createTemplate(event){
       event.preventDefault();
@@ -53,11 +53,11 @@ class NewObjCredentials extends React.Component{
                <label htmlFor="new-obj-desc">Description</label>
                <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
             </div>
-            {/*<div>
+            <div>
             <label className='new-key-result-title' htmlFor="new-key-result-title">Key result</label>
             <NewKeyResult />
             <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>
-            </div>*/}
+            </div>
             <button type="button" id="new-obj-submit-btn" onClick={this.createTemplate}>Add new objective</button>
          </div>
       )

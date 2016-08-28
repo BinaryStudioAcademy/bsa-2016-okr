@@ -29,6 +29,8 @@ export const CREATE_NEW_TEMPLATE = 'CREATE_NEW_TEMPLATE';
 export const RECEIVED_NEW_TEMPLATE = 'RECEIVED_NEW_TEMPLATE';
 export const RECEIVED_NEW_TEMPLATE_ERROR = 'RECEIVED_NEW_TEMPLATE_ERROR';
 
+export const CANCEL_EDIT_TEMPLATE = 'CANCEL_EDIT_TEMPLATE'
+
 export function getObjectivesList(){
 	
 	return(dispatch, getStore) => {
@@ -132,7 +134,13 @@ export function searchObjective(value) {
 	};
 	return action;
 }
-
+/*-----cancel edit------*/
+export function cancelEdit() {
+	const action = {
+		type: CANCEL_EDIT_TEMPLATE,
+	};
+	return action;
+}
 /*-----edit objective------*/
 
 export function activeObjective (active) {

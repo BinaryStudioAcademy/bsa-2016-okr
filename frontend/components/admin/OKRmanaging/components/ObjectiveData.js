@@ -11,6 +11,11 @@ class ObjectiveData extends React.Component{
 
     this.deleteObjective = this.deleteObjective.bind(this);
     this.editObjective = this.editObjective.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
+  }
+
+  cancelEdit(){
+    this.props.cancelEdit();
   }
 
   editObjective(event){
@@ -19,16 +24,19 @@ class ObjectiveData extends React.Component{
 
     if(this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index){
       event.preventDefault();
-      let reqBody = {};
-      let objectiveDesctiption = document.querySelector("textarea.template-description").value;
-      let objectiveTitle = document.querySelector("input.template-title").value;
-      let objectiveCategory = this.refs.selectCategory.value;
+      let result = confirm('Do you really want to save changes?');
+      if (result){
+        let reqBody = {};
+        let objectiveDesctiption = document.querySelector("textarea.template-description").value;
+        let objectiveTitle = document.querySelector("input.template-title").value;
+        let objectiveCategory = this.refs.selectCategory.value;
 
-      reqBody.description = objectiveDesctiption;
-      reqBody.title = objectiveTitle;
-      reqBody.category = objectiveCategory
-      
-      this.props.editObjectiveTemplate(objective._id, reqBody);
+        reqBody.description = objectiveDesctiption;
+        reqBody.title = objectiveTitle;
+        reqBody.category = objectiveCategory
+        
+        this.props.editObjectiveTemplate(objective._id, reqBody);
+      }
     }
     else {
       this.props.activeObjective(this.props.index);
@@ -36,7 +44,7 @@ class ObjectiveData extends React.Component{
   }
 
   deleteObjective(){
-    var result = confirm('Do you really want to delete objective?');
+    let result = confirm('Do you really want to delete objective?');
     if (result){
       let i = this.props.objective._id;
       this.props.deleteObjective(i, true);
@@ -54,9 +62,8 @@ class ObjectiveData extends React.Component{
     let categoryEl;
     let edit;
     let editSaveIcon;
-    let deleteCancelIcon;
     let editSaveTitle;
-    let deleteCancelTitle;
+    let cancel;
 
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
       titleEl = (<input type='text' className='template-title' defaultValue={this.props.objective.title} />);
@@ -67,19 +74,17 @@ class ObjectiveData extends React.Component{
                         })}
                       </select>);
       editSaveIcon = 'flaticon-success';
-      deleteCancelIcon = 'flaticon-garbage-2';
       editSaveTitle = 'Save';
-      deleteCancelTitle = 'Delete';
-      edit = 'editing'
+      edit = 'editing',
+      cancel = (<i className="fi flaticon-multiply cancel" onClick={this.cancelEdit} title='Cancel' aria-hidden="true"></i>)
     } else {
       titleEl = (<div className='name'>{this.props.objective.title}</div>);
       descriptionEl = (<div className='description'>{this.props.objective.description}</div>);
       categoryEl = (<div className='category'>{ category.title }</div>);
       editSaveIcon = 'flaticon-edit';
-      deleteCancelIcon = 'flaticon-garbage-2';
-      editSaveTitle = 'Edit'
-      deleteCancelTitle = 'Delete';
+      editSaveTitle = 'Edit';
       edit = 'edit';
+      cancel = (<i className='fi flaticon-garbage-2 delete' aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>);
     }
 
 		return (
@@ -88,14 +93,14 @@ class ObjectiveData extends React.Component{
               <form onSubmit={this.editObjective}>
               <div className='edit-objective'>
                     <i className={`fi ${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editObjective}></i>
-                    <i className={`fi ${deleteCancelIcon} delete`} aria-hidden="true" title={ deleteCancelTitle } onClick={this.deleteObjective}></i>
+                    {cancel}
               </div>
               { categoryEl }
               { titleEl }
               { descriptionEl }
             </form>     
         </div>
-        <div className='key-result'><KeyResults data={this.props.objective.keyResults} /></div>
+        <div className='key-result'><KeyResults objectiveId={ this.props.objective._id } data={this.props.objective.keyResults} /></div>
       </div>
     )
   }

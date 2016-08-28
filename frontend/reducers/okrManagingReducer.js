@@ -4,7 +4,7 @@ import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
         DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
         RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE, ACTIVE_KEY_RESULT,
         SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE, RECIVED_EDIT_KEY_RESULT,
-        EDIT_KEY_RESULT, RECEIVED_NEW_TEMPLATE} from '../actions/okrManagingActions.js'
+        EDIT_KEY_RESULT, RECEIVED_NEW_TEMPLATE, CANCEL_EDIT_TEMPLATE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
@@ -98,8 +98,9 @@ export default function okrManagingReducer(state = initialState, action) {
             const {searchValue} = action;
             return Object.assign({}, state, {
                 active: '',
-                visibleObjectives: updateVisibleItems(state.visibleObjectives, state.objectives, searchValue)
-
+                visibleObjectives: updateVisibleItems(state.visibleObjectives, state.objectives, searchValue),
+                editing: false,
+                editingKeyResult: false
             })
         }
 
@@ -122,6 +123,13 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
 
+        case CANCEL_EDIT_TEMPLATE: {
+            return Object.assign({}, state, {
+                editing: false,
+                editingKeyResult: false
+            })
+        }
+        
         case RECIVED_EDIT_OBJECTIVE_TEMPLATE: {
             const {objective, id} = action;
             let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
@@ -209,7 +217,9 @@ function updateVisibleItems(visibleObjectives, objectives, searchValue){
         for (let i = 0; i < newObjectivesList.length; i++) {
             let title = newObjectivesList[i].title.split(' ');
             for (let j=0; j < title.length; j++)
-                if (title[j].toUpperCase().indexOf(searchValue.toUpperCase()) === 0) {
+
+                if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0 )/*(title[j]+ ' ').toUpperCase().indexOf(searchValue.toUpperCase()) === 0 
+                    && newObjectivesList[i].title.toUpperCase().indexOf(searchValue.toUpperCase()) !== -1)*/ {
                     objectivesAfterInputFilter.push(newObjectivesList[i])
                     break;
                 }
