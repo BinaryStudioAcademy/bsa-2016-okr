@@ -18,7 +18,6 @@ class NewObjCredentials extends React.Component{
     let title = document.getElementsByClassName('new-key-result-title');
     let count = 0;
     for (var i=0; i < title.length; i++) {
-      console.log(title[i].value)
       if (title[i].value != '') {
         count++;
       }}
@@ -30,7 +29,6 @@ class NewObjCredentials extends React.Component{
    }
 
    delete(index){
-    console.log(index)
     if(this.props.okrManaging.keyResults.length != 1)
     this.props.removeKeyResultFromTemplate(index);
    }
@@ -76,9 +74,9 @@ class NewObjCredentials extends React.Component{
                <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
             </div>
             <div>
-            <label htmlFor="new-key-result-title">Key result</label>
+           {/* <label htmlFor="new-key-result-title">Key result</label>
             {keyResults}
-            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>
+            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>*/}
             </div>
             <button type="button" id="new-obj-submit-btn" onClick={this.createTemplate}>Add new objective</button>
          </div>
