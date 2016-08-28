@@ -61,6 +61,7 @@ class KeyResult extends React.Component {
 					autocompletePlaceholder='key result'
 				  addNewItemByKeyPressEnter={ this.addNewItemByKeyPressEnter }
 				  isValid={ this.isValid }
+					selectedItem={ this.props.keyResultsReducer.selectedItem }
 				/>
 
 				<div className="autocomplete-button">

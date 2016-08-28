@@ -3,6 +3,7 @@ var CONST = require('../config/constants');
 module.exports = {
 	isCorrectId: isCorrectId,
 	isEmpty: isEmpty,
+	isEmptyObject: isEmptyObject,
 	isArray: isArray,
 	isObject: isObject,
 	getValidDifficulty: getValidDifficulty,
@@ -24,7 +25,11 @@ function isCorrectId(id) {
 }
 
 function isEmpty(value) {
-	return (value == null || value.length === 0);
+	return (value == null || value.length === 0) || isEmptyObject(value);
+}
+
+function isEmptyObject(obj) {
+	return (typeof obj === "object" && Object.getOwnPropertyNames(obj).length == 0);
 }
 
 function isArray(value) {
