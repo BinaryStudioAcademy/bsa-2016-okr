@@ -129,10 +129,10 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 			data.userObjective = userObjective;
 			
 			if(!isEmpty(data.keyResultId)) {
-				console.log('Trying to add key result by id');
+				//console.log('Trying to add key result by id');
 				this.addKeyResultById(data, callback);
 			} else {
-				console.log('Trying to add key result by title');
+				//console.log('Trying to add key result by title');
 				this.addKeyResultByTitle(data, callback);
 			}
 		},
@@ -160,12 +160,41 @@ UserObjectiveService.prototype.addKeyResult = function(data, callback) {
 			})
 		},
 		(keyResult, callback) => {
+			UserObjectiveRepository.getById(data.objectiveId, (err, userObjective) => {
+				if (err) {
+					return callback(err, null);
+				}
+
+				if (!userObjective){
+					err = new Error('Can not find user objective');
+					return callback(err, null);
+				}
+
+				let index = userObjective.keyResults.findIndex((keyResultItem) => {
+					return keyResult._id.equals(keyResultItem.templateId);
+				});
+
+				if(index === -1) {
+					let err = new Error('Key result not found');
+					return callback(err, null);
+				}
+
+				let keyResultIdInObjective = userObjective.keyResults[index]._id;
+
+				responseData = {
+					keyResultId: keyResultIdInObjective,
+					keyResult: keyResult,
+				};
+
+				return callback(null, keyResult, responseData);
+			});
+		},
+		(keyResult, responseData, callback) => {
 			HistoryRepository.addUserKeyResult(data.userId, keyResult, CONST.history.type.ADD, (err)=>{
 				if(err)
 					return callback(err,null);
 			});
-
-			return callback(null, keyResult);
+			return callback(null, responseData);
 		}
 	], (err, result) => {
 		return callback(err, result);
