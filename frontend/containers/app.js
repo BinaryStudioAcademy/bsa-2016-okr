@@ -21,39 +21,43 @@ import './app.scss';
 class App extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.props.actions.categories.getAllCategories();
 		this.props.actions.myState.getMe();
 		this.props.actions.app.init();
 	}
 
 	render() {
-		let contentInlineStyle = {
-			display: this.props.isInitializing ? 'none' : 'block'
-		};
-		
-		return (	
-			<div id="application">
-				<LoadingScreen show={ this.props.isInitializing } />
-				<div style={ contentInlineStyle } >
-					<LoadingModal show={ this.props.isLoading } />
-					<Header />
-					<NavMenu />
-					<MainPage>
-					{ this.props.children }
-					{
-						(() => {
-							if (process.env.NODE_ENV !== 'production') {
-								const DevTools = require('../shared/devtools/DevTools').default;
-								return <DevTools />;
-							}
-						})()
-					}
-					</MainPage>
-				</div>
-			</div>
-			);
-	}
+	  let ContentEl = (
+	   <div>
+	    <LoadingModal show={ this.props.isLoading } />
+	    <Header />
+	    <NavMenu />
+	    <MainPage>
+	    { this.props.children }
+	    {
+	     (() => {
+	      if (process.env.NODE_ENV !== 'production') {
+	       const DevTools = require('../shared/devtools/DevTools').default;
+	       return <DevTools />;
+	      }
+	     })()
+	    }
+	    </MainPage>
+	   </div>
+	  );
+
+	  if(this.props.isInitializing) {
+	   ContentEl = <div></div>
+	  }
+
+	  return (
+	   <div id="application">
+	    <LoadingScreen show={ this.props.isInitializing } />
+	    { ContentEl }
+	   </div>
+	   );
+	 }
 }
 
 function mapStateToProps(state) {
