@@ -32,6 +32,8 @@ class HistoryFilter extends Component {
 	onReset(){
 		this.props.resetFilters();
 		this.props.getFilteredItems();
+		this.refs.dateFrom.onFieldChange('');
+		this.refs.dateTo.onFieldChange('');
 	}
 
 	showFiltersContainer() {
@@ -95,8 +97,9 @@ class HistoryFilter extends Component {
 									footer={false}
 									updateOnDateClick={true}
 									collapseOnDateClick={true}
-									theme={false}/>
-								<DateField 
+									theme={false}
+									ref="dateFrom"/>
+								<DateField
 									className="date-field"
 									placeholder="To"
 									dateFormat="YYYY-MM-DD"
@@ -104,7 +107,8 @@ class HistoryFilter extends Component {
 									footer={false}
 									updateOnDateClick={true}
 									collapseOnDateClick={true}
-									theme={false}/>
+									theme={false}
+									ref="dateTo"/>
 							</td>
 							<td className="cell-right-align" colSpan="3">
 								<button onClick={this.onReset} className="btn btn-filter">Reset</button>
