@@ -119,7 +119,7 @@ class RecycleBinFilter extends Component {
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
 
-		this.props.updateAll("", "", "", true, true, false, true, "");
+		this.props.updateAll("", "", "", true, true, false, true, "", false);
 
 	}
 

@@ -230,7 +230,7 @@ export function clearRecycleBin() {
 	return ({ type: CLEAR });
 }
 
-export function updateAll(dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, categoryType, userName) {
+export function updateAll(dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, categoryType, userName, isSortingUsed) {
 	const action = {
 		type: UPDATE_ALL,
 		dateFrom: dateFrom,
@@ -240,7 +240,8 @@ export function updateAll(dateFrom, dateTo, categoryOrTypeFilter, objectiveType,
 		keyType: keyType,
 		sortByDate: sortByDate,
 		categoryType: categoryType,
-		userName: userName
+		userName: userName,
+		isSortingUsed: isSortingUsed
 	};
 	return action;
 }
