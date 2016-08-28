@@ -28,7 +28,10 @@ var ObjectiveList = (props) => {
 				});
 
 			if(my) {
-				input = <ObjectiveInput category={ category.title }/>
+				input = <ObjectiveInput 
+					createObjective={ props.createObjective(category._id) }
+					getObjectiveAutocompleteData={ props.getObjectiveAutocompleteData(category._id) }
+				/>
 			}
 
 			return (
@@ -43,7 +46,7 @@ var ObjectiveList = (props) => {
 
 	return (
 		<div id="project-category" className="category">{ categoryItems }</div>
-		);
+	);
 }
 
 export default ObjectiveList

@@ -67,6 +67,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	return service.add(req.session._id, objective, defaultKeyResults, res.callback);
 });
 
+// Objective autocomplete
 router.get('/category/:categoryId/:title*?', (req, res, next) => {
 	var title = req.params.title;
 	var categoryId = req.params.categoryId;
@@ -76,6 +77,28 @@ router.get('/category/:categoryId/:title*?', (req, res, next) => {
 	}
 
 	return repository.autocomplete(title, categoryId, res.callback);
+});
+
+router.put('/myupdate/:id', (req, res, next) => {
+
+	var id = req.params.id;
+	var body = req.body;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.update(id, body, res.callback);
+});
+
+router.put('/softDelete/:id', adminOnly, (req, res, next) => {
+	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.setToDeleted(id, res.callback);
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
@@ -112,18 +135,6 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	return service.update(userId, objectiveId, data, res.callback);
 });
 
-router.put('/myupdate/:id', (req, res, next) => {
-
-	var id = req.params.id;
-	var body = req.body;
-
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	};
-
-	return repository.update(id, body, res.callback);
-});
-
 router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 
@@ -134,15 +145,8 @@ router.delete('/:id', adminOnly, (req, res, next) => {
 	return service.delete(session._id, id, res.callback);
 });
 
-router.put('/softDelete/:id', adminOnly, (req, res, next) => {
-	var id = req.params.id;
+module.exports = router;
 
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	};
-
-	return repository.setToDeleted(id, res.callback);
-});
 
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
@@ -268,5 +272,3 @@ router.put('/softDelete/:id', adminOnly, (req, res, next) => {
 // router.put('/:id', (req, res, next) => {
 // 	return repository.update(req.params.id, req.body, res.callback);
 // });
-
-module.exports = router;
