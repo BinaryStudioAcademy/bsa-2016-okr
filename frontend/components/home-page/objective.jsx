@@ -29,21 +29,23 @@ class ObjectiveItem extends Component {
 		let changeKeyResultScore = this.props.changeKeyResultScore(objective._id);
 
 		return (
+			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
 				<div className='name'>{ objective.templateId.title }</div>
 				<ObjectiveDescription description={ objective.templateId.description } />
-				<div>
 					<button type="button" className="btn btn-red-hover delete-button-objective"
 					        onClick={ this.handleDelObj }>
 						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
 					</button>
-				</div>
+			</div>
+			<div className='otherUserKR'>
 				<KeyResults 
-					data={ objective.keyResults } 
-					objectiveId={ objective._id }
-					changeScore={ changeKeyResultScore } 
+						data={ objective.keyResults } 
+						objectiveId={ objective._id }
+						changeScore={ changeKeyResultScore } 
 				/>
+			</div>
 			</div>
 		)
 	}

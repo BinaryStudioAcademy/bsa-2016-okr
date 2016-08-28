@@ -33,7 +33,6 @@ class RecycleBin extends Component {
 		}
 	}
 
-
 	renderItem(index, key) {
 
 		let item = this.props.recycleBin.visibleItems[index];
@@ -43,11 +42,9 @@ class RecycleBin extends Component {
    		);
   	}
 
-
 	renderItems(items, ref) {
-  		return ( <tbody ref={ref}>{items}</tbody>)
+  		return ( <tr className="no-hover" ref={ref}>{items}</tr>)
   	}
-
 
 	render() {
 
@@ -82,33 +79,33 @@ class RecycleBin extends Component {
 									<th>Category</th>
 									<th>Deleted By</th>
 									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i className="fa fa-sort" ></i><span className="margin-left-3px">Date</span></th>
-									<th className="actions" className="width-5perc">actions</th>
+									<th className="actions" className="width-5perc">Actions</th>
 								</tr>
 							</thead>
-								<ReactList
-									itemRenderer={::this.renderItem}
-									itemsRenderer={::this.renderItems}
-									length={this.props.recycleBin.visibleItems.length}
-									type='simple'
-									pageSize={100}
-								/>
+							   <tbody>
+									<ReactList
+										itemRenderer={::this.renderItem}
+										itemsRenderer={::this.renderItems}
+										length={this.props.recycleBin.visibleItems.length}
+										type='simple'
+										pageSize={5}
+									/>
+								</tbody>
 						</table>
 					</div>
 			</div>
 		);
 	}
 
-
     componentWillMount() {
-
        this.props.clearRecycleBin();
-        //this.props.getUserDeletedObjectivesRequest();
-        //this.props.getUserObjectivesRequest();
        this.props.getObjectiveTemplatesRequest();
        this.props.getKeyResultsTemplatesRequest();
        this.props.getDeletedCategoriesRequest();
-       // console.log(this.props);
-      //this.props.getUserObjectivesRequest();
+    }
+
+    componentWillUnmount() {
+    	this.props.clearRecycleBin();
     }
 
 	setSortingByDate() {

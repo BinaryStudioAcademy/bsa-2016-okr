@@ -8,6 +8,7 @@ import userPage from './otherPersonReducer.js'
 import mapping from './mappingReducer.js' 
 import myState from './myStateReducer.js'
 import keyResults from './keyResultReducer'
+import objectives from './objectiveReducer'
 import categories from './categoriesReducer'
 import userDashboard from './userDashboard'
 import app from './appReducer';
@@ -28,5 +29,6 @@ export default combineReducers({
   recycleBin,
   userDashboard,
   keyResults,
+  objectives,
   routing: routerReducer
 });

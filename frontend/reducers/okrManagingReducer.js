@@ -4,7 +4,7 @@ import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
         DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
         RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE, ACTIVE_KEY_RESULT,
         SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE, RECIVED_EDIT_KEY_RESULT,
-        EDIT_KEY_RESULT} from '../actions/okrManagingActions.js'
+        EDIT_KEY_RESULT, RECEIVED_NEW_TEMPLATE} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
@@ -17,7 +17,7 @@ const initialState = {
     editingKeyResult: false
 }
 
-export default function patentDetailsReducer(state = initialState, action) {
+export default function okrManagingReducer(state = initialState, action) {
     
     switch (action.type) {             
         
@@ -143,7 +143,30 @@ export default function patentDetailsReducer(state = initialState, action) {
                 editingKeyResult: false
             })
         }
+        case RECEIVED_NEW_TEMPLATE: {
+            const {data} = action;
+            
 
+            var objective ={
+                _id: data._id,
+                category: data.category,
+                createdAt: data.createdAt,
+                creator: data.creator,
+                defaultKeyResults: data.defaultKeyResults, 
+                description: data.description,
+                isApproved: data.isApproved,
+                isDeleted: data.isDeleted,
+                keyResults: data.defaultKeyResults,
+                title: data.title,
+                updatedAt: data.updatedAt,
+                used: data.used
+            }
+
+            return Object.assign({}, state, {
+                visibleObjectives: addNewTemplate(state.visibleObjectives, objective),
+                objectives: addNewTemplate(state.objectives, objective)
+            })
+        }
         
         default: 
             return state;        
@@ -151,13 +174,17 @@ export default function patentDetailsReducer(state = initialState, action) {
     }
 }
 
+function addNewTemplate(visibleObjectives, objective){
+    let objectives = JSON.parse(JSON.stringify(visibleObjectives));
+    objectives.push(objective);
+    return objectives;
+}
 function updateKeyResult(objectives, keyResult, id){
     for (let i = 0; i < objectives.length; i++) 
         for (let j = 0; j < objectives[i].keyResults.length; j++){
             if (objectives[i].keyResults[j]._id == id) {
                 objectives[i].keyResults[j].title = keyResult.title;
                 objectives[i].keyResults[j].difficulty = keyResult.difficulty;
-
           }
     }
     return objectives;
@@ -167,21 +194,25 @@ function update(objectives, objective, id){
         if (objectives[i]._id == id) {
             objectives[i].title =objective.title;
             objectives[i].description =objective.description;
+            objectives[i].category =objective.category;
           }
     }
     return objectives
 }
 function updateVisibleItems(visibleObjectives, objectives, searchValue){
     let objectivesAfterInputFilter = [];
-
+    let newObjectivesList = JSON.parse(JSON.stringify(objectives));
     if (searchValue === "") {
-        objectivesAfterInputFilter = objectives;
+        objectivesAfterInputFilter = newObjectivesList;
     }
     else {
-        for (let i = 0; i < objectives.length; i++) {
-            if (objectives[i].title.toUpperCase().indexOf(searchValue.toUpperCase()) !== -1) {
-                objectivesAfterInputFilter.push(objectives[i])
-            }
+        for (let i = 0; i < newObjectivesList.length; i++) {
+            let title = newObjectivesList[i].title.split(' ');
+            for (let j=0; j < title.length; j++)
+                if (title[j].toUpperCase().indexOf(searchValue.toUpperCase()) === 0) {
+                    objectivesAfterInputFilter.push(newObjectivesList[i])
+                    break;
+                }
         }
     }
     return objectivesAfterInputFilter;

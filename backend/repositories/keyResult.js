@@ -60,7 +60,7 @@ KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callba
 	}
 
 	model
-			.find(options, { title: true })
+			.find(options, { title: true, difficulty: true })
 			.sort({ used: 'desc' })
 			.exec(callback);
 };

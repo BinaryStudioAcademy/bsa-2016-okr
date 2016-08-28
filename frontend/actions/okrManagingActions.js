@@ -25,6 +25,9 @@ export const EDIT_KEY_RESULT = 'EDIT_KEY_RESULT'
 export const RECIVED_EDIT_KEY_RESULT ='RECIVED_EDIT_KEY_RESULT'
 export const RECIVED_EDIT_KEY_RESULT_ERROR = 'RECIVED_EDIT_KEY_RESULT_ERROR'
 
+export const CREATE_NEW_TEMPLATE = 'CREATE_NEW_TEMPLATE';
+export const RECEIVED_NEW_TEMPLATE = 'RECEIVED_NEW_TEMPLATE';
+export const RECEIVED_NEW_TEMPLATE_ERROR = 'RECEIVED_NEW_TEMPLATE_ERROR';
 
 export function getObjectivesList(){
 	
@@ -58,6 +61,8 @@ export function receivedObjectivesList(objectives) {
 	};
 }
 
+/*-----delete template------*/
+
 export function deleteObjective(id){
 	return(dispatch, getStore) => {
 		dispatch({ type: DELETE_OBJECTIVE });
@@ -89,6 +94,8 @@ export function softDeleteObjective(id) {
 	};
 }
 
+/*-----delete key result------*/
+
 export function deleteKeyResult(id){
 	return(dispatch, getStore) => {
 
@@ -116,6 +123,8 @@ export function softDeleteKyeResult(id) {
 	};
 }
 
+/*-----search template------*/
+
 export function searchObjective(value) {
 	const action = {
 		type: SEARCH_OBJECTIVE,
@@ -123,6 +132,9 @@ export function searchObjective(value) {
 	};
 	return action;
 }
+
+/*-----edit objective------*/
+
 export function activeObjective (active) {
 	const action = {
 		type: ACTIVE_OBJECTIVE,
@@ -166,6 +178,8 @@ export function editObjectiveTemplateError(data) {
 	};
 }
 
+/*-----edit key result------*/
+
 export function editKeyResult (id, reqBody) {
 	return(dispatch, getStore) => {
 		dispatch({ type: EDIT_KEY_RESULT });
@@ -207,5 +221,39 @@ export function activeKeyResult(activeKeyResult) {
 	};
 
 	return action;
+}
+
+/*-----create new template------*/
+
+export function createNewTemplate(reqBody) {
+
+	return (dispatch, getStore) => {
+		dispatch({ type: CREATE_NEW_TEMPLATE });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.post('/api/objective/', reqBody)
+		.then(response => {
+			dispatch(receivedNewTemplate(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		})
+		.catch(response => {
+			dispatch(receivedNewTemplateError(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		});
+	};
+}
+
+export function receivedNewTemplateError(data) {
+	return {
+		type: RECEIVED_NEW_TEMPLATE_ERROR,
+		data
+	};
+}
+
+export function receivedNewTemplate(data) {
+	return {
+		type: RECEIVED_NEW_TEMPLATE,
+		data
+	};
 }
 

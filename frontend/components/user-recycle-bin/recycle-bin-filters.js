@@ -40,7 +40,7 @@ class RecycleBinFilter extends Component {
 		const { usersNames } = this.props.recycleBin;
 
 		return(
-			
+
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
 				<div className="filter-box clearfix">
 						<div className="margin-left-4px">
@@ -62,25 +62,24 @@ class RecycleBinFilter extends Component {
 							<td className="no-wrap">
 							<DateField
 									className="date-field"
-									id="date-from"
-									ref="dateFrom"
 									placeholder="From"
 									dateFormat="YYYY-MM-DD"
 									onChange={this.onChangeFrom}
 									footer={false}
 									updateOnDateClick={true}
 									collapseOnDateClick={true}
-									theme={false}/>
+									theme={false}
+									ref="dateFrom"/>
 								<DateField
 									className="date-field"
-									id="date-to"
 									placeholder="To"
 									dateFormat="YYYY-MM-DD"
 									onChange={this.onChangeTo}
 									footer={false}
 									updateOnDateClick={true}
 									collapseOnDateClick={true}
-									theme={false}/>
+									theme={false}
+									ref="dateTo"/>
 							</td>
 							<td>
 								<select ref="userName" onChange={this.changeUserName.bind(this)}>
@@ -98,7 +97,7 @@ class RecycleBinFilter extends Component {
 					</tbody>
 				</table>
 			</div>
-			
+
 		)
 	}
 
@@ -112,14 +111,10 @@ class RecycleBinFilter extends Component {
 
 		document.querySelector("#type-category-filter").value = "";
 
-		/*
-		document.querySelector("#date-from input").value = "";
-		document.querySelector("#date-to input").value = "";
-		document.querySelector("#date-from .react-date-field__clear-icon").click();
-		document.querySelector("#date-to .react-date-field__clear-icon").click();
-		*/
+		this.refs.dateFrom.onFieldChange('');
+		this.refs.dateTo.onFieldChange('');
 
-		this.props.updateAll("", "", "", true, true, false, false, "");
+		this.props.updateAll("", "", "", true, true, false, false, "", false);
 
 	}
 

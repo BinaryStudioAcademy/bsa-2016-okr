@@ -1,19 +1,20 @@
 import {
-	GET_AUTOCOMPLETE_KEY_RESULTS,
-	SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM,
+	GET_AUTOCOMPLETE_OBJECTIVES,
+	RECEIVED_AUTOCOMPLETE_OBJECTIVES,
+	SET_AUTOCOMPLETE_OBJECTIVES_SELECTED_ITEM,
 	RECEIVED_ERROR,
-	RECEIVED_KEY_RESULTS} from '../actions/keyResultActions';
+} from '../actions/objectiveActions';
 
 const initialState = {
 	data: [],
 	selectedItem: {}
 };
 
-export default function keyResultReducer(state = initialState, action = {}) {
+export default function objectiveReducer(state = initialState, action = {}) {
 
 	switch (action.type) {
 	case RECEIVED_ERROR: {
-		const { data } = action;
+		const {data} = action;
 
 		console.log("RECEIVED_ERROR");
 		console.log(data);
@@ -21,7 +22,7 @@ export default function keyResultReducer(state = initialState, action = {}) {
 		return state;
 	}
 
-	case RECEIVED_KEY_RESULTS: {
+	case RECEIVED_AUTOCOMPLETE_OBJECTIVES: {
 		const { data } = action;
 		
 		return Object.assign({}, state, {
@@ -29,7 +30,7 @@ export default function keyResultReducer(state = initialState, action = {}) {
 		});
 	}
 
-	case SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM: {
+	case SET_AUTOCOMPLETE_OBJECTIVES_SELECTED_ITEM: {
 		const { selectedItem } = action;
 		
 		return Object.assign({}, state, {

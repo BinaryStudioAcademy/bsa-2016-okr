@@ -1,4 +1,3 @@
-import users from '../components/mockData/users.js'
 import {GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR} from '../actions/otherPersonActions.js'
 
 const initialState = {
@@ -8,7 +7,7 @@ const initialState = {
     currentYear: getYear()
 }
 
-export default function patentDetailsReducer(state = initialState, action) {
+export default function otherPersonReducer(state = initialState, action) {
     
     switch (action.type) {
         case GET_USER: {

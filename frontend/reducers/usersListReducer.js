@@ -1,5 +1,5 @@
 import users from '../components/mockData/users.js'
-import {SEARCH_USER, GET_USERS_LIST, 
+import {SEARCH_USER, GET_USERS_LIST,
 		USERS_LIST_ERROR, RECEIVED_USERS_LIST} from '../actions/usersListActions.js'
 
 const initialState = {
@@ -8,16 +8,16 @@ const initialState = {
     waiting: true
 }
 
-export default function patentDetailsReducer(state = initialState, action) {
-    
+export default function usersListReducer(state = initialState, action) {
+
     switch (action.type) {
 
-        case SEARCH_USER: 
+        case SEARCH_USER:
             const { searchValue } = action
             return Object.assign({}, state, {
                 searchValue
-            })               
-        
+            })
+
          case GET_USERS_LIST: {
 
             const {data} = action;
@@ -27,25 +27,35 @@ export default function patentDetailsReducer(state = initialState, action) {
         }
 
         case USERS_LIST_ERROR: {
-            
+
             const {data} = action;
 
             return Object.assign({}, state, {
-                user
+                user: []
             })
         }
 
       case RECEIVED_USERS_LIST: {
 
-            const {data} = action;
+            const {data, myId} = action;
+
+						var myApprentices = [];
+						var elseUsers = [];
+						for (let i = 0; i < data.length; i++) {
+							if (data[i].userId.mentor &&
+								data[i].userId.mentor._id == myId) {
+								myApprentices.push(data[i])
+							} else {elseUsers.push(data[i])}
+						}
+						var userList = myApprentices.concat(elseUsers);
 
             return Object.assign({}, state, {
-                user: data,
+                user: userList,
                 waiting: true
             })
         }
-        default: 
-            return state;        
-        
+        default:
+            return state;
+
     }
 }

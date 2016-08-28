@@ -34,10 +34,10 @@ router.post('/', adminOnly, (req, res, next) => {
 
 	if( isEmpty(title)
 		|| isEmpty(description)
-		|| isEmpty(keyResults)
+		/*|| isEmpty(keyResults)*/
 		|| !ValidateService.isCorrectId(category)
-		|| !ValidateService.isArray(keyResults)
-		|| isKeyResultsInvalid)
+		// || !ValidateService.isArray(keyResults)
+		/*|| isKeyResultsInvalid*/)
 	{
 		return res.badRequest();
 	}
@@ -67,6 +67,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	return service.add(req.session._id, objective, defaultKeyResults, res.callback);
 });
 
+// Objective autocomplete
 router.get('/category/:categoryId/:title*?', (req, res, next) => {
 	var title = req.params.title;
 	var categoryId = req.params.categoryId;
@@ -76,33 +77,6 @@ router.get('/category/:categoryId/:title*?', (req, res, next) => {
 	}
 
 	return repository.autocomplete(title, categoryId, res.callback);
-});
-
-router.put('/:id', adminOnly, (req, res, next) => {
-	let objectiveId = req.params.id;
-	let title = req.body.title || '';
-	let description = req.body.description || '';
-	let userId = req.session._id;
-
-	title = title.trim();
-	description = description.trim();
-
-	if(!ValidateService.isCorrectId(objectiveId)
-	|| (isEmpty(title) && isEmpty(description))) {
-		return res.badRequest();
-	};
-
-	let data = {};
-	
-	if(!isEmpty(title)) {
-		data.title = title;
-	}
-
-	if(!isEmpty(description)) {
-		data.description = description;
-	}
-
-	return service.update(userId, objectiveId, data, res.callback);
 });
 
 router.put('/myupdate/:id', (req, res, next) => {
@@ -117,6 +91,50 @@ router.put('/myupdate/:id', (req, res, next) => {
 	return repository.update(id, body, res.callback);
 });
 
+router.put('/softDelete/:id', adminOnly, (req, res, next) => {
+	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.setToDeleted(id, res.callback);
+});
+
+router.put('/:id', adminOnly, (req, res, next) => {
+	let objectiveId = req.params.id;
+	let title = req.body.title || '';
+	let category = req.body.category || '';
+	let description = req.body.description || '';
+	let userId = req.session._id;
+
+	title = title.trim();
+	description = description.trim();
+	category = category.trim();
+
+	if(!ValidateService.isCorrectId(objectiveId)
+	|| (isEmpty(title) && isEmpty(description) 
+	&& !ValidateService.isCorrectId(category))) {
+		return res.badRequest();
+	};
+
+	let data = {};
+	
+	if(!isEmpty(title)) {
+		data.title = title;
+	}
+
+	if(!isEmpty(description)) {
+		data.description = description;
+	}
+
+	if(ValidateService.isCorrectId(objectiveId)) {
+		data.category = category;
+	}
+
+	return service.update(userId, objectiveId, data, res.callback);
+});
+
 router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 
@@ -127,15 +145,8 @@ router.delete('/:id', adminOnly, (req, res, next) => {
 	return service.delete(session._id, id, res.callback);
 });
 
-router.put('/softDelete/:id', adminOnly, (req, res, next) => {
-	var id = req.params.id;
+module.exports = router;
 
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	};
-
-	return repository.setToDeleted(id, res.callback);
-});
 
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
@@ -261,5 +272,3 @@ router.put('/softDelete/:id', adminOnly, (req, res, next) => {
 // router.put('/:id', (req, res, next) => {
 // 	return repository.update(req.params.id, req.body, res.callback);
 // });
-
-module.exports = router;

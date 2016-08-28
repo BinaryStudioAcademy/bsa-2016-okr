@@ -110,8 +110,6 @@ router.put('/:id/keyresult/score', (req, res, next) => {
 	let objectiveId = req.params.id || '';
 	let keyResultId = req.body.keyResultId || '';
 	let score = req.body.score || '';
-	console.log('Received body', req.body);
-	console.log('-----------------------');
 
 	score = Number.parseFloat(score);
 

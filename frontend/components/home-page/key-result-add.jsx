@@ -17,6 +17,7 @@ class KeyResult extends React.Component {
 		this.getAutocompleteData = this.getAutocompleteData.bind(this);
 		this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
 		this.addNewItemByKeyPressEnter = this.addNewItemByKeyPressEnter.bind(this);
+		this.isValid = this.isValid.bind(this);
 	}
 
 	addNewItemByKeyPressEnter(title) {
@@ -45,19 +46,24 @@ class KeyResult extends React.Component {
 		this.props.setAutocompleteKeyResultsSelectedItem(item);
 	}
 
+	isValid(value) {
+		return true;
+	}
+
 	render() {
 		return (
-			<section className="undisplay">
+			<section className="autocomplete undisplay">
 
 				<AutocompleteInput
-					getAutocompleteData={this.getAutocompleteData}
-					setAutocompleteSelectedItem={this.setAutocompleteSelectedItem}
-					autocompleteData={this.props.keyResultsReducer.data}
+					getAutocompleteData={ this.getAutocompleteData }
+					setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
+					autocompleteData={ this.props.keyResultsReducer.data }
 					autocompletePlaceholder='key result'
-				  addNewItemByKeyPressEnter={this.addNewItemByKeyPressEnter}
+				  addNewItemByKeyPressEnter={ this.addNewItemByKeyPressEnter }
+				  isValid={ this.isValid }
 				/>
 
-				<div>
+				<div className="autocomplete-button">
 					<button type="button" className="btn btn-red-hover delete-button-key-result"
 					        onClick={this.onDeleteKeyResultClick}>
 						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
