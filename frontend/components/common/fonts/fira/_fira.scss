@@ -1,9 +1,59 @@
 @font-face {
 	font-family: "Fira Sans";
-	src: url("./FiraSans.eot");
-	src: url("./FiraSans.eot?#iefix") format("embedded-opentype"),
-	url("./FiraSans.woff") format("woff"),
-	url("./FiraSans.ttf") format("truetype");
-	font-weight: normal;
+	src: url("./eot/FiraSans-Regular.eot");
+	src: url("./eot/FiraSans-Regular.eot?#iefix") format("embedded-opentype"),
+	url("./woff/FiraSans-Regular.woff") format("woff"),
+	url("./ttf/FiraSans-Regular.ttf") format("truetype");
+	font-weight: 400;
 	font-style: normal;
+}
+
+@font-face {
+	font-family: "Fira Sans";
+	src: url("./eot/FiraSans-Italic.eot");
+	src: url("./eot/FiraSans-Italic.eot?#iefix") format("embedded-opentype"),
+	url("./woff/FiraSans-Italic.woff") format("woff"),
+	url("./ttf/FiraSans-Italic.ttf") format("truetype");
+	font-weight: 400;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "Fira Sans";
+	src: url("./eot/FiraSans-SemiBold.eot");
+	src: url("./eot/FiraSans-SemiBold.eot?#iefix") format("embedded-opentype"),
+	url("./woff/FiraSans-SemiBold.woff") format("woff"),
+	url("./ttf/FiraSans-SemiBold.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Fira Sans";
+	src: url("./eot/FiraSans-SemiBoldItalic.eot");
+	src: url("./eot/FiraSans-SemiBoldItalic.eot?#iefix") format("embedded-opentype"),
+	url("./woff/FiraSans-SemiBoldItalic.woff") format("woff"),
+	url("./ttf/FiraSans-SemiBoldItalic.ttf") format("truetype");
+	font-weight: 500;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "Fira Sans";
+	src: url("./eot/FiraSans-Thin.eot");
+	src: url("./eot/FiraSans-Thin.eot?#iefix") format("embedded-opentype"),
+	url("./woff/FiraSans-Thin.woff") format("woff"),
+	url("./ttf/FiraSans-Thin.ttf") format("truetype");
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Fira Sans";
+	src: url("./eot/FiraSans-ThinItalic.eot");
+	src: url("./eot/FiraSans-ThinItalic.eot?#iefix") format("embedded-opentype"),
+	url("./woff/FiraSans-ThinItalic.woff") format("woff"),
+	url("./ttf/FiraSans-ThinItalic.ttf") format("truetype");
+	font-weight: 300;
+	font-style: italic;
 }
