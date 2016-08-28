@@ -22,9 +22,9 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.props.actions.categories.getAllCategories();
-		this.props.actions.myState.getMe();
-		this.props.actions.app.init();
+		this.props.categoriesActions.getAllCategories();
+		this.props.myStateActions.getMe();
+		this.props.appActions.init();
 	}
 
 	render() {
@@ -69,11 +69,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: {
-			categories: bindActionCreators(categoriesActions, dispatch),
-			myState: bindActionCreators(myStateActions, dispatch),
-			app: bindActionCreators(appActions, dispatch)
-		}
+		categoriesActions: bindActionCreators(categoriesActions, dispatch),
+		myStateActions: bindActionCreators(myStateActions, dispatch),
+		appActions: bindActionCreators(appActions, dispatch)
 	};
 }
 
