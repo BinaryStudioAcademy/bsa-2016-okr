@@ -74,12 +74,12 @@ export function softDeleteMyObjectiveById(id) {
 	};
 }
 
-export function softDeleteMyObjectiveByIdApi(id, body) {
+export function softDeleteMyObjectiveByIdApi(id) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
-
-		return axios.put(('/api/userObjective/' + id), body)
+		
+		return axios.put(('/api/userObjective/' + id), {isDeleted: true})
 		.then(response => {
 			dispatch(softDeleteMyObjectiveById(id));
 			dispatch({ type: REMOVE_REQUEST	});
