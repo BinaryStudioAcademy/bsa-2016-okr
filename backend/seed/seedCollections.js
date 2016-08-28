@@ -20,6 +20,7 @@ var Chance = require('chance');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
+var mock = require('./mockData');
 
 var chance = new Chance();
 
@@ -28,13 +29,23 @@ function getRandomId(set) {
 	return set[index]._id;
 }
 
+function returnCategoryId(categoryTitle, categories) {
+	var id = '';
+	categories.forEach(category => {
+		if (category.title == categoryTitle) {
+			id = category._id;
+		}
+	})
+	return id
+}
+
 function randomUser() {
 
 	var createdAt = chance.date({ year: 2016, month: 4 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 200000000 }));
-	
+
 	var randomValue = chance.integer({ min: 1, max: 100 });
-	
+
 	var localRole;
 
 	if (randomValue <= 10)
@@ -106,9 +117,9 @@ function randomObjective(users, categories, i) {
 	let deletedBy = null;
 
 	if (isDeleted) {
-		
+
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-		
+
 		let isDone = false;
 
 		let userWhoDidDeletionIndex;
@@ -124,6 +135,22 @@ function randomObjective(users, categories, i) {
 	}
 
 	return new Objective({
+		title: mock.objectivesMock[i].title,
+		description: mock.objectivesMock[i].description,
+		category: returnCategoryId(mock.objectivesMock[i].category, categories),
+		defaultKeyResults: [],
+		used: 0,
+		creator: getRandomId(users),
+		isApproved: i % 5 !== 0,
+		isDeleted: i % 10 === 0,
+		isDeleted: isDeleted,
+		deletedBy: deletedBy,
+		deletedDate: deletedDate,
+		createdAt: createdAt,
+		updatedAt: updatedAt
+	});
+/*
+	return new Objective({
 		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
 		description: chance.sentence({ words: chance.integer({ min: 5, max: 15 }) }),
 		category: getRandomId(categories),
@@ -138,10 +165,11 @@ function randomObjective(users, categories, i) {
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
+*/
 }
 
 function randomKeyResult(objectives, users, i) {
-	
+
 	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
@@ -150,9 +178,9 @@ function randomKeyResult(objectives, users, i) {
 	let deletedBy = null;
 
 	if (isDeleted) {
-		
+
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-		
+
 		let isDone = false;
 
 		let userWhoDidDeletionIndex;
@@ -167,23 +195,24 @@ function randomKeyResult(objectives, users, i) {
 
 	}
 
+	var objectivePlace = mock.keyResultsMock[i].id
 	return new KeyResult({
-		title: chance.sentence({ words: chance.integer({ min: 1, max: 5 }) }),
+		title: mock.keyResultsMock[i].title,
 		creator: getRandomId(users),
-		objectiveId: getRandomId(objectives),
+		objectiveId: objectives[objectivePlace]._id,
 		isApproved: i % 6 !== 0,
 		isDeleted: i % 8 === 0,
 		isDeleted: isDeleted,
 		deletedBy: deletedBy,
 		deletedDate: deletedDate,
-		difficulty: chance.pickone(KeyResult.schema.path('difficulty').enumValues),
+		difficulty: mock.keyResultsMock[i].difficulty,
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
 }
 
 function randomUserObjective(objectives, users, keyResults, i) {
-	
+
 	var createdAt = chance.date({ year: 2016, month: 7 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
@@ -192,9 +221,9 @@ function randomUserObjective(objectives, users, keyResults, i) {
 	let deletedBy = null;
 
 	if (isDeleted) {
-		
+
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-		
+
 		let isDone = false;
 
 		let userWhoDidDeletionIndex;
@@ -240,7 +269,7 @@ function randomUserObjective(objectives, users, keyResults, i) {
 		if (keyIsDeleted) {
 
 			keyDeletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
-			
+
 			let isDone = false;
 
 			let userWhoDidDeletionIndex;
@@ -304,7 +333,7 @@ function baseCategories(users) {
 		if (users[userWhoDidDeletionIndex].localRole === "admin")
 			isDone = true;
 	}
-
+/*
 	var myCategory = new Category({
 		title: "science",
 		isDeleted: true,
@@ -313,7 +342,7 @@ function baseCategories(users) {
 	})
 
 	res.push(myCategory.toObject());
-
+*/
 	return res;
 }
 
@@ -420,7 +449,7 @@ function randomUserInfo(users) {
 		lastName: chance.last(),
 		globalRole: chance.pickone(['ADMIN', 'DEVELOPER', 'HR', 'CEO', 'Tech Lead']),
 		email: chance.email()
-	};	
+	};
 
 	return new UserInfo(info);
 };
@@ -453,9 +482,9 @@ module.exports = function () {
 		generateMentors(users);
 		setInfoToUser(users, userinfos);
 		var categories = baseCategories(users);
-		var objectives = new Array(100).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
-		var keyresults = new Array(500).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
-		var userobjectives = new Array(1000).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
+		var objectives = new Array(mock.objectivesMock.length).fill(0).map((_, i) => randomObjective(users, categories, i).toObject());
+		var keyresults = new Array(mock.keyResultsMock.length).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
+		var userobjectives = new Array(240).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
 
 		userobjectives = setArchivedToUserObjectives(userobjectives, quarters);

@@ -33,7 +33,8 @@
 
   .autocomplete-result-li:hover {
     &:not(.inactive) {
-      background: $color-green;
+      color: $color-white;
+      background: $color-blue;
     }
   }
 

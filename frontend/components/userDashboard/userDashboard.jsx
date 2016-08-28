@@ -1,6 +1,7 @@
 import React from 'react';
 import './userDashboard.scss';
 
+import Dashboard from '../dashboard/dashboard.jsx'
 import UserHistory from './userHistory.jsx';
 import Tabs from './tabs.jsx';
 
@@ -25,13 +26,11 @@ class UserDashboard extends React.Component{
 		//this.props.getMyHistory();
 	}
 	componentWillUnmount() {
-		console.log('component unmounted')
 		this.props.clearUserDashboardState();
 	}
 
-	isVisibleContent() {
-		
-		if(this.props.userDashboard.tabIndex === 1)
+	isVisibleContent(index) {
+		if(this.props.userDashboard.tabIndex === index)
 			return "showContent"
 		else return "hideContent"
 	}
@@ -63,11 +62,11 @@ class UserDashboard extends React.Component{
 		return (
 			<div className="userDashboard">
 				<Tabs/>
-				<div className="content"> 
-					{this.getView()}
-				</div>
-				<div className={this.isVisibleContent()}>
+				<div className={this.isVisibleContent(1)}>
 					<UserHistory />
+				</div>
+				<div className={this.isVisibleContent(2)}>
+					<Dashboard />
 				</div>
 			</div>
 		)
