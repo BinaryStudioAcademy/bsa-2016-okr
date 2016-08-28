@@ -112,21 +112,24 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE: {
 			const { response, request} = action;
 
+			let keyResultIdInObjective = response.keyResultId;
+			let templateKeyResult = response.keyResult;
+
 			let keyResult = {
-				_id: response._id,
-				creator: response.creator,
+				_id: keyResultIdInObjective,
+				creator: templateKeyResult.creator,
 				score: 0,
 				templateId: {
-					_id: response._id,
-					createdAt: response.createdAt,
-					creator: response.creator,
-					difficulty: response.difficulty,
-					isApproved: response.isApproved,
-					isDeleted: response.isDeleted,
-					objectiveId: response.objectiveId,
-					title: response.title,
-					updatedAt: response.updatedAt,
-					used: response.used
+					_id: templateKeyResult._id,
+					createdAt: templateKeyResult.createdAt,
+					creator: templateKeyResult.creator,
+					difficulty: templateKeyResult.difficulty,
+					isApproved: templateKeyResult.isApproved,
+					isDeleted: templateKeyResult.isDeleted,
+					objectiveId: templateKeyResult.objectiveId,
+					title: templateKeyResult.title,
+					updatedAt: templateKeyResult.updatedAt,
+					used: templateKeyResult.used
 				}
 			};
 
