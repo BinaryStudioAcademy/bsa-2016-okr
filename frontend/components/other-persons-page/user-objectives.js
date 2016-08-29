@@ -18,13 +18,14 @@ class Objectives extends Component {
 	changeTab(num) {
 		this.props.changeTab(num)
 	}
-	changeYear(year){
+
+	changeYear(year) {
 		this.props.changeYear(year)
 	}
 
 	render() {
 		
-		const { user, currentYear, currentTab} = this.props.user;
+		const { user, selectedYear, selectedTab } = this.props.user;
 		const categories = this.props.categories;
 
 		let quarter = {};
@@ -32,7 +33,7 @@ class Objectives extends Component {
 
 		if(user.quarters != undefined) {
 			quarter = user.quarters.find((quarter) => {
-				return (quarter.year == currentYear) && (quarter.index == currentTab)
+				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
 
 			objectives = quarter.userObjectives;
@@ -41,7 +42,7 @@ class Objectives extends Component {
 		return (
 			<div>
 				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) } 
-				currentYear={ currentYear } currentTab={ currentTab } />
+				selectedYear={ selectedYear } selectedTab={ selectedTab } />
 				<div id='user-objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list } my={ false } 
 					ObjectiveItem={ ObjectiveItem }/>

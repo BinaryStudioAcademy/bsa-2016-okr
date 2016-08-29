@@ -7,7 +7,9 @@ module.exports = {
 	isArray: isArray,
 	isObject: isObject,
 	getValidDifficulty: getValidDifficulty,
-	isStringBoolean: isStringBoolean
+	isStringBoolean: isStringBoolean,
+	isValidYear: isValidYear,
+	isValidQuarter: isValidQuarter
 };
 
 function isCorrectId(id) {
@@ -57,4 +59,12 @@ function isStringBoolean(value) {
 	}
 	
 	return result
+}
+
+function isValidYear(year) {
+	return year >= 2016;
+}
+
+function isValidQuarter(index) {
+	return (index >= 1) && (index <= 4);
 }

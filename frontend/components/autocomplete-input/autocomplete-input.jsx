@@ -29,10 +29,6 @@ class AutocompleteInput extends React.Component {
 		let title = this.refs.autocompleteInput.value;
 		this.props.getAutocompleteData(title);
 
-		if (!this.props.isValid(title) && this.state.isValid) {
-			this.setState({isValid: false});
-		}
-
 		this.setState({selectedLi: false});
 
 		// undisplay autocomplete results when item is selected
@@ -63,8 +59,6 @@ class AutocompleteInput extends React.Component {
 
 		if(this.props.isValid(title) && !this.state.isValid) {
 			this.setState({ isValid: true });
-		} else if(!this.props.isValid(title) && this.state.isValid) {
-			this.setState({	isValid: false });
 		}
 
 		this.getData(title);
@@ -87,11 +81,21 @@ class AutocompleteInput extends React.Component {
 	}
 
 	onKeyPress(event) {
-		if (event.key === 'Enter' && this.state.isValid) {
-			const title = this.refs.autocompleteInput.value;
-			this.props.addNewItemByKeyPressEnter(title);
-			this.refs.autocompleteInput.value = '';
-			this.getData('');
+		const title = this.refs.autocompleteInput.value;
+		let isTitleValid = this.props.isValid(title);
+		
+		if(event.key === 'Enter') {
+			if (!isTitleValid && this.state.isValid) {
+				this.setState({ isValid: false });
+			} else if(isTitleValid && !this.state.isValid) {
+				this.setState({ isValid: true });
+			}
+			
+			if (isTitleValid) {
+				this.props.addNewItemByKeyPressEnter(title);
+				this.refs.autocompleteInput.value = '';
+				this.getData('');
+			}
 		}
 	}
 

@@ -3,6 +3,8 @@ var Objective = require('../schemas/objective');
 var User = require('../schemas/user');
 var KeyResult = require('../schemas/keyResult');
 var ObjectiveRepository = require('../repositories/objective.js');
+var UserObjectiveRepository = require('../repositories/userObjective.js');
+var QuarterRepository = require('../repositories/quarter');
 var KeyResultRepository = require('../repositories/keyResult.js');
 var HistoryRepository = require('../repositories/history.js');
 var async = require('async');
@@ -49,7 +51,7 @@ ObjectiveService.prototype.getAll = function(callback) {
 		return callback(err, result);
 	}
 	);
-}
+};
 
 // 1) Create new objective with empty keyResults array
 // 2) Create all keyResults with corresponding objectiveId
@@ -137,7 +139,7 @@ ObjectiveService.prototype.update = function (authorId, objectiveId, objective, 
 	], (err, result) => {
 		return callback(err, result);
 	})
-}
+};
 
 ObjectiveService.prototype.delete = function (authorId, objectiveId, callback){
 	async.waterfall([
@@ -160,7 +162,50 @@ ObjectiveService.prototype.delete = function (authorId, objectiveId, callback){
 	], (err, result) => {
 		return callback(err, result);
 	})
-}
+};
+
+ObjectiveService.prototype.autocomplete = function(userId, categoryId, year, quarter, title, callback) {
+	async.waterfall([
+		(callback) => {
+			QuarterRepository.getByUserIdObjectiveIds(userId, year, quarter, (err, quarter) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				let objectiveIds = quarter.userObjectives;
+
+				return callback(null, objectiveIds);
+			});
+		},
+		(objectiveIds, callback) => {
+			UserObjectiveRepository.getTemplateFieldByObjectiveIds(objectiveIds, (err, userObjectiveTemplates) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				let filteredByCategory = userObjectiveTemplates.filter((userObjective) => {
+					return userObjective.templateId.category.equals(categoryId);
+				});
+
+				let userObjectiveTemplateIds = filteredByCategory.map((userObjective) => {
+					return userObjective.templateId._id;
+				});
+
+				return callback(null, userObjectiveTemplateIds);
+			});
+		}, (userObjectiveTemplateIds, callback) => {
+			ObjectiveRepository.autocomplete(title, categoryId, userObjectiveTemplateIds, (err, objectives) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, objectives);
+			});
+		},
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
 
 
 // ObjectiveService.prototype.addToUser = function(objective, keys, assignedTo, callback) {

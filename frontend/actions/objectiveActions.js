@@ -11,12 +11,12 @@ export const SET_AUTOCOMPLETE_OBJECTIVES_SELECTED_ITEM = 'SET_AUTOCOMPLETE_OBJEC
 // Return AXIOS error
 export const RECEIVED_ERROR = 'RECEIVED_ERROR';
 
-export function getAutocompleteObjectives(categoryId, title) {
+export function getAutocompleteObjectives(categoryId, year, quarter, title) {
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_AUTOCOMPLETE_OBJECTIVES });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get(`api/objective/category/${ categoryId }/${ title }`)
+		return axios.get(`/api/objective/category/${ categoryId }/year/${ year }/quarter/${ quarter }/${ title }`)
 		.then(response => {
 			dispatch(receivedAutocompleteObjectives(response.data))
 			dispatch({ type: REMOVE_REQUEST	});
@@ -25,7 +25,6 @@ export function getAutocompleteObjectives(categoryId, title) {
 			dispatch(receivedError(response.data))
 			dispatch({ type: REMOVE_REQUEST	});
 		});
-
 	};
 }
 

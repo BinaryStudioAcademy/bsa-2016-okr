@@ -1,5 +1,5 @@
 import React from 'react';
-import ObjectiveInput from '../../new-objective/objectiveInput.jsx';
+import ObjectiveInput from '../../home-page/objectiveInput.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 
 var ObjectiveList = (props) => {

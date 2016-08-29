@@ -17,8 +17,8 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
-    currentTab: currentQuarter,
-    currentYear: currentYear,
+    selectedTab: currentQuarter,
+    selectedYear: currentYear,
     existedQuarters: getExistedQuarters(),
     me: {
 		    "localRole": ""
@@ -44,24 +44,22 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
-				currentTab: currentQuarter,
-        currentYear: currentYear
 			});
 		}
 
 		case CHANGE_TAB: {
-			const { currentTab } = action;
+			const { selectedTab } = action;
 
 			return Object.assign({}, state, {
-				currentTab: currentTab
+				selectedTab: selectedTab
 			});
 		}
 
 		case CHANGE_YEAR: {
-			const { currentYear } = action;
+			const { selectedYear } = action;
 
 			return Object.assign({}, state, {
-				currentYear: currentYear
+				selectedYear: selectedYear
 			});
 		}
 

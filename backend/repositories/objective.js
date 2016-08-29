@@ -51,20 +51,21 @@ ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 		.exec(callback);
 };
 
-ObjectiveRepository.prototype.autocomplete = function(title, categoryId, callback) {
+ObjectiveRepository.prototype.autocomplete = function(title, categoryId, excludeIds, callback) {
 	var model = this.model;
 	var options = {
 		isApproved: true,
 		isDeleted: false,
-		category: categoryId 
+		category: categoryId,
+		_id: {
+			$not: {
+				$in: excludeIds
+			}
+		},
 	};
 
 	var fields = {
 		title: true,
-		description: true,
-		category: true,
-		used: true,
-		defaultKeyResults: true
 	};
 
 	if(title) {
@@ -75,10 +76,6 @@ ObjectiveRepository.prototype.autocomplete = function(title, categoryId, callbac
 		.find(options, fields)
 		.sort({ used: 'desc' })
 		.limit(10)
-		.populate({
-			path: 'defaultKeyResults',
-			select: 'title used difficulty'
-		})
 		.exec(callback);
 };
 

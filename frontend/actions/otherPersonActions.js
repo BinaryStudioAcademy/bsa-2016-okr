@@ -42,12 +42,12 @@ export function receivedUser(data) {
 export function changeTab(num) {
 	return {
 		type: CHANGE_TAB,
-		currentTab: num
+		selectedTab: num
 	};
 }
 export function changeYear(year) {
 	return {
 		type: CHANGE_YEAR,
-		currentYear: year
+		selectedYear: year
 	};
 }

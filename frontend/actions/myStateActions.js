@@ -15,7 +15,7 @@ export const CHANGED_KEYRESULT_SCORE = 'CHANGED_KEYRESULT_SCORE';
 export const CHANGED_KEYRESULT_SCORE_ERROR = 'CHANGED_KEYRESULT_SCORE_ERROR';
 
 export function getMe() {
-
+	console.log('Getting me');
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_MY_OBJECTIVES });
 		dispatch({ type: ADD_REQUEST });
@@ -49,14 +49,14 @@ export function receivedMyObjectives(data) {
 export function setChangeTab(num) {
 	return {
 		type: CHANGE_TAB,
-		currentTab: num
+		selectedTab: num
 	};
 }
 
 export function setChangeYear(year) {
 	return {
 		type: CHANGE_YEAR,
-		currentYear: year
+		selectedYear: year
 	};
 }
 

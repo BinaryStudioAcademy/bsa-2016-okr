@@ -62,15 +62,15 @@ class Objectives extends Component {
 
 	createObjective(categoryId) {
 		return (title) => {
-			var quarters = this.props.myState.me.quarters;
-			var currentYear = this.props.myState.currentYear;
-			var currentTab = this.props.myState.currentTab;
+			let quarters = this.props.myState.me.quarters;
+			let selectedYear = this.props.myState.selectedYear;
+			let selectedTab = this.props.myState.selectedTab;
 
 			let quarter = quarters.find((quarter) => {
-				return (quarter.index == currentTab) && (quarter.year == currentYear);
+				return (quarter.index == selectedTab) && (quarter.year == selectedYear);
 			});
 
-			var body = {
+			let body = {
 				title: title,
 				category: categoryId,
 				quarterId: quarter._id
@@ -81,25 +81,34 @@ class Objectives extends Component {
 	}
 
 	getObjectiveAutocompleteData(categoryId) {
+		let selectedYear = this.props.myState.selectedYear;
+		let selectedTab = this.props.myState.selectedTab;
+		
 		return (title) => {
-			this.props.objectiveActions.getAutocompleteObjectives(categoryId, title);
+			this.props.objectiveActions.getAutocompleteObjectives(categoryId, selectedYear, selectedTab, title);
 		};
 	}
 
 	render() {
 		const myState = this.props.myState;
-		const { me, currentYear, currentTab, existedQuarters } = myState;
+		const { me, selectedYear, selectedTab, existedQuarters } = myState;
 
 		const categories = this.props.categories;
+
+		console.log('myState', myState);
 
 		var objectiveItems = [];
 		var quarter = {};
 		var objectives = [];
 
+		console.log('selectedYear, selectedTab', selectedYear, selectedTab);
+
 		if (me.quarters != undefined) {
 			quarter = me.quarters.find((quarter) => {
-				return (quarter.year == currentYear) && (quarter.index == currentTab)
+				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
+
+			console.log('quarter', me.quarters);
 
 			objectives = quarter.userObjectives;
 		}
@@ -107,7 +116,7 @@ class Objectives extends Component {
 		return (
 			<div id="home-page-wrapper">
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
-				currentTab={ currentTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
+				selectedTab={ selectedTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } />
 				<div id='objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list }
 					my={ true } ObjectiveItem={ ObjectiveItem } softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }

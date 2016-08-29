@@ -7,6 +7,9 @@ const cloneObjective = require('../../services/cloneObjective');
 const session = require('../../config/session');
 const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
+const isValidYear = ValidateService.isValidYear;
+const isValidQuarter = ValidateService.isValidQuarter;
+const isCorrectId = ValidateService.isCorrectId;
 
 router.get('/', (req, res, next) => {
 	return service.getAll(res.callback);
@@ -68,15 +71,29 @@ router.post('/', adminOnly, (req, res, next) => {
 });
 
 // Objective autocomplete
-router.get('/category/:categoryId/:title*?', (req, res, next) => {
-	var title = req.params.title;
-	var categoryId = req.params.categoryId;
+router.get('/category/:categoryId/year/:year/quarter/:quarter/:title*?', (req, res, next) => {
 
-	if(!ValidateService.isCorrectId(categoryId)) {
-		return res.badRequest();
+	console.log('/category/:categoryId/:title*?');
+	var title = req.params.title || '';
+	var categoryId = req.params.categoryId || '';
+	var year = req.params.year || '';
+	var quarter = req.params.quarter || '';
+	var userId = req.session._id;
+
+	if(!isCorrectId(categoryId)
+	|| isEmpty(year) || isEmpty(quarter)) {
+		return res.badRequest('Not enough arguments');
 	}
 
-	return repository.autocomplete(title, categoryId, res.callback);
+	year = Number.parseInt(year, 10);
+	quarter = Number.parseInt(quarter, 10);
+
+	if(Number.isNaN(year) || Number.isNaN(quarter)
+	|| !isValidYear(year) || !isValidQuarter(quarter)) {
+		return res.badRequest('Year or quarter in wrong format');
+	}
+
+	service.autocomplete(userId, categoryId, year, quarter, title, res.callback);
 });
 
 router.put('/myupdate/:id', (req, res, next) => {

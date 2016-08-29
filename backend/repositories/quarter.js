@@ -14,23 +14,42 @@ QuarterRepository.prototype.getByUserId = function(id, callback) {
 	var model = this.model;
 
 	model
-		.find({ userId: id })
-		.exec(callback);
+	.find({ userId: id })
+	.exec(callback);
+};
+
+QuarterRepository.prototype.getByUserIdObjectiveIds = function(id, year, quarter, callback) {
+	var model = this.model;
+
+	var options = { 
+		userId: id,
+		year: year,
+		index: quarter,
+	};
+
+	var fields = {
+		_id: false, 
+		userObjectives: true
+	};
+
+	model
+	.findOne(options, fields)
+	.exec(callback);
 };
 
 QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
 	var model = this.model;
 
 	model
-		.find({ userId: id })
-		.populate({
-			path: 'userObjectives',
-			match: { isDeleted: false},
-			populate: {
-				path: 'templateId keyResults.templateId',
-			}
-		})
-		.exec(callback);
+	.find({ userId: id })
+	.populate({
+		path: 'userObjectives',
+		match: { isDeleted: false},
+		populate: {
+			path: 'templateId keyResults.templateId',
+		}
+	})
+	.exec(callback);
 };
 
 QuarterRepository.prototype.getCurrentQuarter = function(callback) {
@@ -38,26 +57,26 @@ QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 	var today = new Date();
 
 	model
-		.find({'index': CONST.currentQuarter, 'year': CONST.currentYear})
-		.populate({
-			path: 'userObjectives',
-			match: { isDeleted: false},
+	.find({'index': CONST.currentQuarter, 'year': CONST.currentYear})
+	.populate({
+		path: 'userObjectives',
+		match: { isDeleted: false},
+		populate: {
+			path: 'templateId keyResults.templateId',
 			populate: {
-				path: 'templateId keyResults.templateId',
-				populate: {
-						path:	'category'
-				}
+				path:	'category'
 			}
-		})
-		.populate({
-			path: 'userId',
+		}
+	})
+	.populate({
+		path: 'userId',
+		populate: {
+			path: 'userInfo mentor',
 			populate: {
-				path: 'userInfo mentor',
-				populate: {
-					path: 'userInfo'
-				}
+				path: 'userInfo'
 			}
-		})
-		.exec(callback);
+		}
+	})
+	.exec(callback);
 };
 module.exports = new QuarterRepository();
