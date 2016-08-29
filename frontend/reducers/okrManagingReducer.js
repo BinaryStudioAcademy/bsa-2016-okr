@@ -12,7 +12,7 @@ const initialState = {
     waiting: true,
     visibleObjectives: [],
     keyResults: [],
-    count: 0,
+    index: 0,
     active: '',
     searchValue: '',
     editing: false,
@@ -188,7 +188,7 @@ export default function okrManagingReducer(state = initialState, action) {
 
         case REMOVE_KEY_RESULT_FROM_TAMPLATE : {
             const {index} = action;
-            console.log(state.keyResults.splice(index, 1))
+            state.keyResults.splice(index, 1)
             return Object.assign({}, state, {
                 keyResults:  state.keyResults
             })
