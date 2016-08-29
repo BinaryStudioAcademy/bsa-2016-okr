@@ -86,8 +86,11 @@ body {
 	white-space: nowrap;
 }
 
-#rec-bin-wrapper  .width-20perc {
-    white-space: nowrap;
+#rec-bin-wrapper .no-wrap {
+	white-space: nowrap;
+}
+
+#rec-bin-wrapper .width-20perc {
 	width: 20%;
 }
 
