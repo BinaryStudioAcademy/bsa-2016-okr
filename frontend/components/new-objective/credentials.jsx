@@ -15,6 +15,7 @@ class NewObjCredentials extends React.Component{
       this.delete = this.delete.bind(this);
    }
    addNewKeyResult(){
+    let newField = (<NewKeyResult delete={this.delete}/>);
     let title = document.getElementsByClassName('new-key-result-title');
     let count = 0;
     for (var i=0; i < title.length; i++) {
@@ -22,13 +23,13 @@ class NewObjCredentials extends React.Component{
         count++;
       }}
       if (count == title.length){
-      let keyResult = this.props.okrManaging.keyResults.concat(this.props.okrManaging.count)
+      let keyResult = this.props.okrManaging.keyResults.concat(newField)
       this.props.addKeyResultToTemplate(keyResult);
-      }
-      
+      }     
    }
 
    delete(index){
+    console.log(index)
     if(this.props.okrManaging.keyResults.length != 1)
     this.props.removeKeyResultFromTemplate(index);
    }
@@ -55,8 +56,10 @@ class NewObjCredentials extends React.Component{
 
    render(){
     console.log(this.props.okrManaging.keyResults)
-    let keyResults = this.props.okrManaging.keyResults.map((keyResult, index) => {
-        return <NewKeyResult delete={this.delete} key={index} index={index}/> });
+    let keyResults;
+    if(this.props.okrManaging.keyResults.length != 0)
+    keyResults = this.props.okrManaging.keyResults.map((keyResult, index) => {
+        return <NewKeyResult key={index} index={index} delete={this.delete} /> });
 
       return(
          <div id="new-obj-creds">
@@ -74,9 +77,9 @@ class NewObjCredentials extends React.Component{
                <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
             </div>
             <div>
-           {/* <label htmlFor="new-key-result-title">Key result</label>
+            <label htmlFor="new-key-result-title">Key result</label>
             {keyResults}
-            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>*/}
+            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>
             </div>
             <button type="button" id="new-obj-submit-btn" onClick={this.createTemplate}>Add new objective</button>
          </div>

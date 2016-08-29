@@ -118,6 +118,33 @@ ObjectiveService.prototype.addBlank = function(authorId, objective, callback) {
 	});
 };
 
+ObjectiveService.prototype.softDelete = function(authorId, objectiveId, objective, callback){
+	 async.waterfall([
+		(callback) => {
+			ObjectiveRepository.update(objectiveId, objective, (err, oldObjective) => {
+				if(err) {
+					return callback(err, null);
+				};
+				
+				return callback(null, oldObjective);
+			})
+		},
+		(oldObjective, callback) => {
+			// console.log('update finished');
+			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
+			// 	if(err) {
+			// 		return callback(err, null);
+			// 	};
+				
+			// 	return callback(null, objective);
+			// })
+			return callback(null, objective);
+		}
+	], (err, result) => {
+		return callback(err, result)
+	})
+};
+
 ObjectiveService.prototype.update = function (authorId, objectiveId, objective, callback){
 	async.waterfall([
 		(callback) => {

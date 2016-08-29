@@ -57,6 +57,33 @@ KeyResultsService.prototype.delete = function(userId, keyResultId, callback) {
 	});
 };
 
+KeyResultsService.prototype.softDelete = function(authorId, keyResultId, keyResult, callback){
+	 async.waterfall([
+		(callback) => {
+			KeyResultRepository.update(keyResultId, keyResult, (err, oldKeyResult) => {
+				if(err) {
+					return callback(err, null);
+				};
+				
+				return callback(null, oldKeyResult);
+			})
+		},
+		(oldKeyResult, callback) => {
+			// console.log('update finished');
+			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
+			// 	if(err) {
+			// 		return callback(err, null);
+			// 	};
+				
+			// 	return callback(null, keyResult);
+			// })
+			return callback(null, keyResult);
+		}
+	], (err, result) => {
+		return callback(err, result)
+	})
+};
+
 KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback){
 	async.waterfall([
 		(callback) => {
