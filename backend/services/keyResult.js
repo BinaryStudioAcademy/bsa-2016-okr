@@ -21,7 +21,7 @@ KeyResultsService.prototype.update = function(userId, keyResultId, data, callbac
 			});
 		},
 		(keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(authorId, keyResultId, CONST.history.type.UPDATE, (err, keyResult) => {
+			HistoryRepository.addKeyResultEvent(userId, keyResultId, CONST.history.type.UPDATE, (err, keyResult) => {
 				if(err) {
 					return  callback(err, null);
 				}
@@ -57,7 +57,7 @@ KeyResultsService.prototype.delete = function(userId, keyResultId, callback) {
 	});
 };
 
-KeyResultsService.prototype.softDelete = function(authorId, keyResultId, keyResult, callback){
+KeyResultsService.prototype.softDelete = function(userId, keyResultId, keyResult, callback){
 	 async.waterfall([
 		(callback) => {
 			KeyResultRepository.update(keyResultId, keyResult, (err, oldKeyResult) => {
@@ -70,7 +70,7 @@ KeyResultsService.prototype.softDelete = function(authorId, keyResultId, keyResu
 		},
 		(oldKeyResult, callback) => {
 			// console.log('update finished');
-			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
+			// HistoryRepository.addUserObjective(userId, objectiveId, CONST.history.type.UPDATE, (err) => {
 			// 	if(err) {
 			// 		return callback(err, null);
 			// 	};
