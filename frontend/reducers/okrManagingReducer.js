@@ -11,7 +11,7 @@ const initialState = {
     objectives: [],
     waiting: true,
     visibleObjectives: [],
-    keyResults: [],
+    keyResults: [''],
     index: 0,
     active: '',
     searchValue: '',
