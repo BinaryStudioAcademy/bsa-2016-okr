@@ -67,7 +67,11 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 		sortWayNum = -1
 	else 
 		sortWayNum = 1;
-
+	console.log('sortedList');
+	console.log(sortedList);
+	console.log('sortField');
+	console.log(sortField);
+	console.log(sortWay);
 	switch(sortField){
 	 	case 'date':
 	 		sortedList.sort((a, b) => {
@@ -83,7 +87,7 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 	// 	});
 	 	// break;
 	 	case 'action':
-
+	 		console.log('sorting');
 	 		function sorting (a, b) {
 	 			let actionA = a.type.split(' ')[0];
 	 			let actionB = b.type.split(' ')[0];
@@ -103,13 +107,14 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 				else return 0;
 	 			};  
 	 		};
-
+	 		console.log('sorted to');
 	 		sortedList.sort(sorting);
+	 		console.log(sortedList);
 	 	break;
 	 	default: break; 
 	}
 
-	return callback(null, sortedList);
+	return callback(sortedList);
 }
 
 HistoryService.prototype.filterBy = function (eventList, filter, callback) {

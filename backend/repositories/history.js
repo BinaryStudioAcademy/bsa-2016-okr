@@ -14,7 +14,15 @@ HistoryRepository.prototype.getHistory = function (callback) {
 	let model = this.model;
 	model
 		.find()
-		.populate('userObjective')
+		.populate({
+			path: 'userObjective',
+			populate: [{
+				path: 'templateId'
+			},
+			{
+				path: 'keyResults.templateId'
+			}]
+		})
 		.populate('keyResult')
 		.populate('objective')
 		.populate('category')
@@ -31,7 +39,15 @@ HistoryRepository.prototype.getHistoryById = function (id, callback) {
 	let model = this.model;
 	model
 		.find({_id: id})
-		.populate('userObjective')
+		.populate({
+			path: 'userObjective',
+			populate: [{
+				path: 'templateId'
+			},
+			{
+				path: 'keyResults.templateId'
+			}]
+		})
 		.populate('keyResult')
 		.populate('objective')
 		.populate('category')
@@ -48,7 +64,15 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 	let model = this.model;
 	model
 		.find({authorId: id})
-		.populate('userObjective')
+		.populate({
+			path: 'userObjective',
+			populate: [{
+				path: 'templateId'
+			},
+			{
+				path: 'keyResults.templateId'
+			}]
+		})
 		.populate('keyResult')
 		.populate('objective')
 		.populate('category')

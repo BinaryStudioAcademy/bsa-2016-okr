@@ -1,6 +1,10 @@
 @import '../common/variables';
 @import '../common/styles/images';
 
+.list-of-users-dashboard{
+	margin:10px;
+}
+
 #usersList {
 	.users-title {
 	clear: both;

@@ -93,7 +93,7 @@ export default function historyReducer(state = initialState, action) {
 
 			const historyItems = action.historyItems;
 			console.log('received');
-
+			console.log(historyItems);
 			return Object.assign({}, state, {
 				historyItems  
 			})

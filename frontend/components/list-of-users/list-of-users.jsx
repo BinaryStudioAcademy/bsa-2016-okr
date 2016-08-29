@@ -49,7 +49,9 @@ class ListOfUsers extends Component {
 					</div>
 				</CentralWindow>
 				<StatPanel>
-					<Dashboard></Dashboard>
+					<div className="list-of-users-dashboard">
+						<Dashboard></Dashboard>
+					</div>
 				</StatPanel>
 			</div>
 		)
