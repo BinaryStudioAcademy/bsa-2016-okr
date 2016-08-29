@@ -59,16 +59,32 @@ class NewObjCredentials extends React.Component{
       let objectiveDesctiption = document.querySelector("textarea#new-obj-desc").value;
       let objectiveTitle = document.querySelector("input#new-obj-title").value;
       let objectiveCategory = document.querySelector("select#new-obj-category").value;
-
+      let keyResults = [];
+      let data = {};
+      for(let i=0; i<title.length; i++){
+        data.title = title[i].value;
+        data.difficulty = difficulty[i].value;
+        keyResults.splice(i, 0, data);
+        data= {}; 
+      }  
       reqBody.description = objectiveDesctiption;
       reqBody.title = objectiveTitle;
       reqBody.category = objectiveCategory;
-      reqBody.keyResult = [];
+      reqBody.keyResults = keyResults;
 
       this.props.createNewTemplate(reqBody);
-      
+
       document.querySelector("textarea#new-obj-desc").value = '';
       document.querySelector("input#new-obj-title").value = '';
+
+      for(let i=0; i<title.length; i++){
+        document.getElementsByClassName('new-key-result-title')[i].value = '';
+        document.getElementsByClassName('new-key-result-difficulty')[i].value = 'easy';
+      }
+
+      keyResults = [''];
+      this.props.addKeyResultToTemplate(keyResults)
+
       this.props.handleCloseNewObjView();     
     }
 

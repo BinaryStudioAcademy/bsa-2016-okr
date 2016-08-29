@@ -242,7 +242,7 @@ export function activeKeyResult(activeKeyResult) {
 /*-----create new template------*/
 
 export function createNewTemplate(reqBody) {
-
+console.log(reqBody)
 	return (dispatch, getStore) => {
 		dispatch({ type: CREATE_NEW_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });
