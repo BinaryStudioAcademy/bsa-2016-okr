@@ -29,7 +29,7 @@ class NewObjCredentials extends React.Component{
    }
 
    delete(index){
-    console.log(index)
+    console.log('num parent '+ index)
     if(this.props.okrManaging.keyResults.length != 1)
     this.props.removeKeyResultFromTemplate(index);
    }
@@ -59,7 +59,8 @@ class NewObjCredentials extends React.Component{
     let keyResults;
     if(this.props.okrManaging.keyResults.length != 0)
     keyResults = this.props.okrManaging.keyResults.map((keyResult, index) => {
-        return <NewKeyResult key={index} index={index} delete={this.delete} /> });
+        return <NewKeyResult delete={this.delete} key={index} num={index}/>
+      });
 
       return(
          <div id="new-obj-creds">
@@ -77,9 +78,9 @@ class NewObjCredentials extends React.Component{
                <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
             </div>
             <div>
-            <label htmlFor="new-key-result-title">Key result</label>
+            {/*<label htmlFor="new-key-result-title">Key result</label>
             {keyResults}
-            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>
+            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>*/}
             </div>
             <button type="button" id="new-obj-submit-btn" onClick={this.createTemplate}>Add new objective</button>
          </div>
