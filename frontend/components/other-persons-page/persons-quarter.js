@@ -34,8 +34,9 @@ class Quarter extends Component {
       } else {
          return ""
       }
-   }      
-   handleChangeYear(e){
+   }
+
+   handleChangeYear(e) {
       let value = e.target.value;
       this.props.changeYear(value)
    }
@@ -53,10 +54,10 @@ class Quarter extends Component {
       return (
          <div id='quaterPanel'>
             <ul id='quaterList'>
-            <select onChange={ this.handleChangeYear } className='year'>
-               <option>{this.props.today.getFullYear()}</option>
-               <option>{this.props.today.getFullYear()+1}</option>
-            </select> 
+               <select onChange={ this.handleChangeYear } className='year'>
+                  <option>{this.props.today.getFullYear()}</option>
+                  <option>{this.props.today.getFullYear()+1}</option>
+               </select> 
                <li className={"quater " + this.activeTab1()} onClick={this.handleTabClick}>1-st quarter</li>
                <li className={"quater " + this.activeTab2()} onClick={this.handleTabClick}>2-nd quarter</li>
                <li className={"quater " + this.activeTab3()} onClick={this.handleTabClick}>3-rd quarter</li>

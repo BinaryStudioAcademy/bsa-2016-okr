@@ -12,8 +12,7 @@ class Quarter extends Component {
 
 	handleYearChange(e) {
 		let value = e.target.value;
-		console.log('Handle year change', e)
-		// this.props.changeYear(value)
+		this.props.changeYear(value)
 	}
 	
 	handleTabClick(e) {
@@ -64,11 +63,16 @@ class Quarter extends Component {
 			return quarters;
 		}
 
+		let years = [ this.props.currentYear, this.props.currentYear + 1 ];
+
+		let optionsEl = years.map((year) => {
+			return <option value={ year }>{ year }</option>
+		});
+
 		return (
 			<div id="quarter-bar">
 				<select id="business-year" onChange={ this.handleYearChange }>
-					<option value="">{ this.props.today.getFullYear() }</option>
-					<option value="">{ this.props.today.getFullYear()+1 }</option>
+					{ optionsEl }
 				</select>
 				<ul>
 					{

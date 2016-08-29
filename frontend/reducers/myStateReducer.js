@@ -17,6 +17,8 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
+		currentYear,
+		currentQuarter,
     selectedTab: currentQuarter,
     selectedYear: currentYear,
     existedQuarters: getExistedQuarters(),
