@@ -28,6 +28,14 @@ export const RECIVED_EDIT_KEY_RESULT_ERROR = 'RECIVED_EDIT_KEY_RESULT_ERROR'
 export const CREATE_NEW_TEMPLATE = 'CREATE_NEW_TEMPLATE';
 export const RECEIVED_NEW_TEMPLATE = 'RECEIVED_NEW_TEMPLATE';
 export const RECEIVED_NEW_TEMPLATE_ERROR = 'RECEIVED_NEW_TEMPLATE_ERROR';
+export const ADD_KEY_RESULT_TO_TEMPLATE ='ADD_KEY_RESULT_TO_TEMPLATE'
+export const REMOVE_KEY_RESULT_FROM_TAMPLATE = 'REMOVE_KEY_RESULT_FROM_TAMPLATE'
+
+export const ADD_KEY_RESULT = 'ADD_KEY_RESULT'
+export const RECIVED_NEW_KEY_RESULT = 'RECIVED_NEW_KEY_RESULT'
+
+export const CANCEL_EDIT_TEMPLATE = 'CANCEL_EDIT_TEMPLATE'
+export const RECEIVED_ERROR = 'RECEIVED_ERROR'
 
 export function getObjectivesList(){
 	
@@ -132,7 +140,13 @@ export function searchObjective(value) {
 	};
 	return action;
 }
-
+/*-----cancel edit------*/
+export function cancelEdit() {
+	const action = {
+		type: CANCEL_EDIT_TEMPLATE,
+	};
+	return action;
+}
 /*-----edit objective------*/
 
 export function activeObjective (active) {
@@ -257,3 +271,55 @@ export function receivedNewTemplate(data) {
 	};
 }
 
+/*------Add new key result-------*/
+
+export function addKeyResult(body) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_KEY_RESULT });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.post(('/api/keyResult/'), body)
+				.then(response => {
+					dispatch(addKeyResultToObjective(response.data , body));
+					dispatch({ type: REMOVE_REQUEST	});
+				})
+				.catch(response => {
+					dispatch(receivedError(response.data));
+					dispatch({ type: REMOVE_REQUEST	});
+				});
+	};
+}
+
+export function addKeyResultToObjective(data, body) {
+	return {
+			type: RECIVED_NEW_KEY_RESULT,
+		  data,
+		  request: body
+	};
+}
+
+export function receivedError(data) {
+
+	return (dispatch, getStore) => {
+		dispatch({
+			type: RECEIVED_ERROR,
+			data
+		});
+	}
+}
+
+/*------Add new key result to template-------*/
+
+export function addKeyResultToTemplate(keyResult) {
+	return {
+			type: ADD_KEY_RESULT_TO_TEMPLATE,
+			keyResult
+	};
+}
+
+export function removeKeyResultFromTemplate(index) {
+	return  {
+		type: REMOVE_KEY_RESULT_FROM_TAMPLATE,
+		index
+	}
+}

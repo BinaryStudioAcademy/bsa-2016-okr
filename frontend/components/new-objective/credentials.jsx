@@ -11,11 +11,27 @@ class NewObjCredentials extends React.Component{
       super(props)
 
       this.createTemplate = this.createTemplate.bind(this);
-   //   this.addNewKeyResult = this.addNewKeyResult.bind(this);
+      this.addNewKeyResult = this.addNewKeyResult.bind(this);
+      this.delete = this.delete.bind(this);
    }
-/*   addNewKeyResult(){
+   addNewKeyResult(){
+    let title = document.getElementsByClassName('new-key-result-title');
+    let count = 0;
+    for (var i=0; i < title.length; i++) {
+      if (title[i].value != '') {
+        count++;
+      }}
+      if (count == title.length){
+      let keyResult = this.props.okrManaging.keyResults.concat(this.props.okrManaging.count)
+      this.props.addKeyResultToTemplate(keyResult);
+      }
       
-   }*/
+   }
+
+   delete(index){
+    if(this.props.okrManaging.keyResults.length != 1)
+    this.props.removeKeyResultFromTemplate(index);
+   }
 
    createTemplate(event){
       event.preventDefault();
@@ -38,13 +54,17 @@ class NewObjCredentials extends React.Component{
     }
 
    render(){
+    console.log(this.props.okrManaging.keyResults)
+    let keyResults = this.props.okrManaging.keyResults.map((keyResult, index) => {
+        return <NewKeyResult delete={this.delete} key={index} index={index}/> });
+
       return(
          <div id="new-obj-creds">
             <div className="title-group">
                <label htmlFor="new-obj-title">New objective title</label>
                <input type="text" placeholder="Title" id="new-obj-title"/>
                <select className='template-category' id="new-obj-category">
-                  { this.props.categories.list.map((category, index) => {
+                  {this.props.categories.list.map((category, index) => {
                      return <option key={index} value={category._id}>{category.title}</option>
                   })}
                </select>
@@ -53,11 +73,11 @@ class NewObjCredentials extends React.Component{
                <label htmlFor="new-obj-desc">Description</label>
                <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
             </div>
-            {/*<div>
-            <label className='new-key-result-title' htmlFor="new-key-result-title">Key result</label>
-            <NewKeyResult />
-            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>
-            </div>*/}
+            <div>
+           {/* <label htmlFor="new-key-result-title">Key result</label>
+            {keyResults}
+            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>*/}
+            </div>
             <button type="button" id="new-obj-submit-btn" onClick={this.createTemplate}>Add new objective</button>
          </div>
       )

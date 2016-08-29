@@ -31,6 +31,7 @@
         z-index: 0;
     }
 }
+/* template */
 #templates{
     margin: 0 5%;
 
@@ -45,11 +46,11 @@
 
         .template-description{
             resize: vertical;
-            width: 70%;
+            width: 65%;
             margin: 10px 0;
         }
         .template-title{
-            width: 70%;
+            width: 65%;
             box-sizing: border-box;
         }
         .template-category{
@@ -87,22 +88,58 @@
             float: right;
             margin-top: 2px;
             .editing{
-                color: $color-blue;
+                color: $color-green;
+            }
+            .cancel{
+                color: $color-red;
             }
             .edit:hover{
-                color: $color-blue;
+                color: $color-green;
             }
             .delete:hover{
                 color: $color-red;
             }
             i{  
+                font-size: 18px;
                 display: inline-block;
                 margin-left: 10px;
                 cursor: pointer;
             }
         }
     }
-            .key-results{
+
+    /* add new key result */
+         .add-new-key-result{
+            position: relative;
+            color: $color-green;
+            cursor: pointer;
+                .add-key-result-icon{
+                    float: right;
+                    display: inline-block;
+                    margin-top: 7px;
+                    .delete{
+                        color: $color-red;
+                    }
+                    .add{
+                        font-size: 17px;
+                    }
+                    i {
+                        margin-left: 10px;
+                    }
+                }
+                .add-new-key-result-title{
+                    width: 70%;
+                    padding: 6px 5px;
+                }
+               .add-key-result-difficulty{
+                    position: absolute;
+                    top: 0;
+                    right: 65px;
+                }
+        }
+
+    /* key result */
+        .key-results{
             margin-top: -48px;
             position: relative;
             margin-left: 18px;
@@ -134,7 +171,6 @@
             }
             .display{
                 display: block;
-                margin-bottom: 20px;
             }
             .undisplay{
                 display: none;
@@ -144,7 +180,7 @@
                 margin: 0;
                 padding: 0px;
                 list-style: none;
-
+               
                 .key-result-item{
                     border: 1px solid #c5c5c5;
                     border-top: none;
@@ -170,17 +206,26 @@
                     .edit-key-result{
                         display: inline-block;
                         float: right;
-                         .editing{
-                            color: $color-blue;
+                        .editing{
+                            display: inline-block;
+                            margin-top: 6px;
+                            color: $color-green;
+                        }
+                        .cancel{
+                            display: inline-block;
+                            margin-top: 6px;
+                            color: $color-red; 
                         }
                         .edit:hover{
-                            color: $color-blue;
+                            color: $color-green;
                         }
                         .delete:hover{
                             color: $color-red;
                         }
+
                         i{
                             margin-left: 10px;
+                            font-size: 18px;
                             cursor: pointer;
                         }
                     }
@@ -188,60 +233,6 @@
             }
         }
 }
-.OKR-mnaging.active.objective{
-    margin: 20px;
-    background-color: #fff;
-    border-left: 5px solid #6aa84f;
-
-    input, textarea, select{
-        box-sizing: border-box;
-        width: 100%;
-    }
-}
-.OKR-managing.thumbnail {
-  text-align: center;
-  padding: 2rem 1rem;
-
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 60px;
-    left: 25px;
-    height: 0;
-    width: 35%;
-    border-top: 1px solid #aaaaaa;
-  }
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    height: 0;
-    width: 35%;
-    border-top: 1px solid #aaaaaa;
-  }
-}
-
-.toolbar {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  .btn {
-    margin-right: 1rem;
-
-  }
-
-}
-
-
-
-.OKR-mnaging.active.objective .keyResults {
-	margin-bottom: 10px;
-}
-
 
 
 .OKR-managing.searchbar{
@@ -249,13 +240,6 @@
 }
 .OKR-managing.search {
     margin-top: 20px;
-}
-
-
-.OKR-managing button.btn.btn-reset {
-    float: right;
-    margin-top: -55px;
-    margin-right: -2px;
 }
 
 .OKR-managing button#add-new-objective {
@@ -269,15 +253,6 @@
     	outline:none;
     }
 }
-
-.OKR-managing.thumbnail i{
-  cursor: pointer;
-}
-
-.OKR-managing.thumbnail i:first-child {
-  margin-right: 10px;
-}
-
 
 .OKR-managing input.searchbar-input {
     padding: 10px;

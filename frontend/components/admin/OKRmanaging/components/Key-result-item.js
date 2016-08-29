@@ -11,19 +11,27 @@ class KeyResult extends Component {
 
 	this.deleteObjective = this.deleteObjective.bind(this);
 	this.editKeyResult = this.editKeyResult.bind(this);
+	this.cancelEdit = this.cancelEdit.bind(this);
 	}
+
+	cancelEdit(){
+    this.props.cancelEdit();
+  }
 
 	editKeyResult(e){
 		if(this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult){
 			event.preventDefault();
-			let reqBody = {};
-			let keyResultDifficulty = this.refs.keyResultDifficulty.value;
-			let keyResultTitle = this.refs.keyResultTitle.value;
+			let result = confirm('Do you really want to save changes?');
+      if (result){
+				let reqBody = {};
+				let keyResultDifficulty = this.refs.keyResultDifficulty.value;
+				let keyResultTitle = this.refs.keyResultTitle.value;
 
-		 	reqBody.difficulty = keyResultDifficulty;
-			reqBody.title = keyResultTitle;
+		 		reqBody.difficulty = keyResultDifficulty;
+				reqBody.title = keyResultTitle;
 
-			this.props.editKeyResult(this.props.item._id, reqBody);
+				this.props.editKeyResult(this.props.item._id, reqBody);
+			}
 		}
 		else {
 			this.props.activeKeyResult(this.props.item._id, true);
@@ -44,6 +52,7 @@ class KeyResult extends Component {
     let edit;
     let editSaveIcon;
     let editSaveTitle;
+    let cancel;
 
     if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
       titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
@@ -55,19 +64,21 @@ class KeyResult extends Component {
       editSaveIcon = 'flaticon-success';
       edit = 'editing';
       editSaveTitle = 'Save';
+      cancel = (<i className="fi flaticon-multiply cancel" onClick={this.cancelEdit} aria-hidden="true"></i>)
     } else {
       titleEl = (<div className='name'>{this.props.item.title}</div>);
       difficultyEl = (<div className='difficulty'>{this.props.item.difficulty}</div>);
       editSaveIcon = 'flaticon-edit';
       editSaveTitle = 'Edit'
       edit = 'edit';
+      cancel = (<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>)
     }
 			return (
 				<li className="key-result-item" >
 					{titleEl}
 					<div className='edit-key-result'>
 						<i className={`fi ${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editKeyResult}></i>
-						<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>
+						{cancel}
 					</div>
 					{difficultyEl}
 				</li>

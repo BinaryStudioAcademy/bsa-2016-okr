@@ -68,7 +68,33 @@ router.put('/myupdate/:id', (req, res, next) => {
  	repository.update(id, req.body, res.callback);
 });
 
+router.post('/', (req, res, next) => {
+	let objectiveId = req.body.objectiveId || '';
+	let userId = req.session._id;
+	let title = req.body.title || '';
+	let difficulty = req.body.difficulty || '';
 
+	title = title.trim();
+	difficulty = difficulty.trim();
+	
+	if(!ValidateService.isCorrectId(objectiveId)
+	|| isEmpty(title) 
+	|| isEmpty(difficulty)) {
+		return res.badRequest();
+	}
+
+	let data = {
+		creator: userId,
+		isApproved: true,
+		isDeleted: false,
+		difficulty: difficulty,
+		objectiveId: objectiveId,
+		title: title,
+		used: 0
+	};
+
+	return repository.add(data, res.callback);
+});
 // router.delete('/:id', adminOnly, (req, res, next) => {
 // 	var id = req.params.id;
 

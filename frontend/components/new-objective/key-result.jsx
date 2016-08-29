@@ -1,5 +1,7 @@
 import React from 'react';
 import './key-result.scss';
+var CONST = require('../../../backend/config/constants');
+
 
 class KeyResult extends React.Component {
 	constructor(props) {
@@ -9,20 +11,20 @@ class KeyResult extends React.Component {
 	}
 
 	handleDelKeyRes() {
-		this.props.onClick(this.props.id);
+		this.props.delete(this.props.index);
 	}
 
-	addNewKeyResult(){
-		this
-	}
 
 	render() {
 		return (
 				<li className="keyresult-group">
-					<input ref="title" type="text" placeholder="Key result name"/>
-					<button type="button" className="btn btn-red-hover del-keyres" onClick={this.handleDelKeyRes}>
-						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
-					</button>
+					<i className="fi flaticon-multiply delete-new-key-result" title='Cancel' onClick={this.handleDelKeyRes} aria-hidden="true"></i>
+					<input type='text' className='new-key-result-title' ref="keyResultTitle" placeholder='Enter key result title' />
+					<select className='new-key-result-difficulty' ref="keyResultDifficulty" defaultValue={CONST.keyResult.EASY}>
+						<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
+						<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
+						<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
+					</select>
 				</li>
 		)
 	}
