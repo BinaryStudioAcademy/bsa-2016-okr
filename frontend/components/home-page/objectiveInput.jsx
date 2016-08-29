@@ -25,7 +25,8 @@ class ObjectiveInput extends Component {
 		value = value || '';
 		value = value.trim();
 		
-		return value.length > 3;
+		// return value.length > 3;
+		return true;
 	}
 
 	getAutocompleteData(title) {

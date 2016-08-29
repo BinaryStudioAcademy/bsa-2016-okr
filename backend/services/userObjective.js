@@ -279,8 +279,9 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 					return callback(err, null);
 				}
 
-				if(!userObjective.userId.equals(userId)
-				|| userObjective.isArchived) {
+				// TODO: Should be check for userObjective.isArchived
+				// Removed temporary
+				if(!userObjective.userId.equals(userId)) {
 					let err = new Error('You are not allowed to do this');
 					return callback(err, null);
 				}
