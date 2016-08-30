@@ -24,7 +24,7 @@ const initialState = {
 	nameFilter: '',
 	typeFilter: '',
 	sort:{
-		up: true,
+		up: false,
 		sortField: ''
 	},
 	setHistoryFilterDateFrom:'',

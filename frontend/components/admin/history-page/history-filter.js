@@ -61,7 +61,7 @@ class HistoryFilter extends Component {
 		var value = event.target.value;
 		console.log(value);
 		this.props.setNameFilter(value);
-		//this.props.getFilteredItems();
+		this.props.getFilteredItems();
 	}
 
 	onChangeType(event) {

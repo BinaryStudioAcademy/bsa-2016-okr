@@ -163,11 +163,11 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 					keyResult: keyResult,
 				};
 
-				return callback(null, keyResult, responseData);
+				return callback(null, keyResult, userObjective, responseData);
 			});
 		},
-		(keyResult, responseData, callback) => {
-			HistoryRepository.addUserKeyResult(userId, keyResult, CONST.history.type.ADD, (err) => {
+		(keyResult, userObjective, responseData, callback) => {
+			HistoryRepository.addUserKeyResult(userId, keyResult, userObjective, CONST.history.type.ADD, (err) => {
 				if(err)
 					return callback(err,null);
 			});
