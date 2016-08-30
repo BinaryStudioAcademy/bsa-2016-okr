@@ -1,0 +1,18 @@
+@import '../../common/variables';
+@import '../../common/styles/commonStyles';
+
+.category{
+	.visible-category-content{
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.hidden-category-content{
+		height:0;
+		overflow:hidden;
+	}
+
+	.category-title{
+		cursor: pointer;
+	}
+}
