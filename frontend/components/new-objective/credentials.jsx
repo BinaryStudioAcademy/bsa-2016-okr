@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../actions/okrManagingActions.js";
 
+const title = document.getElementsByClassName('new-key-result-title');
+const difficulty = document.getElementsByClassName('new-key-result-difficulty');
+
 class NewObjCredentials extends React.Component{
    constructor(props){
       super(props)
@@ -15,23 +18,38 @@ class NewObjCredentials extends React.Component{
       this.delete = this.delete.bind(this);
    }
    addNewKeyResult(){
-    let newField = (<NewKeyResult delete={this.delete}/>);
-    let title = document.getElementsByClassName('new-key-result-title');
+    let keyResults = [''];
+    let data = {};
     let count = 0;
-    for (var i=0; i < title.length; i++) {
-      if (title[i].value != '') {
+    
+    for(let i=0; i<title.length; i++){
+      if(title[i].value != '') {
+        data.title = title[i].value;
+        data.difficulty = difficulty[i].value;
+        keyResults.splice(-1, 0, data);
+        data= {}
         count++;
-      }}
-      if (count == title.length){
-      let keyResult = this.props.okrManaging.keyResults.concat(newField)
-      this.props.addKeyResultToTemplate(keyResult);
-      }     
+      }
+    } 
+
+    if(title.length == count)
+      this.props.addKeyResultToTemplate(keyResults)
    }
 
    delete(index){
-    console.log('num parent '+ index)
+    
+    let keyResults = [];
+    let data = {};
+    for(let i=0; i<title.length; i++){
+      data.title = title[i].value;
+      data.difficulty = difficulty[i].value;
+      keyResults.splice(i, 0, data);
+      data= {}; 
+    }  
+
+    this.props.addKeyResultToTemplate(keyResults)
     if(this.props.okrManaging.keyResults.length != 1)
-    this.props.removeKeyResultFromTemplate(index);
+      this.props.removeKeyResultFromTemplate(index);
    }
 
    createTemplate(event){
@@ -41,26 +59,42 @@ class NewObjCredentials extends React.Component{
       let objectiveDesctiption = document.querySelector("textarea#new-obj-desc").value;
       let objectiveTitle = document.querySelector("input#new-obj-title").value;
       let objectiveCategory = document.querySelector("select#new-obj-category").value;
-
+      let keyResults = [];
+      let data = {};
+      for(let i=0; i<title.length; i++){
+        data.title = title[i].value;
+        data.difficulty = difficulty[i].value;
+        keyResults.splice(i, 0, data);
+        data= {}; 
+      }  
       reqBody.description = objectiveDesctiption;
       reqBody.title = objectiveTitle;
       reqBody.category = objectiveCategory;
-      reqBody.keyResult = [];
+      reqBody.keyResults = keyResults;
 
       this.props.createNewTemplate(reqBody);
-      
+
       document.querySelector("textarea#new-obj-desc").value = '';
       document.querySelector("input#new-obj-title").value = '';
+
+      for(let i=0; i<title.length; i++){
+        document.getElementsByClassName('new-key-result-title')[i].value = '';
+        document.getElementsByClassName('new-key-result-difficulty')[i].value = 'easy';
+      }
+
+      keyResults = [''];
+      this.props.addKeyResultToTemplate(keyResults)
+
       this.props.handleCloseNewObjView();     
     }
 
    render(){
-    console.log(this.props.okrManaging.keyResults)
     let keyResults;
     if(this.props.okrManaging.keyResults.length != 0)
     keyResults = this.props.okrManaging.keyResults.map((keyResult, index) => {
-        return <NewKeyResult delete={this.delete} key={index} num={index}/>
+        return <NewKeyResult keyResult={this.props.okrManaging.keyResults} delete={this.delete} key={index} num={index}/>
       });
+    else keyResults = (<NewKeyResult delete={this.delete}/>);
 
       return(
          <div id="new-obj-creds">
@@ -78,9 +112,9 @@ class NewObjCredentials extends React.Component{
                <textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
             </div>
             <div>
-            {/*<label htmlFor="new-key-result-title">Key result</label>
+            <label htmlFor="new-key-result-title">Key result</label>
             {keyResults}
-            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>*/}
+            <p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>
             </div>
             <button type="button" id="new-obj-submit-btn" onClick={this.createTemplate}>Add new objective</button>
          </div>

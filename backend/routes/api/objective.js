@@ -37,10 +37,10 @@ router.post('/', adminOnly, (req, res, next) => {
 
 	if( isEmpty(title)
 		|| isEmpty(description)
-		/*|| isEmpty(keyResults)*/
+		|| isEmpty(keyResults)
 		|| !ValidateService.isCorrectId(category)
-		// || !ValidateService.isArray(keyResults)
-		/*|| isKeyResultsInvalid*/)
+		|| !ValidateService.isArray(keyResults)
+		|| isKeyResultsInvalid)
 	{
 		return res.badRequest();
 	}
