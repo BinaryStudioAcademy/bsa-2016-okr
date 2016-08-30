@@ -15,8 +15,7 @@ class HistoryItemList extends React.Component {
     constructor(props) {
         super(props);
         this.onSort = this.onSort.bind(this);
-        this.getActionColor = this.getActionColor.bind(this);
-        this.componentWillMount = this.componentWillMount.bind(this)
+       // this.componentWillMount = this.componentWillMount.bind(this)
     }
 
     getObjectId(item) {
@@ -32,26 +31,6 @@ class HistoryItemList extends React.Component {
     	this.props.clearState();
     }
 
-    getActionColor(actionType) {
-        switch(actionType.split(' ')[0]) {
-            case 'add': 
-                return 'actionCreate';
-                break;
-            case 'update': 
-                return 'actionUpdate';
-                break;
-            case 'change': 
-                return 'actionUpdate';
-                break;
-            case 'delete': 
-                return 'actionDelete';
-                break;
-            default: 
-                return 'actionDefault';
-                break;
-        }
-    }
-
     onSort(sort) {
         this.props.setSort(sort);
         this.props.getFilteredItems();
@@ -61,9 +40,9 @@ class HistoryItemList extends React.Component {
 		let item = this.props.historyItems[index];
    		return(
    			<tr key={item._id}>
-				<td><img className="history-item-user-avatar"/>{item.authorId}</td>
-				<td>{item.type}</td>
-				<td><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getObjectId(item)}</span></td>
+				<td><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>{item.author.userInfo.firstName} {item.author.userInfo.lastName}</td>
+				<td>{item.type.split(' ')[0]}</td>
+				<td><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{item.type.substr(item.type.indexOf(' ')+ 1)}</span></td>
 				<td className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</td>
 			</tr>)
   	}

@@ -5,6 +5,7 @@ import ActiveObjective from './components/ActiveObjective';
 import Searchbar from './components/SearchBar';
 import Toolbar from './components/Toolbar';
 import StatPanel from "../../../containers/statistic-panel.jsx";
+import NewObjective from '../../new-objective/new-objective.jsx';
 
 import './OKRmanaging.scss';
 
@@ -18,7 +19,9 @@ render() {
     return (
     	<div>
     	<CentralWindow>
+    		<NewObjective />
 			<div className="OKR-managing app container">
+			<div><Toolbar/></div>
 				<div className="OKR-managing fixed-header">
 					<div className="OKR-managing search">
 						<Searchbar />
@@ -35,7 +38,7 @@ render() {
 		</CentralWindow>
 		<StatPanel>
 			<div className="OKR-mnaging active objective">
-				<ActiveObjective />
+				{/*<ActiveObjective />*/}
 			</div>
 		</StatPanel>
 		</div>

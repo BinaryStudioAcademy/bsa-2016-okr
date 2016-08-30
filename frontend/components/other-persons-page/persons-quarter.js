@@ -5,37 +5,37 @@ class Quarter extends Component {
       super();
 
       this.handleTabClick = this.handleTabClick.bind(this);
-      this.hendleChangeYear = this.hendleChangeYear.bind(this);
+      this.handleChangeYear = this.handleChangeYear.bind(this);
    }
    activeTab1(){
-      if (this.props.currentTab == 1) {
+      if (this.props.selectedTab == 1) {
          return "active"
       } else {
          return ""
       }
    }
    activeTab2(){
-      if (this.props.currentTab == 2) {
+      if (this.props.selectedTab == 2) {
          return "active"
       } else {
          return ""
       }
    }
    activeTab3(){
-      if (this.props.currentTab == 3) {
+      if (this.props.selectedTab == 3) {
          return "active"
       } else {
          return ""
       }
    }
    activeTab4(){
-      if (this.props.currentTab == 4) {
+      if (this.props.selectedTab == 4) {
          return "active"
       } else {
          return ""
       }
    }      
-   hendleChangeYear(e){
+   handleChangeYear(e){
       let value = e.target.value;
       this.props.changeYear(value)
    }
@@ -44,16 +44,16 @@ class Quarter extends Component {
       var li = document.getElementsByClassName('quater');
       for (var i=0; i<4; i++) {
          if ( li[i] == e.target)
-            var currentTab = i;
+            var selectedTab = i;
       } 
-      this.props.changeTab(++currentTab);
+      this.props.changeTab(++selectedTab);
    }
 
    render() {
       return (
          <div id='quaterPanel'>
             <ul id='quaterList'>
-            <select onChange={this.hendleChangeYear} className='year'>
+            <select onChange={ this.handleChangeYear } className='year'>
                <option>{this.props.today.getFullYear()}</option>
                <option>{this.props.today.getFullYear()+1}</option>
             </select> 

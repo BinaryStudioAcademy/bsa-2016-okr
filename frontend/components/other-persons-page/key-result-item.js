@@ -9,8 +9,8 @@ class KeyResult extends Component {
 			return (
 				<li className="user-key-result">
 					<div className='name'>{this.props.item.templateId.title}</div>
-					<div className='difficulty'>{this.props.item.templateId.difficulty}</div>
 					<div className='score'>{this.props.item.score}</div>
+					<div className='difficulty'>{this.props.item.templateId.difficulty}</div>
 				</li>
 			)
 	}

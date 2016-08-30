@@ -38,6 +38,27 @@ UserObjectiveRepository.prototype.getByUserIdPopulate = function(userId, callbac
 		.exec(callback);
 };
 
+UserObjectiveRepository.prototype.getTemplateFieldByObjectiveIds = function(objectiveIds, callback) {
+	var model = this.model;
+
+	var options = {
+		_id: { $in: objectiveIds }, 
+		isDeleted: false ,
+	};
+
+	var fields = { 
+		templateId: true, 
+		_id: false 
+	};
+
+	model
+		.find(options, fields)
+		.populate({
+			path: 'templateId',
+		})
+		.exec(callback);
+};
+
 UserObjectiveRepository.prototype.getDeletedByUserIdPopulate = function(userId, callback) {
 	
 	var model = this.model;

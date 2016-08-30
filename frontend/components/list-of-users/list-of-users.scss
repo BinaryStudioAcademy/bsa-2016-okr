@@ -57,7 +57,6 @@
 	.userItemDiv{
 		background: #f9fafb;
 	    border: 1px solid #dddddd;
-	    border-left: 10px solid #607D8B;
 	    margin-bottom: 15px;
     	padding: 10px 5px;
 	    -webkit-transition: all .15s;
@@ -68,6 +67,7 @@
 	    margin-left: 3%;
 	    box-sizing: border-box;
 	    display: inline-block;
+	    height: 92px;
 		
 		&:hover{
 			background-color: #fff;
@@ -127,7 +127,7 @@
 		.progress-bar{
 			margin-right: 10%; 
 			width: 37%;
-		    padding-top: 20px;
+		    padding-top: 23px;
 			
 			.progressValue {
 				top: 40px;
@@ -137,7 +137,7 @@
 			img{
 				margin: 0 10px;
     			width: 60px;
-    			border-radius: 5px;
+    			border-radius: 3px;
 			}
 		}
 
@@ -147,7 +147,7 @@
 }
 
 @media all 
-    and (max-width: 1440px)
+    and (max-width: 1400px)
     and (min-width: 900px)
 {
 	.listOfUsers {

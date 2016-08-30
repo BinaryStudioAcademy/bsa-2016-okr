@@ -9,6 +9,7 @@ import UserOjectives from './user-objectives.js';
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
+import UserDashboard from "../userDashboard/userDashboard.jsx";
 
 class OtherPersonsPage extends Component {
 	constructor(props) {
@@ -24,14 +25,14 @@ class OtherPersonsPage extends Component {
 		if (this.props.user.waiting){
 			return <div></div>
 		} else {
-			const {user} = this.props.user;
 			return (
 				<div>
 					<CentralWindow>
-						<PersonInfo data={user} />
+						<PersonInfo />
 						<UserOjectives />
 					</CentralWindow>
 					<StatPanel>
+						<UserDashboard where="otherPersonPage"/>
 						{/*<Dashboard></Dashboard>*/}
 					</StatPanel>
 				</div>

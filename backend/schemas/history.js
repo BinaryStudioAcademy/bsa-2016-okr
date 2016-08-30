@@ -2,13 +2,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var historySchema = new Schema({
-	authorId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	keyResult: {type: mongoose.Schema.Types.ObjectId, ref: 'KeyResult'},
-	objectiveId: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
-	//commentId: {type: mongoose.Schema.Types.ObjectId, ref: 'Comment'},
-	//userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-	//planId: {type: mongoose.Schema.Types.ObjectId, ref: 'Plan'},
-	//categoryId: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
+	userObjective: {type: mongoose.Schema.Types.ObjectId, ref: 'UserObjective'},
+	userKeyResult: Schema.Types.ObjectId, 
+	userKeyResultScore: Number,
+	objective: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
+	category: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
 	type: String,
 	updateFrom: {},
 	updateTo: {}

@@ -1,6 +1,7 @@
 @import "variables";
 
 .loading-screen {
+	font-family: Arial, sans-serif;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -22,7 +23,6 @@
 		
 		.binary {
 			font-size: 1.5em;
-
 		}
 
 		.studio {

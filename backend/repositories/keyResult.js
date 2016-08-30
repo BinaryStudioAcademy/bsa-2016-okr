@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
 var KeyResult = require('../schemas/keyResult');
+var UserObjectiveRepository = require('./userObjective');
 
 var KeyResultRepository = function(){
 	Repository.prototype.constructor.call(this);
@@ -9,35 +10,42 @@ var KeyResultRepository = function(){
 
 KeyResultRepository.prototype = new Repository();
 
-//KeyResultRepository.prototype.getById = function(id, callback) {
-//	var model = this.model;
-//	var query = model.findOne({_id: id});
-//	query.exec(callback);
-//};
-//
-//KeyResultRepository.prototype.getByObjId = function(objectiveId, callback) {
-//	var model = this.model;
-//	var query = model.find({'objectiveId': objectiveId});
-//	query.exec(callback);
-//};
-//
-//KeyResultRepository.prototype.getAllApprovedByTitle = function(title, callback) {
-//	var model = this.model;
-//	var query = model.find({'title': title}, {'isApproved': 'true'});
-//	query.exec(callback);
-//};
-//
-//KeyResultRepository.prototype.setIsApprovedToTrue = function(id, callback) {
-//	var model = this.model;
-//	var query = model.update({_id:id}, {$set: {'isApproved': 'true'} });
-//	query.exec(callback);
-//};
-//
-//KeyResultRepository.prototype.setIsApprovedToFalse = function(id, callback) {
-//	var model = this.model;
-//	var query = model.update({_id:id}, {$set: {'isApproved': 'false'} });
-//	query.exec(callback);
-//};
+KeyResultRepository.prototype.getAll = function(callback) {
+	
+	var model = this.model;
+
+	model
+		.find({
+			isApproved: true,
+			isDeleted: false
+		})
+		.exec(callback);
+};
+
+KeyResultRepository.prototype.getAllDeletedPopulate = function(callback) {
+	
+	var model = this.model;
+
+	model
+		.find({
+			isDeleted: true
+		})
+		.populate('objectiveId')
+		.populate({
+			path: "objectiveId",
+			populate: {
+				path: 'category'
+			}
+		})
+		.populate({
+			path: "deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
 
 KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callback) {
 	var model = this.model;
@@ -52,11 +60,17 @@ KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callba
 	}
 
 	model
-			.find(options, { title: true })
+			.find(options, { title: true, difficulty: true })
 			.sort({ used: 'desc' })
-			.limit(10)
-			.populate('keyResults')
 			.exec(callback);
-}
+};
+
+KeyResultRepository.prototype.getByTitle = function(title, callback) {
+	var model = this.model;
+
+	model
+			.findOne({ title: title })
+			.exec(callback);
+};
 
 module.exports = new KeyResultRepository();

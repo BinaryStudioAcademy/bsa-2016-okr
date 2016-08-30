@@ -40,21 +40,20 @@ class RecycleBinFilter extends Component {
 		const { usersNames } = this.props.recycleBin;
 
 		return(
-			<div>
-			
+
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
 				<div className="filter-box clearfix">
-						<div>
+						<div className="margin-left-4px">
 							<input type="checkbox" id="cbObjectives" defaultChecked={true} onClick={this.setObjectiveType.bind(this)}></input>
 							<label htmlFor="cbObjectives">Objectives</label>
 						</div>
 						<div>
-							<input type="checkbox" id="cbKey" onClick={this.setKeyType.bind(this)}></input>
+							<input type="checkbox" id="cbKey" defaultChecked={true}  onClick={this.setKeyType.bind(this)}></input>
 							<label htmlFor="cbKey">Key</label>
 						</div>
 						<div>
-							<input type="checkbox" id="cbCategory" onClick={this.setCategoryType.bind(this)}></input>
-							<label htmlFor="cbCategory">Category</label>
+							<input type="checkbox" id="cbCategory" defaultChecked={true}  onClick={this.setCategoryType.bind(this)}></input>
+							<label htmlFor="cbCategory">Categories</label>
 						</div>
 					</div>
 				<table className="recycle-bin-filter-table">
@@ -64,14 +63,32 @@ class RecycleBinFilter extends Component {
 							    <input type="text" id="type-category-filter" placeholder="Enter type or category" ref="inputFilter" onChange={this.typeOrCategoryFilter.bind(this)}/>
 						    </td>
 							<td className="cell-right-align">Date: </td>
-							<td>
-								<DateField className="date-field" id="date-from" ref="dateFrom" placeholder="From" dateFormat="YYYY-MM-DD" onChange={this.onChangeFrom} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
-								<DateField className="date-field" id="date-to" placeholder="To" dateFormat="YYYY-MM-DD" onChange={this.onChangeTo} footer={false} updateOnDateClick={true} collapseOnDateClick={true}/>
+							<td className="no-wrap">
+								<DateField
+									className="date-field"
+									placeholder="From"
+									dateFormat="YYYY-MM-DD"
+									onChange={this.onChangeFrom}
+									footer={false}
+									updateOnDateClick={true}
+									collapseOnDateClick={true}
+									theme={false}
+									ref="dateFrom"/>
+								<DateField
+									className="date-field"
+									placeholder="To"
+									dateFormat="YYYY-MM-DD"
+									onChange={this.onChangeTo}
+									footer={false}
+									updateOnDateClick={true}
+									collapseOnDateClick={true}
+									theme={false}
+									ref="dateTo"/>
 							</td>
-							<td>User Name: </td>
 							<td>
 								<select ref="userName" onChange={this.changeUserName.bind(this)}>
-								   <option value="" id="reset-option">No one</option>
+								   <option id="reset-option" value="" disabled className="not-display">By User Name</option>
+								   <option value="">No one</option>
 								   {usersNames.map(function(name) {
 			                            return <option key={name.id} value={name.name}>{name.name}</option>
 			                       })}
@@ -84,8 +101,7 @@ class RecycleBinFilter extends Component {
 					</tbody>
 				</table>
 			</div>
-			</div>
-			
+
 		)
 	}
 
@@ -93,22 +109,22 @@ class RecycleBinFilter extends Component {
 	reset() {
 
 		document.querySelector("#cbObjectives").checked = true;
-		document.querySelector("#cbCategory").checked = false;
-		document.querySelector("#cbKey").checked = false;
+		document.querySelector("#cbKey").checked = true;
+		document.querySelector("#cbCategory").checked = true;
 
 		document.querySelector("#reset-option").selected = true;
 
 		document.querySelector("#type-category-filter").value = "";
 
-		/*
-		document.querySelector("#date-from input").value = "";
-		document.querySelector("#date-to input").value = "";
-		document.querySelector("#date-from .react-date-field__clear-icon").click();
-		document.querySelector("#date-to .react-date-field__clear-icon").click();
-		*/
+		this.refs.dateFrom.onFieldChange('');
+		this.refs.dateTo.onFieldChange('');
 
-		this.props.updateAll("", "", "", true, false, false, false, "");
+		this.props.updateAll("", "", "", true, true, false, true, "", false);
 
+	}
+
+	componentDidMount() {
+		document.querySelector("#reset-option").selected = true;
 	}
 
 	changeUserName() {

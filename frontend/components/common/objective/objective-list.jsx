@@ -1,5 +1,5 @@
 import React from 'react';
-import ObjectiveInput from '../../new-objective/objectiveInput.jsx';
+import ObjectiveInput from '../../home-page/objectiveInput.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 
 var ObjectiveList = (props) => {
@@ -8,6 +8,7 @@ var ObjectiveList = (props) => {
 	const my = props.my;
 	const ObjectiveItem = props.ObjectiveItem;
 	const softDeleteMyObjectiveByIdApi = props.softDeleteMyObjectiveByIdApi;
+	const changeKeyResultScore = props.changeKeyResultScore;
 
 	var categoryItems = [];
 
@@ -21,11 +22,16 @@ var ObjectiveList = (props) => {
 					return objective.templateId.category == category._id
 				})
 				.map((item, index) => {
-					return <ObjectiveItem index={ index } key={ item._id } item={ item } softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } />
+					return <ObjectiveItem index={ index } key={ item._id } item={ item } 
+						softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } 
+						changeKeyResultScore={ changeKeyResultScore } />
 				});
 
 			if(my) {
-				input = <ObjectiveInput category={ category.title }/>
+				input = <ObjectiveInput 
+					createObjective={ props.createObjective(category._id) }
+					getObjectiveAutocompleteData={ props.getObjectiveAutocompleteData(category._id) }
+				/>
 			}
 
 			return (
@@ -40,7 +46,7 @@ var ObjectiveList = (props) => {
 
 	return (
 		<div id="project-category" className="category">{ categoryItems }</div>
-		);
+	);
 }
 
 export default ObjectiveList

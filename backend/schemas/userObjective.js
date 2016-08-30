@@ -17,13 +17,21 @@ var userObjective = new Schema({
 		ref: 'User',
 		required: false
 	},
-	deletedDate: {},
 	creator: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 		required: true
 	},
-	isDeleted: Boolean,
+	isArchived: {
+		type: Boolean,
+		default: false,
+	},
+	isDeleted: {
+		type: Boolean,
+	},
+	deletedDate: {
+		type: Date,
+	},
 	keyResults: [{
 		templateId: {
 			type: Schema.Types.ObjectId,

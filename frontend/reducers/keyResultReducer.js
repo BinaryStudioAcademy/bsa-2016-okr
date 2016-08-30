@@ -2,7 +2,7 @@ import {
 	GET_AUTOCOMPLETE_KEY_RESULTS,
 	SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM,
 	RECEIVED_ERROR,
-	RECEIVED_KEY_RESULTS } from '../actions/keyResultActions';
+	RECEIVED_KEY_RESULTS} from '../actions/keyResultActions';
 
 const initialState = {
 	data: [],
@@ -12,40 +12,32 @@ const initialState = {
 export default function keyResultReducer(state = initialState, action = {}) {
 
 	switch (action.type) {
-		case RECEIVED_ERROR:
-		{
+	case RECEIVED_ERROR: {
+		const { data } = action;
 
-			const {data} = action;
+		console.log("RECEIVED_ERROR");
+		console.log(data);
 
-			console.log("RECEIVED_ERROR");
-			console.log(data);
+		return state;
+	}
 
-			return Object.assign({}, state, {
-				data
-			})
-		}
+	case RECEIVED_KEY_RESULTS: {
+		const { data } = action;
+		
+		return Object.assign({}, state, {
+			data
+		});
+	}
 
-		case RECEIVED_KEY_RESULTS:
-		{
+	case SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM: {
+		const { selectedItem } = action;
+		
+		return Object.assign({}, state, {
+			selectedItem
+		});
+	}
 
-			const {data} = action;
-			return Object.assign({}, state, {
-				data
-			})
-		}
-
-		case SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM:
-		{
-
-			const {selectedItem} = action;
-			return Object.assign({}, state, {
-				selectedItem
-			})
-		}
-
-		default:
-		{
-			return state;
-		}
+	default:
+		return state;
 	}
 }

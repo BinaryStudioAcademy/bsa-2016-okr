@@ -1,14 +1,24 @@
 @import "_variables";
 
 #historyTable{
+	i{
+		margin-right: 7px;
+	}
+
+	img{
+		height:30px;
+		width: 30px;
+		margin-right: 7px;
+	}
+
 	tbody{
 		display: block;
-		height: 56vh;
+		height: 50vh;
 		table-layout:fixed;
     	overflow: auto;
     	display:block;
    		/*height:400px;*/
-    	overflow-y :auto;
+    	overflow-y:overlay;
 	}
 	thead, tbody tr {
 	   	display:table;

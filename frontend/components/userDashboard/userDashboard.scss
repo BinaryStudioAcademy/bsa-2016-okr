@@ -1,0 +1,20 @@
+@import "../common/variables";
+@import '../common/styles/commonStyles';
+
+.userDashboard{
+
+	padding: 10px;
+	min-height: 50px;
+	box-sizing: border-box;
+
+	.showContent{
+		display: block;
+		height:100%;
+		overflow:hidden;
+	}
+	.hideContent{
+		display: none;
+		height:0;
+		overflow:hidden;
+	}
+}

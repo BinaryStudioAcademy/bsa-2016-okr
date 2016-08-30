@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var HistoryRepository = require('../repositories/history');
+var UserService = require('./user.js')
 var moment = require('moment');
 
 var HistoryService = function(){
@@ -9,6 +10,54 @@ var HistoryService = function(){
 HistoryService.prototype.generateNotification = function(){
 
 };
+
+HistoryService.prototype.getUserHistory = function (id, callback) {
+	async.waterfall([
+		(callback) => {
+			UserService.getById(id, (err, user) => {
+				if(err)
+					return callback(err, null);
+				return callback(null, user);
+			})
+		},
+		(user, callback) => {
+			let historyList =[];
+			user.quarters.forEach((quarter, i) => {
+				quarter.userObjectives.forEach((objective, i) => {
+					historyList.push(objective._id);
+				})
+			})
+
+			return callback(null, historyList);
+		},
+		(historyList, callback) => {
+			let list= [];
+			let i = 0;
+			(function forEachInList () {
+				HistoryRepository.getUserObjectiveHistoryPopulate(historyList[i], (err, result) => {
+						if(err)
+							return callback(err, null);
+						if( result.length > 0) {
+							if(Array.isArray(result))
+								result.forEach((item)=> { list.push(item)})
+							else list.push(result)
+						};
+
+						++i;
+
+						if(i<= historyList.length && historyList[i] != null)
+							forEachInList()
+						else
+						{
+							return callback(null, list);
+						}
+				})
+			})();
+		}
+	], (err, result) => {
+		return callback(err, result);
+	})
+}
 
 HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callback) {
 	var sortedList = eventList.slice();
@@ -59,12 +108,12 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 	break;
 	 	default: break; 
 	}
-	 return callback(sortedList);
+
+	return callback(null, sortedList);
 }
 
 HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 	var filters = filter;
-	console.log(filters.date);
 	if(filters.date.from == ''){
 		filters.date.from = '2000-01-01';
 	}

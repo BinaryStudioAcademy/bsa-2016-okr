@@ -7,46 +7,39 @@ export const RECEIVED_USERS_LIST = 'RECEIVED_USERS_LIST';
 export const USERS_LIST_ERROR = 'USERS_LIST_ERROR';
 
 export function getUsersList() {
-	
+
 	return(dispatch, getStore) => {
-
-		dispatch({
-			type: GET_USERS_LIST
-		});
-
-		dispatch({
-			type: ADD_REQUEST
-		});
+		dispatch({ type: GET_USERS_LIST	});
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.get('/api/user/quarter')
-			.then(response => dispatch(receivedUsersList(response.data)))
-			.catch(response => dispatch(userslistError(response.data)));
+		.then(response => {
+			dispatch(receivedUsersList(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		})
+		.catch(response => {
+			dispatch(userslistError(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		});
 	};
 }
 
 export function userslistError(data) {
 	return(dispatch, getStore) => {
 		dispatch({
-			type: USER_LISTS_ERROR,
+			type: USERS_LIST_ERROR,
 			data
-		});
-
-		dispatch({
-			type: REMOVE_REQUEST
 		});
 	}
 }
 
 export function receivedUsersList(data) {
 	return (dispatch, getState) => {
-		
-		dispatch({
-			type: REMOVE_REQUEST
-		});
-
+		var myId = getState().myState.me._id;
 		dispatch({
 			type: RECEIVED_USERS_LIST,
-			data
+			data,
+			myId
 		});
 	}
 }
@@ -57,4 +50,3 @@ export function search(value) {
 	};
 	return action;
 }
- 

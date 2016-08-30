@@ -1,70 +1,74 @@
 @import "../components/common/variables";
 
 header {
-   height: $header-height;
-   background-color: $primary-color;
-   padding-right: 20px;
-   z-index: $header-index;
-   position: fixed;
-   width: 100%;
+	height: $header-height;
+	background-color: $primary-color;
+	width: 100%;
 }
 /*
 ** User info
 */
 .user-info {
-   float: right;
-   padding-left: 20px;
-   .logo{
-      height: 70px;
-      width: 70px;
-      margin-left: 20px;
-      overflow: hidden;
-      float: right;
-      cursor: pointer;
-      img{
-         display: block;
-         height: 100%;
-      }
-   }
-   .credentials{
-      float: left;
-      margin: 16px 0;
-      text-align: right;
-      color: #ffffff;
-      .field{
-         color: #ccc;
-         font-weight: 300;
-         font-style: italic;
-      }
-   }
+	float: right;
+	padding-left: 20px;
+
+	.logo {
+		height: 70px;
+		width: 70px;
+		margin-left: 20px;
+		overflow: hidden;
+		float: right;
+		cursor: pointer;
+		img {
+			display: block;
+			height: 100%;
+		}
+	}
+
+	.credentials {
+		float: left;
+		margin: 16px 0;
+		text-align: right;
+		color: $color-white;
+
+		.field {
+			color: darken($color-white, 0%);
+			font-weight: 300;
+			font-style: italic;
+		}
+	}
 }
 
 /*
 ** Bars menu button
 */
 #bars {
-   display: block;
-   float: left;
-   width: $left-nav-width;
-   height: $header-height;
-   text-align: center;
-   background: none;
-   border: none;
-   cursor: pointer;
-   color: #cccccc;
-   i{
-      cursor: pointer;
-      font-size: 30px;
-      pointer-events: none;
-   }
-   &:focus,
-   &:active{
-      outline: none;
-   }
-   &:hover i{
-      color: #ffffff;
-   }
-   &.active i{
-      color: #ffffff;
-   }
+	display: block;
+	float: left;
+	width: $left-nav-width;
+	height: $header-height;
+	text-align: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: darken($color-white, 20%);
+
+	i {
+		cursor: pointer;
+		font-size: 30px;
+		pointer-events: none;
+	}
+
+	&:focus,
+	&:active {
+		outline: none;
+	}
+
+	&:hover i {
+		color: $color-white;
+	}
+
+	&.active i {
+		color: $color-white;
+	}
 }

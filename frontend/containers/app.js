@@ -8,7 +8,9 @@ import MainPage from './main-page.jsx';
 import LoadingScreen from '../components/common/LoadingScreen.jsx';
 import LoadingModal from '../components/common/LoadingModal.jsx';
 
-import * as categoriesActions from '../actions/categoriesActions.js';
+import * as categoriesActions from '../actions/categoriesActions';
+import * as myStateActions from '../actions/myStateActions';
+import * as appActions from '../actions/appActions';
 
 import "normalize.css";
 import '../components/common/fonts/flaticon/_flaticon.scss';
@@ -19,46 +21,57 @@ import './app.scss';
 class App extends Component {
 	constructor(props) {
 		super(props);
-	}
 
-	componentWillMount() {
-		this.props.actions.categories.getAllCategories(); 
+		this.props.categoriesActions.getAllCategories();
+		this.props.myStateActions.getMe();
+		this.props.appActions.init();
 	}
 
 	render() {
+	  let ContentEl = (
+	   <div>
+	    <LoadingModal show={ this.props.isLoading } />
+	    <Header />
+	    <NavMenu />
+	    <MainPage>
+	    { this.props.children }
+	    {
+	     (() => {
+	      if (process.env.NODE_ENV !== 'production') {
+	       const DevTools = require('../shared/devtools/DevTools').default;
+	       return <DevTools />;
+	      }
+	     })()
+	    }
+	    </MainPage>
+	   </div>
+	  );
 
-		return (
-			<div id="application">
-				<LoadingModal show={ this.props.isLoading } />
-				<Header />
-				<NavMenu />
-				<MainPage>
-				{ this.props.children }
-				{
-					(() => {
-						if (process.env.NODE_ENV !== 'production') {
-							const DevTools = require('../shared/devtools/DevTools').default;
-							return <DevTools />;
-						}
-					})()
-				}
-				</MainPage>
-			</div>
-			);
-	}
+	  if(this.props.isInitializing) {
+	   ContentEl = <div></div>
+	  }
+
+	  return (
+	   <div id="application">
+	    <LoadingScreen show={ this.props.isInitializing } />
+	    { ContentEl }
+	   </div>
+	   );
+	 }
 }
 
 function mapStateToProps(state) {
 	return {
-		isLoading: state.app.isLoading
+		isLoading: state.app.isLoading,
+		isInitializing: state.app.isInitializing,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: {
-			categories: bindActionCreators(categoriesActions, dispatch)
-		}
+		categoriesActions: bindActionCreators(categoriesActions, dispatch),
+		myStateActions: bindActionCreators(myStateActions, dispatch),
+		appActions: bindActionCreators(appActions, dispatch)
 	};
 }
 

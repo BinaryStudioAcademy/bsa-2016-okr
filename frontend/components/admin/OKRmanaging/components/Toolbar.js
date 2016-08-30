@@ -8,21 +8,25 @@ class Toolbar extends Component {
   constructor(props) {
     super(props);
 
-    this.onSort = this.onSort.bind(this);
+    this.addTemplate = this.addTemplate.bind(this);
   }
 
-  onSort(sort) {
-      this.props.setSort(sort);
-      this.props.getFilteredItems();
+  addTemplate(event) {
+      var target = event.target,
+         newObjWindow = document.getElementById('new-objective');
+ 
+     if(!newObjWindow.classList.contains('opened')){
+         newObjWindow.classList.add('opened');
+     } else { newObjWindow.classList.remove('opened') }
     }
   render(){
         return (
 		    <div className="toolbar">
-		      <button type="button" id="add-new-objective"><i className="fi flaticon-add" aria-hidden="true"></i><span>New objective</span></button>
+		      <button type="button" onClick={this.addTemplate} className='btn btn-green'id="add-new-objective"><span>New objective</span></button>
 
-		      <button className="btn btn-reset" >
+		     {/* <button className="btn btn-reset" >
 		      <i className="fa fa-ban"></i>  Reset
-		      </button>
+		      </button>*/}
 		      
 		    </div>
     	)

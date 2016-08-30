@@ -30,15 +30,35 @@ module.exports = {
 	keyResult: {
 		EASY: 'easy',
 		INTERMEDIATE: 'intermediate',
-		ADVANCED: 'advanced'
+		ADVANCED: 'advanced',
 	},
 	objective: {
 		categories: {
 			KNOWLEDGE: 'knowledge',
 			EXPERTIZE: 'expertise',
-			PROJECTS: 'projects'
+			PROJECTS: 'projects',
 		}
 	},
-		currentYear: currentYear,
-		currentQuarter: currentQuarter
+	history: {
+		type: {
+			ADD: 'ADD',
+			UPDATE: 'UPDATE',
+			SOFT_DELETE: 'SOFT_DELETE',
+			HARD_DELETE: 'HARD_DELETE',
+			CHANGE_SCORE: 'CHANGE_SCORE',
+			RESTORE: 'RESTORE',
+			CHANGE_APPROVE: 'CHANGE_APPROVE',
+		},
+		target: {
+			OBJECTIVE: 'OBJECTIVE',
+			KEY_RESULT: 'KEY_RESULT',
+			QUARTER: 'QUARTER',
+			CATEGORY: 'CATEGORY',
+			USER: 'USER',
+			USER_OBJECTIVE: 'USER_OBJECTIVE',
+			USER_KEY_RESULT: 'USER_KEY_RESULT',
+		},
+	},
+	currentYear: currentYear,
+	currentQuarter: currentQuarter
 };

@@ -3,10 +3,13 @@ var CONST = require('../config/constants');
 module.exports = {
 	isCorrectId: isCorrectId,
 	isEmpty: isEmpty,
+	isEmptyObject: isEmptyObject,
 	isArray: isArray,
 	isObject: isObject,
 	getValidDifficulty: getValidDifficulty,
-	isStringBoolean: isStringBoolean
+	isStringBoolean: isStringBoolean,
+	isValidYear: isValidYear,
+	isValidQuarter: isValidQuarter
 };
 
 function isCorrectId(id) {
@@ -24,7 +27,11 @@ function isCorrectId(id) {
 }
 
 function isEmpty(value) {
-	return (value == null || value.length === 0);
+	return (value == null || value.length === 0) || isEmptyObject(value);
+}
+
+function isEmptyObject(obj) {
+	return (typeof obj === "object" && Object.getOwnPropertyNames(obj).length == 0);
 }
 
 function isArray(value) {
@@ -50,5 +57,14 @@ function isStringBoolean(value) {
 	    default:
 	        var result = false;
 	}
+	
 	return result
+}
+
+function isValidYear(year) {
+	return year >= 2016;
+}
+
+function isValidQuarter(index) {
+	return (index >= 1) && (index <= 4);
 }

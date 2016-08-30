@@ -3,12 +3,20 @@ const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/objective');
 const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
-const ValidateService = require('../../utils/ValidateService');
 const cloneObjective = require('../../services/cloneObjective');
 const session = require('../../config/session');
+const ValidateService = require('../../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
+const isValidYear = ValidateService.isValidYear;
+const isValidQuarter = ValidateService.isValidQuarter;
+const isCorrectId = ValidateService.isCorrectId;
 
 router.get('/', (req, res, next) => {
-	return repository.getAllPopulate(res.callback);
+	return service.getAll(res.callback);
+});
+
+router.get('/deleted', (req, res, next) => {
+	return repository.getAllDeletedPopulate(res.callback);
 });
 
 router.post('/', adminOnly, (req, res, next) => {
@@ -24,15 +32,15 @@ router.post('/', adminOnly, (req, res, next) => {
 
 	var isKeyResultsInvalid = keyResults.some((keyResult) => {
 		return !ValidateService.isObject(keyResult)
-		|| ValidateService.isEmpty(keyResult.title)
+		|| isEmpty(keyResult.title)
 	});
 
-	if( ValidateService.isEmpty(title)
-		|| ValidateService.isEmpty(description)
-		|| ValidateService.isEmpty(keyResults)
+	if( isEmpty(title)
+		|| isEmpty(description)
+		/*|| isEmpty(keyResults)*/
 		|| !ValidateService.isCorrectId(category)
-		|| !ValidateService.isArray(keyResults)
-		|| isKeyResultsInvalid)
+		// || !ValidateService.isArray(keyResults)
+		/*|| isKeyResultsInvalid*/)
 	{
 		return res.badRequest();
 	}
@@ -42,12 +50,12 @@ router.post('/', adminOnly, (req, res, next) => {
 		description: description,
 		category: category,
 		creator: req.session._id,
-		keyResults: [],
+		defaultKeyResults: [],
 		isApproved: true,
 		isDeleted: false
 	}
 
-	keyResults = keyResults.map((item) => {
+	defaultKeyResults = keyResults.map((item) => {
 		var keyResult = {
 			title: item.title,
 			difficulty: item.difficulty,
@@ -59,21 +67,37 @@ router.post('/', adminOnly, (req, res, next) => {
 		return keyResult;
 	});
 
-	return service.add(req.session._id, objective, keyResults, res.callback);
+	return service.add(req.session._id, objective, defaultKeyResults, res.callback);
 });
 
-router.get('/category/:categoryId/:title*?', (req, res, next) => {
-	var title = req.params.title;
-	var categoryId = req.params.categoryId;
+// Objective autocomplete
+router.get('/category/:categoryId/year/:year/quarter/:quarter/:title*?', (req, res, next) => {
 
-	if(!ValidateService.isCorrectId(categoryId)) {
-		return res.badRequest();
+	console.log('/category/:categoryId/:title*?');
+	var title = req.params.title || '';
+	var categoryId = req.params.categoryId || '';
+	var year = req.params.year || '';
+	var quarter = req.params.quarter || '';
+	var userId = req.session._id;
+
+	if(!isCorrectId(categoryId)
+	|| isEmpty(year) || isEmpty(quarter)) {
+		return res.badRequest('Not enough arguments');
 	}
 
-	return repository.autocomplete(title, categoryId, res.callback);
+	year = Number.parseInt(year, 10);
+	quarter = Number.parseInt(quarter, 10);
+
+	if(Number.isNaN(year) || Number.isNaN(quarter)
+	|| !isValidYear(year) || !isValidQuarter(quarter)) {
+		return res.badRequest('Year or quarter in wrong format');
+	}
+
+	service.autocomplete(userId, categoryId, year, quarter, title, res.callback);
 });
 
-router.put('/:id', adminOnly, (req, res, next) => {
+router.put('/myupdate/:id', (req, res, next) => {
+
 	var id = req.params.id;
 	var body = req.body;
 
@@ -81,7 +105,51 @@ router.put('/:id', adminOnly, (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return service.update(session._id, id, body, res.callback);
+	return repository.update(id, body, res.callback);
+});
+
+router.put('/softDelete/:id', adminOnly, (req, res, next) => {
+	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.setToDeleted(id, res.callback);
+});
+
+router.put('/:id', adminOnly, (req, res, next) => {
+	let objectiveId = req.params.id;
+	let title = req.body.title || '';
+	let category = req.body.category || '';
+	let description = req.body.description || '';
+	let userId = req.session._id;
+
+	title = title.trim();
+	description = description.trim();
+	category = category.trim();
+
+	if(!ValidateService.isCorrectId(objectiveId)
+	|| (isEmpty(title) && isEmpty(description) 
+	&& !ValidateService.isCorrectId(category))) {
+		return res.badRequest();
+	};
+
+	let data = {};
+	
+	if(!isEmpty(title)) {
+		data.title = title;
+	}
+
+	if(!isEmpty(description)) {
+		data.description = description;
+	}
+
+	if(ValidateService.isCorrectId(objectiveId)) {
+		data.category = category;
+	}
+
+	return service.update(userId, objectiveId, data, res.callback);
 });
 
 router.delete('/:id', adminOnly, (req, res, next) => {
@@ -94,15 +162,8 @@ router.delete('/:id', adminOnly, (req, res, next) => {
 	return service.delete(session._id, id, res.callback);
 });
 
-router.put('/softDelete/:id', adminOnly, (req, res, next) => {
-	var id = req.params.id;
+module.exports = router;
 
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	};
-
-	return repository.setToDeleted(id, res.callback);
-});
 
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
@@ -228,5 +289,3 @@ router.put('/softDelete/:id', adminOnly, (req, res, next) => {
 // router.put('/:id', (req, res, next) => {
 // 	return repository.update(req.params.id, req.body, res.callback);
 // });
-
-module.exports = router;

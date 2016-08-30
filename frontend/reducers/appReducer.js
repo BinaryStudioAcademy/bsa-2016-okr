@@ -1,8 +1,9 @@
-import { ADD_REQUEST, REMOVE_REQUEST } from '../actions/appActions';
+import { ADD_REQUEST, REMOVE_REQUEST, INIT } from '../actions/appActions';
 
 const initialState = {
   requestCount: 0,
-  isLoading: false
+  isLoading: false,
+  isInitializing: true,
 };
 
 export default function appReducer(state = initialState, action = {}) {
@@ -26,10 +27,23 @@ export default function appReducer(state = initialState, action = {}) {
   	} else {
 	  	newRequestCount = state.requestCount - 1;
   	}
+
+  	let showLoadingScreen = false;
+
+  	if(state.isInitializing && newRequestCount !== 0) {
+  		showLoadingScreen = true;
+  	}
 		
 		return Object.assign({}, state, {
 			requestCount: newRequestCount,
-			isLoading: newRequestCount === 0 ? false : true
+			isLoading: newRequestCount === 0 ? false : true,
+			isInitializing: showLoadingScreen
+		});
+	}
+
+	case INIT: {
+		return Object.assign({}, state, {
+			isInitializing: !!state.requestCount
 		});
 	}
 

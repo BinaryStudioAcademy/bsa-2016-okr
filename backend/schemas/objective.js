@@ -16,7 +16,7 @@ var objectiveSchema = new Schema({
 		ref: 'Category',
 		required: true,
 	},
-	keyResults: [{
+	defaultKeyResults: [{
 			type: ObjectId,
 			ref: 'KeyResult'
 	}],
@@ -37,7 +37,13 @@ var objectiveSchema = new Schema({
 	isDeleted: {
 		type: Boolean,
 		default: false
-	}
+	},
+	deletedBy: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+		required: false
+	},
+	deletedDate: {}
 }, {
     timestamps: true
 });

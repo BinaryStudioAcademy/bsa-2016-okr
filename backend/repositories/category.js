@@ -9,4 +9,24 @@ var CategoryRepository = function(){
 
 CategoryRepository.prototype = new Repository();
 
+CategoryRepository.prototype.getByTitle = function(title, callback) {
+	var model = this.model;
+
+	model
+		.findOne({ title: title })
+		.exec(callback);
+};
+
+Repository.prototype.getAllDeletedPopulate = function(callback) {
+	var model = this.model;
+	model.find({'isDeleted': 'true'})
+	.populate({
+		path: "deletedBy",
+		populate: {
+			path: 'userInfo'
+		}
+	})
+	.exec(callback);
+};
+
 module.exports = new CategoryRepository();

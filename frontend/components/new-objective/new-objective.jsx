@@ -1,5 +1,6 @@
 import React from 'react';
 import NewObjCredentials from './credentials.jsx';
+import NewKeyResult from './key-result.jsx';
 import './new-objective.scss';
 
 class NewObjective extends React.Component{
@@ -20,11 +21,7 @@ class NewObjective extends React.Component{
                <i className="fi flaticon-multiply" aria-hidden="true"></i>
             </button>
             <form action="">
-               <section>
-                  <NewObjCredentials />
-               </section>
-
-               <button type="button" id="new-obj-submit-btn">Add new objective</button>
+               <NewObjCredentials handleCloseNewObjView={this.handleCloseNewObjView} />
             </form>
          </div>
       )

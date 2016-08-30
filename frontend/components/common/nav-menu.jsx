@@ -42,8 +42,8 @@ class NavMenu extends React.Component {
 							</Link>
 						</li>
 						<li>
-							<Link to="okr-managing">
-								<i className="fi flaticon-settings-4" aria-hidden="true"></i>
+							<Link to="/okr-managing">
+								<i className="fi flaticon-folder-19" aria-hidden="true"></i>
 								OKR managing
 							</Link>
 						</li>
@@ -51,6 +51,18 @@ class NavMenu extends React.Component {
 							<Link to="/recycle-bin">
 								<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
 								Recycle Bin
+							</Link>
+						</li>
+						<li>
+							<Link to="/admin-recycle-bin">
+								<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
+								Admin Recycle Bin
+							</Link>
+						</li>
+						<li>
+							<Link to="/charts">
+								<i className="fi flaticon-bookmark-1" aria-hidden="true"></i>
+								Statistics
 							</Link>
 						</li>
 					</ul>

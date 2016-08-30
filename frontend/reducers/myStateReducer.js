@@ -1,4 +1,5 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
+import { currentYear, currentQuarter } from '../../backend/config/constants';
 import {
   RECEIVED_MY_OBJECTIVES_ERROR,
   RECEIVED_MY_OBJECTIVES,
@@ -6,12 +7,18 @@ import {
   CHANGE_YEAR,
   CREATE_QUARTER,
   SOFT_DELETE_MY_OBJECTIVE_BY_ID,
-  ADDED_NEW_OBJECTIVE
-} from '../actions/myObjectivesActions';
+  ADDED_NEW_OBJECTIVE,
+  CHANGED_KEYRESULT_SCORE,
+  CHANGED_KEYRESULT_SCORE_ERROR,
+} from '../actions/myStateActions';
+
+import {
+	ADD_NEW_KEY_RESULT_TO_OBJECTIVE
+} from '../actions/keyResultActions';
 
 const initialState = {
-    currentTab: getQuarter(),
-    currentYear: getYear(),
+    selectedTab: currentQuarter,
+    selectedYear: currentYear,
     existedQuarters: getExistedQuarters(),
     me: {
 		    "localRole": ""
@@ -37,24 +44,22 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
-				currentTab: getQuarter(),
-        currentYear: getYear()
 			});
 		}
 
 		case CHANGE_TAB: {
-			const { currentTab } = action;
+			const { selectedTab } = action;
 
 			return Object.assign({}, state, {
-				currentTab: currentTab
+				selectedTab: selectedTab
 			});
 		}
 
 		case CHANGE_YEAR: {
-			const { currentYear } = action;
+			const { selectedYear } = action;
 
 			return Object.assign({}, state, {
-				currentYear: currentYear
+				selectedYear: selectedYear
 			});
 		}
 
@@ -95,12 +100,59 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
         },
         updatedAt: response.updatedAt,
         userId: response.updatedAt
-      }
+      };
 
       return Object.assign({}, state, {
         me: addNewObjectiveToMe(state.me, request.quarterId, objective)
       })
     }
+
+		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE: {
+			const { response, request} = action;
+
+			let keyResultIdInObjective = response.keyResultId;
+			let templateKeyResult = response.keyResult;
+
+			let keyResult = {
+				_id: keyResultIdInObjective,
+				creator: templateKeyResult.creator,
+				score: 0,
+				templateId: {
+					_id: templateKeyResult._id,
+					createdAt: templateKeyResult.createdAt,
+					creator: templateKeyResult.creator,
+					difficulty: templateKeyResult.difficulty,
+					isApproved: templateKeyResult.isApproved,
+					isDeleted: templateKeyResult.isDeleted,
+					objectiveId: templateKeyResult.objectiveId,
+					title: templateKeyResult.title,
+					updatedAt: templateKeyResult.updatedAt,
+					used: templateKeyResult.used
+				}
+			};
+
+			return Object.assign({}, state, {
+				me: addNewKeyResultToMe(state.me, request.objectiveId, keyResult)
+			})
+		}
+
+		case CHANGED_KEYRESULT_SCORE: {
+			let { data } = action;
+			let { objectiveId, keyResultId, score } = data;
+
+			return Object.assign({}, state, {
+				me: setScoreToKeyResult(state.me, objectiveId, keyResultId, score),
+			});
+		}
+
+		case CHANGED_KEYRESULT_SCORE_ERROR: {
+			let { data } = action;
+
+			console.log(CHANGED_KEYRESULT_SCORE_ERROR);
+			console.log(data);
+			
+			return state
+		}
 
 		default: {
 			return state;
@@ -108,29 +160,9 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 	}
 }
 
-function getYear(){
-    let today = new Date();
-    return today.getFullYear()
-}
-
-function getQuarter(){
-    let today = new Date();
-    let first = new Date('2016-03-31T10:42:12.643Z'),
-        second = new Date('2016-06-30T10:42:12.643Z'),
-        third = new Date('2016-09-30T10:42:12.643Z');
-    if (today < first)
-        return 1;
-    else if (today >= first && today <= second)
-        return 2;
-    else if(today > second && today <= third)
-        return 3;
-    else if(today > third)
-        return 4;
-}
-
 function getExistedQuarters(){
 	let quarters = [];
-	for(let i = 1, currentQuarter = getQuarter(); i <= currentQuarter; i++){
+	for(let i = 1; i <= currentQuarter; i++) {
 		quarters.push(i);
 	}
 
@@ -146,15 +178,69 @@ function deleteObjectiveFromMe(me, id) {
 			}
 		}
 	});
-	return meCopy
+	return meCopy;
+}
+
+function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
+	const meCopy = Object.assign({}, me);
+
+	let quarterIndex = -1;
+	let	userObjectiveIndex = -1;
+	let	keyResultIndex = -1;
+
+	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
+		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
+			return userObjective._id === objectiveId
+		});
+
+		if(userObjectiveFoundedIndex !== -1) {
+			userObjectiveIndex = userObjectiveFoundedIndex;
+			return true;
+		}
+		
+		return false;
+	});
+
+	if(quarterFoundedIndex !== -1) {
+		quarterIndex = quarterFoundedIndex;
+
+		if (userObjectiveIndex !== -1) {
+			let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
+				return keyResult._id === keyResultId;
+			});
+
+			if (keyResultFoundedIndex !== -1) {
+				keyResultIndex = keyResultFoundedIndex;
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
+			}
+		}
+	}
+
+	return meCopy;
 }
 
 function addNewObjectiveToMe(me, quarterId, objective) {
 	var meCopy = Object.assign({}, me);
 	meCopy.quarters.forEach((quarter) => {
-    if (quarter._id = quarterId) {
+    if (quarter._id == quarterId) {
       quarter.userObjectives.push(objective);
 		}
 	});
+	return meCopy
+}
+
+function addNewKeyResultToMe(me, objectiveId, keyResult) {
+	var meCopy = Object.assign({}, me);
+
+	meCopy.quarters.forEach((quarter) => {
+		let index = quarter.userObjectives.findIndex((userObjective) => {
+			return userObjective._id == objectiveId;
+		});
+
+		if (index !== -1) {
+			quarter.userObjectives[index].keyResults.push(keyResult);
+		}
+	});
+
 	return meCopy
 }
