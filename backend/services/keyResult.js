@@ -137,7 +137,7 @@ KeyResultsService.prototype.changeApprove = function(userId, keyResultId, callba
 			return callback(null, keyResult);
 		},
 		(keyResult, callback) => {
-			if(keyResult.isApproved){
+			if(keyResult.isApproved) {
 				KeyResultRepository.setIsApprovedToFalse(keyResultId, function(err, keyResult){
 					if (err){
 						return callback(err, null);

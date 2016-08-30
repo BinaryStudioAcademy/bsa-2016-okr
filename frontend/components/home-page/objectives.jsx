@@ -61,7 +61,7 @@ class Objectives extends Component {
 	}
 
 	createObjective(categoryId) {
-		return (title) => {
+		return (title, objectiveId) => {
 			let quarters = this.props.myState.me.quarters;
 			let selectedYear = this.props.myState.selectedYear;
 			let selectedTab = this.props.myState.selectedTab;
@@ -72,8 +72,9 @@ class Objectives extends Component {
 
 			let body = {
 				title: title,
-				category: categoryId,
-				quarterId: quarter._id
+				objectiveId: objectiveId,
+				categoryId: categoryId,
+				quarterId: quarter._id,
 			};
 
 			this.props.myStateActions.addNewObjective(body);
@@ -95,20 +96,14 @@ class Objectives extends Component {
 
 		const categories = this.props.categories;
 
-		console.log('myState', myState);
-
 		var objectiveItems = [];
 		var quarter = {};
 		var objectives = [];
-
-		console.log('selectedYear, selectedTab', selectedYear, selectedTab);
 
 		if (me.quarters != undefined) {
 			quarter = me.quarters.find((quarter) => {
 				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
-
-			console.log('quarter', me.quarters);
 
 			objectives = quarter.userObjectives;
 		}

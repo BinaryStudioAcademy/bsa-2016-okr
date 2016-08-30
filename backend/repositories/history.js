@@ -111,7 +111,7 @@ HistoryRepository.prototype.addObjectiveEvent = function(author, objective, type
 	let model = this.model;
 	let newEvent = new model({
 		author, 
-		objective, 
+		objective,
 		type: type + ' ' + CONST.history.target.OBJECTIVE,
 	});
 

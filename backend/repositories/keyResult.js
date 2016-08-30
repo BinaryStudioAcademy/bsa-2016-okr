@@ -73,4 +73,15 @@ KeyResultRepository.prototype.getByTitle = function(title, callback) {
 			.exec(callback);
 };
 
+KeyResultRepository.prototype.getByTitleAndObjectiveId = function(title, objectiveId, callback) {
+	var model = this.model;
+
+	model
+			.findOne({ 
+				title: title,
+				objectiveId: objectiveId,
+			})
+			.exec(callback);
+};
+
 module.exports = new KeyResultRepository();

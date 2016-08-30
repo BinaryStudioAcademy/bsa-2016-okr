@@ -1,15 +1,15 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
 import { currentYear, currentQuarter } from '../../backend/config/constants';
 import {
-  RECEIVED_MY_OBJECTIVES_ERROR,
-  RECEIVED_MY_OBJECTIVES,
-  CHANGE_TAB,
-  CHANGE_YEAR,
-  CREATE_QUARTER,
-  SOFT_DELETE_MY_OBJECTIVE_BY_ID,
-  ADDED_NEW_OBJECTIVE,
-  CHANGED_KEYRESULT_SCORE,
-  CHANGED_KEYRESULT_SCORE_ERROR,
+	RECEIVED_MY_OBJECTIVES_ERROR,
+	RECEIVED_MY_OBJECTIVES,
+	CHANGE_TAB,
+	CHANGE_YEAR,
+	CREATE_QUARTER,
+	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
+	ADDED_NEW_OBJECTIVE,
+	CHANGED_KEYRESULT_SCORE,
+	CHANGED_KEYRESULT_SCORE_ERROR,
 } from '../actions/myStateActions';
 
 import {
@@ -17,14 +17,14 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
-		currentYear,
-		currentQuarter,
-    selectedTab: currentQuarter,
-    selectedYear: currentYear,
-    existedQuarters: getExistedQuarters(),
-    me: {
-		    "localRole": ""
-    }
+	currentYear,
+	currentQuarter,
+	selectedTab: currentQuarter,
+	selectedYear: currentYear,
+	existedQuarters: getExistedQuarters(),
+	me: {
+		"localRole": ""
+	}
 };
 
 export default function myObjectivesReducer(state = initialState, action = {}) {
@@ -35,7 +35,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			const { data } = action;
 
 			console.log("RECEIVED_ERROR >>>" , data);
-      console.log("state.me >>>", state.me);
+			console.log("state.me >>>", state.me);
 			return Object.assign({}, state, {
 				me: state.me
 			});
@@ -73,44 +73,30 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				existedQuarters: new_exQuarters
-			})
+			});
 		}
 
-    	case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
+		case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
 			const { id } = action;
-			console.log(state);
+
 			return Object.assign({}, state, {
 				me: deleteObjectiveFromMe(state.me, id)
-			})
+			});
 
 		}
 
-    case ADDED_NEW_OBJECTIVE: {
-      const { response, request } = action;
+		case ADDED_NEW_OBJECTIVE: {
+			const { responseData, requestData } = action;
 
-      var objective = {
-        _id: response._id,
-        createdAt: response.createdAt,
-        creator: response.creator,
-        isDeleted: response.isDeleted,
-        keyResults: [],
-        templateId: {
-          _id: response.templateId,
-          category: request.category,
-          description: request.description,
-          title: request.title
-        },
-        updatedAt: response.updatedAt,
-        userId: response.updatedAt
-      };
+			let newMe = addNewObjectiveToMe(state.me, requestData.quarterId, responseData);
 
-      return Object.assign({}, state, {
-        me: addNewObjectiveToMe(state.me, request.quarterId, objective)
-      })
-    }
+			return Object.assign({}, state, {
+				me: newMe
+			});
+		}
 
 		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE: {
-			const { response, request} = action;
+			const { response, userObjectiveId } = action;
 
 			let keyResultIdInObjective = response.keyResultId;
 			let templateKeyResult = response.keyResult;
@@ -133,9 +119,11 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 				}
 			};
 
+			let newMe = addNewKeyResultToMe(state.me, userObjectiveId, keyResult)
+
 			return Object.assign({}, state, {
-				me: addNewKeyResultToMe(state.me, request.objectiveId, keyResult)
-			})
+				me: newMe,
+			});
 		}
 
 		case CHANGED_KEYRESULT_SCORE: {
@@ -153,7 +141,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			console.log(CHANGED_KEYRESULT_SCORE_ERROR);
 			console.log(data);
 			
-			return state
+			return state;
 		}
 
 		default: {
@@ -175,8 +163,8 @@ function deleteObjectiveFromMe(me, id) {
 	var meCopy = Object.assign({}, me);
 	meCopy.quarters.forEach((quarter) => {
 		for(var i=0 ; i<quarter.userObjectives.length; i++) {
-    	if(quarter.userObjectives[i]._id == id) {
-        quarter.userObjectives.splice(i, 1);
+			if(quarter.userObjectives[i]._id == id) {
+				quarter.userObjectives.splice(i, 1);
 			}
 		}
 	});
@@ -222,13 +210,17 @@ function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
 }
 
 function addNewObjectiveToMe(me, quarterId, objective) {
-	var meCopy = Object.assign({}, me);
-	meCopy.quarters.forEach((quarter) => {
-    if (quarter._id == quarterId) {
-      quarter.userObjectives.push(objective);
-		}
+	let meCopy = Object.assign({}, me);
+	
+	let index = meCopy.quarters.findIndex((quarter) => {
+		return quarter._id == quarterId;
 	});
-	return meCopy
+
+	if(index !== -1) {
+		meCopy.quarters[index].userObjectives.push(objective);
+	}
+
+	return meCopy;
 }
 
 function addNewKeyResultToMe(me, objectiveId, keyResult) {

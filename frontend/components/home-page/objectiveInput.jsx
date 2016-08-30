@@ -18,7 +18,11 @@ class ObjectiveInput extends Component {
 	}
 
 	addNewItemByKeyPressEnter(title) {
-		this.props.createObjective(title);
+		if (title !== '') {
+			let objectiveId = this.props.selectedTemplate;
+
+			this.props.createObjective(title, objectiveId);
+		}
 	}
 
 	isValid(value) {
@@ -65,7 +69,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		objectives: state.objectives.data
+		objectives: state.objectives.data,
+		selectedTemplate: state.objectives.selectedItem,
 	};
 }
 

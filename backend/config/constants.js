@@ -27,6 +27,13 @@ case 12:
 }
 
 module.exports = {
+	user: {
+		role: {
+			USER: 'user',
+			MENTOR: 'mentor',
+			ADMIN: 'admin',
+		},
+	},
 	keyResult: {
 		EASY: 'easy',
 		INTERMEDIATE: 'intermediate',
@@ -37,7 +44,7 @@ module.exports = {
 			KNOWLEDGE: 'knowledge',
 			EXPERTIZE: 'expertise',
 			PROJECTS: 'projects',
-		}
+		},
 	},
 	history: {
 		type: {
@@ -60,5 +67,5 @@ module.exports = {
 		},
 	},
 	currentYear: currentYear,
-	currentQuarter: currentQuarter
+	currentQuarter: currentQuarter,
 };
