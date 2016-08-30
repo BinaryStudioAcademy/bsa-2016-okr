@@ -118,27 +118,24 @@ ObjectiveService.prototype.addBlank = function(authorId, objective, callback) {
 	});
 };
 
-ObjectiveService.prototype.softDelete = function(authorId, objectiveId, objective, callback){
+ObjectiveService.prototype.softDelete = function(userId, objectiveId, objective, callback){
 	 async.waterfall([
 		(callback) => {
-			ObjectiveRepository.update(objectiveId, objective, (err, oldObjective) => {
+			ObjectiveRepository.update(objectiveId, objective, (err, objective) => {
 				if(err) {
 					return callback(err, null);
 				};
 				
-				return callback(null, oldObjective);
-			})
+				return callback(null, objective);
+			});
 		},
-		(oldObjective, callback) => {
-			// console.log('update finished');
-			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
-			// 	if(err) {
-			// 		return callback(err, null);
-			// 	};
-				
-			// 	return callback(null, objective);
-			// })
+		(objective, callback) => {
+			HistoryRepository.addObjectiveEvent(userId, objectiveId, CONST.history.type.SOFT_DELETE, (err, objective) => {
+				if(err) {
+					return  callback(err, null);
+				}
 			return callback(null, objective);
+			});
 		}
 	], (err, result) => {
 		return callback(err, result)

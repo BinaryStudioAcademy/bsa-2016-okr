@@ -108,11 +108,11 @@ router.put('/myupdate/:id', (req, res, next) => {
 	return repository.update(id, body, res.callback);
 });
 
-router.put('/softDelete/:id', adminOnly, (req, res, next) => {
+router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
-	let isDeleted = req.body.isDeleted || '';
-	let deletedDate = req.body.deletedDate || '';
-	let deletedBy = req.body.deletedBy || '';
+	let isDeleted = true;
+	let deletedDate = new Date();
+	let userId = req.session._id || '';
 
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
@@ -121,10 +121,10 @@ router.put('/softDelete/:id', adminOnly, (req, res, next) => {
 	let body = {
 		isDeleted: isDeleted,
 		deletedDate: deletedDate,
-		deletedBy: deletedBy
+		deletedBy: userId
 	}
 
-	return service.softDelete(session._id, id, body, res.callback);
+	return service.softDelete(userId, id, body, res.callback);
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
@@ -161,7 +161,10 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	return service.update(userId, objectiveId, data, res.callback);
 });
 
-router.delete('/:id', adminOnly, (req, res, next) => {
+
+module.exports = router;
+
+/*router.delete('/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 
 	if(!ValidateService.isCorrectId(id)) {
@@ -169,10 +172,7 @@ router.delete('/:id', adminOnly, (req, res, next) => {
 	};
 
 	return service.delete(session._id, id, res.callback);
-});
-
-module.exports = router;
-
+});*/
 
 // router.post('/me/', (req, res, next) => {
 // 	var title = req.body.title || '';
