@@ -233,7 +233,82 @@
             }
         }
 }
+.OKR-mnaging.category{
+    background-color: #fff;
+    margin: 25px 10px 0;
+    border-left: 5px solid $color-green;
+    padding-top: 10px;
+    p{
+        box-sizing: border-box;
+        color: #aaa;
+        text-align: center;
+        position: relative;
+        padding: 2px;
+        margin: 0;
 
+        
+        span{
+            font-size: 18px;
+            background-color: #fff;
+            display: inline-block;
+            position: relative;
+            padding: 0 8px;
+            z-index: 10;
+        }
+    }
+    p:before{
+        content: '';
+        display: block;
+        position: absolute;
+        top: 14px;
+        left: 0;
+        height: 0;
+        width: 100%;
+        border-top: 1px solid #aaaaaa;
+        z-index: 0;
+    }
+    .category-list{
+        list-style: none;
+        padding: 0 15px 10px;
+        
+        .category-item {
+            position: relative;
+            padding: 10px 0;
+
+            .category-title{
+                background-color: #fff;
+                padding: 7px 12px;
+            }
+            .edit-category{
+                position: absolute;
+                top: 7px;
+                right: 10px;
+
+                i{
+                    margin-left: 10px;
+                    cursor: pointer;
+                    font-size: 18px;
+                }
+                .edit:hover{
+                    color: $color-green;
+                }
+                .delete:hover{
+                    color: $color-red;
+                }
+                .save{
+                    color: $color-green;
+                    margin-top: 12px;
+                    display: inline-block; 
+                }
+                .cancel{
+                    color: $color-red;
+                    margin-top: 12px;
+                    display: inline-block; 
+                }
+            }
+        }
+    }
+}
 
 .OKR-managing.searchbar{
     margin: 0 5%;

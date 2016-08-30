@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CentralWindow from "../../../containers/central-window.jsx";
 import ObjectiveList from './components/ObjectiveList';
-import ActiveObjective from './components/ActiveObjective';
+import CategoryList from './components/CategoryList.jsx';
 import Searchbar from './components/SearchBar';
 import Toolbar from './components/Toolbar';
 import StatPanel from "../../../containers/statistic-panel.jsx";
@@ -37,8 +37,8 @@ render() {
 			</div>
 		</CentralWindow>
 		<StatPanel>
-			<div className="OKR-mnaging active objective">
-				{/*<ActiveObjective />*/}
+			<div className="OKR-mnaging category">
+				<CategoryList />
 			</div>
 		</StatPanel>
 		</div>

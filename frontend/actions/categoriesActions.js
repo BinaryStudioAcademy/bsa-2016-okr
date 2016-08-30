@@ -6,6 +6,16 @@ export const GET_ALL_CATEGORIES = 'CATEGORIES.GET_ALL';
 export const RECEIVED_ALL_CATEGORIES = 'CATEGORIES.RECEIVED_ALL';
 export const RECEIVED_ERROR = 'CATEGORIES.RECEIVED_ERROR';
 
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
+export const RECIVED_DELETE_CATEGORY = 'RECIVED_DELETE_CATEGORY';
+export const DELETE_CATEGORY_ERROR = 'DELETE_CATEGORY_ERROR';
+
+export const EDIT_CATEGORY = 'EDIT_CATEGORY';
+export const CANCEL_EDIT_CATEGORY = 'CANCEL_EDIT_CATEGORY';
+export const ACTIVE_CATEGORY = 'ACTIVE_CATEGORY';
+export const RECIVED_EDIT_CATEGORY = 'RECIVED_EDIT_CATEGORY';
+export const EDIT_CATEGORY_ERROR = 'EDIT_CATEGORY_ERROR'
+
 export function getAllCategories() {
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_ALL_CATEGORIES	});
@@ -39,4 +49,80 @@ export function receivedError(data) {
 			data: data
 		});
 	}
+}
+
+/*------delete category-------*/
+
+export function deleteCategory(id, flag){
+
+	return(dispatch, getStore) => {
+
+		dispatch({
+			type: DELETE_CATEGORY
+		});
+
+		return axios.delete(`/api/category/${ id }/${ flag }`)
+			.then(response => dispatch(recivedDeleteCategory(id)))
+			.catch(response => dispatch(deleteCategoryError(response.data)));
+	};
+}
+
+export function recivedDeleteCategory(id) {
+	return {
+		type: RECIVED_DELETE_CATEGORY,
+		id
+	};
+}
+
+export function deleteCategoryError(data) {
+	return {
+		type: DELETE_CATEGORY_ERROR,
+		data
+	};
+}
+
+/*------Edit category-------*/
+
+export function cancelEdit() {
+	const action = {
+		type: CANCEL_EDIT_CATEGORY,
+	};
+	return action;
+}
+
+export function activeCategory (activeCategory) {
+	const action = {
+		type: ACTIVE_CATEGORY,
+		activeCategory
+	};
+
+	return action;
+}
+
+export function editCategory(id, reqBody){
+	return(dispatch, getStore) => {
+
+		dispatch({
+			type: EDIT_CATEGORY
+		});
+
+		return axios.put(`/api/category/${ id }/`, reqBody)
+			.then(response => dispatch(recivedEditCategory(response.data, reqBody)))
+			.catch(response => dispatch(editCategoryError(response.data)));
+	};
+}
+
+export function recivedEditCategory(data, reqBody) {
+	return {
+		type: RECIVED_EDIT_CATEGORY,
+		data,
+		reqBody
+	};
+}
+
+export function editCategoryError(data) {
+	return {
+		type: EDIT_CATEGORY_ERROR,
+		data
+	};
 }
