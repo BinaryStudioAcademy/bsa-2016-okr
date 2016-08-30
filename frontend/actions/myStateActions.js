@@ -113,8 +113,8 @@ export function addNewObjective(body) {
 export function addedNewObjective(data, body) {
 	return {
 		type: ADDED_NEW_OBJECTIVE,
-		response: data,
-		request: body,
+		responseData: data,
+		requestData: body,
 	};
 }
 

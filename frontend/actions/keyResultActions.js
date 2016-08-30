@@ -15,28 +15,28 @@ export const SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM = 'SET_AUTOCOMPLETE_KEY_
 // Return AXIOS error
 export const RECEIVED_ERROR = 'RECEIVED_ERROR';
 
-export function addNewKeyResults(body) {
+export function addNewKeyResults(userObjectiveId, body) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_NEW_KEY_RESULT });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post((`api/userobjective/${body.objectiveId}/keyresult/`), body)
-				.then(response => {
-					dispatch(addNewKeyResultToObjective(response.data , body));
-					dispatch({ type: REMOVE_REQUEST	});
-				})
-				.catch(response => {
-					dispatch(receivedError(response.data));
-					dispatch({ type: REMOVE_REQUEST	});
-				});
+		return axios.post((`api/userobjective/${ userObjectiveId }/keyresult/`), body)
+		.then(response => {
+			dispatch(addNewKeyResultToObjective(response.data , userObjectiveId));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			dispatch(receivedError(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
 	};
 }
 
-export function addNewKeyResultToObjective(data, body) {
+export function addNewKeyResultToObjective(data, userObjectiveId) {
 	return {
-			type: ADD_NEW_KEY_RESULT_TO_OBJECTIVE,
-		  response: data,
-		  request: body
+		type: ADD_NEW_KEY_RESULT_TO_OBJECTIVE,
+		response: data,
+		userObjectiveId: userObjectiveId,
 	};
 }
 

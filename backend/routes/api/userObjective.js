@@ -7,55 +7,25 @@ const ValidateService = require('../../utils/ValidateService');
 const isCorrectId = ValidateService.isCorrectId;
 const isEmpty = ValidateService.isEmpty;
 
-// TODO: Body validation and separate logic for adding by templateId and new
-// NOT ready yet!
 router.post('/', (req, res, next) => {
 	var title = req.body.title || '';
-	//var description = req.body.description || '';
-	//var keyResults = req.body.keyResults || [];
-	var category = req.body.category || '';
-	var userId = req.session._id || '';
-	var creator = req.session._id || '';
+	var categoryId = req.body.categoryId || '';
 	var quarterId = req.body.quarterId || '';
-/*
-	keyResults.forEach((keyResult) => {
-		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
-	});
+	// Not necessary field
+	var objectiveId = req.body.objectiveId || '';
+	var userId = req.session._id;
+	var isApproved = false;
 
-	var isKeyResultsInvalid = keyResults.some((keyResult) => {
-		return !ValidateService.isObject(keyResult)
-		|| ValidateService.isEmpty(keyResult.title)
-	});
-*/
-	if( isEmpty(title) || !isCorrectId(category))
-
-	{
+	if(isEmpty(title) || !isCorrectId(categoryId)
+	|| !isCorrectId(quarterId)) {
 		return res.badRequest();
 	}
-/*
-	var keyResultsF = keyResults.map((item) => {
-		var keyResult = {
-			title: item.title,
-			difficulty: item.difficulty,
-			creator: req.session._id,
-			isApproved: true,
-			isDeleted: false
-		};
 
-		return keyResult;
-	});
-*/
-	var data = {
-		title: title,
-		description: '',
-		category: category,
-		creator: creator,
-		keyResults: [],
-		isApproved: true,
-		isDeleted: false
-	};
+	if(req.session.isAdmin) {
+		isApproved = true;
+	}
 
-	return service.add(data, quarterId, res.callback)
+	return service.add(userId, categoryId, quarterId, objectiveId, title, isApproved, res.callback)
 });
 
 router.get('/me/', (req, res, next) => {
@@ -79,29 +49,26 @@ router.get('/user/:id', (req, res, next) => {
 });
 
 router.post('/:id/keyresult/', (req, res, next) => {
-	let objectiveId = req.body.objectiveId || '';
+	let userObjectiveId = req.params.id || '';
 	let userId = req.session._id;
 	let isAdmin = req.session.isAdmin;
 	let title = req.body.title || '';
 	let keyResultId = req.body.keyResultId || '';
+	let isApproved = false;
 
-	title = title.trim();
+	let keyResultTitle = title.trim();
 	
-	if(!isCorrectId(objectiveId)
+	if(!isCorrectId(userObjectiveId)
 	|| (isEmpty(title) && isEmpty(keyResultId))
 	|| (!isEmpty(keyResultId) && !isCorrectId(keyResultId))) {
 		return res.badRequest();
 	}
 
-	let data = {
-		userId: userId,
-		objectiveId: objectiveId,
-		keyResultId: keyResultId,
-		keyResultTitle: title,
-		isAdmin: isAdmin
-	};
-
-	service.addKeyResult(data, res.callback);
+	if(req.session.isAdmin) {
+		isApproved = true;
+	}
+	
+	service.addKeyResult(userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, res.callback);
 });
 
 router.put('/:id/keyresult/score', (req, res, next) => {

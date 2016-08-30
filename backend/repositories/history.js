@@ -111,7 +111,7 @@ HistoryRepository.prototype.addObjectiveEvent = function(author, objective, type
 	let model = this.model;
 	let newEvent = new model({
 		author, 
-		objective, 
+		objective,
 		type: type + ' ' + CONST.history.target.OBJECTIVE,
 	});
 
@@ -152,12 +152,12 @@ HistoryRepository.prototype.addUserObjective = function (author, userObjective, 
 	newEvent.save(callback);
 }
 
-HistoryRepository.prototype.addUserKeyResult = function (author, key, type, callback) {
+HistoryRepository.prototype.addUserKeyResult = function (author, key, objective, type, callback) {
 	var model = this.model;
 	var newEvent = new model({
 		author,
 		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
-		userObjective: key.userObjective,
+		userObjective: objective,
 		userKeyResult: key._id
 	})
 

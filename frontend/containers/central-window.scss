@@ -7,7 +7,7 @@
    left: 0;
    bottom: 0;
    margin-right: $right-stat-panel-width;
-   overflow-y: auto;
+   overflow-y: scroll;
    overflow-x: hidden;
    &.full-screen {
       margin-right: 0;

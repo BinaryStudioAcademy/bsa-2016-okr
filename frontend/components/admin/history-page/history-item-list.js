@@ -38,34 +38,34 @@ class HistoryItemList extends React.Component {
     }
 
     getHistoryType(item) {
-    let object = item.type.slice(item.type.indexOf(' ') + 1);
-    if(item.type.indexOf('ADD') != -1)
-      return 'added';
-    else if (item.type.indexOf('UPDATE') != -1)
-      return 'updated'
-    else if (item.type.indexOf('CHANGE') != -1)
-      return 'has changed scrore to ' + item.userKeyResultScore;
-    else if (item.type.indexOf('DELETE') != -1)
-      return 'deleted';
+      let object = item.type.slice(item.type.indexOf(' ') + 1);
+      if(item.type.indexOf('ADD') != -1)
+        return 'added';
+      else if (item.type.indexOf('UPDATE') != -1)
+        return 'updated'
+      else if (item.type.indexOf('CHANGE') != -1)
+        return 'has changed scrore to ' + item.userKeyResultScore;
+      else if (item.type.indexOf('DELETE') != -1)
+        return 'deleted';
     }
 
     getHistoryObjectName(historyItem){
       console.log(historyItem);
-    if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
-      return ` user objective \'${historyItem.userObjective.templateId.title}\'`;
-    };
+      if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
+        return ` user objective \'${historyItem.userObjective.templateId.title}\'`;
+      };
 
-    if(historyItem.type.indexOf('OBJECTIVE') !== -1){
-      return `objective \'${historyItem.objective.title}\'`;
-    };
+      if(historyItem.type.indexOf('OBJECTIVE') !== -1){
+        return `objective \'${historyItem.objective.title}\'`;
+       };
 
-    if(historyItem.type.indexOf('KEY_RESULT') !== -1){
-      let keyResults = historyItem.userObjective.keyResults;
-      let keyResult;
-      keyResults.forEach((key) => {
-        if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
+      if(historyItem.type.indexOf('KEY_RESULT') !== -1){
+        let keyResults = historyItem.userObjective.keyResults;
+        let keyResult;
+        keyResults.forEach((key) => {
+          if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
           keyResult = key;
-      })
+        })
       return `key result \'${keyResult.templateId.title} \'`;
     }
   }
@@ -95,7 +95,7 @@ class HistoryItemList extends React.Component {
 						<tr>
 							<th ><i onClick={() => this.onSort("user")} className="fa fa-sort"></i>User</th>
 							<th ><i onClick={() => this.onSort("action")} className="fa fa-sort"></i>Action</th>
-							<th ><i onClick={() => this.onSort("object")} className="fa fa-sort"></i>Object</th>
+							<th ><i onClick={() => this.onSort("target")} className="fa fa-sort"></i>Target</th>
 							<th ><i onClick={() => this.onSort("date")} className="fa fa-sort"></i>Date</th>
 						</tr>
 					</thead>

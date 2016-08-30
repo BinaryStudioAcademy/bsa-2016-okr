@@ -12,7 +12,7 @@ class Quarter extends Component {
 
 	handleYearChange(e) {
 		let value = e.target.value;
-		this.props.changeYear(value)
+		this.props.changeYear(value);
 	}
 	
 	handleTabClick(e) {

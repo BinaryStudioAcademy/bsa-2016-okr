@@ -66,24 +66,18 @@ router.get('/user/:id', (req, res, next) => {
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
-
-	console.log('-----------------REQUEST');
 	
 	async.waterfall([
 		(callback) => {
 			service.getUserHistory(id, (err, historyList) => {
 				if(err)
 					return callback(err, null);
-				console.log(`----------------------get this shit `);
-				console.log(historyList);
 				return callback(null, historyList)
 			})
 		},
 		(historyList, callback) => {
 			if(historyList.length > 0)
-				service.sortBy(historyList, 'date', true, (historyList) => {
-					console.log(`----------------------sorted to this shit ${historyList}`);
-					
+				service.sortBy(historyList, 'date', true, (historyList) => {					
 					return callback(null, historyList)
 				})
 			else {
@@ -93,9 +87,6 @@ router.get('/user/:id', (req, res, next) => {
 		}
 
 	], (err, result) => {
-		console.log('--------------RESPONSE----')
-		
-		console.log(result)
 		return res.callback(null, result);
 	})
 });
