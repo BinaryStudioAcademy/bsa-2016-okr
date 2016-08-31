@@ -46,11 +46,12 @@ class HistoryItemList extends React.Component {
       else if (item.type.indexOf('CHANGE') != -1)
         return 'has changed scrore to ' + item.userKeyResultScore;
       else if (item.type.indexOf('DELETE') != -1)
-        return 'deleted';
+        return 'deleted'
+      else if (item.type.indexOf('RESTORE') != -1)
+        return 'restored';
     }
 
     getHistoryObjectName(historyItem){
-      console.log(historyItem);
       if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
         return ` user objective \'${historyItem.userObjective.templateId.title}\'`;
       };
@@ -66,8 +67,12 @@ class HistoryItemList extends React.Component {
           if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
           keyResult = key;
         })
-      return `key result \'${keyResult.templateId.title} \'`;
-    }
+        return `key result \'${keyResult.templateId.title} \'`;
+      }
+      if(historyItem.type.indexOf('CATEGORY') !== -1){
+        return `category \'${historyItem.category.title}\'`;
+       };
+    
   }
 
 	renderItem(index, key) {

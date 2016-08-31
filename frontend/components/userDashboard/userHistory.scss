@@ -10,22 +10,21 @@
   
   .typeIcon{ 
     background-color: white;
-    font-size: 24px;
+    font-size: 25px;
     position: absolute;
     float: left;
     bottom: 0;
-    top: 0px;
-    margin:auto;
-    left:-10px;
-    height: 20px;
+    top: -5px;
+    margin: auto;
+    left: -11px;
+    height: 24px;
   }
 
 	.historyEvent{
     position:relative;
-		padding: 10px;
-		margin: 5px, 0;
-		border-bottom: 1px solid #AAAAAA;
-		border-left: 1px solid #AAAAAA;
+		padding: 10px 5px;
+		margin: 5px 0px;
+		border-left: 1px solid #DBDBDB;
 	}
 
 	.eventDate{
@@ -40,19 +39,28 @@
     font-size: 12px;
 	}
 
-  .author-name { font-weight: bold;}
+  .history-target{
+    font-style: italic;
+    font-size: 13px;
+  }
+  
+  .author-name{    
+    position: relative;
+    display: inline-block;
+    top: 9px;
+    left: -3px; 
+  }
+  .author { font-weight: bold; line-height: 35px; }
   .action-description {  display:inline-block; font-size:14px;}
-  .action-text { margin-left: 65px;}
+  .action-text { margin-left: 15px;}
 
   .user-avatar{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 20px;
     float:left;
-    position: absolute;
-    left: 25px;
-    top:15px;
-    margin: auto;
+    position: inline-block;
+    margin-right: 10px;
   }
 
 	h1 {

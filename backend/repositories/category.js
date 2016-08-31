@@ -13,7 +13,10 @@ CategoryRepository.prototype.getByTitle = function(title, callback) {
 	var model = this.model;
 
 	model
-		.findOne({ title: title })
+		.findOne({ 
+			title: title, 
+			isDeleted: false
+		})
 		.exec(callback);
 };
 

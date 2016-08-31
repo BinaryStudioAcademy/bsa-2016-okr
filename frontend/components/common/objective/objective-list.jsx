@@ -14,10 +14,15 @@ class ObjectiveList extends React.Component{
  	}
 
  	changeCategoryContentVisibility(id){
- 		console.log('change visibilityu')
- 		if (document.getElementById(id).children[1].className === "hidden-category-content")
- 			document.getElementById(id).children[1].className = "visible-category-content"
- 		else document.getElementById(id).children[1].className = "hidden-category-content"
+ 		var icoId = id + " icon";
+ 		if (document.getElementById(id).children[1].className === "hidden-category-content"){
+ 			document.getElementById(id).children[1].className = "visible-category-content";
+ 			document.getElementById(icoId).className = "fa fa-caret-up";
+ 		}
+ 		else{
+ 			document.getElementById(id).children[1].className = "hidden-category-content";
+ 			document.getElementById(icoId).className = "fa fa-caret-down";
+ 		}
  	}
 
  	getCategoryItems() {
@@ -54,8 +59,13 @@ class ObjectiveList extends React.Component{
 
 				return (
 					<div key={ index } id={ category.title }>
-					<p onClick={ ()=>this.changeCategoryContentVisibility(category.title) }><span className="category-title">{ category.title } ({ objectiveItems.length })</span></p>
-						<div className="hidden-category-content" >
+					<p className="category-title-container" onClick={ ()=>this.changeCategoryContentVisibility(category.title) }>
+						<span className="category-title">
+							<i className="fa fa-caret-up" id={category.title+' icon'} aria-hidden="true"></i>
+							{ category.title } ({ objectiveItems.length })
+						</span>
+					</p>
+						<div className="visible-category-content" >
 							{ input }
 							{ objectiveItems }
 						</div>

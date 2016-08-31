@@ -73,12 +73,12 @@ export function receivedObjectivesList(objectives) {
 
 /*-----delete template------*/
 
-export function deleteObjective(id){
+export function deleteObjective(id, flag){
 	return(dispatch, getStore) => {
 		dispatch({ type: DELETE_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.delete('/api/objective/'+id)
+		return axios.delete(`/api/objective/${ id }/${ flag }`)
 			.then(response => {
 				dispatch(softDeleteObjective(id));
 				dispatch({ type: REMOVE_REQUEST });
@@ -106,14 +106,14 @@ export function softDeleteObjective(id) {
 
 /*-----delete key result------*/
 
-export function deleteKeyResult(id){
+export function deleteKeyResult(id, flag){
 	return(dispatch, getStore) => {
 
 		dispatch({
 			type: DELETE_KEY_RESULT_TEMPLATE
 		});
 
-		return axios.delete('/api/keyResult/'+id)
+		return axios.delete(`/api/keyResult/${ id }/${ flag }`)
 			.then(response => dispatch(softDeleteKyeResult(id)))
 			.catch(response => dispatch(deleteObjectiveError(response.data)));
 	};

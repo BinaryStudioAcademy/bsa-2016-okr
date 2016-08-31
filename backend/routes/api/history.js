@@ -7,7 +7,7 @@ const service = require('../../services/history');
 var async = require('async');
 
 router.get('/', (req, res, next) => {
-	repository.getHistory(res.callback);
+	service.getHistory(res.callback);
 });
 
 router.put('/', (req, res, next) => {
@@ -15,35 +15,7 @@ router.put('/', (req, res, next) => {
 	var sort = req.body.sort || null;
 	var eventList = [];
 
-	async.waterfall([
-		(callback) => {
-			repository.getHistory((err, result) => {
-				if(err) {
-					return callback(err, result);
-				}
-
-				return callback(null, result.slice());	
-			});
-		},
-		(result, callback) => {
-			if(filters !== null )
-				service.filterBy(result, filters, (res) => {
-					result = res.slice();
-				})
-
-			return callback(null, result);
-		},
-		(result, callback) => {
-			if(sort !== null && sort.sortField !== '')
-				service.sortBy(result, sort.sortField, sort.up, (res) => {
-					result = res.slice();				
-				})
-
-			return callback(null, result)
-		}
-	], (err, result) => {
-		return res.callback(null, result);
-	})
+	service.getSortedAndFiltered(filters, sort, res.callback);
 })
 
 router.post('/', (req, res, next) => {
@@ -66,28 +38,8 @@ router.get('/user/:id', (req, res, next) => {
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
+	service.getUserHistory(id, res.callback)
 	
-	async.waterfall([
-		(callback) => {
-			service.getUserHistory(id, (err, historyList) => {
-				if(err)
-					return callback(err, null);
-				return callback(null, historyList)
-			})
-		},
-		(historyList, callback) => {
-			if(historyList.length > 0)
-				service.sortBy(historyList, 'date', true, (historyList) => {					
-					return callback(null, historyList)
-				})
-			else {
-				historyList = ['empty'];
-				return callback(null, historyList)
-			}
-		}
-
-	], (err, result) => {
-		return res.callback(null, result);
-	})
 });
+
 module.exports = router;
