@@ -46,7 +46,9 @@ class HistoryItemList extends React.Component {
       else if (item.type.indexOf('CHANGE') != -1)
         return 'has changed scrore to ' + item.userKeyResultScore;
       else if (item.type.indexOf('DELETE') != -1)
-        return 'deleted';
+        return 'deleted'
+      else if (item.type.indexOf('RESTORE') != -1)
+        return 'restored';
     }
 
     getHistoryObjectName(historyItem){
