@@ -10,6 +10,7 @@ import {
 	ADDED_NEW_OBJECTIVE,
 	CHANGED_KEYRESULT_SCORE,
 	CHANGED_KEYRESULT_SCORE_ERROR,
+	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
 } from '../actions/myStateActions';
 
 import {
@@ -81,6 +82,15 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				me: deleteObjectiveFromMe(state.me, id)
+			});
+
+		}
+
+		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API: {
+			const { objectiveId, keyResultId } = action;
+
+			return Object.assign({}, state, {
+				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId)
 			});
 
 		}
@@ -167,6 +177,23 @@ function deleteObjectiveFromMe(me, id) {
 				quarter.userObjectives.splice(i, 1);
 			}
 		}
+	});
+	return meCopy;
+}
+
+function deleteKeyResultFromObjective(me, objectiveId, keyResultId) {
+	var meCopy = Object.assign({}, me);
+	let objIndex, keyResIndex;
+	meCopy.quarters.forEach((quarter) => {
+		objIndex = quarter.userObjectives.findIndex((userObjective)=>{
+			return userObjective._id === objectiveId
+		});
+
+		keyResIndex = quarter.userObjectives[objIndex].keyResults.findIndex((keyResult)=>{
+			return keyResult._id === keyResultId
+		});
+
+		quarter.userObjectives[objIndex].keyResults[keyResIndex].splice(i, 1);
 	});
 	return meCopy;
 }

@@ -49,6 +49,43 @@ router.get('/user/:id', (req, res, next) => {
 	return repository.getByUserIdPopulate(id, res.callback);
 });
 
+// Soft delete key result from objective
+router.delete('/:id/keyResult/:keyid/:flag', (req, res, next) => {
+	var flag = req.params.flag || '';
+	var objectiveId = req.params.id || '';
+	var keyResultId = req.params.keyid || '';
+	var session = req.session;
+
+	if(!ValidateService.isCorrectId(objectiveId)
+			|| !ValidateService.isStringBoolean(flag)
+	    || !ValidateService.isCorrectId(keyResultId)) {
+		return res.badRequest();
+	}
+
+	flag = HelpService.stringToBoolean(flag);
+
+	return service.softDeleteKeyResult(session, objectiveId, keyResultId, flag, res.callback);
+});
+
+router.delete('/:id/:flag', (req, res, next) => {
+	var flag = req.params.flag || '';
+	var objectiveId = req.params.id || '';
+	var session = req.session;
+
+	if(!ValidateService.isCorrectId(objectiveId)
+			|| !ValidateService.isStringBoolean(flag)) {
+		return res.badRequest();
+	}
+
+	var data = {
+		isDeleted: HelpService.stringToBoolean(flag),
+		deletedDate: new Date(),
+		deletedBy: userId
+	};
+
+	return service.softDelete(session, objectiveId, data, res.callback);
+});
+
 router.post('/:id/keyresult/', (req, res, next) => {
 	let userObjectiveId = req.params.id || '';
 	let userId = req.session._id;
@@ -117,25 +154,6 @@ router.put('/:id', (req, res, next) => {
 	};
 
 	return service.update(session._id, id, body, res.callback);
-});
-
-router.delete('/:id/:flag', (req, res, next) => {
-	var flag = req.params.flag || '';
-	var objectiveId = req.params.id || '';
-	var userId = req.session._id;
-
-	if(!ValidateService.isCorrectId(objectiveId)
-		|| !ValidateService.isStringBoolean(flag)) {
-			return res.badRequest();
-		}
-
-		var data = {
-			isDeleted: HelpService.stringToBoolean(flag),
-			deletedDate: new Date(),
-			deletedBy: userId
-		};
-
-	return service.softDelete(userId, objectiveId, data, res.callback);
 });
 
 router.delete('/:id', (req, res, next) => {

@@ -71,6 +71,7 @@ class KeyResults extends Component {
 								key={index}
 								item={item}
 								changeScore={ changeScore(item._id) }
+								objectiveId={ this.props.objectiveId }
 								softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 			/>
 		});
