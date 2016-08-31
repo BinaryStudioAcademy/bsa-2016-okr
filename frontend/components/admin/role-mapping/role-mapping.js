@@ -22,6 +22,7 @@ class RoleMapping extends React.Component {
 
       const { visibleUsers } = this.props.stateFromReducer.mapping;
       const { roles } = this.props.stateFromReducer.mapping;
+      const { globalRoles} =  this.props.stateFromReducer.mapping;
 
       return (
 
@@ -48,6 +49,14 @@ class RoleMapping extends React.Component {
            
                  <div id="user-role-mapping-header-wrapper">
                    <input type="text" placeholder="Search it" id="role-mapping-search" ref="filterInput" onKeyUp={this.filter.bind(this)}/>
+ 
+                  <select onChange={this.callSetGlobalRoleFilter.bind(this)} id="global-role-filter">
+                       <option value=""  className="not-display">By Global Role</option>
+                       <option value="">No one</option>
+                        {globalRoles.map(function(glRole) {
+                            return  <option key={glRole.id} value={glRole.globalRole}>{glRole.globalRole + " (" + glRole.count+")"}</option>
+                         })}
+                    </select>
                  </div>
 
                     <p><span>Personal roles</span></p>
@@ -57,7 +66,7 @@ class RoleMapping extends React.Component {
                              <h3 className="col-1">Avatar</h3>
                              <h3 className="col-2">Name</h3>
                              <h3 className="col-3">E-mail</h3>
-                             <h3 className="col-4">Global role</h3>
+                             <h3 className="col-4" onClick={this.sortingByGlobalRole.bind(this)}><i className="fa fa-sort"></i>Global role</h3>
                              <h3 className="col-5">Local role</h3>
                        </div>
 
@@ -71,6 +80,15 @@ class RoleMapping extends React.Component {
 
 
       )
+   }
+
+   callSetGlobalRoleFilter() {
+    let value = document.querySelector("#global-role-filter").value;
+    this.props.setGlobalRoleFilter(value);
+   }
+
+   sortingByGlobalRole() {
+     this.props.sortingByGlobalRole(!this.props.stateFromReducer.mapping.sortByGlobalRole);
    }
 
    filter() {

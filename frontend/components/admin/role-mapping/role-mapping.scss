@@ -9,6 +9,26 @@
     font-size: 26px;
 }
 
+#role-mapping-wrapper .not-display {
+   display: none;
+}
+
+#user-role-mapping-header-wrapper select {
+    margin-left: 1%;
+}
+
+#role-mapping-wrapper h3 i {
+   padding-right: 3px;
+}
+
+#role-mapping-wrapper .table-head h3.col-4 {
+    cursor: pointer;
+}
+
+.table-head h3 {
+    font-size: 18px;
+}
+
 #user-role-mapping-header-wrapper {
 	width: 100%;
     display: flex;

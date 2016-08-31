@@ -3,7 +3,7 @@ import { render } from "react-dom"
 import App from "./containers/app"
 import History from "./components/admin/history-page/history-page.js"
 import HomePage from "./components/home-page.js"
-import RolesPage from "./components/admin/RoleMapping/role-mapping.js"
+import RolesPage from "./components/admin/role-mapping/role-mapping.js"
 import UserPage from "./components/other-persons-page/other-persons-page.js"
 import {IndexRoute, Route, Router, browserHistory} from 'react-router'
 import ObjectiveView from "./components/objectiveView/objectiveView.js"
