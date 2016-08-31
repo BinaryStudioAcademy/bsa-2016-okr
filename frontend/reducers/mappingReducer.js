@@ -11,19 +11,46 @@ import {
 	MAPPING_UPDATE_USER_ERROR,
 	MAPPING_RECEIVED_ERROR,
 	MAPPING_RECEIVED_GLOBAL_ROLES,
+	MAPPING_SORTING_BY_G_ROLE,
+	MAPPING_SET_GLOBAL_ROLE_FILTER
 } from '../actions/mappingActions';
 
 const initialState = {
 	users : [],
 	visibleUsers : [],
 	roles: [],
-	filter: ""
+	globalRoles: [],
+	sortByGlobalRole: false,
+	isSortingUsed: false,
+	globalRoleFilter: "",
+	filter: "",
 };
 
 
 export default function mappingReducer(state = initialState, action = {}) {
 
 	switch (action.type) {
+
+		case MAPPING_SET_GLOBAL_ROLE_FILTER: {
+
+				const {value} = action;
+
+				return Object.assign({}, state, {
+					globalRoleFilter: value,
+					visibleUsers: updateVisibleUsers(state.users, state.filter, state.sortByGlobalRole, state.isSortingUsed, value)
+				})
+		}
+
+		case MAPPING_SORTING_BY_G_ROLE: {
+
+				const {value} = action;
+
+				return Object.assign({}, state, {
+					sortByGlobalRole: value,
+					isSortingUsed: true,
+					visibleUsers: updateVisibleUsers(state.users, state.filter, value, true, state.globalRoleFilter)
+				})
+		}
 
 		case MAPPING_RECEIVED_USERS: {
 
@@ -42,7 +69,8 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				users: JSON.parse(JSON.stringify(data)),
-				visibleUsers: JSON.parse(JSON.stringify(data)) 
+				visibleUsers: JSON.parse(JSON.stringify(data)),
+				globalRoles: getAllGlobalRoles(data)
 			})
 		}
 
@@ -77,7 +105,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 			const {filter} = action;
 
 			return Object.assign({}, state, {
-				visibleUsers: updateVisibleUsers(state.users, filter),
+				visibleUsers: updateVisibleUsers(state.users, filter, state.sortByGlobalRole, state.isSortingUsed, state.globalRoleFilter),
 				filter: filter
 			})
 		}
@@ -104,7 +132,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				users: updateLocRole(users, id, localRole),
-				visibleUsers: updateVisibleUsers(users, state.filter)
+				visibleUsers: updateVisibleUsers(users, state.filter, state.sortByGlobalRole, state.isSortingUsed, state.globalRoleFilter)
 			})
 		}
 
@@ -115,7 +143,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 }
 
 
-function updateVisibleUsers(users, filter) {
+function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, globalRoleFilter) {
 
 	
 	let visibleUsers = [];
@@ -129,12 +157,67 @@ function updateVisibleUsers(users, filter) {
 			if (users[i].name.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
 				users[i].email.toUpperCase().indexOf(filter.toUpperCase()) === 0 ) {
 				visibleUsers.push(users[i]);
+			}
 		}
+    }
+
+	for (let i = 0; i < visibleUsers.length; i++) {
+
+		if (visibleUsers[i].globalRole != globalRoleFilter && globalRoleFilter != "") {
+			visibleUsers.splice(i, 1);
+			--i;
+		}
+
 	}
+
+    if (isSortingUsed) {
+
+		if (sortByGlobalRole) {
+
+			visibleUsers.sort(function(a, b) {
+				    if(a.globalRole < b.globalRole) return -1;
+				    if(a.globalRole > b.globalRole) return 1;
+				    return 0;
+			});
+		} else {
+
+			visibleUsers.sort(function(a, b) {
+					if(a.globalRole < b.globalRole) return 1;
+				    if(a.globalRole > b.globalRole) return -1;
+				    return 0;
+			});
+		}
+
+	}
+
+	return visibleUsers;
 }
 
-return visibleUsers;
+	function getAllGlobalRoles(users) {
+
+		let globalRoles = [];
+		let found;
+
+		for (let i = 0; i < users.length; i++) {
+
+			found = false;
+
+			for (let j = 0; j < globalRoles.length; j++) {
+
+				if (globalRoles[j].globalRole.indexOf(users[i].globalRole) != -1) {
+					found = true;
+					++globalRoles[j].count;
+				}
+			}
+
+			if (!found) {
+				globalRoles.push({globalRole: users[i].globalRole, count: 0, id: globalRoles.length});
+			}
+		}
+
+		return globalRoles;
 }
+
 
 function updateLocRole(array, id, localRole) {
 

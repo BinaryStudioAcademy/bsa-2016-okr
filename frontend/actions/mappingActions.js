@@ -13,6 +13,26 @@ export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 export const MAPPING_UPDATE_USER_ERROR = 'MAPPING_UPDATE_USER_ERROR';
 export const MAPPING_RECEIVED_ERROR = 'MAPPING_RECEIVED_ERROR';
 export const MAPPING_RECEIVED_GLOBAL_ROLES = 'MAPPING_RECEIVED_GLOBAL_ROLES';
+export const MAPPING_SORTING_BY_G_ROLE = 'MAPPING_SORTING_BY_G_ROLE';
+export const MAPPING_SET_GLOBAL_ROLE_FILTER = 'MAPPING_SET_GLOBAL_ROLE_FILTER';
+
+export function setGlobalRoleFilter(value) {
+	
+	const action = {
+		type: MAPPING_SET_GLOBAL_ROLE_FILTER,
+		value: value
+	};
+	return action;
+}
+
+export function sortingByGlobalRole(value) {
+	
+	const action = {
+		type: MAPPING_SORTING_BY_G_ROLE,
+		value: value
+	};
+	return action;
+}
 
 export function updateUserLocRole(id, localRole) {
 	return (dispatch, getStore) => {
