@@ -53,8 +53,8 @@ class ObjectiveList extends React.Component{
 				}
 
 				return (
-					<div key={ index } id={category.title}>
-					<p onClick={()=>this.changeCategoryContentVisibility(category.title)}><span className="category-title">{ category.title }</span></p>
+					<div key={ index } id={ category.title }>
+					<p onClick={ ()=>this.changeCategoryContentVisibility(category.title) }><span className="category-title">{ category.title } ({ objectiveItems.length })</span></p>
 						<div className="hidden-category-content" >
 							{ input }
 							{ objectiveItems }
