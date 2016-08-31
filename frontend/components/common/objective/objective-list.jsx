@@ -47,7 +47,9 @@ class ObjectiveList extends React.Component{
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item } 
 							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } 
-							changeKeyResultScore={ changeKeyResultScore } />
+							changeKeyResultScore={ changeKeyResultScore }
+							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+						/>
 					});
 
 				if(my) {

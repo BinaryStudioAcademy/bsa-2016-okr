@@ -43,7 +43,8 @@ class ObjectiveItem extends Component {
 				<KeyResults 
 						data={ objective.keyResults } 
 						objectiveId={ objective._id }
-						changeScore={ changeKeyResultScore } 
+						changeScore={ changeKeyResultScore }
+						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 				/>
 			</div>
 			</div>

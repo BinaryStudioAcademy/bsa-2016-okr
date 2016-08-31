@@ -66,7 +66,13 @@ class KeyResults extends Component {
 		let keyResults = this.props.data;
 		let changeScore = this.props.changeScore;
 		let items = keyResults.map((item, index) => {
-			return <KeyResultItem index={index} key={index} item={item} changeScore={ changeScore(item._id) }/>
+			return <KeyResultItem
+								index={index}
+								key={index}
+								item={item}
+								changeScore={ changeScore(item._id) }
+								softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+			/>
 		});
 
 		return (

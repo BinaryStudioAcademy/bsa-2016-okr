@@ -147,3 +147,21 @@ export function keyResultScoreChangedError(data) {
 		data,
 	};
 }
+
+export function softDeleteObjectiveKeyResultByIdApi(id) {
+	console.log('--- --- ACTIONS --- ---', id);
+	//return (dispatch, getStore) => {
+	//	dispatch({ type: ADD_REQUEST	});
+	//	dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
+	//
+	//	return axios.delete('/api/userObjective/' + id + '/true')
+	//			.then(response => {
+	//				dispatch(softDeleteMyObjectiveById(id));
+	//				dispatch({ type: REMOVE_REQUEST	});
+	//			})
+	//			.catch(response => {
+	//				dispatch(receivedMyObjectivesError(response.data));
+	//				dispatch({ type: REMOVE_REQUEST	});
+	//			});
+	//};
+}
