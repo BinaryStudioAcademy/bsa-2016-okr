@@ -93,6 +93,7 @@ function softDelete(list, id){
             categories.splice(i, 1);
           }
     }
+    return categories;
 }
 
 function update(list, id, category){

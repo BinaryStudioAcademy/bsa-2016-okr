@@ -135,7 +135,7 @@ CategoryService.prototype.update = function (userId, categoryId, data, callback)
 		(category, callback) => {
 			let type = CONST.history.type.UPDATE;
 
-			HistoryRepository.addCategoryEvent(userId, category._id, type, (err, history) => {
+			HistoryRepository.addCategoryEvent(userId, categoryId, type, (err, history) => {
 				if(err) {
 					return callback(err, null)
 				}
