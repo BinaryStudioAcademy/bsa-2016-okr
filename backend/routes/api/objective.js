@@ -37,10 +37,10 @@ router.post('/', adminOnly, (req, res, next) => {
 
 	if( isEmpty(title)
 		|| isEmpty(description)
-		/*|| isEmpty(keyResults)*/
+		|| isEmpty(keyResults)
 		|| !ValidateService.isCorrectId(category)
-		// || !ValidateService.isArray(keyResults)
-		/*|| isKeyResultsInvalid*/)
+		|| !ValidateService.isArray(keyResults)
+		|| isKeyResultsInvalid)
 	{
 		return res.badRequest();
 	}
@@ -110,12 +110,21 @@ router.put('/myupdate/:id', (req, res, next) => {
 
 router.put('/softDelete/:id', adminOnly, (req, res, next) => {
 	var id = req.params.id;
+	let isDeleted = req.body.isDeleted || '';
+	let deletedDate = req.body.deletedDate || '';
+	let deletedBy = req.body.deletedBy || '';
 
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
 
-	return repository.setToDeleted(id, res.callback);
+	let body = {
+		isDeleted: isDeleted,
+		deletedDate: deletedDate,
+		deletedBy: deletedBy
+	}
+
+	return service.softDelete(session._id, id, body, res.callback);
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {

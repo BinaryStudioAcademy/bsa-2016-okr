@@ -86,6 +86,7 @@ class UserHistory extends React.Component{
 	}
 
 	render() {
+		console.log(this.props.userDashboard.historyList);
 		let itemList = this.props.userDashboard.historyList.map((item, i) => {
 			return (
 				<div key={item._id} className="historyEvent">

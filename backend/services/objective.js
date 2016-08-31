@@ -63,7 +63,7 @@ ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults
 	defaultKeyResults = defaultKeyResults.map((keyResult) => {
 		keyResult.objectiveId = objective._id;
 		keyResult = new KeyResult(keyResult);
-		objective.keyResults.push(keyResult._id);
+	//	objective.keyResults.push(keyResult._id);
 		return keyResult;
 	});
 
@@ -116,6 +116,33 @@ ObjectiveService.prototype.addBlank = function(authorId, objective, callback) {
 	], (err, result) => {
 		return callback(err, result);
 	});
+};
+
+ObjectiveService.prototype.softDelete = function(authorId, objectiveId, objective, callback){
+	 async.waterfall([
+		(callback) => {
+			ObjectiveRepository.update(objectiveId, objective, (err, oldObjective) => {
+				if(err) {
+					return callback(err, null);
+				};
+				
+				return callback(null, oldObjective);
+			})
+		},
+		(oldObjective, callback) => {
+			// console.log('update finished');
+			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
+			// 	if(err) {
+			// 		return callback(err, null);
+			// 	};
+				
+			// 	return callback(null, objective);
+			// })
+			return callback(null, objective);
+		}
+	], (err, result) => {
+		return callback(err, result)
+	})
 };
 
 ObjectiveService.prototype.update = function (authorId, objectiveId, objective, callback){

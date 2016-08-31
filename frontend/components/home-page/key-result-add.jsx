@@ -24,11 +24,12 @@ class KeyResult extends React.Component {
 		if (title !== '') {
 			const body = {
 				title: title,
-				objectiveId: this.props.objectiveId,
 				keyResultId: this.props.keyResultsReducer.selectedItem._id || '',
 			};
 
-			this.props.addNewKeyResults(body);
+			let userObjectiveId = this.props.objectiveId;
+
+			this.props.addNewKeyResults(userObjectiveId, body);
 			this.props.onDeleteKeyResultClick();
 		}
 	};

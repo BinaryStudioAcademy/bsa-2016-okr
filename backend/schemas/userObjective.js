@@ -54,8 +54,12 @@ var userObjective = new Schema({
 			ref: 'User',
 			required: false
 		},
-		deletedDate: {},
-		isDeleted: Boolean
+		deletedDate: {
+			type: Date,
+		},
+		isDeleted: {
+			type: Boolean
+		}
 	}]
 }, {
 	timestamps: true

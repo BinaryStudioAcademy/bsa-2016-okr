@@ -33,7 +33,7 @@ class ObjectiveData extends React.Component{
 
         reqBody.description = objectiveDesctiption;
         reqBody.title = objectiveTitle;
-        reqBody.category = objectiveCategory
+        reqBody.category = objectiveCategory;
         
         this.props.editObjectiveTemplate(objective._id, reqBody);
       }

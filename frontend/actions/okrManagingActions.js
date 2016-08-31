@@ -37,6 +37,8 @@ export const RECIVED_NEW_KEY_RESULT = 'RECIVED_NEW_KEY_RESULT'
 export const CANCEL_EDIT_TEMPLATE = 'CANCEL_EDIT_TEMPLATE'
 export const RECEIVED_ERROR = 'RECEIVED_ERROR'
 
+const session = require('../../backend/config/session');
+
 export function getObjectivesList(){
 	
 	return(dispatch, getStore) => {
@@ -76,7 +78,7 @@ export function deleteObjective(id){
 		dispatch({ type: DELETE_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put('/api/objective/softDelete/'+id)
+		return axios.put('/api/objective/softDelete/'+id, {isDeleted: true, deletedDate: new Date(), deletedBy: session._id})
 			.then(response => {
 				dispatch(softDeleteObjective(id));
 				dispatch({ type: REMOVE_REQUEST });
@@ -111,7 +113,7 @@ export function deleteKeyResult(id){
 			type: DELETE_KEY_RESULT_TEMPLATE
 		});
 
-		return axios.put('/api/keyResult/softDelete/'+id)
+		return axios.put('/api/keyResult/softDelete/'+id, {isDeleted: true, deletedDate: new Date(), deletedBy: session._id})
 			.then(response => dispatch(softDeleteKyeResult(id)))
 			.catch(response => dispatch(deleteObjectiveError(response.data)));
 	};
@@ -240,7 +242,7 @@ export function activeKeyResult(activeKeyResult) {
 /*-----create new template------*/
 
 export function createNewTemplate(reqBody) {
-
+console.log(reqBody)
 	return (dispatch, getStore) => {
 		dispatch({ type: CREATE_NEW_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });

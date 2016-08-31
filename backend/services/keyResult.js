@@ -21,7 +21,7 @@ KeyResultsService.prototype.update = function(userId, keyResultId, data, callbac
 			});
 		},
 		(keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(authorId, keyResultId, CONST.history.type.UPDATE, (err, keyResult) => {
+			HistoryRepository.addKeyResultEvent(userId, keyResultId, CONST.history.type.UPDATE, (err, keyResult) => {
 				if(err) {
 					return  callback(err, null);
 				}
@@ -55,6 +55,33 @@ KeyResultsService.prototype.delete = function(userId, keyResultId, callback) {
 	], (err, result) => {
 		return callback(err, result);
 	});
+};
+
+KeyResultsService.prototype.softDelete = function(userId, keyResultId, keyResult, callback){
+	 async.waterfall([
+		(callback) => {
+			KeyResultRepository.update(keyResultId, keyResult, (err, oldKeyResult) => {
+				if(err) {
+					return callback(err, null);
+				};
+				
+				return callback(null, oldKeyResult);
+			})
+		},
+		(oldKeyResult, callback) => {
+			// console.log('update finished');
+			// HistoryRepository.addUserObjective(userId, objectiveId, CONST.history.type.UPDATE, (err) => {
+			// 	if(err) {
+			// 		return callback(err, null);
+			// 	};
+				
+			// 	return callback(null, keyResult);
+			// })
+			return callback(null, keyResult);
+		}
+	], (err, result) => {
+		return callback(err, result)
+	})
 };
 
 KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback){
@@ -110,7 +137,7 @@ KeyResultsService.prototype.changeApprove = function(userId, keyResultId, callba
 			return callback(null, keyResult);
 		},
 		(keyResult, callback) => {
-			if(keyResult.isApproved){
+			if(keyResult.isApproved) {
 				KeyResultRepository.setIsApprovedToFalse(keyResultId, function(err, keyResult){
 					if (err){
 						return callback(err, null);

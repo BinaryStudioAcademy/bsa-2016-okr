@@ -21,13 +21,22 @@ router.get('/deleted', (req, res, next) => {
 });
 
 router.put('/softDelete/:id', adminOnly, (req, res, next) => {
-    var id = req.params.id;
+	var id = req.params.id;
+	let isDeleted = req.body.isDeleted || '';
+	let deletedDate = req.body.deletedDate || '';
+	let deletedBy = req.body.deletedBy || '';
 
-    if(!ValidateService.isCorrectId(id)) {
-        return res.badRequest();
-    };
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
 
-    return repository.setToDeleted(id, res.callback);
+	let body = {
+		isDeleted: isDeleted,
+		deletedDate: deletedDate,
+		deletedBy: deletedBy
+	}
+
+	return service.softDelete(req.body.deletedBy, id, body, res.callback);
 });
 
 router.put('/:id', (req, res, next) => {

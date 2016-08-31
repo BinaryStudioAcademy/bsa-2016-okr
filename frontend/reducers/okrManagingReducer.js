@@ -11,8 +11,8 @@ const initialState = {
     objectives: [],
     waiting: true,
     visibleObjectives: [],
-    keyResults: ['0'],
-    count: 1,
+    keyResults: [''],
+    index: 0,
     active: '',
     searchValue: '',
     editing: false,
@@ -182,8 +182,7 @@ export default function okrManagingReducer(state = initialState, action) {
         case ADD_KEY_RESULT_TO_TEMPLATE : {
             const {keyResult} = action;
             return Object.assign({}, state, {
-                keyResults: keyResult,
-                count: ++state.count
+                keyResults: keyResult
             })
         }
 

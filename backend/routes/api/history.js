@@ -17,7 +17,7 @@ router.put('/', (req, res, next) => {
 
 	async.waterfall([
 		(callback) => {
-			repository.getAll((err, result) => {
+			repository.getHistory((err, result) => {
 				if(err) {
 					return callback(err, result);
 				}
@@ -66,25 +66,18 @@ router.get('/user/:id', (req, res, next) => {
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
 	};
-
 	
 	async.waterfall([
 		(callback) => {
 			service.getUserHistory(id, (err, historyList) => {
 				if(err)
 					return callback(err, null);
-				//console.log(`----------------------get this shit `);
-				//console.log(historyList);
 				return callback(null, historyList)
 			})
 		},
 		(historyList, callback) => {
 			if(historyList.length > 0)
-				service.sortBy(historyList, 'date', true, (err, historyList) => {
-					if(err)
-						return callback(err, null);
-					//console.log(`----------------------sorted to this shit ${historyList}`);
-					
+				service.sortBy(historyList, 'date', true, (historyList) => {					
 					return callback(null, historyList)
 				})
 			else {

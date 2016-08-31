@@ -51,6 +51,29 @@ ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 		.exec(callback);
 };
 
+ObjectiveRepository.prototype.getByTitle = function(title, callback) {
+	var model = this.model;
+
+	model
+		.findOne({
+			title: title,
+		})
+		.exec(callback);
+};
+
+ObjectiveRepository.prototype.getByTitleAndCategoryId = function(title, categoryId, callback) {
+	var model = this.model;
+
+	var options = {
+		title: title,
+		category: categoryId,
+	};
+
+	model
+		.findOne(options)
+		.exec(callback);
+};
+
 ObjectiveRepository.prototype.autocomplete = function(title, categoryId, excludeIds, callback) {
 	var model = this.model;
 	var options = {

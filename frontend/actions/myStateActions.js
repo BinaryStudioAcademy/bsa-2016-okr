@@ -14,6 +14,8 @@ export const ADDED_NEW_OBJECTIVE = 'ADDED_NEW_OBJECTIVE';
 export const CHANGED_KEYRESULT_SCORE = 'CHANGED_KEYRESULT_SCORE';
 export const CHANGED_KEYRESULT_SCORE_ERROR = 'CHANGED_KEYRESULT_SCORE_ERROR';
 
+const session = require('../../backend/config/session');
+
 export function getMe() {
 	console.log('Getting me');
 	return (dispatch, getStore) => {
@@ -79,7 +81,7 @@ export function softDeleteMyObjectiveByIdApi(id) {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
 		
-		return axios.put(('/api/userObjective/' + id), {isDeleted: true})
+		return axios.put(('/api/userObjective/' + id), {isDeleted: true, deletedDate: new Date(), deletedBy: session._id})
 		.then(response => {
 			dispatch(softDeleteMyObjectiveById(id));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -111,8 +113,8 @@ export function addNewObjective(body) {
 export function addedNewObjective(data, body) {
 	return {
 		type: ADDED_NEW_OBJECTIVE,
-		response: data,
-		request: body,
+		responseData: data,
+		requestData: body,
 	};
 }
 
