@@ -70,7 +70,7 @@ router.get('/users/:id', (req, res, next) => {
     ], (err, data) => res.send(data[0]));
 });
 
-router.get('/progresse', (req, res, next) => {
+router.get('/progress', (req, res, next) => {
     UserObjectives.collection.aggregate([
         {
             $match: {
