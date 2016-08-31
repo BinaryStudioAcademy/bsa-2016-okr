@@ -65,6 +65,12 @@ class NavMenu extends React.Component {
 								Statistics
 							</Link>
 						</li>
+						<li>
+							<Link to="/obj-accept">
+								<i className="fi flaticon-folder-17" aria-hidden="true"></i>
+								Accept Objective
+							</Link>
+						</li>
 					</ul>
 				</nav>
 			</aside>
