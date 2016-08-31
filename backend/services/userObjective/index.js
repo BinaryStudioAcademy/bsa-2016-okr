@@ -16,7 +16,7 @@ UserObjectiveService.prototype.add = add;
 UserObjectiveService.prototype.addKeyResult = addKeyResult;
 
 UserObjectiveService.prototype.update = function(authorId, objectiveId, objective, callback){
-	 async.waterfall([
+	async.waterfall([
 		(callback) => {
 			UserObjectiveRepository.update(objectiveId, objective, (err, oldObjective) => {
 				if(err) {
@@ -37,128 +37,120 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 			// })
 			return callback(null, objective);
 		}
-	], (err, result) => {
-		return callback(err, result)
-	})
+		], (err, result) => {
+			return callback(err, result)
+		})
 };
 
-UserObjectiveService.prototype.softDeleteKeyResult = function(session, objectiveId, keyResultId, flag, callback){
+UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjectiveId, keyResultId, flag, callback){
 	var historyType = CONST.history.type.UPDATE;
 	async.waterfall([
 		(callback) => {
-			UserObjectiveRepository.getById(objectiveId, (err, objective) => {
+			UserObjectiveRepository.getById(userObjectiveId, (err, userObjective) => {
 				if(err) {
 					return callback(err, null);
 				}
 
-				if ((!objective.userId.equals(session._id))
-						&& (!objective.userId.equals(session.mentor))
-						&& (!session.localRole === CONST.user.role.ADMIN)) {
+				if(isEmpty(objective)) {
+					err = new Error('Objective not found');
+					return callback(err, null);
+				}
+
+				if ((!userObjective.userId.equals(session._id))
+				&& (!userObjective.userId.equals(session.mentor))
+				&& (!session.localRole === CONST.user.role.ADMIN)) {
 					err = new Error('Forbidden');
 					err.status = 403;
 					return callback(err, null);
 				}
 
-				return callback(null, objective);
+				return callback(null, userObjective);
 			});
-		},
-		 (objective, callback) => {
+		}, (userObjective, callback) => {
 
-			 let index = objective.keyResults.findIndex((keyResult)=>{
-				 return keyResult._id.equals(keyResultId);
-			 });
+			let index = userObjective.keyResults.findIndex((keyResult)=>{
+				return keyResult._id.equals(keyResultId);
+			});
 
-			 objective.keyResults[index].isDeleted = flag;
-			 objective.keyResults[index].deletedDate = new Date();
-			 objective.keyResults[index].deletedBy = session._id;
+			if(index === -1) {
+				let err = new Error('Key result not found in objective');
+				return callback(err, null);
+			}
 
-			 objective.save((err, objective) => {
-				 if(err) {
-					 return callback(err, null);
-				 }
+			userObjective.keyResults[index].isDeleted = flag;
+			userObjective.keyResults[index].deletedDate = new Date();
+			userObjective.keyResults[index].deletedBy = session._id;
 
-				 return callback(null, objective);
-			 });
-		 },
-		(objective, callback) => {
-			HistoryRepository.addUserObjective(session._id, objectiveId, historyType, (err, historyEvent) => {
+			userObjective.save((err, userObjective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective);
+			});
+		}, (userObjective, callback) => {
+			HistoryRepository.addUserObjective(session._id, userObjectiveId, historyType, (err, historyEvent) => {
 				if(err) {
 					return  callback(err, null);
 				}
-			return callback(null, objective);
+
+				return callback(null, userObjective);
 			});
 		}
-	], (err, result) => {
-		console.log('-------------------------------------',result);
-		return callback(err, result)
-	})
+		], (err, result) => {
+			return callback(err, result)
+		})
 };
 
-UserObjectiveService.prototype.softDelete = function(session, objectiveId, data, callback){
+UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, data, callback){
 	var historyType = objective.isDeleted ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
 	async.waterfall([
 		(callback) => {
-			UserObjectiveRepository.getById(objectiveId, (err, objective) => {
+			UserObjectiveRepository.getById(userObjectiveId, (err, userObjective) => {
 				if(err) {
 					return callback(err, null);
 				}
 
-				if ((!objective.userId.equals(session._id))
-						|| (!objective.userId.equals(session.mentor))
-						|| (!session.localRole === CONST.user.role.ADMIN)) {
+				if(isEmpty(objective)) {
+					err = new Error('Objective not found');
 					return callback(err, null);
 				}
 
-				return callback(null, objective);
+				if ((!userObjective.userId.equals(session._id))
+				&& (!userObjective.userId.equals(session.mentor))
+				&& (!session.localRole === CONST.user.role.ADMIN)) {
+					err = new Error('Forbidden');
+					err.status = 403;
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective);
 			});
 		},
-		(objective, callback) => {
-			objective.isDeleted = flag;
-			objective.deletedDate = new Date();
-			objective.deletedBy = session._id;
+		(userObjective, callback) => {
+			userObjective.isDeleted = flag;
+			userObjective.deletedDate = new Date();
+			userObjective.deletedBy = session._id;
 
-			objective.save((err, objective) => {
+			userObjective.save((err, userObjective) => {
 				if(err) {
 					return callback(err, null);
 				}
 
-				return callback(null, objective);
+				return callback(null, userObjective);
 			});
 		},
-		(objective, callback) => {
-			HistoryRepository.addUserObjective(session._id, objectiveId, historyType, (err, historyEvent) => {
+		(userObjective, callback) => {
+			HistoryRepository.addUserObjective(session._id, userObjectiveId, historyType, (err, historyEvent) => {
 				if(err) {
 					return  callback(err, null);
 				}
-				return callback(null, objective);
+				return callback(null, userObjective);
 			});
 		}
-	], (err, result) => {
-		return callback(err, result)
-	})
-};
-
-UserObjectiveService.prototype.delete = function(authorId, objectiveId, callback){
-	async.waterfall([
-		(callback) => {
-			UserObjectiveRepository.delete(objectiveId, (err, objective) => {
-				if(err) {
-					return callback(err, null);
-				};
-				return callback(null, objective);
-			})
-		},
-		(objective, callback) => {
-			HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.HARD_DELETE, (err) => {
-				if(err) {
-					return callback(err, null);
-				};
-				return callback(null, objective);
-			})
-		}
-	], (err, result) => {
-		return callback(err, result)
-	})
+		], (err, result) => {
+			return callback(err, result);
+		})
 };
 
 UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveId, keyResultId, score, callback) {
@@ -215,9 +207,9 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 			})
 			return callback(null, result);
 		}
-	], (err, result) => {
-		return callback(err, result);
-	});
+		], (err, result) => {
+			return callback(err, result);
+		});
 };
 
 module.exports = new UserObjectiveService();
