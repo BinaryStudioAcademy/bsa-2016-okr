@@ -16,6 +16,10 @@ export const ACTIVE_CATEGORY = 'ACTIVE_CATEGORY';
 export const RECIVED_EDIT_CATEGORY = 'RECIVED_EDIT_CATEGORY';
 export const EDIT_CATEGORY_ERROR = 'EDIT_CATEGORY_ERROR'
 
+export const ADD_CATEGORY = 'ADD_CATEGORY';
+export const RECIVED_NEW_CATEGORY = 'RECIVED_NEW_CATEGORY';
+export const RECIVED_NEW_CATEGORY_ERROR = 'RECIVED_NEW_CATEGORY_ERROR';
+
 export function getAllCategories() {
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_ALL_CATEGORIES	});
@@ -125,4 +129,33 @@ export function editCategoryError(data) {
 		type: EDIT_CATEGORY_ERROR,
 		data
 	};
+}
+
+/*------ADD NEW CATEGORY------*/
+
+export function addCategory(reqBody){
+	return (dispatch, getStore) => {
+
+	dispatch({
+			type: ADD_CATEGORY
+	});
+
+	return axios.post('/api/category/', reqBody)
+			.then(response => dispatch(recivedNewCategory(response.data)))
+			.catch(response => dispatch(recivedNewCategoryError(response.data)));
+	};
+}
+
+export function recivedNewCategory(data){
+	return {
+		type: RECIVED_NEW_CATEGORY,
+		data
+	}
+}
+
+export function recivedNewCategoryError(data){
+	return {
+		type: RECIVED_NEW_CATEGORY_ERROR,
+		data
+	}
 }

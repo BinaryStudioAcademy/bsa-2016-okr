@@ -2,7 +2,8 @@ import { isEmpty } from '../../backend/utils/ValidateService';
 import { RECEIVED_ERROR, RECEIVED_ALL_CATEGORIES,
 				 RECIVED_DELETE_CATEGORY, DELETE_CATEGORY_ERROR,
 				 ACTIVE_CATEGORY, CANCEL_EDIT_CATEGORY,
-				 RECIVED_EDIT_CATEGORY, EDIT_CATEGORY_ERROR } from '../actions/categoriesActions';
+				 RECIVED_EDIT_CATEGORY, EDIT_CATEGORY_ERROR,
+				 RECIVED_NEW_CATEGORY, RECIVED_NEW_CATEGORY_ERROR } from '../actions/categoriesActions';
 
 const initialState = {
   list: [],
@@ -26,10 +27,8 @@ export default function categoriesReducer(state = initialState, action = {}) {
 		});
 	}
 
-	case DELETE_CATEGORY_ERROR: {
-		const { data } = action;
+	case DELETE_CATEGORY_ERROR: 
 		return state;
-	}
 
   case RECIVED_DELETE_CATEGORY: {
 		const { id } = action;
@@ -62,14 +61,29 @@ export default function categoriesReducer(state = initialState, action = {}) {
 	  })
   }
 
-  case EDIT_CATEGORY_ERROR: {
-	  const { data } = action;
+  case EDIT_CATEGORY_ERROR: 
 		return state;
+	
+
+	case RECIVED_NEW_CATEGORY: {
+		const {data} = action;
+		return Object.assign({}, state, {
+			list: addCategory(state.list, data)
+		})
 	}
+
+	case RECIVED_NEW_CATEGORY_ERROR: 
+		return state;
 
 	default:
 		return state;
 	}
+}
+
+function addCategory(list, data){
+	let categories = JSON.parse(JSON.stringify(list));
+	categories.push(data);
+	return categories
 }
 
 function softDelete(list, id){

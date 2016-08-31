@@ -14,7 +14,18 @@ class NewCategory extends React.Component {
 	}
 
 	addNewCategory() {
-		
+		let result = confirm('Do you really want to add new category?');
+    if (result){
+			let title = this.refs.newCategory.value;
+			const body = {
+				title: title,
+			};
+
+			this.props.addCategory(body);
+
+			this.props.onDelete();
+			this.refs.newCategory.value = '';
+		}
 	}
 
 	onDeleteCategory() {
