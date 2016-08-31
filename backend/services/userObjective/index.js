@@ -51,7 +51,7 @@ UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjec
 					return callback(err, null);
 				}
 
-				if(isEmpty(objective)) {
+				if(isEmpty(userObjective)) {
 					err = new Error('Objective not found');
 					return callback(err, null);
 				}

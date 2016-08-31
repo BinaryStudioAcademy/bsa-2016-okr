@@ -14,6 +14,7 @@ export const ADDED_NEW_OBJECTIVE = 'ADDED_NEW_OBJECTIVE';
 export const CHANGED_KEYRESULT_SCORE = 'CHANGED_KEYRESULT_SCORE';
 export const CHANGED_KEYRESULT_SCORE_ERROR = 'CHANGED_KEYRESULT_SCORE_ERROR';
 export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API';
+export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS';
 
 const session = require('../../backend/config/session');
 
@@ -150,14 +151,13 @@ export function keyResultScoreChangedError(data) {
 }
 
 export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId) {
-	console.log('--- --- ACTIONS --- ---', keyResultId, ' === ', objectiveId);
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API });
 
 		return axios.delete('/api/userObjective/' + objectiveId +'/keyResult/'+ keyResultId +'/true')
 				.then(response => {
-					dispatch(softDeleteObjectiveKeyResultById(objectiveId,keyResultId));
+					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
 				})
 				.catch(response => {
@@ -167,10 +167,11 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId) {
 	};
 }
 
-export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId) {
+export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, data) {
 	return {
-		type: SOFT_DELETE_MY_OBJECTIVE_BY_ID,
-		objectiveId: objectiveId,
-		keyResultId: keyResultId,
+		type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
+		objectiveId,
+		keyResultId,
+		data,
 	};
-}
+};

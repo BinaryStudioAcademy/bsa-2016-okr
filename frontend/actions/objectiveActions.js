@@ -16,7 +16,7 @@ export function getAutocompleteObjectives(categoryId, year, quarter, title) {
 		dispatch({ type: GET_AUTOCOMPLETE_OBJECTIVES });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get(`/api/objective/category/${ categoryId }/year/${ year }/quarter/${ quarter }/${ title }`)
+		return axios.get(`/api/objective/category/${ categoryId }/year/${ year }/quarter/${ quarter }/${ encodeURIComponent(title) }`)
 		.then(response => {
 			dispatch(receivedAutocompleteObjectives(response.data))
 			dispatch({ type: REMOVE_REQUEST	});

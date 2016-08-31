@@ -11,6 +11,7 @@ import {
 	CHANGED_KEYRESULT_SCORE,
 	CHANGED_KEYRESULT_SCORE_ERROR,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
+	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 } from '../actions/myStateActions';
 
 import {
@@ -87,12 +88,17 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API: {
-			const { objectiveId, keyResultId } = action;
+			return state;
+		}
 
+		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS: {
+			const { objectiveId, keyResultId, data } = action;
+
+			console.log('Reducer reached');
+			
 			return Object.assign({}, state, {
-				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId)
+				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, data)
 			});
-
 		}
 
 		case ADDED_NEW_OBJECTIVE: {
@@ -181,20 +187,36 @@ function deleteObjectiveFromMe(me, id) {
 	return meCopy;
 }
 
-function deleteKeyResultFromObjective(me, objectiveId, keyResultId) {
+function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult) {
 	var meCopy = Object.assign({}, me);
-	let objIndex, keyResIndex;
-	meCopy.quarters.forEach((quarter) => {
-		objIndex = quarter.userObjectives.findIndex((userObjective)=>{
-			return userObjective._id === objectiveId
+	let quarterIndex, objectiveIndex, keyResultIndex;
+	
+	quarterIndex = meCopy.quarters.findIndex((quarter) => {
+		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=>{
+			return userObjective._id === objectiveId;
 		});
 
-		keyResIndex = quarter.userObjectives[objIndex].keyResults.findIndex((keyResult)=>{
-			return keyResult._id === keyResultId
-		});
+		if(objectiveIndex !== -1) {
+			return true;
+		}
 
-		quarter.userObjectives[objIndex].keyResults[keyResIndex].splice(i, 1);
+		return false;
 	});
+
+	console.log('Quarter index founded');
+
+	if(quarterIndex !== -1) {
+		keyResultIndex = meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.findIndex((keyResult) => {
+			return keyResult._id === keyResultId;
+		});
+
+		if(keyResultIndex !== -1) {
+			meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.slice(keyResultIndex, 1);
+		}
+	}
+
+	console.log('Success deleting keyResult from objective');
+
 	return meCopy;
 }
 

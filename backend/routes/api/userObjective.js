@@ -123,7 +123,7 @@ router.delete('/:id/:flag', (req, res, next) => {
 		return res.badRequest();
 	}
 
-	flag = HelpService.stringToBoolean(flag),
+	flag = HelpService.stringToBoolean(flag);
 
 	return service.softDelete(session, userObjectiveId, flag, res.callback);
 });

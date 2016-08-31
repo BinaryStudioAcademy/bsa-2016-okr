@@ -72,51 +72,6 @@
   }
 }
 
-#new-objective {
-  position: fixed;
-  padding-top: 35px;
-  padding-bottom: 30px;
-  top: $header-height;
-  right: 0;
-  margin-right: $right-stat-panel-width;
-  left: $left-nav-width;
-  bottom: 0;
-  background: lighten($color-blue-grey, 50%);
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: $new-obj-index;
-  display: none;
-
-  &.opened {
-    display: block;
-  }
-
-  form {
-    display: block;
-    width: 70%;
-    margin: 0 auto;
-  }
-
-  .close-new-obj-window{
-    display: block;
-    background: none;
-    border: none;
-    position: absolute;
-    font-size: 20px;
-    padding: 7px 10px;
-    background-color: transparent;
-    right: 10px;
-    top: 10px;
-    color: #AAAAAA;
-    &:hover{
-      color: #000000;
-    }
-    &:focus{
-      outline: none;
-    }
-  }
-}
-
 /*
 **    Section for Submit Objective
 */
