@@ -4,6 +4,7 @@ const repository = require('../../repositories/userObjective');
 const session = require('../../config/session');
 const service = require('../../services/userObjective');
 const ValidateService = require('../../utils/ValidateService');
+const HelpService = require('../../utils/HelpService');
 const isCorrectId = ValidateService.isCorrectId;
 const isEmpty = ValidateService.isEmpty;
 
@@ -57,7 +58,7 @@ router.post('/:id/keyresult/', (req, res, next) => {
 	let isApproved = false;
 
 	let keyResultTitle = title.trim();
-	
+
 	if(!isCorrectId(userObjectiveId)
 	|| (isEmpty(title) && isEmpty(keyResultId))
 	|| (!isEmpty(keyResultId) && !isCorrectId(keyResultId))) {
@@ -67,7 +68,7 @@ router.post('/:id/keyresult/', (req, res, next) => {
 	if(req.session.isAdmin) {
 		isApproved = true;
 	}
-	
+
 	service.addKeyResult(userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, res.callback);
 });
 
@@ -116,6 +117,25 @@ router.put('/:id', (req, res, next) => {
 	};
 
 	return service.update(session._id, id, body, res.callback);
+});
+
+router.delete('/:id/:flag', (req, res, next) => {
+	var flag = req.params.flag || '';
+	var objectiveId = req.params.id || '';
+	var userId = req.session._id;
+
+	if(!ValidateService.isCorrectId(objectiveId)
+		|| !ValidateService.isStringBoolean(flag)) {
+			return res.badRequest();
+		}
+
+		var data = {
+			isDeleted: HelpService.stringToBoolean(flag),
+			deletedDate: new Date(),
+			deletedBy: userId
+		};
+
+	return service.softDelete(userId, objectiveId, data, res.callback);
 });
 
 router.delete('/:id', (req, res, next) => {
