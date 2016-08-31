@@ -67,11 +67,7 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 		sortWayNum = -1
 	else 
 		sortWayNum = 1;
-	// console.log('sortedList');
-	// console.log(sortedList);
-	// console.log('sortField');
-	// console.log(sortField);
-	// console.log(sortWay);
+
 	switch(sortField){
 	 	case 'date':
 	 		sortedList.sort((a, b) => {
@@ -81,13 +77,18 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 			return (dateA - dateB) * sortWayNum;
 	 		});
 	 	break;
-	 	// case 'user':
-	 	// 	sortedList.sort((a, b) => {
-
-	 	// 	});
-	 	// break;
+	 	case 'user':
+	 		sortedList.sort((a, b) => {
+	 			let nameA = a.author.userInfo.firstName;
+	 			let nameB = b.author.userInfo.firstName;
+	 			if(nameA === nameB)
+	 				return 0
+	 			else if(nameA > nameB)
+	 				return sortWayNum
+	 			else return sortWayNum * -1;
+	 		});
+	 	break;
 	 	case 'action':
-	 		// console.log('sorting');
 	 		function sorting (a, b) {
 	 			let actionA = a.type.split(' ')[0];
 	 			let actionB = b.type.split(' ')[0];
@@ -107,9 +108,40 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 				else return 0;
 	 			};  
 	 		};
-	 		// console.log('sorted to');
-	 		sortedList.sort(sorting);
-	 		// console.log(sortedList);
+	 	break;
+	 	case 'target': 
+	 		function getHistoryObjectName(historyItem){
+      			if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
+       				return historyItem.userObjective.templateId.title;
+      			};
+
+      			if(historyItem.type.indexOf('OBJECTIVE') !== -1){
+        			return historyItem.objective.title;
+       			};
+
+      			if(historyItem.type.indexOf('KEY_RESULT') !== -1){
+        			let keyResults = historyItem.userObjective.keyResults;
+        			let keyResult;
+        			keyResults.forEach((key) => {
+        				if (key.templateId._id.toString() === historyItem.userKeyResult.toString() 
+        					|| key._id.toString() === historyItem.userKeyResult.toString()){
+          					console.log(key);
+          					keyResult = key;
+          				}
+       				})
+      				return keyResult.templateId.title;
+      			}
+    		}
+ 			
+	 		sortedList.sort((a, b) => {
+	 			let targetA = getHistoryObjectName(a);
+	 			let targetB = getHistoryObjectName(b);
+	 			if(targetA === targetB)
+	 				return 0
+	 			else if(targetA > targetB)
+	 				return sortWayNum
+	 			else return sortWayNum * -1;
+	 		});
 	 	break;
 	 	default: break; 
 	}
@@ -128,18 +160,17 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 	}
 
 	var filteredList = eventList.filter( (item) => {
-	let isFiltered = true;
-	
+		let isFiltered = true;
 
-	for (let key in filters)
-	{
-		if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
-			if(item.type.indexOf(filters[key]) === -1)
-				{
-					isFiltered = false;
-				}
-			};
-				
+		for (let key in filters)
+		{
+			if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
+				if(item.type.indexOf(filters[key]) === -1)
+					{
+						isFiltered = false;
+					}
+				};
+					
 			if ( key == "date" && isFiltered
 				&& !isNaN(Date.parse(filters[key].from)) 
 				&& !isNaN(Date.parse(filters[key].to))) 
@@ -149,7 +180,13 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 				{
 					isFiltered = false;
 				}	
-			};
+			};		
+
+			if(key == "name" && filters[key] !== '' && filters[key] !== ' '){
+				let name = item.author.userInfo.firstName + ' ' + item.author.userInfo.lastName;
+				if(name.toLowerCase().indexOf(filters[key]) === -1)
+					isFiltered = false;
+			}
 		}
 		return isFiltered;
 	})

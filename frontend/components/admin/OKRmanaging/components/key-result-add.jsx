@@ -23,7 +23,6 @@ class KeyResult extends React.Component {
 			objectiveId: this.props.objectiveId,
 		};
 
-		console.log(body)
 		this.props.addKeyResult(body);
 		this.props.onDeleteKeyResultClick();
 		this.refs.keyResultTitle.value = '';

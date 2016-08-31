@@ -247,7 +247,7 @@ export function updateAll(dateFrom, dateTo, categoryOrTypeFilter, objectiveType,
 }
 
 export function setUserName(value) {
-	
+
 	const action = {
 		type: SET_USER_NAME,
 		value: value
@@ -256,7 +256,7 @@ export function setUserName(value) {
 }
 
 export function deleteItemFromState(id) {
-	
+
 	const action = {
 		type: DELETE_ITEM_FROM_STATE,
 		id: id
@@ -270,7 +270,7 @@ export function updateUserObjectivesRequest(id, body, idItem) {
 		dispatch({ type: UPDATE_USER_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/userObjective/' + id), body)
+		return axios.delete('/api/userObjective/' + id + '/' + body.isDeleted)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -358,7 +358,7 @@ export function receivedGetUserDeletedObjectivesError(data) {
 }
 
 export function typeOrCategoryFilter(value) {
-	
+
 	const action = {
 		type: CATEGORY_TYPE_FILTER,
 		value: value
@@ -367,7 +367,7 @@ export function typeOrCategoryFilter(value) {
 }
 
 export function setSortingByDate(value) {
-	
+
 	const action = {
 		type: SET_SORTING_BY_DATE,
 		value: value
@@ -376,7 +376,7 @@ export function setSortingByDate(value) {
 }
 
 export function setObjectiveType(value) {
-	
+
 	const action = {
 		type: SET_OBJECTIVE_TYPE,
 		value: value
@@ -394,7 +394,7 @@ export function setCategoryType(value) {
 }
 
 export function setKeyType(value) {
-	
+
 	const action = {
 		type: SET_KEY_TYPE,
 		value: value

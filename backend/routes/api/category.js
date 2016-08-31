@@ -7,7 +7,7 @@ const session = require('../../config/session');
 const categoryService = require('../../services/category');
 
 router.get('/', (req, res, next) => {
-	repository.getAll(res.callback);
+	repository.getAllNotDeleted(res.callback);
 });
 
 router.get('/deleted', adminOnly, (req, res, next) => {
@@ -32,7 +32,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	categoryService.add(userId, data, res.callback);
 });
 
-router.put('/:id/delete/:flag', adminOnly, (req, res, next) => {
+router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	console.log('/:id/delete/:flag');
 	var flag = req.params.flag || '';
 	var categoryId = req.params.id || '';

@@ -78,7 +78,7 @@ export function deleteObjective(id){
 		dispatch({ type: DELETE_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put('/api/objective/softDelete/'+id, {isDeleted: true, deletedDate: new Date(), deletedBy: session._id})
+		return axios.delete('/api/objective/'+id)
 			.then(response => {
 				dispatch(softDeleteObjective(id));
 				dispatch({ type: REMOVE_REQUEST });
@@ -113,7 +113,7 @@ export function deleteKeyResult(id){
 			type: DELETE_KEY_RESULT_TEMPLATE
 		});
 
-		return axios.put('/api/keyResult/softDelete/'+id, {isDeleted: true, deletedDate: new Date(), deletedBy: session._id})
+		return axios.delete('/api/keyResult/'+id)
 			.then(response => dispatch(softDeleteKyeResult(id)))
 			.catch(response => dispatch(deleteObjectiveError(response.data)));
 	};
