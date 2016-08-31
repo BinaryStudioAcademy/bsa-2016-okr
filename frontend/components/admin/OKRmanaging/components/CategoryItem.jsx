@@ -20,10 +20,16 @@ class CategoryItem extends Component {
 
 	delete(){
 		let flag = true;
+		let isEmpty = true;
+		for (let i=0; i<this.props.objectives.length; i++)
+			if (this.props.objectives[i].category == this.props.category._id)
+				isEmpty = false;
+			
 		let result = confirm('Do you really want to delete category?');
-    if (result){
-		/*	this.props.deleteCategory(this.props.category._id, flag);*/
+    if (result && isEmpty){
+			this.props.deleteCategory(this.props.category._id, flag);
 		}	
+		else alert("This category isn't empty.")
 	}
 
 	editCategory(){
@@ -37,7 +43,7 @@ class CategoryItem extends Component {
       let categoryTitle = document.querySelector("input.category-title").value;
 
       reqBody.title = categoryTitle;
-
+      
     	this.props.editCategory(this.props.category._id, reqBody);
 		}
 	}
@@ -75,7 +81,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    categories: state.categories
+    categories: state.categories,
+    objectives: state.okrManaging.objectives
   };
 }
 

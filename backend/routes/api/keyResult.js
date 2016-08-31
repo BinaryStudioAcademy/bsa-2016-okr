@@ -3,6 +3,7 @@ const repository = require('../../repositories/keyResult');
 const service = require('../../services/keyResult');
 const adminOnly = require('../adminOnly');
 const ValidateService = require('../../utils/ValidateService');
+const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
 const session = require('../../config/session');
 
@@ -21,18 +22,19 @@ router.get('/deleted', (req, res, next) => {
 	return repository.getAllDeletedPopulate(res.callback);
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id/:flag', (req, res, next) => {
 	var id = req.params.id;
-	let isDeleted = true;
+	let isDeleted = req.params.flag;
 	let deletedDate = new Date();
 	let userId = req.session._id
 
-	if(!ValidateService.isCorrectId(id)) {
+	if(!ValidateService.isCorrectId(id)
+		|| !ValidateService.isStringBoolean(flag)) {
 		return res.badRequest();
 	};
 
 	let body = {
-		isDeleted: isDeleted,
+		isDeleted: HelpService.stringToBoolean(flag),
 		deletedDate: deletedDate,
 		deletedBy: userId
 	}

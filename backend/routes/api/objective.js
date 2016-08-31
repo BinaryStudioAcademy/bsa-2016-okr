@@ -6,6 +6,7 @@ const service = require('../../services/objective');
 const cloneObjective = require('../../services/cloneObjective');
 const session = require('../../config/session');
 const ValidateService = require('../../utils/ValidateService');
+const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
 const isValidYear = ValidateService.isValidYear;
 const isValidQuarter = ValidateService.isValidQuarter;
@@ -108,18 +109,20 @@ router.put('/myupdate/:id', (req, res, next) => {
 	return repository.update(id, body, res.callback);
 });
 
-router.delete('/:id', adminOnly, (req, res, next) => {
+router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	var id = req.params.id;
-	let isDeleted = true;
+	let flag = req.params.flag;
 	let deletedDate = new Date();
 	let userId = req.session._id || '';
 
-	if(!ValidateService.isCorrectId(id)) {
+	if(!ValidateService.isCorrectId(id)
+		|| !ValidateService.isStringBoolean(flag)) {
 		return res.badRequest();
 	};
 
+
 	let body = {
-		isDeleted: isDeleted,
+		isDeleted: HelpService.stringToBoolean(flag),
 		deletedDate: deletedDate,
 		deletedBy: userId
 	}
