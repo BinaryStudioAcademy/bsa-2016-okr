@@ -81,7 +81,7 @@ export function softDeleteMyObjectiveByIdApi(id) {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
 		
-		return axios.put(('/api/userObjective/' + id), {isDeleted: true, deletedDate: new Date(), deletedBy: session._id})
+		return axios.delete('/api/userObjective/' + id + '/true')
 		.then(response => {
 			dispatch(softDeleteMyObjectiveById(id));
 			dispatch({ type: REMOVE_REQUEST	});

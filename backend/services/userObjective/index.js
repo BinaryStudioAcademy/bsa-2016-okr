@@ -21,7 +21,7 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 				if(err) {
 					return callback(err, null);
 				};
-				
+
 				return callback(null, oldObjective);
 			})
 		},
@@ -31,10 +31,35 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 			// 	if(err) {
 			// 		return callback(err, null);
 			// 	};
-				
+
 			// 	return callback(null, objective);
 			// })
 			return callback(null, objective);
+		}
+	], (err, result) => {
+		return callback(err, result)
+	})
+};
+
+UserObjectiveService.prototype.softDelete = function(userId, objectiveId, objective, callback){
+	var historyType = objective.isDeleted ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
+	 async.waterfall([
+		(callback) => {
+			UserObjectiveRepository.update(objectiveId, objective, (err, objective) => {
+				if(err) {
+					return callback(err, null);
+				};
+
+				return callback(null, objective);
+			});
+		},
+		(objective, callback) => {
+			HistoryRepository.addUserObjective(userId, objectiveId, historyType, (err, objective) => {
+				if(err) {
+					return  callback(err, null);
+				}
+			return callback(null, objective);
+			});
 		}
 	], (err, result) => {
 		return callback(err, result)
