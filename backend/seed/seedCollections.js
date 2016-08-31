@@ -10,7 +10,7 @@ var UserObjective = require('../schemas/userObjective');
 var Quarter = require('../schemas/quarter');
 var UserInfo = require('../schemas/userInfo');
 // var Comment = require('../schemas/comment');
-// var History = require('../schemas/history');
+var History = require('../schemas/history');
 // var Plan = require('../schemas/plan');
 // var UserMentor = require('../schemas/userMentor');
 
