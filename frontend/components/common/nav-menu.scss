@@ -10,7 +10,8 @@ aside#navbar {
    box-sizing: border-box;
    width: $left-nav-width;
    background-color: lighten($primary-color, 5%);
-   overflow: hidden;
+   overflow-x: hidden;
+   overflow-y: scroll;
    z-index: $navbar-index;
 
    /* Navbar opened */
