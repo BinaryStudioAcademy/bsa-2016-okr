@@ -54,6 +54,18 @@ $primary-color_local: #607D8B;
 
   }
 
+  //disabled for other user
+  li.disabled{
+    color: #bbbbbb;
+    background-color: transparent;
+    border: 1px solid #bbb;
+    border-left: none;
+    &:hover{
+      background-color: transparent;
+      cursor: not-allowed;
+    }
+  }
+
   // for not existed
   li.not-exist{
     color: #bbbbbb;

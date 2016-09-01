@@ -11,8 +11,14 @@ class Quarterbar extends Component {
    }
 
    handleQuarterChange(event) {
-      this.props.changeTab(parseInt(event.target.dataset.id));
-      tab_click_feedback.call(this, event);
+      let target = event.target;
+
+      if(target.matches('li:not(.not-exist)') && target.matches('li:not(.disabled)')){
+         this.props.changeTab(parseInt(event.target.dataset.id));
+         tab_click_feedback.call(this, event);
+      } else if(event.target.matches('li.not-exist')){
+         console.log('not-existed tab just was clicked');
+      }
    }
 
    handleYearChange(event) {
@@ -32,7 +38,6 @@ class Quarterbar extends Component {
             <ul id="quarters" onClick={this.handleQuarterChange}>
                { getQuarters.call(this) }
             </ul>
-
          </div>
       )
    }
@@ -45,19 +50,32 @@ Quarterbar.defaultProps = {
 export default Quarterbar;
 
 function getQuarters() {
-   let quarters_prefixes = ["1-st", "2-nd", "3-rd", "4-th"],
-      current_year = this.props.currentYear,
-      current_tab = this.props.currentQuarter,
-      quarters = this.props.quarters,
-      quarters_to_show;
+   var   quarters_prefixes = ["1-st", "2-nd", "3-rd", "4-th"],
+         current_year = this.props.currentYear,
+         current_tab = this.props.currentQuarter,
+         quarters = this.props.quarters,
+         isMe = this.props.me,
+         quarters_to_show = [];
 
-   quarters_to_show = quarters.map(quarter => {
-      return <li
-         key={quarter.index}
-         data-id={quarter.index}
-         className={quarter.index == current_tab ? 'active' : ''}>
-         {quarters_prefixes[quarter.index - 1]} quarter</li>
-   });
+   for(let i = 0; i < 4; i++){
+      if(quarters[i] != undefined){
+         quarters_to_show.push( <li
+            key={i}
+            data-id={quarters[i].index}
+            className={quarters[i].index == current_tab ? 'active' : ''}>
+            {quarters_prefixes[i]} quarter</li> )
+      } else {
+         if(isMe != undefined && isMe == true){
+            quarters_to_show.push(
+               <li className="not-exist">Open {quarters_prefixes[i]} quarter</li>
+            )
+         } else {
+            quarters_to_show.push(
+               <li className="disabled">{quarters_prefixes[i]} quarter</li>
+            )
+         }
+      }
+   }
 
    return quarters_to_show;
 

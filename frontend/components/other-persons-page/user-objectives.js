@@ -39,6 +39,7 @@ class Objectives extends Component {
 			var quarters = user.quarters.filter(quarter => {
 				return quarter.year == selectedYear;
 			});
+			//TODO: fix year displaying(currentYear or selectedYear, otherPersonsReducer)
 
 			objectives = quarter.userObjectives;
 		}
