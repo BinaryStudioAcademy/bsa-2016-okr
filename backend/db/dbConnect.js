@@ -5,6 +5,7 @@ var Category = require('../schemas/category');
 var UserObjective = require('../schemas/userObjective');
 var Quarter = require('../schemas/quarter');
 var UserInfo = require('../schemas/userInfo');
+var History = require('../schemas/history');
 
 function dbConnectionHandler() {
 	var mongoose = require('mongoose'),

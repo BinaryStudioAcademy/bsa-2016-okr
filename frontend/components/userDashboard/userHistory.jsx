@@ -32,29 +32,51 @@ class UserHistory extends React.Component{
 		if(item.type.indexOf('ADD') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</p>
+					<p className="author-name">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+					</p>
 					<p className="action-description">added {this.getHistoryObjectName(item)}</p>
 				</div>
 			)
 		else if (item.type.indexOf('UPDATE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</p>
+					<p className="author-name">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+					</p>
 					<p className="action-description">updated {this.getHistoryObjectName(item)}</p>
 				</div>
 			)
 		else if (item.type.indexOf('CHANGE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</p>
+					<p className="author-name">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+					</p>
 					<p className="action-description">changed score {this.getHistoryObjectName(item)} to {item.userKeyResultScore}</p>
 				</div>
 			)
 		else if (item.type.indexOf('DELETE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</p>
-					<p className="action-description">deleted {object}</p>
+					<p className="author-name">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+					</p>
+					<p className="action-description">deleted {this.getHistoryObjectName(item)}</p>
+				</div>
+			)
+		else if (item.type.indexOf('RESTORE') != -1)
+			return (
+				<div className="action-text">
+					<p className="author-name">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+					</p>
+					<p className="action-description">restored {this.getHistoryObjectName(item)}</p>
 				</div>
 			)
 	}
@@ -62,7 +84,7 @@ class UserHistory extends React.Component{
 
 	getHistoryObjectName(historyItem){
 	 	if(historyItem.type.indexOf('OBJECTIVE') !== -1){
-			return `objective \'${historyItem.userObjective.templateId.title}\'`;
+			return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
 	 	};
 
 		if(historyItem.type.indexOf('KEY_RESULT') !== -1){
@@ -72,17 +94,19 @@ class UserHistory extends React.Component{
 				if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
 					keyResult = key;
 			})
-			return `key result \'${keyResult.templateId.title} \'`;
+			return (<span>key result <span className="history-target">"{keyResult.templateId.title}"</span></span>);
 		}
 	}
 
 	getIconType(item){
 		if(item.type.indexOf('ADD') != -1)
-			return "fa fa-plus-square typeIcon green"
+			return "fa fa-plus-circle typeIcon green"
 		else if (item.type.indexOf('UPDATE') != -1 || item.type.indexOf('CHANGE') != -1)
-			return "fa fa-pencil-square typeIcon orange"
+			return "fa fa-check-circle typeIcon orange"
 		else if (item.type.indexOf('DELETE') != -1)
-			return "fa fa-minus-square typeIcon red"
+			return "fa fa-times-circle typeIcon red"
+		else if (item.type.indexOf('RESTORE') != -1)
+			return "fa fa-stumbleupon-circle typeIcon green"
 	}
 
 	render() {
@@ -91,7 +115,6 @@ class UserHistory extends React.Component{
 			return (
 				<div key={item._id} className="historyEvent">
 					<i className={this.getIconType(item)} aria-hidden="true"></i>
-					<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
 					{this.getHistoryType(item)}
 					<div className="eventDate"> 
 						{moment(item.createdAt).format('D MMMM YYYY, H:mm')}
@@ -102,7 +125,7 @@ class UserHistory extends React.Component{
 		return (
 			<div className="userHistory">
 				<div className="title">
-					<h1><span>Recently events</span></h1>
+					<h1><span>Recent events</span></h1>
 				</div>
 				{itemList}
 			</div>

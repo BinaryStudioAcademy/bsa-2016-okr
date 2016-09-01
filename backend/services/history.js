@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var HistoryRepository = require('../repositories/history');
 var UserService = require('./user.js')
+var UserObjectiveRepository = require('../repositories/userObjective');
 var moment = require('moment');
 
 var HistoryService = function(){
@@ -8,24 +9,21 @@ var HistoryService = function(){
 };
 
 HistoryService.prototype.generateNotification = function(){
-
 };
 
 HistoryService.prototype.getUserHistory = function (id, callback) {
 	async.waterfall([
 		(callback) => {
-			UserService.getById(id, (err, user) => {
+			UserObjectiveRepository.getByUserIdPopulate(id, (err, objectives)=>{
 				if(err)
 					return callback(err, null);
-				return callback(null, user);
+				return callback(null, objectives);
 			})
 		},
-		(user, callback) => {
+		(objectives, callback) => {
 			let historyList =[];
-			user.quarters.forEach((quarter, i) => {
-				quarter.userObjectives.forEach((objective, i) => {
-					historyList.push(objective._id);
-				})
+			objectives.forEach((obj) => {
+				historyList.push(obj._id);
 			})
 
 			return callback(null, historyList);
@@ -53,11 +51,21 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 						}
 				})
 			})();
+		},
+		(historyList, callback) => {
+			if(historyList.length > 0)
+				this.sortBy(historyList, 'date', true, (historyList) => {					
+					return callback(null, historyList)
+				})
+			else {
+				historyList = ['empty'];
+				return callback(null, historyList)
+			}
 		}
 	], (err, result) => {
 		return callback(err, result);
 	})
-}
+};
 
 HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callback) {
 	var sortedList = eventList.slice();
@@ -147,7 +155,7 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	}
 
 	return callback(sortedList);
-}
+};
 
 HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 	var filters = filter;
@@ -192,7 +200,56 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 	})
 
 	return callback(filteredList);
+};
+
+HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callback) {
+	async.waterfall([
+		(callback) => {
+			HistoryRepository.getHistory((err, result) => {
+				if(err) {
+					return callback(err, result);
+				}
+
+				return callback(null, result.slice());	
+			});
+		},
+		(result, callback) => {
+			if(filters !== null )
+				this.filterBy(result, filters, (res) => {
+					result = res.slice();
+				})
+
+			return callback(null, result);
+		},
+		(result, callback) => {
+			if(sort !== null && sort.sortField !== '')
+				this.sortBy(result, sort.sortField, sort.up, (res) => {
+					result = res.slice();				
+				})
+
+			return callback(null, result)
+		}
+	], (err, result) => {
+		return res.callback(null, result);
+	})
+};
+
+HistoryService.prototype.getHistory = function (callback) {
+	async.waterfall([
+		(callback) =>{
+			HistoryRepository.getHistory((err, result) => {
+				if(err)
+					return callback(err, null);
+				return callback(null, result);
+			})
+		},
+		(history, callback) => {
+			this.sortBy(history, 'date', true, (result) => {
+				return callback(null, result);
+			})
+		}
+	], (err, result) => {
+		return callback(err, result);
+	})
 }
-
-
 module.exports = new HistoryService();
