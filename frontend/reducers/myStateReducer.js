@@ -12,6 +12,9 @@ import {
 	CHANGED_KEYRESULT_SCORE_ERROR,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
+	ADD_NEW_QUARTER,
+	NEW_QUARTER_ADDED,
+	ADD_NEW_QUARTER_ERROR
 } from '../actions/myStateActions';
 
 import {
@@ -20,10 +23,8 @@ import {
 
 const initialState = {
 	currentYear,
-	currentQuarter,
 	selectedTab: currentQuarter,
 	selectedYear: currentYear,
-	existedQuarters: getExistedQuarters(),
 	me: {
 		"localRole": ""
 	}
@@ -67,15 +68,19 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-		case CREATE_QUARTER: {
-			const { payload } = action;
+		case ADD_NEW_QUARTER : {
+			console.log('Adding new quarter ...');
+			return state;
+		}
 
-			var new_exQuarters = state.existedQuarters.concat(payload);
-			new_exQuarters.sort();
+		case NEW_QUARTER_ADDED : {
+			console.log('new quarter added');
+			return state;
+		}
 
-			return Object.assign({}, state, {
-				existedQuarters: new_exQuarters
-			});
+		case ADD_NEW_QUARTER_ERROR : {
+			console.log(action.error);
+			return state;
 		}
 
 		case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
@@ -164,15 +169,6 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return state;
 		}
 	}
-}
-
-function getExistedQuarters(){
-	let quarters = [];
-	for(let i = 1; i <= currentQuarter; i++) {
-		quarters.push(i);
-	}
-
-	return quarters;
 }
 
 function deleteObjectiveFromMe(me, id) {

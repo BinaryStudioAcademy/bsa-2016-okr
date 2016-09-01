@@ -32,11 +32,12 @@ class Objectives extends Component {
 	}
 
 	handleAddingNewQuarter(newQuarter) {
-		let confirmation = confirm("Do you really want to create new quarter?");
+		let confirmed = confirm("Do you really want to create new quarter?");
 
-		if (confirmation) {
+		if (confirmed) {
+			//API call
 			this.props.myStateActions.createQuarter(newQuarter);
-			this.changeTab(newQuarter);
+			this.changeTab(newQuarter.index);
 		}
 	}
 
@@ -91,7 +92,7 @@ class Objectives extends Component {
 	}
 
 	render() {
-		const { me, selectedYear, selectedTab, existedQuarters, currentYear, currentQuarter } = this.props.myState;
+		const { me, selectedYear, selectedTab, currentYear, currentQuarter } = this.props.myState;
 
 		const categories = this.props.categories;
 
@@ -109,12 +110,15 @@ class Objectives extends Component {
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarterbar changeTab={ this.changeTab }
+				<Quarterbar
+						changeTab={ this.changeTab }
 						changeYear={this.changeYear}
 				      currentYear={ currentYear }
-						currentQuarter={currentQuarter} quarters={ quarters }
+						selectedYear= {selectedYear }
+						selectedTab={ selectedTab }
 				      addNewQuarter={ this.handleAddingNewQuarter }
-				/>
+						quarters={ quarters }
+						me={ true } />
 				<div id='objectives'>
 					<ObjectivesList
 						objectives={ objectives }

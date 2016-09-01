@@ -7,6 +7,9 @@ export const RECEIVED_MY_OBJECTIVES = 'RECEIVED_MY_OBJECTIVES';
 export const CHANGE_TAB = 'CHANGE_TAB';
 export const CHANGE_YEAR = 'CHANGE_YEAR';
 export const CREATE_QUARTER = 'CREATE_QUARTER';
+export const ADD_NEW_QUARTER = 'ADD_NEW_QUARTER';
+export const NEW_QUARTER_ADDED = 'NEW_QUARTER_ADDED';
+export const ADD_NEW_QUARTER_ERROR = 'ADD_NEW_QUARTER_ERROR';
 export const SOFT_DELETE_MY_OBJECTIVE_BY_ID = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID';
 export const SOFT_DELETE_MY_OBJECTIVE_BY_ID_API = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID_API';
 export const ADD_NEW_OBJECTIVE = 'ADD_NEW_OBJECTIVE';
@@ -65,9 +68,32 @@ export function setChangeYear(year) {
 }
 
 export function createQuarter(quarter){
+	return(dispatch) => {
+		dispatch({type: ADD_NEW_QUARTER});
+		dispatch({type: ADD_REQUEST});
+
+		axios.post('/api/quarters/', quarter)
+		.then(() => {
+			dispatch(newQuarterAdded());
+			dispatch({type: REMOVE_REQUEST});
+		})
+		.catch((error) => {
+			dispatch(addNewQuarterError(error));
+		})
+	}
+}
+
+export function newQuarterAdded(){
 	return {
-		type: CREATE_QUARTER,
-		payload: quarter
+		type: NEW_QUARTER_ADDED
+	}
+}
+
+export function addNewQuarterError(error) {
+	console.log(error);
+	return {
+		type: ADD_NEW_QUARTER_ERROR,
+		error: error
 	}
 }
 

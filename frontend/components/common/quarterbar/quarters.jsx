@@ -5,19 +5,27 @@ class Quarterbar extends Component {
    constructor(props) {
       super(props);
 
-      this.handleQuarterChange = this.handleQuarterChange.bind(this);
+      this.handleQuarterClick = this.handleQuarterClick.bind(this);
       this.handleYearChange = this.handleYearChange.bind(this);
-      this.handleAddingNewQuarter = this.handleAddingNewQuarter.bind(this);
    }
 
-   handleQuarterChange(event) {
+   handleQuarterClick(event) {
       let target = event.target;
 
       if(target.matches('li:not(.not-exist)') && target.matches('li:not(.disabled)')){
+
          this.props.changeTab(parseInt(event.target.dataset.id));
          tab_click_feedback.call(this, event);
+
       } else if(event.target.matches('li.not-exist')){
-         console.log('not-existed tab just was clicked');
+
+         //adding new quarter to database, API call
+         this.props.addNewQuarter({
+            year: this.props.selectedYear,
+            index: target.dataset.id
+         });
+
+         console.log(this.props.selectedYear, target.dataset.id);
       }
    }
 
@@ -25,9 +33,6 @@ class Quarterbar extends Component {
       this.props.changeYear(event.target.value);
    }
 
-   handleAddingNewQuarter() {
-
-   }
 
    render() {
       return (
@@ -35,7 +40,7 @@ class Quarterbar extends Component {
             <select id="business-year" onChange={this.handleYearChange}>
                { getYears.call(this) }
             </select>
-            <ul id="quarters" onClick={this.handleQuarterChange}>
+            <ul id="quarters" onClick={this.handleQuarterClick}>
                { getQuarters.call(this) }
             </ul>
          </div>
@@ -52,7 +57,7 @@ export default Quarterbar;
 function getQuarters() {
    var   quarters_prefixes = ["1-st", "2-nd", "3-rd", "4-th"],
          current_year = this.props.currentYear,
-         current_tab = this.props.currentQuarter,
+         current_tab = this.props.selectedTab,
          quarters = this.props.quarters,
          isMe = this.props.me,
          quarters_to_show = [];
@@ -67,7 +72,7 @@ function getQuarters() {
       } else {
          if(isMe != undefined && isMe == true){
             quarters_to_show.push(
-               <li className="not-exist">Open {quarters_prefixes[i]} quarter</li>
+               <li className="not-exist" data-id={i + 1}>Open {quarters_prefixes[i]} quarter</li>
             )
          } else {
             quarters_to_show.push(

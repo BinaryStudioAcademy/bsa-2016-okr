@@ -6,8 +6,10 @@ const adminOnly = require('../adminOnly');
 const session = require('../../config/session');
 
 router.post('/',  (req, res, next) => {
+	req.body.userId = req.session._id;
+
 	return repository.add(req.body, res.callback);
-})
+});
 
 router.get('/:id', (req, res, next) => {
 	var id = req.params.id;

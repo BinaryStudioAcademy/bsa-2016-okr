@@ -6,6 +6,7 @@ const initialState = {
 	waiting: true,
 	selectedTab: currentQuarter,
 	selectedYear: currentYear,
+	currentYear
 };
 
 export default function otherPersonReducer(state = initialState, action) {

@@ -25,7 +25,7 @@ class Objectives extends Component {
 
 	render() {
 		
-		const { user, selectedYear, selectedTab, currentQuarter, currentYear } = this.props.user;
+		const { user, selectedYear, selectedTab, currentYear } = this.props.user;
 		const categories = this.props.categories;
 
 		let quarter = {};
@@ -39,7 +39,6 @@ class Objectives extends Component {
 			var quarters = user.quarters.filter(quarter => {
 				return quarter.year == selectedYear;
 			});
-			//TODO: fix year displaying(currentYear or selectedYear, otherPersonsReducer)
 
 			objectives = quarter.userObjectives;
 		}
@@ -47,10 +46,9 @@ class Objectives extends Component {
 		return (
 			<div>
 				<Quarterbar changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) }
-				selectedYear={ currentYear }
-				selectedTab={ currentQuarter }
-				currentQuarter={currentQuarter}
-				currentYear={currentYear}
+				selectedYear={ selectedYear }
+				selectedTab={ selectedTab }
+				currentYear={ currentYear }
 				quarters={quarters}/>
 				<div id='user-objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list } my={ false } 
