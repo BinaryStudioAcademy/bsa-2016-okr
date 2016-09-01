@@ -2,64 +2,68 @@
 @import '../common/styles/commonStyles';
 
 .userHistory{
-	padding: 10px 30px;
-  background-color:white;
-  border-left: 5px solid #6aa84f;
-  max-height: 450px;
-  overflow-y:overlay;
+	padding: 10px 10px;
+  margin-left: 15px;
+  margin-top: 10px;
+  
+  .aside{
+    position: absolute;
+    left: -41px;
+    top: 14px;
+    float: left;
+  }
   
   .typeIcon{ 
-    background-color: white;
+    background-color: #F9FAFB;
     font-size: 25px;
-    position: absolute;
-    float: left;
-    bottom: 0;
-    top: -5px;
-    margin: auto;
-    left: -11px;
-    height: 24px;
+    float: right;
+  }
+
+  .history-body{
+    overflow-y:overlay;
   }
 
 	.historyEvent{
     position:relative;
-		padding: 10px 5px;
-		margin: 5px 0px;
-		border-left: 1px solid #DBDBDB;
+		padding: 10px 13px 10px 0px;
 	}
 
+  .historyEvent::after{
+    content:" ";
+    width: 300px;
+    border-top:1px solid #DBDBDB;
+  }
+
+  .history-list-container{
+    border-left: 1px solid #DBDBDB;
+    margin-left: 45px;
+  }
+
 	.eventDate{
-    display:inline-block;
-    float:right;
-    position:relative;
-    top: 3px;
-    left: -10px;
-    background-color:white;
-		text-align: right;
+		text-align: left;
 		color: #A4A3A3;
     font-size: 12px;
+    float: left;
+    width: 20px;
+    margin-right:10px;
+    .eventDate-month{ float: left; clear:both;}
+    .eventDate-day{clear:both; width:13px;margin:auto;}
 	}
 
   .history-target{
     font-style: italic;
     font-size: 13px;
   }
-  
-  .author-name{    
-    position: relative;
-    display: inline-block;
-    top: 9px;
-    left: -3px; 
-  }
-  .author { font-weight: bold; line-height: 35px; }
+
+  .author { font-weight: bold; line-height: 25px; }
   .action-description {  display:inline-block; font-size:14px;}
   .action-text { margin-left: 15px;}
 
   .user-avatar{
-    width: 35px;
-    height: 35px;
-    border-radius: 20px;
-    float:left;
-    position: inline-block;
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: inline-block;
     margin-right: 10px;
   }
 
@@ -94,4 +98,5 @@
     .green{ color: green; }
     .orange{ color: orange; }
     .red{ color: red; }
+    .grey{color: #DBDBDB; }
 }
