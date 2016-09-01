@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Quarter from '../common/quarterbar/quarters.jsx';
+import Quarterbar from '../common/quarterbar/quarters.jsx';
 import ObjectiveItem from './objective.jsx';
 import ObjectivesList from '../common/objective/objective-list.jsx';
 
@@ -109,10 +109,9 @@ class Objectives extends Component {
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
-				         selectedTab={ selectedTab } quarters={ quarters }
-				         addNewQuarter={ this.handleAddingNewQuarter }
-				         currentYear={ currentYear } currentQuarter={ currentQuarter }/>
+				<Quarterbar changeTab={ this.changeTab } changeYear={this.changeYear}
+				         currentYear={ currentYear } currentQuarter={currentQuarter} quarters={ quarters }
+				         addNewQuarter={ this.handleAddingNewQuarter }/>
 				<div id='objectives'>
 					<ObjectivesList
 						objectives={ objectives }

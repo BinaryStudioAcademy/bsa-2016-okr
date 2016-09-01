@@ -29,7 +29,7 @@ class Quarterbar extends Component {
             <select id="business-year" onChange={this.handleYearChange}>
                { getYears.call(this) }
             </select>
-            <ul id="quarters">
+            <ul id="quarters" onClick={this.handleQuarterChange}>
                { getQuarters.call(this) }
             </ul>
 
@@ -52,7 +52,11 @@ function getQuarters() {
       quarters_to_show;
 
    quarters_to_show = quarters.map(quarter => {
-      return <li key={quarter.index} data-id={quarter.index}>{quarters_prefixes[quarter.index - 1]} quarter</li>
+      return <li
+         key={quarter.index}
+         data-id={quarter.index}
+         className={quarter.index == current_tab ? 'active' : ''}>
+         {quarters_prefixes[quarter.index - 1]} quarter</li>
    });
 
    return quarters_to_show;
@@ -68,10 +72,8 @@ function getYears() {
 }
 
 function tab_click_feedback(event) {
-   var quarters = querySelectorAll('#quarters li'),
+   var quarters = document.querySelectorAll('#quarters li'),
       target = event.target;
-
-   console.log('target element', event.target);
 
    if (!target.classList.contains('active')) {
       quarters.forEach((el) => {

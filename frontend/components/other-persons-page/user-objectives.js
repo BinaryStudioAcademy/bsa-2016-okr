@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../actions/otherPersonActions.js";
 
-import Quarter from './persons-quarter.js';
+import Quarterbar from '../common/quarterbar/quarters.jsx';
 import ObjectivesList from '../common/objective/objective-list.jsx';
 import ObjectiveItem from './user-objective-item.jsx';
 
@@ -25,7 +25,7 @@ class Objectives extends Component {
 
 	render() {
 		
-		const { user, selectedYear, selectedTab } = this.props.user;
+		const { user, selectedYear, selectedTab, currentQuarter, currentYear } = this.props.user;
 		const categories = this.props.categories;
 
 		let quarter = {};
@@ -36,13 +36,21 @@ class Objectives extends Component {
 				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
 
+			var quarters = user.quarters.filter(quarter => {
+				return quarter.year == selectedYear;
+			});
+
 			objectives = quarter.userObjectives;
 		}
 		
 		return (
 			<div>
-				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) } 
-				selectedYear={ selectedYear } selectedTab={ selectedTab } />
+				<Quarterbar changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) }
+				selectedYear={ currentYear }
+				selectedTab={ currentQuarter }
+				currentQuarter={currentQuarter}
+				currentYear={currentYear}
+				quarters={quarters}/>
 				<div id='user-objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list } my={ false } 
 					ObjectiveItem={ ObjectiveItem }/>

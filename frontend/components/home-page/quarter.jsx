@@ -35,7 +35,6 @@ class Quarter extends Component {
 		this.props.addNewQuarter(quarter_id);
 	}
 
-
 	render() {
 		var quarters_prefixes = [
 		"st",
@@ -43,7 +42,6 @@ class Quarter extends Component {
 		"rd",
 		"th"
 		];
-
 		function getQuarters() {
 			var quarters = [];
 
