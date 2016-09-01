@@ -5,7 +5,8 @@ import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
         RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE, ACTIVE_KEY_RESULT,
         SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE, RECIVED_EDIT_KEY_RESULT,
         EDIT_KEY_RESULT, RECEIVED_NEW_TEMPLATE, CANCEL_EDIT_TEMPLATE, 
-        RECIVED_NEW_KEY_RESULT, REMOVE_KEY_RESULT_FROM_TAMPLATE, ADD_KEY_RESULT_TO_TEMPLATE} from '../actions/okrManagingActions.js'
+        RECIVED_NEW_KEY_RESULT, REMOVE_KEY_RESULT_FROM_TAMPLATE, ADD_KEY_RESULT_TO_TEMPLATE,
+        RECIVED_DEFAULT_KEY_RESULT_ERROR, RECIVED_DEFAULT_KEY_RESULT} from '../actions/okrManagingActions.js'
 
 const initialState = {
     objectives: [],
@@ -205,17 +206,41 @@ export default function okrManagingReducer(state = initialState, action) {
         case RECIVED_NEW_KEY_RESULT : {
 
             const {data} = action;
-             console.log(data)
+            
             return Object.assign({}, state, {
                 visibleObjectives: addKeyResult(state.visibleObjectives, data),
                 objectives: addKeyResult(state.objectives, data)
             })
+        }
+             
+        case RECIVED_DEFAULT_KEY_RESULT : {
+            let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let objectives = JSON.parse(JSON.stringify(state.objectives));
+            const {data} = action;
+             console.log(data)
+            return Object.assign({}, state, {
+                visibleObjectives: setDefaultKeyResult(state.visibleObjectives, data),
+                objectives: setDefaultKeyResult(state.objectives, data)
+            })
+        }
+
+        case RECIVED_DEFAULT_KEY_RESULT_ERROR : {
+            return state
         }
         
         default: 
             return state;        
         
     }
+}
+function setDefaultKeyResult(objectives, data) {
+
+    for (let i = 0; i < objectives.length; i++) {
+        if (objectives[i]._id == data._id) {
+            objectives.splice(i, 1, data);
+        }
+    }
+    return objectives
 }
 
 function addKeyResult(visibleObjectives, keyResult) {

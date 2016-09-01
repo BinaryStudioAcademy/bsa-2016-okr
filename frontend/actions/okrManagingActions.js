@@ -37,6 +37,10 @@ export const RECIVED_NEW_KEY_RESULT = 'RECIVED_NEW_KEY_RESULT'
 export const CANCEL_EDIT_TEMPLATE = 'CANCEL_EDIT_TEMPLATE'
 export const RECEIVED_ERROR = 'RECEIVED_ERROR'
 
+export const SET_DEFAULT_KEY_RESULT = 'SET_DEFAULT_KEY_RESULT';
+export const RECIVED_DEFAULT_KEY_RESULT = 'RECIVED_DEFAULT_KEY_RESULT';
+export const RECIVED_DEFAULT_KEY_RESULT_ERROR = 'RECIVED_DEFAULT_KEY_RESULT_ERROR';
+
 const session = require('../../backend/config/session');
 
 export function getObjectivesList(){
@@ -109,13 +113,18 @@ export function softDeleteObjective(id) {
 export function deleteKeyResult(id, flag){
 	return(dispatch, getStore) => {
 
-		dispatch({
-			type: DELETE_KEY_RESULT_TEMPLATE
-		});
+		dispatch({ type: DELETE_KEY_RESULT_TEMPLATE });
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.delete(`/api/keyResult/${ id }/${ flag }`)
-			.then(response => dispatch(softDeleteKyeResult(id)))
-			.catch(response => dispatch(deleteObjectiveError(response.data)));
+			.then(response => {
+				dispatch(softDeleteKyeResult(id));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.catch(response => {
+				dispatch(deleteObjectiveError(response.data))
+				dispatch({ type: REMOVE_REQUEST });
+			});
 	};
 }
 
@@ -323,5 +332,41 @@ export function removeKeyResultFromTemplate(index) {
 	return  {
 		type: REMOVE_KEY_RESULT_FROM_TAMPLATE,
 		index
+	}
+}
+
+/*-----set default key result-----*/
+
+export function setDefaultKeyResult(objectiveId, keyResultId, flag) {
+	return (dispatch, getStore) => {
+		dispatch({ type: SET_DEFAULT_KEY_RESULT });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put(`/api/objective/${ objectiveId }/keyresult/${ keyResultId }/default/${ flag }` )
+				.then(response => {
+					dispatch(receivedDefaultKeyResult(response.data));
+					dispatch({ type: REMOVE_REQUEST	});
+				})
+				.catch(response => {
+					dispatch(receivedDefaultKeyResultError(response.data));
+					dispatch({ type: REMOVE_REQUEST	});
+				});
+	};
+}
+
+export function receivedDefaultKeyResult(data) {
+	return {
+			type: RECIVED_DEFAULT_KEY_RESULT,
+		  data
+	};
+}
+
+export function receivedDefaultKeyResultError(data) {
+
+	return (dispatch, getStore) => {
+		dispatch({
+			type: RECIVED_DEFAULT_KEY_RESULT_ERROR,
+			data
+		});
 	}
 }

@@ -164,6 +164,23 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	return service.update(userId, objectiveId, data, res.callback);
 });
 
+router.put('/:objectiveId/keyresult/:keyResultId/default/:flag', adminOnly, (req, res, next) => {
+	let objectiveId = req.params.objectiveId;
+	let keyResultId = req.params.keyResultId;
+	let userId = req.session._id;
+	let flag = req.params.flag;
+
+	if(!ValidateService.isCorrectId(objectiveId)
+	|| !ValidateService.isCorrectId(keyResultId)) {
+		return res.badRequest();
+	};
+
+	flag = HelpService.stringToBoolean(flag);
+
+	return service.setDefaultKeyResult(userId, objectiveId, keyResultId, flag, res.callback);
+});
+
+
 
 module.exports = router;
 
