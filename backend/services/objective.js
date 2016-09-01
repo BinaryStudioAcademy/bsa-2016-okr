@@ -63,7 +63,7 @@ ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults
 	defaultKeyResults = defaultKeyResults.map((keyResult) => {
 		keyResult.objectiveId = objective._id;
 		keyResult = new KeyResult(keyResult);
-		objective.defaultKeyResults.push(keyResult._id);
+	//	objective.defaultKeyResults.push(keyResult._id);
 		return keyResult;
 	});
 

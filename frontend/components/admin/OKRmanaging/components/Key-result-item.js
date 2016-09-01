@@ -55,10 +55,14 @@ class KeyResult extends Component {
     let cancel;
     let isKeyResultDefault;
 
-    if(true) 
+    let objective = this.props.objectivesList.objectives.find(item => {
+    	return item._id == this.props.objectiveId
+    });
+    
+    if(objective.defaultKeyResults.includes(this.props.item._id )) 
     	isKeyResultDefault = true;
     	else  isKeyResultDefault = false;
-    	
+
     if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
       titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
       difficultyEl = (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
@@ -80,13 +84,14 @@ class KeyResult extends Component {
     }
 			return (
 				<li className="key-result-item" >
-				(<input type="checkbox" id="defaultKeyResult" defaultChecked={isKeyResultDefault} ></input>);
 					{titleEl}
 					<div className='edit-key-result'>
 						<i className={`fi ${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editKeyResult}></i>
 						{cancel}
 					</div>
 					{difficultyEl}
+					<input type="checkbox" id="defaultKeyResult" defaultChecked={isKeyResultDefault} ></input>
+					<label htmlFor="defaultKeyResult">Default</label>
 				</li>
 			)
 	}
