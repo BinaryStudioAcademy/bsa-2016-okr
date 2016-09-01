@@ -1,4 +1,3 @@
 module.exports = {
-	_id: "57c7eacbe96367bc01b08506",
-	isAdmin: true
+	_id: "57c495aa775a5a6423c16645",
 };

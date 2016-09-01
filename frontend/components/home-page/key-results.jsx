@@ -44,7 +44,6 @@ class KeyResults extends Component {
 		}
 	}
 
-
 	setShowKeyResultElement(keyResultElement) {
 		if (keyResultElement.classList.contains('undisplay')) {
 			keyResultElement.classList.remove('undisplay');
@@ -65,8 +64,20 @@ class KeyResults extends Component {
 	render() {
 		let keyResults = this.props.data;
 		let changeScore = this.props.changeScore;
+		
+		keyResults = keyResults.filter((keyResult) => {
+			return keyResult.isDeleted === false;
+		});
+		
 		let items = keyResults.map((item, index) => {
-			return <KeyResultItem index={index} key={index} item={item} changeScore={ changeScore(item._id) }/>
+			return <KeyResultItem
+								index={index}
+								key={index}
+								item={item}
+								changeScore={ changeScore(item._id) }
+								objectiveId={ this.props.objectiveId }
+								softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+			/>
 		});
 
 		return (

@@ -52,7 +52,6 @@ class HistoryItemList extends React.Component {
     }
 
     getHistoryObjectName(historyItem){
-      console.log(historyItem);
       if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
         return ` user objective \'${historyItem.userObjective.templateId.title}\'`;
       };
@@ -68,8 +67,12 @@ class HistoryItemList extends React.Component {
           if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
           keyResult = key;
         })
-      return `key result \'${keyResult.templateId.title} \'`;
-    }
+        return `key result \'${keyResult.templateId.title} \'`;
+      }
+      if(historyItem.type.indexOf('CATEGORY') !== -1){
+        return `category \'${historyItem.category.title}\'`;
+       };
+    
   }
 
 	renderItem(index, key) {

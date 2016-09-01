@@ -46,7 +46,7 @@ export function getAutocompleteKeyResults(objectId, title) {
 		dispatch({ type: GET_AUTOCOMPLETE_KEY_RESULTS });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('api/keyresult/objective/' + objectId + '/' + title)
+		return axios.get('api/keyresult/objective/' + objectId + '/' + encodeURIComponent(title))
 		.then(response => {
 			dispatch(receivedKeyResults(response.data))
 			dispatch({ type: REMOVE_REQUEST	});

@@ -11,6 +11,7 @@ import keyResults from './keyResultReducer'
 import objectives from './objectiveReducer'
 import categories from './categoriesReducer'
 import userDashboard from './userDashboard'
+import acceptObj from './acceptObjective'
 import app from './appReducer';
 
 
@@ -30,5 +31,6 @@ export default combineReducers({
   userDashboard,
   keyResults,
   objectives,
-  routing: routerReducer
+  routing: routerReducer,
+  acceptObj
 });

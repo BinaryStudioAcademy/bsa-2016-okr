@@ -34,7 +34,7 @@ class Objectives extends Component {
 	handleAddingNewQuarter(newQuarter) {
 		let confirmation = confirm("Do you really want to create new quarter?");
 
-		if(confirmation) {
+		if (confirmation) {
 			this.props.myStateActions.createQuarter(newQuarter);
 			this.changeTab(newQuarter);
 		}
@@ -42,11 +42,11 @@ class Objectives extends Component {
 
 	changeKeyResultScore(objectiveId) {
 		let apiCall = this.props.myStateActions.changeKeyResultScore;
-		
+
 		return (keyResultId) => {
 			return (score) => {
-				if(!isCorrectId(objectiveId) 
-				|| !isCorrectId(keyResultId)) {
+				if (!isCorrectId(objectiveId)
+					|| !isCorrectId(keyResultId)) {
 					return;
 				}
 
@@ -84,7 +84,7 @@ class Objectives extends Component {
 	getObjectiveAutocompleteData(categoryId) {
 		let selectedYear = this.props.myState.selectedYear;
 		let selectedTab = this.props.myState.selectedTab;
-		
+
 		return (title) => {
 			this.props.objectiveActions.getAutocompleteObjectives(categoryId, selectedYear, selectedTab, title);
 		};
@@ -111,21 +111,28 @@ class Objectives extends Component {
 		return (
 			<div id="home-page-wrapper">
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
-				selectedTab={ selectedTab } existedQuarters={ existedQuarters } addNewQuarter={ this.handleAddingNewQuarter } 
-				currentYear={ currentYear } currentQuarter={ currentQuarter } />
+				         selectedTab={ selectedTab } existedQuarters={ existedQuarters }
+				         addNewQuarter={ this.handleAddingNewQuarter }
+				         currentYear={ currentYear } currentQuarter={ currentQuarter }/>
 				<div id='objectives'>
-					<ObjectivesList objectives={ objectives } categories={ categories.list }
-					my={ true } ObjectiveItem={ ObjectiveItem } softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
-					changeKeyResultScore={ this.changeKeyResultScore }
-					createObjective={ this.createObjective } 
-					getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData } />
+					<ObjectivesList
+						objectives={ objectives }
+						categories={ categories.list }
+						my={ true }
+						ObjectiveItem={ ObjectiveItem }
+						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
+						changeKeyResultScore={ this.changeKeyResultScore }
+						createObjective={ this.createObjective }
+						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
+						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
+					/>
 				</div>
 			</div>
 		)
 	}
 }
 
-Objectives.defaultProps = { today: new Date() };
+Objectives.defaultProps = {today: new Date()};
 
 function mapDispatchToProps(dispatch) {
 	return {
