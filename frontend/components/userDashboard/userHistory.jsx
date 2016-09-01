@@ -127,9 +127,11 @@ class UserHistory extends React.Component{
 		})
 		return (
 			<div className="userHistory">
+				<div className="history-body">
 					<div className="history-list-container">
 						{itemList}
 					</div>
+				</div>
 			</div>
 		)
 	}
