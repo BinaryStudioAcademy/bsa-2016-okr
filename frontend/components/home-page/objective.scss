@@ -1,7 +1,35 @@
 .delete-button-objective{
-  margin-top: -20px;
+  margin-top: -40px;
   float: right;
   display: block;
   width: 20px;
-  
+}
+
+.save{
+  margin-top: -40px;
+  margin-right: 40px;
+  float: right;
+  display: block;
+  width: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.objective-edit {
+  display: block;
+  float: right;
+  margin-right: 45px;
+  margin-top: -25px;
+
+  &:hover {
+  color: #4caf50;
+  cursor: pointer;
+  }
+}
+
+.description-textarea {
+  width: 65%;
+  margin-bottom: 10px;
 }
