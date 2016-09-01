@@ -61,11 +61,13 @@ export default function okrManagingReducer(state = initialState, action) {
 
         case SOFT_DELETE_OBJECTIVE: {
             const{id} = action;
-            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
                 active: '',
-                visibleObjectives: softdelete(objectives, id),
+                visibleObjectives: softdelete(visibleObjectives, id),
+                objectives: softdelete(objectives, id),
                 waiting: false,
                 editing: false
             })
@@ -80,10 +82,12 @@ export default function okrManagingReducer(state = initialState, action) {
 
         case SOFT_DELETE_KEY_RESULT: {
             const{id} = action;
-            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
-                visibleObjectives: softDeleteKeyResult(objectives, id),
+                visibleObjectives: softDeleteKeyResult(visibleObjectives, id),
+                objectives: softDeleteKeyResult(objectives, id),
                 waiting: false,
                 editing: false,
                 editingKeyResult:false
@@ -135,10 +139,12 @@ export default function okrManagingReducer(state = initialState, action) {
         
         case RECIVED_EDIT_OBJECTIVE_TEMPLATE: {
             const {objective, id} = action;
-            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
-                visibleObjectives: update(objectives, objective, id),
+                visibleObjectives: update(visibleObjectives, objective, id),
+                objectives: update(objectives, objective, id),
                 editing: false,
                 editingKeyResult: false
             })
@@ -146,10 +152,12 @@ export default function okrManagingReducer(state = initialState, action) {
 
         case RECIVED_EDIT_KEY_RESULT: {
             const {keyResult, id} = action;
-            let objectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
+            let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
-                visibleObjectives: updateKeyResult(objectives, keyResult, id),
+                visibleObjectives: updateKeyResult(visibleObjectives, keyResult, id),
+                objectives: updateKeyResult(objectives, keyResult, id),
                 editing: false,
                 editingKeyResult: false
             })

@@ -58,8 +58,8 @@ class KeyResult extends Component {
     let objective = this.props.objectivesList.objectives.find(item => {
     	return item._id == this.props.objectiveId
     });
-    
-    if(objective.defaultKeyResults.includes(this.props.item._id )) 
+
+    if(objective.defaultKeyResults.includes(this.props.item._id)) 
     	isKeyResultDefault = true;
     	else  isKeyResultDefault = false;
 
