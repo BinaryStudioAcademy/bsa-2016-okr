@@ -10,6 +10,8 @@ import {
 	ADDED_NEW_OBJECTIVE,
 	CHANGED_KEYRESULT_SCORE,
 	CHANGED_KEYRESULT_SCORE_ERROR,
+	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
+	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 } from '../actions/myStateActions';
 
 import {
@@ -83,6 +85,20 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 				me: deleteObjectiveFromMe(state.me, id)
 			});
 
+		}
+
+		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API: {
+			return state;
+		}
+
+		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS: {
+			const { objectiveId, keyResultId, data } = action;
+
+			console.log('Reducer reached');
+			
+			return Object.assign({}, state, {
+				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, data)
+			});
 		}
 
 		case ADDED_NEW_OBJECTIVE: {
@@ -168,6 +184,39 @@ function deleteObjectiveFromMe(me, id) {
 			}
 		}
 	});
+	return meCopy;
+}
+
+function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult) {
+	var meCopy = Object.assign({}, me);
+	let quarterIndex, objectiveIndex, keyResultIndex;
+	
+	quarterIndex = meCopy.quarters.findIndex((quarter) => {
+		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=>{
+			return userObjective._id === objectiveId;
+		});
+
+		if(objectiveIndex !== -1) {
+			return true;
+		}
+
+		return false;
+	});
+
+	console.log('Quarter index founded');
+
+	if(quarterIndex !== -1) {
+		keyResultIndex = meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.findIndex((keyResult) => {
+			return keyResult._id === keyResultId;
+		});
+
+		if(keyResultIndex !== -1) {
+			meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.slice(keyResultIndex, 1);
+		}
+	}
+
+	console.log('Success deleting keyResult from objective');
+
 	return meCopy;
 }
 

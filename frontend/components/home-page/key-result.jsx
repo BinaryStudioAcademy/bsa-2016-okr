@@ -18,7 +18,7 @@ class KeyResult extends Component {
 		var confirmed = confirm("Do you really want to delete this key result?");
 
 		if (confirmed) {
-			this.props.softDeleteObjectiveKeyResultByIdApi(this.props.item._id);
+			this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id);
 		}
 	}
 
