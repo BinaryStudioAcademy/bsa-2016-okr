@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './quarter-bar.scss';
 
 class Quarter extends Component {
 	constructor(props) {

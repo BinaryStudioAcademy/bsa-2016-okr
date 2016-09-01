@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Quarter from './quarter.jsx';
+import Quarter from '../common/quarterbar/quarters.jsx';
 import ObjectiveItem from './objective.jsx';
 import ObjectivesList from '../common/objective/objective-list.jsx';
 
@@ -91,27 +91,26 @@ class Objectives extends Component {
 	}
 
 	render() {
-		const myState = this.props.myState;
-		const { me, selectedYear, selectedTab, existedQuarters, currentYear, currentQuarter } = myState;
+		const { me, selectedYear, selectedTab, existedQuarters, currentYear, currentQuarter } = this.props.myState;
 
 		const categories = this.props.categories;
 
-		var objectiveItems = [];
-		var quarter = {};
-		var objectives = [];
-
 		if (me.quarters != undefined) {
-			quarter = me.quarters.find((quarter) => {
+			var current_quarter = me.quarters.find((quarter) => {
 				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
 
-			objectives = quarter.userObjectives;
+			var quarters = me.quarters.filter(quarter => {
+				return quarter.year == selectedYear;
+			});
+
+			var objectives = current_quarter.userObjectives;
 		}
 
 		return (
 			<div id="home-page-wrapper">
 				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
-				         selectedTab={ selectedTab } existedQuarters={ existedQuarters }
+				         selectedTab={ selectedTab } quarters={ quarters }
 				         addNewQuarter={ this.handleAddingNewQuarter }
 				         currentYear={ currentYear } currentQuarter={ currentQuarter }/>
 				<div id='objectives'>

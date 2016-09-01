@@ -1,10 +1,7 @@
-@import '../common/styles/commonStyles';
+@import '../styles/commonStyles';
 
-$main-color: #607D8B;
-
-/*
-**    Quarter bar
-*/
+//local palette
+$primary-color_local: #607D8B;
 
 #quarter-bar{
 
@@ -13,8 +10,8 @@ $main-color: #607D8B;
     padding: 6px 10px;
     width: 120px;
     border-radius: 3px 0 0 3px;
-    border: 1px solid $main-color;
-    background-color: $main-color;
+    border: 1px solid $primary-color_local;
+    background-color: $primary-color_local;
     color: #ffffff;
   }
 }
@@ -33,48 +30,32 @@ $main-color: #607D8B;
 
   li{
     flex: 1 0 100px;
-    border: 1px solid $main-color;
-    padding: 7px 10px;
     text-align: center;
+    padding: 7px 10px;
+    color: $primary-color_local;
+    background-color: #fff;
+    border: 1px solid $primary-color_local;
     border-left: none;
+    cursor: pointer;
     span{
       pointer-events: none;
     }
-
     &:last-child{
       border-radius: 0 3px 3px 0;
     }
-
-  }
-
-  li.exist{
-    border: 1px solid $main-color;
-    border-left: none;
-    color: $main-color;
-    background: #fff;
-    cursor: pointer;
-  }
-  
-  li.exist:not(.current){
-    &:hover{
+    &.active{
+      background-color: $primary-color_local;
+      color: #ffffff;
+      border-color: $primary-color_local;
+    }
+    &:not(.active):hover{
       background-color: lighten($color-blue-grey, 45%);
     }
-  }
-
-  li.current{
-    background: $main-color;
-    color: #ffffff;
-    border-color: $main-color;
-  }
-  
-  li.selected{
-    background-color: lighten($color-blue-grey, 30%);
-    color: #ffffff;
 
   }
 
-  /* for none existed */
-  li:not(.exist){
+  // for not existed
+  li.not-exist{
     color: #bbbbbb;
     background-color: transparent;
     border: 1px solid #bbb;
@@ -86,5 +67,4 @@ $main-color: #607D8B;
       cursor: pointer;
     }
   }
-  
 }
