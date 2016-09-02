@@ -9,6 +9,7 @@ $primary-color_local: #607D8B;
     float: left;
     padding: 6px 10px;
     width: 120px;
+    margin-right: 1px;
     border-radius: 3px 0 0 3px;
     border: 1px solid $primary-color_local;
     background-color: $primary-color_local;
@@ -41,6 +42,9 @@ $primary-color_local: #607D8B;
     span{
       pointer-events: none;
     }
+    &:first-child{
+      border-left: 1px solid $primary-color_local;
+    }
     &:last-child{
       border-radius: 0 3px 3px 0;
     }
@@ -55,7 +59,7 @@ $primary-color_local: #607D8B;
 
   }
 
-  //disabled for other user
+  //disabled for other users
   li.disabled{
     color: #bbbbbb;
     background-color: transparent;
