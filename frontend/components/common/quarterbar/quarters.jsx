@@ -53,6 +53,7 @@ class Quarterbar extends Component {
 
 export default Quarterbar;
 
+//basic functionality
 function getQuarters() {
    var   quarters_prefixes = ["1-st", "2-nd", "3-rd", "4-th"],
          current_tab = this.props.selectedTab,
