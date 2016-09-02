@@ -6,7 +6,7 @@ const initialState = {
 	user: [],
 	waiting: true,
 	selectedTab: currentQuarter,
-	selectedYear: currentYear,
+	selectedYear: currentYear
 };
 
 export default function otherPersonReducer(state = initialState, action) {

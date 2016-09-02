@@ -6,7 +6,7 @@ import * as myStateActions from "../../actions/myStateActions";
 import * as otherPersonActions from "../../actions/otherPersonActions.js";
 import { isEmpty, isCorrectId } from '../../../backend/utils/ValidateService';
 
-import Quarter from './persons-quarter.js';
+import Quarterbar from '../common/quarterbar/quarters.jsx';
 import ObjectivesList from '../common/objective/objective-list.jsx';
 import ObjectiveItem from './user-objective-item.jsx';
 
@@ -50,22 +50,29 @@ class Objectives extends Component {
 	render() {
 		const { user, selectedYear, selectedTab } = this.props.user;
 		const categories = this.props.categories;
-		
-		let quarter = {};
+
+		let current_quarter = {};
 		let objectives = [];
 
 		if(user.quarters != undefined) {
-			quarter = user.quarters.find((quarter) => {
+			current_quarter = user.quarters.find((quarter) => {
 				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
+			var quarters = user.quarters.filter(quarter => {
+				return quarter.year == selectedYear;
+			});
 
-			objectives = quarter.userObjectives;
+			if(current_quarter != undefined)
+				objectives = current_quarter.userObjectives;
+			else objectives = []
 		}
 		
 		return (
 			<div>
-				<Quarter changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) } 
-				selectedYear={ selectedYear } selectedTab={ selectedTab } />
+				<Quarterbar changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) }
+				selectedYear={ selectedYear }
+				selectedTab={ selectedTab }
+				quarters={quarters}/>
 				<div id='user-objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list } my={ false } 
 					ObjectiveItem={ ObjectiveItem } changeKeyResultScore={ this.changeKeyResultScore }/>

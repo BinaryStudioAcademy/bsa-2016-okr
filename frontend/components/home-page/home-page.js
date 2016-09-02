@@ -1,13 +1,13 @@
 import React from 'react';
-import './home-page/home-page.scss';
-import './common/styles/scrollbar.scss';
-import ListOfUsers from './list-of-users/list-of-users.jsx';
-import Quarter from './home-page/quarter.jsx';
-import UserObjectives from './home-page/objectives.jsx';
-import CentralWindow from '../containers/central-window.jsx';
-import StatPanel from "../containers/statistic-panel.jsx";
-import Dashboard from "./dashboard/dashboard.jsx";
-import UserDashboard from "./userDashboard/userDashboard.jsx"
+import './home-page.scss';
+import '../common/styles/scrollbar.scss';
+import ListOfUsers from '../list-of-users/list-of-users.jsx';
+import Quarter from './quarter.jsx';
+import UserObjectives from './objectives.jsx';
+import CentralWindow from '../../containers/central-window.jsx';
+import StatPanel from "../../containers/statistic-panel.jsx";
+import Dashboard from "../dashboard/dashboard.jsx";
+import UserDashboard from "../userDashboard/userDashboard.jsx"
 
 
 import { bindActionCreators } from 'redux';

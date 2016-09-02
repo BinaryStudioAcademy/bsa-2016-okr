@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './quarter-bar.scss';
 
 class Quarter extends Component {
 	constructor(props) {
@@ -36,7 +35,6 @@ class Quarter extends Component {
 		this.props.addNewQuarter(quarter_id);
 	}
 
-
 	render() {
 		var quarters_prefixes = [
 		"st",
@@ -44,7 +42,6 @@ class Quarter extends Component {
 		"rd",
 		"th"
 		];
-
 		function getQuarters() {
 			var quarters = [];
 

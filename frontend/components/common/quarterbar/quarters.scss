@@ -1,0 +1,86 @@
+@import '../styles/commonStyles';
+
+//local palette
+$primary-color_local: #607D8B;
+
+#quarter-bar{
+
+  #business-year{
+    float: left;
+    padding: 5px 10px;
+    width: 120px;
+    border-radius: 3px 0 0 3px;
+    border: 1px solid $primary-color_local;
+    background-color: $primary-color_local;
+    color: #ffffff;
+  }
+}
+
+#quarter-bar ul {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  margin-left: 90px;
+  padding: 0;
+
+  li{
+    flex: 1 0 100px;
+    text-align: center;
+    padding: 8px 10px;
+    color: $primary-color_local;
+    background-color: #fff;
+    border: 1px solid $primary-color_local;
+    border-left: none;
+    cursor: pointer;
+    span{
+      pointer-events: none;
+    }
+    &:last-child{
+      border-radius: 0 3px 3px 0;
+    }
+    &.active{
+      background-color: $primary-color_local;
+      color: #ffffff;
+      border-color: $primary-color_local;
+    }
+    &:not(.active):hover{
+      background-color: lighten($color-blue-grey, 45%);
+    }
+
+  }
+
+  //disabled for other users
+  li.disabled{
+    color: #bbbbbb;
+    background-color: transparent;
+    border: 1px solid #bbb;
+    border-left: none;
+    &:hover{
+      background-color: transparent;
+      cursor: not-allowed;
+    }
+  }
+
+  // for not existed
+  li.not-exist{
+    color: #bbbbbb;
+    background-color: transparent;
+    border: 1px solid #bbb;
+    border-left: 1px solid transparent;
+    margin-left: -1px;
+    &:first-child{
+      border-left: 1px solid transparent;
+    }
+    &:hover{
+      color: $color-green;
+      background: #fff;
+      border-color: $color-green;
+      cursor: pointer;
+    }
+  }
+}

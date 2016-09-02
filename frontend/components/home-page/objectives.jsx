@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Quarter from './quarter.jsx';
+import Quarterbar from '../common/quarterbar/quarters.jsx';
 import ObjectiveItem from './objective.jsx';
 import ObjectivesList from '../common/objective/objective-list.jsx';
 
@@ -32,11 +32,13 @@ class Objectives extends Component {
 	}
 
 	handleAddingNewQuarter(newQuarter) {
-		let confirmation = confirm("Do you really want to create new quarter?");
+		let confirmed = confirm("Do you really want to create new quarter?");
 
-		if (confirmation) {
+		if (confirmed) {
+			//API call
 			this.props.myStateActions.createQuarter(newQuarter);
-			this.changeTab(newQuarter);
+			this.props.myStateActions.getMe();
+			this.changeTab(newQuarter.index);
 		}
 	}
 
@@ -91,29 +93,34 @@ class Objectives extends Component {
 	}
 
 	render() {
-		const myState = this.props.myState;
-		const { me, selectedYear, selectedTab, existedQuarters, currentYear, currentQuarter } = myState;
-		console.log('me', me)
+
+		const { me, selectedYear, selectedTab } = this.props.myState;
+
 		const categories = this.props.categories;
 
-		var objectiveItems = [];
-		var quarter = {};
-		var objectives = [];
-
 		if (me.quarters != undefined) {
-			quarter = me.quarters.find((quarter) => {
+			var current_quarter = me.quarters.find((quarter) => {
 				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
+			var quarters = me.quarters.filter(quarter => {
+				return quarter.year == selectedYear;
+			});
 
-			objectives = quarter.userObjectives;
+			if(current_quarter != undefined)
+				var objectives = current_quarter.userObjectives;
+			else objectives = []
 		}
 
 		return (
 			<div id="home-page-wrapper">
-				<Quarter changeTab={ this.changeTab } changeYear={this.changeYear}
-				         selectedTab={ selectedTab } existedQuarters={ existedQuarters }
-				         addNewQuarter={ this.handleAddingNewQuarter }
-				         currentYear={ currentYear } currentQuarter={ currentQuarter }/>
+				<Quarterbar
+						changeTab={ this.changeTab }
+						changeYear={this.changeYear}
+						selectedYear= {selectedYear }
+						selectedTab={ selectedTab }
+				      addNewQuarter={ this.handleAddingNewQuarter }
+						quarters={ quarters }
+						me={ true } />
 				<div id='objectives'>
 					<ObjectivesList
 						myId = { me._id }
