@@ -83,16 +83,16 @@ describe('Server start test', () => {
 	after(() => {
 		async.waterfall([
 			(callback) => {
-				async.forEach(users, (item, callback) => {
-			    User.remove({ _id: item._id }, (err) => {
+				async.forEach(users, (id, callback) => {
+			    User.remove({ _id: id }, (err) => {
 			    	return callback(err);
 			    });
 				}, (err) => {
 			    return callback(err);
 			  });
 			}, (callback) => {
-				async.forEach(userInfos, (item, callback) => {
-			    UserInfo.remove({ _id: item._id }, (err) => {
+				async.forEach(userInfos, (id, callback) => {
+			    UserInfo.remove({ _id: id }, (err) => {
 			    	return callback(err);
 			    });
 				}, (err) => {

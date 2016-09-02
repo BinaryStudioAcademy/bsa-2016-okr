@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/userObjective');
-const session = require('../../config/session');
 const service = require('../../services/userObjective');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
@@ -160,7 +159,7 @@ router.put('/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return service.update(session._id, id, body, res.callback);
+	return service.update(req.session._id, id, body, res.callback);
 });
 
 module.exports = router;

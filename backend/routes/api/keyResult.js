@@ -5,7 +5,6 @@ const adminOnly = require('../adminOnly');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
-const session = require('../../config/session');
 
 router.get('/objective/:objectiveId/:title*?', (req, res, next) => {
 	var title = req.params.title;
@@ -114,7 +113,7 @@ router.post('/', (req, res, next) => {
 // 		return res.badRequest();
 // 	};
 
-// 	return service.delete(session._id, id, res.callback);
+// 	return service.delete(req.session._id, id, res.callback);
 // });
 
 // router.get('/objective/:id', (req, res, next) => {
@@ -144,7 +143,7 @@ router.post('/', (req, res, next) => {
 // 		return res.badRequest();
 // 	};
 
-// 	return service.changeApprove(session._id, id, res.callback);
+// 	return service.changeApprove(req.session._id, id, res.callback);
 // });
 
 

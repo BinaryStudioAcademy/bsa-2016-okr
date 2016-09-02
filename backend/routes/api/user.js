@@ -50,7 +50,7 @@ router.get('/:id', (req, res, next) => {
 
 
 // router.post('/', (req, res, next) => {
-// 	service.add(session._id, req.body, res.callback);
+// 	service.add(req.session._id, req.body, res.callback);
 // });
 
 // router.put('/:id', (req, res, next) => {
@@ -60,7 +60,7 @@ router.get('/:id', (req, res, next) => {
 // 		return res.badRequest();
 // 	};
 
-// 	service.update(session._id, id, req.body, res.callback);
+// 	service.update(req.session._id, id, req.body, res.callback);
 // });
 
 // router.get('/me/:id', (req, res, next) => {
@@ -70,7 +70,7 @@ router.get('/:id', (req, res, next) => {
 // 		return res.badRequest();
 // 	};
 
-// 	if(session._id === id)
+// 	if(req.session._id === id)
 // 		service.getMe(id, res.callback)
 // 	else res.forbidden();
 // });
@@ -89,13 +89,13 @@ router.get('/:id', (req, res, next) => {
 // 		return res.badRequest();
 // 	};
 
-// 	if(!session._id === id && !session.isAdmin 
-// 		&& !userMentorRepository.checkUserMentor(id, session._id))
+// 	if(!req.session._id === id && !req.session.isAdmin 
+// 		&& !userMentorRepository.checkUserMentor(id, req.session._id))
 // 	{
 // 		return res.forbidden();
 // 	};
 
-// 	service.changeArchive(session._id, id, objectiveId, res.callback);
+// 	service.changeArchive(req.session._id, id, objectiveId, res.callback);
 
 // })
 
@@ -106,7 +106,7 @@ router.get('/:id', (req, res, next) => {
 // 		return res.badRequest();
 // 	};
 
-// 	service.delete(session._id, id, res.callback);
+// 	service.delete(req.session._id, id, res.callback);
 // })
 
 module.exports = router;

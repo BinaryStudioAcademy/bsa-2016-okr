@@ -3,7 +3,6 @@ const adminOnly = require('../adminOnly');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const repository = require('../../repositories/category');
-const session = require('../../config/session');
 const categoryService = require('../../services/category');
 
 router.get('/', (req, res, next) => {
