@@ -37,6 +37,7 @@ class Objectives extends Component {
 		if (confirmed) {
 			//API call
 			this.props.myStateActions.createQuarter(newQuarter);
+			this.props.myStateActions.getMe();
 			this.changeTab(newQuarter.index);
 		}
 	}

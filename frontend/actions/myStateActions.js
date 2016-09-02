@@ -20,7 +20,6 @@ export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS = 'SOFT_DELETE_OBJEC
 const session = require('../../backend/config/session');
 
 export function getMe() {
-	console.log('Getting me');
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_MY_OBJECTIVES });
 		dispatch({ type: ADD_REQUEST });
@@ -67,12 +66,9 @@ export function setChangeYear(year) {
 
 export function createQuarter(quarter){
 	return(dispatch) => {
-		dispatch({type: ADD_REQUEST});
-
 		axios.post('/api/quarters/', quarter)
 		.then(() => {
 			dispatch(newQuarterAdded(quarter));
-			dispatch({type: REMOVE_REQUEST});
 		})
 		.catch((error) => {
 			dispatch(addNewQuarterError(error));

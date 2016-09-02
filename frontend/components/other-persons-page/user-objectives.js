@@ -28,19 +28,20 @@ class Objectives extends Component {
 		const { user, selectedYear, selectedTab } = this.props.user;
 		const categories = this.props.categories;
 
-		let quarter = {};
+		let current_quarter = {};
 		let objectives = [];
 
 		if(user.quarters != undefined) {
-			quarter = user.quarters.find((quarter) => {
+			current_quarter = user.quarters.find((quarter) => {
 				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
-
 			var quarters = user.quarters.filter(quarter => {
 				return quarter.year == selectedYear;
 			});
 
-			objectives = quarter.userObjectives;
+			if(current_quarter != undefined)
+				objectives = current_quarter.userObjectives;
+			else objectives = []
 		}
 		
 		return (

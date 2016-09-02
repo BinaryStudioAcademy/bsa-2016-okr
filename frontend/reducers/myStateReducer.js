@@ -66,18 +66,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case NEW_QUARTER_ADDED : {
-			const { year, index, createdAt, updatedAt, userObjectives } = action.quarter;
-			return Object.assign({}, state, {
-				me: {
-					quarters: state.me.quarters.concat({
-						year,
-						index,
-						createdAt,
-						updatedAt,
-						userObjectives
-					})
-				}
-			});
+			return Object.assign({}, state);
 		}
 
 		case ADD_NEW_QUARTER_ERROR : {
