@@ -301,11 +301,10 @@ export function addKeyResult(body) {
 	};
 }
 
-export function addKeyResultToObjective(data, body) {
+export function addKeyResultToObjective(data) {
 	return {
 			type: RECIVED_NEW_KEY_RESULT,
-		  data,
-		  request: body
+		  data
 	};
 }
 

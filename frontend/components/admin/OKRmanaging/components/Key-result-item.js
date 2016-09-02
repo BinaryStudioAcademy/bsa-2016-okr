@@ -96,7 +96,7 @@ class KeyResult extends Component {
 						{cancel}
 					</div>
 					{difficultyEl}
-					<input type="checkbox" id={`defaultKeyResult-${this.props.item._id}`} ref='defaultKeyResult' defaultChecked={isKeyResultDefault} onChange={this.setDefaultKeyResult}></input>
+					<input type="checkbox" id={`defaultKeyResult-${this.props.item._id}`} className='defaultCheckbox' ref='defaultKeyResult' defaultChecked={isKeyResultDefault} onChange={this.setDefaultKeyResult}></input>
 					<label htmlFor={`defaultKeyResult-${this.props.item._id}`} >Default</label>
 				</li>
 			)

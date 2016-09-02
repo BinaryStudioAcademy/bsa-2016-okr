@@ -3,6 +3,7 @@ var QuarterRepository = require('../repositories/quarter');
 var HistoryRepository = require('../repositories/history');
 var async = require('async');
 var ObjectId = require('mongoose').Types.ObjectId;
+const CONST = require('../config/constants');
 
 var UserService = function() {};
 
@@ -23,7 +24,7 @@ UserService.prototype.getById = function(id, callback) {
 
 				return callback(err, user);
 			});
-		}, 
+		},
 		(user, callback) => {
 			user = user.toObject();
 			QuarterRepository.getByUserIdPopulate(id, (err, quarters) => {
@@ -39,6 +40,43 @@ UserService.prototype.getById = function(id, callback) {
 	], (err, result) => {
 		return callback(err, result);
 	});
+};
+
+UserService.prototype.takeApprentice = function(mentorId, userId, callback) {
+  async.waterfall([
+		(callback) => {
+      UserRepository.getById(mentorId, (err, me) => {
+				if(err) {
+					return callback(err, null);
+				}
+				return callback(null, me);
+			})
+		}, (me, callback) => {
+      if(me.localRole == CONST.user.role.ADMIN || me.localRole == CONST.user.role.MENTOR) {
+        UserRepository.getById(userId, (err, myApprentice) => {
+  				if(err) {
+  					return callback(err, null);
+  				}
+  				return callback(null, myApprentice);
+  			});
+      }
+    }, (myApprentice, callback) => {
+      if(myApprentice.mentor == null) {
+        var body = {
+          mentor: mentorId
+        }
+        UserRepository.update(userId, body, (err, finish) => {
+  				if(err) {
+  					return callback(err, null);
+  				}
+// TODO add history log events
+  				return callback(null, finish);
+  			});
+      }
+    }
+    ], (err, result) => {
+  return callback(err, result);
+});
 };
 
 // UserService.prototype.add = function(authorId, user, callback){
@@ -69,7 +107,7 @@ UserService.prototype.getById = function(id, callback) {
 // 	}
 // 	], (err, result) => {
 // 		return callback(err, result);
-// 	});	
+// 	});
 // };
 
 // UserService.prototype.update = function(authorId, userId, body, callback){

@@ -13,11 +13,12 @@ class ObjectiveInput extends Component {
 
 		this.isValid = this.isValid.bind(this);
 		this.getAutocompleteData = this.getAutocompleteData.bind(this);
-		this.addNewItemByKeyPressEnter = this.addNewItemByKeyPressEnter.bind(this);
+		this.addNewItem = this.addNewItem.bind(this);
 		this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
 	}
 
-	addNewItemByKeyPressEnter(title) {
+	addNewItem() {
+		let title = this.refs[`autocompleteInput-${this.props.key}`].refs['autocompleteInput'].value;
 		if (title !== '') {
 			let objectiveId = this.props.selectedTemplate;
 
@@ -51,8 +52,9 @@ class ObjectiveInput extends Component {
 							setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
 							autocompleteData = { this.props.objectives }
 							autocompletePlaceholder = 'objective'
-							addNewItemByKeyPressEnter={ this.addNewItemByKeyPressEnter }
+							addNewItem={ this.addNewItem }
 							isValid={ this.isValid }
+							ref={ `autocompleteInput-${this.props.key}` }
 						/>
 					</section>
 				</div>

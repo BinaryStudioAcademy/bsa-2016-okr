@@ -4,7 +4,6 @@ const repository = require('../../repositories/objective');
 const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
 const cloneObjective = require('../../services/cloneObjective');
-const session = require('../../config/session');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
@@ -191,7 +190,7 @@ module.exports = router;
 		return res.badRequest();
 	};
 
-	return service.delete(session._id, id, res.callback);
+	return service.delete(req.session._id, id, res.callback);
 });*/
 
 // router.post('/me/', (req, res, next) => {
