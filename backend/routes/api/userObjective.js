@@ -29,6 +29,19 @@ router.post('/', (req, res, next) => {
 	return service.add(userId, categoryId, quarterId, objectiveId, title, isApproved, res.callback)
 });
 
+router.post('/clone', (req, res, next) => {
+	var userObjectiveId = req.body.userObjectiveId || '';
+	var quarterId = req.body.quarterId || '';
+	var session = req.session;
+
+	if(!isCorrectId(userObjectiveId)
+	|| !isCorrectId(quarterId)) {
+		return res.badRequest('Wrong input params');
+	}
+
+	service.cloneUserObjective(session, userObjectiveId, quarterId, res.callback);
+});
+
 router.get('/me/', (req, res, next) => {
 	return repository.getByUserIdPopulate(req.session._id, res.callback);
 });

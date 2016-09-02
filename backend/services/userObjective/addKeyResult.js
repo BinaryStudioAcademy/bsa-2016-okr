@@ -116,6 +116,9 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 					keyResults: {
 						'templateId': keyResult._id,
 						'creator': userId,
+						'deletedBy' : null,
+						'deletedDate' : null,
+						'isDeleted' : false,
 					},
 				},
 			};

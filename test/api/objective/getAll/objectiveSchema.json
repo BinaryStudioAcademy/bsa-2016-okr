@@ -1,0 +1,56 @@
+{
+	"title": "Objective template schema",
+	"type": "object",
+	"required": ["title", "category", "defaultKeyResults", "creator", "isDeleted", "isApproved"],
+	"properties": {
+		"_id": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{24}$"
+		},
+		"title": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"category": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{24}$"
+		},
+		"defaultKeyResults": {
+			"type": "array",
+			"minItems": 0,
+			"items": {
+				"type": "string",
+				"pattern": "^[a-fA-F0-9]{24}$"
+			}
+		},
+		"creator": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{24}$"
+		},
+		"used": {
+			"type": "number",
+			"minimum": 0
+		},
+		"isApproved": {
+			"type": "boolean"
+		},
+		"isDeleted": {
+			"type": "boolean"
+		},
+		"deletedBy": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{24}$"
+		},
+		"deletedDate": {
+			"type": "date"
+		},
+		"createdAt": {
+			"type": "date"
+		},
+		"updatedAt": {
+			"type": "date"
+		}
+	}
+}

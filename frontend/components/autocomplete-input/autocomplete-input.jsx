@@ -92,7 +92,7 @@ class AutocompleteInput extends React.Component {
 			}
 			
 			if (isTitleValid) {
-				this.props.addNewItemByKeyPressEnter(title);
+				this.props.addNewItem();
 				this.refs.autocompleteInput.value = '';
 				this.getData('');
 			}
