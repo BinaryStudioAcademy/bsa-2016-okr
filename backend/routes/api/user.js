@@ -16,8 +16,14 @@ router.get('/quarter', (req, res, next) => {
 	return quarterRepository.getCurrentQuarter(res.callback)
 });
 
+router.post('/takeApprentice/:id', (req, res, next) => {
+  var mentorId = req.session._id || '';
+  var userId = req.params.id || '';
+  service.takeApprentice(mentorId, userId, res.callback);
+});
+
 router.put('/:id', (req, res, next) => {
-	
+
 	var id = req.params.id;
 
 	repository.update(id, req.body, function(err, data){
@@ -79,7 +85,7 @@ router.get('/:id', (req, res, next) => {
 // 	var id = req.params.id;
 // 	var objectiveId = req.body.objectiveId;
 
-// 	if(ValidateService.isCorrectId(id) 
+// 	if(ValidateService.isCorrectId(id)
 // 		&& ValidateService.isCorrectId(objectiveId))
 // 	{
 // 		return res.badRequest();
@@ -89,7 +95,7 @@ router.get('/:id', (req, res, next) => {
 // 		return res.badRequest();
 // 	};
 
-// 	if(!session._id === id && !session.isAdmin 
+// 	if(!session._id === id && !session.isAdmin
 // 		&& !userMentorRepository.checkUserMentor(id, session._id))
 // 	{
 // 		return res.forbidden();
