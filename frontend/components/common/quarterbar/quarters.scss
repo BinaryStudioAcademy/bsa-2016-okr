@@ -9,12 +9,10 @@ $primary-color_local: #607D8B;
     float: left;
     padding: 6px 10px;
     width: 120px;
-    margin-right: 1px;
     border-radius: 3px 0 0 3px;
     border: 1px solid $primary-color_local;
     background-color: $primary-color_local;
     color: #ffffff;
-    border-right: 1px solid #bbb;
   }
 }
 
@@ -76,7 +74,11 @@ $primary-color_local: #607D8B;
     color: #bbbbbb;
     background-color: transparent;
     border: 1px solid #bbb;
-    border-left: none;
+    border-left: 1px solid transparent;
+    margin-left: -1px;
+    &:first-child{
+      border-left: 1px solid #bbb;
+    }
     &:hover{
       color: $color-green;
       background: #fff;

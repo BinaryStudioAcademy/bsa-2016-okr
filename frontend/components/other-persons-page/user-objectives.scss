@@ -1,7 +1,6 @@
 @import '../common/variables';
 
 #user-objectives{
-	margin: 0 5%;
 	p{
 		padding-left: 0;
 		padding-right: 0;
@@ -221,7 +220,7 @@
 #topPanel {
   display: inline-block;
   width: 100%;
-  padding: 0px 5% 10px;
+  padding-bottom: 10px;
   box-sizing: border-box;
 
     .userInfo{
