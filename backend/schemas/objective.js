@@ -43,7 +43,9 @@ var objectiveSchema = new Schema({
 		ref: 'User',
 		required: false
 	},
-	deletedDate: {}
+	deletedDate: {
+		type: Date,
+	}
 }, {
     timestamps: true
 });

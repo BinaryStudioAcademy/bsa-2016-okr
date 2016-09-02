@@ -3,7 +3,6 @@ const adminOnly = require('../adminOnly');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const repository = require('../../repositories/category');
-const session = require('../../config/session');
 const categoryService = require('../../services/category');
 
 router.get('/', (req, res, next) => {
@@ -37,6 +36,7 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	var flag = req.params.flag || '';
 	var categoryId = req.params.id || '';
 	var userId = req.session._id;
+	var deletedDate = new Date();
 
 	if(!ValidateService.isCorrectId(categoryId)
 	|| !ValidateService.isStringBoolean(flag)) {
@@ -44,7 +44,9 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	}
 
 	var data = {
-		isDeleted: HelpService.stringToBoolean(flag)
+		isDeleted: HelpService.stringToBoolean(flag),
+		deletedDate: deletedDate,
+		deletedBy: userId
 	};
 	
 	categoryService.softDelete(userId, categoryId, data, res.callback);

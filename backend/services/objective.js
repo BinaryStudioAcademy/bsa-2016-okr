@@ -7,6 +7,7 @@ var UserObjectiveRepository = require('../repositories/userObjective.js');
 var QuarterRepository = require('../repositories/quarter');
 var KeyResultRepository = require('../repositories/keyResult.js');
 var HistoryRepository = require('../repositories/history.js');
+const ValidateService = require('../utils/ValidateService');
 var async = require('async');
 var CONST = require('../config/constants.js');
 
@@ -63,7 +64,7 @@ ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults
 	defaultKeyResults = defaultKeyResults.map((keyResult) => {
 		keyResult.objectiveId = objective._id;
 		keyResult = new KeyResult(keyResult);
-		objective.defaultKeyResults.push(keyResult._id);
+	//	objective.defaultKeyResults.push(keyResult._id);
 		return keyResult;
 	});
 
@@ -95,6 +96,67 @@ ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults
 	], (err, result) => {
 		return callback(err, result);
 	});
+};
+
+ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, keyResultId, flag, callback){
+	var historyType = CONST.history.type.UPDATE;
+	async.waterfall([
+		(callback) => {
+			ObjectiveRepository.getById(objectiveId, (err, objective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(ValidateService.isEmpty(objective)) {
+					err = new Error('Objective not found');
+					return callback(err, null);
+				}
+
+				return callback(null, objective);
+			});
+		}, (objective, callback) => {
+
+			let keyResult = objective.defaultKeyResults.find((keyResult)=>{
+				return keyResult.equals(keyResultId);
+			});
+			let index = objective.defaultKeyResults.findIndex((keyResult)=>{
+				return keyResult.equals(keyResultId);
+			});
+
+			if (flag && keyResult == undefined) {
+				objective.defaultKeyResults.push(keyResultId)
+			}
+			else if (!flag && keyResult != undefined)
+				objective.defaultKeyResults.splice(index, 1)
+
+			/*if(index === -1) {
+				let err = new Error('Key result not found in objective');
+				return callback(err, null);
+			}
+
+			userObjective.keyResults[index].isDeleted = flag;
+			userObjective.keyResults[index].deletedDate = new Date();
+			userObjective.keyResults[index].deletedBy = session._id;*/
+
+			objective.save((err, objective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, objective);
+			});
+		}, (objective, callback) => {
+			HistoryRepository.addObjectiveEvent(session._id, objectiveId, historyType, (err, historyEvent) => {
+				if(err) {
+					return  callback(err, null);
+				}
+
+				return callback(null, objective);
+			});
+		}
+		], (err, result) => {
+			return callback(err, result)
+		})
 };
 
 ObjectiveService.prototype.addBlank = function(authorId, objective, callback) {

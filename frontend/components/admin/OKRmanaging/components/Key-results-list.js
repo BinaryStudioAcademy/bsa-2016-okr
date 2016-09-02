@@ -60,7 +60,7 @@ class KeyResults extends Component {
 
 	render() {
 		let item = this.props.data.map((item, index) => {
-			return <KeyResultItem index={index} key={index} item={item}/>
+			return <KeyResultItem index={index} objectiveId={ this.props.objectiveId } key={index} item={item}/>
 		});
 		
 		return (

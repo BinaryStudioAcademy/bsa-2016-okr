@@ -1,0 +1,80 @@
+{
+	"title": "Objective template schema populated by key results belongs to this template",
+	"type": "object",
+	"required": ["title", "category", "defaultKeyResults", "creator", "isDeleted", "isApproved"],
+	"properties": {
+		"_id": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{24}$"
+		},
+		"title": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"category": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{24}$"
+		},
+		"defaultKeyResults": {
+			"type": "array",
+			"minItems": 0,
+			"items": {
+				"type": "string",
+				"pattern": "^[a-fA-F0-9]{24}$"
+				}
+		},
+		"creator": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{24}$"
+		},
+		"used": {
+			"type": "number",
+			"minimum": 0
+		},
+		"isApproved": {
+			"type": "boolean"
+		},
+		"isDeleted": {
+			"type": "boolean"
+		},
+		"keyResults": {
+			"type": "array",
+			"minItems": 0,
+			"items": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"pattern": "^[a-fA-F0-9]{24}$"
+					},
+					"title": {
+						"type": "string"
+					},
+					"creator": {
+						"type": "string",
+						"pattern": "^[a-fA-F0-9]{24}$"
+					},
+					"objectiveId": {
+						"type": "string",
+						"pattern": "^[a-fA-F0-9]{24}$"
+					},
+					"isDeleted": {
+						"type": "boolean"
+					},
+					"isApproved": {
+						"type": "boolean"
+					},
+					"used": {
+						"type": "number",
+						"minimum": 0
+					},
+					"difficulty": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
