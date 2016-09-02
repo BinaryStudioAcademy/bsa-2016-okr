@@ -1,10 +1,22 @@
-const expect = require('chai').expect;
+const async = require('async');
+const chai = require('chai');
+const expect = chai.expect;
 const request = require('request');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 
+const CONST = require('../backend/config/constants');
+const ValidateService = require('../backend/utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
+
+const UserInfo = require('../backend/schemas/userInfo');
+const User = require('../backend/schemas/user');
+
 const rootUrl = 'http://localhost:4444/';
+
+let users = [];
+let userInfos = [];
 
 describe('Server start test', () => {
 
@@ -13,7 +25,14 @@ describe('Server start test', () => {
 		mongoose.set('debug', false);
 
 		mongoose.connection.on('connected', () => {
-			done();
+			async.waterfall([
+				(callback) => { createDefaultUser(callback); },
+				(callback) => { createMentor(callback); },
+				(callback) => { createMentee(callback); },
+				(callback) => { createAdmin(callback); },
+			], (err, result) => {
+				done(err);
+			});
 		});
 	});
 
@@ -49,10 +68,10 @@ describe('Server start test', () => {
 			describe('Get all objectives', objectiveTests.getAll);
 			
 			// POST /api/objective/
-			describe('Create objective template', objectiveTests.createTemplate);
+			// describe('Create objective template', objectiveTests.createTemplate);
 
 			// GET /api/objective/title/:title*?
-			describe('Get objectives by title (autocomplete)', objectiveTests.autocomplete);
+			// describe('Get objectives by title (autocomplete)', objectiveTests.autocomplete);
 
 			// POST /api/objective/me
 			// describe('User creating an objective', objectiveTests.createObjectiveByUser);
@@ -62,7 +81,27 @@ describe('Server start test', () => {
 	});
 
 	after(() => {
-		mongoose.connection.close();
+		async.waterfall([
+			(callback) => {
+				async.forEach(users, (item, callback) => {
+			    User.remove({ _id: item._id }, (err) => {
+			    	return callback(err);
+			    });
+				}, (err) => {
+			    return callback(err);
+			  });
+			}, (callback) => {
+				async.forEach(userInfos, (item, callback) => {
+			    UserInfo.remove({ _id: item._id }, (err) => {
+			    	return callback(err);
+			    });
+				}, (err) => {
+			    return callback(err);
+			  });
+			},
+		], (err, result) => {
+			mongoose.connection.close();
+		});
 	});
 	
 });
@@ -71,4 +110,131 @@ function getDirectories(srcPath) {
   return fs.readdirSync(srcPath).filter(function(file) {
     return fs.statSync(path.join(srcPath, file)).isDirectory();
   });
+}
+
+function createUser(userInfo, user, callback) {
+	async.waterfall([
+		(callback) => {
+			let userInfoData = {
+				firstName: userInfo.firstName,
+				lastName: userInfo.lastName,
+				globalRole: userInfo.globalRole,
+				email: userInfo.email,
+			};
+			
+			userInfo = new UserInfo(userInfoData);
+
+			userInfo.save((err, result) => {
+				if(err) {
+					return callback(err);
+				}
+
+				userInfos.push(userInfo._id);
+
+				return callback(null, userInfo)
+			});
+		}, (userInfo, callback) => {
+			let userData = {
+				localRole: user.localRole,
+				mentor: user.mentor,
+				userInfo: userInfo._id,
+			};
+
+			user = new User(userData);
+			user.save((err, result) => {
+				if(err) {
+					return callback(err);
+				}
+
+				users.push(user._id);
+
+				return callback(null);
+			});
+		}
+	], (err, result) => {
+		callback(err);
+	});
+}
+
+function createDefaultUser(callback) {
+	let userInfoData = {
+		firstName: "User",
+		lastName: "Testerovich",
+		globalRole: "QA",
+		email: "user.testerovich@okr.bsa",
+	};
+
+	let userData = {
+		localRole: CONST.user.role.USER,
+		mentor: null,
+	};
+
+	createUser(userInfoData, userData, callback);
+}
+
+function createMentor(callback) {
+	let userInfoData = {
+		firstName: "Mentor",
+		lastName: "Testerovich",
+		globalRole: "Team Lead",
+		email: "mentor.testerovich@okr.bsa",
+	};
+
+	let userData = {
+		localRole: CONST.user.role.MENTOR,
+		mentor: null,
+	};
+
+	createUser(userInfoData, userData, callback);
+}
+
+function createMentee(callback) {
+	async.waterfall([
+		(callback) => {
+			User.findOne({ localRole: CONST.user.role.MENTOR }, (err, mentor) => {
+				if(err) {
+					return callback(err);
+				}
+
+				if(isEmpty(mentor)) {
+					err = new Error('Mentor not found');
+					return callback(err);
+				}
+
+				return callback(null, mentor);
+			})
+		}, (mentor, callback) => {
+			let userInfoData = {
+				firstName: "Mentee",
+				lastName: "Testerovich",
+				globalRole: "Developer",
+				email: "mentee.testerovich@okr.bsa",
+			};
+
+			let userData = {
+				localRole: CONST.user.role.USER,
+				mentor: mentor._id,
+			};
+
+			return createUser(userInfoData, userData, callback);
+		}
+	], (err, result) => {
+		return callback(err);
+	});
+}
+
+function createAdmin(callback) {
+	let userInfoData = {
+		firstName: "Admin",
+		lastName: "Testerovich",
+		globalRole: "CEO",
+		email: "admin.testerovich@okr.bsa",
+	};
+
+	let userData = {
+		localRole: CONST.user.role.ADMIN,
+		mentor: null,
+	};
+
+	createUser(userInfoData, userData, callback);
 }
