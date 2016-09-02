@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const repository = require('../../repositories/history');
-const session = require('../../config/session');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 const service = require('../../services/history');

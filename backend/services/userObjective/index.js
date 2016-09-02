@@ -4,6 +4,8 @@ const isEmpty = ValidateService.isEmpty;
 const CONST = require('../../config/constants');
 
 const UserObjectiveRepository = require('../../repositories/userObjective');
+const QuarterRepository = require('../../repositories/quarter');
+const Quarter = require('../../schemas/quarter');
 const UserRepository = require('../../repositories/user');
 const HistoryRepository = require('../../repositories/history');
 
@@ -40,6 +42,88 @@ UserObjectiveService.prototype.update = function(authorId, objectiveId, objectiv
 		], (err, result) => {
 			return callback(err, result)
 		})
+};
+
+UserObjectiveService.prototype.cloneUserObjective = function(session, userObjectiveId, quarterId, callback) {
+	async.waterfall([
+		(callback) => {
+			UserObjectiveRepository.getById(userObjectiveId, (err, otherUserObjective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(otherUserObjective)) {
+					err = new Error('Objective not found');
+					return callback(err, null);
+				}
+
+				return callback(null, otherUserObjective);
+			});
+		}, (otherUserObjective, callback) => {
+			QuarterRepository.getByIdPopulate(quarterId, (err, quarter) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(quarter)) {
+					err = new Error('Quarter not found');
+					return callback(err, null);
+				}
+
+				return callback(null, otherUserObjective, quarter);
+			});
+		}, (otherUserObjective, quarter, callback) => {
+			let existingUserObjectiveIndex = quarter.userObjectives.findIndex((userObjective) => {
+				return userObjective.templateId.equals(otherUserObjective.templateId);
+			});
+
+			if(existingUserObjectiveIndex !== -1) {
+				let err = new Error('Objective with equal template already exists');
+				return callback(err, null);
+			}
+
+			return callback(null, otherUserObjective, quarter);
+		}, (otherUserObjective, quarter, callback) => {
+			let newUserObjective = {
+				templateId: otherUserObjective.templateId,
+				userId: session._id,
+				creator: session._id,
+			};
+
+			let newKeyResults = otherUserObjective.keyResults.map((keyResult) => {
+				return {
+					templateId: keyResult.templateId,
+					creator: session._id,
+				};
+			});
+
+			newUserObjective.keyResults = newKeyResults;
+
+			UserObjectiveRepository.add(newUserObjective, (err, userObjective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective, quarter)
+			});
+		}, (userObjective, quarter, callback) => {
+			let updateData = {
+				$push: {
+					userObjectives: userObjective._id,
+				},
+			};
+
+			Quarter.findOneAndUpdate({ _id: quarter._id }, updateData, (err, quarter) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
 };
 
 UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjectiveId, keyResultId, flag, callback){

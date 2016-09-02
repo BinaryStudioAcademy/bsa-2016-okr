@@ -3,7 +3,6 @@ const repository = require('../../repositories/quarter');
 const service = require('../../services/quarter');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
-const session = require('../../config/session');
 
 router.post('/',  (req, res, next) => {
 	return repository.add(req.body, res.callback);

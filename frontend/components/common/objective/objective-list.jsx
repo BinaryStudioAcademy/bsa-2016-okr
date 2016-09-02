@@ -56,6 +56,7 @@ class ObjectiveList extends React.Component{
 					input = <ObjectiveInput 
 						createObjective={ this.props.createObjective(category._id) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }
+						key={ index }
 					/>
 				}
 

@@ -16,11 +16,12 @@ class KeyResult extends React.Component {
 		this.onDeleteKeyResultClick = this.onDeleteKeyResultClick.bind(this);
 		this.getAutocompleteData = this.getAutocompleteData.bind(this);
 		this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
-		this.addNewItemByKeyPressEnter = this.addNewItemByKeyPressEnter.bind(this);
+		this.addNewItem = this.addNewItem.bind(this);
 		this.isValid = this.isValid.bind(this);
 	}
 
-	addNewItemByKeyPressEnter(title) {
+	addNewItem() {
+		let title = this.refs[`autocompleteInput-${this.props.objectiveId}`].refs['autocompleteInput'].value;
 		if (title !== '') {
 			const body = {
 				title: title,
@@ -60,14 +61,22 @@ class KeyResult extends React.Component {
 					setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
 					autocompleteData={ this.props.keyResultsReducer.data }
 					autocompletePlaceholder='key result'
-				  addNewItemByKeyPressEnter={ this.addNewItemByKeyPressEnter }
+					addNewItem={ this.addNewItem }
 				  isValid={ this.isValid }
 					selectedItem={ this.props.keyResultsReducer.selectedItem }
+				  ref={ `autocompleteInput-${this.props.objectiveId}` }
 				/>
 
 				<div className="autocomplete-button">
+					<button type="button" className="btn btn-blue-hover add-button-key-result"
+					        onClick={ this.addNewItem }>
+						<i className="fi flaticon-success" aria-hidden="true"></i>
+					</button>
+				</div>
+
+				<div className="autocomplete-button">
 					<button type="button" className="btn btn-red-hover delete-button-key-result"
-					        onClick={this.onDeleteKeyResultClick}>
+					        onClick={ this.onDeleteKeyResultClick }>
 						<i className="fi flaticon-multiply" aria-hidden="true"></i>
 					</button>
 				</div>

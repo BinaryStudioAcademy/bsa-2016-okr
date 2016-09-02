@@ -10,6 +10,15 @@ var QuarterRepository = function(){
 
 QuarterRepository.prototype = new Repository();
 
+QuarterRepository.prototype.getByIdPopulate = function(id, callback) {
+	var model = this.model;
+
+	model
+	.findOne({ _id: id })
+	.populate('userObjectives')
+	.exec(callback);
+};
+
 QuarterRepository.prototype.getByUserId = function(id, callback) {
 	var model = this.model;
 
@@ -54,7 +63,6 @@ QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
 
 QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 	var model = this.model;
-	var today = new Date();
 
 	model
 	.find({'index': CONST.currentQuarter, 'year': CONST.currentYear})

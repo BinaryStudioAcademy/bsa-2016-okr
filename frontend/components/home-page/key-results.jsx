@@ -6,7 +6,7 @@ import './key-results.scss';
 class KeyResults extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.textHandleShow = this.textHandleShow.bind(this);
 		this.setShowKeyResultElement = this.setShowKeyResultElement.bind(this);
 
@@ -64,11 +64,11 @@ class KeyResults extends Component {
 	render() {
 		let keyResults = this.props.data;
 		let changeScore = this.props.changeScore;
-		
+
 		keyResults = keyResults.filter((keyResult) => {
-			return keyResult.isDeleted === false;
+			return keyResult.templateId.isDeleted === false;
 		});
-		
+
 		let items = keyResults.map((item, index) => {
 			return <KeyResultItem
 								index={index}
