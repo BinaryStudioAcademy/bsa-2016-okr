@@ -1,199 +1,50 @@
 const router = require('express').Router();
-var mongo = require('mongodb');
-const UserObjectives = require('../../schemas/userObjective');
+const ValidateService = require('../../utils/ValidateService');
+const isCorrectId = ValidateService.isCorrectId;
+
+const service = require('../../services/stats');
 
 router.get('/users', (req, res, next) => {
-    var sort = req.query.sort === "desc" ? 1 : -1;
-    var nLimit = Number(req.query.limit);
-    var limit = nLimit ? nLimit : 5;
-    UserObjectives.collection.aggregate([
-        {
-            $match: {
-                isDeleted: false
-            }
-        },
-        {
-            $project: {
-                userId: "$userId",
-                avgScore: { $avg: "$keyResults.score" },
-            }
-        },
-        {
-            $group: {
-                _id: "$userId",
-                avgByAllObjectives: { $avg: "$avgScore" }
-            }
-        },
-        {
-            $sort: {
-                avgByAllObjectives: sort
-            }
-        },
-        {
-            $limit: limit
-        },
-        {
-            $project: {
-                user: "$_id",
-                totalScore: "$avgByAllObjectives",
-            }
-        }
-    ], (err, data) => res.send(data));
+	var sort = req.query.sort === "desc" ? 1 : -1;
+	var limit = req.query.limit || 5;
+	
+	var limit = Number.parseInt(limit);
+
+	if(Number.isNaN(limit)) {
+		return res.badRequest('Limit param should be a number');
+	}
+
+	if(limit > 1000) {
+		limit = 1000;
+	}
+
+	if(limit <= 0) {
+		limit = 5;
+	}
+
+	service.getAllUsersStats(sort, limit, res.callback);
 });
 
 router.get('/users/:id', (req, res, next) => {
-    UserObjectives.collection.aggregate([
-        {
-            $match: {
-                isDeleted: false,
-                userId: new mongo.ObjectID(req.params.id)
-            }
-        },
-        {
-            $project: {
-                userId: "$userId",
-                avgScore: { $avg: "$keyResults.score" },
-            }
-        },
-        {
-            $group: {
-                _id: "$userId",
-                avgByAllObjectives: { $avg: "$avgScore" }
-            }
-        },
-        {
-            $project: {
-                user: "$_id",
-                totalScore: "$avgByAllObjectives",
-            }
-        }
-    ], (err, data) => res.send(data[0]));
+	var userId = req.params.id;
+
+	if(!isCorrectId(userId)) {
+		res.badRequest('Wrong user ID');
+	}
+
+	service.getUserStatsById(userId, res.callback);
 });
 
 router.get('/progress', (req, res, next) => {
-    UserObjectives.collection.aggregate([
-        {
-            $match: {
-                isDeleted: false
-            }
-        },
-        {
-            $project: {
-                userId: "$userId",
-                avgScore: { $avg: "$keyResults.score" },
-            }
-        },
-        {
-            $group: {
-                _id: null,
-                progress: { $avg: "$avgScore" }
-            }
-        }
-    ], (err, data) => res.send({ progress: data[0].progress }))
-})
+	service.getProgressStats(res.callback);
+});
 
 router.get('/categories', (req, res, next) => {
-    UserObjectives.collection.aggregate(
-        [
-            {
-                $match: {
-                    isDeleted: false
-                }
-            },
-            {
-                $project: {
-                    userId: "$userId",
-                    templateId: "$templateId",
-                    avgScore: { $avg: "$keyResults.score" },
-                }
-            },
-            {
-                $lookup: {
-                    from: "objectives",
-                    localField: "templateId",
-                    foreignField: "_id",
-                    as: "template"
-                }
-            },
-            {
-                $unwind: "$template"
-            },
-            {
-                $project: {
-                    userId: "$userId",
-                    templateId: "$templateId",
-                    avgScore: "$avgScore",
-                    categoryId: "$template.category",
-                }
-            },
-            {
-                $lookup: {
-                    from: "categories",
-                    localField: "categoryId",
-                    foreignField: "_id",
-                    as: "category"
-                }
-            },
-            {
-                $unwind: "$category"
-            },
-            {
-                $group: {
-                    _id: { _id: "$category._id", title: "$category.title" },
-                    avgScore: { $avg: "$avgScore" },
-                }
-            },
-            {
-                $project: {
-                    _id: "$_id._id",
-                    title: "$_id.title",
-                    score: "$avgScore"
-                }
-            }
-        ], (err, data) => res.send(data));
-})
+	service.getCategoriesStats(res.callback);
+});
 
 router.get('/keyresults', (req, res, next) => {
-    UserObjectives.collection.aggregate(
-        [
-            {
-                $match: {
-                    isDeleted: false
-                }
-            },
-            {
-                $unwind: "$keyResults"
-            },
-            {
-                $project: {
-                    score: "$keyResults.score",
-                    templateId: "$keyResults.templateId"
-                }
-            },
-            {
-                $lookup: {
-                    from: "keyresults",
-                    localField: "templateId",
-                    foreignField: "_id",
-                    as: "template"
-                }
-            },
-            {
-                $unwind: "$template"
-            },
-            {
-                $group: {
-                    _id: "$template.difficulty",
-                    avgScore: { $avg: "$score" },
-                }
-            },
-            {
-                $project: {
-                    title: "$_id",
-                    score: "$avgScore"
-                }
-            }
-        ], (err, data) => res.send(data))
-})
+	service.getKeyResultsStats(res.callback);
+});
 
 module.exports = router;

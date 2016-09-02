@@ -5,17 +5,17 @@
 **    Content Wrapper
 */
 #home-page-wrapper {
-	width: 85%;
-	margin: 0 auto;
+  width: 85%;
+  margin: 0 auto;
 }
 
 /*
 ** Objectives
 */
 #objectives {
-	.home-objective {
-		position: relative;
-		margin: 0;
+  .home-objective {
+    position: relative;
+    margin: 0;
     padding: 17px 17px 45px;
     background: lighten($color-blue-grey, 52%);
     border: 1px solid #ddd;
@@ -23,150 +23,170 @@
     min-height: 90px;
     box-sizing: border-box;
 
-		.name {
-			display: inline-block;
+    .name {
+      display: inline-block;
       margin-bottom: 10px;
       font-size: 18px;
       font-weight: 700;
-		}
-		.description {
-			color: #777;
-	    font-size: 15px;
-	    margin-bottom: 15px;
-	    width: 75%;
-	    line-height: 18px;
-		}
-		.delete-button-objective{
-		  margin-top: -20px;
-		  position: absolute;
-		  bottom: 20px;
-		  right: 15px;
-		  display: block;
-		  margin: 0;
-		  padding: 5px 0px;
-		  width: 35px;
-			z-index: 1;
-		}
-		.progress-bar{
-			padding-top: 0px;
-			margin-right: 40px;
-			.progressValue {
-				top: 4px;
-			}
-		}
-	}
-	.key-results {
-			margin-top: -48px;
-    	position: relative;
-    	margin-left: 18px;
-    	margin-bottom: 40px;
-
-    	.key-result-details{
-        margin-top: 20px;
-        margin-bottom: -20px;
+    }
+    .description {
+      color: #777;
+      font-size: 15px;
+      margin-bottom: 15px;
+      width: 75%;
+      line-height: 18px;
+    }
+    .delete-button-objective {
+      margin-top: -20px;
+      position: absolute;
+      bottom: 20px;
+      right: 15px;
+      display: block;
+      margin: 0;
+      padding: 5px 0px;
+      width: 35px;
+      z-index: 1;
+    }
+    .progress-bar {
+      padding-top: 0px;
+      margin-right: 40px;
+      .progressValue {
+        top: 4px;
       }
-			.change {
-				cursor: pointer;
-        padding: 5px 10px;
-			}
+    }
+  }
+  .key-results {
+    margin-top: -48px;
+    position: relative;
+    margin-left: 18px;
+    margin-bottom: 40px;
 
-			.key-result-details span {
-				color: #000;
-				cursor: inherit;
-				padding: 0 15px 0 0;
+    .key-result-details {
+      margin-top: 20px;
+      margin-bottom: -20px;
+    }
+    .change {
+      cursor: pointer;
+      padding: 5px 10px;
+    }
 
-			}
-			.display {
-				display: block;
-			}
+    .key-result-details span {
+      color: #000;
+      cursor: inherit;
+      padding: 0 15px 0 0;
 
-			.undisplay {
-				display: none;
-			}
+    }
+    .display {
+      display: block;
+    }
 
-			.key-result-details-ul {
-				width: 100%;
-        margin: 0;
-        padding: 0px;
-        list-style: none;
+    .undisplay {
+      display: none;
+    }
 
-				li {
-					position: relative;
-					border: 1px solid #c5c5c5;
-          border-top: none;
-          background-color: #eaeaea;
-          padding: 10px 15px;
+    .key-result-details-ul {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
 
-					div {
-						display: inline-block;
-					}
-					.difficulty{
-          	font-size: 13px;
-          	padding: 2px 6px;
-          	background-color:  $color-blue-grey;
-          	color: #fff;
-          	border-radius: 2px;
-          	margin-right: 170px;
-          	float: right;
-          	display: inline-block;
-          }
+      li {
+        position: relative;
+        border: 1px solid #c5c5c5;
+        border-top: none;
+        background-color: #eaeaea;
+        padding: 10px 15px;
 
-					.score {
-						position: absolute;
-						top: 6px;
-						right: 15px;
-						display: block;
-						box-sizing: border-box;
-						font-size: 15px;
-						background: $color-green;
-						border: 1px solid $color-green;
-						border-radius: .3em;
-						padding: 2px;
-						height: 1.7em;
-						width: 2.1em;
-						line-height: 1.5em;
-						text-align: center;
-						color: $color-white;
-					}
-					.keyScore {
-						position: absolute;
-						top: 14px;
-						right: 65px;
-				}
-			}
-		}
-	}
+        div {
+          display: inline-block;
+        }
+
+        .key-result-title{
+          width: 75%;
+        }
+
+        .difficulty {
+          font-size: 13px;
+          padding: 2px 6px;
+          background-color: $color-blue-grey;
+          color: #fff;
+          border-radius: 2px;
+          margin-right: 190px;
+          float: right;
+          display: inline-block;
+        }
+
+        .score {
+          position: absolute;
+          top: 6px;
+          right: 55px;
+          display: block;
+          box-sizing: border-box;
+          font-size: 15px;
+          background: $color-green;
+          border: 1px solid $color-green;
+          border-radius: .3em;
+          padding: 2px;
+          height: 1.7em;
+          width: 2.1em;
+          line-height: 1.5em;
+          text-align: center;
+          color: $color-white;
+        }
+
+        .key-result-delete-button{
+          position: absolute;
+          top: 6px;
+          right: 15px;
+          display: block;
+          box-sizing: border-box;
+          font-size: 15px;
+          padding: 2px;
+          height: 1.7em;
+          width: 2.1em;
+          line-height: 1.5em;
+          text-align: center;
+        }
+
+        .keyScore {
+          position: absolute;
+          top: 14px;
+          right: 95px;
+        }
+      }
+    }
+  }
 }
 
 .category {
 
-	p {
-		color: #aaaaaa;
-		font-size: 20px;
-		text-align: center;
-		position: relative;
-		padding: 4px;
-		width: 100%;
-		margin: 30px auto;
-	}
+  p {
+    color: #aaaaaa;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    padding: 4px;
+    width: 100%;
+    margin: 30px auto;
+  }
 
-	.category-title {
-		text-transform: capitalize;
-		display: inline-block;
-		padding: 10px;
-		position: relative;
-		background: lighten($color-blue-grey, 50%);
-	}
+  .category-title {
+    text-transform: capitalize;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    background: lighten($color-blue-grey, 50%);
+  }
 
-	p:before {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 25px;
-		left: 0;
-		height: 0;
-		width: 100%;
-		border-top: 1px solid #aaaaaa;
-	}
+  p:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    height: 0;
+    width: 100%;
+    border-top: 1px solid #aaaaaa;
+  }
 
 }

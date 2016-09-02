@@ -43,20 +43,18 @@ class ObjectiveInput extends Component {
 
 	render() {
 		return (
-			<div className="new-objective-form">
-				<div className="new-obj-creds">
-					<div className="title-group">
-						<section className="autocomplete undisplay">
-							<AutocompleteInput className='red-border'
-								getAutocompleteData={ this.getAutocompleteData }
-								setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
-								autocompleteData = { this.props.objectives }
-								autocompletePlaceholder = 'objective'
-								addNewItemByKeyPressEnter={ this.addNewItemByKeyPressEnter }
-								isValid={ this.isValid }
-							/>
-						</section>
-					</div>
+			<div className="new-obj-creds">
+				<div className="title-group">
+					<section className="autocomplete undisplay">
+						<AutocompleteInput className='red-border'
+							getAutocompleteData={ this.getAutocompleteData }
+							setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
+							autocompleteData = { this.props.objectives }
+							autocompletePlaceholder = 'objective'
+							addNewItemByKeyPressEnter={ this.addNewItemByKeyPressEnter }
+							isValid={ this.isValid }
+						/>
+					</section>
 				</div>
 			</div>
 		)

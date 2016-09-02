@@ -1,14 +1,28 @@
-var defaultSession = require('../config/session');
-var ValidateService = require('../utils/ValidateService');
+const defaultSession = require('../config/session');
+const ValidateService = require('../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
+
+const UserRepository = require('../repositories/user');
 
 module.exports = function(req, res, next) {
 
 	var _id = req.get('_id');
-	var isAdmin = req.get('isAdmin');
 
-	req.session = {};
-	req.session._id = ValidateService.isCorrectId(_id) ? _id : defaultSession._id;
-	req.session.isAdmin = isAdmin || defaultSession.isAdmin;
+	_id = ValidateService.isCorrectId(_id) ? _id : defaultSession._id;
 
-	return next();
+	UserRepository.getById(_id, (err, user) => {
+		if(err) {
+			return res.badRequest('Wrong user ID');
+		}
+
+		req.session = {};
+		
+		if(!isEmpty(user)) {
+			req.session._id = user._id;
+			req.session.localRole = user.localRole;
+			req.session.mentor = user.mentor;
+		}
+
+		return next();
+	});
 }

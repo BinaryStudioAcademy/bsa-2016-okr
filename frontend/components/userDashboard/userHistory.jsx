@@ -32,9 +32,9 @@ class UserHistory extends React.Component{
 		if(item.type.indexOf('ADD') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">
+					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
 					</p>
 					<p className="action-description">added {this.getHistoryObjectName(item)}</p>
 				</div>
@@ -42,9 +42,9 @@ class UserHistory extends React.Component{
 		else if (item.type.indexOf('UPDATE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">
+					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
 					</p>
 					<p className="action-description">updated {this.getHistoryObjectName(item)}</p>
 				</div>
@@ -52,9 +52,9 @@ class UserHistory extends React.Component{
 		else if (item.type.indexOf('CHANGE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">
+					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
 					</p>
 					<p className="action-description">changed score {this.getHistoryObjectName(item)} to {item.userKeyResultScore}</p>
 				</div>
@@ -62,9 +62,9 @@ class UserHistory extends React.Component{
 		else if (item.type.indexOf('DELETE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">
+					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
 					</p>
 					<p className="action-description">deleted {this.getHistoryObjectName(item)}</p>
 				</div>
@@ -72,9 +72,9 @@ class UserHistory extends React.Component{
 		else if (item.type.indexOf('RESTORE') != -1)
 			return (
 				<div className="action-text">
-					<p className="author-name">
+					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						{item.author.userInfo.firstName} {item.author.userInfo.lastName}
+						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
 					</p>
 					<p className="action-description">restored {this.getHistoryObjectName(item)}</p>
 				</div>
