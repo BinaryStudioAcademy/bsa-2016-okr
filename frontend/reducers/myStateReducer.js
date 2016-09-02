@@ -5,14 +5,12 @@ import {
 	RECEIVED_MY_OBJECTIVES,
 	CHANGE_TAB,
 	CHANGE_YEAR,
-	CREATE_QUARTER,
 	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
 	ADDED_NEW_OBJECTIVE,
 	CHANGED_KEYRESULT_SCORE,
 	CHANGED_KEYRESULT_SCORE_ERROR,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
-	ADD_NEW_QUARTER,
 	NEW_QUARTER_ADDED,
 	ADD_NEW_QUARTER_ERROR
 } from '../actions/myStateActions';
@@ -22,7 +20,6 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
-	currentYear,
 	selectedTab: currentQuarter,
 	selectedYear: currentYear,
 	me: {
@@ -68,14 +65,19 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-		case ADD_NEW_QUARTER : {
-			console.log('Adding new quarter ...');
-			return state;
-		}
-
 		case NEW_QUARTER_ADDED : {
-			console.log('new quarter added');
-			return state;
+			const { year, index, createdAt, updatedAt, userObjectives } = action.quarter;
+			return Object.assign({}, state, {
+				me: {
+					quarters: state.me.quarters.concat({
+						year,
+						index,
+						createdAt,
+						updatedAt,
+						userObjectives
+					})
+				}
+			});
 		}
 
 		case ADD_NEW_QUARTER_ERROR : {

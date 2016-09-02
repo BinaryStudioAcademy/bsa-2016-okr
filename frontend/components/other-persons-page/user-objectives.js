@@ -25,7 +25,7 @@ class Objectives extends Component {
 
 	render() {
 		
-		const { user, selectedYear, selectedTab, currentYear } = this.props.user;
+		const { user, selectedYear, selectedTab } = this.props.user;
 		const categories = this.props.categories;
 
 		let quarter = {};
@@ -48,7 +48,6 @@ class Objectives extends Component {
 				<Quarterbar changeTab={ this.changeTab.bind(this) } changeYear={ this.changeYear.bind(this) }
 				selectedYear={ selectedYear }
 				selectedTab={ selectedTab }
-				currentYear={ currentYear }
 				quarters={quarters}/>
 				<div id='user-objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list } my={ false } 

@@ -92,7 +92,7 @@ class Objectives extends Component {
 	}
 
 	render() {
-		const { me, selectedYear, selectedTab, currentYear, currentQuarter } = this.props.myState;
+		const { me, selectedYear, selectedTab } = this.props.myState;
 
 		const categories = this.props.categories;
 
@@ -100,12 +100,13 @@ class Objectives extends Component {
 			var current_quarter = me.quarters.find((quarter) => {
 				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 			});
-
 			var quarters = me.quarters.filter(quarter => {
 				return quarter.year == selectedYear;
 			});
 
-			var objectives = current_quarter.userObjectives;
+			if(current_quarter != undefined)
+				var objectives = current_quarter.userObjectives;
+			else objectives = []
 		}
 
 		return (
@@ -113,7 +114,6 @@ class Objectives extends Component {
 				<Quarterbar
 						changeTab={ this.changeTab }
 						changeYear={this.changeYear}
-				      currentYear={ currentYear }
 						selectedYear= {selectedYear }
 						selectedTab={ selectedTab }
 				      addNewQuarter={ this.handleAddingNewQuarter }
