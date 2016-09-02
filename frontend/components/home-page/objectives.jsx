@@ -93,7 +93,7 @@ class Objectives extends Component {
 	render() {
 		const myState = this.props.myState;
 		const { me, selectedYear, selectedTab, existedQuarters, currentYear, currentQuarter } = myState;
-
+		console.log('me', me)
 		const categories = this.props.categories;
 
 		var objectiveItems = [];
@@ -116,6 +116,7 @@ class Objectives extends Component {
 				         currentYear={ currentYear } currentQuarter={ currentQuarter }/>
 				<div id='objectives'>
 					<ObjectivesList
+						myId = { me._id }
 						objectives={ objectives }
 						categories={ categories.list }
 						my={ true }

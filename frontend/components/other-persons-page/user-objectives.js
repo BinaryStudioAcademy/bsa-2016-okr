@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/otherPersonActions.js";
+import * as myStateActions from "../../actions/myStateActions";
+import * as otherPersonActions from "../../actions/otherPersonActions.js";
+import { isEmpty, isCorrectId } from '../../../backend/utils/ValidateService';
 
 import Quarter from './persons-quarter.js';
 import ObjectivesList from '../common/objective/objective-list.jsx';
@@ -13,21 +15,42 @@ import './user-objectives.scss';
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
+
+		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 	}
 	
 	changeTab(num) {
-		this.props.changeTab(num)
+		this.props.otherPersonActions.changeTab(num)
 	}
 
 	changeYear(year) {
-		this.props.changeYear(year)
+		this.props.otherPersonActions.changeYear(year)
+	}
+
+	changeKeyResultScore(objectiveId) {
+		let apiCall = this.props.myStateActions.changeKeyResultScore;
+		return (keyResultId) => {
+			return (score) => {
+				
+				if (!isCorrectId(objectiveId)
+					|| !isCorrectId(keyResultId)) {
+					return;
+				}
+
+				let body = {
+					keyResultId: keyResultId,
+					score: score
+				};
+
+				apiCall(objectiveId, body);
+			};
+		};
 	}
 
 	render() {
-		
 		const { user, selectedYear, selectedTab } = this.props.user;
 		const categories = this.props.categories;
-
+		
 		let quarter = {};
 		let objectives = [];
 
@@ -45,7 +68,7 @@ class Objectives extends Component {
 				selectedYear={ selectedYear } selectedTab={ selectedTab } />
 				<div id='user-objectives'>
 					<ObjectivesList objectives={ objectives } categories={ categories.list } my={ false } 
-					ObjectiveItem={ ObjectiveItem }/>
+					ObjectiveItem={ ObjectiveItem } changeKeyResultScore={ this.changeKeyResultScore }/>
 				</div> 
 			</div> 
 		)
@@ -53,7 +76,10 @@ class Objectives extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
+	return {
+		myStateActions: bindActionCreators(myStateActions, dispatch),
+		otherPersonActions: bindActionCreators(otherPersonActions, dispatch),
+	}
 }
 
 function mapStateToProps(state, ownProps) {

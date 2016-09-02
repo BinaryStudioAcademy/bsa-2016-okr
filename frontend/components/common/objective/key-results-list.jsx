@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import KeyResultItem from '../common/objective/key-result.jsx';
+import KeyResultItem from './key-result.jsx';
 import KeyResultAdd from './key-result-add.jsx';
 import './key-results.scss';
+
+const session = require('../../../../backend/config/session');
 
 class KeyResults extends Component {
 	constructor(props) {
@@ -62,23 +64,39 @@ class KeyResults extends Component {
 
 
 	render() {
-		let keyResults = this.props.data;
+		let myId = this.props.myId;
 		let changeScore = this.props.changeScore;
+		let addNewKeyResult;
+		let items;
+		console.log(changeScore)
+		if (this.props.route != undefined){
+			var urlArray = this.props.route.split('/');
+			var routeId = urlArray[urlArray.length - 1];
+		}
 
-		keyResults = keyResults.filter((keyResult) => {
-			return keyResult.templateId.isDeleted === false;
-		});
+		if( myId == session._id || routeId == session._id){
+			addNewKeyResult = (
+				<div id="new-obj-keyresults">
+					<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.onAddNewKeyResultClick }>
+						+Add new key result</a>
+					<KeyResultAdd objectiveId={ this.props.objectiveId } onDeleteKeyResultClick={ this.onDeleteKeyResultClick } />
+				</div>
+			);
+			items = this.props.data.map((item, index) => {
+				return <KeyResultItem index={index} key={index} item={item} id={routeId}
+															myId = { myId }
+															changeScore={ changeScore(item._id) }
+															objectiveId={ this.props.objectiveId }
+															softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+							/>
+			});
+		} else {
+			items = this.props.data.map((item, index) => {
+				return <KeyResultItem index={index} key={index} item={item} id={routeId}/>
+			});
+		}
 
-		let items = keyResults.map((item, index) => {
-			return <KeyResultItem
-								index={index}
-								key={index}
-								item={item}
-								changeScore={ changeScore(item._id) }
-								objectiveId={ this.props.objectiveId }
-								softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
-			/>
-		});
+		
 
 		return (
 			<div className='key-results'>
@@ -88,13 +106,7 @@ class KeyResults extends Component {
 					<ul className='key-result-details-ul'>
 						{ items }
 					</ul>
-
-					<div id="new-obj-keyresults">
-						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.onAddNewKeyResultClick }>
-							+Add new key result</a>
-
-						<KeyResultAdd objectiveId={ this.props.objectiveId } onDeleteKeyResultClick={ this.onDeleteKeyResultClick } />
-					</div>
+					{ addNewKeyResult }
 				</div>
 			</div>
 		)

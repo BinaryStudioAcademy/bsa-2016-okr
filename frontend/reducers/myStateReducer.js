@@ -148,7 +148,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case CHANGED_KEYRESULT_SCORE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, score } = data;
-
+			console.log('myRed', data )
 			return Object.assign({}, state, {
 				me: setScoreToKeyResult(state.me, objectiveId, keyResultId, score),
 			});
