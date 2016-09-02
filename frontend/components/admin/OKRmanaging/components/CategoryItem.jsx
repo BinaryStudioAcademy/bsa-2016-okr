@@ -19,17 +19,16 @@ class CategoryItem extends Component {
 	}
 
 	delete(){
-		let flag = true;
-		let isEmpty = true;
-		for (let i=0; i<this.props.objectives.length; i++)
-			if (this.props.objectives[i].category == this.props.category._id)
-				isEmpty = false;
+		let category = this.props.objectives.find(item => {
+			return item.category == this.props.category._id
+		})
 			
 		let result = confirm('Do you really want to delete category?');
-    if (result && isEmpty){
-			this.props.deleteCategory(this.props.category._id, flag);
+		console.log(category)
+    if (result && category == undefined){
+			this.props.deleteCategory(this.props.category._id, true);
 		}	
-		else alert("This category isn't empty.")
+		else alert("This category isn't empty.");
 	}
 
 	editCategory(){

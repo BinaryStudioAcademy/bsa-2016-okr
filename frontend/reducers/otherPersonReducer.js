@@ -1,4 +1,4 @@
-import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR } from '../actions/otherPersonActions.js'
+import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR, TOOK_APPRENTICE } from '../actions/otherPersonActions.js'
 import { currentYear, currentQuarter } from '../../backend/config/constants'
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export default function otherPersonReducer(state = initialState, action) {
-	
+
 	switch (action.type) {
 		case GET_USER: {
 			return Object.assign({}, state, {
@@ -24,7 +24,7 @@ export default function otherPersonReducer(state = initialState, action) {
 				waiting: false,
 				// selectedTab: currentQuarter,
 				// selectedYear: currentYear
-			})               
+			})
 		}
 
 		case CHANGE_TAB: {
@@ -43,8 +43,16 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
-		default: 
-		return state;        
-		
+		case TOOK_APPRENTICE: {
+			const { response } = action;
+
+			return Object.assign({}, state, {
+
+			});
+		}
+
+		default:
+		return state;
+
 	}
 }

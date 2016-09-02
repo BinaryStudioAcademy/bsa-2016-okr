@@ -9,9 +9,19 @@
     display: table-cell;
     width: 100%;
 
-    .delete-button-key-result {
+    .add-button-key-result {
       padding: .5em 1em;
       margin: 0 0 0 .5em;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      box-sizing: border-box;
+    }
+
+    .delete-button-key-result {
+      padding: .5em 1em;
+      margin: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
       box-sizing: border-box;
     }
   }

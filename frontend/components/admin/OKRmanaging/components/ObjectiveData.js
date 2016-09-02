@@ -52,6 +52,7 @@ class ObjectiveData extends React.Component{
   }
 
   render() {
+    console.log(this.props.objective.category)
     let categoryId = this.props.objective.category;
     let category = this.props.categories.list.find((category) => {
       return category._id === categoryId;

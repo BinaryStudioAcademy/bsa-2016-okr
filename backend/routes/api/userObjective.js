@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/userObjective');
-const session = require('../../config/session');
 const service = require('../../services/userObjective');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
@@ -27,6 +26,19 @@ router.post('/', (req, res, next) => {
 	}
 
 	return service.add(userId, categoryId, quarterId, objectiveId, title, isApproved, res.callback)
+});
+
+router.post('/clone', (req, res, next) => {
+	var userObjectiveId = req.body.userObjectiveId || '';
+	var quarterId = req.body.quarterId || '';
+	var session = req.session;
+
+	if(!isCorrectId(userObjectiveId)
+	|| !isCorrectId(quarterId)) {
+		return res.badRequest('Wrong input params');
+	}
+
+	service.cloneUserObjective(session, userObjectiveId, quarterId, res.callback);
 });
 
 router.get('/me/', (req, res, next) => {
@@ -147,7 +159,7 @@ router.put('/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return service.update(session._id, id, body, res.callback);
+	return service.update(req.session._id, id, body, res.callback);
 });
 
 module.exports = router;

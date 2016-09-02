@@ -3,14 +3,13 @@ const repository = require('../../repositories/plan');
 const ValidateService = require('../../utils/ValidateService');
 const service = require('../../services/plan')
 const adminOnly = require('../adminOnly');
-const session = require('../../config/session');
 
 router.get('/', (req, res, next) => {
 	repository.getAll(res.callback);
 });
 
 router.post('/', (req, res, next) => {
-	var userId = req.body.userId || session.id;
+	var userId = req.body.userId || req.session.id;
 	var title = req.body.title.trim() || '';
 	var isDeleted = req.body.isDeleted || false;
 	var objectives = req.body.objectives || {"1": [], "2": [], "3": [], "4": []};
@@ -56,7 +55,7 @@ router.post('/', (req, res, next) => {
 		objectives
 	};
 
-	service.add(session._id, plan, res.callback);
+	service.add(req.session._id, plan, res.callback);
 });
 
 router.get('/:id', (req, res, next) => {
@@ -76,7 +75,7 @@ router.put('/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	service.update(session._id, id, req.body, res.callback);
+	service.update(req.session._id, id, req.body, res.callback);
 });
 
 router.delete('/:id', adminOnly, (req, res, next) => {
@@ -86,7 +85,7 @@ router.delete('/:id', adminOnly, (req, res, next) => {
 		return res.badRequest();
 	};
 
-	service.delete(session._id, id, res.callback);
+	service.delete(req.session._id, id, res.callback);
 });
 
 router.get('/user/:id', (req, res, next) => {
