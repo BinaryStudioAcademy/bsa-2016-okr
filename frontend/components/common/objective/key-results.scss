@@ -45,14 +45,39 @@
         }
 
         .difficulty {
-          font-size: 13px;
+          /* font-size: 13px;
           padding: 2px 6px;
           background-color:  $color-blue-grey;
           color: #fff;
-          border-radius: 2px;
+          border-radius: 2px; */
           float: right;
           display: inline-block;
+
+          div{
+            display: inline-block;
+            margin-left: 5px;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            border: 1px solid $color-green; 
+            cursor: pointer;           
+          }
         }
+        .easy {
+          :first-child{
+            background-color: $color-green; 
+          }
+        }
+        .intermediate {
+          :nth-child(0),
+          :nth-child(1){
+            background-color: $color-green;    
+          }
+        }
+        .advanced div{
+          background-color: $color-green;    
+        }
+
 
         .score {
           margin-top: -4px;
