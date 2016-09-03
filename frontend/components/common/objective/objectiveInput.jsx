@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import AutocompleteInput from '../autocomplete-input/autocomplete-input.jsx';
+import AutocompleteInput from '../../autocomplete-input/autocomplete-input.jsx';
 import './objectiveInput.scss';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from "../../actions/objectiveActions";
+import * as actions from "../../../actions/objectiveActions";
 
 class ObjectiveInput extends Component {
 	constructor(props) {

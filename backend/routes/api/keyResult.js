@@ -110,45 +110,5 @@ router.post('/', (req, res, next) => {
 
 	return repository.add(data, res.callback);
 });
-// router.delete('/:id', adminOnly, (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
-
-// 	return service.delete(req.session._id, id, res.callback);
-// });
-
-// router.get('/objective/:id', (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
-
-// 	return repository.getByObjId(id, res.callback);
-// });
-
-
-//router.get('/title/:title', (req, res, next) => {
-//	var title = req.params.title.trim();
-//	if(ValidateService.isEmpty(title)){
-//		return res.badRequest();
-//	};
-//
-//	return service.autocomplete(title, res.callback);
-//});
-
-// router.put('/:id/approve', adminOnly, (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
-
-// 	return service.changeApprove(req.session._id, id, res.callback);
-// });
-
 
 module.exports = router;

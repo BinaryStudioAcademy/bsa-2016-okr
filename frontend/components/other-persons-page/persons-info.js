@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Quarter from './persons-quarter.js'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -34,13 +33,14 @@ class PersonsInfo extends Component {
 		let mentorAvatar = null;
 		const {user} = this.props.user
 		var mentor = '';
-		if(user.mentor == null)
+		let photo;
+		if(user.mentor == null) {
 			mentor = 'Is not assigned';
-		else {
+			photo = (<i className='fi flaticon-user-3'></i>);
+		} else { 
 			mentor = (user.mentor.userInfo.firstName +' '+ user.mentor.userInfo.lastName);
-			mentorAvatar = <img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>
+			photo = (<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>);
 		}
-		
 		return (
 			<div id='topPanel'>
 				<div className='userInfo'>
@@ -52,7 +52,7 @@ class PersonsInfo extends Component {
 					<div className='credentials'>
 					{user.userInfo.firstName} {user.userInfo.lastName}
 						<div>
-							{mentorAvatar}
+							{ photo }
 							<span className='mentorName'>
 								<span className='mentorTitle'>Mentor:</span>
 								<br />{mentor}

@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import Quarterbar from '../common/quarterbar/quarters.jsx';
+import Quarterbar from '../quarterbar/quarters.jsx';
 import ObjectiveItem from './objective.jsx';
-import ObjectivesList from '../common/objective/objective-list.jsx';
+import ObjectivesList from './objective-list.jsx';
 
-import { isEmpty, isCorrectId } from '../../../backend/utils/ValidateService';
+import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as myStateActions from "../../actions/myStateActions";
-import * as objectiveActions from "../../actions/objectiveActions";
+import * as myStateActions from "../../../actions/myStateActions";
+import * as objectiveActions from "../../../actions/objectiveActions";
+
+import './objectives.scss';
 
 class Objectives extends Component {
 	constructor(props) {
@@ -93,25 +95,30 @@ class Objectives extends Component {
 	}
 
 	render() {
-
-		const { me, selectedYear, selectedTab } = this.props.myState;
-
+		const route =  this.props.route;
 		const categories = this.props.categories;
+		const { me } = this.props.myState;
+		const { user } = this.props.user;
+		let selectedYear = '';
+		let selectedTab = '';
+		let userInfo = {};
 
-		if (me.quarters != undefined) {
-			var current_quarter = me.quarters.find((quarter) => {
-				return (quarter.year == selectedYear) && (quarter.index == selectedTab)
-			});
-			var quarters = me.quarters.filter(quarter => {
-				return quarter.year == selectedYear;
-			});
+		//console.log('user',this.props.user);
+		if (route != undefined){
+			var urlArray = this.props.route.split('/');
+			var routeId = urlArray[urlArray.length - 1];
+		}
 
-			if(current_quarter != undefined)
-				var objectives = current_quarter.userObjectives;
-			else objectives = []
+		if ((user._id != undefined) && (routeId != undefined) && (user._id == routeId)) {
+			/*console.log('user');*/
+			selectedYear = this.props.user.selectedYear;
+			selectedTab = this.props.user.selectedTab;
+			userInfo = getObjectivesData(user, selectedYear, selectedTab);
 		} else {
-			quarters = [];
-			objectives = [];
+			/*console.log('me');*/
+			selectedYear = this.props.myState.selectedYear;
+			selectedTab = this.props.myState.selectedTab;
+			userInfo = getObjectivesData(me, selectedYear, selectedTab);
 		}
 
 		return (
@@ -121,15 +128,16 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= {selectedYear }
 						selectedTab={ selectedTab }
-				      addNewQuarter={ this.handleAddingNewQuarter }
-						quarters={ quarters }
+				    addNewQuarter={ this.handleAddingNewQuarter }
+						quarters={ userInfo.quarters }
 						me={ true } />
 				<div id='objectives'>
 					<ObjectivesList
-						myId = { me._id }
-						objectives={ objectives }
+						//route = { route }
 						categories={ categories.list }
-						my={ true }
+						myId = { userInfo.id }
+						mentorId = { userInfo.mentorId }
+						objectives={ userInfo.objectives }
 						ObjectiveItem={ ObjectiveItem }
 						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
 						changeKeyResultScore={ this.changeKeyResultScore }
@@ -155,7 +163,40 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 	return {
 		myState: state.myState,
-		categories: state.categories
+		categories: state.categories,
+		user: state.userPage,
+	};
+}
+
+function getObjectivesData(userObject, selectedYear, selectedTab) {
+	let quarters = [];
+	let objectives = [];
+	let id = userObject._id;
+	let mentor;
+	if(userObject.mentor != undefined || userObject.mentor != null)
+		mentor = userObject.mentor._id;
+
+	if (userObject.quarters != undefined) {
+		var current_quarter = userObject.quarters.find((quarter) => {
+			return (quarter.year == selectedYear) && (quarter.index == selectedTab)
+		});
+
+		if(current_quarter != undefined) {
+			objectives = current_quarter.userObjectives;
+		} else {
+			objectives = []
+		}
+
+		quarters = userObject.quarters.filter(quarter => {
+			return quarter.year == selectedYear;
+		});
+	}
+
+	return {
+		quarters: quarters,
+	  objectives: objectives,
+	  id: id,
+	  mentorId: mentor,
 	};
 }
 

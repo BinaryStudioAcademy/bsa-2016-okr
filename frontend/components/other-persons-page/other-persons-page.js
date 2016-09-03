@@ -5,30 +5,41 @@ import { connect } from 'react-redux';
 import * as actions from "../../actions/otherPersonActions.js";
 
 import PersonInfo from './persons-info.js';
-import UserOjectives from './user-objectives.js';
+import UserOjectives from '../common/objective/objectives.jsx';
 import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
 import UserDashboard from "../userDashboard/userDashboard.jsx";
+
+const session = require("../../../backend/config/session");
 
 class OtherPersonsPage extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	componentWillMount(){
+	componentWillMount() {
 		var urlArray = this.props.routing.pathname.split('/');
-		var id = urlArray[urlArray.length - 1]
+		var id = urlArray[urlArray.length - 1];
 		this.props.getUser(id);
 	}
+
 	render() {
-		if (this.props.user.waiting){
+		if (this.props.user.waiting) {
 			return <div></div>
 		} else {
+			var urlArray = this.props.routing.pathname.split('/');
+			var id = urlArray[urlArray.length - 1];
+			var personInfo;
+
+			if (id != session._id) {
+				personInfo = (<PersonInfo />);
+			}
+
 			return (
 				<div>
 					<CentralWindow>
-						<PersonInfo />
+						{ personInfo }
 						<UserOjectives route={this.props.routing.pathname}/>
 					</CentralWindow>
 					<StatPanel>
@@ -40,6 +51,7 @@ class OtherPersonsPage extends Component {
 		}
 	}
 }
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(actions, dispatch);
 }
