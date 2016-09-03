@@ -102,6 +102,7 @@ class Objectives extends Component {
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
+		let ismyself = true;
 
 		//console.log('user',this.props.user);
 		if (route != undefined){
@@ -111,11 +112,13 @@ class Objectives extends Component {
 
 		if ((user._id != undefined) && (routeId != undefined) && (user._id == routeId)) {
 			/*console.log('user');*/
+			ismyself = false;
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
 		} else {
 			/*console.log('me');*/
+			ismyself = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
@@ -128,9 +131,9 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= {selectedYear }
 						selectedTab={ selectedTab }
-				    addNewQuarter={ this.handleAddingNewQuarter }
+				    	addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
-						me={ true } />
+						me={ ismyself } />
 				<div id='objectives'>
 					<ObjectivesList
 						//route = { route }
@@ -196,7 +199,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 		quarters: quarters,
 	  objectives: objectives,
 	  id: id,
-	  mentorId: mentor,
+	  mentorId: mentor
 	};
 }
 
