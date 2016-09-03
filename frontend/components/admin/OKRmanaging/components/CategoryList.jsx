@@ -43,6 +43,10 @@ class CategoryList extends Component {
 			}
 		}
 
+		componentWillMount(){
+			this.props.getAllCategories()
+		}
+
 render() {
 	return(
 		<div>

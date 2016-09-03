@@ -51,7 +51,8 @@ export default function usersListReducer(state = initialState, action) {
 
             return Object.assign({}, state, {
                 user: userList,
-                waiting: true
+                waiting: true,
+                searchValue: ''
             })
         }
         default:

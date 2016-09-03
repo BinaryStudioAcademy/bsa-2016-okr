@@ -65,6 +65,9 @@ class Objectives extends Component {
 			if(current_quarter != undefined)
 				objectives = current_quarter.userObjectives;
 			else objectives = []
+		} else {
+			quarters = [];
+			objectives = [];
 		}
 		
 		return (

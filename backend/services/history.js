@@ -105,17 +105,10 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 				return sortWayNum
 	 			else if(actionA < actionB)
 	 				return -1 * sortWayNum
-	 			else {
-	 				let actionA = a.type.split(' ')[1];
-	 				let actionB = b.type.split(' ')[1];
-	 				
-	 				if(actionA > actionB)
-	 					return sortWayNum
-	 				else if(actionA < actionB)
-	 					return -1 * sortWayNum
-	 				else return 0;
-	 			};  
+	 			else return 0;
 	 		};
+
+	 		sortedList.sort(sorting);
 	 	break;
 	 	case 'target': 
 	 		function getHistoryObjectName(historyItem){
@@ -133,7 +126,6 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
         			keyResults.forEach((key) => {
         				if (key.templateId._id.toString() === historyItem.userKeyResult.toString() 
         					|| key._id.toString() === historyItem.userKeyResult.toString()){
-          					console.log(key);
           					keyResult = key;
           				}
        				})
@@ -172,10 +164,12 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 
 		for (let key in filters)
 		{
+			let type = item.type.toLowerCase();
 			if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
-				if(item.type.toLowerCase().indexOf(filters[key]) === -1)
+				if(type.indexOf(filters[key]) === -1)
 					{
-						isFiltered = false;
+						if(filters[key] !== 'update' || type.indexOf('change') === -1)
+							isFiltered = false;
 					}
 				};
 					
@@ -216,8 +210,6 @@ HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callbac
 		(result, callback) => {
 			if(filters !== null )
 				this.filterBy(result, filters, (res) => {
-					console.log('------------filtered')
-					console.log(res);
 					result = res.slice();
 				})
 
@@ -226,8 +218,6 @@ HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callbac
 		(result, callback) => {
 			if(sort !== null && sort.sortField !== '')
 				this.sortBy(result, sort.sortField, sort.up, (res) => {
-					console.log('------------sorted')
-					console.log(res);
 					result = res.slice();				
 				})
 

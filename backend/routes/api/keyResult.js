@@ -6,6 +6,10 @@ const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
 
+router.get('/notApproved/', (req, res, next) => {
+ 	return repository.getAllNotApproved(res.callback);
+});
+
 router.get('/objective/:objectiveId/:title*?', (req, res, next) => {
 	var title = req.params.title;
 	var objectiveId = req.params.objectiveId;

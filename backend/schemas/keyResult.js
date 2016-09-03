@@ -31,6 +31,10 @@ var keyResultSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
+	isDeclined: {
+		type: Boolean,
+		default: false
+	},
 	isDeleted: {
 		type:	Boolean,
 		default: false

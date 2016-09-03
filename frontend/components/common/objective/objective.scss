@@ -3,7 +3,7 @@
 
 .category{
 	.visible-category-content{
-		height: 100%;
+		height: auto;
 	}
 
 	.hidden-category-content{
@@ -19,5 +19,8 @@
 			font-size: 15px;
 		}
 	}
-
+	
+	.category-title-container{
+		padding: 1px;
+	}
 }

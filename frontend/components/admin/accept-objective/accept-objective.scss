@@ -1,6 +1,6 @@
 #accept-objective-wrapper {
 	padding: 3%;
-    position: absolute;
+	position: relative;
     top: 0;
     right: 0;
     bottom: 0;
@@ -63,7 +63,7 @@ accept-objective--search-bar button {
   border: 1px solid #ddd;
   border-radius: 3px 3px 0 3px;
   overflow: hidden;
-  display: inline-block;
+  display: inline-table;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -178,7 +178,7 @@ accept-objective--search-bar button {
 	  border: 1px solid #ddd;
 	  border-radius: 3px 3px 0 3px;
 	  overflow: hidden;
-	  display: inline-block;
+	  display: inline-table;
 	  margin-top: 20px;
 	  margin-bottom: 20px;
 	}
@@ -192,7 +192,7 @@ accept-objective--search-bar button {
 	  border: 1px solid #ddd;
 	  border-radius: 3px 3px 0 3px;
 	  overflow: hidden;
-	  display: inline-block;
+	  display: inline-table;
 	  margin-top: 20px;
 	  margin-bottom: 20px;
 	}
@@ -207,7 +207,7 @@ accept-objective--search-bar button {
 	  border: 1px solid #ddd;
 	  border-radius: 3px 3px 0 3px;
 	  overflow: hidden;
-	  display: inline-block;
+	  display: inline-table;
 	  margin-top: 20px;
 	  margin-bottom: 20px;
 	}
