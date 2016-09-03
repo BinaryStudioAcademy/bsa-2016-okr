@@ -46,14 +46,19 @@ module.exports = {
         "presets": ["es2015", "stage-0", "react"]
       }
     }, {
-      test: /\.json?$/,
+      test: /\.json$/,
       loader: 'json'
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
+      loader: ExtractTextPlugin.extract('style', 'css!postcss')
+      // loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
     }, {
       test: /\.scss$/,
-      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss!sass')
+      loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
+      // loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss!sass')
+    }, { 
+      test: /\.(png|woff|woff2|eot|ttf|otf|svg)$/,
+      loader: 'file?name=fonts/[name].[ext]'
     }]
   },
   postcss: [
