@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import "./nav-menu.scss";
-import '../common/fonts/flaticon/_flaticon.scss';
+import './nav-menu.scss';
 
 class NavMenu extends React.Component {
 	constructor(props) {
