@@ -13,7 +13,7 @@ import UserRecycleBin from './components/user-recycle-bin/recycle-bin.jsx'
 import AdminRecycleBin from './components/admin/admin-recycle-bin/recycle-bin.jsx'
 import ListOfUsers from './components/list-of-users/list-of-users.jsx'
 import BarStats from './components/dashboard/barStats.jsx'
-
+import NotFound from './components/common/notFound.jsx';
 
 
 import configureStore from './store/configureStore';
@@ -42,6 +42,7 @@ render(
 				<Route path="admin-recycle-bin" component={AdminRecycleBin} />
 				<Route path="charts" component={BarStats}/>
 				<Route path="obj-accept" component={ObjAccept}/>
+				<Route path="*" component={NotFound}/>
 			</Route>
 		</Router>
 	</Provider>)
