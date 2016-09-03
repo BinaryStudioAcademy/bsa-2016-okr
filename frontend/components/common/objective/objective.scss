@@ -3,14 +3,12 @@
 
 .category{
 	.visible-category-content{
-		max-height: 5000px;
-		transition: 0.4s;
+		height: auto;
 	}
 
 	.hidden-category-content{
-		max-height:0;
+		height:0;
 		overflow:hidden;
-		transition: 0.4s;
 	}
 
 	.category-title{
