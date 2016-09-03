@@ -173,7 +173,7 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 		for (let key in filters)
 		{
 			if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
-				if(item.type.indexOf(filters[key]) === -1)
+				if(item.type.toLowerCase().indexOf(filters[key]) === -1)
 					{
 						isFiltered = false;
 					}
@@ -216,6 +216,8 @@ HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callbac
 		(result, callback) => {
 			if(filters !== null )
 				this.filterBy(result, filters, (res) => {
+					console.log('------------filtered')
+					console.log(res);
 					result = res.slice();
 				})
 
@@ -224,6 +226,8 @@ HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callbac
 		(result, callback) => {
 			if(sort !== null && sort.sortField !== '')
 				this.sortBy(result, sort.sortField, sort.up, (res) => {
+					console.log('------------sorted')
+					console.log(res);
 					result = res.slice();				
 				})
 

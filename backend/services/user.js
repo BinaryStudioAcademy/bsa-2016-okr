@@ -42,38 +42,93 @@ UserService.prototype.getById = function(id, callback) {
 	});
 };
 
-UserService.prototype.takeApprentice = function(mentorId, userId, callback) {
+UserService.prototype.takeApprentice = function(userId, apprenticeId, userLocalRole, callback) {
   async.waterfall([
 		(callback) => {
-      UserRepository.getById(mentorId, (err, me) => {
-				if(err) {
-					return callback(err, null);
-				}
-				return callback(null, me);
-			})
-		}, (me, callback) => {
-      if(me.localRole == CONST.user.role.ADMIN || me.localRole == CONST.user.role.MENTOR) {
-        UserRepository.getById(userId, (err, myApprentice) => {
+			if(userId == apprenticeId) {
+				var err = new Error("You can't mentor yourself");
+				err.status = 400;
+				return callback(err);
+			}
+      if(userLocalRole == CONST.user.role.ADMIN || userLocalRole == CONST.user.role.MENTOR) {
+        UserRepository.getById(apprenticeId, (err, myApprentice) => {
   				if(err) {
   					return callback(err, null);
   				}
   				return callback(null, myApprentice);
   			});
-      }
+      } else {
+				var err = new Error('You are not admin/mentor');
+				err.status = 400;
+				return callback(err);
+			}
     }, (myApprentice, callback) => {
       if(myApprentice.mentor == null) {
         var body = {
-          mentor: mentorId
+          mentor: userId
         }
-        UserRepository.update(userId, body, (err, finish) => {
+        UserRepository.update(apprenticeId, body, (err, finish) => {
   				if(err) {
   					return callback(err, null);
   				}
-// TODO add history log events
   				return callback(null, finish);
   			});
       }
-    }
+    }, (finish, callback) => {
+        HistoryRepository.addApprenticeEvent(userId, apprenticeId, CONST.history.type.TOOK_APPRENTICE, (err, end) => {
+  				if(err) {
+  					return callback(err, null);
+  				}
+  				return callback(null, end);
+  			});
+      }
+    ], (err, result) => {
+  return callback(err, result);
+});
+};
+
+UserService.prototype.removeApprentice = function(userId, apprenticeId, userLocalRole, callback) {
+  async.waterfall([
+		(callback) => {
+			/*
+			if(userId != apprenticeId) {
+				var err = new Error("You can only remove your apprentices");
+				err.status = 400;
+				return callback(err);
+			}
+			*/
+      if(userLocalRole == CONST.user.role.ADMIN || userLocalRole == CONST.user.role.MENTOR) {
+        UserRepository.getById(apprenticeId, (err, myApprentice) => {
+  				if(err) {
+  					return callback(err, null);
+  				}
+  				return callback(null, myApprentice);
+  			});
+      } else {
+				var err = new Error('You are not admin/mentor');
+				err.status = 400;
+				return callback(err);
+			}
+    }, (myApprentice, callback) => {
+      if(myApprentice.mentor != null) {
+        var body = {
+          mentor: null
+        }
+        UserRepository.update(apprenticeId, body, (err, finish) => {
+  				if(err) {
+  					return callback(err, null);
+  				}
+  				return callback(null, finish);
+  			});
+      }
+    }, (finish, callback) => {
+        HistoryRepository.addApprenticeEvent(userId, apprenticeId, CONST.history.type.REMOVED_APPRENTICE, (err, end) => {
+  				if(err) {
+  					return callback(err, null);
+  				}
+  				return callback(null, end);
+  			});
+      }
     ], (err, result) => {
   return callback(err, result);
 });

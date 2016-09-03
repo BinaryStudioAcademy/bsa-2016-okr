@@ -8,6 +8,8 @@ export const CHANGE_TAB = 'CHANGE_TAB';
 export const CHANGE_YEAR = 'CHANGE_YEAR';
 export const TAKE_APPRENTICE = 'TAKE_APPRENTICE';
 export const TOOK_APPRENTICE = 'TOOK_APPRENTICE';
+export const REMOVE_APPRENTICE = 'REMOVE_APPRENTICE';
+export const REMOVED_APPRENTICE = 'REMOVED_APPRENTICE';
 
 export function getUser(id) {
 
@@ -75,6 +77,31 @@ export function takeApprentice(id) {
 export function tookApprentice(response) {
 	return {
 		type: TOOK_APPRENTICE,
+		response
+	};
+}
+
+export function removeApprentice(id) {
+
+	return (dispatch, getStore) => {
+		dispatch({ type: REMOVE_APPRENTICE });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.post('/api/user/removeApprentice/' + id)
+		.then(response => {
+			dispatch(removedApprentice(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		})
+		.catch(response => {
+			dispatch(receivedError(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		});
+	};
+}
+
+export function removedApprentice(response) {
+	return {
+		type: REMOVED_APPRENTICE,
 		response
 	};
 }
