@@ -31,7 +31,13 @@ HistoryRepository.prototype.getHistory = function (callback) {
 			populate: {
 				path: 'userInfo'
 			}
-		}) 
+		})
+		.populate({
+			path: 'user',
+			populate: {
+				path: 'userInfo'
+			}
+		})
 		.exec(callback);
 }
 
@@ -56,7 +62,7 @@ HistoryRepository.prototype.getHistoryById = function (id, callback) {
 			populate: {
 				path: 'userInfo'
 			}
-		}) 
+		})
 		.exec(callback);
 }
 
@@ -81,38 +87,49 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 			populate: {
 				path: 'userInfo'
 			}
-		}) 
-		.exec(callback);	
+		})
+		.exec(callback);
 };
 
 HistoryRepository.prototype.addKeyResultEvent = function(author, keyResult, type, callback) {
 	let model = this.model;
 	let newEvent = new model({
-		author, 
-		keyResult, 
+		author,
+		keyResult,
 		type: type + ' ' + CONST.history.target.KEY_RESULT,
 	});
-	
+
 	newEvent.save(callback);
 };
 
 HistoryRepository.prototype.addCategoryEvent = function(author, category, type, callback) {
 	let model = this.model;
 	let newEvent = new model({
-		author, 
-		category, 
+		author,
+		category,
 		type: type + ' ' + CONST.history.target.CATEGORY,
 	});
-	
+
 	newEvent.save(callback);
 };
 
 HistoryRepository.prototype.addObjectiveEvent = function(author, objective, type, callback) {
 	let model = this.model;
 	let newEvent = new model({
-		author, 
+		author,
 		objective,
 		type: type + ' ' + CONST.history.target.OBJECTIVE,
+	});
+
+	newEvent.save(callback);
+};
+
+HistoryRepository.prototype.addApprenticeEvent = function(author, user, type, callback) {
+	let model = this.model;
+	let newEvent = new model({
+		author,
+		user,
+		type: type + ' ' + CONST.history.target.USER,
 	});
 
 	newEvent.save(callback);
@@ -128,7 +145,7 @@ HistoryRepository.prototype.getUserObjectiveHistoryPopulate = function (id, call
 			populate: {
 				path: 'userInfo'
 			}
-		}) 
+		})
 		.populate({
 			path: 'userObjective',
 			populate: [{
