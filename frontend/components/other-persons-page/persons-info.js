@@ -14,7 +14,7 @@ class PersonsInfo extends Component {
 
 	takeApprentice() {
 		alert("Are you sure?");
-		this.props.takeApprentice(this.props.user.user._id);
+		this.props.takeApprentice(this.props.user.user._id, this.props.me);
 	}
 
 	removeApprentice() {
@@ -28,15 +28,19 @@ class PersonsInfo extends Component {
 			apprentice = (<button className="btn btn-blue-hover apprentice" title="apprentice" onClick={this.takeApprentice}>Take apprentice</button>);
 		}
 		let removeApprenticeButton;
-		console.log("props ... ", this.props);
 		if (this.props.user.user.mentor != null && this.props.user.user.mentor._id == this.props.me._id && this.props.user.user._id != this.props.me._id) {
 			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>Remove apprentice</button>);
 		}
+		let mentorAvatar = null;
 		const {user} = this.props.user
 		var mentor = '';
 		if(user.mentor == null)
 			mentor = 'Is not assigned';
-		else mentor = (user.mentor.userInfo.firstName +' '+ user.mentor.userInfo.lastName);
+		else {
+			mentor = (user.mentor.userInfo.firstName +' '+ user.mentor.userInfo.lastName);
+			mentorAvatar = <img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>
+		}
+		
 		return (
 			<div id='topPanel'>
 				<div className='userInfo'>
@@ -48,7 +52,7 @@ class PersonsInfo extends Component {
 					<div className='credentials'>
 					{user.userInfo.firstName} {user.userInfo.lastName}
 						<div>
-							<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>
+							{mentorAvatar}
 							<span className='mentorName'>
 								<span className='mentorTitle'>Mentor:</span>
 								<br />{mentor}

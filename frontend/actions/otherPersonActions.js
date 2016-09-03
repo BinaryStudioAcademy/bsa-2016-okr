@@ -56,7 +56,7 @@ export function changeYear(year) {
 	};
 }
 
-export function takeApprentice(id) {
+export function takeApprentice(id, me) {
 
 	return (dispatch, getStore) => {
 		dispatch({ type: TAKE_APPRENTICE });
@@ -64,7 +64,7 @@ export function takeApprentice(id) {
 
 		return axios.post('/api/user/takeApprentice/' + id)
 		.then(response => {
-			dispatch(tookApprentice(response.data));
+			dispatch(tookApprentice(response.data, me));
 			dispatch({ type: REMOVE_REQUEST });
 		})
 		.catch(response => {
@@ -74,10 +74,11 @@ export function takeApprentice(id) {
 	};
 }
 
-export function tookApprentice(response) {
+export function tookApprentice(response, me) {
 	return {
 		type: TOOK_APPRENTICE,
-		response
+		response,
+		me
 	};
 }
 
