@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import KeyResults from './key-results.jsx';
-import Progress from './progress-bar.jsx';
+import KeyResults from '../common/objective/key-results-list.jsx';
+import Progress from '../common/objective/progress-bar.jsx';
 import ObjectiveDescription from './objective-description.jsx';
 import './objective.scss';
 
@@ -47,8 +47,8 @@ class ObjectiveItem extends Component {
 
 	render() {
 		let objective = this.props.item;
-		let changeKeyResultScore = this.props.changeKeyResultScore(objective._id);
-
+		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
+		console.log(objective.keyResults)
 		return (
 			<div>
 			<div className='home-objective'>
@@ -66,15 +66,16 @@ class ObjectiveItem extends Component {
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults
+						myId = { this.props.myId }
 						data={ objective.keyResults }
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+						
 				/>
 			</div>
 			</div>
 		)
 	}
 }
-
 export default ObjectiveItem;
