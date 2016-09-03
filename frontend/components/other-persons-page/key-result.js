@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import KeyResultItem from './key-result-item.js';
+import KeyResultItem from '../common/objective/key-result.jsx';
 
 class KeyResults extends Component {
 	constructor(props) {
@@ -34,7 +34,7 @@ class KeyResults extends Component {
 				<button className="btn btn-blue-hover change" onClick={this.textHandleShow}>Key results
 				</button>
 				<div className='key-result-details undisplay'>
-					<ul>
+					<ul className='key-result-details-ul'>
 						{item}
 					</ul>
 				</div>

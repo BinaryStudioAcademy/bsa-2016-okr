@@ -23,7 +23,7 @@ router.get('/deleted', (req, res, next) => {
 
 router.delete('/:id/:flag', (req, res, next) => {
 	var id = req.params.id;
-	let isDeleted = req.params.flag;
+	let flag = req.params.flag;
 	let deletedDate = new Date();
 	let userId = req.session._id
 

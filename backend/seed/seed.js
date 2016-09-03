@@ -26,15 +26,14 @@ function seed(items) {
 					if (err) {
 						console.log(`Error inserting into ${collection.name}`);
 						console.log(err);
-					}
-					else {
+						done(err);
+					} else {
 						console.log(`${seedItems.length} item inserted into ${collection.name}`);
+						done();
 					}
-					done(err);
 				});
-			}
-			else {
-				done(err);
+			} else {
+				done();
 			}
 		});
 	}, (err, result) => {

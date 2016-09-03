@@ -11,6 +11,7 @@ const userMentor = require('./userMentor');
 const role = require('./role');
 const userObjective = require('./userObjective');
 const stats = require('./stats');
+const quarter = require('./quarter');
 
 module.exports = function (app) {
 
@@ -22,6 +23,7 @@ module.exports = function (app) {
 	router.use('/history', history);
 	router.use('/userObjective', userObjective);
 	router.use('/stats', stats);
+	router.use('/quarters', quarter);
 	// router.use('/comment', comment);
 	// router.use('/plan', plan);
 	// router.use('/userMentor', userMentor);

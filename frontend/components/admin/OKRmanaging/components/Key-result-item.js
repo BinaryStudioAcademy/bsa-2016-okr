@@ -12,6 +12,12 @@ class KeyResult extends Component {
 	this.deleteObjective = this.deleteObjective.bind(this);
 	this.editKeyResult = this.editKeyResult.bind(this);
 	this.cancelEdit = this.cancelEdit.bind(this);
+	this.setDefaultKeyResult = this.setDefaultKeyResult.bind(this);
+	}
+
+	setDefaultKeyResult() {
+	//	console.log(this.refs.defaultKeyResult.checked, this.props.item)
+			this.props.setDefaultKeyResult(this.props.objectiveId, this.props.item._id, this.refs.defaultKeyResult.checked);
 	}
 
 	cancelEdit(){
@@ -53,6 +59,15 @@ class KeyResult extends Component {
     let editSaveIcon;
     let editSaveTitle;
     let cancel;
+    let isKeyResultDefault;
+
+    let objective = this.props.objectivesList.objectives.find(item => {
+    	return item._id == this.props.objectiveId
+    });
+
+    if(objective.defaultKeyResults.includes(this.props.item._id)) 
+    	isKeyResultDefault = true;
+    	else  isKeyResultDefault = false;
 
     if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
       titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
@@ -64,7 +79,7 @@ class KeyResult extends Component {
       editSaveIcon = 'flaticon-success';
       edit = 'editing';
       editSaveTitle = 'Save';
-      cancel = (<i className="fi flaticon-multiply cancel" onClick={this.cancelEdit} aria-hidden="true"></i>)
+      cancel = (<i className="fi flaticon-multiply cancel" onClick={this.cancelEdit} aria-hidden="true"></i>);
     } else {
       titleEl = (<div className='name'>{this.props.item.title}</div>);
       difficultyEl = (<div className='difficulty'>{this.props.item.difficulty}</div>);
@@ -81,6 +96,10 @@ class KeyResult extends Component {
 						{cancel}
 					</div>
 					{difficultyEl}
+					<div className='defaultKeyResultCheckbox'>
+						<input type="checkbox" id={`defaultKeyResult-${this.props.item._id}`}  ref='defaultKeyResult' defaultChecked={isKeyResultDefault} onChange={this.setDefaultKeyResult}></input>
+						<label htmlFor={`defaultKeyResult-${this.props.item._id}`} >Default</label>
+					</div>
 				</li>
 			)
 	}

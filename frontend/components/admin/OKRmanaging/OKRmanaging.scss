@@ -180,7 +180,14 @@
                 margin: 0;
                 padding: 0px;
                 list-style: none;
-               
+
+                .defaultKeyResultCheckbox{
+                    display: inline-block;
+                    float: right;
+                    margin-top: -6px;
+                    margin-right: 15px;
+                }
+
                 .key-result-item{
                     border: 1px solid #c5c5c5;
                     border-top: none;
@@ -306,6 +313,7 @@
             padding: 10px 10px;
 
             .category-title{
+                text-transform: lowercase; 
                 background-color: #fff;
                 width: 60%;
                 padding: 7px 12px;

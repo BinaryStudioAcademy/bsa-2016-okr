@@ -1,11 +1,10 @@
 import React from 'react';
-import './key-result-add.scss';
-import AutocompleteInput from '../autocomplete-input/autocomplete-input.jsx';
+import AutocompleteInput from '../../autocomplete-input/autocomplete-input.jsx';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from "../../actions/keyResultActions";
+import * as actions from "../../../actions/keyResultActions";
 
 class KeyResult extends React.Component {
 	constructor(props) {
@@ -70,7 +69,7 @@ class KeyResult extends React.Component {
 				<div className="autocomplete-button">
 					<button type="button" className="btn btn-blue-hover add-button-key-result"
 					        onClick={ this.addNewItem }>
-						<i className="fi flaticon-success" aria-hidden="true"></i>
+						<i className="fi flaticon-add" aria-hidden="true"></i>
 					</button>
 				</div>
 

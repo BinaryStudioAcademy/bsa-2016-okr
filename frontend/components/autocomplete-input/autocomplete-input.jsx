@@ -133,7 +133,7 @@ class AutocompleteInput extends React.Component {
 		}
 
 		return (
-			<div className="autocomplete">
+			<div className="autocomplete-123">
 				<input
 					ref="autocompleteInput"
 					className={`input-key-result ${validateClass}`} type="text"
