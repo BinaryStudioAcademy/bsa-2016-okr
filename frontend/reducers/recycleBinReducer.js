@@ -615,7 +615,7 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		}
 	}
 
-	if (!sortByDate) {
+	if (sortByDate) {
 
 		visibleItems.sort(function(a, b) {
 			return new Date(a.deletedDate) - new Date(b.deletedDate);
