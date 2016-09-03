@@ -71,7 +71,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				users: JSON.parse(JSON.stringify(data)),
-				visibleUsers: JSON.parse(JSON.stringify(data)),
+				visibleUsers:  updateVisibleUsers(data, state.filter, state.sortByGlobalRole, state.isSortingUsed, state.globalRoleFilter),
 				globalRoles: getAllGlobalRoles(data)
 			})
 		}
@@ -186,25 +186,22 @@ function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, glob
 
 	}
 
-    if (isSortingUsed) {
+	if (!sortByGlobalRole) {
 
-		if (sortByGlobalRole) {
+		visibleUsers.sort(function(a, b) {
+			    if(a.globalRole < b.globalRole) return -1;
+			    if(a.globalRole > b.globalRole) return 1;
+			    return 0;
+		});
+	} else {
 
-			visibleUsers.sort(function(a, b) {
-				    if(a.globalRole < b.globalRole) return -1;
-				    if(a.globalRole > b.globalRole) return 1;
-				    return 0;
-			});
-		} else {
-
-			visibleUsers.sort(function(a, b) {
-					if(a.globalRole < b.globalRole) return 1;
-				    if(a.globalRole > b.globalRole) return -1;
-				    return 0;
-			});
-		}
-
+		visibleUsers.sort(function(a, b) {
+				if(a.globalRole < b.globalRole) return 1;
+			    if(a.globalRole > b.globalRole) return -1;
+			    return 0;
+		});
 	}
+
 
 	return visibleUsers;
 }

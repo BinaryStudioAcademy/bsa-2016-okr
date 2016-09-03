@@ -615,20 +615,19 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		}
 	}
 
-	if (isSortingUsed) {
+	if (!sortByDate) {
 
-		if (sortByDate) {
+		visibleItems.sort(function(a, b) {
+			return new Date(a.deletedDate) - new Date(b.deletedDate);
+		});
 
-			visibleItems.sort(function(a, b) {
-				return new Date(a.deletedDate) - new Date(b.deletedDate);
-			});
-		} else {
+	} else {
 
-			visibleItems.sort(function(a, b) {
-				return new Date(b.deletedDate) - new Date(a.deletedDate);
-			});
-		}
+		visibleItems.sort(function(a, b) {
+			return new Date(b.deletedDate) - new Date(a.deletedDate);
+		});
 	}
+
 
 	return visibleItems;
 }
