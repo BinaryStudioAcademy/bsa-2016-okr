@@ -4,6 +4,39 @@ header {
 	height: $header-height;
 	background-color: $primary-color;
 	width: 100%;
+
+	.mentor-info{
+		float: left;
+		display: block;
+		margin-top: 15px;
+		background-color: #607d8b;
+		border-radius: 20px;
+		box-sizing: border-box;
+		color: #fff;
+		padding-right: 10px;
+
+		i{
+			font-size: 34px;
+		}
+
+		img{
+			width: 34px;
+			border-radius: 50%;
+		}
+		.mentorName{
+			float: right;
+
+			margin-top: 0px;
+			line-height: 18px;
+			font-size: 13px;
+			padding-left: 5px;
+			color: fff;
+
+			.mentorTitle{
+				color: $primary-color;
+			}
+		}
+	}
 }
 /*
 ** User info
