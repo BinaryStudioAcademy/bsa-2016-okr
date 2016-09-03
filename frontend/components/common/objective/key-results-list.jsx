@@ -68,7 +68,7 @@ class KeyResults extends Component {
 		let changeScore = this.props.changeScore;
 		let addNewKeyResult;
 		let items;
-		console.log(changeScore)
+
 		if (this.props.route != undefined){
 			var urlArray = this.props.route.split('/');
 			var routeId = urlArray[urlArray.length - 1];
@@ -95,8 +95,6 @@ class KeyResults extends Component {
 				return <KeyResultItem index={index} key={index} item={item} id={routeId}/>
 			});
 		}
-
-		
 
 		return (
 			<div className='key-results'>

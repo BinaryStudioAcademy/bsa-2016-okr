@@ -20,7 +20,7 @@ export function addNewKeyResults(userObjectiveId, body) {
 		dispatch({ type: ADD_NEW_KEY_RESULT });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post((`api/userobjective/${ userObjectiveId }/keyresult/`), body)
+		return axios.post((`/api/userobjective/${ userObjectiveId }/keyresult/`), body)
 		.then(response => {
 			dispatch(addNewKeyResultToObjective(response.data , userObjectiveId));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -41,21 +41,19 @@ export function addNewKeyResultToObjective(data, userObjectiveId) {
 }
 
 export function getAutocompleteKeyResults(objectId, title) {
-
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_AUTOCOMPLETE_KEY_RESULTS });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('api/keyresult/objective/' + objectId + '/' + encodeURIComponent(title))
+		return axios.get('/api/keyresult/objective/' + objectId + '/' + encodeURIComponent(title))
 		.then(response => {
-			dispatch(receivedKeyResults(response.data))
+			dispatch(receivedKeyResults(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
 		})
 		.catch(response => {
-			dispatch(receivedError(response.data))
+			dispatch(receivedError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
 		});
-
 	};
 }
 

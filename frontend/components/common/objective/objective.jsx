@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import KeyResults from '../common/objective/key-results-list.jsx';
-import Progress from '../common/objective/progress-bar.jsx';
+import KeyResults from './key-results-list.jsx';
+import Progress from './progress-bar.jsx';
 import ObjectiveDescription from './objective-description.jsx';
 import './objective.scss';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../actions/myStateActions.js";
+import * as actions from "../../../actions/myStateActions.js";
+
+const session = require('../../../../backend/config/session');
 
 class ObjectiveItem extends Component {
 	constructor(props) {
@@ -46,23 +48,58 @@ class ObjectiveItem extends Component {
 	}
 
 	render() {
+		const myId = this.props.myId;
+		let editButton;
+		let saveButton;
+		let deleteButton;
+		let cancelButton;
+
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
-		console.log(objective.keyResults)
+
+		if( myId == session._id){
+			editButton = (<i ref="edit"
+			                className="fi flaticon-edit objective-edit"
+			                onClick={ this.handleEdit }>
+									 </i>);
+			saveButton = (<i ref="saveEdit"
+			                className="fi flaticon-success save hidden"
+			                aria-hidden="true"
+			                title="Save">
+										</i>);
+			cancelButton = (<i ref="cancelEdit"
+			                   className="fi flaticon-multiply cancel delete-button-objective hidden"
+			                   title='Cancel'
+			                   aria-hidden="true"
+			                   onClick={ this.handleCancelEdit }>
+										</i>);
+			deleteButton = (<button ref="deleteObjective"
+			                       type="button"
+			                       className="btn btn-red-hover delete-button-objective"
+			                       onClick={ this.handleDelObj }>
+															<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
+											</button>);
+		}
+
 		return (
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
+
 				<div className='name'>{ objective.templateId.title }</div>
-				<ObjectiveDescription ref="description" description={ objective.templateId.description } />
-				<textarea ref="descriptionEdit" name='description' className='description-textarea hidden' defaultValue={objective.templateId.description}/>
-				<i ref="edit" className="fi flaticon-edit objective-edit" onClick={ this.handleEdit }></i>
-					<i ref="saveEdit" className="fi flaticon-success save hidden" aria-hidden="true" title="Save"></i>
-					<i ref="cancelEdit" className="fi flaticon-multiply cancel delete-button-objective hidden" title='Cancel' aria-hidden="true" onClick={ this.handleCancelEdit }></i>
-					<button ref="deleteObjective" type="button" className="btn btn-red-hover delete-button-objective"
-					        onClick={ this.handleDelObj }>
-						<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
-					</button>
+				<ObjectiveDescription
+						ref="description"
+						description={ objective.templateId.description }
+				/>
+				<textarea
+						ref="descriptionEdit"
+						name='description'
+						className='description-textarea hidden'
+						defaultValue={objective.templateId.description}/>
+				{ editButton }
+				{ saveButton }
+				{ deleteButton }
+				{ cancelButton }
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults
@@ -71,7 +108,6 @@ class ObjectiveItem extends Component {
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
-						
 				/>
 			</div>
 			</div>

@@ -41,7 +41,7 @@ class KeyResult extends Component {
     let score;
     let rangeEl;
     let deleteEl;
-    {item.templateId.difficulty}
+
     if(this.props.id == session._id || this.props.myId == session._id){
       score = this.state.score;
       rangeEl =(

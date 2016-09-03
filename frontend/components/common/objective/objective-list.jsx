@@ -1,7 +1,9 @@
 import React from 'react';
-import ObjectiveInput from '../../home-page/objectiveInput.jsx';
+import ObjectiveInput from './objectiveInput.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import './objective.scss';
+
+const session = require('../../../../backend/config/session');
 
 
 class ObjectiveList extends React.Component{
@@ -28,7 +30,7 @@ class ObjectiveList extends React.Component{
  	getCategoryItems() {
  		const categories = this.props.categories || [];
 		const objectives = this.props.objectives || [];
-		const my = this.props.my;
+		const myId = this.props.myId;
 		const ObjectiveItem = this.props.ObjectiveItem;
 		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
 		const changeKeyResultScore = this.props.changeKeyResultScore;
@@ -52,7 +54,7 @@ class ObjectiveList extends React.Component{
 						/>
 					});
 
-				if(my) {
+				if( myId == session._id){
 					input = <ObjectiveInput 
 						createObjective={ this.props.createObjective(category._id) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }

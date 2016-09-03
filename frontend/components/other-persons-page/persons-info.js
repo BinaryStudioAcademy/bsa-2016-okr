@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Quarter from './persons-quarter.js'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
