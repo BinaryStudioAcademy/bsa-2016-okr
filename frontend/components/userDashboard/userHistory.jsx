@@ -10,21 +10,8 @@ class UserHistory extends React.Component{
 	constructor(props){
 		super(props);
 
-		this.getHistory = this.getHistory.bind(this);
 		this.getHistoryType= this.getHistoryType.bind(this);
 		this.getHistoryObjectName = this.getHistoryObjectName.bind(this);
-	}
-
-	getHistory() {
-		this.props.userDashboard.historyList.map((item, i) => {
-			return (
-				<tr key={item._id}>
-					<td>{item._id}</td>
-					<td>{item.type}</td>
-					<td>{item.createdAt}</td>
-				</tr>
-			)
-		})
 	}
 
 	getHistoryType(item) {
@@ -100,13 +87,13 @@ class UserHistory extends React.Component{
 
 	getIconType(item){
 		if(item.type.indexOf('ADD') != -1)
-			return "fa fa-plus-circle typeIcon green"
+			return "fi flaticon-plus typeIcon green"
 		else if (item.type.indexOf('UPDATE') != -1 || item.type.indexOf('CHANGE') != -1)
-			return "fa fa-check-circle typeIcon orange"
+			return "fi flaticon-success typeIcon orange"
 		else if (item.type.indexOf('DELETE') != -1)
-			return "fa fa-times-circle typeIcon red"
+			return "fi flaticon-error typeIcon red"
 		else if (item.type.indexOf('RESTORE') != -1)
-			return "fa fa-stumbleupon-circle typeIcon green"
+			return "fi flaticon-repeat-1 typeIcon green"
 	}
 
 	render() {
@@ -115,7 +102,7 @@ class UserHistory extends React.Component{
 			return (
 				<div key={item._id} className="historyEvent">
 					<div className="aside">
-						<i className={this.getIconType(item)} aria-hidden="true"></i>
+						<span> <i className={this.getIconType(item)} aria-hidden="true"></i> </span>
 						<div className="eventDate"> 
 							<div className="eventDate-day">{moment(item.createdAt).format('DD')}</div>
 							<div className="eventDate-month">{moment(item.createdAt).format('MMM')}</div>

@@ -28,7 +28,9 @@ export default function okrManagingReducer(state = initialState, action) {
          case GET_OBJECTIVES_LIST: {
 
             return Object.assign({}, state, {
-                waiting: true
+                waiting: true,
+                editing: false,
+                editingKeyResult:false
             })
         }
 
@@ -49,7 +51,10 @@ export default function okrManagingReducer(state = initialState, action) {
                 active: '',
                 objectives,
                 visibleObjectives: objectives,
-                waiting: false
+                waiting: false,
+                searchValue: '',
+                editing: false,
+                editingKeyResult:false
             })
         }
 
@@ -70,7 +75,8 @@ export default function okrManagingReducer(state = initialState, action) {
                 visibleObjectives: softdelete(visibleObjectives, id),
                 objectives: softdelete(objectives, id),
                 waiting: false,
-                editing: false
+                editing: false,
+                editingKeyResult:false
             })
         }
 

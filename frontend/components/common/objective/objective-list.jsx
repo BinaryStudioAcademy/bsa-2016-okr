@@ -17,11 +17,11 @@ class ObjectiveList extends React.Component{
  		var icoId = id + " icon";
  		if (document.getElementById(id).children[1].className === "hidden-category-content"){
  			document.getElementById(id).children[1].className = "visible-category-content";
- 			document.getElementById(icoId).className = "fa fa-caret-up";
+ 			document.getElementById(icoId).className = "fi flaticon-folder-10";
  		}
  		else{
  			document.getElementById(id).children[1].className = "hidden-category-content";
- 			document.getElementById(icoId).className = "fa fa-caret-down";
+ 			document.getElementById(icoId).className = "fi flaticon-folder-2";
  		}
  	}
 
@@ -64,7 +64,7 @@ class ObjectiveList extends React.Component{
 					<div key={ index } id={ category.title }>
 					<p className="category-title-container" onClick={ ()=>this.changeCategoryContentVisibility(category.title) }>
 						<span className="category-title">
-							<i className="fa fa-caret-up" id={category.title+' icon'} aria-hidden="true"></i>
+							<i className="fi flaticon-folder-10" id={category.title+' icon'} aria-hidden="true"></i>
 							{ category.title } ({ objectiveItems.length })
 						</span>
 					</p>

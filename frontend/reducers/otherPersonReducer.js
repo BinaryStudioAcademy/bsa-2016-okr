@@ -45,18 +45,27 @@ export default function otherPersonReducer(state = initialState, action) {
 		}
 
 		case TOOK_APPRENTICE: {
-			const { response } = action;
-
+			const { response, me } = action;
+			let userCopy = Object.assign({}, state.user);
+			userCopy.mentor = {
+				_id : me._id,
+				createdAt : me.createdAt,
+				localRole : me.localRole,
+				menor : me.mentor,
+				updatedAt : me.updatedAt,
+				userInfo : me.userInfo
+			}
 			return Object.assign({}, state, {
-
+				user : userCopy
 			});
 		}
 
 		case REMOVED_APPRENTICE: {
 			const { response } = action;
-
+			let userCopy = Object.assign({}, state.user);
+			userCopy.mentor = null;
 			return Object.assign({}, state, {
-
+				user : userCopy
 			});
 		}
 

@@ -11,8 +11,12 @@
 		margin-right: 7px;
 		vertical-align: middle;
 	}
-
 	span{
+
+		float: left;
+	}
+	td{
+
 		vertical-align: middle;
 	}
 
@@ -56,6 +60,12 @@
 		cursor: pointer;
 	}
 
+	.author-name{
+		margin-left: 5px;
+		margin-top:5px;
+		display:inline-block;
+	}
+
 }
 
 .history-item-list {
@@ -64,22 +74,6 @@
 		width: 100%;
 		margin: 0 auto;
 	}
-    //
-	//th, td {
-	//	padding: $padding;
-	//}
-    //
-	//th {
-	//	background-color: $color-main;
-	//	border: 1px solid #99bce0;
-	//	color: #fff;
-	//	font-size: 18px;
-	//}
-    //
-	//td {
-	//	border: 1px solid #99bce0;
-	//	vertical-align: center;
-	//}
 
 	.actionCreate {
 		color: green;
@@ -110,9 +104,9 @@
 	}
 
 	.history-item-user-avatar {
-		height: auto;
-		width: 18px;
+
 		border-radius: 50%;
+		float: left;
 	}
-	//
+	
 }

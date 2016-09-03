@@ -67,19 +67,23 @@ UserService.prototype.takeApprentice = function(userId, apprenticeId, userLocalR
         var body = {
           mentor: userId
         }
-        UserRepository.update(apprenticeId, body, (err, finish) => {
+        UserRepository.update(apprenticeId, body, (err, apprentice) => {
   				if(err) {
   					return callback(err, null);
   				}
-  				return callback(null, finish);
+  				return callback(null, apprentice);
   			});
-      }
-    }, (finish, callback) => {
-        HistoryRepository.addApprenticeEvent(userId, apprenticeId, CONST.history.type.TOOK_APPRENTICE, (err, end) => {
+      } else {
+				var err = new Error('This user already has mentor');
+				err.status = 400;
+				return callback(err);
+			}
+    }, (apprentice, callback) => {
+        HistoryRepository.addApprenticeEvent(userId, apprenticeId, CONST.history.type.TOOK_APPRENTICE, (err, historyEvent) => {
   				if(err) {
   					return callback(err, null);
   				}
-  				return callback(null, end);
+  				return callback(null, historyEvent);
   			});
       }
     ], (err, result) => {
@@ -114,19 +118,23 @@ UserService.prototype.removeApprentice = function(userId, apprenticeId, userLoca
         var body = {
           mentor: null
         }
-        UserRepository.update(apprenticeId, body, (err, finish) => {
+        UserRepository.update(apprenticeId, body, (err, apprentice) => {
   				if(err) {
   					return callback(err, null);
   				}
-  				return callback(null, finish);
+  				return callback(null, apprentice);
   			});
-      }
-    }, (finish, callback) => {
-        HistoryRepository.addApprenticeEvent(userId, apprenticeId, CONST.history.type.REMOVED_APPRENTICE, (err, end) => {
+      } else {
+				var err = new Error("This doesn't mentor");
+				err.status = 400;
+				return callback(err);
+			}
+    }, (apprentice, callback) => {
+        HistoryRepository.addApprenticeEvent(userId, apprenticeId, CONST.history.type.REMOVED_APPRENTICE, (err, historyEvent) => {
   				if(err) {
   					return callback(err, null);
   				}
-  				return callback(null, end);
+  				return callback(null, historyEvent);
   			});
       }
     ], (err, result) => {
