@@ -230,7 +230,7 @@ HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callbac
 			return callback(null, result)
 		}
 	], (err, result) => {
-		return res.callback(null, result);
+		return callback(err, result);
 	})
 };
 

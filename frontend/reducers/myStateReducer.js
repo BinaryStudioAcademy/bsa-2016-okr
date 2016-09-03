@@ -120,6 +120,9 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			let keyResult = {
 				_id: keyResultIdInObjective,
 				creator: templateKeyResult.creator,
+				deletedBy: null,
+				deletedDate: null,
+				isDeleted: false,
 				score: 0,
 				templateId: {
 					_id: templateKeyResult._id,
@@ -135,7 +138,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 				}
 			};
 
-			let newMe = addNewKeyResultToMe(state.me, userObjectiveId, keyResult)
+			let newMe = addNewKeyResultToMe(state.me, userObjectiveId, keyResult);
 
 			return Object.assign({}, state, {
 				me: newMe,

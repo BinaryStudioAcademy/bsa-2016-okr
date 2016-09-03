@@ -8,14 +8,18 @@ import * as actions from "../../actions/otherPersonActions.js";
 class PersonsInfo extends Component {
 	constructor(props){
 		super(props);
+		this.takeApprentice = this.takeApprentice.bind(this);
+	}
 
+	takeApprentice(title) {
+		alert("Are you sure?");
+		this.props.takeApprentice(this.props.user.user._id);
 	}
 
 	render() {
 		let apprentice;
-		console.log(this.props.localRole)
-		if (this.props.localRole == 'mentor' || this.props.localRole == 'admin') {
-			apprentice = (<button className="btn btn-blue-hover apprentice" title="apprentice">Take apprentice</button>);
+		if (this.props.user.user.mentor == null && (this.props.localRole == 'mentor' || this.props.localRole == 'admin')) {
+			apprentice = (<button className="btn btn-blue-hover apprentice" title="apprentice" onClick={this.takeApprentice}>Take apprentice</button>);
 		}
 		const {user} = this.props.user
 		var mentor = '';
@@ -34,7 +38,7 @@ class PersonsInfo extends Component {
 						<div>
 							<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>
 							<span className='mentorName'>
-								<span className='mentorTitle'>Mentor:</span> 
+								<span className='mentorTitle'>Mentor:</span>
 								<br />{mentor}
 							</span>
 						</div>

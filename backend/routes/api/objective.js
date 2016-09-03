@@ -4,7 +4,6 @@ const repository = require('../../repositories/objective');
 const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
 const cloneObjective = require('../../services/cloneObjective');
-const session = require('../../config/session');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
@@ -164,6 +163,23 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	return service.update(userId, objectiveId, data, res.callback);
 });
 
+router.put('/:objectiveId/keyresult/:keyResultId/default/:flag', adminOnly, (req, res, next) => {
+	let objectiveId = req.params.objectiveId;
+	let keyResultId = req.params.keyResultId;
+	let userId = req.session._id;
+	let flag = req.params.flag;
+
+	if(!ValidateService.isCorrectId(objectiveId)
+	|| !ValidateService.isCorrectId(keyResultId)) {
+		return res.badRequest();
+	};
+
+	flag = HelpService.stringToBoolean(flag);
+
+	return service.setDefaultKeyResult(userId, objectiveId, keyResultId, flag, res.callback);
+});
+
+
 
 module.exports = router;
 
@@ -174,7 +190,7 @@ module.exports = router;
 		return res.badRequest();
 	};
 
-	return service.delete(session._id, id, res.callback);
+	return service.delete(req.session._id, id, res.callback);
 });*/
 
 // router.post('/me/', (req, res, next) => {

@@ -28,6 +28,7 @@ var userObjective = new Schema({
 	},
 	isDeleted: {
 		type: Boolean,
+		default: false,
 	},
 	deletedDate: {
 		type: Date,
@@ -58,7 +59,8 @@ var userObjective = new Schema({
 			type: Date,
 		},
 		isDeleted: {
-			type: Boolean
+			type: Boolean,
+			default: false,
 		}
 	}]
 }, {

@@ -114,20 +114,24 @@ class UserHistory extends React.Component{
 		let itemList = this.props.userDashboard.historyList.map((item, i) => {
 			return (
 				<div key={item._id} className="historyEvent">
-					<i className={this.getIconType(item)} aria-hidden="true"></i>
-					{this.getHistoryType(item)}
-					<div className="eventDate"> 
-						{moment(item.createdAt).format('D MMMM YYYY, H:mm')}
+					<div className="aside">
+						<i className={this.getIconType(item)} aria-hidden="true"></i>
+						<div className="eventDate"> 
+							<div className="eventDate-day">{moment(item.createdAt).format('DD')}</div>
+							<div className="eventDate-month">{moment(item.createdAt).format('MMM')}</div>
+						</div>
 					</div>
+					{this.getHistoryType(item)}
 				</div>
 			)
 		})
 		return (
 			<div className="userHistory">
-				<div className="title">
-					<h1><span>Recent events</span></h1>
+				<div className="history-body">
+					<div className="history-list-container">
+						{itemList}
+					</div>
 				</div>
-				{itemList}
 			</div>
 		)
 	}
