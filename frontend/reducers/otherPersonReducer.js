@@ -1,4 +1,4 @@
-import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR, TOOK_APPRENTICE} from '../actions/otherPersonActions.js'
+import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR, TOOK_APPRENTICE, REMOVED_APPRENTICE} from '../actions/otherPersonActions.js'
 import { CHANGED_KEYRESULT_SCORE, CHANGED_KEYRESULT_SCORE_ERROR } from '../actions/myStateActions.js'
 import { currentYear, currentQuarter } from '../../backend/config/constants'
 
@@ -52,6 +52,14 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
+		case REMOVED_APPRENTICE: {
+			const { response } = action;
+
+			return Object.assign({}, state, {
+
+			});
+		}
+
 /*		case CHANGED_KEYRESULT_SCORE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, score } = data;
@@ -66,10 +74,11 @@ export default function otherPersonReducer(state = initialState, action) {
 
 			console.log(CHANGED_KEYRESULT_SCORE_ERROR);
 			console.log(data);
-			
+
 			return state;
 		}
 */
+
 		default:
 		return state;
 
@@ -93,7 +102,7 @@ function setScoreToKeyResult(user, objectiveId, keyResultId, score) {
 			userObjectiveIndex = userObjectiveFoundedIndex;
 			return true;
 		}
-		
+
 		return false;
 	});
 

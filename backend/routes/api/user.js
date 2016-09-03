@@ -17,9 +17,17 @@ router.get('/quarter', (req, res, next) => {
 });
 
 router.post('/takeApprentice/:id', (req, res, next) => {
-  var mentorId = req.session._id || '';
-  var userId = req.params.id || '';
-  service.takeApprentice(mentorId, userId, res.callback);
+  var userId = req.session._id || '';
+  var apprenticeId = req.params.id || '';
+	var userLocalRole = req.session.localRole || '';
+  service.takeApprentice(userId, apprenticeId, userLocalRole, res.callback);
+});
+
+router.post('/removeApprentice/:id', (req, res, next) => {
+  var userId = req.session._id || '';
+  var apprenticeId = req.params.id || '';
+	var userLocalRole = req.session.localRole || '';
+  service.removeApprentice(userId, apprenticeId, userLocalRole, res.callback);
 });
 
 router.put('/:id', (req, res, next) => {
@@ -96,7 +104,7 @@ router.get('/:id', (req, res, next) => {
 // 	};
 
 
-// 	if(!req.session._id === id && !req.session.isAdmin 
+// 	if(!req.session._id === id && !req.session.isAdmin
 // 		&& !userMentorRepository.checkUserMentor(id, req.session._id))
 // 	{
 // 		return res.forbidden();

@@ -21,9 +21,11 @@ export default function categoriesReducer(state = initialState, action = {}) {
 
   case RECEIVED_ALL_CATEGORIES: {
 		const { data } = action;
-
+		console.log('dvs')
 		return Object.assign({}, state, {
 			list: data,
+			edit: false,
+			activeCategory: ''
 		});
 	}
 
@@ -68,7 +70,8 @@ export default function categoriesReducer(state = initialState, action = {}) {
 	case RECIVED_NEW_CATEGORY: {
 		const {data} = action;
 		return Object.assign({}, state, {
-			list: addCategory(state.list, data)
+			list: addCategory(state.list, data),
+			edit: false
 		})
 	}
 

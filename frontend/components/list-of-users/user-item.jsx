@@ -9,10 +9,14 @@ class UserItem extends Component {
 
 	render() {
 		var mentor = '';
-		if(this.props.user.userId.mentor == null)
+		let photo;
+		if(this.props.user.userId.mentor == null) {
 			mentor = 'Is not assigned';
-		else mentor = (this.props.user.userId.mentor.userInfo.firstName +' '+ this.props.user.userId.mentor.userInfo.lastName)
-		
+			photo = (<i className='fi flaticon-user-3'></i>);
+		} else { 
+			mentor = (this.props.user.userId.mentor.userInfo.firstName +' '+ this.props.user.userId.mentor.userInfo.lastName)
+			photo = (<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>);
+		}
 		return (
 			<Link to={`user/${this.props.user.userId._id}`}>
 				<div className="userItemDiv">
@@ -20,7 +24,7 @@ class UserItem extends Component {
 						<img src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>
 						<div className='userInfo'>
 							<div className='userName'>{this.props.user.userId.userInfo.firstName} {this.props.user.userId.userInfo.lastName}</div>
-							<div><img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>
+							<div>{ photo }
 								<span className='mentorName'>
 									<span className='mentorTitle'>Mentor:</span> 
 									<br /> {mentor} 

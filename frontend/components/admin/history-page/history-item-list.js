@@ -49,6 +49,10 @@ class HistoryItemList extends React.Component {
         return 'deleted'
       else if (item.type.indexOf('RESTORE') != -1)
         return 'restored';
+      else if (item.type.indexOf('TOOK_APPRENTICE') != -1)
+        return 'took apprentice';
+      else if (item.type.indexOf('REMOVED_APPRENTICE') != -1)
+        return 'removed apprentice';
     }
 
     getHistoryObjectName(historyItem){
@@ -72,7 +76,10 @@ class HistoryItemList extends React.Component {
       if(historyItem.type.indexOf('CATEGORY') !== -1){
         return `category \'${historyItem.category.title}\'`;
        };
-    
+      if(historyItem.type.indexOf('USER') !== -1){
+        return `user \'${historyItem.user.userInfo.firstName} ${historyItem.user.userInfo.lastName}\'`;
+      };
+
   }
 
 	renderItem(index, key) {
@@ -113,7 +120,7 @@ class HistoryItemList extends React.Component {
 							pageSize={10}
 						/>
 						</tbody>
-				</table>	
+				</table>
             </div>
         )
     }
