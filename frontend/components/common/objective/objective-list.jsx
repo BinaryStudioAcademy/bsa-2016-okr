@@ -31,6 +31,7 @@ class ObjectiveList extends React.Component{
  		const categories = this.props.categories || [];
 		const objectives = this.props.objectives || [];
 		const myId = this.props.myId;
+		const mentorId = this.props.mentorId;
 		const ObjectiveItem = this.props.ObjectiveItem;
 		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
 		const changeKeyResultScore = this.props.changeKeyResultScore;
@@ -48,13 +49,14 @@ class ObjectiveList extends React.Component{
 					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item } myId={ this.props.myId }
+							mentorId = { mentorId }
 							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } 
 							changeKeyResultScoreOne={ changeKeyResultScore }
 							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						/>
 					});
 
-				if( myId == session._id){
+				if( myId == session._id || mentorId == session._id){
 					input = <ObjectiveInput 
 						createObjective={ this.props.createObjective(category._id) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }

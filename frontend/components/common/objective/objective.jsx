@@ -49,6 +49,7 @@ class ObjectiveItem extends Component {
 
 	render() {
 		const myId = this.props.myId;
+		const mentorId = this.props.mentorId;
 		let editButton;
 		let saveButton;
 		let deleteButton;
@@ -57,7 +58,7 @@ class ObjectiveItem extends Component {
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
 
-		if( myId == session._id){
+		if( myId == session._id || mentorId == session._id){
 			editButton = (<i ref="edit"
 			                className="fi flaticon-edit objective-edit"
 			                onClick={ this.handleEdit }>
@@ -104,6 +105,7 @@ class ObjectiveItem extends Component {
 			<div className='otherUserKR'>
 				<KeyResults
 						myId = { this.props.myId }
+						mentorId = { this.props.mentorId }
 						data={ objective.keyResults }
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }

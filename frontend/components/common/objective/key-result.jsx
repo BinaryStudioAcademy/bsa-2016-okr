@@ -36,13 +36,14 @@ class KeyResult extends Component {
   }
 
   render() {
-
+    const myId = this.props.myId;
+    const mentorId = this.props.mentorId;
     const item = this.props.item;
     let score;
     let rangeEl;
     let deleteEl;
 
-    if(this.props.id == session._id || this.props.myId == session._id){
+    if(myId == session._id || mentorId == session._id){
       score = this.state.score;
       rangeEl =(
         <input type="range" min="0" max="1" step="0.1" className="range keyScore"

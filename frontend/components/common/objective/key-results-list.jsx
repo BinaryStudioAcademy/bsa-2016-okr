@@ -65,6 +65,7 @@ class KeyResults extends Component {
 
 	render() {
 		let myId = this.props.myId;
+		const mentorId = this.props.mentorId;
 		let changeScore = this.props.changeScore;
 		let addNewKeyResult;
 		let items;
@@ -74,7 +75,7 @@ class KeyResults extends Component {
 			var routeId = urlArray[urlArray.length - 1];
 		}
 
-		if( myId == session._id || routeId == session._id){
+		if( myId == session._id || mentorId == session._id){
 			addNewKeyResult = (
 				<div id="new-obj-keyresults">
 					<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.onAddNewKeyResultClick }>
@@ -83,8 +84,8 @@ class KeyResults extends Component {
 				</div>
 			);
 			items = this.props.data.map((item, index) => {
-				return <KeyResultItem index={index} key={index} item={item} id={routeId}
-															myId = { myId }
+				return <KeyResultItem index={index} key={index} item={item}
+															myId = { myId } mentorId = { mentorId }
 															changeScore={ changeScore(item._id) }
 															objectiveId={ this.props.objectiveId }
 															softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }

@@ -110,12 +110,12 @@ class Objectives extends Component {
 		}
 
 		if ((user._id != undefined) && (routeId != undefined) && (user._id == routeId)) {
-			console.log('user');
+			/*console.log('user');*/
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
 		} else {
-			console.log('me');
+			/*console.log('me');*/
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
@@ -136,6 +136,7 @@ class Objectives extends Component {
 						//route = { route }
 						categories={ categories.list }
 						myId = { userInfo.id }
+						mentorId = { userInfo.mentorId }
 						objectives={ userInfo.objectives }
 						ObjectiveItem={ ObjectiveItem }
 						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
@@ -171,6 +172,9 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let quarters = [];
 	let objectives = [];
 	let id = userObject._id;
+	let mentor;
+	if(userObject.mentor != undefined || userObject.mentor != null)
+		mentor = userObject.mentor._id;
 
 	if (userObject.quarters != undefined) {
 		var current_quarter = userObject.quarters.find((quarter) => {
@@ -192,6 +196,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 		quarters: quarters,
 	  objectives: objectives,
 	  id: id,
+	  mentorId: mentor,
 	};
 }
 
