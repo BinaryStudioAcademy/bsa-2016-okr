@@ -12,7 +12,6 @@ import * as categoriesActions from '../actions/categoriesActions';
 import * as myStateActions from '../actions/myStateActions';
 import * as appActions from '../actions/appActions';
 
-import "normalize.css";
 import '../components/common/fonts/flaticon/_flaticon.scss';
 import '../components/common/fonts/fira/_fira.scss';
 import './app.scss';

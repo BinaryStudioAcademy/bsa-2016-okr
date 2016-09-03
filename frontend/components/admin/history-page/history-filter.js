@@ -15,7 +15,6 @@ class HistoryFilter extends Component {
 
 	constructor(props) {
 		super(props);
-		this.showFiltersContainer = this.showFiltersContainer.bind(this);
 		this.onChangeFrom = this.onChangeFrom.bind(this);
 		this.onChangeTo = this.onChangeTo.bind(this);
 		this.onChangeName = this.onChangeName.bind(this);
@@ -34,15 +33,6 @@ class HistoryFilter extends Component {
 		this.props.getFilteredItems();
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
-	}
-
-	showFiltersContainer() {
-		if (this.props.history.showHistoryFilters) {
-			return "show-container"
-		} else {
-			return "hide-container"
-		}
-		return "hide-container";
 	}
 
 	onChangeFrom(dateString, { dateMoment, timestamp }) {
@@ -74,7 +64,7 @@ class HistoryFilter extends Component {
 	render() {
 
 		return(
-			<div className={"history-filter-bar " + this.showFiltersContainer()}>
+			<div className={"history-filter-bar"}>
 				<table className="history-filter-table">
 					<tbody>
 						<tr>
