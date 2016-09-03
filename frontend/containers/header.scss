@@ -10,12 +10,14 @@ header {
 		display: block;
 		margin-top: 15px;
 		background-color: #607d8b;
-		border-radius: 20px;
+		border-radius: 18px;
+		height: 36px;
 		box-sizing: border-box;
 		color: #fff;
 		padding-right: 10px;
 
 		i{
+			display: inline-block;
 			font-size: 34px;
 		}
 
@@ -25,7 +27,6 @@ header {
 		}
 		.mentorName{
 			float: right;
-
 			margin-top: 0px;
 			line-height: 18px;
 			font-size: 13px;
@@ -33,6 +34,7 @@ header {
 			color: fff;
 
 			.mentorTitle{
+				font-weight: 600;
 				color: $primary-color;
 			}
 		}
