@@ -16,6 +16,7 @@ class KeyResult extends Component {
 	}
 
 	setDefaultKeyResult() {
+		this.props.cancelEdit();
 	//	console.log(this.refs.defaultKeyResult.checked, this.props.item)
 			this.props.setDefaultKeyResult(this.props.objectiveId, this.props.item._id, this.refs.defaultKeyResult.checked);
 	}

@@ -44,6 +44,7 @@ class ObjectiveData extends React.Component{
   }
 
   deleteObjective(){
+    this.props.cancelEdit();
     let result = confirm('Do you really want to delete objective?');
     if (result){
       let i = this.props.objective._id;
@@ -100,7 +101,7 @@ class ObjectiveData extends React.Component{
               { descriptionEl }
             </form>     
         </div>
-        <div className='key-result'><KeyResults objectiveId={ this.props.objective._id } data={this.props.objective.keyResults} /></div>
+        <div className='key-result'><KeyResults objectiveId={ this.props.objective._id } cancelEdit={this.props.cancelEdit} data={this.props.objective.keyResults} /></div>
       </div>
     )
   }

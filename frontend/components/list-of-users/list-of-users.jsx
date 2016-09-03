@@ -26,7 +26,6 @@ class ListOfUsers extends Component {
 	}
 
 	render() {
-		console.log(this.props.users)
 		const {user, searchValue, name} = this.props.users;
 		var userNodes = user.map(function (user, index) {
 			if((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 || 

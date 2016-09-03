@@ -13,6 +13,8 @@ class KeyResults extends Component {
 	}
 
 	onAddNewKeyResultClick() {
+		this.props.cancelEdit();
+		
 		let keyResultAddBtn = this.refs.newKeyResultButton;
 		let keyResultAddElement = this.refs.newKeyResultButton.nextElementSibling;
 
@@ -43,6 +45,8 @@ class KeyResults extends Component {
 	}
 
 	setShowKeyResultElement(keyResultElement) {
+		this.props.cancelEdit();
+
 		if (keyResultElement.classList.contains('undisplay')) {
 			keyResultElement.classList.remove('undisplay');
 			keyResultElement.classList.add('display');

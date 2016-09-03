@@ -75,7 +75,8 @@ export default function okrManagingReducer(state = initialState, action) {
                 visibleObjectives: softdelete(visibleObjectives, id),
                 objectives: softdelete(objectives, id),
                 waiting: false,
-                editing: false
+                editing: false,
+                editingKeyResult:false
             })
         }
 
