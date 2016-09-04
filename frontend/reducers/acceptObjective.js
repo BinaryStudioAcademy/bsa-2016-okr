@@ -31,7 +31,7 @@ export default function accObjReducer(state = initialState, action) {
 
 			let key = {};
 
-			key.type = "key";
+			key.type = "key result";
 
 			for (let i = 0; i < data.length; i++) {
 				

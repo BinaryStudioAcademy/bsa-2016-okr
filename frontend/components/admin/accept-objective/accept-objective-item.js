@@ -18,19 +18,17 @@ class AcceptObjectiveItem extends Component {
 			        <button className="red-hover" onClick={this.decline.bind(this)}>Decline</button>
 			        <button className="green-hover" onClick={this.accept.bind(this)}>Accept</button>				   
 			    </div>
-			    <div className="row">
-			        <div className="left-column">
-					    <span>{this.props.item.type}</span>
-				    </div>
-				    <h3>{this.props.item.title}</h3>
+			    <div className="objective-general-info">
+				    <span className="type">{this.props.item.type}</span>
 				    <span className="margin-right-23px category">{this.props.item.category}</span>
 			    </div>
-			    <div className="row">
+		        <div className="objective-text-info">			    
+				    <h3>{this.props.item.title}</h3>
 				    <div className="text-block">
 					    <p>{this.props.item.description}</p>
 					</div>
-			    </div>
-		   </div>
+			    </div>		    
+		    </div>
 		   )
 	}
 
