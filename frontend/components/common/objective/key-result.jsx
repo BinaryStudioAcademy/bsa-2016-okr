@@ -36,14 +36,13 @@ class KeyResult extends Component {
   }
 
   render() {
-    const myId = this.props.myId;
-    const mentorId = this.props.mentorId;
+    let isArchived = this.props.isArchived;
     const item = this.props.item;
     let score;
     let rangeEl;
     let deleteEl;
 
-    if(myId == session._id || mentorId == session._id){
+    if(!isArchived){
       score = this.state.score;
       rangeEl =(
         <input type="range" min="0" max="1" step="0.1" className="range keyScore"

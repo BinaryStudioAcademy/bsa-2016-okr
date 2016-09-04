@@ -1,12 +1,27 @@
 import users from '../components/mockData/users.js'
-import {GET_OBJECTIVES_LIST, OBJECTIVES_LIST_ERROR, RECEIVED_OBJECTIVES_LIST,
-        SET_SORT , SEARCH_OBJECTIVE, ACTIVE_OBJECTIVE,
-        DELETE_OBJECTIVE, DELETE_OBJECTIVE_ERROR, SOFT_DELETE_OBJECTIVE,
-        RECIVED_EDIT_OBJECTIVE_TEMPLATE, EDIT_OBJECTIVE_TEMPLATE, ACTIVE_KEY_RESULT,
-        SOFT_DELETE_KEY_RESULT, DELETE_KEY_RESULT_TEMPLATE, RECIVED_EDIT_KEY_RESULT,
-        EDIT_KEY_RESULT, RECEIVED_NEW_TEMPLATE, CANCEL_EDIT_TEMPLATE, 
-        RECIVED_NEW_KEY_RESULT, REMOVE_KEY_RESULT_FROM_TAMPLATE, ADD_KEY_RESULT_TO_TEMPLATE,
-        RECIVED_DEFAULT_KEY_RESULT_ERROR, RECIVED_DEFAULT_KEY_RESULT} from '../actions/okrManagingActions.js'
+import { GET_OBJECTIVES_LIST, 
+         OBJECTIVES_LIST_ERROR, 
+         RECEIVED_OBJECTIVES_LIST,
+         SEARCH_OBJECTIVE, 
+         ACTIVE_OBJECTIVE,
+         DELETE_OBJECTIVE_ERROR, 
+         SOFT_DELETE_OBJECTIVE,
+         RECIVED_EDIT_OBJECTIVE_TEMPLATE, 
+         EDIT_OBJECTIVE_TEMPLATE, 
+         ACTIVE_KEY_RESULT,
+         SOFT_DELETE_KEY_RESULT, 
+         DELETE_KEY_RESULT_TEMPLATE, 
+         RECIVED_EDIT_KEY_RESULT,
+         EDIT_KEY_RESULT, 
+         RECEIVED_NEW_TEMPLATE, 
+         CANCEL_EDIT_TEMPLATE, 
+         RECIVED_NEW_KEY_RESULT, 
+         REMOVE_KEY_RESULT_FROM_TAMPLATE, 
+         ADD_KEY_RESULT_TO_TEMPLATE,
+         RECIVED_DEFAULT_KEY_RESULT_ERROR, 
+         RECIVED_DEFAULT_KEY_RESULT } from '../actions/okrManagingActions.js'
+
+import { ACTIVE_CATEGORY } from '../actions/categoriesActions.js'
 
 const initialState = {
     objectives: [],
@@ -25,43 +40,25 @@ export default function okrManagingReducer(state = initialState, action) {
     
     switch (action.type) {             
         
-         case GET_OBJECTIVES_LIST: {
-
+        case GET_OBJECTIVES_LIST: 
             return Object.assign({}, state, {
                 waiting: true,
                 editing: false,
                 editingKeyResult:false
             })
-        }
 
-        case OBJECTIVES_LIST_ERROR: {
-            
-            const {data} = action;
-
+        case OBJECTIVES_LIST_ERROR:
             return Object.assign({}, state, {
                 data
             })
-        }
 
-      case RECEIVED_OBJECTIVES_LIST: {
-
+        case RECEIVED_OBJECTIVES_LIST: {
             const {objectives} = action;
-
             return Object.assign({}, state, {
-                active: '',
                 objectives,
                 visibleObjectives: objectives,
                 waiting: false,
                 searchValue: '',
-                editing: false,
-                editingKeyResult:false
-            })
-        }
-
-        case DELETE_OBJECTIVE: {
-       
-            return Object.assign({}, state, {
-                waiting: true
             })
         }
 
@@ -100,13 +97,6 @@ export default function okrManagingReducer(state = initialState, action) {
                 editingKeyResult:false
             })
         }        
-        case SET_SORT: {
-            const sort = action.sort;
-
-            return Object.assign({}, state, {
-                sort
-            })
-        }
 
         case SEARCH_OBJECTIVE: {
             const {searchValue} = action;
@@ -118,15 +108,21 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
 
+        case ACTIVE_CATEGORY: 
+            return Object.assign({}, state, {
+                editing: false,
+                editingKeyResult:false
+            })
+
         case ACTIVE_OBJECTIVE: {
             const {active} = action;
-
             return Object.assign({}, state, {
                 active,
                 editing: true,
                 editingKeyResult: false
             })
         }
+
         case ACTIVE_KEY_RESULT: {
             const {activeKeyResult} = action;
 

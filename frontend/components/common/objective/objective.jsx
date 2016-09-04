@@ -9,8 +9,6 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../../actions/myStateActions.js";
 
-const session = require('../../../../backend/config/session');
-
 class ObjectiveItem extends Component {
 	constructor(props) {
 		super(props);
@@ -48,17 +46,16 @@ class ObjectiveItem extends Component {
 	}
 
 	render() {
-		const myId = this.props.myId;
-		const mentorId = this.props.mentorId;
 		let editButton;
 		let saveButton;
 		let deleteButton;
 		let cancelButton;
+		let isArchived = this.props.isArchived;
 
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
 
-		if( myId == session._id || mentorId == session._id){
+		if(!isArchived){
 			editButton = (<i ref="edit"
 			                className="fi flaticon-edit objective-edit"
 			                onClick={ this.handleEdit }>
@@ -104,6 +101,7 @@ class ObjectiveItem extends Component {
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults
+						isArchived = { isArchived }
 						myId = { this.props.myId }
 						mentorId = { this.props.mentorId }
 						data={ objective.keyResults }

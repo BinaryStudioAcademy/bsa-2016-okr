@@ -13,6 +13,9 @@ import * as objectiveActions from "../../../actions/objectiveActions";
 
 import './objectives.scss';
 
+const CONST = require('../../../../backend/config/constants.js');
+const session = require('../../../../backend/config/session');
+
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
@@ -103,6 +106,7 @@ class Objectives extends Component {
 		let selectedTab = '';
 		let userInfo = {};
 		let ismyself = true;
+		let archived;
 
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
 			/*console.log('user');*/
@@ -118,6 +122,14 @@ class Objectives extends Component {
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
 		}
 
+		if (( CONST.currentYear < selectedYear ||
+				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
+				( ismyself || session._id == userInfo.mentorId || userId == session._id )) {
+			archived = false;
+		} else {
+			archived = true;
+		}
+
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
@@ -125,15 +137,14 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    	addNewQuarter={ this.handleAddingNewQuarter }
+				    addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
 						me={ ismyself } 
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
 						categories={ categories.list }
-						myId = { userInfo.id }
-						mentorId = { userInfo.mentorId }
+						archived = { archived }
 						objectives={ userInfo.objectives }
 						ObjectiveItem={ ObjectiveItem }
 						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }

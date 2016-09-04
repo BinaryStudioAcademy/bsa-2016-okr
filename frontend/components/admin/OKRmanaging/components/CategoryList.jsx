@@ -44,7 +44,7 @@ class CategoryList extends Component {
 		}
 
 		componentWillMount(){
-			this.props.getAllCategories()
+			this.props.cancelEdit();
 		}
 
 render() {

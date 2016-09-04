@@ -4,24 +4,24 @@ var currentMonth = date.getMonth() + 1;
 var currentQuarter;
 
 switch(currentMonth) {
-case 1:
-case 2:
 case 3:
-	currentQuarter = 1;
-	break;
 case 4:
 case 5:
-case 6:
-	currentQuarter = 2;
+	currentQuarter = 1;
 	break;
+case 5:
 case 7:
 case 8:
-case 9:
-	currentQuarter = 3;
+	currentQuarter = 2;
 	break;
+case 9:
 case 10:
 case 11:
+	currentQuarter = 3;
+	break;
 case 12:
+case 1:
+case 2:
 	currentQuarter = 4;
 	break;
 }
