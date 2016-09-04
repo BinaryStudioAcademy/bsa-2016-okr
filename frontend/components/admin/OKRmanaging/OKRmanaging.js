@@ -18,32 +18,32 @@ render() {
 
     return (
     	<div>
-    	<CentralWindow>
-    		<NewObjective />
-			<div className="OKR-managing app container">
-			<div><Toolbar/></div>
-				<div className="OKR-managing fixed-header">
-					<div className="OKR-managing search">
-						<Searchbar />
-					</div>
-					<div id="OKR-managing-title"> 
-						<p><span>Template management</span></p>
-					</div>
-				</div>			
+	    	<CentralWindow>
+	    		<NewObjective />
+					<div className="OKR-managing app container">
+						<Toolbar/>
+						<div className="OKR-managing fixed-header">
+							<div className="OKR-managing search">
+								<Searchbar />
+							</div>
+							
+							<div id="OKR-managing-title"> 
+								<p><span>Template management</span></p>
+							</div>
+						</div>			
 
-				<div className="OKR-managing objective-list">
-					<ObjectiveList />
+						<div className="OKR-managing objective-list">
+							<ObjectiveList />
+						</div>
 				</div>
-			</div>
-		</CentralWindow>
-		<StatPanel>
-			<div className="OKR-mnaging category">
-				<CategoryList />
-			</div>
-		</StatPanel>
+			</CentralWindow>
+			<StatPanel>
+				<div className="OKR-mnaging category">
+					<CategoryList />
+				</div>
+			</StatPanel>
 		</div>
-
-    );
+    )
   }
 }
 
