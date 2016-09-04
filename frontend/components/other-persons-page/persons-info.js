@@ -51,8 +51,8 @@ class PersonsInfo extends Component {
 		return (
 			<div id='topPanel'>
 				<div className='userInfo'>
-					{apprentice}
-					{removeApprenticeButton}
+					{ apprentice }
+					{ removeApprenticeButton }
 					<div className='logo'>
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
 					</div>

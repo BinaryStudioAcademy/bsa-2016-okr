@@ -15,15 +15,17 @@ class ObjectiveList extends React.Component{
  		this.changeCategoryContentVisibility = this.changeCategoryContentVisibility.bind(this);
  	}
 
- 	changeCategoryContentVisibility(id){
- 		var icoId = id + " icon";
- 		if (document.getElementById(id).children[1].className === "hidden-category-content"){
- 			document.getElementById(id).children[1].className = "visible-category-content";
- 			document.getElementById(icoId).className = "fi flaticon-folder-10";
- 		}
- 		else{
- 			document.getElementById(id).children[1].className = "hidden-category-content";
- 			document.getElementById(icoId).className = "fi flaticon-folder-2";
+ 	changeCategoryContentVisibility(id) {
+ 		let icoId = id + " icon";
+ 		let categoryEl = document.getElementById(id);
+ 		let categoryIconEl = document.getElementById(icoId);
+
+ 		if (categoryEl.children[1].className === "hidden-category-content"){
+ 			categoryEl.children[1].className = "visible-category-content";
+ 			categoryIconEl.className = "fi flaticon-folder-10";
+ 		} else {
+ 			categoryEl.children[1].className = "hidden-category-content";
+ 			categoryIconEl.className = "fi flaticon-folder-2";
  		}
  	}
 
@@ -82,7 +84,8 @@ class ObjectiveList extends React.Component{
 		}
 		return categoryItems;
  	}
- 	render(){
+ 	
+ 	render() {
 		return (
 			<div id="project-category" className="category">{ this.getCategoryItems() }</div>
 		);

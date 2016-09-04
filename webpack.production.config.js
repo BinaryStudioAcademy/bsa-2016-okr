@@ -57,7 +57,7 @@ module.exports = {
       loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
       // loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss!sass')
     }, { 
-      test: /\.(png|woff|woff2|eot|ttf|otf|svg)$/,
+      test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
       loader: 'file?name=fonts/[name].[ext]'
     }]
   },

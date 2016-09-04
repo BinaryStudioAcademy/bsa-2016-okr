@@ -6,7 +6,7 @@ import HomePage from "./components/home-page/home-page.js";
 import RolesPage from "./components/admin/role-mapping/role-mapping.js";
 import ObjAccept from "./components/admin/accept-objective/accept-objective.js";
 import UserPage from "./components/other-persons-page/other-persons-page.js";
-import {IndexRoute, Route, Router, browserHistory} from 'react-router';
+import { IndexRoute, Route, Router, IndexRedirect, browserHistory } from 'react-router';
 import ObjectiveView from "./components/objectiveView/objectiveView.js";
 import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.js";
 import UserRecycleBin from './components/user-recycle-bin/recycle-bin.jsx';
@@ -41,7 +41,9 @@ render(
 				<Route path="admin-recycle-bin" component={AdminRecycleBin} />
 				<Route path="charts" component={BarStats}/>
 				<Route path="obj-accept" component={ObjAccept}/>
-				<Route path="*" component={NotFound}/>
+				<Route path="*" component={NotFound}>
+					<IndexRedirect from="*" to="/" />
+				</Route>
 			</Route>
 		</Router>
 	</Provider>)
