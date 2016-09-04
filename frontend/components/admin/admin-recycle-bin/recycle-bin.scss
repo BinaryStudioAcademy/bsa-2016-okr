@@ -1,3 +1,5 @@
+@import '../../common/styles/table.scss';
+
 .recycle-bin-header {
     width: 100%;
     box-sizing: border-box;
@@ -28,13 +30,7 @@
 	}
 }
 
-body {
-	overflow-y:hidden
-}
-
-#rec-bin-wrapper .margin-left-4px {
-	margin-left: 12px;
-}
+body { overflow-y:hidden }
 
 .recycle-bin-header-row p {
     box-sizing: border-box;
@@ -70,104 +66,54 @@ body {
     z-index: 0;
 }
 
-#rec-bin-wrapper .no-hover {
-	background: none;
-}
+#rec-bin-wrapper .margin-left-4px { margin-left: 12px; }
 
-#rec-bin-wrapper {
-	padding: 3%;
-}
+#rec-bin-wrapper .no-hover { background: none; }
 
-#rec-bin-wrapper .not-display {
-	display: none;
-}
+#rec-bin-wrapper { padding: 3%; }
 
-#rec-bin-wrapper .item-deleted-by {
-	white-space: nowrap;
-}
+#rec-bin-wrapper .not-display { display: none; }
 
-#rec-bin-wrapper .no-wrap {
-	white-space: nowrap;
-}
+#rec-bin-wrapper .item-deleted-by { white-space: nowrap;}
 
-#rec-bin-wrapper .width-20perc {
-	width: 20%;
-}
+#rec-bin-wrapper .no-wrap { white-space: nowrap; }
+
+#rec-bin-wrapper .width-20perc { width: 20%; }
 
 #rec-bin-wrapper .width-15perc {
 	width: 16%;
 	white-space: nowrap
 }
 
-#rec-bin-wrapper .width-30perc {
-	width: 25%;
-}
+#rec-bin-wrapper .width-30perc { width: 25%; }
 
-#rec-bin-wrapper .width-5perc {
-	width: 60px;
-}
+#rec-bin-wrapper .width-5perc { width: 60px; }
 
 #rec-bin-wrapper .width-85perc {
 	width: 100%;
 	margin: 0 auto;
 }
 
-#rec-bin-wrapper .filter-table td button {
-	margin-left: -5px;
-}
+#rec-bin-wrapper .filter-table td button { margin-left: -5px; }
 
 #rec-bin-wrapper .filter-table tr {
 	display: table;
     width: 99.99%;
     table-layout: fixed;
-    border-color: #E0E0E0;
 }
 
-#rec-bin-wrapper td span {
-	display: block;
-}
+#rec-bin-wrapper td span { display: block; }
 
-#rec-bin-wrapper .filter-table td {
-	text-align: left;
-	padding: 6px;
-	font-size: 15px;
-	text-overflow: ellipsis;
-}
+#rec-bin-wrapper .filter-table td { text-overflow: ellipsis;}
 
 #rec-bin-wrapper .filter-table th {
-	text-align: left;
 	white-space: nowrap;
 	padding-left: 5px;
 }
 
-#rec-bin-wrapper .no-wrap {
-	white-space: nowrap;
-}
+#rec-bin-wrapper .no-wrap { white-space: nowrap; }
 
-#rec-bin-wrapper tr {
-	border-color: #E0E0E0;
-}
-
-.margin-left-3px {
-	margin-left: 3px;
-}
-
-.cursor-pointer {
-	cursor: pointer;
-}
-
-.filter-box {
-	
-	display: block;
-    margin: 5px auto;
-    width: 1053px;
-
-	& > div {
-		margin: 0 10px;
-		float: left;
-	}
-}
-
+//#rec-bin-wrapper tr { border-color: #E0E0E0; }
 
 #rec-bin-wrapper .filter-table {
 	width: 100%;
@@ -179,26 +125,37 @@ body {
 #rec-bin-wrapper .filter-table tbody {
 	height: 56vh;
     table-layout: fixed;
-    overflow: auto;
+    //overflow: auto;
     display: block;
     overflow-y: overlay;
 }
 
-
-#rec-bin-wrapper th.width-15perc {
-	cursor: pointer;
-}
+#rec-bin-wrapper th.width-15perc { cursor: pointer; }
 
 #rec-bin-wrapper .item-category {
     display: inline-block;
-    border-radius: 3px;
+    border-radius: 20px;
+    font-size: 12px;
     background-color: #607d8b;
     color: #fff;
     padding: 4px 8px;
 }
 
-#rec-bin-wrapper .btn-blue {
-	margin-bottom: 12px;
+#rec-bin-wrapper .btn-blue { margin-bottom: 12px; }
+
+.margin-left-3px { margin-left: 3px; }
+
+.cursor-pointer { cursor: pointer; }
+
+.filter-box {
+	display: block;
+    margin: 5px auto;
+    width: 1053px;
+
+	& > div {
+		margin: 0 10px;
+		float: left;
+	}
 }
 
 .recucle-bin-filter-bar-container {
@@ -239,18 +196,22 @@ body {
 	}
 
 	.recycle-bin-filter-table {
-
+		font-size:14px;
 		width: auto;
 		margin-left: auto;
 		margin-right: auto;
 
 		td {
 			vertical-align: middle !important;
-			padding: 2px;
+			padding: 10px;
 		}
 
 		.cell-right-align {
 			text-align: right;
+		}
+		label{
+			font-size:12px;
+			border-radius: 20px;
 		}
 	}
 

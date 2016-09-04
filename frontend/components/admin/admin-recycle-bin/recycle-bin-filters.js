@@ -56,7 +56,7 @@ class RecycleBinFilter extends Component {
 							<label htmlFor="cbCategory">Categories</label>
 						</div>
 					</div>
-				<table className="recycle-bin-filter-table">
+				<table className="recycle-bin-filter-table table">
 					<tbody>
 						<tr>
 						    <td className="cell-right-align">

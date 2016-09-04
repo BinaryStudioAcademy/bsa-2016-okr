@@ -4,6 +4,7 @@
 
 	table {
 		border-collapse: collapse;
+		font-size: 14px; 
 	}
 
 	tbody {
@@ -20,16 +21,19 @@
 	th {
 		background-color: #607D8B;
 		color: #fff;
-		font-size: 18px;
+		font-size: 16px;
+		font-weight:bold;
 	}
 
 	td {
+		font-size:14px;
 		vertical-align: middle;
+		text-align: left;
 	}
 
 	tr {
 		display: table-row;
-		border: 1px solid #99BCE0;
+		border: 1px solid #E0E0E0;
 		vertical-align: inherit;
 
 		&:hover {
@@ -37,10 +41,8 @@
 		}
 	}
 
-	thead {
-		tr {
-			border-color: #607D8B;
-		}
+	tr:first-child {
+		border-top:none;
 	}
 
 	.controls {

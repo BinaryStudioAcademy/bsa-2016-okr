@@ -87,7 +87,7 @@ class HistoryItemList extends React.Component {
    		return(
    			<tr key={item._id}>
 				<td><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>
-          <span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+          <span className="author-name">{item.author.userInfo.firstName + " " +item.author.userInfo.lastName}</span>
         </td>
 				<td>{this.getHistoryType(item)}</td>
 				<td><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getHistoryObjectName(item)}</span></td>
