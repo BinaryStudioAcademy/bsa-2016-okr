@@ -9,7 +9,7 @@ import {
 	ADDED_NEW_OBJECTIVE,
 	CHANGED_KEYRESULT_SCORE,
 	CHANGED_KEYRESULT_SCORE_ERROR,
-	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
+	//SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	NEW_QUARTER_ADDED,
 	ADD_NEW_QUARTER_ERROR
@@ -83,14 +83,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 		}
 
-		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API: {
-			return state;
-		}
+		//case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API: {
+		//	return state;
+		//}
 
 		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS: {
 			const { objectiveId, keyResultId, data } = action;
 
-			console.log('Reducer reached');
+			//console.log('Reducer reached');
 			
 			return Object.assign({}, state, {
 				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, data)
@@ -185,28 +185,24 @@ function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult
 		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=>{
 			return userObjective._id === objectiveId;
 		});
-
-		if(objectiveIndex !== -1) {
+		if (objectiveIndex !== -1) {
 			return true;
 		}
 
 		return false;
 	});
 
-	console.log('Quarter index founded');
+	//console.log('Quarter index founded',quarterIndex,'objectiveIndex',objectiveIndex);
 
 	if(quarterIndex !== -1) {
 		keyResultIndex = meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.findIndex((keyResult) => {
 			return keyResult._id === keyResultId;
 		});
-
 		if(keyResultIndex !== -1) {
-			meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.slice(keyResultIndex, 1);
+			meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
 		}
 	}
-
-	console.log('Success deleting keyResult from objective');
-
+	//console.log('Success deleting keyResult from objective');
 	return meCopy;
 }
 

@@ -104,7 +104,6 @@ class Objectives extends Component {
 		let userInfo = {};
 		let ismyself = true;
 
-		//console.log('user',this.props.user);
 		if (route != undefined){
 			var urlArray = this.props.route.split('/');
 			var routeId = urlArray[urlArray.length - 1];
@@ -137,7 +136,6 @@ class Objectives extends Component {
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
-						//route = { route }
 						categories={ categories.list }
 						myId = { userInfo.id }
 						mentorId = { userInfo.mentorId }
