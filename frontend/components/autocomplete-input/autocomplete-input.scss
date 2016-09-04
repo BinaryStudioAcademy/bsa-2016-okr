@@ -33,15 +33,15 @@
 
   .autocomplete-result-li {
     list-style: none;
-    padding: 5px 8px;
+    padding: 3px 10px;
     color: #777;
     cursor: pointer;
   }
 
   .autocomplete-result-li:hover {
     &:not(.inactive) {
-      color: $color-white;
-      background: -webkit-linear-gradient(deepskyblue, $color-blue);
+      color: #555;
+      background: -webkit-linear-gradient(#e4eaec, #c1dada);
     }
   }
 
