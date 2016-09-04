@@ -21,6 +21,7 @@ class HistoryFilter extends Component {
 		this.onChangeType = this.onChangeType.bind(this);
 		this.setFilters = this.setFilters.bind(this);
 		this.onReset = this.onReset.bind(this);
+		this.restoreDefaultIcons = this.restoreDefaultIcons.bind(this);
 	}
 
 	setFilters() {
@@ -33,7 +34,15 @@ class HistoryFilter extends Component {
 		this.props.getFilteredItems();
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
+		this.restoreDefaultIcons();
 	}
+
+	 restoreDefaultIcons ()  {
+      document.getElementById('user').className = "fa fa-sort";
+      document.getElementById('action').className = "fa fa-sort";
+      document.getElementById('target').className = "fa fa-sort";
+      document.getElementById('date').className = "fa fa-sort";
+    }
 
 	onChangeFrom(dateString, { dateMoment, timestamp }) {
 		this.props.setFilterDateFrom(dateString);

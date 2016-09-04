@@ -87,8 +87,8 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 	break;
 	 	case 'user':
 	 		sortedList.sort((a, b) => {
-	 			let nameA = a.author.userInfo.firstName;
-	 			let nameB = b.author.userInfo.firstName;
+	 			let nameA = a.author.userInfo.firstName + " " + a.author.userInfo.lastName;
+	 			let nameB = b.author.userInfo.firstName + " " + b.author.userInfo.lastName;
 	 			if(nameA === nameB)
 	 				return 0
 	 			else if(nameA > nameB)

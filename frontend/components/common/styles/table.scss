@@ -31,10 +31,13 @@
 		text-align: left;
 	}
 
+	.no-border{ border: none;}
+
 	tr {
 		display: table-row;
 		border: 1px solid #E0E0E0;
 		vertical-align: inherit;
+		border-top:none;
 
 		&:hover {
 			background-color: #ECEFF1;

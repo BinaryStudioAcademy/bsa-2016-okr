@@ -15,8 +15,9 @@ class HistoryItemList extends React.Component {
     constructor(props) {
         super(props);
         this.onSort = this.onSort.bind(this);
-        //this.getHistoryObjectName = this.getHistoryObjectName.bind(this);
-       // this.componentWillMount = this.componentWillMount.bind(this)
+        this.restoreDefaultIcons = this.restoreDefaultIcons.bind(this);
+        this.markSorted = this.markSorted.bind(this);
+        this.unmarkAll = this.unmarkAll.bind(this);
     }
 
     getObjectId(item) {
@@ -34,6 +35,50 @@ class HistoryItemList extends React.Component {
     onSort(sort) {
         this.props.setSort(sort);
         this.props.getFilteredItems();
+
+        this.restoreDefaultIcons()
+        this.unmarkAll();
+        this.markSorted(sort);
+        if(this.props.sort.up)
+           document.getElementById(sort).className = "fa fa-sort-desc"
+         else document.getElementById(sort).className = "fa fa-sort-asc";
+    }
+
+    restoreDefaultIcons ()  {
+      document.getElementById('user').className = "fa fa-sort";
+      document.getElementById('action').className = "fa fa-sort";
+      document.getElementById('target').className = "fa fa-sort";
+      document.getElementById('date').className = "fa fa-sort";
+    }
+
+    unmarkAll(){
+      let list = document.getElementsByClassName('user');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+      list = document.getElementsByClassName('action');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+      list = document.getElementsByClassName('target');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+      list = document.getElementsByClassName('date');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+    }
+
+    markSorted(name){
+      let list = document.getElementsByClassName(name);
+      Array.prototype.forEach.call(list, (item) => {
+        item.className = item.className + " bold"
+      })
     }
 
     getHistoryType(item) {
@@ -85,12 +130,12 @@ class HistoryItemList extends React.Component {
 		let item = this.props.historyItems[index];
    		return(
    			<tr key={item._id}>
-				<td><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>
+				<td className="user"><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>
           <span className="author-name">{item.author.userInfo.firstName + " " +item.author.userInfo.lastName}</span>
         </td>
-				<td>{this.getHistoryType(item)}</td>
-				<td><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getHistoryObjectName(item)}</span></td>
-				<td className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</td>
+				<td className="action">{this.getHistoryType(item)}</td>
+				<td className="target"><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getHistoryObjectName(item)}</span></td>
+				<td className="date"><span className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</span></td>
 			</tr>)
   	}
 
@@ -104,10 +149,10 @@ class HistoryItemList extends React.Component {
             	<table className="table" id="historyTable">
 					<thead>
 						<tr>
-							<th ><i onClick={() => this.onSort("user")} className="fa fa-sort"></i>User</th>
-							<th ><i onClick={() => this.onSort("action")} className="fa fa-sort"></i>Action</th>
-							<th ><i onClick={() => this.onSort("target")} className="fa fa-sort"></i>Target</th>
-							<th ><i onClick={() => this.onSort("date")} className="fa fa-sort"></i>Date</th>
+							<th ><span className="table-th" onClick={() => this.onSort("user")}><i id="user" className="fa fa-sort"></i>User</span></th>
+							<th ><span className="table-th" onClick={() => this.onSort("action")}><i id="action" className="fa fa-sort"></i>Action</span></th>
+							<th ><span className="table-th" onClick={() => this.onSort("target")}><i id="target" className="fa fa-sort"></i>Target</span></th>
+							<th ><span className="table-th" onClick={() => this.onSort("date")}><i id="date" className="fa fa-sort"></i>Date</span></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -132,6 +177,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 	return {
 		historyItems: state.history.historyItems,
+    sort: state.history.sort,
         sortBy: state.history.sortBy,
 		keyResultItems: state.keyResults.keyResultItems
 	};
