@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { isEmpty } from '../../../backend/utils/ValidateService';
+
 import * as actions from "../../actions/otherPersonActions.js";
 
 import PersonInfo from './persons-info.js';
@@ -18,29 +20,54 @@ class OtherPersonsPage extends Component {
 		super(props);
 	}
 
+	// componentWillUpdate(nextProps, nextState) {
+	// 	console.log('Getting user info for component update...');
+	// 	console.log('Next props', nextProps);
+	// 	let id = nextProps.routeParams.id;
+	// 	nextProps.getUser(id);
+	// }
+
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	console.log('route current ID: ', this.props.routeParams.id);
+	// 	console.log('route next ID: ', nextProps.routeParams.id);
+	// 	console.log('user is empty: ', isEmpty(this.props.user.user));
+	// 	console.log('nextProps user is empty: ', isEmpty(nextProps.user.user));
+
+	// 	let userLoaded = this.props.user.waiting && !nextProps.user.waiting;
+		
+	// 	return userLoaded;
+	// }
+
 	componentWillMount() {
-		var urlArray = this.props.routing.pathname.split('/');
-		var id = urlArray[urlArray.length - 1];
+		console.log('other-persons-page.js mounted');
+		console.log('Mounted props: ', this.props);
+		console.log('Getting user info...');
+		let id = this.props.routeParams.id;
 		this.props.getUser(id);
 	}
 
 	render() {
+		console.log('other-persons-page.js RENDER');
+		console.log('this.props.user', this.props.user);
+		console.log('Props', this.props);
+
+		console.log('other-persons-page.js USER_ID:', this.props.routeParams.id);
+
 		if (this.props.user.waiting) {
 			return <div></div>
 		} else {
-			var urlArray = this.props.routing.pathname.split('/');
-			var id = urlArray[urlArray.length - 1];
+			var id = this.props.routeParams.id;
 			var personInfo;
 
 			if (id != session._id) {
-				personInfo = (<PersonInfo />);
+				personInfo = (<PersonInfo userId={ this.props.routeParams.id } />);
 			}
 
 			return (
 				<div>
 					<CentralWindow>
 						{ personInfo }
-						<UserOjectives route={this.props.routing.pathname}/>
+						<UserOjectives userId={ this.props.routeParams.id } />
 					</CentralWindow>
 					<StatPanel>
 						<UserDashboard where="otherPersonPage"/>
@@ -59,7 +86,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
 	return {
 		user: state.userPage,
-		routing: state.routing.locationBeforeTransitions,
 		categories: state.categories
 	};
 }

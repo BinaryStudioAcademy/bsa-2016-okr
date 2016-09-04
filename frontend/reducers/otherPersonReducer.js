@@ -3,7 +3,7 @@ import { CHANGED_KEYRESULT_SCORE, CHANGED_KEYRESULT_SCORE_ERROR } from '../actio
 import { currentYear, currentQuarter } from '../../backend/config/constants'
 
 const initialState = {
-	user: [],
+	user: {},
 	waiting: true,
 	selectedTab: currentQuarter,
 	selectedYear: currentYear
@@ -14,7 +14,7 @@ export default function otherPersonReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_USER: {
 			return Object.assign({}, state, {
-				waiting: true
+				waiting: true,
 			});
 		}
 		case RECEIVED_USER: {

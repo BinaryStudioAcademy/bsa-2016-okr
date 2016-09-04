@@ -24,7 +24,6 @@ class CategoryItem extends Component {
 		})
 			
 		let result = confirm('Do you really want to delete category?');
-		console.log(category)
     if (result && category == undefined){
 			this.props.deleteCategory(this.props.category._id, true);
 		}	

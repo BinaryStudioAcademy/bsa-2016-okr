@@ -36,27 +36,23 @@ class HistoryFilter extends Component {
 	}
 
 	onChangeFrom(dateString, { dateMoment, timestamp }) {
-		console.log(dateString);
 		this.props.setFilterDateFrom(dateString);
 		this.props.getFilteredItems();
 	}
 
 	onChangeTo(dateString, { dateMoment, timestamp }) {
-		console.log(dateString);
 		this.props.setFilterDateTo(dateString);
 		this.props.getFilteredItems();
 	}
 
 	onChangeName(event) {
 		var value = event.target.value;
-		console.log(value);
 		this.props.setNameFilter(value);
 		this.props.getFilteredItems();
 	}
 
 	onChangeType(event) {
 		var value = event.target.value;
-		console.log(value);
 		this.props.setTypeFilter(value);
 		this.props.getFilteredItems();
 	}

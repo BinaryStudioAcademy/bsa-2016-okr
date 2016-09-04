@@ -95,7 +95,7 @@ class Objectives extends Component {
 	}
 
 	render() {
-		const route =  this.props.route;
+		const userId = this.props.userId;
 		const categories = this.props.categories;
 		const { me } = this.props.myState;
 		const { user } = this.props.user;
@@ -104,12 +104,7 @@ class Objectives extends Component {
 		let userInfo = {};
 		let ismyself = true;
 
-		if (route != undefined){
-			var urlArray = this.props.route.split('/');
-			var routeId = urlArray[urlArray.length - 1];
-		}
-
-		if ((user._id != undefined) && (routeId != undefined) && (user._id == routeId)) {
+		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
 			/*console.log('user');*/
 			ismyself = false;
 			selectedYear = this.props.user.selectedYear;
@@ -128,7 +123,7 @@ class Objectives extends Component {
 				<Quarterbar
 						changeTab={ this.changeTab }
 						changeYear={this.changeYear}
-						selectedYear= {selectedYear }
+						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
 				    	addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }

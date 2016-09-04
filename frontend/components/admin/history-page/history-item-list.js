@@ -25,7 +25,6 @@ class HistoryItemList extends React.Component {
 
     componentWillMount() {
         this.props.getHistoryItems();
-        console.log(this.props.historyItems);
     }
 
     componentWillUnmount(){
