@@ -133,7 +133,8 @@ class Objectives extends Component {
 						selectedTab={ selectedTab }
 				    	addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
-						me={ ismyself } />
+						me={ ismyself } 
+						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
 						//route = { route }
