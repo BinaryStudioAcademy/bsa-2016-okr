@@ -186,8 +186,8 @@ UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjec
 		})
 };
 
-UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, data, callback){
-	var historyType = objective.isDeleted ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
+UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, flag, callback){
+	var historyType = flag ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
 	async.waterfall([
 		(callback) => {
 			UserObjectiveRepository.getById(userObjectiveId, (err, userObjective) => {
@@ -195,7 +195,7 @@ UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, d
 					return callback(err, null);
 				}
 
-				if(isEmpty(objective)) {
+				if(isEmpty(userObjective)) {
 					err = new Error('Objective not found');
 					return callback(err, null);
 				}

@@ -85,8 +85,8 @@ class RecycleBin extends Component {
 							</thead>
 							   <tbody>
 									<ReactList
-										itemRenderer={::this.renderItem}
-										itemsRenderer={::this.renderItems}
+										itemRenderer={::this.renderItem.bind(this)}
+										itemsRenderer={::this.renderItems.bind(this)}
 										length={this.props.recycleBin.visibleItems.length}
 										type='simple'
 										pageSize={5}
