@@ -6,6 +6,10 @@
 		float: left;
 	}
 
+	.table-th{
+		cursor:pointer;
+	}
+
 	img{
 		height:20px;
 		width: 20px;
@@ -29,7 +33,7 @@
 		right: 0;
 		left: 0;
 		table-layout: fixed;
-		overflow-y: auto;
+		overflow-y: overlay;
 		height: 66vh;
 		& > tr {
 			border-bottom: none;
@@ -68,6 +72,10 @@
 		display:inline-block;
 	}
 
+	.bold{
+		font-weight: bold;
+	}
+
 }
 
 .history-item-list {
@@ -103,6 +111,10 @@
 
 	.no-hover:hover {
 		background-color: #fff;
+	}
+
+	.no-hover{
+		border:none;
 	}
 
 	.history-item-user-avatar {

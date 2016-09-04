@@ -23,17 +23,23 @@ class PersonsInfo extends Component {
 
 	render() {
 		let apprentice;
+		
 		if (this.props.user.user.mentor == null && this.props.user.user._id != this.props.me._id && (this.props.me.localRole == 'mentor' || this.props.me.localRole == 'admin')) {
 			apprentice = (<button className="btn btn-blue-hover apprentice" title="apprentice" onClick={this.takeApprentice}>Take apprentice</button>);
 		}
+
 		let removeApprenticeButton;
+		
 		if (this.props.user.user.mentor != null && this.props.user.user.mentor._id == this.props.me._id && this.props.user.user._id != this.props.me._id) {
 			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>Remove apprentice</button>);
 		}
+		
 		let mentorAvatar = null;
 		const {user} = this.props.user
+
 		var mentor = '';
 		let photo;
+		
 		if(user.mentor == null) {
 			mentor = 'Is not assigned';
 			photo = (<i className='fi flaticon-user-3'></i>);
@@ -41,6 +47,7 @@ class PersonsInfo extends Component {
 			mentor = (user.mentor.userInfo.firstName +' '+ user.mentor.userInfo.lastName);
 			photo = (<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>);
 		}
+		
 		return (
 			<div id='topPanel'>
 				<div className='userInfo'>

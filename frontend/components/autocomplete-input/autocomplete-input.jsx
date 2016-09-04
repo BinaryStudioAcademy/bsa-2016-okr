@@ -110,8 +110,6 @@ class AutocompleteInput extends React.Component {
 		let validateClass = this.state.isValid ? '' : 'red-border';
 		let autocompleteItems;
 
-		console.log('data',data);
-
 		if(data.length !== 0) {
 			autocompleteItems = data.map(function (item, i) {
 				return <li

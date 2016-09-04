@@ -127,8 +127,6 @@ export function getFilteredItems () {
 			type: 'GET_FILTERED_ITEMS',
 		});
 
-
-		console.log(getStore());
 		return axios.put('/api/history/', { 
 			sort: store.sort,
 			filters: {
