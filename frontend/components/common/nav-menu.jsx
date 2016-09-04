@@ -17,7 +17,7 @@ class NavMenu extends React.Component {
 				<nav onClick={this.links_feedback_handler.bind(this)}>
 					<ul>
 						<li>
-							<Link to="/" className="active">
+							<Link to="/">
 								<i className="fi flaticon-home-1" aria-hidden="true"></i>
 								Home
 							</Link>
