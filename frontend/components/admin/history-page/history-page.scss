@@ -9,25 +9,9 @@
 
 .history-page {
   height: 100%;
+  margin-bottom: -30px;
   //display: flex;
   //flex-direction: column;
-
-  & > button{
-    position: relative;
-    float: right;
-    right: 0;
-    top: 35px;
-    padding: 6px 10px;
-    margin-right: 6px;
-    background: none;
-    color: #ffffff;
-    span{
-      pointer-events: none;
-    }
-    &:hover{
-      background: lighten($color-blue-grey, 25%);
-    }
-  }
 }
 
 #top-panel {
@@ -40,15 +24,16 @@
 .history-page-header {
   width: 100%;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  
+  & > button{
+    margin-bottom: 10px;
+    span{
+      pointer-events: none;
+    }
+  }
 }
 
 .history-filter-container {
   display: none;
-  position: relative;
-  top: 35px;
   &.opened{
     display: block;
   }

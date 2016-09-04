@@ -51,6 +51,10 @@ class HistoryPage extends React.Component {
                            <div className="history-page-title">
                               <p><span>History</span></p>
                            </div>
+                        <button className="btn btn-blue" onClick={this.handleFilterShow}>
+                           <i className="fi flaticon-funnel"/>
+                           &nbsp;Filter
+                        </button>
                         <div className="history-filter-container">
                            <div className="history-filter-bar-container">
                               <HistoryFilter/>
@@ -59,10 +63,6 @@ class HistoryPage extends React.Component {
                         </div>
                      </div>
                   </div>
-                  <button className="btn" onClick={this.handleFilterShow}>
-                     <i className="fi flaticon-funnel"/>
-                     &nbsp;Filter
-                  </button>
                   <HistoryItemList/>
                </div>
             </CentralWindow>
@@ -85,9 +85,15 @@ const HistoryPageConnected = connect(mapStateToProps, mapDispatchToProps)(Histor
 export default HistoryPageConnected
 
 function handler_filter_click(event) {
-   let filter_container = document.querySelector('.history-filter-container');
+   let   filter_container = document.querySelector('.history-filter-container'),
+         t_body = document.querySelector('#historyTable tbody');
 
-   if(!filter_container.classList.contains('opened'))
+   if(!filter_container.classList.contains('opened')){
       filter_container.classList.add('opened');
-   else filter_container.classList.remove('opened');
+      t_body.style.height = '53vh';
+   }
+   else {
+      filter_container.classList.remove('opened');
+      t_body.style.height = '66vh';
+   }
 }

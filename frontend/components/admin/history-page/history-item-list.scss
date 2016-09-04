@@ -20,14 +20,21 @@
 		vertical-align: middle;
 	}
 
-	tbody{
+	tbody {
 		display: block;
-		table-layout:fixed;
-    	overflow: auto;
-   		/*height:400px;*/
-    	//overflow-y:overlay;
-		& > tr{
+		position: relative;
+		bottom: 0;
+		top: 0;
+		right: 0;
+		left: 0;
+		table-layout: fixed;
+		overflow-y: auto;
+		height: 66vh;
+		& > tr {
 			border-bottom: none;
+			& > tr:last-child {
+				border-bottom: none;
+			}
 		}
 	}
 	thead, tbody tr {
