@@ -1,14 +1,10 @@
 @import "_variables";
 
 .history-filter-bar {
-	position: absolute;
-	top: 35px;
-	left: 0;
-	right: 0;
 	padding: 12px;
+	margin-bottom: 10px;
 	background-color: #fff;
 	border: 1px solid #ddd;
-	box-shadow: 0 3px 7px rgba(0,0,0, .2);
 	color: #777777;
 }
 
