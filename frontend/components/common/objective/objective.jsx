@@ -56,12 +56,13 @@ class ObjectiveItem extends Component {
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
 
 		if(!isArchived){
-			editButton = (<button 	ref="edit"
+			editButton 	= 	(<button ref="edit"
+											title="Edit"
 										 	className="btn btn-blue-hover objective-edit"
 										 	onClick={ this.handleEdit }>
 												<i className="fi flaticon-edit"></i>
 											</button>);
-			saveButton = (<button 	ref="saveEdit"
+			saveButton 	= 	(<button ref="saveEdit"
 											className="btn btn-green save hidden"
 											aria-hidden="true"
 											title="Save">
@@ -75,9 +76,10 @@ class ObjectiveItem extends Component {
 												<i className="fi flaticon-error"></i>
 											</button>);
 			deleteButton = (<button ref="deleteObjective"
-			                       type="button"
-			                       className="btn btn-red-hover delete-button-objective"
-			                       onClick={ this.handleDelObj }>
+											title="Delete"
+			                       	type="button"
+			                       	className="btn btn-red-hover delete-button-objective"
+			                       	onClick={ this.handleDelObj }>
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
 		}
