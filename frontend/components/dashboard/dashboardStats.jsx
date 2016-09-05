@@ -40,7 +40,7 @@ export default class DashboardStats extends React.Component {
 		return (
 			<div className="main">
 				<div className="countInfo">
-					<p><span><b>{Math.round(this.state.score.progress * 100) + '%'}</b> Medium progress by all users</span></p>
+					<p><span>Medium progress by all users</span><b>{Math.round(this.state.score.progress * 100) + '%'}</b></p>
 				</div>
 				<div className="tableInfo">
 					<table>

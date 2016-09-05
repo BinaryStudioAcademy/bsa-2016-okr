@@ -8,6 +8,7 @@ aside#inter-panel {
    border-left: 1px solid #DBDBDB;
    width: $right-stat-panel-width;
    background-color: #F9FAFB;
-   overflow-y: auto;
+   //noinspection CssInvalidPropertyValue
+   overflow-y: overlay;
    overflow-x: hidden;
 }

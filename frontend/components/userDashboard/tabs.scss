@@ -12,12 +12,18 @@
 	.tab{
 		display: table-cell;
 		width:100px;
-		border: 1px solid #2c3e50;
+		border: 1px solid #607D8B;
 		padding: 4px;
 		cursor: pointer;
-		border-color: #607D8B;
 		color:#787D8B;
 		background: white;
+		border-radius: 3px;
+		&:first-child{
+			border-radius: 3px 0 0 3px;
+		}
+		&:last-child{
+			border-radius: 0 3px 3px 0;
+		}
 	}
 
 	.mainTabs{
@@ -49,7 +55,7 @@
 	.tab-wrapper {
 		display:table;
 		margin-bottom: 10px;
-		border-collapse: collapse;
+		//border-collapse: collapse;
 	}
 
 	.active {

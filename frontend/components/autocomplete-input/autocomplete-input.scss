@@ -40,7 +40,7 @@
 
   .autocomplete-result-li:hover {
     &:not(.inactive) {
-      color: #555;
+      color: #607D8B;
       background-color: lighten($color-blue-grey, 45%);
     }
   }
