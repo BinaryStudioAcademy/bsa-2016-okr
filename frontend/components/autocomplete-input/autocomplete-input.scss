@@ -41,7 +41,7 @@
   .autocomplete-result-li:hover {
     &:not(.inactive) {
       color: #555;
-      background: -webkit-linear-gradient(#e4eaec, #c1dada);
+      background-color: lighten($color-blue-grey, 45%);
     }
   }
 

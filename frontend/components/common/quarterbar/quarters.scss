@@ -17,7 +17,7 @@ $primary-color_local: #607D8B;
     transition: none;
     &:hover{
       cursor: pointer;
-      background-color: lighten($color-blue-grey, 45%);;
+      background-color: lighten($color-blue-grey, 45%);
     }
 
     & > option{
