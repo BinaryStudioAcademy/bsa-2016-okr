@@ -18,10 +18,21 @@
 			margin-right: 5px;
 			font-size: 20px;
 		}
+		.obj-count-panel{
+			background: #607d8b;
+			padding: 2px 8px;
+			color: #fff;
+			font-size: 16px;
+			border-radius: 4px;
+			margin-left: 5px;
+		}
 	}
 	
 	.category-title-container{
 		padding: 1px;
+		&:before{
+			top: 23px;
+		}
 	}
 }
 
