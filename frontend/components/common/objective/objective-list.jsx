@@ -1,7 +1,7 @@
 import React from 'react';
 import ObjectiveInput from '../../home-page/objectiveInput.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
-import './objective-list.scss';
+import './objective.scss';
 
 
 class ObjectiveList extends React.Component{
@@ -39,15 +39,15 @@ class ObjectiveList extends React.Component{
 
 			categoryItems = categories.map((category, index) => {
 				let input;
-
+				
 				var objectiveItems = objectives
 					.filter((objective) => {
 						return objective.templateId.category == category._id
 					})
 					.map((item, index) => {
-						return <ObjectiveItem index={ index } key={ item._id } item={ item } 
+						return <ObjectiveItem index={ index } key={ item._id } item={ item } myId={ this.props.myId }
 							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } 
-							changeKeyResultScore={ changeKeyResultScore }
+							changeKeyResultScoreOne={ changeKeyResultScore }
 							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						/>
 					});

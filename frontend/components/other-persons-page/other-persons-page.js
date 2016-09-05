@@ -29,7 +29,7 @@ class OtherPersonsPage extends Component {
 				<div>
 					<CentralWindow>
 						<PersonInfo />
-						<UserOjectives />
+						<UserOjectives route={this.props.routing.pathname}/>
 					</CentralWindow>
 					<StatPanel>
 						<UserDashboard where="otherPersonPage"/>

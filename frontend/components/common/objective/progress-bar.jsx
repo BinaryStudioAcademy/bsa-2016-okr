@@ -4,7 +4,8 @@ const Progress = (props) => {
 	let keyResults = props.data;
 	let score = 0;
 	let value = 0;
-
+	console.log('progr', keyResults);
+	
 	if(keyResults.length !== 0) {
 		score = keyResults.reduce((prev, keyResult) => {
 			return prev += +keyResult.score;

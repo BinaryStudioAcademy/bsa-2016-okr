@@ -1,7 +1,6 @@
 @import '../common/variables';
 
 #user-objectives{
-	margin: 0 5%;
 	p{
 		padding-left: 0;
 		padding-right: 0;
@@ -60,7 +59,7 @@
 
 		}
 	}
-	.otherUserKR{
+	/* .otherUserKR{
 		.users-key-results{
 			margin-top: -48px;
     	position: relative;
@@ -74,11 +73,7 @@
 				cursor: pointer;
         padding: 5px 10px;
 			}
-			.key-result-details span{
-				color: #000;
-				cursor: inherit;
-				padding: 0 15px 0 0;
-			}
+			
 			.display{
 				display: block;
 				margin-bottom: 20px;
@@ -86,59 +81,8 @@
 			.undisplay{
 				display: none;
 			}
-			
-			ul {
-				 width: 100%;
-         margin: 0;
-         padding: 0px;
-         list-style: none;
-				
-				.user-key-result{
-					position: relative;
-					border: 1px solid #c5c5c5;
-          border-top: none;
-          background-color: #eaeaea;
-          padding: 10px 15px;
-				
-					div{
-						display: inline-block;
-					}
-					.name{
-						width: 65%;
-					}
-					.difficulty{
-          	font-size: 13px;
-          	padding: 2px 6px;
-          	background-color:  $color-blue-grey;
-          	color: #fff;
-          	border-radius: 2px;
-          	margin-right: 60px;
-          	float: right;
-          	display: inline-block;
-          }
-
-					.score {
-						position: absolute;
-						top: 6px;
-						right: 15px;
-						display: block;
-						box-sizing: border-box;		
-						font-size: 15px;			
-						background: $color-green;
-						border: 1px solid $color-green;
-						border-radius: .3em;
-						padding: 2px;
-						height: 1.7em;
-						width: 2.1em;
-						line-height: 1.5em;
-						text-align: center;
-						color: $color-white;
-					}
-				}
-			}
 		}
-		
-	}
+	} */
 }
 #quaterPanel{
 
@@ -221,7 +165,7 @@
 #topPanel {
   display: inline-block;
   width: 100%;
-  padding: 0px 5% 10px;
+  padding-bottom: 10px;
   box-sizing: border-box;
 
     .userInfo{
