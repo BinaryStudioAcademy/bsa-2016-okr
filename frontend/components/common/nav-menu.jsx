@@ -4,7 +4,7 @@ import './nav-menu.scss';
 
 const NavMenu = (props) => {
 	return (
-		<aside id="navbar" ref="">
+		<aside id="navbar">
 			<nav onClick={ closeNav }>
 				<ul>
 					<li>

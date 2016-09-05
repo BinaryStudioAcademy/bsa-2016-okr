@@ -1,17 +1,18 @@
 
-import { combineReducers } from 'redux'
-import history from './historyReducer'
-import recycleBin from './recycleBinReducer.js'
-import usersList from './usersListReducer.js'
-import okrManaging from './okrManagingReducer.js'
-import userPage from './otherPersonReducer.js'
-import mapping from './mappingReducer.js' 
-import myState from './myStateReducer.js'
-import keyResults from './keyResultReducer'
-import objectives from './objectiveReducer'
-import categories from './categoriesReducer'
-import userDashboard from './userDashboard'
-import acceptObj from './acceptObjective'
+import { combineReducers } from 'redux';
+import history from './historyReducer';
+import recycleBin from './recycleBinReducer.js';
+import usersList from './usersListReducer.js';
+import okrManaging from './okrManagingReducer.js';
+import userPage from './otherPersonReducer.js';
+import mapping from './mappingReducer.js';
+import myState from './myStateReducer.js';
+import keyResults from './keyResultReducer';
+import objectives from './objectiveReducer';
+import categories from './categoriesReducer';
+import userDashboard from './userDashboard';
+import acceptObj from './acceptObjective';
+import stats from './statsReducer';
 import app from './appReducer';
 
 
@@ -31,6 +32,7 @@ export default combineReducers({
   userDashboard,
   keyResults,
   objectives,
+  stats,
   routing: routerReducer,
-  acceptObj
+  acceptObj,
 });
