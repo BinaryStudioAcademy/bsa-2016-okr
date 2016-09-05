@@ -41,13 +41,13 @@ class Header extends Component {
 				<button id="bars" onClick={ this.onBarsClick } >
 					<i className="fi flaticon-menu-1" aria-hidden="true"></i>
 				</button>
-				<div className='mentor-info'>
+				{/*<div className='mentor-info'>
 					{ photo }
 					<div className='mentorName'>
 						<span className='mentorTitle'>Mentor:</span> 
 						<br /> {mentor} 
-					</div>
-				</div>
+					</div> 
+				</div>*/}
 				<div className="user-info clearfix">
 					<div className="logo">
 						<img src="http://www.appresume.com/cv_templates/cv_2_1/conf/images/profile.jpg" alt="" />
