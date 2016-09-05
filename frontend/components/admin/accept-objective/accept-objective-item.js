@@ -42,7 +42,7 @@ class AcceptObjectiveItem extends Component {
 			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id);
 		}
 
-		if (this.props.item.type === "key") {
+		if (this.props.item.type === "key result") {
 			
 			let body = {};			
 			body.isDeclined = true;
@@ -53,7 +53,6 @@ class AcceptObjectiveItem extends Component {
 
 	accept(id) {
 
-
 		if (this.props.item.type === "objective") {
 			
 			let body = {};		
@@ -62,7 +61,7 @@ class AcceptObjectiveItem extends Component {
 			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id);
 		}
 
-		if (this.props.item.type === "key") {
+		if (this.props.item.type === "key result") {
 			
 			let body = {};			
 			body.isApproved = true;
