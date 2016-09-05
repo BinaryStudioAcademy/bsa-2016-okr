@@ -15,9 +15,9 @@
 		cursor: pointer;
 		color: #777;
 		i{
-			margin-right: 5px;
+			margin-right: 8px;
 			font-size: 20px;
-		}
+			color: #aaa;  }
 		.obj-count-panel{
 			display: block;
 			float: right;
@@ -30,11 +30,38 @@
 		}
 	}
 	
-	.category-title-container{
-		padding: 1px;
-		&:before{
-			top: 23px;
-		}
+	.category-title-container{}
+
+	p {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		color: #aaaaaa;
+		font-size: 20px;
+		text-align: center;
+		position: relative;
+		padding: 4px;
+		width: 100%;
+		margin: 10px auto;
+	}
+
+	.category-title {
+		text-transform: capitalize;
+		display: inline-block;
+		padding: 10px;
+		position: relative;
+		background: lighten($color-blue-grey, 50%);
+	}
+
+	p:before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 23px;
+		left: 0;
+		height: 0;
+		width: 100%;
+		border-top: 1px solid #aaaaaa;
 	}
 }
 
@@ -46,24 +73,24 @@
 
 	.delete-button-objective{
 		position: absolute;
-		bottom: 20px;
+		bottom: 19px;
 		right: 18px;
-		padding: 6px;
+		padding: 7px 10px;
 		z-index: 1;
 	}
 	.cancel-button-objective{
 		position: absolute;
-		bottom: 15px;
+		bottom: 20px;
 		right: 18px;
-		padding: 7px;
+		padding: 7px 10px;
 		z-index: 1;
 	}
 
 	.save{
 		position: absolute;
-		bottom: 15px;
-		right: 53px;
-		padding: 7px;
+		bottom: 20px;
+		right: 60px;
+		padding: 7px 10px;
 		background: #4caf50;
 		z-index: 1;
 	}
@@ -74,9 +101,9 @@
 
 	.objective-edit {
 		position: absolute;
-		bottom: 20px;
-		right: 50px;
-		padding: 6px;
+		bottom: 19px;
+		right: 58px;
+		padding: 7px 10px;
 		z-index: 1;
 	}
 

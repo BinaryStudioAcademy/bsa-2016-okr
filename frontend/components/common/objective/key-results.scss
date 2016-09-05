@@ -2,7 +2,7 @@
 @import '../styles/commonStyles';
 
 .key-results {
-    margin-top: -48px;
+    margin-top: -52px;
     position: relative;
     margin-left: 18px;
     margin-bottom: 40px;
@@ -13,7 +13,14 @@
     }
     .change {
       cursor: pointer;
-      padding: 5px 10px;
+      padding: 7px 10px;
+      &:hover{
+        background-color: $color-aliceblue;
+        color: #fff;
+      }
+      &:active{
+        background-color: darken($color-aliceblue, 25%);
+      }
     }
 
     .display {
@@ -108,7 +115,6 @@
           margin-left: 15px;
           display: inline-block;
           float: right;
-          display: block;
           box-sizing: border-box;
           font-size: 15px;
           padding: 2px;

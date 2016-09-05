@@ -12,19 +12,14 @@ import UserDashboard from "../userDashboard/userDashboard.jsx"
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-// import * as actions from "../actions/categoriesActions";
 
 class Home extends React.Component {
 	constructor() {
 		super();
 	}
 
-	componentWillMount() {
-		// this.props.getAllCategories();
-	}
 
 	render() {
-		// <Dashboard />
 		return (
 			<div>
 				<CentralWindow>
@@ -38,17 +33,4 @@ class Home extends React.Component {
 	}
 }
 
-// function mapDispatchToProps(dispatch) {
-// 	return bindActionCreators(actions, dispatch);
-// }
-
-// function mapStateToProps(state) {
-// 	return {
-// 		stateFromReducer: state
-// 	};
-// }
-
-// const HomeConnected = connect(mapStateToProps, mapDispatchToProps)(Home);
-
-// export default HomeConnected;
 export default Home;
