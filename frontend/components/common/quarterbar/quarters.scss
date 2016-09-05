@@ -22,11 +22,7 @@ $primary-color_local: #607D8B;
 
     & > option{
       background-color: #fff;
-      color: #fff;
-      &:hover{
-        background-color: $primary-color_local;
-        color: #fff;
-      }
+      color: $primary-color_local;
     }
   }
 }
