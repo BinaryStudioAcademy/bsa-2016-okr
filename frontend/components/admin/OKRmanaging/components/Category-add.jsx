@@ -25,6 +25,7 @@ class NewCategory extends React.Component {
 
 	onDeleteCategory() {
 		this.props.onDelete();
+		this.refs.newCategory.value = '';
 	}
 
 	render() {

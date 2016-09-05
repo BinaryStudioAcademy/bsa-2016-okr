@@ -3,7 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import CategoryItem from './CategoryItem.jsx'
 import NewCategory from './Category-add.jsx'
-import * as actions from "../../../../actions/categoriesActions.js";
+
+import * as categoriesActions from "../../../../actions/categoriesActions.js";
+import * as okrManagingActions from "../../../../actions/okrManagingActions.js";
 
 class CategoryList extends Component {
 	constructor(props){
@@ -14,6 +16,9 @@ class CategoryList extends Component {
   }
 
 	addNewCategory() {
+			this.props.categoriesActions.cancelEdit();
+			this.props.okrManagingActions.cancelEdit();
+
 			let categoryAddBtn = this.refs.newCategoryButton;
 			let categoryAddElement = this.refs.newCategoryButton.nextElementSibling;
 
@@ -44,7 +49,7 @@ class CategoryList extends Component {
 		}
 
 		componentWillMount(){
-			this.props.cancelEdit();
+			this.props.categoriesActions.cancelEdit();
 		}
 
 render() {
@@ -60,10 +65,11 @@ render() {
 														 key = { index } 
 														 categories = { this.props.category } 
 														 objectives = { this.props.objectives } 
-														 editCategory = { this.props.editCategory }
-														 activeCategory = { this.props.activeCategory }
-														 cancelEdit = { this.props.cancelEdit }
-														 deleteCategory = { this.props.deleteCategory }
+														 editCategory = { this.props.categoriesActions.editCategory }
+														 activeCategory = { this.props.categoriesActions.activeCategory }
+														 cancelEdit = { this.props.categoriesActions.cancelEdit }
+														 deleteCategory = { this.props.categoriesActions.deleteCategory }
+														 onDeleteNewCategory = { this.onDelete }
 								/>
 			})}
 			</ul>
@@ -71,7 +77,7 @@ render() {
 						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={this.addNewCategory}>
 							+Add new category</a>
 						<NewCategory  category = { this.props.category }
-													addCategory = { this.props.addCategory }
+													addCategory = { this.props.categoriesActions.addCategory }
 													onDelete = { this.onDelete } 
 						/>
 			</div>
@@ -81,7 +87,10 @@ render() {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
+	return {
+		categoriesActions: bindActionCreators(categoriesActions, dispatch),
+		okrManagingActions: bindActionCreators(okrManagingActions, dispatch),
+	}
 }
 
 function mapStateToProps(state) {

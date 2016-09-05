@@ -11,13 +11,23 @@ class ObjectiveList extends React.Component{
   }
 
   componentWillMount(){
-    this.props.getObjectivesList()
+    this.props.cancelEdit();
+    this.props.getObjectivesList();
   }
 
   render(){
     var objectives = [];
-    objectives = this.props.objectivesList.map((objective, index) => {
-      return <ObjectiveData objective={objective} index={index} key={objective._id}/>
+    objectives = this.props.objectivesList.visibleObjectives.map((objective, index) => {
+      return <ObjectiveData objective = { objective } 
+                            index = { index } 
+                            key = { objective._id }
+                            categories = { this.props.categories }
+                            objectivesList = { this.props.objectivesList }
+                            editObjectiveTemplate = { this.props.editObjectiveTemplate }
+                            cancelEdit = { this.props.cancelEdit }
+                            activeObjective = { this.props.activeObjective }
+                            deleteObjective = { this.props.deleteObjective }
+              />
       })
     return (
         <div id='templates'>
@@ -33,7 +43,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    objectivesList: state.okrManaging.visibleObjectives
+    objectivesList: state.okrManaging,
+    categories: state.categories
   };
 }
 
