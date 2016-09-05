@@ -7,4 +7,5 @@
    top: $header-height;
    background-color: lighten($color-blue-grey, 50%);
    bottom: 0;
+   overflow-y: overlay;
 }

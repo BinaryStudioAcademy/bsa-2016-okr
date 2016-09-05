@@ -8,6 +8,8 @@ import { isEmpty } from '../../../backend/utils/ValidateService';
 
 import ChartStats from './chartStats.jsx';
 
+import './StatsPage.scss';
+
 class StatsPage extends Component {
 	constructor(props) {
 		super(props);

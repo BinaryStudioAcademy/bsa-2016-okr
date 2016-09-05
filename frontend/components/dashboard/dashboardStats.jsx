@@ -16,7 +16,8 @@ export default class DashboardStats extends React.Component {
 		return (
 			<tr>
 				<td>
-					<Link to={ `/user/${ row._id }` }>{ `${ row.userInfo.firstName } ${ row.userInfo.lastName }` }</Link>
+					{ `${ row.userInfo.firstName } ${ row.userInfo.lastName }` }
+					{/*<Link to={ `/user/${ row._id }` }>{ `${ row.userInfo.firstName } ${ row.userInfo.lastName }` }</Link>*/}
 				</td>
 				<td>
 					{ Math.round(row.totalScore * 100) + '%' }
@@ -48,7 +49,7 @@ export default class DashboardStats extends React.Component {
 						{ this.state.rows.map(this.renderRow) }
 					</table>
 					<table className="second">
-						<tr><td>..........</td><td>...</td></tr>
+						<tr><td>...</td><td>...</td></tr>
 						<tr><td>Lowest result</td><td>{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
 					</table>
 				</div>
