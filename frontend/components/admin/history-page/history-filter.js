@@ -22,6 +22,7 @@ class HistoryFilter extends Component {
 		this.setFilters = this.setFilters.bind(this);
 		this.onReset = this.onReset.bind(this);
 		this.restoreDefaultIcons = this.restoreDefaultIcons.bind(this);
+		this.unmarkAll = this.unmarkAll.bind(this);
 	}
 
 	setFilters() {
@@ -35,7 +36,31 @@ class HistoryFilter extends Component {
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
 		this.restoreDefaultIcons();
+		this.unmarkAll();
 	}
+
+	 unmarkAll(){
+      let list = document.getElementsByClassName('user');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+      list = document.getElementsByClassName('action');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+      list = document.getElementsByClassName('target');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+      list = document.getElementsByClassName('date');
+      Array.prototype.forEach.call(list, (item) => {
+        if(item.className.indexOf('bold') !== -1)
+           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
+      });
+    }
 
 	 restoreDefaultIcons ()  {
       document.getElementById('user').className = "fa fa-sort";
