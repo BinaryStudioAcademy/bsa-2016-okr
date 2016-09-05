@@ -15,18 +15,23 @@ class CategoryItem extends Component {
 	}
 
 	delete(){
+		this.props.onDeleteNewCategory();
+
 		let category = this.props.objectives.find(item => {
 			return item.category == this.props.category._id
 		})
 			
 		let result = confirm('Do you really want to delete category?');
-    if (result && category == undefined){
+    if (result && category == undefined) {
 			this.props.deleteCategory(this.props.category._id, true);
 		}	
-		else alert("This category isn't empty.");
+		else if(result && category != undefined){
+			alert("This category isn't empty.");
+		}
 	}
 
 	editCategory(){
+		this.props.onDeleteNewCategory();
 		this.props.activeCategory(this.props.index);
 	}
 
@@ -43,14 +48,13 @@ class CategoryItem extends Component {
 	}
 
 	render(){
-		console.log(this.props.categories)
 		let titleEl;
     let edit;
     let editSaveIcon;
     let editSaveTitle;
     let cancel;
     if(this.props.categories.edit && this.props.categories.activeCategory == this.props.index){
-    	titleEl = (<input type='text' className='category-title' defaultValue={this.props.category.title} />);
+    	titleEl = (<input type='text' className='category-edit-title' defaultValue={this.props.category.title} />);
 	    edit =(<i className='fi flaticon-success save' aria-hidden="true" title='Save' onClick={this.saveChanges}></i>);
 	    cancel = (<i className="fi flaticon-multiply cancel" title='Cancel' aria-hidden="true" onClick={this.cancelEdit}></i>);
     } else {

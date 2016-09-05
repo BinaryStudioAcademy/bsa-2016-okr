@@ -48,6 +48,7 @@
             resize: vertical;
             width: 65%;
             margin: 10px 0;
+            max-height: 100px;
         }
         .template-title{
             width: 65%;
@@ -184,9 +185,12 @@
                 .defaultKeyResultCheckbox{
                     display: inline-block;
                     float: right;
-                    margin-top: -6px;
                     margin-right: 15px;
+                    margin-top: -6px;
                 }
+                .defaultKeyResultCheckbox.editing{
+                    margin-top: 0;
+                }  
 
                 .key-result-item{
                     border: 1px solid #c5c5c5;
@@ -312,7 +316,7 @@
             position: relative;
             padding: 10px 10px;
 
-            .category-title{
+            .category-edit-title{
                 text-transform: lowercase; 
                 background-color: #fff;
                 width: 60%;

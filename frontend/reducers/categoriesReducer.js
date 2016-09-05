@@ -29,7 +29,6 @@ export default function categoriesReducer(state = initialState, action = {}) {
 
   case RECEIVED_ALL_CATEGORIES: {
 		const { data } = action;
-		console.log('from red')
 		return Object.assign({}, state, {
 			list: data,
 			edit: false,

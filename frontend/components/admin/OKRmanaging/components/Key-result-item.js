@@ -9,7 +9,7 @@ class KeyResult extends Component {
 	constructor(props) {
 		super(props);
 
-	this.deleteObjective = this.deleteObjective.bind(this);
+	this.deleteKeyResult = this.deleteKeyResult.bind(this);
 	this.editKeyResult = this.editKeyResult.bind(this);
 	this.cancelEdit = this.cancelEdit.bind(this);
 	this.setDefaultKeyResult = this.setDefaultKeyResult.bind(this);
@@ -17,8 +17,9 @@ class KeyResult extends Component {
 
 	setDefaultKeyResult() {
 		this.props.cancelEdit();
-	//	console.log(this.refs.defaultKeyResult.checked, this.props.item)
-			this.props.setDefaultKeyResult(this.props.objectiveId, this.props.item._id, this.refs.defaultKeyResult.checked);
+		this.props.onDeleteKeyResultClick();
+		
+		this.props.setDefaultKeyResult(this.props.objectiveId, this.props.item._id, this.refs.defaultKeyResult.checked);
 	}
 
 	cancelEdit(){
@@ -26,6 +27,8 @@ class KeyResult extends Component {
   }
 
 	editKeyResult(e){
+		this.props.onDeleteKeyResultClick();
+
 		if(this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult){
 			event.preventDefault();
 			let result = confirm('Do you really want to save changes?');
@@ -45,7 +48,8 @@ class KeyResult extends Component {
 		}
 	}
 
-	deleteObjective(){
+	deleteKeyResult(){
+		this.props.onDeleteKeyResultClick();
 		var result = confirm('Do you really want to delete key result?');
 		if (result){
 			let i = this.props.item._id;
@@ -87,17 +91,17 @@ class KeyResult extends Component {
       editSaveIcon = 'flaticon-edit';
       editSaveTitle = 'Edit'
       edit = 'edit';
-      cancel = (<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteObjective}></i>)
+      cancel = (<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteKeyResult}></i>)
     }
 			return (
 				<li className="key-result-item" >
 					{titleEl}
-					<div className='edit-key-result'>
+					<div className='edit-key-result '>
 						<i className={`fi ${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editKeyResult}></i>
 						{cancel}
 					</div>
 					{difficultyEl}
-					<div className='defaultKeyResultCheckbox'>
+					<div className={ `defaultKeyResultCheckbox ${edit}` }>
 						<input type="checkbox" id={`defaultKeyResult-${this.props.item._id}`}  ref='defaultKeyResult' defaultChecked={isKeyResultDefault} onChange={this.setDefaultKeyResult}></input>
 						<label htmlFor={`defaultKeyResult-${this.props.item._id}`} >Default</label>
 					</div>
