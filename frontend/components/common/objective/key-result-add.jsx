@@ -28,6 +28,8 @@ class KeyResult extends React.Component {
 			};
 
 			let userObjectiveId = this.props.objectiveId;
+			this.refs[`autocompleteInput-${this.props.objectiveId}`].refs['autocompleteInput'].value = '';
+			this.getAutocompleteData('');
 
 			this.props.addNewKeyResults(userObjectiveId, body);
 			this.props.onDeleteKeyResultClick();

@@ -29,8 +29,8 @@ class StatsPage extends Component {
 		let keyResultsChartData = [['Difficulty', 'AVG Score']].concat(keyResults.map(toArray));
 		let KeyResultChartEl = isEmpty(keyResults) ? (<div></div>) : (<ChartStats title="Objective average score by key result difficulty" color="#C5CAFC" data = { keyResultsChartData } />);
 		
-		console.log('Categories', categories);
-		console.log('Categories to array', toArray(categories));	
+		// console.log('Categories', categories);
+		// console.log('Categories to array', toArray(categories));	
 		
 		return (
 			<div className="main-content">
