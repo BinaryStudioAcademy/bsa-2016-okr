@@ -42,7 +42,7 @@
     
     th {
         font-weight: bold;
-        border-bottom: 1px solid #ccc;
+        background: lighten($color-blue-grey, 45%);
         padding: 10px;
         padding-left: 45px;
         text-align: left;
@@ -50,6 +50,9 @@
 
     tr {
         vertical-align: middle;
+        &:hover{
+            background: #eee;
+        }
     }
 
     td {
@@ -60,7 +63,8 @@
     }
     
     caption{
-        font-size: 14px;
+        font-size: 16px;
+        margin-bottom: 10px;
     }
     
     .second{
