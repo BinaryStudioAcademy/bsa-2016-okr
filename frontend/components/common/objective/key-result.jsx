@@ -36,13 +36,13 @@ class KeyResult extends Component {
   }
 
   render() {
-
+    let isArchived = this.props.isArchived;
     const item = this.props.item;
     let score;
     let rangeEl;
     let deleteEl;
 
-    if(this.props.id == session._id || this.props.myId == session._id){
+    if(!isArchived){
       score = this.state.score;
       rangeEl =(
         <input type="range" min="0" max="1" step="0.1" className="range keyScore"
@@ -67,7 +67,11 @@ class KeyResult extends Component {
         <span className='score'>{ score }</span>
         { rangeEl }
         
-        <div className='difficulty'>{item.templateId.difficulty}</div>
+        <div className={ `difficulty ${item.templateId.difficulty}` } title={item.templateId.difficulty}>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         
       </li>
     )

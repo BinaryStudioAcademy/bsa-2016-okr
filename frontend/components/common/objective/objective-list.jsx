@@ -1,8 +1,7 @@
 import React from 'react';
-import ObjectiveInput from '../../home-page/objectiveInput.jsx';
+import ObjectiveInput from './objectiveInput.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import './objective.scss';
-
 
 class ObjectiveList extends React.Component{
 
@@ -13,25 +12,27 @@ class ObjectiveList extends React.Component{
  		this.changeCategoryContentVisibility = this.changeCategoryContentVisibility.bind(this);
  	}
 
- 	changeCategoryContentVisibility(id){
- 		var icoId = id + " icon";
- 		if (document.getElementById(id).children[1].className === "hidden-category-content"){
- 			document.getElementById(id).children[1].className = "visible-category-content";
- 			document.getElementById(icoId).className = "fa fa-caret-up";
- 		}
- 		else{
- 			document.getElementById(id).children[1].className = "hidden-category-content";
- 			document.getElementById(icoId).className = "fa fa-caret-down";
+ 	changeCategoryContentVisibility(id) {
+ 		let icoId = id + " icon";
+ 		let categoryEl = document.getElementById(id);
+ 		let categoryIconEl = document.getElementById(icoId);
+
+ 		if (categoryEl.children[1].className === "hidden-category-content"){
+ 			categoryEl.children[1].className = "visible-category-content";
+ 			categoryIconEl.className = "fi flaticon-folder-10";
+ 		} else {
+ 			categoryEl.children[1].className = "hidden-category-content";
+ 			categoryIconEl.className = "fi flaticon-folder-2";
  		}
  	}
 
  	getCategoryItems() {
  		const categories = this.props.categories || [];
 		const objectives = this.props.objectives || [];
-		const my = this.props.my;
 		const ObjectiveItem = this.props.ObjectiveItem;
 		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
 		const changeKeyResultScore = this.props.changeKeyResultScore;
+		const isArchived = this.props.archived;
 
 		var categoryItems = [];
 
@@ -45,14 +46,15 @@ class ObjectiveList extends React.Component{
 						return objective.templateId.category == category._id
 					})
 					.map((item, index) => {
-						return <ObjectiveItem index={ index } key={ item._id } item={ item } myId={ this.props.myId }
+						return <ObjectiveItem index={ index } key={ item._id } item={ item } 
+							isArchived = { isArchived }
 							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } 
 							changeKeyResultScoreOne={ changeKeyResultScore }
 							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						/>
 					});
 
-				if(my) {
+				if(!isArchived) {
 					input = <ObjectiveInput 
 						createObjective={ this.props.createObjective(category._id) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }
@@ -64,7 +66,7 @@ class ObjectiveList extends React.Component{
 					<div key={ index } id={ category.title }>
 					<p className="category-title-container" onClick={ ()=>this.changeCategoryContentVisibility(category.title) }>
 						<span className="category-title">
-							<i className="fa fa-caret-up" id={category.title+' icon'} aria-hidden="true"></i>
+							<i className="fi flaticon-folder-10" id={category.title+' icon'} aria-hidden="true"></i>
 							{ category.title } ({ objectiveItems.length })
 						</span>
 					</p>
@@ -78,7 +80,8 @@ class ObjectiveList extends React.Component{
 		}
 		return categoryItems;
  	}
- 	render(){
+ 	
+ 	render() {
 		return (
 			<div id="project-category" className="category">{ this.getCategoryItems() }</div>
 		);

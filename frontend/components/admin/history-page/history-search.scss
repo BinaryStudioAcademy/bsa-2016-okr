@@ -1,5 +1,5 @@
-@import "normalize";
 @import "_variables";
+@import "normalize";
 
 .history-search-bar {
   display: flex;
@@ -40,7 +40,7 @@
 }
 
 .btn-filter {
-  margin-left: 12px;
+  margin: 0;
 }
 
 .active-button {

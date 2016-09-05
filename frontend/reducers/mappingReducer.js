@@ -61,40 +61,53 @@ export default function mappingReducer(state = initialState, action = {}) {
 			for (let i = 0; i < data.length; i++) {
 
 				data[i].avatar = "avatar1.png";
-				data[i].name = data[i].userInfo.firstName + " " + data[i].userInfo.lastName;;
+				data[i].name = data[i].userInfo.firstName + " " + data[i].userInfo.lastName;
+				data[i].lastName = data[i].userInfo.lastName;
 				data[i].email = data[i].userInfo.email;
+				data[i].secondPartEmail = data[i].email.substr(data[i].email.indexOf('@') + 1);
 				data[i].globalRole = data[i].userInfo.globalRole;
 
 			}
 
 			return Object.assign({}, state, {
 				users: JSON.parse(JSON.stringify(data)),
-				visibleUsers: JSON.parse(JSON.stringify(data)),
+				visibleUsers:  updateVisibleUsers(data, state.filter, state.sortByGlobalRole, state.isSortingUsed, state.globalRoleFilter),
 				globalRoles: getAllGlobalRoles(data)
 			})
 		}
 
 		case MAPPING_UPDATE_USER_ERROR: {
+
 			const {data} = action;
+
+			console.log(MAPPING_UPDATE_USER_ERROR);
 			
 			return state;
 		}
 
 		case GET_USERS_ERROR: {
+
 			const {data} = action;
+
+			console.log(GET_USERS_ERROR);
 			
 			return state;
 		}
 
 
 		case MAPPING_RECEIVED_ERROR: {
+
 			const {data} = action;
+
+			console.log(MAPPING_RECEIVED_ERROR);
 			
 			return state;
 		}
 
 		case MAPPING_RECEIVED_GLOBAL_ROLES: {
+
 			const {roles} = action;
+
 			
 			return Object.assign({}, state, {
 				roles: roles
@@ -102,6 +115,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 		}
 
 		case MAPPING_USERS_ROLES_FILTER: {
+
 			const {filter} = action;
 
 			return Object.assign({}, state, {
@@ -155,7 +169,9 @@ function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, glob
 		for (let i = 0; i < users.length; i++) {
 
 			if (users[i].name.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				users[i].email.toUpperCase().indexOf(filter.toUpperCase()) === 0 ) {
+				users[i].lastName.toUpperCase().indexOf(filter.toUpperCase()) === 0  ||
+				users[i].email.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
+				users[i].secondPartEmail.toUpperCase().indexOf(filter.toUpperCase()) === 0) {
 				visibleUsers.push(users[i]);
 			}
 		}
@@ -170,25 +186,22 @@ function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, glob
 
 	}
 
-    if (isSortingUsed) {
+	if (!sortByGlobalRole) {
 
-		if (sortByGlobalRole) {
+		visibleUsers.sort(function(a, b) {
+			    if(a.globalRole < b.globalRole) return -1;
+			    if(a.globalRole > b.globalRole) return 1;
+			    return 0;
+		});
+	} else {
 
-			visibleUsers.sort(function(a, b) {
-				    if(a.globalRole < b.globalRole) return -1;
-				    if(a.globalRole > b.globalRole) return 1;
-				    return 0;
-			});
-		} else {
-
-			visibleUsers.sort(function(a, b) {
-					if(a.globalRole < b.globalRole) return 1;
-				    if(a.globalRole > b.globalRole) return -1;
-				    return 0;
-			});
-		}
-
+		visibleUsers.sort(function(a, b) {
+				if(a.globalRole < b.globalRole) return 1;
+			    if(a.globalRole > b.globalRole) return -1;
+			    return 0;
+		});
 	}
+
 
 	return visibleUsers;
 }

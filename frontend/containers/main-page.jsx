@@ -2,7 +2,7 @@ import React from 'react';
 import "./main-page.scss";
 
 const MainPage = (props) => {
-	return(
+	return (
 		<div id="main">
 			{ props.children }
 		</div>

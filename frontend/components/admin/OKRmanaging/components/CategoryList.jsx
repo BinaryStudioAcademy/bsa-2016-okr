@@ -43,6 +43,10 @@ class CategoryList extends Component {
 			}
 		}
 
+		componentWillMount(){
+			this.props.cancelEdit();
+		}
+
 render() {
 	return(
 		<div>
@@ -50,14 +54,26 @@ render() {
 				<span>Categories</span>
 			</p>
 			<ul className='category-list'>
-			{this.props.category.map((item, index) => {
-				return <CategoryItem index={index} category={item} key={index} />
+			{this.props.category.list.map((item, index) => {
+				return <CategoryItem index = { index } 
+														 category = { item } 
+														 key = { index } 
+														 categories = { this.props.category } 
+														 objectives = { this.props.objectives } 
+														 editCategory = { this.props.editCategory }
+														 activeCategory = { this.props.activeCategory }
+														 cancelEdit = { this.props.cancelEdit }
+														 deleteCategory = { this.props.deleteCategory }
+								/>
 			})}
 			</ul>
 			<div id="new-category">
 						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={this.addNewCategory}>
 							+Add new category</a>
-						<NewCategory  onDelete={this.onDelete} />
+						<NewCategory  category = { this.props.category }
+													addCategory = { this.props.addCategory }
+													onDelete = { this.onDelete } 
+						/>
 			</div>
 		</div>
 		)
@@ -70,7 +86,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		category: state.categories.list
+		category: state.categories,
+		objectives: state.okrManaging.objectives
 	};
 }
 

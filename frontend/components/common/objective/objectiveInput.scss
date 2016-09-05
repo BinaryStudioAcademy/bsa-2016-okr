@@ -1,5 +1,5 @@
-@import '../common/variables';
-@import '../common/styles/commonStyles';
+@import '../_variables';
+@import '../styles/commonStyles';
 
 .new-obj-creds{
   margin-bottom: 30px;
@@ -7,7 +7,6 @@
   label{
     display: block;
     width: 100%;
-    font-family: $primary-font;
     font-size: 20px;
     color: #777777;
     margin-bottom: 10px;

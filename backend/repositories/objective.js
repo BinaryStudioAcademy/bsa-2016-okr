@@ -102,6 +102,26 @@ ObjectiveRepository.prototype.autocomplete = function(title, categoryId, exclude
 		.exec(callback);
 };
 
+ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
+ 	
+	var model = this.model;
+	
+	model
+		.find({
+			isApproved: false,
+			isDeleted: false,
+			isDeclined: false
+		})
+		.populate({
+			path: "creator",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.populate('category')
+		.exec(callback);
+};
+
 // ObjectiveRepository.prototype.getAllDeleted = function(callback) {
 // 	var model = this.model;
 // 	var query = model.find({

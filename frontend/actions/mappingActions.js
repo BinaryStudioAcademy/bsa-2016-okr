@@ -68,7 +68,7 @@ export function getUsers() {
 		dispatch({ type: MAPPING_GET_USERS });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('api/user/')
+		return axios.get('/api/user/')
 		.then(response => {
 			dispatch(receivedUsers(response.data));
 			dispatch({ type: REMOVE_REQUEST	});

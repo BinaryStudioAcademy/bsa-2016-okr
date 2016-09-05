@@ -69,7 +69,7 @@ class KeyResult extends React.Component {
 				<div className="autocomplete-button">
 					<button type="button" className="btn btn-blue-hover add-button-key-result"
 					        onClick={ this.addNewItem }>
-						<i className="fi flaticon-success" aria-hidden="true"></i>
+						<i className="fi flaticon-add" aria-hidden="true"></i>
 					</button>
 				</div>
 

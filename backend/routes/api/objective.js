@@ -15,6 +15,10 @@ router.get('/', (req, res, next) => {
 	return service.getAll(res.callback);
 });
 
+ router.get('/notApproved/', (req, res, next) => {
+ 	return repository.getAllNotApproved(res.callback);
+ });
+
 router.get('/deleted', (req, res, next) => {
 	return repository.getAllDeletedPopulate(res.callback);
 });

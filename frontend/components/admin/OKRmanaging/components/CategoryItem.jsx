@@ -1,8 +1,4 @@
 import React, {Component} from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import * as actions from "../../../../actions/categoriesActions.js";
 
 class CategoryItem extends Component {
 	constructor(props){
@@ -24,7 +20,6 @@ class CategoryItem extends Component {
 		})
 			
 		let result = confirm('Do you really want to delete category?');
-		console.log(category)
     if (result && category == undefined){
 			this.props.deleteCategory(this.props.category._id, true);
 		}	
@@ -48,6 +43,7 @@ class CategoryItem extends Component {
 	}
 
 	render(){
+		console.log(this.props.categories)
 		let titleEl;
     let edit;
     let editSaveIcon;
@@ -74,16 +70,5 @@ class CategoryItem extends Component {
 			)
 	}
 }
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
-}
 
-function mapStateToProps(state) {
-  return {
-    categories: state.categories,
-    objectives: state.okrManaging.objectives
-  };
-}
-
-const CategoryItemConnected = connect(mapStateToProps, mapDispatchToProps)(CategoryItem);
-export default CategoryItemConnected
+export default CategoryItem

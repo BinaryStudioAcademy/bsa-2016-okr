@@ -61,6 +61,25 @@ router.get('/user/:id', (req, res, next) => {
 	return repository.getByUserIdPopulate(id, res.callback);
 });
 
+// Soft delete key result from objective
+router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
+
+	var flag = req.params.flag || '';
+	var userObjectiveId = req.params.id || '';
+	var keyResultId = req.params.keyResultId || '';
+	var session = req.session;
+
+	if(!ValidateService.isCorrectId(userObjectiveId)
+			|| !ValidateService.isStringBoolean(flag)
+			|| !ValidateService.isCorrectId(keyResultId)) {
+		return res.badRequest();
+	}
+
+	flag = HelpService.stringToBoolean(flag);
+
+	return service.softDeleteKeyResult(session, userObjectiveId, keyResultId, flag, res.callback);
+});
+
 router.post('/:id/keyresult/', (req, res, next) => {
 	let userObjectiveId = req.params.id || '';
 	let userId = req.session._id;
@@ -105,24 +124,6 @@ router.put('/:id/keyresult/score', (req, res, next) => {
 	}
 
 	service.setScoreToKeyResult(userId, objectiveId, keyResultId, score, res.callback);
-});
-
-// Soft delete key result from objective
-router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
-	var flag = req.params.flag || '';
-	var userObjectiveId = req.params.id || '';
-	var keyResultId = req.params.keyResultId || '';
-	var session = req.session;
-
-	if(!ValidateService.isCorrectId(userObjectiveId)
-	|| !ValidateService.isStringBoolean(flag)
-	|| !ValidateService.isCorrectId(keyResultId)) {
-		return res.badRequest();
-	}
-
-	flag = HelpService.stringToBoolean(flag);
-
-	return service.softDeleteKeyResult(session, userObjectiveId, keyResultId, flag, res.callback);
 });
 
 router.delete('/:id/:flag', (req, res, next) => {

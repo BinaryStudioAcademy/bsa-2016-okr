@@ -1,13 +1,10 @@
 @import "_variables";
 
-.history-filter-bar-container {
-
-}
-
 .history-filter-bar {
 	padding: 12px;
+	margin-bottom: 10px;
 	background-color: #fff;
-	border: 1px solid #99BCE0;
+	border: 1px solid #ddd;
 	color: #777777;
 }
 
@@ -36,7 +33,6 @@
 }
 
 .history-filter-table {
-
 	width: auto;
 	margin-left: auto;
 	margin-right: auto;
@@ -44,6 +40,13 @@
 	td {
 		vertical-align: middle !important;
 		padding: 2px;
+		.btn-filter{
+			padding: 7px 20px;
+			margin-left: 20px;
+			&:hover{
+				color: #fff;
+			}
+		}
 	}
 
 	.cell-right-align {

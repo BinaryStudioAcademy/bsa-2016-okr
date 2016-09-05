@@ -15,13 +15,13 @@ class HistoryFilter extends Component {
 
 	constructor(props) {
 		super(props);
-		this.showFiltersContainer = this.showFiltersContainer.bind(this);
 		this.onChangeFrom = this.onChangeFrom.bind(this);
 		this.onChangeTo = this.onChangeTo.bind(this);
 		this.onChangeName = this.onChangeName.bind(this);
 		this.onChangeType = this.onChangeType.bind(this);
 		this.setFilters = this.setFilters.bind(this);
 		this.onReset = this.onReset.bind(this);
+		this.restoreDefaultIcons = this.restoreDefaultIcons.bind(this);
 	}
 
 	setFilters() {
@@ -34,39 +34,34 @@ class HistoryFilter extends Component {
 		this.props.getFilteredItems();
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
+		this.restoreDefaultIcons();
 	}
 
-	showFiltersContainer() {
-		if (this.props.history.showHistoryFilters) {
-			return "show-container"
-		} else {
-			return "hide-container"
-		}
-		return "hide-container";
-	}
+	 restoreDefaultIcons ()  {
+      document.getElementById('user').className = "fa fa-sort";
+      document.getElementById('action').className = "fa fa-sort";
+      document.getElementById('target').className = "fa fa-sort";
+      document.getElementById('date').className = "fa fa-sort";
+    }
 
 	onChangeFrom(dateString, { dateMoment, timestamp }) {
-		console.log(dateString);
 		this.props.setFilterDateFrom(dateString);
 		this.props.getFilteredItems();
 	}
 
 	onChangeTo(dateString, { dateMoment, timestamp }) {
-		console.log(dateString);
 		this.props.setFilterDateTo(dateString);
 		this.props.getFilteredItems();
 	}
 
 	onChangeName(event) {
 		var value = event.target.value;
-		console.log(value);
 		this.props.setNameFilter(value);
 		this.props.getFilteredItems();
 	}
 
 	onChangeType(event) {
 		var value = event.target.value;
-		console.log(value);
 		this.props.setTypeFilter(value);
 		this.props.getFilteredItems();
 	}
@@ -74,7 +69,7 @@ class HistoryFilter extends Component {
 	render() {
 
 		return(
-			<div className={"history-filter-bar " + this.showFiltersContainer()}>
+			<div className={"history-filter-bar"}>
 				<table className="history-filter-table">
 					<tbody>
 						<tr>

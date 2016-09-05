@@ -1,9 +1,9 @@
-import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR, TOOK_APPRENTICE} from '../actions/otherPersonActions.js'
+import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR, TOOK_APPRENTICE, REMOVED_APPRENTICE} from '../actions/otherPersonActions.js'
 import { CHANGED_KEYRESULT_SCORE, CHANGED_KEYRESULT_SCORE_ERROR } from '../actions/myStateActions.js'
 import { currentYear, currentQuarter } from '../../backend/config/constants'
 
 const initialState = {
-	user: [],
+	user: {},
 	waiting: true,
 	selectedTab: currentQuarter,
 	selectedYear: currentYear
@@ -14,7 +14,7 @@ export default function otherPersonReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_USER: {
 			return Object.assign({}, state, {
-				waiting: true
+				waiting: true,
 			});
 		}
 		case RECEIVED_USER: {
@@ -45,10 +45,27 @@ export default function otherPersonReducer(state = initialState, action) {
 		}
 
 		case TOOK_APPRENTICE: {
-			const { response } = action;
-
+			const { response, me } = action;
+			let userCopy = Object.assign({}, state.user);
+			userCopy.mentor = {
+				_id : me._id,
+				createdAt : me.createdAt,
+				localRole : me.localRole,
+				menor : me.mentor,
+				updatedAt : me.updatedAt,
+				userInfo : me.userInfo
+			}
 			return Object.assign({}, state, {
+				user : userCopy
+			});
+		}
 
+		case REMOVED_APPRENTICE: {
+			const { response } = action;
+			let userCopy = Object.assign({}, state.user);
+			userCopy.mentor = null;
+			return Object.assign({}, state, {
+				user : userCopy
 			});
 		}
 
@@ -66,10 +83,11 @@ export default function otherPersonReducer(state = initialState, action) {
 
 			console.log(CHANGED_KEYRESULT_SCORE_ERROR);
 			console.log(data);
-			
+
 			return state;
 		}
 */
+
 		default:
 		return state;
 
@@ -93,7 +111,7 @@ function setScoreToKeyResult(user, objectiveId, keyResultId, score) {
 			userObjectiveIndex = userObjectiveFoundedIndex;
 			return true;
 		}
-		
+
 		return false;
 	});
 

@@ -84,4 +84,30 @@ KeyResultRepository.prototype.getByTitleAndObjectiveId = function(title, objecti
 			.exec(callback);
 };
 
+KeyResultRepository.prototype.getAllNotApproved = function(callback) {
+ 	
+	var model = this.model;
+	
+	model
+		.find({
+			isApproved: false,
+			isDeleted: false,
+			isDeclined: false
+		})
+		.populate({
+			path: "creator",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.populate('objectiveId')
+		.populate({
+			path: "objectiveId",
+			populate: {
+				path: 'category'
+			}
+		})
+		.exec(callback);
+};
+
 module.exports = new KeyResultRepository();

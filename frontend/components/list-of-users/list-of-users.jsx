@@ -42,7 +42,7 @@ class ListOfUsers extends Component {
 				<CentralWindow>
 					<div id='usersList'>
 					<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
-						<div className="users-title">
+						<div className='users-title'>
 							<p><span>Users</span></p>
 							</div>
 						<ul className='listOfUsers'>{userNodes}</ul>

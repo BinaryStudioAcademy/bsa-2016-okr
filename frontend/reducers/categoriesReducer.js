@@ -1,9 +1,17 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
-import { RECEIVED_ERROR, RECEIVED_ALL_CATEGORIES,
-				 RECIVED_DELETE_CATEGORY, DELETE_CATEGORY_ERROR,
-				 ACTIVE_CATEGORY, CANCEL_EDIT_CATEGORY,
-				 RECIVED_EDIT_CATEGORY, EDIT_CATEGORY_ERROR,
-				 RECIVED_NEW_CATEGORY, RECIVED_NEW_CATEGORY_ERROR } from '../actions/categoriesActions';
+import { RECEIVED_ERROR, 
+				 RECEIVED_ALL_CATEGORIES,
+				 RECIVED_DELETE_CATEGORY, 
+				 DELETE_CATEGORY_ERROR,
+				 ACTIVE_CATEGORY, 
+				 CANCEL_EDIT_CATEGORY,
+				 RECIVED_EDIT_CATEGORY, 
+				 EDIT_CATEGORY_ERROR,
+				 RECIVED_NEW_CATEGORY, 
+				 RECIVED_NEW_CATEGORY_ERROR } from '../actions/categoriesActions';
+				 
+import { ACTIVE_OBJECTIVE, 
+				 ACTIVE_KEY_RESULT } from '../actions/okrManagingActions.js';
 
 const initialState = {
   list: [],
@@ -21,11 +29,24 @@ export default function categoriesReducer(state = initialState, action = {}) {
 
   case RECEIVED_ALL_CATEGORIES: {
 		const { data } = action;
-
+		console.log('from red')
 		return Object.assign({}, state, {
 			list: data,
+			edit: false,
+			activeCategory: ''
 		});
 	}
+
+	case ACTIVE_OBJECTIVE:
+		return Object.assign({}, state, {
+			edit: false,
+			activeCategory: ''
+		});
+
+	case ACTIVE_KEY_RESULT: 
+    return Object.assign({}, state, {
+      edit: false
+     })
 
 	case DELETE_CATEGORY_ERROR: 
 		return state;
@@ -68,7 +89,8 @@ export default function categoriesReducer(state = initialState, action = {}) {
 	case RECIVED_NEW_CATEGORY: {
 		const {data} = action;
 		return Object.assign({}, state, {
-			list: addCategory(state.list, data)
+			list: addCategory(state.list, data),
+			edit: false
 		})
 	}
 

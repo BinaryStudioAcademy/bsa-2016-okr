@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import "./quarters.scss";
 import { currentYear, currentQuarter } from '../../../../backend/config/constants';
 
+const session = require('../../../../backend/config/session');
+
 class Quarterbar extends Component {
    constructor(props) {
       super(props);
@@ -59,6 +61,7 @@ function getQuarters() {
          current_tab = this.props.selectedTab,
          quarters = this.props.quarters,
          isMe = this.props.me,
+         mentorId = this.props.mentorId,
          quarters_to_show = [];
 
    for(let i = 0; i < 4; i++){
@@ -69,7 +72,7 @@ function getQuarters() {
             className={quarters[i].index == current_tab ? 'active' : ''}>
             {quarters_prefixes[i]} quarter</li> )
       } else {
-         if(isMe != undefined && isMe == true){
+         if(isMe != undefined && isMe == true || (mentorId == session._id)){
             quarters_to_show.push(
                <li className="not-exist" data-id={i + 1} key={i + 1}>Open {quarters_prefixes[i]} quarter</li>
             )

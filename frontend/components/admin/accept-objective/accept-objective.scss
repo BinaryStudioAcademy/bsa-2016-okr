@@ -1,216 +1,215 @@
+@import '../../common/variables';
+
 #accept-objective-wrapper {
-	padding: 3%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-}
+  padding: 3%;
+  height: 100%;
+  overflow-y: auto; }
+
+#accept-objective-wrapper .objective-list {
+  padding-bottom: 100px; }
 
 #accept-objective--search-bar {
-	margin: 0 5%;
-}
+  margin: 0 5%; }
 
 #accept-objective-wrapper input {
-	width: 100%;
-	height: 40px;
-	box-sizing: border-box;
-}
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box; }
 
 accept-objective--search-bar button {
-	float: right;
-    margin-right: 5%;
+  float: right;
+  margin-right: 5%; 
+}
+
+.objective-text-info {
+  width: 75%;
+}
+
+.objective-general-info {
+  color: green;
 }
 
 #accept-objective-wrapper p#main-title {
-	box-sizing: border-box;
-    color: #aaaaaa;
-    font-size: 16px;
-    text-align: center;
-    position: relative;
-    padding-top: 12px;
-    padding-bottom: 4px;
-    width: 100%;
-    margin: 0 auto;
-    font-size: 20px;
-    min-width: 550px;
+  box-sizing: border-box;
+  color: #aaaaaa;
+  font-size: 16px;
+  text-align: center;
+  position: relative;
+  padding-top: 12px;
+  padding-bottom: 4px;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 20px;
+  min-width: 550px; 
+}
+
+#accept-objective-wrapper .type {
+  float: right;
 }
 
 #accept-objective-wrapper p#main-title span {
-	display: inline-block;
-    padding: 10px;
-    position: relative;
-    background: #f3f6f7;
-    z-index: 10;
-}
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  background: #f3f6f7;
+  z-index: 10; 
+  }
 
 #accept-objective-wrapper p#main-title:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 31px;
-    left: 0;
-    height: 0;
-    width: 100%;
-    border-top: 1px solid #aaaaaa;
-    z-index: 0;
-}
+  content: '';
+  display: block;
+  position: absolute;
+  top: 31px;
+  left: 0;
+  height: 0;
+  width: 100%;
+  border-top: 1px solid #aaaaaa;
+  z-index: 0; 
+  }
 
 #accept-objective-wrapper .accept-objective-item {
   width: 48.85%;
   margin-right: 2%;
+  box-sizing: border-box;
+  padding: 20px;
   background: #f9fafb;
   border: 1px solid #ddd;
   border-radius: 3px 3px 0 3px;
   overflow: hidden;
-  display: inline-block;
+  display: inline-table;
   margin-top: 20px;
   margin-bottom: 20px;
-}
+  }
 
 #accept-objective-wrapper .accept-objective-item:nth-child(2n) {
-	margin-right: 0;
-}
+  margin-right: 0;
+   }
 
-#accept-objective-wrapper .accept-objective-item h2, h3{
-	padding:0;
-	margin: 0;
-}
+#accept-objective-wrapper .accept-objective-item h2, h3 {
+  padding: 0;
+  margin: 0; 
+  }
 
 #accept-objective-wrapper .accept-objective-item h2 {
-	padding-left: 5px;
-	line-height: 50px;
-	display: inline-block;
-}
+  padding-left: 5px;
+  color: $primary-color;
+  position: absolute;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: -15px;
+  }
 
 #accept-objective-wrapper .accept-objective-item h3 {
-	padding-left: 5px;
-	display: inline-block;
+  margin-top: 5px;
+  display: inline-block;
+  font-size: 16px;
 }
 
 #accept-objective-wrapper .accept-objective-item img {
-	width: 34px;
-	height: 34px;
-	float: right;
-	margin-top: 8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  margin-top: 0px;
+  }
+
+#accept-objective-wrapper .accept-objective-item .red-hover:hover {
+  background: $color-red;
+  color: white; 
 }
 
-#accept-objective-wrapper .accept-objective-item .row .red-hover:hover {
-	background: red;
-	color: white;
+#accept-objective-wrapper .accept-objective-item .green-hover:hover {
+  background: $color-green;
+  color: white; 
 }
 
-#accept-objective-wrapper .accept-objective-item .row .green-hover:hover {
-	background: green;
-	color: white;
-}
-
-#accept-objective-wrapper .accept-objective-item .row button {
-	float: right;
-	height: 26px;
-	background: #CFD8DC;
-	border-radius: 4px;
-	border: none;
-	color: #555;
-    text-align: center;
-    -webkit-transition: all .1s;
-    -moz-transition: all .1s;
-    -o-transition: all .1s;
-    transition: all .1s;
-    margin-right: 23px;
-    margin-top: 12px;
+#accept-objective-wrapper .accept-objective-item  button {
+  float: right;
+  height: 26px;
+  background: #CFD8DC;
+  border-radius: 4px;
+  border: none;
+  color: #555;
+  text-align: center;
+  -webkit-transition: all .1s;
+  -moz-transition: all .1s;
+  -o-transition: all .1s;
+  transition: all .1s;
+  margin-left: 15px;
+  padding: 5px 10px;
 }
 
 #accept-objective-wrapper .accept-objective-item .left-column {
-   width: 80px;
-   float: left;
-   min-width: 80px;
+  width: 80px;
+  display: inline-block;
+  min-width: 80px;
 }
 
-#accept-objective-wrapper .accept-objective-item .row span {
-	display: inline-block;
-    border-radius: 3px;
-    background-color: #607d8b;
-    color: #fff;
-    padding: 3px 8px;
-    font-size: 13px;
-    float: right;
-}
-
-#accept-objective-wrapper .accept-objective-item .margin-right-23px {
-	margin-right: 23px;
+#accept-objective-wrapper .accept-objective-item span {
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #607d8b;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 15px;
 }
 
 
-#accept-objective-wrapper .accept-objective-item .row .text-block {
-    display: block;
-    clear: both;
-    float: left;
-	background: #CCC;
-	border-radius: 4px;
-	width: 70%;
-	margin-left: 85px;
-	margin-bottom: 20px;
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-top: 25px;
-	padding-bottom: 25px;
+#accept-objective-wrapper .accept-objective-item  .text-block {
+  display: block;
+  color: #777;
+  border-radius: 4px;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 14px;
 }
 
-#accept-objective-wrapper .accept-objective-item .row .text-block p {
-	text-align:justify;
+#height-25px {
+  height: 25px;
+}
+#accept-objective-wrapper .accept-objective-item  .text-block p {
+  text-align: justify;
+  padding:0;
 }
 
-#accept-objective-wrapper .accept-objective-item .row span.category {
-	background-color: #4caf50;
-}
+#accept-objective-wrapper .accept-objective-item  span.category {
+  background-color: $color-green; 
+  float: right;
+  margin-top: 11px;
+  clear: both;
+ }
 
-#accept-objective-wrapper .accept-objective-item .row {
-	padding-top: 10px;
-	padding-bottom: 10px;
+#accept-objective-wrapper .accept-objective-item  {
+  min-height: 167px;
+  position: relative;
+  clear: both;
+  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 1475px) {
-	#accept-objective-wrapper .accept-objective-item {
-	  width: 48.8%;
-	  margin-right: 2%;
-	  background: #f9fafb;
-	  border: 1px solid #ddd;
-	  border-radius: 3px 3px 0 3px;
-	  overflow: hidden;
-	  display: inline-block;
-	  margin-top: 20px;
-	  margin-bottom: 20px;
-	}
-}
+  #accept-objective-wrapper .accept-objective-item {
+    width: 48.8%;
+    margin-right: 2%;
+    background: #f9fafb;
+    border: 1px solid #ddd;
+    border-radius: 3px 3px 0 3px;
+    overflow: hidden;
+    display: inline-table;
+    margin-top: 20px;
+    margin-bottom: 20px;
+ } }
 
-@media screen and (max-width: 1125px) {
-	#accept-objective-wrapper .accept-objective-item {
-	  width: 48.7%;
-	  margin-right: 2%;
-	  background: #f9fafb;
-	  border: 1px solid #ddd;
-	  border-radius: 3px 3px 0 3px;
-	  overflow: hidden;
-	  display: inline-block;
-	  margin-top: 20px;
-	  margin-bottom: 20px;
-	}
-}
-
-@media screen and (max-width: 1000px) {
-	#accept-objective-wrapper .accept-objective-item {
-	  width: 100%;
-	  min-width: 550px;
-	  margin-right:0;
-	  background: #f9fafb;
-	  border: 1px solid #ddd;
-	  border-radius: 3px 3px 0 3px;
-	  overflow: hidden;
-	  display: inline-block;
-	  margin-top: 20px;
-	  margin-bottom: 20px;
-	}
-}
-
+ @media all and (max-width: 1400px) {
+  #accept-objective-wrapper .accept-objective-item {
+    width: 100%;
+    min-width: 550px;
+    margin-right: 0;
+    background: #f9fafb;
+    border: 1px solid #ddd;
+    border-radius: 3px 3px 0 3px;
+    overflow: hidden;
+    display: inline-table;
+    margin-top: 20px;
+    margin-bottom: 20px; 
+ } }
 

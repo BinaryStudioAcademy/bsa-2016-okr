@@ -14,26 +14,62 @@ class AcceptObjectiveItem extends Component {
 			        <div className="left-column">
 				        <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
 			        </div>
-			        <h2>Charles Mills</h2>
-			        <button className="red-hover">Decline</button>
-			        <button className="green-hover">Accept</button>				   
+			        <h2>{this.props.item.userName}</h2>
+			        <button className="red-hover" onClick={this.decline.bind(this)}>Decline</button>
+			        <button className="green-hover" onClick={this.accept.bind(this)}>Accept</button>				   
 			    </div>
-			    <div className="row">
-			        <div className="left-column">
-					    <span>objective</span>
-				    </div>
-				    <h3>Objective title</h3>
-				    <span className="margin-right-23px category">projects</span>
+			    <div className="objective-general-info">
+				    <span className="type">{this.props.item.type}</span>
+				    <span className="margin-right-23px category">{this.props.item.category}</span>
 			    </div>
-			    <div className="row">
+		        <div className="objective-text-info">			    
+				    <h3>{this.props.item.title}</h3>
 				    <div className="text-block">
-					    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi .</p>
+					    <p>{this.props.item.description}</p>
 					</div>
-			    </div>
-		   </div>
+			    </div>		    
+		    </div>
 		   )
+	}
+
+	decline(id) {
+
+		if (this.props.item.type === "objective") {
+			
+			let body = {};		
+			body.isDeclined = true;
+
+			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id);
+		}
+
+		if (this.props.item.type === "key") {
+			
+			let body = {};			
+			body.isDeclined = true;
+
+			this.props.updateKeyTemplateRequest(this.props.item.id, body, this.props.item.id);
+		}
+	}
+
+	accept(id) {
+
+
+		if (this.props.item.type === "objective") {
+			
+			let body = {};		
+			body.isApproved = true;
+
+			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id);
+		}
+
+		if (this.props.item.type === "key") {
+			
+			let body = {};			
+			body.isApproved = true;
+
+			this.props.updateKeyTemplateRequest(this.props.item.id, body, this.props.item.id);
+		}
+
 	}
 
 }

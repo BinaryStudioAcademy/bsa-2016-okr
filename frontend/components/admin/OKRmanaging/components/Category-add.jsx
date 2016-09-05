@@ -1,10 +1,5 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import * as actions from "../../../../actions/categoriesActions.js";
-
 class NewCategory extends React.Component {
 	constructor(props) {
 		super(props);
@@ -45,16 +40,4 @@ class NewCategory extends React.Component {
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
-function mapStateToProps(state) {
-	return {
-		category: state.categories
-	};
-}
-
-const NewCategoryConnected = connect(mapStateToProps, mapDispatchToProps)(NewCategory);
-
-export default NewCategoryConnected;
+export default NewCategory;

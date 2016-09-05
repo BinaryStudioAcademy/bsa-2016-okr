@@ -454,7 +454,7 @@ export default function recBynReducer(state = initialState, action) {
 
 				return Object.assign({}, state, {
 					setRecycleBinFilterDateFrom,
-					visibleItems: updateVisibleItems(state.visibleItems, setRecycleBinFilterDateFrom, state.setRecycleBinFilterDateTo,
+					visibleItems: updateVisibleItems(state.recycleBinItems, setRecycleBinFilterDateFrom, state.setRecycleBinFilterDateTo,
 						state.categoryOrTypeFilter, state.objectiveType, state.keyType, state.sortByDate, state.categoryType, 
 						state.userName, state.isSortingUsed)
 				})
@@ -466,7 +466,7 @@ export default function recBynReducer(state = initialState, action) {
 
 				return Object.assign({}, state, {
 					setRecycleBinFilterDateTo,
-					visibleItems: updateVisibleItems(state.visibleItems, state.setRecycleBinFilterDateFrom, setRecycleBinFilterDateTo,
+					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom, setRecycleBinFilterDateTo,
 						state.categoryOrTypeFilter, state.objectiveType, state.keyType, state.sortByDate, state.categoryType, 
 						state.userName, state.isSortingUsed)
 				})
@@ -615,22 +615,19 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		}
 	}
 
-	console.log(isSortingUsed);
+	if (sortByDate) {
 
-	if (isSortingUsed) {
+		visibleItems.sort(function(a, b) {
+			return new Date(a.deletedDate) - new Date(b.deletedDate);
+		});
 
-		if (sortByDate) {
+	} else {
 
-			visibleItems.sort(function(a, b) {
-				return new Date(a.deletedDate) - new Date(b.deletedDate);
-			});
-		} else {
-
-			visibleItems.sort(function(a, b) {
-				return new Date(b.deletedDate) - new Date(a.deletedDate);
-			});
-		}
+		visibleItems.sort(function(a, b) {
+			return new Date(b.deletedDate) - new Date(a.deletedDate);
+		});
 	}
+
 
 	return visibleItems;
 }
@@ -639,12 +636,12 @@ function filterDate(items, dateFrom, dateTo) {
 
 	let visibleItems = [];
 
-	if(dateFrom == '' && dateTo == '') { 	
+	if(dateFrom === "" && dateTo === "") { 	
 
 		visibleItems = JSON.parse(JSON.stringify(items));
 
 	}
-	else if(dateFrom == '' && dateTo != '') {
+	else if(dateFrom === "" && dateTo != "") {
 		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
 			if (dateTo >= items[i].deletedDate) {
@@ -652,7 +649,7 @@ function filterDate(items, dateFrom, dateTo) {
 			}
 		}
 	}
-	else if(dateFrom != '' && dateTo == ''){
+	else if(dateFrom != "" && dateTo === ""){
 		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
 			if (dateFrom <= items[i].deletedDate) {

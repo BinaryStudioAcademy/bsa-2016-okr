@@ -172,7 +172,7 @@ export function keyResultScoreChangedError(data) {
 export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
-		dispatch({ type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API });
+		//dispatch({ type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API });
 
 		return axios.delete('/api/userObjective/' + objectiveId +'/keyResult/'+ keyResultId +'/true')
 				.then(response => {

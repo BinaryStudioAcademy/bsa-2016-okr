@@ -87,8 +87,8 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 	break;
 	 	case 'user':
 	 		sortedList.sort((a, b) => {
-	 			let nameA = a.author.userInfo.firstName;
-	 			let nameB = b.author.userInfo.firstName;
+	 			let nameA = a.author.userInfo.firstName + " " + a.author.userInfo.lastName;
+	 			let nameB = b.author.userInfo.firstName + " " + b.author.userInfo.lastName;
 	 			if(nameA === nameB)
 	 				return 0
 	 			else if(nameA > nameB)
@@ -105,17 +105,10 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 				return sortWayNum
 	 			else if(actionA < actionB)
 	 				return -1 * sortWayNum
-	 			else {
-	 				let actionA = a.type.split(' ')[1];
-	 				let actionB = b.type.split(' ')[1];
-	 				
-	 				if(actionA > actionB)
-	 					return sortWayNum
-	 				else if(actionA < actionB)
-	 					return -1 * sortWayNum
-	 				else return 0;
-	 			};  
+	 			else return 0;
 	 		};
+
+	 		sortedList.sort(sorting);
 	 	break;
 	 	case 'target': 
 	 		function getHistoryObjectName(historyItem){
@@ -133,7 +126,6 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
         			keyResults.forEach((key) => {
         				if (key.templateId._id.toString() === historyItem.userKeyResult.toString() 
         					|| key._id.toString() === historyItem.userKeyResult.toString()){
-          					console.log(key);
           					keyResult = key;
           				}
        				})
@@ -172,10 +164,12 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 
 		for (let key in filters)
 		{
+			let type = item.type.toLowerCase();
 			if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
-				if(item.type.indexOf(filters[key]) === -1)
+				if(type.indexOf(filters[key]) === -1)
 					{
-						isFiltered = false;
+						if(filters[key] !== 'update' || type.indexOf('change') === -1)
+							isFiltered = false;
 					}
 				};
 					

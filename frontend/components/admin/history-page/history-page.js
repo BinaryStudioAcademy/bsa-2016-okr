@@ -16,68 +16,84 @@ import { connect } from 'react-redux';
 import * as actions from "../../../actions/historyActions";
 
 class HistoryPage extends React.Component {
-	constructor(props) {
-		super(props);
-		this.filterButtonState = this.filterButtonState.bind(this);
-		this.handleFilterButton = this.handleFilterButton.bind(this);
-	}
+   constructor(props) {
+      super(props);
+      this.filterButtonState = this.filterButtonState.bind(this);
+      this.handleFilterButton = this.handleFilterButton.bind(this);
+      this.handleFilterShow = this.handleFilterShow.bind(this);
+   }
 
-	filterButtonState(show) {
-		if (show) {
-			return 'active-button'
-		} else {
-			return ''
-		}
-	}
+   handleFilterShow(event){
+      handler_filter_click.call(this, event);
+   }
 
-	handleFilterButton() {
-		let show = this.props.history.showHistoryFilters;
-		this.props.showFilters(!show);
-	}
+   filterButtonState(show) {
+      if (show) {
+         return 'active-button'
+      } else {
+         return ''
+      }
+   }
 
-	render() {
-		return(
-			<div className="history-page-window">
-			<div className="main-content">
-				<div className="history-page">
-					<div id="top-panel">
-						{/*historyItems: {console.log(this.props.historyItems)}*/}
-						<div className="history-page-header">
-							<div className="history-page-header-row">
+   handleFilterButton() {
+      let show = this.props.history.showHistoryFilters;
+      this.props.showFilters(!show);
+   }
 
-								<div className="history-page-title">
-									<p><span>History</span></p>
-								</div>
-								
-							</div>
-							<div className="history-filter-container">
-									<button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.history.showHistoryFilters)} onClick={this.handleFilterButton}><i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button>
-							</div>
-							<div className="history-page-header-row">
-								<div className="history-filter-bar-container">
-									<HistoryFilter/>
-								</div>
-							</div>
-						</div>
-					</div>
-					<HistoryItemList/>
-				</div>
-				</div>
-			</div>
-		)
-	}
+   render() {
+      return (
+         <div>
+            <CentralWindow fullScreen={ true }>
+               <div className="history-page">
+                  <div id="top-panel">
+                     {/*historyItems: {console.log(this.props.historyItems)}*/}
+                     <div className="history-page-header">
+                           <div className="history-page-title">
+                              <p><span>History</span></p>
+                           </div>
+                        <button className="btn btn-blue" onClick={this.handleFilterShow}>
+                           <i className="fi flaticon-funnel"/>
+                           &nbsp;Filter
+                        </button>
+                        <div className="history-filter-container">
+                           <div className="history-filter-bar-container">
+                              <HistoryFilter/>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+                  <HistoryItemList/>
+               </div>
+            </CentralWindow>
+         </div>
+      )
+   }
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
+   return bindActionCreators(actions, dispatch);
 }
 
 function mapStateToProps(state) {
-	return {
-		history: state.history
-	};
+   return {
+      history: state.history
+   };
 }
 
 const HistoryPageConnected = connect(mapStateToProps, mapDispatchToProps)(HistoryPage);
 export default HistoryPageConnected
 
+function handler_filter_click(event) {
+   let   filter_container = document.querySelector('.history-filter-container'),
+         t_body = document.querySelector('#historyTable tbody');
+
+   if(!filter_container.classList.contains('opened')){
+      filter_container.classList.add('opened');
+      t_body.style.height = '53vh';
+   }
+   else {
+      filter_container.classList.remove('opened');
+      t_body.style.height = '66vh';
+   }
+}
