@@ -7,37 +7,37 @@
 
 #usersList {
 	.users-title {
-	clear: both;
+		clear: both;
 
-	p {
-		color: #aaaaaa;
-		font-size: 20px;
-		text-align: center;
-		position: relative;
-		padding: 4px;
-		width: 98%;
-		margin: 0 5px;
-	}
+		p {
+			color: #aaaaaa;
+			font-size: 20px;
+			text-align: center;
+			position: relative;
+			padding: 4px;
+			width: 98%;
+			margin: 0 5px;
+		}
 
-	p > span {
-		display: inline-block;
-		padding: 10px;
-		position: relative;
-		background: lighten($color-blue-grey, 50%);
-		z-index: 10;
-	}
+		p > span {
+			display: inline-block;
+			padding: 10px;
+			position: relative;
+			background: lighten($color-blue-grey, 50%);
+			z-index: 10;
+		}
 
-	p:after {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 28px;
-		left: 0;
-		height: 0;
-		width: 100%;
-		border-top: 1px solid #aaaaaa;
-		z-index: 0;
-	}
+		p:after {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 28px;
+			left: 0;
+			height: 0;
+			width: 100%;
+			border-top: 1px solid #aaaaaa;
+			z-index: 0;
+		}
 	}
 	.searchBar {
 		float: right;
@@ -54,24 +54,24 @@
 
 .listOfUsers {
 	list-style: none;
-    padding: 5px;
-    margin-top: 10px;
-    margin-left: -3%;
+	padding: 5px;
+	margin-top: 10px;
+	margin-left: -3%;
 
 	.userItemDiv{
 		background: #f9fafb;
-	    border: 1px solid #dddddd;
-	    margin-bottom: 15px;
-    	padding: 10px 5px;
-	    -webkit-transition: all .15s;
-	    -moz-transition: all .15s;
-	    -o-transition: all .15s;
-	    transition: all .15s;
-	    width: 47%;
-	    margin-left: 3%;
-	    box-sizing: border-box;
-	    display: inline-block;
-	    height: 92px;
+		border: 1px solid #dddddd;
+		margin-bottom: 15px;
+		padding: 10px 5px;
+		-webkit-transition: all .15s;
+		-moz-transition: all .15s;
+		-o-transition: all .15s;
+		transition: all .15s;
+		width: 47%;
+		margin-left: 3%;
+		box-sizing: border-box;
+		display: inline-block;
+		height: 92px;
 		
 		&:hover{
 			background-color: #fff;
@@ -91,32 +91,32 @@
 		}
 		.userInfo{
 			display: inline-block;
-		    position: absolute;
-		    top: 0;
-		    width: 38%;
+			position: absolute;
+			top: 0;
+			width: 38%;
 
 			.userName {
 				font-weight: bold;
 			}
 			div{
 				margin: 6px 0;
-    			position: relative;
+				position: relative;
 
-    			img{
-    				width: 35px;
-				    border-radius: 50%;
-				    margin: 0px;
-    			}
-    			i{
-				font-size: 32px;
-				margin: 0;
-			}
+				img{
+					width: 35px;
+					border-radius: 50%;
+					margin: 0px;
+				}
+				i{
+					font-size: 32px;
+					margin: 0;
+				}
 				.mentorName{
 					position: absolute;
-				    top: 0px;
-				    line-height: 18px;
-				    font-size: 12px;
-				    padding-left: 5px;
+					top: 0px;
+					line-height: 18px;
+					font-size: 12px;
+					padding-left: 5px;
 
 					.mentorTitle{
 						color: #aaa;
@@ -130,24 +130,24 @@
 		}
 		.progressTitle {
 			margin-left: 2%;
-    		font-size: 14px;
+			font-size: 14px;
 		}
 		.progress-bar{
 			margin-right: 10%; 
 			width: 37%;
-		    padding-top: 23px;
+			padding-top: 23px;
 			
 			.progressValue {
 				top: 40px;
 			}
 		}	
 
-			img{
-				margin: 0 10px;
-    			width: 60px;
-    			border-radius: 3px;
-			}
+		img{
+			margin: 0 10px;
+			width: 60px;
+			border-radius: 3px;
 		}
+	}
 
 	.userItem:hover{
 		cursor: pointer;
@@ -155,23 +155,23 @@
 }
 
 @media all 
-    and (max-width: 1400px)
-    and (min-width: 900px)
+and (max-width: 1400px)
+and (min-width: 900px)
 {
 	.listOfUsers {
 		.userItemDiv{
-		    width: 97%;
-		    margin-left: 3%;
-		    display: block;
+			width: 97%;
+			margin-left: 3%;
+			display: block;
 
 			.progressTitle {
 				margin-left: 2%;
-	    		font-size: 14px;
+				font-size: 14px;
 			}
 			.progress-bar{
 				margin-right: 50px; 
 				width: 30%;
-			    padding-top: 10px;
+				padding-top: 10px;
 				
 				.progressValue {
 					top: 30px;

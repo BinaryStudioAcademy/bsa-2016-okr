@@ -1,22 +1,58 @@
 @import "../components/common/variables";
 
 #central-window {
-   position: absolute;
-   top: 0;
-   right: 0;
-   left: 0;
-   bottom: 0;
-   margin-right: $right-stat-panel-width;
-   overflow-y: scroll;
-   overflow-x: hidden;
-   &.full-screen {
-      margin-right: 0;
-   }
-   
-   .main-content {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      padding: 30px;
-   }
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin-right: $right-stat-panel-width;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	&.full-screen {
+		margin-right: 0;
+	}
+}
+
+.main-content {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 30px;
+
+	.page-title {
+		width: 100%;
+		margin-left: auto;
+
+		& > p {
+			color: #aaaaaa;
+			font-size: 20px;
+			text-align: center;
+			position: relative;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			min-width: 535px;
+			margin: 10px 5%;
+
+			& > span {
+				display: inline-block;
+				padding: 10px;
+				position: relative;
+				background: lighten($color-blue-grey, 50%);
+				z-index: 10;
+			}
+
+			&:after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 28px;
+				left: 0;
+				height: 0;
+				width: 100%;
+				border-top: 1px solid #aaaaaa;
+				z-index: 0;
+			}
+		}
+	}
 }

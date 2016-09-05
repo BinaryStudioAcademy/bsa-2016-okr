@@ -31,7 +31,10 @@ class StatsPage extends Component {
 		console.log('Categories to array', toArray(categories));	
 		
 		return (
-			<div className="barStats">
+			<div className="main-content">
+				<div className="page-title">
+					<p><span>OKR system overall stats</span></p>
+				</div>
 				{ CategoriesChartEl }
 				{ KeyResultChartEl }
 			</div>
