@@ -56,26 +56,29 @@ class ObjectiveItem extends Component {
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
 
 		if(!isArchived){
-			editButton = (<i ref="edit"
-			                className="fi flaticon-edit objective-edit"
-			                onClick={ this.handleEdit }>
-									 </i>);
-			saveButton = (<i ref="saveEdit"
-			                className="fi flaticon-success save hidden"
-			                aria-hidden="true"
-			                title="Save">
-										</i>);
-			cancelButton = (<i ref="cancelEdit"
-			                   className="fi flaticon-multiply cancel delete-button-objective hidden"
-			                   title='Cancel'
-			                   aria-hidden="true"
-			                   onClick={ this.handleCancelEdit }>
-										</i>);
+			editButton = (<button 	ref="edit"
+										 	className="btn btn-blue-hover objective-edit"
+										 	onClick={ this.handleEdit }>
+												<i className="fi flaticon-edit"></i>
+											</button>);
+			saveButton = (<button 	ref="saveEdit"
+											className="btn btn-green save hidden"
+											aria-hidden="true"
+											title="Save">
+												<i className="fi flaticon-success"></i>
+											</button>);
+			cancelButton = (<button ref="cancelEdit"
+											className="btn btn-red cancel cancel-button-objective hidden"
+											title='Cancel'
+											aria-hidden="true"
+											onClick={ this.handleCancelEdit }>
+												<i className="fi flaticon-error"></i>
+											</button>);
 			deleteButton = (<button ref="deleteObjective"
 			                       type="button"
 			                       className="btn btn-red-hover delete-button-objective"
 			                       onClick={ this.handleDelObj }>
-															<i className="fi flaticon-garbage-2" aria-hidden="true"></i>
+															<i className="fi flaticon-garbage-2"></i>
 											</button>);
 		}
 
