@@ -13,7 +13,7 @@
 		display: table-cell;
 		width:100px;
 		border: 1px solid #607D8B;
-		padding: 4px;
+		padding: 5px 40px;
 		cursor: pointer;
 		color:#787D8B;
 		background: white;
@@ -50,6 +50,8 @@
 	.tabLine{
 		display:table-row;
 		text-align: center;
+		margin: 0;
+		padding: 0;
 	}
 
 	.tab-wrapper {
