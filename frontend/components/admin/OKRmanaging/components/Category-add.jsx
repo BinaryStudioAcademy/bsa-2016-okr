@@ -1,4 +1,6 @@
 import React from 'react';
+import sweetalert from 'sweetalert';
+import '../../../common/styles/sweetalert.css';
 
 class NewCategory extends React.Component {
 	constructor(props) {
@@ -9,8 +11,7 @@ class NewCategory extends React.Component {
 	}
 
 	addNewCategory() {
-		let result = confirm('Do you really want to add new category?');
-    if (result){
+		let handler = function() {
 			let title = this.refs.newCategory.value;
 			const body = {
 				title: title,
@@ -20,11 +21,21 @@ class NewCategory extends React.Component {
 
 			this.props.onDelete();
 			this.refs.newCategory.value = '';
-		}
+		}.bind(this);
+
+		sweetalert({
+			title: "Do you really want to add new category?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	onDeleteCategory() {
 		this.props.onDelete();
+		this.refs.newCategory.value = '';
 	}
 
 	render() {

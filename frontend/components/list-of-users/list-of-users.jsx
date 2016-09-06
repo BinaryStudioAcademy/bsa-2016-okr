@@ -20,15 +20,15 @@ class ListOfUsers extends Component {
 	search(e) {
 		this.props.search(e.target.value);
 	}
-	
+
 	componentWillMount(){
 		this.props.getUsersList();
 	}
 
 	render() {
-		const {user, searchValue, name} = this.props.users;
+		const {user, myApprentices, searchValue, name} = this.props.users;
 		var userNodes = user.map(function (user, index) {
-			if((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 || 
+			if((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
 				user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0 )
 				return(
 					<UserItem key={index} user={user} />
@@ -37,11 +37,31 @@ class ListOfUsers extends Component {
 				return ;
 		}.bind(this));
 
+		var apprenticeNodes = myApprentices.map(function (user, index) {
+			if((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
+				user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0 )
+				return(
+					<UserItem key={index} user={user} />
+				);
+			else
+				return ;
+		}.bind(this));
+		let apprentices = null;
+		let apprenticesList = null;
+		if (apprenticeNodes.length > 0) {
+		apprentices = (<div className='users-title'>
+												<p><span>Apprentices</span></p>
+											</div>)
+		apprenticesList = (<ul className='listOfUsers'>{apprenticeNodes}</ul>)
+		}
+
 		return (
 			<div>
 				<CentralWindow>
 					<div id='usersList'>
 					<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
+						{ apprentices }
+						{ apprenticesList }
 						<div className='users-title'>
 							<p><span>Users</span></p>
 							</div>

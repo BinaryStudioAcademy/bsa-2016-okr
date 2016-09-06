@@ -25,26 +25,17 @@
     .name {
       display: inline-block;
       margin-bottom: 10px;
+      color: #555;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: bold;
     }
     .description {
       color: #777;
       font-size: 15px;
+      font-style: italic;
       margin-bottom: 15px;
       width: 75%;
       line-height: 18px;
-    }
-    .delete-button-objective {
-      margin-top: -20px;
-      position: absolute;
-      bottom: 45px;
-      right: 15px;
-      display: block;
-      //margin: 0;
-      padding: 5px 0px;
-      width: 35px;
-      z-index: 1;
     }
     .progress-bar {
       padding-top: 0;
@@ -54,40 +45,4 @@
       }
     }
   }
-}
-
-.category {
-
-  p {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    color: #aaaaaa;
-    font-size: 20px;
-    text-align: center;
-    position: relative;
-    padding: 4px;
-    width: 100%;
-    margin: 30px auto;
-  }
-
-  .category-title {
-    text-transform: capitalize;
-    display: inline-block;
-    padding: 10px;
-    position: relative;
-    background: lighten($color-blue-grey, 50%);
-  }
-
-  p:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 25px;
-    left: 0;
-    height: 0;
-    width: 100%;
-    border-top: 1px solid #aaaaaa;
-  }
-
 }

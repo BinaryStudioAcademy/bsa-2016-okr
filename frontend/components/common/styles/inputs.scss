@@ -92,14 +92,14 @@ textarea{
         position: absolute;
         top: 14px;
         width: 45px;
-        height: 14px;
+        height: 17px;
         right: -40px;
-        font-size: 12px;
+        font-size: 13px;
         line-height: 11px;
         background-color: #aaa;
         color: #fff;
         box-sizing: border-box;
-        padding: 1.5px 12px 0 12px;
+        padding: 2.5px 12px 0 12px;
         border-radius: 0 10px 10px 0;
       }
 
@@ -115,7 +115,7 @@ textarea{
     border: 4px solid lighten($color-blue-grey, 52%);
     border-radius: 12px ;
     background: #eee;
-    height: 22px;
+    height: 25px;
     box-sizing: border-box;
 }
 ::-webkit-progress-value {

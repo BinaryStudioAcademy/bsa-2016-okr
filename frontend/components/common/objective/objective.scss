@@ -13,32 +13,86 @@
 
 	.category-title{
 		cursor: pointer;
-
+		color: #777;
 		i{
-			margin-right: 5px;
-			font-size: 15px;
+			margin-right: 8px;
+			font-size: 20px;
+			color: #aaa;  }
+		.obj-count-panel{
+			display: block;
+			float: right;
+			background: #cfd8dc;
+			padding: 3px 8px;
+			color: #fff;
+			font-size: 16px;
+			border-radius: 4px;
+			margin-left: 8px;
 		}
 	}
 	
-	.category-title-container{
-		padding: 1px;
+	.category-title-container{}
+
+	p {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		color: #aaaaaa;
+		font-size: 20px;
+		text-align: center;
+		position: relative;
+		padding: 4px;
+		width: 100%;
+		margin: 10px auto;
+	}
+
+	.category-title {
+		text-transform: capitalize;
+		display: inline-block;
+		padding: 10px;
+		position: relative;
+		background: lighten($color-blue-grey, 50%);
+	}
+
+	p:before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 23px;
+		left: 0;
+		height: 0;
+		width: 100%;
+		border-top: 1px solid #aaaaaa;
 	}
 }
 
 .home-objective{
+	@extend .clearfix;
+	button i{
+		pointer-events: none;
+	}
+
 	.delete-button-objective{
-		margin-top: -40px;
-		float: right;
-		display: block;
-		width: 20px;
+		position: absolute;
+		bottom: 13px;
+		right: 15px;
+		padding: 7px 10px;
+		z-index: 1;
+	}
+	.cancel-button-objective{
+		position: absolute;
+		bottom: 15px;
+		right: 17px;
+		padding: 7px 10px;
+		z-index: 1;
 	}
 
 	.save{
-		margin-top: 40px;
-		margin-right: 40px;
-		float: right;
-		display: block;
-		width: 20px;
+		position: absolute;
+		bottom: 15px;
+		right: 57px;
+		padding: 7px 10px;
+		background: #4caf50;
+		z-index: 1;
 	}
 
 	.hidden {
@@ -46,19 +100,22 @@
 	}
 
 	.objective-edit {
-		display: block;
-		float: right;
-		margin-right: 45px;
-		margin-top: -25px;
-
-		&:hover {
-			color: #4caf50;
-			cursor: pointer;
-		}
+		position: absolute;
+		bottom: 13px;
+		right: 55px;
+		padding: 7px 10px;
+		z-index: 1;
 	}
 
 	.description-textarea {
-		width: 65%;
+		display: block;
+		resize: vertical;
+		width: 100%;
+		height: 50px;
+		min-height: 50px;
+		max-height: 70px;
 		margin-bottom: 10px;
+		padding: 10px;
+		margin-right: 50px;
 	}
 }

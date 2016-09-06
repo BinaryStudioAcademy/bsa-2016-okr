@@ -174,11 +174,11 @@ export default function okrManagingReducer(state = initialState, action) {
                 category: data.category,
                 createdAt: data.createdAt,
                 creator: data.creator,
-                defaultKeyResults: data.defaultKeyResults, 
+                defaultKeyResults: [], 
                 description: data.description,
                 isApproved: data.isApproved,
                 isDeleted: data.isDeleted,
-                keyResults: data.defaultKeyResults,
+                keyResults: data.keyResults,
                 title: data.title,
                 updatedAt: data.updatedAt,
                 used: data.used
@@ -221,8 +221,8 @@ export default function okrManagingReducer(state = initialState, action) {
             const {data} = action;
              console.log(data)
             return Object.assign({}, state, {
-                visibleObjectives: setDefaultKeyResult(state.visibleObjectives, data),
-                objectives: setDefaultKeyResult(state.objectives, data)
+                visibleObjectives: setDefaultKeyResult(visibleObjectives, data),
+                objectives: setDefaultKeyResult(objectives, data)
             })
         }
 
@@ -239,9 +239,10 @@ function setDefaultKeyResult(objectives, data) {
 
     for (let i = 0; i < objectives.length; i++) {
         if (objectives[i]._id == data._id) {
-            objectives.splice(i, 1, data);
+            objectives.defaultKeyResults.splice(i, 1, data.defaultKeyResults);
         }
     }
+    console.log(objectives);
     return objectives
 }
 

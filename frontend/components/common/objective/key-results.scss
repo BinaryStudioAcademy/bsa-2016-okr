@@ -2,174 +2,154 @@
 @import '../styles/commonStyles';
 
 .key-results {
-    margin-top: -48px;
-    position: relative;
-    margin-left: 18px;
-    margin-bottom: 40px;
+	margin-top: -48px;
+	position: relative;
+	margin-left: 18px;
+	margin-bottom: 40px;
 
-    .key-result-details {
-      margin-top: 20px;
-      margin-bottom: -20px;
-    }
-    .change {
-      cursor: pointer;
-      padding: 5px 10px;
-    }
+	.key-result-details {
+		margin-top: 20px;
+		margin-bottom: -20px;
+	}
+	.change {
+		cursor: pointer;
+		padding: 7px 10px;
+		margin-bottom: -4px;
+		&:hover{
+			background-color: $color-aliceblue;
+			color: #fff;
+		}
+		&:active{
+			background-color: darken($color-aliceblue, 25%);
+		}
+	}
 
-    .display {
-      display: block;
-    }
+	.display {
+		display: block;
+	}
 
-    .undisplay {
-      display: none;
-    }
+	.undisplay {
+		display: none;
+	}
 
-    .key-result-details-ul {
-      width: 100%;  
-      margin: 0;
-      padding: 0px;
-      list-style: none;
+	.key-result-details-ul {
+		width: 100%;  
+		margin: 0;
+		padding: 0;
+		list-style: none;
 
-      li.key-result {
-        position: relative;
-        border: 1px solid #c5c5c5;
-        border-top: none;
-        background-color: #eaeaea;
-        padding: 10px 15px;
+		li.key-result {
+			position: relative;
+			border: 1px solid #c5c5c5;
+			border-top: none;
+			background-color: #eaeaea;
+			padding: 10px 15px;
 
-        div {
-          display: inline-block;
-        }
-        .key-result-title{
-          width: 55%;
-        }
+			div {
+				display: inline-block;
+			}
+			.key-result-title{
+				width: 55%;
+			}
 
-        .difficulty {
-          /* font-size: 13px;
-          padding: 2px 6px;
-          background-color:  $color-blue-grey;
-          color: #fff;
-          border-radius: 2px; */
-          float: right;
-          display: inline-block;
+			.difficulty {
+					/* font-size: 13px;
+					padding: 2px 6px;
+					background-color:  $color-blue-grey;
+					color: #fff;
+					border-radius: 2px; */
+					float: right;
+					display: inline-block;
 
-          div{
-            display: inline-block;
-            margin-left: 5px;
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            border: 1px solid $color-green; 
-            cursor: pointer;           
-          }
-        }
-        .easy {
-          :first-child{
-            background-color: $color-green; 
-          }
-        }
-        .intermediate {
-          :nth-child(0),
-          :nth-child(1){
-            background-color: $color-green;    
-          }
-        }
-        .advanced div{
-          background-color: $color-green;    
-        }
+					div{
+						display: inline-block;
+						margin-left: 5px;
+						height: 10px;
+						width: 10px;
+						border-radius: 50%;
+						border: 1px solid $color-green; 
+						cursor: pointer;           
+					}
+				}
+				.easy {
+					:first-child {
+						background-color: $color-green; 
+					}
+				}
+				.intermediate {
+					:nth-child(0),
+					:nth-child(1){
+						background-color: $color-green;    
+					}
+				}
+				.advanced div {
+					background-color: $color-green;    
+				}
 
+				.score {
+					margin-top: -4px;
+					margin-left: 15px;
+					display: inline-block;
+					float: right;
+					box-sizing: border-box;   
+					font-size: 15px;      
+					background: $color-green;
+					border: 1px solid $color-green;
+					border-radius: .3em;
+					padding: 2px;
+					height: 1.7em;
+					width: 2.1em;
+					line-height: 1.5em;
+					text-align: center;
+					color: $color-white;
+				}
+				.keyScore {
+					margin-left: 15px;
+					margin-top: 4px;
+					display: inline-block;
+					float: right;
+				}
 
-        .score {
-          margin-top: -4px;
-          margin-left: 15px;
-          display: inline-block;
-          float: right;
-          box-sizing: border-box;   
-          font-size: 15px;      
-          background: $color-green;
-          border: 1px solid $color-green;
-          border-radius: .3em;
-          padding: 2px;
-          height: 1.7em;
-          width: 2.1em;
-          line-height: 1.5em;
-          text-align: center;
-          color: $color-white;
-        }
-        .keyScore {
-          margin-left: 15px;
-          margin-top: 4px;
-          display: inline-block;
-          float: right;
-        }
+				.key-result-delete-button {
+					margin-top: -4px;
+					margin-left: 15px;
+					display: inline-block;
+					float: right;
+					box-sizing: border-box;
+					font-size: 15px;
+					padding: 2px;
+					height: 1.7em;
+					width: 2.1em;
+					line-height: 1.5em;
+					text-align: center;
+				}
+			}
+		}
 
-        .key-result-delete-button{
-          margin-top: -4px;
-          margin-left: 15px;
-          display: inline-block;
-          float: right;
-          display: block;
-          box-sizing: border-box;
-          font-size: 15px;
-          padding: 2px;
-          height: 1.7em;
-          width: 2.1em;
-          line-height: 1.5em;
-          text-align: center;
-        }
-      }
-    }
+		#new-obj-keyresults {
+			margin-bottom: 25px;
+			list-style-type: none;
+			border: 1px solid #c5c5c5;
+			border-top: none;
+			background-color: #eaeaea;
+			padding: 10px 15px;
 
-  .autocomplete {
-    width: 100%;
-    display: table;
+			.add-new-keyresult-btn {
+				display: inline-block;
+				cursor: pointer;
+				color: $color-green;
+				&:hover {
+					color: darken($color-green, 10%);
+					text-decoration: underline;
+				}
+			}
+			.display {
+				display: block;
+			}
 
-    .autocomplete-button {
-      display: table-cell;
-      width: 100%;
-
-      .add-button-key-result {
-        padding: .5em 1em;
-        margin: 0 0 0 .5em;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        box-sizing: border-box;
-      }
-
-      .delete-button-key-result {
-        padding: .5em 1em;
-        margin: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        box-sizing: border-box;
-      }
-    }
-  }
-
-  #new-obj-keyresults {
-    margin-bottom: 25px;
-    list-style-type: none;
-    border: 1px solid #c5c5c5;
-    border-top: none;
-    background-color: #eaeaea;
-    padding: 10px 15px;
-
-    .add-new-keyresult-btn {
-      display: inline-block;
-      cursor: pointer;
-      color: $color-green;
-      &:hover {
-        color: darken($color-green, 10%);
-        text-decoration: underline;
-      }
-    }
-    .display {
-      display: block;
-    }
-
-    .undisplay {
-      display: none;
-    }
-  }
-}
+			.undisplay {
+				display: none;
+			}
+		}
+	}
 

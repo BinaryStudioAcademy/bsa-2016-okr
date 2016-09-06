@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Quarterbar from '../quarterbar/quarters.jsx';
 import ObjectiveItem from './objective.jsx';
 import ObjectivesList from './objective-list.jsx';
+import sweetalert from 'sweetalert';
+import '../styles/sweetalert.css';
 
 import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
 
@@ -37,14 +39,21 @@ class Objectives extends Component {
 	}
 
 	handleAddingNewQuarter(newQuarter) {
-		let confirmed = confirm("Do you really want to create new quarter?");
-
-		if (confirmed) {
+		let handler = function() {
 			//API call
 			this.props.myStateActions.createQuarter(newQuarter);
 			this.props.myStateActions.getMe();
 			this.changeTab(newQuarter.index);
-		}
+		}.bind(this);
+
+		sweetalert({
+			title: "Do you really want to create new quarter?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	changeKeyResultScore(objectiveId) {
@@ -139,7 +148,7 @@ class Objectives extends Component {
 						selectedTab={ selectedTab }
 				    addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
-						me={ ismyself } 
+						me={ ismyself }
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList

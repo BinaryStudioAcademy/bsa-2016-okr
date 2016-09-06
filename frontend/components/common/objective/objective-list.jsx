@@ -64,10 +64,10 @@ class ObjectiveList extends React.Component{
 
 				return (
 					<div key={ index } id={ category.title }>
-					<p className="category-title-container" onClick={ ()=>this.changeCategoryContentVisibility(category.title) }>
-						<span className="category-title">
-							<i className="fi flaticon-folder-10" id={category.title+' icon'} aria-hidden="true"></i>
-							{ category.title } ({ objectiveItems.length })
+					<p className="category-title-container">
+						<span className="category-title" onClick={ ()=>this.changeCategoryContentVisibility(category.title) }>
+							<i className="fi flaticon-folder-10" id={category.title + ' icon'} aria-hidden="true"></i>
+							{ category.title } <span className="obj-count-panel">{ objectiveItems.length }</span>
 						</span>
 					</p>
 						<div className="visible-category-content" >

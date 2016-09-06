@@ -14,21 +14,24 @@
     }
     
     .countInfo, .tableInfo{
-        margin-bottom: 20px;
-    
+        margin-bottom: 10px;
         width:100%;
         box-sizing: border-box;
         padding-right: 8px;
     }
     
-    .countInfo b{
-        color:#99BCE0;
+    .countInfo b {
+        display: block;
+        margin-top: 10px;
+        color: #99BCE0;
+        font-size: 30px;
     }
     
     table{
         width:100%;
-        font-size: 12px;
-        text-align: center;
+        font-size: 14px;
+        color: #777777;
+        text-align: left;
         border-collapse: collapse;
         margin-top:10px;
     }
@@ -38,23 +41,30 @@
     }
     
     th {
-        font-weight: normal;
-    
-        padding: 10px 10px;
-        text-align: center;
+        font-weight: bold;
+        background: lighten($color-blue-grey, 45%);
+        padding: 10px;
+        padding-left: 45px;
+        text-align: left;
     }
 
-    tr:{
-        vertical-align: center;
+    tr {
+        vertical-align: middle;
+        &:hover{
+            background: #eee;
+        }
     }
-    
+
     td {
         width: 100px;
-        padding: 12px 5px;
+        padding: 10px;
+        padding-left: 45px;
+        border-bottom: 1px dotted #ddd;
     }
     
     caption{
-        font-size: 14px;
+        font-size: 16px;
+        margin-bottom: 10px;
     }
     
     .second{
@@ -74,13 +84,13 @@
         text-align: center;
         position: relative;
         width: 100%;
-        margin: 0px auto;
+        margin: 0 auto;
     }
     
     p > span {
-        font-weight: bold;
+        font-weight: normal;
         display: inline-block;
-        padding: 10px 5px;
+        padding: 5px 10px;
         position: relative;
         z-index: 10;
         background: #F9FAFB;
@@ -90,7 +100,7 @@
         content: '';
         display: block;
         position: absolute;
-        top: 23px;
+        top: 17px;
         left: 0;
         height: 0;
         width: 100%;

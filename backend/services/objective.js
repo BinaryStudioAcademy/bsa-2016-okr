@@ -59,12 +59,12 @@ ObjectiveService.prototype.getAll = function(callback) {
 // 3) Push keyResult ids to objective.keyResults
 // 4) Save objective and keyResults in DB
 // 5) Profit =)
-ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults, callback) {
+ObjectiveService.prototype.add = function(authorId, objective, keyResults, callback) {
 	objective = new Objective(objective);
-	defaultKeyResults = defaultKeyResults.map((keyResult) => {
+	keyResults = keyResults.map((keyResult) => {
 		keyResult.objectiveId = objective._id;
 		keyResult = new KeyResult(keyResult);
-	//	objective.defaultKeyResults.push(keyResult._id);
+		/*objective.defaultKeyResults.push(keyResult._id);*/
 		return keyResult;
 	});
 
@@ -82,11 +82,11 @@ ObjectiveService.prototype.add = function(authorId, objective, defaultKeyResults
 			});
 		}, (obj, callback) => {
 			obj = obj.toObject();
-			obj.defaultKeyResults = [];
-			async.forEach(defaultKeyResults, (keyResult, callback) => {
+			obj.keyResults = [];
+			async.forEach(keyResults, (keyResult, callback) => {
 				keyResult.save((err, keyResult) => {
 					if(err) { return callback(err); }
-					obj.defaultKeyResults.push(keyResult.toObject());
+					obj.keyResults.push(keyResult.toObject());
 					return callback(null);
 				});
 			}, (err) => {

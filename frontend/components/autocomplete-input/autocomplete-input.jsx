@@ -14,10 +14,13 @@ class AutocompleteInput extends React.Component {
 		};
 
 		this.onKeyPress = this.onKeyPress.bind(this);
+		// this.onKeyDown = this.onKeyDown.bind(this);
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.onClickLi = this.onClickLi.bind(this);
+		this.addNewItem = this.addNewItem.bind(this);
+		this.resetAutocompleteState = this.resetAutocompleteState.bind(this);
 		this.getData = debounce(this.getData.bind(this), 500);
 	}
 
@@ -29,24 +32,16 @@ class AutocompleteInput extends React.Component {
 		let title = this.refs.autocompleteInput.value;
 		this.props.getAutocompleteData(title);
 
-		this.setState({selectedLi: false});
+		// this.setState({ selectedLi: false });
 
 		// undisplay autocomplete results when item is selected
 		if (isEmpty(this.props.selectedItem)) {
-			let autocompleteResultElement = event.target.nextElementSibling;
-			if (autocompleteResultElement.classList.contains('undisplay')) {
-				autocompleteResultElement.classList.remove('undisplay');
-				autocompleteResultElement.classList.add('display');
-			}
+			this.changeAutocompleteListVisibility('display');
 		}
 	}
 
 	onBlur(event) {
-		let autocompleteResultElement = this.refs.autocompleteInput.nextElementSibling;
-		if (autocompleteResultElement.classList.contains('display')) {
-			autocompleteResultElement.classList.add('undisplay');
-			autocompleteResultElement.classList.remove('display');
-		}
+		this.changeAutocompleteListVisibility('undisplay');
 
 		if(!this.state.isValid) {
 			this.setState({ isValid: true });
@@ -63,12 +58,6 @@ class AutocompleteInput extends React.Component {
 
 		this.getData(title);
 		this.props.setAutocompleteSelectedItem(item);
-
-		let autocompleteResultElement = event.target.nextElementSibling;
-		if (autocompleteResultElement.classList.contains('undisplay')) {
-			autocompleteResultElement.classList.remove('undisplay');
-			autocompleteResultElement.classList.add('display');
-		}
 	}
 
 	onClickLi(item) {
@@ -81,26 +70,73 @@ class AutocompleteInput extends React.Component {
 	}
 
 	onKeyPress(event) {
+		if(event.key === 'Enter') {
+			this.addNewItem();
+		}
+	}
+
+	// onKeyDown(event) {
+	// 	if(event.keyCode === 27) {
+	// 		// Escape pressed
+	// 		this.resetAutocompleteState();
+	// 	}
+	// }
+
+	addNewItem() {
+		// console.log('Trying to add new item...');
 		const title = this.refs.autocompleteInput.value;
 		let isTitleValid = this.props.isValid(title);
+
+		if (!isTitleValid && this.state.isValid) {
+			this.setState({ isValid: false });
+		} else if(isTitleValid && !this.state.isValid) {
+			this.setState({ isValid: true });
+		}
 		
-		if(event.key === 'Enter') {
-			if (!isTitleValid && this.state.isValid) {
-				this.setState({ isValid: false });
-			} else if(isTitleValid && !this.state.isValid) {
-				this.setState({ isValid: true });
+		if (isTitleValid) {
+			this.props.addNewItem(title);
+			this.refs.autocompleteInput.value = '';
+			this.props.setAutocompleteSelectedItem({});
+			this.setState({ selectedLi: false });
+			this.getData('');
+		}
+	}
+
+	resetAutocompleteState() {
+		this.refs.autocompleteInput.value = '';
+		this.props.setAutocompleteSelectedItem({});
+		this.setState({ selectedLi: false });
+		this.props.resetAutocompleteState();
+	}
+
+	changeAutocompleteListVisibility(visibilityClass) {
+		let autocompleteListElement = this.refs.autocompleteList;
+		
+		if(visibilityClass == undefined) {
+			if (autocompleteListElement.classList.contains('undisplay')) {
+				autocompleteListElement.classList.remove('undisplay');
+				autocompleteListElement.classList.add('display');
+			} else if (autocompleteListElement.classList.contains('display')) {
+				autocompleteListElement.classList.remove('display');
+				autocompleteListElement.classList.add('undisplay');
 			}
-			
-			if (isTitleValid) {
-				this.props.addNewItem();
-				this.refs.autocompleteInput.value = '';
-				this.getData('');
+		} else if(visibilityClass === 'display') {
+			if (autocompleteListElement.classList.contains('undisplay')) {
+				autocompleteListElement.classList.remove('undisplay');
+				autocompleteListElement.classList.add('display');
+			}
+		} else if(visibilityClass === 'undisplay') {
+			if (autocompleteListElement.classList.contains('display')) {
+				autocompleteListElement.classList.remove('display');
+				autocompleteListElement.classList.add('undisplay');
 			}
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		// console.log('Autocomplete input did update');
 		if(prevState.selectedLi) {
+			// console.log('Some item was selected from autocomplete');
 			ReactDOM.findDOMNode(this.refs.autocompleteInput).focus();
 		}
 	}
@@ -133,18 +169,38 @@ class AutocompleteInput extends React.Component {
 		}
 
 		return (
-			<div className="autocomplete-123">
+			<div className="autocomplete-component">
 				<input
 					ref="autocompleteInput"
-					className={`input-key-result ${validateClass}`} type="text"
-					placeholder={`Start typing to get ${this.props.autocompletePlaceholder}... and press enter to add it`}
-					onFocus={this.onFocus}
-					onChange={this.onChange}
-					onBlur={this.onBlur}
-					onKeyPress={this.onKeyPress}
+					className={ `autocomplete-input ${validateClass}` } type="text"
+					placeholder={ `Start typing to get ${this.props.autocompletePlaceholder}...` }
+					onFocus={ this.onFocus }
+					onChange={ this.onChange }
+					onBlur={ this.onBlur }
+					onKeyPress={ this.onKeyPress }
 				/>
 
-				<div className="autocomplete-result undisplay">
+				<div className="buttons">
+					<div className="autocomplete-button">
+						<button ref="btnAdd" 
+						        type="button" 
+						        className="btn btn-blue-hover btn-add"
+						        onMouseDown={ this.addNewItem }>
+							<i className="fi flaticon-add" aria-hidden="true"></i>
+						</button>
+					</div>
+
+					<div className="autocomplete-button">
+						<button ref="btnCancel" 
+						        type="button" 
+						        className="btn btn-red-hover btn-cancel"
+						        onMouseDown={ this.resetAutocompleteState }>
+							<i className="fi flaticon-multiply" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+
+				<div ref="autocompleteList" className="autocomplete-result undisplay">
 					<ul className="autocomplete-result-ul">
 					{ autocompleteItems }
 					</ul>

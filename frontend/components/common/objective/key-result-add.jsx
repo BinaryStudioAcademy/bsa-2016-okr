@@ -12,15 +12,14 @@ class KeyResult extends React.Component {
 
 		this.state = {};
 
-		this.onDeleteKeyResultClick = this.onDeleteKeyResultClick.bind(this);
+		this.resetAutocompleteState = this.resetAutocompleteState.bind(this);
 		this.getAutocompleteData = this.getAutocompleteData.bind(this);
 		this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
 		this.addNewItem = this.addNewItem.bind(this);
 		this.isValid = this.isValid.bind(this);
 	}
 
-	addNewItem() {
-		let title = this.refs[`autocompleteInput-${this.props.objectiveId}`].refs['autocompleteInput'].value;
+	addNewItem(title) {
 		if (title !== '') {
 			const body = {
 				title: title,
@@ -30,12 +29,12 @@ class KeyResult extends React.Component {
 			let userObjectiveId = this.props.objectiveId;
 
 			this.props.addNewKeyResults(userObjectiveId, body);
-			this.props.onDeleteKeyResultClick();
+			this.props.resetAutocompleteState();
 		}
 	};
 
-	onDeleteKeyResultClick() {
-		this.props.onDeleteKeyResultClick();
+	resetAutocompleteState() {
+		this.props.resetAutocompleteState();
 	}
 
 	getAutocompleteData(title) {
@@ -54,31 +53,17 @@ class KeyResult extends React.Component {
 	render() {
 		return (
 			<section className="autocomplete undisplay">
-
 				<AutocompleteInput
 					getAutocompleteData={ this.getAutocompleteData }
 					setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
 					autocompleteData={ this.props.keyResultsReducer.data }
 					autocompletePlaceholder='key result'
 					addNewItem={ this.addNewItem }
+					resetAutocompleteState={ this.resetAutocompleteState }
 				  isValid={ this.isValid }
 					selectedItem={ this.props.keyResultsReducer.selectedItem }
 				  ref={ `autocompleteInput-${this.props.objectiveId}` }
 				/>
-
-				<div className="autocomplete-button">
-					<button type="button" className="btn btn-blue-hover add-button-key-result"
-					        onClick={ this.addNewItem }>
-						<i className="fi flaticon-add" aria-hidden="true"></i>
-					</button>
-				</div>
-
-				<div className="autocomplete-button">
-					<button type="button" className="btn btn-red-hover delete-button-key-result"
-					        onClick={ this.onDeleteKeyResultClick }>
-						<i className="fi flaticon-multiply" aria-hidden="true"></i>
-					</button>
-				</div>
 			</section>
 		)
 	}

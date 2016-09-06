@@ -1,12 +1,14 @@
 import React from "react";
 import { render } from "react-dom";
+import { IndexRoute, Route, Router, IndexRedirect, browserHistory } from 'react-router';
+import CONST from '../backend/config/constants';
+
 import App from "./containers/app";
 import History from "./components/admin/history-page/history-page.js";
 import HomePage from "./components/home-page/home-page.js";
 import RolesPage from "./components/admin/role-mapping/role-mapping.js";
 import ObjAccept from "./components/admin/accept-objective/accept-objective.js";
 import UserPage from "./components/other-persons-page/other-persons-page.js";
-import { IndexRoute, Route, Router, IndexRedirect, browserHistory } from 'react-router';
 import ObjectiveView from "./components/objectiveView/objectiveView.js";
 import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.js";
 import UserRecycleBin from './components/user-recycle-bin/recycle-bin.jsx';
@@ -33,14 +35,14 @@ render(
 				<IndexRoute component={HomePage} />
 				<Route path="users" component={ListOfUsers} />
 				<Route path="user/:id" component={UserPage} />
-				<Route path="history" component={History} />
-				<Route path="roles" component={RolesPage} />
-				<Route path="objective" component={ObjectiveView} />
-				<Route path="okr-managing" component={OKRmanaging} />
 				<Route path="recycle-bin" component={UserRecycleBin} />
-				<Route path="admin-recycle-bin" component={AdminRecycleBin} />
-				<Route path="charts" component={StatsPage}/>
-				<Route path="obj-accept" component={ObjAccept}/>
+				<Route path="charts" component={StatsPage} onEnter={ adminOnly } />
+				<Route path="roles" component={RolesPage} onEnter={ adminOnly } />
+				<Route path="history" component={History} onEnter={ adminOnly } />
+				<Route path="obj-accept" component={ObjAccept} onEnter={ adminOnly } />
+				<Route path="okr-managing" component={OKRmanaging} onEnter={ adminOnly } />
+				<Route path="admin-recycle-bin" component={AdminRecycleBin} onEnter={ adminOnly } />
+				<Route path="objective" component={ObjectiveView} />
 				<Route path="*" component={NotFound}>
 					<IndexRedirect from="*" to="/" />
 				</Route>
@@ -48,3 +50,14 @@ render(
 		</Router>
 	</Provider>)
 	, document.getElementById('root'));
+
+function adminOnly(nextState, transition, callback) {
+	let reducer = store.getState();
+	let localRole = reducer.myState.me.localRole;
+
+	if(localRole !== CONST.user.role.ADMIN) {
+		transition('/');
+	}
+
+	return callback();
+}

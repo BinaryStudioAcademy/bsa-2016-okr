@@ -4,18 +4,28 @@
 $primary-color_local: #607D8B;
 
 #quarter-bar{
+  margin-bottom: 40px;
 
-  #business-year{
+  #business-year {
     float: left;
     padding: 5px 10px;
     padding-bottom: 6px;
     width: 120px;
     border-radius: 3px 0 0 3px;
     border: 1px solid $primary-color_local;
-    background-color: $primary-color_local;
-    color: #ffffff;
-    &:hover{
+    background-color: #fff;
+    color: $primary-color_local;
+    transition: none;
+    height: 34px;
+    
+    &:hover {
       cursor: pointer;
+      background-color: lighten($color-blue-grey, 45%);
+    }
+
+    & > option{
+      background-color: #fff;
+      color: $primary-color_local;
     }
   }
 }
@@ -31,8 +41,9 @@ $primary-color_local: #607D8B;
   margin: 0;
   margin-left: 90px;
   padding: 0;
+  height: 34px;
 
-  li{
+  li {
     flex: 1 0 100px;
     text-align: center;
     padding: 7px 10px;
@@ -77,10 +88,10 @@ $primary-color_local: #607D8B;
     border: 1px solid #bbb;
     border-left: 1px solid transparent;
     margin-left: -1px;
-    &:first-child{
+    &:first-child {
       border-left: 1px solid transparent;
     }
-    &:hover{
+    &:hover {
       color: $color-green;
       background: #fff;
       border-color: $color-green;
