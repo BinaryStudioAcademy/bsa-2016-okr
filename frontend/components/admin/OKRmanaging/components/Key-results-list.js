@@ -63,7 +63,6 @@ class KeyResults extends Component {
 	}
 
 	render() {
-		console.log('dsv', this.props.data)
 		let item = this.props.data.map((item, index) => {
 			return <KeyResultItem index = { index } 
 														objectiveId = { this.props.objectiveId } 

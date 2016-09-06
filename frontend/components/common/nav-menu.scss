@@ -15,8 +15,13 @@ aside#navbar {
    z-index: $navbar-index;
 
    /* Navbar opened */
-   &.opened{
+   &.opened {
       width: auto;
+   }
+
+   /* remove scrollbar visibility */
+   &::-webkit-scrollbar{
+      display: none;
    }
 }
 
