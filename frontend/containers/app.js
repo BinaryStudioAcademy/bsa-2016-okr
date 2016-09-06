@@ -14,6 +14,7 @@ import * as myStateActions from '../actions/myStateActions';
 import * as appActions from '../actions/appActions';
 
 import '../components/common/fonts/flaticon/_flaticon.scss';
+import '../components/common/fonts/flaticon-1/_flaticon-1.scss';
 import '../components/common/fonts/fira/_fira.scss';
 import './app.scss';
 

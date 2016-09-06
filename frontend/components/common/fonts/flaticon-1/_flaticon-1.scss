@@ -1,0 +1,64 @@
+		/*
+		Flaticon icon font: Flaticon
+		Creation date: 06/09/2016 16:50
+		CUSTOM BUILD
+		*/
+
+		@font-face {
+			font-family: "Flaticon-1";
+			src: url("./Flaticon-1.eot");
+			src: url("./Flaticon-1.eot?#iefix") format("embedded-opentype"),
+			url("./Flaticon-1.woff") format("woff"),
+			url("./Flaticon-1.ttf") format("truetype"),
+			url("./Flaticon-1.svg#Flaticon") format("svg");
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		@media screen and (-webkit-min-device-pixel-ratio:0) {
+			@font-face {
+				font-family: "Flaticon-1";
+				src: url("./Flaticon-1.svg#Flaticon") format("svg");
+			}
+		}
+
+		.fi-1:before {
+			display: inline-block;
+			font-family: "Flaticon-1";
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			line-height: 1;
+			text-decoration: inherit;
+			text-rendering: optimizeLegibility;
+			text-transform: none;
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-font-smoothing: antialiased;
+			font-smoothing: antialiased;
+		}
+
+		.flaticon-1-arrow-chart:before { content: "\f100"; }
+		.flaticon-1-arrow-down:before { content: "\f101"; }
+		.flaticon-1-arrow-up:before { content: "\f102"; }
+		.flaticon-1-arrow-up-and-down:before { content: "\f103"; }
+		.flaticon-1-check:before { content: "\f104"; }
+		.flaticon-1-check-bold:before { content: "\f105"; }
+		.flaticon-1-check-rounded:before { content: "\f106"; }
+		.flaticon-1-checkbox:before { content: "\f107"; }
+		.flaticon-1-checkbox-checked:before { content: "\f108"; }
+		.flaticon-1-networking:before { content: "\f109"; }
+		.flaticon-1-people:before { content: "\f10a"; }
+		.flaticon-1-pie-chart:before { content: "\f10b"; }
+		
+		$font-Flaticon-1-arrow-chart: "\f100";
+		$font-Flaticon-1-arrow-down: "\f101";
+		$font-Flaticon-1-arrow-up: "\f102";
+		$font-Flaticon-1-arrow-up-and-down: "\f103";
+		$font-Flaticon-1-check: "\f104";
+		$font-Flaticon-1-check-bold: "\f105";
+		$font-Flaticon-1-check-rounded: "\f106";
+		$font-Flaticon-1-checkbox: "\f107";
+		$font-Flaticon-1-checkbox-checked: "\f108";
+		$font-Flaticon-1-networking: "\f109";
+		$font-Flaticon-1-people: "\f10a";
+		$font-Flaticon-1-pie-chart: "\f10b";
