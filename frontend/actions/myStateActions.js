@@ -30,16 +30,16 @@ export function getMe() {
 			dispatch({ type: REMOVE_REQUEST	});
 		})
 		.catch(response => {
-			dispatch(receivedMyObjectivesError(response.data));
+			dispatch(receivedMyObjectivesError(response));
 			dispatch({ type: REMOVE_REQUEST	});
 		});
 	};
 }
 
-export function receivedMyObjectivesError(data) {
+export function receivedMyObjectivesError(response) {
 	return {
 		type: RECEIVED_MY_OBJECTIVES_ERROR,
-		data: data
+		data: response
 	};
 }
 
