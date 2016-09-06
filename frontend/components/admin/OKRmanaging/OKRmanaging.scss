@@ -9,7 +9,7 @@
         padding-top: 4px;
         padding-bottom: 4px;
         min-width: 535px;
-        margin: 10px 5%;
+        margin: 10px 0;
         
         span{
             display: inline-block;
@@ -33,7 +33,6 @@
 }
 /* template */
 #templates{
-    margin: 0 5%;
 
     .objective-template{
         margin: 0;
@@ -146,7 +145,7 @@
             margin-left: 18px;
             margin-bottom: 40px;
             .key-result-details{
-                margin-top: 20px;
+                margin-top: 23px;
                 margin-bottom: -20px;
             }
             .change {
@@ -354,16 +353,12 @@
 }
 
 .OKR-managing.searchbar{
-    margin: 0 5%;
-}
-.OKR-managing.search {
-    margin-top: 20px;
+    margin: 0;
 }
 
 .OKR-managing button#add-new-objective {
     display: block;
     float: right;
-    margin-right: 5%;
 
     &:hover, &:active {
     	background-color: #357a38;

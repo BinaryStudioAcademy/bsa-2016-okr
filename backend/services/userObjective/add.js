@@ -94,7 +94,7 @@ module.exports = function addUserObjective(userId, categoryId, quarterId, object
 			var keyResults = objective.defaultKeyResults.map((keyResultId) => {
 				return {
 					templateId: keyResultId,
-					creator: userId
+					creator: session._id
 				};
 			});
 			

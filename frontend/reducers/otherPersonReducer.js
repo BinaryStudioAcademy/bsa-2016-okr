@@ -1,5 +1,6 @@
-import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR, TOOK_APPRENTICE, REMOVED_APPRENTICE} from '../actions/otherPersonActions.js'
-import { CHANGED_KEYRESULT_SCORE, CHANGED_KEYRESULT_SCORE_ERROR } from '../actions/myStateActions.js'
+import { GET_USER, RECEIVED_USER, CHANGE_TAB, CHANGE_YEAR, TOOK_APPRENTICE, REMOVED_APPRENTICE,
+				 ADDED_NEW_OBJECTIVE_OTHER_USER } from '../actions/otherPersonActions.js'
+import { CHANGED_KEYRESULT_SCORE, CHANGED_KEYRESULT_SCORE_ERROR, } from '../actions/myStateActions.js'
 import { currentYear, currentQuarter } from '../../backend/config/constants'
 
 const initialState = {
@@ -69,6 +70,16 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
+		case ADDED_NEW_OBJECTIVE_OTHER_USER: {
+			const { responseData, requestData } = action;
+
+			let newUser = addNewObjectiveToUser(state.user, requestData.quarterId, responseData);
+			return Object.assign({}, state, {
+				user: newUser
+			});
+		}
+
+
 /*		case CHANGED_KEYRESULT_SCORE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, score } = data;
@@ -128,6 +139,23 @@ function setScoreToKeyResult(user, objectiveId, keyResultId, score) {
 				userCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
 			}
 		}
+	}
+
+	return userCopy;
+}
+
+function addNewObjectiveToUser(user, quarterId, objective) {
+	let userCopy = Object.assign({}, user);
+	console.log('response data', objective)
+	console.log('llk', quarterId)
+	console.log('user copy', userCopy)
+	let index = userCopy.quarters.findIndex((quarter) => {
+		return quarter._id == quarterId;
+	});
+
+	if(index !== -1) {
+		console.log('push')
+		userCopy.quarters[index].userObjectives.push(objective);
 	}
 
 	return userCopy;
