@@ -14,7 +14,7 @@ class AutocompleteInput extends React.Component {
 		};
 
 		this.onKeyPress = this.onKeyPress.bind(this);
-		this.onKeyDown = this.onKeyDown.bind(this);
+		// this.onKeyDown = this.onKeyDown.bind(this);
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
 		this.onChange = this.onChange.bind(this);
