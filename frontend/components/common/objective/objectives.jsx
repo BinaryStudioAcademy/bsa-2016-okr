@@ -99,7 +99,6 @@ class Objectives extends Component {
 				return (quarter.index == selectedTab) && (quarter.year == selectedYear);
 			});
 			
-			console.log('quarter', quarter._id)
 			let body = {
 				title: title,
 				objectiveId: objectiveId,
@@ -156,7 +155,7 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-		console.log('obj', userInfo.objectives)
+		
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar

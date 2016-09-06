@@ -83,7 +83,7 @@ class ObjectiveData extends React.Component{
     let editSaveIcon;
     let editSaveTitle;
     let cancel;
-    console.log('sdvdsvs', this.props.objective.keyResults)
+
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
       titleEl = (<input type='text'
                         className='template-title'
