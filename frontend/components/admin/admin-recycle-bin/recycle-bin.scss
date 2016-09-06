@@ -30,7 +30,9 @@
 	}
 }
 
-body { overflow-y:hidden }
+body { 
+	overflow-y:hidden 
+}
 
 .recycle-bin-header-row p {
     box-sizing: border-box;
@@ -66,11 +68,15 @@ body { overflow-y:hidden }
     z-index: 0;
 }
 
-#rec-bin-wrapper .margin-left-4px { margin-left: 12px; }
-
 #rec-bin-wrapper .no-hover { background: none; border:none;}
 
-#rec-bin-wrapper { padding: 3%; }
+#rec-bin-wrapper { 
+	box-sizing: border-box;
+    padding: 30px;
+    overflow-y: hidden;
+    padding-bottom: 0;
+
+}
 
 #rec-bin-wrapper .not-display { display: none; }
 
@@ -112,7 +118,6 @@ body { overflow-y:hidden }
 
 #rec-bin-wrapper .no-wrap { white-space: nowrap; }
 
-//#rec-bin-wrapper tr { border-color: #E0E0E0; }
 
 #rec-bin-wrapper .filter-table {
 	width: 100%;
@@ -122,9 +127,8 @@ body { overflow-y:hidden }
 }
 
 #rec-bin-wrapper .filter-table tbody {
-	height: 56vh;
+	height: 66vh;
     table-layout: fixed;
-    //overflow: auto;
     display: block;
     overflow-y: overlay;
 }
@@ -147,9 +151,9 @@ body { overflow-y:hidden }
 .cursor-pointer { cursor: pointer; }
 
 .filter-box {
-	display: block;
-    margin: 5px auto;
-    width: 1053px;
+
+    height: 59px;
+    display: inline-block;
 
 	& > div {
 		margin: 0 10px;
@@ -158,7 +162,9 @@ body { overflow-y:hidden }
 }
 
 .recucle-bin-filter-bar-container {
+	
 	width: 100%;
+
 	.recycle-bin-filter-bar {
 		padding: 12px;
 		background-color: #fff;
@@ -194,11 +200,14 @@ body { overflow-y:hidden }
 		margin: 5px;
 	}
 
+	.filter-box label {
+		line-height: 60px;
+	}
+
 	.recycle-bin-filter-table {
-		font-size:14px;
-		width: auto;
-		margin-left: auto;
-		margin-right: auto;
+
+		font-size: 14px;
+	    display: inline-block;
 
 		td {
 			vertical-align: middle !important;
@@ -208,7 +217,7 @@ body { overflow-y:hidden }
 		.cell-right-align {
 			text-align: right;
 		}
-		label{
+		label {
 			font-size:12px;
 			border-radius: 20px;
 		}
@@ -216,6 +225,8 @@ body { overflow-y:hidden }
 
 	.show-container {
 		display: block;
+		padding: 0;
+		text-align: center;
 	}
 
 	.hide-container {
@@ -223,3 +234,28 @@ body { overflow-y:hidden }
 	}
 
 }
+
+ @media all and (max-width: 1450px) {
+
+	 .recucle-bin-filter-bar-container {
+	 
+		 .filter-box {
+		     display: block;
+		     width: 986px;
+		     height: auto;
+		     margin: 0 auto;
+		     margin-top: 12px;
+		 }
+
+		.filter-box label {
+			line-height: normal;
+		}
+
+		.recycle-bin-filter-table {
+			font-size:14px;
+			margin: 0 auto;
+		    display: table;
+		}
+	}
+
+ }
