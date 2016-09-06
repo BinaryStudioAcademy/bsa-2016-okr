@@ -75,14 +75,34 @@ class CategoryItem extends Component {
     let editSaveIcon;
     let editSaveTitle;
     let cancel;
-    if(this.props.categories.edit && this.props.categories.activeCategory == this.props.index){
-    	titleEl = (<input type='text' className='category-edit-title' defaultValue={this.props.category.title} />);
-	    edit =(<i className='fi flaticon-success save' aria-hidden="true" title='Save' onClick={this.saveChanges}></i>);
-	    cancel = (<i className="fi flaticon-multiply cancel" title='Cancel' aria-hidden="true" onClick={this.cancelEdit}></i>);
+    if( this.props.categories.edit && 
+    		this.props.categories.activeCategory == this.props.index ) {
+    	titleEl = ( <input type='text' 
+    										 className='category-edit-title' 
+    										 defaultValue={this.props.category.title} 
+    						/> );
+	    edit 		= ( <i className='fi-1 flaticon-1-check-rounded save' 
+	    							 aria-hidden="true" 
+	    							 title='Save' 
+	    							 onClick={this.saveChanges}>
+	    					</i> );
+	    cancel  = ( <i className="fi flaticon-multiply cancel" 
+	    							 title='Cancel' 
+	    							 aria-hidden="true"
+	    							 onClick={this.cancelEdit}>
+	    					</i>);
     } else {
-    	titleEl = (<span>{this.props.category.title} </span>);
-	    edit = (<i className='fi flaticon-edit edit' aria-hidden="true" title='Edit' onClick={this.editCategory}></i>);
-	    cancel = (<i className='fi flaticon-garbage-2 delete' aria-hidden="true" title='Delete' onClick={this.delete}></i>);
+    	titleEl = ( <span>{this.props.category.title} </span> );
+	    edit 		= ( <i className='fi flaticon-edit edit' 
+	    							 aria-hidden="true" 
+	    							 title='Edit' 
+	    							 onClick={this.editCategory}>
+	    					</i>);
+	    cancel  = (<i className='fi flaticon-garbage-2 delete' 
+	    							aria-hidden="true" 
+	    							title='Delete' 
+	    							onClick={this.delete}>
+	    					</i>);
     }
 
 		return (

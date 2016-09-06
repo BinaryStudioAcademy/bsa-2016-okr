@@ -14,24 +14,22 @@ class OKRmanaging extends Component {
     super(props); 
   }
 
-render() {
-
-    return (
-    	<div>
+	render() {
+	  return (
+	   	<div>
 	    	<CentralWindow>
 	    		<NewObjective />
 					<div className="OKR-managing app container">
 						<Toolbar/>
 						<div className="OKR-managing fixed-header">
 							<div className="OKR-managing search">
-								<Searchbar />
-							</div>
-							
-							<div id="OKR-managing-title"> 
-								<p><span>Template management</span></p>
-							</div>
+							<Searchbar />
+						</div>
+						
+						<div id="OKR-managing-title"> 
+							<p><span>Template management</span></p>
+						</div>
 						</div>			
-
 						<div className="OKR-managing objective-list">
 							<ObjectiveList />
 						</div>
@@ -39,12 +37,12 @@ render() {
 			</CentralWindow>
 			<StatPanel>
 				<div className="OKR-mnaging category">
-					<CategoryList />
+						<CategoryList />
 				</div>
 			</StatPanel>
 		</div>
-    )
-  }
+	  )
+	}
 }
 
 export default OKRmanaging

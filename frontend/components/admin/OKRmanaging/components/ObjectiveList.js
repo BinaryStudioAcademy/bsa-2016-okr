@@ -30,9 +30,9 @@ class ObjectiveList extends React.Component{
               />
       })
     return (
-        <div id='templates'>
-          {objectives}
-        </div>  
+      <div id='templates'>
+        {objectives}
+      </div>  
     )
   }
 }

@@ -90,6 +90,7 @@
             margin-top: 2px;
             .editing{
                 color: $color-green;
+                font-size: 22px;
             }
             .cancel{
                 color: $color-red;
@@ -146,7 +147,7 @@
             margin-left: 18px;
             margin-bottom: 40px;
             .key-result-details{
-                margin-top: 20px;
+                margin-top: 23px;
                 margin-bottom: -20px;
             }
             .change {
@@ -184,15 +185,17 @@
 
                 .defaultKeyResultCheckbox{
                     display: inline-block;
-                    float: right;
-                    margin-right: 15px;
-                    margin-top: 0;
+                    position: absolute;
+                    right: 185px;
+                    top: 4px;
                 }
                 .defaultKeyResultCheckbox.editing{
+                    margin-right: 40px;
                     margin-top: 6px;
                 }  
 
                 .key-result-item{
+                    position: relative;
                     border: 1px solid #c5c5c5;
                     border-top: none;
                     background-color: #eaeaea;
@@ -219,12 +222,13 @@
                         float: right;
                         .editing{
                             display: inline-block;
-                            margin-top: 6px;
+                            margin-top: 4px;
                             color: $color-green;
+                            font-size: 22px;
                         }
                         .cancel{
                             display: inline-block;
-                            margin-top: 6px;
+                            margin-top: 4px;
                             color: $color-red; 
                         }
                         .edit:hover{
@@ -246,7 +250,7 @@
 }
 .OKR-mnaging.category{
     background-color:#F9FAFB;
-    margin: 25px 20px 0;
+    margin: 10px;
     padding-top: 15px;
     padding-bottom: 15px;
     p{
@@ -286,13 +290,14 @@
         .add-category-icon{
             float: right;
             display: inline-block;
-            margin-top: 7px;
+            margin-top: 4px;
             
             .delete{
                 color: $color-red;
+                font-size: 18px;
             }
             i {
-                font-size: 18px;
+                font-size: 22px;
                 margin-left: 10px;
             }
         }
@@ -309,12 +314,13 @@
     }
     .category-list{
         list-style: none;
-        padding: 0 20px;
+        padding: 0;
         
         .category-item {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px dotted #ddd;
             position: relative;
-            padding: 10px 10px;
+            padding: 10px 35px;
+            color: #777;
 
             .category-edit-title{
                 text-transform: lowercase; 
@@ -324,8 +330,8 @@
             }
             .edit-category{
                 position: absolute;
-                top: 7px;
-                right: 10px;
+                top: 4px;
+                right: 35px;
 
                 i{
                     margin-left: 10px;
@@ -340,7 +346,8 @@
                 }
                 .save{
                     color: $color-green;
-                    margin-top: 12px;
+                    margin-top: 10px;
+                    font-size: 22px;
                     display: inline-block; 
                 }
                 .cancel{

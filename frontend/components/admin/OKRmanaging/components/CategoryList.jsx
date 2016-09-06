@@ -59,19 +59,19 @@ render() {
 				<span>Categories</span>
 			</p>
 			<ul className='category-list'>
-			{this.props.category.list.map((item, index) => {
-				return <CategoryItem index = { index } 
-														 category = { item } 
-														 key = { index } 
-														 categories = { this.props.category } 
-														 objectives = { this.props.objectives } 
-														 editCategory = { this.props.categoriesActions.editCategory }
-														 activeCategory = { this.props.categoriesActions.activeCategory }
-														 cancelEdit = { this.props.categoriesActions.cancelEdit }
-														 deleteCategory = { this.props.categoriesActions.deleteCategory }
-														 onDeleteNewCategory = { this.onDelete }
-								/>
-			})}
+				{this.props.category.list.map((item, index) => {
+					return <CategoryItem index = { index } 
+															 category = { item } 
+															 key = { index } 
+															 categories = { this.props.category } 
+															 objectives = { this.props.objectives } 
+															 editCategory = { this.props.categoriesActions.editCategory }
+															 activeCategory = { this.props.categoriesActions.activeCategory }
+															 cancelEdit = { this.props.categoriesActions.cancelEdit }
+															 deleteCategory = { this.props.categoriesActions.deleteCategory }
+															 onDeleteNewCategory = { this.onDelete }
+									/>
+				})}
 			</ul>
 			<div id="new-category">
 						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={this.addNewCategory}>

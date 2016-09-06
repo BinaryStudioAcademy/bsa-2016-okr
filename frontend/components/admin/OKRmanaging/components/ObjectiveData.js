@@ -85,37 +85,39 @@ class ObjectiveData extends React.Component{
     let cancel;
 
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
-      titleEl = (<input type='text'
-                        className='template-title'
-                        defaultValue={this.props.objective.title}
-                />);
+      titleEl       =   (<input type='text'
+                                className='template-title'
+                                defaultValue={this.props.objective.title}
+                        />);
       descriptionEl = (<textarea className='template-description'
                                  defaultValue={this.props.objective.description}
                       />);
-      categoryEl = (<select className='template-category' ref='selectCategory' defaultValue={categoryId}>
-                        { this.props.categories.list.map((category, index) => {
-                          return <option key={index} value={category._id}>{category.title}</option>
-                        })}
+      categoryEl    = (<select className='template-category' 
+                               ref='selectCategory'  
+                               defaultValue={categoryId}>
+                               { this.props.categories.list.map((category, index) => {
+                                 return <option key={index} value={category._id}>{category.title}</option>
+                               })}
                       </select>);
-      editSaveIcon = 'flaticon-success';
+      editSaveIcon  = 'fi-1 flaticon-1-check-rounded';
       editSaveTitle = 'Save';
-      edit = 'editing',
-      cancel = (<i className="fi flaticon-multiply cancel"
-                   onClick={this.cancelEdit}
-                   title='Cancel'
-                   aria-hidden="true">
-                </i> )
+      edit          = 'editing',
+      cancel        = (<i className="fi flaticon-multiply cancel"
+                          onClick={this.cancelEdit}
+                          title='Cancel'
+                          aria-hidden="true">
+                      </i> )
     } else {
-      titleEl = (<div className='name'>{this.props.objective.title}</div>);
+      titleEl       = (<div className='name'>{this.props.objective.title}</div>);
       descriptionEl = (<div className='description'>{this.props.objective.description}</div>);
-      categoryEl = (<div className='category'>{ category.title }</div>);
-      editSaveIcon = 'flaticon-edit';
+      categoryEl    = (<div className='category'>{ category.title }</div>);
+      editSaveIcon  = 'fi flaticon-edit';
       editSaveTitle = 'Edit';
-      edit = 'edit';
-      cancel = (<i className='fi flaticon-garbage-2 delete'
-                   aria-hidden="true"
-                   title='Delete'
-                   onClick={this.deleteObjective}></i>);
+      edit          = 'edit';
+      cancel        = (<i className='fi flaticon-garbage-2 delete'
+                          aria-hidden="true"
+                          title='Delete'
+                          onClick={this.deleteObjective}></i>);
     }
 
 		return (
@@ -123,7 +125,7 @@ class ObjectiveData extends React.Component{
         <div className='objective-template'>
               <form onSubmit={this.editObjective}>
               <div className='edit-objective'>
-                    <i className={`fi ${editSaveIcon} ${edit}`}
+                    <i className={`${editSaveIcon} ${edit}`}
                        aria-hidden="true"
                        title={ editSaveTitle }
                        onClick={this.editObjective}>
