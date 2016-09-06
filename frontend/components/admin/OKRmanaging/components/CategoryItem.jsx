@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import sweetalert from 'sweetalert';
+import '../../../common/styles/sweetalert.css';
 
 class CategoryItem extends Component {
 	constructor(props){
@@ -20,14 +22,26 @@ class CategoryItem extends Component {
 		let category = this.props.objectives.find(item => {
 			return item.category == this.props.category._id
 		})
-			
-		let result = confirm('Do you really want to delete category?');
-    if (result && category == undefined) {
+
+		let handler = function() {
 			this.props.deleteCategory(this.props.category._id, true);
-		}	
-		else if(result && category != undefined){
-			alert("This category isn't empty.");
-		}
+		}.bind(this);
+
+		sweetalert({
+			title: "Do you really want to delete category?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: false
+		}, function(isConfirm){
+				if(isConfirm && category == undefined){
+					handler();
+					sweetalert.close();
+				} else if(isConfirm && category != undefined){
+            sweetalert("This category isn't empty.", "error");
+        }
+			});
 	}
 
 	editCategory(){
@@ -36,15 +50,23 @@ class CategoryItem extends Component {
 	}
 
 	saveChanges(){
-		let result = confirm('Do you really want to save changes?');
-    if (result){
-      let reqBody = {};
+		let handler = function() {
+			let reqBody = {};
       let categoryTitle = document.querySelector("input.category-title").value;
 
       reqBody.title = categoryTitle;
-      
+
     	this.props.editCategory(this.props.category._id, reqBody);
-		}
+		}.bind(this);
+
+		sweetalert({
+			title: "Do you really want to save changes?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	render(){

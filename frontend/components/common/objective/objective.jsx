@@ -3,6 +3,8 @@ import KeyResults from './key-results-list.jsx';
 import Progress from './progress-bar.jsx';
 import ObjectiveDescription from './objective-description.jsx';
 import './objective.scss';
+import sweetalert from 'sweetalert';
+import '../styles/sweetalert.css';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -19,11 +21,18 @@ class ObjectiveItem extends Component {
 	}
 
 	handleDelObj(e) {
-		var confirmed = confirm("Do you really want to delete this objective?");
-
-		if (confirmed) {
+		let handler = function() {
 			this.props.softDeleteMyObjectiveByIdApi(this.props.item._id);
-		}
+		}.bind(this);
+
+		sweetalert({
+			title: "Do you really want to delete this objective?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	handleEdit() {

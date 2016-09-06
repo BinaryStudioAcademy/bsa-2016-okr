@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import sweetalert from 'sweetalert';
+import '../../../common/styles/sweetalert.css';
 
 import * as actions from "../../../../actions/okrManagingActions.js";
 var CONST = require('../../../../../backend/config/constants');
@@ -18,7 +20,7 @@ class KeyResult extends Component {
 	setDefaultKeyResult() {
 		this.props.cancelEdit();
 		this.props.onDeleteKeyResultClick();
-		
+
 		this.props.setDefaultKeyResult(this.props.objectiveId, this.props.item._id, this.refs.defaultKeyResult.checked);
 	}
 
@@ -31,8 +33,8 @@ class KeyResult extends Component {
 
 		if(this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult){
 			event.preventDefault();
-			let result = confirm('Do you really want to save changes?');
-      if (result){
+
+			let handler = function() {
 				let reqBody = {};
 				let keyResultDifficulty = this.refs.keyResultDifficulty.value;
 				let keyResultTitle = this.refs.keyResultTitle.value;
@@ -41,8 +43,19 @@ class KeyResult extends Component {
 				reqBody.title = keyResultTitle;
 
 				this.props.editKeyResult(this.props.item._id, reqBody);
-			}
+			}.bind(this);
+
+			sweetalert({
+				title: "Do you really want to save changes?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#4caf50",
+				confirmButtonText: "OK",
+				closeOnConfirm: true
+			}, function(){handler();});
+
 		}
+
 		else {
 			this.props.activeKeyResult(this.props.item._id, true);
 		}
@@ -50,11 +63,20 @@ class KeyResult extends Component {
 
 	deleteKeyResult(){
 		this.props.onDeleteKeyResultClick();
-		var result = confirm('Do you really want to delete key result?');
-		if (result){
+
+		let handler = function() {
 			let i = this.props.item._id;
 			this.props.deleteKeyResult(i, true)
-		}
+		}.bind(this);
+
+		sweetalert({
+			title: "Do you really want to delete key result?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	render() {
@@ -70,7 +92,7 @@ class KeyResult extends Component {
     	return item._id == this.props.objectiveId
     });
 
-    if(objective.defaultKeyResults.includes(this.props.item._id)) 
+    if(objective.defaultKeyResults.includes(this.props.item._id))
     	isKeyResultDefault = true;
     	else  isKeyResultDefault = false;
 
