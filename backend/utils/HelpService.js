@@ -37,10 +37,11 @@ function stringToBoolean(str) {
 function getDifficultyNumber(str) {
 	switch(str) {
 	case CONST.keyResult.EASY:
-		return 0;
-	case CONST.keyResult.INTERMEDIATE:
 		return 1;
-	case CONST.keyResult.ADVANCED:
+	case CONST.keyResult.INTERMEDIATE:
 		return 2;
+	case CONST.keyResult.ADVANCED:
+		return 3;
+	default: return 2;
 	}
 }

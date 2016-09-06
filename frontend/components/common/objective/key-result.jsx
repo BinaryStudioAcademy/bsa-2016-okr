@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { debounce } from '../../../../backend/utils/HelpService';
+import Rating from '../rating/rating.jsx';
+import { debounce, getDifficultyNumber } from '../../../../backend/utils/HelpService';
 const session = require('../../../../backend/config/session');
 import sweetalert from 'sweetalert';
 import '../styles/sweetalert.css';
@@ -44,12 +45,20 @@ class KeyResult extends Component {
     });
   }
 
+//<div className={ `difficulty ${item.templateId.difficulty}` } title={item.templateId.difficulty}>
+//<div></div>
+//<div></div>
+//<div></div>
+//</div>
+
   render() {
     let isArchived = this.props.isArchived;
     const item = this.props.item;
     let score;
     let rangeEl;
     let deleteEl;
+
+    let rating = getDifficultyNumber(item.templateId.difficulty);
 
     if(!isArchived){
       score = this.state.score;
@@ -75,13 +84,11 @@ class KeyResult extends Component {
         { deleteEl }
         <span className='score'>{ score }</span>
         { rangeEl }
-
-        <div className={ `difficulty ${item.templateId.difficulty}` } title={item.templateId.difficulty}>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+        <Rating
+          rating = { rating }
+        />
         <span className='difficulty-label'>Difficulty:</span>
+
       </li>
     )
   }
