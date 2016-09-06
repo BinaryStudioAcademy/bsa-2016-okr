@@ -155,6 +155,7 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
+		console.log('objectives', userInfo.objectives)
 		
 		return (
 			<div id="home-page-wrapper">

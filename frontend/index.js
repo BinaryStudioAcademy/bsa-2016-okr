@@ -26,7 +26,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import reducer from './reducers/commonReducer'
 
 const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
+const rootUrl = '/';
 
 render(
 	(<Provider store={store}>
@@ -56,7 +57,8 @@ function adminOnly(nextState, transition, callback) {
 	let localRole = reducer.myState.me.localRole;
 
 	if(localRole !== CONST.user.role.ADMIN) {
-		transition('/');
+		// console.log('Redirecting to root')
+		transition(rootUrl);
 	}
 
 	return callback();

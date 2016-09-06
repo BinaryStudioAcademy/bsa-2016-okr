@@ -2,7 +2,8 @@ var CONST = require('../config/constants');
 
 module.exports = {
 	stringToBoolean: stringToBoolean,
-	debounce: debounce
+	debounce: debounce,
+	getDifficultyNumber: getDifficultyNumber,
 };
 
 function debounce(func, wait, immediate) {
@@ -31,4 +32,16 @@ function stringToBoolean(str) {
 	}
 
 	return false;
+}
+
+function getDifficultyNumber(str) {
+	switch(str) {
+	case CONST.keyResult.EASY:
+		return 1;
+	case CONST.keyResult.INTERMEDIATE:
+		return 2;
+	case CONST.keyResult.ADVANCED:
+		return 3;
+	default: return 2;
+	}
 }

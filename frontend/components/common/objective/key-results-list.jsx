@@ -98,7 +98,7 @@ class KeyResults extends Component {
 
 		return (
 			<div className='key-results'>
-				<button className="btn change" onClick={this.textHandleShow}>Key results
+				<button className="btn btn-blue-hover change" onClick={this.textHandleShow}>Key results
 				</button>
 				<div className='key-result-details undisplay'>
 					<ul className='key-result-details-ul'>

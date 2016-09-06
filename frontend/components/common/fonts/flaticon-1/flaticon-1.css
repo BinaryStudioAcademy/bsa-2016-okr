@@ -1,0 +1,49 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 06/09/2016 16:50
+    Additional icons. Custom build
+  	*/
+
+@font-face {
+  font-family: "Flaticon-1";
+  src: url("./Flaticon-1.eot");
+  src: url("./Flaticon-1.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon-1.woff") format("woff"),
+       url("./Flaticon-1.ttf") format("truetype"),
+       url("./Flaticon-1.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon-1";
+    src: url("./Flaticon-1.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-1-"]:before, [class*=" flaticon-1-"]:before,
+[class^="flaticon-1-"]:after, [class*=" flaticon-1-"]:after {   
+  font-family: 'Flaticon-1';
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-1-arrow-chart:before { content: "\f100"; }
+.flaticon-1-arrow-down:before { content: "\f101"; }
+.flaticon-1-arrow-up:before { content: "\f102"; }
+.flaticon-1-arrow-up-and-down:before { content: "\f103"; }
+.flaticon-1-business-1:before { content: "\f104"; }
+.flaticon-1-business-2:before { content: "\f105"; }
+.flaticon-1-check:before { content: "\f106"; }
+.flaticon-1-check-bold:before { content: "\f107"; }
+.flaticon-1-check-rounded:before { content: "\f108"; }
+.flaticon-1-checkbox:before { content: "\f109"; }
+.flaticon-1-checkbox-checked:before { content: "\f10a"; }
+.flaticon-1-networking:before { content: "\f10b"; }
+.flaticon-1-people:before { content: "\f10c"; }
+.flaticon-1-pie-chart:before { content: "\f10d"; }
+.flaticon-1-weightlifter-1:before { content: "\f10e"; }
+.flaticon-1-weightlifter-2:before { content: "\f10f"; }
+.flaticon-1-weightlifter-3:before { content: "\f110"; }

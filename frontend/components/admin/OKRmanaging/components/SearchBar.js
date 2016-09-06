@@ -12,6 +12,7 @@ class SearchBar extends React.Component{
   searchObjective(e){
     this.props.searchObjective(e.target.value); 
   }
+  
   render(){
     return (
       <div className="OKR-managing searchbar">
@@ -22,10 +23,10 @@ class SearchBar extends React.Component{
           onChange={this.searchObjective.bind(this)}
         /> 
       </div>
-  )
+    )
   }
-
 }
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actions, dispatch);
 }

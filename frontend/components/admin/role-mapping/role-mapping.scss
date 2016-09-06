@@ -29,6 +29,10 @@
     font-size: 18px;
 }
 
+#role-mapping-wrapper #global-role {
+    margin-right: 7px;
+}
+
 #user-role-mapping-header-wrapper {
 	width: 100%;
     display: flex;
@@ -173,6 +177,7 @@
 }
 
 #roles-table {
+    color: #777777;
     background-color: #FFF;
 	width: 300px;
     min-width: 300px;
@@ -180,8 +185,18 @@
     margin-top: -25px;
 }
 
+#roles-table .table-head {
+    color: #777777;
+    background: #e4eaec;
+    border: none;
+}
+
 #roles-table .col-2 {
     width: 42%;
+}
+
+#roles-table .table-row:hover {
+   background: #eee;
 }
 
 #roles-table .col-1 {
@@ -197,8 +212,8 @@
 	height: 45px;
 	display: flex;
 	align-items: center;
-	border: solid 1px #E0E0E0;
-    border-top:none;
+    border: none;
+	border-bottom: 1px dotted #ddd;
 }
 
 #role-mapping-wrapper #global-roles-p {

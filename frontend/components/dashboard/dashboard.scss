@@ -78,34 +78,35 @@
         padding-top: 0;
     }
     
+    .stats-title {   
+        p {
+            color: #aaaaaa;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            margin: 0px;
+        }
         
-    p {
-        color: #aaaaaa;
-        text-align: center;
-        position: relative;
-        width: 100%;
-        margin: 0 auto;
-    }
-    
-    p > span {
-        font-weight: normal;
-        display: inline-block;
-        padding: 5px 10px;
-        position: relative;
-        z-index: 10;
-        background: #F9FAFB;
-    }
-    
-    p:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 17px;
-        left: 0;
-        height: 0;
-        width: 100%;
-        border-top: 1px solid #aaaaaa;
-        z-index: 0;
+        p > span {
+            font-weight: normal;
+            display: inline-block;
+            padding: 5px 10px;
+            position: relative;
+            z-index: 10;
+            background: #F9FAFB;
+        }
+        
+        p:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 17px;
+            left: 0;
+            height: 0;
+            width: 100%;
+            border-top: 1px solid #aaaaaa;
+            z-index: 0;
+        }
     }
 
 }

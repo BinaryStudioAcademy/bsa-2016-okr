@@ -103,14 +103,14 @@ class KeyResult extends Component {
 												<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 												<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 											</select>);
-      editSaveIcon = 'flaticon-success';
+      editSaveIcon = 'fi-1 flaticon-1-check';
       edit = 'editing';
       editSaveTitle = 'Save';
       cancel = (<i className="fi flaticon-multiply cancel" onClick={this.cancelEdit} aria-hidden="true"></i>);
     } else {
       titleEl = (<div className='name'>{this.props.item.title}</div>);
       difficultyEl = (<div className='difficulty'>{this.props.item.difficulty}</div>);
-      editSaveIcon = 'flaticon-edit';
+      editSaveIcon = 'fi flaticon-edit';
       editSaveTitle = 'Edit'
       edit = 'edit';
       cancel = (<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteKeyResult}></i>)
@@ -119,7 +119,7 @@ class KeyResult extends Component {
 				<li className="key-result-item" >
 					{titleEl}
 					<div className='edit-key-result '>
-						<i className={`fi ${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editKeyResult}></i>
+						<i className={`${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editKeyResult}></i>
 						{cancel}
 					</div>
 					{difficultyEl}

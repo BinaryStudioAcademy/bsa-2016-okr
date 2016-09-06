@@ -1,12 +1,9 @@
 @import '../../common/variables';
 
 #accept-objective-wrapper {
-  padding: 3%;
+  padding: 30px;
   height: 100%;
   overflow-y: auto; }
-
-#accept-objective-wrapper .objective-list {
-  padding-bottom: 100px; }
 
 #accept-objective--search-bar {
   margin: 0 5%; }
@@ -22,7 +19,9 @@ accept-objective--search-bar button {
 }
 
 .objective-text-info {
-  width: 75%;
+  width: 85%;
+  overflow: hidden;
+  min-height: 68px;
 }
 
 .objective-general-info {
@@ -71,14 +70,13 @@ accept-objective--search-bar button {
   width: 48.85%;
   margin-right: 2%;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 17px;
   background: #f9fafb;
   border: 1px solid #ddd;
-  border-radius: 3px 3px 0 3px;
+  border-radius: 3px;
   overflow: hidden;
   display: inline-table;
   margin-top: 20px;
-  margin-bottom: 20px;
   }
 
 #accept-objective-wrapper .accept-objective-item:nth-child(2n) {
@@ -92,23 +90,24 @@ accept-objective--search-bar button {
 
 #accept-objective-wrapper .accept-objective-item h2 {
   padding-left: 5px;
-  color: $primary-color;
+  color: #555;
   position: absolute;
   display: inline-block;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  margin-left: -15px;
+  margin-left: -25px;
   }
 
 #accept-objective-wrapper .accept-objective-item h3 {
   margin-top: 5px;
   display: inline-block;
-  font-size: 16px;
+  font-size: 18px;
+  color: #555;
 }
 
 #accept-objective-wrapper .accept-objective-item img {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 3px;
   margin-top: 0px;
   }
@@ -150,8 +149,8 @@ accept-objective--search-bar button {
   border-radius: 3px;
   background-color: #607d8b;
   color: #fff;
-  padding: 4px 8px;
-  font-size: 15px;
+  padding: 3px 6px;
+  font-size: 13px;
 }
 
 
@@ -160,8 +159,8 @@ accept-objective--search-bar button {
   color: #777;
   border-radius: 4px;
   width: 100%;
-  margin-top: 5px;
-  font-size: 14px;
+  margin-top: 6px;
+  font-size: 15px;
 }
 
 #height-25px {
@@ -175,17 +174,16 @@ accept-objective--search-bar button {
 #accept-objective-wrapper .accept-objective-item  span.category {
   background-color: $color-green; 
   float: right;
-  margin-top: 11px;
+  margin-top: 8px;
   clear: both;
  }
 
 #accept-objective-wrapper .accept-objective-item  {
-  min-height: 167px;
+ 
   position: relative;
   clear: both;
-  margin-bottom: 10px;
 }
-
+/* 
 @media screen and (max-width: 1475px) {
   #accept-objective-wrapper .accept-objective-item {
     width: 48.8%;
@@ -196,20 +194,18 @@ accept-objective--search-bar button {
     overflow: hidden;
     display: inline-table;
     margin-top: 20px;
-    margin-bottom: 20px;
- } }
+ } } */
 
- @media all and (max-width: 1400px) {
+ @media all and (max-width: 1300px) {
   #accept-objective-wrapper .accept-objective-item {
     width: 100%;
     min-width: 550px;
     margin-right: 0;
     background: #f9fafb;
     border: 1px solid #ddd;
-    border-radius: 3px 3px 0 3px;
+    border-radius: 3px;
     overflow: hidden;
     display: inline-table;
     margin-top: 20px;
-    margin-bottom: 20px; 
  } }
 

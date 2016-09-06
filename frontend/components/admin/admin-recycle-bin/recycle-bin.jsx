@@ -78,7 +78,7 @@ class RecycleBin extends Component {
 									<th>Type</th>
 									<th>Category</th>
 									<th>Deleted By</th>
-									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i className="fa fa-sort" ></i><span className="margin-left-3px">Date</span></th>
+									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i id="date-field" className="fa fa-sort-desc"></i><span className="margin-left-3px">Date</span></th>
 									<th className="actions" className="width-5perc">Actions</th>
 								</tr>
 							</thead>
@@ -109,6 +109,23 @@ class RecycleBin extends Component {
     }
 
 	setSortingByDate() {
+		
+		let dateField = document.querySelector(".filter-table #date-field");
+
+		if (dateField != null) {
+
+			if (dateField.classList.contains("fa-sort-asc")) {
+
+				dateField.classList.remove("fa-sort-asc");
+				dateField.classList.add("fa-sort-desc");
+
+			}
+			else {
+				dateField.classList.remove("fa-sort-desc");
+				dateField.classList.add("fa-sort-asc");
+			}
+		} 
+
 		this.props.setSortingByDate(!this.props.recycleBin.sortByDate);
 	}
 
