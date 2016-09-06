@@ -55,7 +55,7 @@ class PersonsInfo extends Component {
 		let removeApprenticeButton;
 
 		if (this.props.user.user.mentor != null && this.props.user.user.mentor._id == this.props.me._id && this.props.user.user._id != this.props.me._id) {
-			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>Remove apprentice</button>);
+			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>Finish mentoring</button>);
 		}
 
 		let mentorAvatar = null;
