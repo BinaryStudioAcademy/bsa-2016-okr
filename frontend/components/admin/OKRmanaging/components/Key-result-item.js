@@ -103,7 +103,7 @@ class KeyResult extends Component {
 												<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 												<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 											</select>);
-      editSaveIcon = 'fi-1 flaticon-1-check-rounded';
+      editSaveIcon = 'fi-1 flaticon-1-check';
       edit = 'editing';
       editSaveTitle = 'Save';
       cancel = (<i className="fi flaticon-multiply cancel" onClick={this.cancelEdit} aria-hidden="true"></i>);

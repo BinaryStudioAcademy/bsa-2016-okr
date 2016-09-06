@@ -81,7 +81,7 @@ class CategoryItem extends Component {
     										 className='category-edit-title' 
     										 defaultValue={this.props.category.title} 
     						/> );
-	    edit 		= ( <i className='fi-1 flaticon-1-check-rounded save' 
+	    edit 		= ( <i className='fi-1 flaticon-1-check save' 
 	    							 aria-hidden="true" 
 	    							 title='Save' 
 	    							 onClick={this.saveChanges}>

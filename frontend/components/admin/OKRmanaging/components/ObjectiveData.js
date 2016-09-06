@@ -99,7 +99,7 @@ class ObjectiveData extends React.Component{
                                  return <option key={index} value={category._id}>{category.title}</option>
                                })}
                       </select>);
-      editSaveIcon  = 'fi-1 flaticon-1-check-rounded';
+      editSaveIcon  = 'fi-1 flaticon-1-check';
       editSaveTitle = 'Save';
       edit          = 'editing',
       cancel        = (<i className="fi flaticon-multiply cancel"

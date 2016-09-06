@@ -75,7 +75,7 @@ class ObjectiveItem extends Component {
 											className="btn btn-green save hidden"
 											aria-hidden="true"
 											title="Save">
-												<i className="fi-1 flaticon-1-check-rounded"></i>
+												<i className="fi-1 flaticon-1-check"></i>
 											</button>);
 			cancelButton = (<button ref="cancelEdit"
 											className="btn btn-red cancel cancel-button-objective hidden"

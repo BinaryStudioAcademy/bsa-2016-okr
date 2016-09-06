@@ -43,7 +43,7 @@ class NewCategory extends React.Component {
 			<section className="add-new-key-result undisplay">
 				<input type='text' className='add-new-category' ref="newCategory" placeholder='Enter category' />
 				<div className='add-category-icon'>
-					<i className="fi-1 flaticon-1-check-rounded add" aria-hidden="true" title='Save' onClick={this.addNewCategory}></i>
+					<i className="fi-1 flaticon-1-check add" aria-hidden="true" title='Save' onClick={this.addNewCategory}></i>
 					<i className="fi flaticon-multiply delete" title='Cancel' onClick={this.onDeleteCategory} aria-hidden="true"></i>
 				</div>
 			</section>

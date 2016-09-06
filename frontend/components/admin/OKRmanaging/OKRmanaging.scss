@@ -330,7 +330,7 @@
             }
             .edit-category{
                 position: absolute;
-                top: 4px;
+                top: 10px;
                 right: 35px;
 
                 i{
@@ -345,14 +345,15 @@
                     color: $color-red;
                 }
                 .save{
+
                     color: $color-green;
-                    margin-top: 10px;
+                    margin-top: 5px;
                     font-size: 22px;
                     display: inline-block; 
                 }
                 .cancel{
                     color: $color-red;
-                    margin-top: 12px;
+                    margin-top: 7px;
                     display: inline-block; 
                 }
             }
