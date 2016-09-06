@@ -11,13 +11,13 @@ const NavMenu = (props) => {
 		<ul className="nav-divider-before">
 			<li>
 				<Link to="/charts" activeClassName="active">
-					<i className="fa fa-bar-chart" aria-hidden="true"></i>
+					<i className="fi-1 flaticon-1-arrow-chart" aria-hidden="true"></i>
 					Statistics
 				</Link>
 			</li>
 			<li>
 				<Link to="/roles" activeClassName="active">
-					<i className="fi flaticon-folder-14" aria-hidden="true"></i>
+					<i className="fi-1 flaticon-1-business-1" aria-hidden="true"></i>
 					Role mapping
 				</Link>
 			</li>
@@ -29,7 +29,9 @@ const NavMenu = (props) => {
 			</li>
 			<li>
 				<Link to="/obj-accept" activeClassName="active">
-					<i className="fi flaticon-checked-1" aria-hidden="true"></i>
+					<i className="fi flaticon-checked-1" aria-hidden="true">
+						{/*<div className="badge"><div className="badge-counter">1000</div></div>*/}
+					</i>
 					Accept Template
 				</Link>
 			</li>
@@ -41,7 +43,11 @@ const NavMenu = (props) => {
 			</li>
 			<li>
 				<Link to="/admin-recycle-bin" activeClassName="active">
-					<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
+					<i className="fi flaticon-garbage-1" aria-hidden="true">
+						{/*<div className="badge">
+							<i className="fi flaticon-worldwide" aria-hidden="true"></i>	
+						</div>*/}
+					</i>
 					Admin Recycle Bin
 				</Link>
 			</li>
@@ -72,14 +78,6 @@ const NavMenu = (props) => {
 					</li>
 				</ul>
 				{ isAdmin ? AdminLinksEl : '' }
-				<ul className="nav-divider-before">
-					<li>
-						<a href="https://github.com/BinaryStudioAcademy/bsa-2016-okr" target="_blank" activeClassName="active">
-							<i className="fa fa-github" aria-hidden="true"></i>
-							Project source
-						</a>
-					</li>
-				</ul>
 			</nav>
 		</aside>
 	)

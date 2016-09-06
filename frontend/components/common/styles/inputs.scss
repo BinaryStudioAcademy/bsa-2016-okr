@@ -223,10 +223,10 @@ textarea{
 }
 
 [type="checkbox"]:checked + label:before {
-	content: '\f108';
+	content: '\f10a';
 	color: $color-blue-grey;
 }
 
 [type="checkbox"]:not(:checked) + label:before {
-	content: '\f107';
+	content: '\f109';
 }
