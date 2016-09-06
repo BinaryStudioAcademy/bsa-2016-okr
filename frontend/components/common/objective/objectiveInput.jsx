@@ -14,16 +14,20 @@ class ObjectiveInput extends Component {
 		this.isValid = this.isValid.bind(this);
 		this.getAutocompleteData = this.getAutocompleteData.bind(this);
 		this.addNewItem = this.addNewItem.bind(this);
+		this.resetAutocompleteState = this.resetAutocompleteState.bind(this);
 		this.setAutocompleteSelectedItem = this.setAutocompleteSelectedItem.bind(this);
 	}
 
-	addNewItem() {
-		let title = this.refs[`autocompleteInput-${this.props.key}`].refs['autocompleteInput'].value;
+	addNewItem(title) {
 		if (title !== '') {
 			let objectiveId = this.props.selectedTemplate;
 
 			this.props.createObjective(title, objectiveId);
 		}
+	}
+
+	resetAutocompleteState() {
+		// Additional actions not needed yet
 	}
 
 	isValid(value) {
@@ -53,6 +57,7 @@ class ObjectiveInput extends Component {
 							autocompleteData = { this.props.objectives }
 							autocompletePlaceholder = 'objective'
 							addNewItem={ this.addNewItem }
+							resetAutocompleteState = { this.resetAutocompleteState }
 							isValid={ this.isValid }
 							ref={ `autocompleteInput-${this.props.key}` }
 						/>

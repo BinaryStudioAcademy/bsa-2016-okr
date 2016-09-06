@@ -127,32 +127,6 @@
       }
     }
 
-  .autocomplete {
-    width: 100%;
-    display: table;
-
-    .autocomplete-button {
-      display: table-cell;
-      width: 100%;
-
-      .add-button-key-result {
-        padding: .5em 1em;
-        margin: 0 0 0 .5em;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        box-sizing: border-box;
-      }
-
-      .delete-button-key-result {
-        padding: .5em 1em;
-        margin: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        box-sizing: border-box;
-      }
-    }
-  }
-
   #new-obj-keyresults {
     margin-bottom: 25px;
     list-style-type: none;

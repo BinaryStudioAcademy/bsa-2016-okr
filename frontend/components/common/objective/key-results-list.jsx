@@ -13,7 +13,7 @@ class KeyResults extends Component {
 		this.setShowKeyResultElement = this.setShowKeyResultElement.bind(this);
 
 		this.onAddNewKeyResultClick = this.onAddNewKeyResultClick.bind(this);
-		this.onDeleteKeyResultClick = this.onDeleteKeyResultClick.bind(this);
+		this.resetAutocompleteState = this.resetAutocompleteState.bind(this);
 	}
 
 	onAddNewKeyResultClick() {
@@ -31,7 +31,8 @@ class KeyResults extends Component {
 		}
 	}
 
-	onDeleteKeyResultClick() {
+	resetAutocompleteState() {
+		console.log('Hiding key result input...');
 		let keyResultAddBtn = this.refs.newKeyResultButton;
 		let keyResultAddElement = this.refs.newKeyResultButton.nextElementSibling;
 
@@ -50,8 +51,7 @@ class KeyResults extends Component {
 		if (keyResultElement.classList.contains('undisplay')) {
 			keyResultElement.classList.remove('undisplay');
 			keyResultElement.classList.add('display');
-		}
-		else {
+		}	else {
 			keyResultElement.classList.remove('display');
 			keyResultElement.classList.add('undisplay');
 		}
@@ -64,7 +64,7 @@ class KeyResults extends Component {
 
 
 	render() {
-		let isArchived =  this.props.isArchived;
+		let isArchived = this.props.isArchived;
 		let changeScore = this.props.changeScore;
 		let addNewKeyResult;
 		let items;
@@ -79,7 +79,7 @@ class KeyResults extends Component {
 				<div id="new-obj-keyresults">
 					<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.onAddNewKeyResultClick }>
 						+Add new key result</a>
-					<KeyResultAdd objectiveId={ this.props.objectiveId } onDeleteKeyResultClick={ this.onDeleteKeyResultClick } />
+					<KeyResultAdd objectiveId={ this.props.objectiveId } resetAutocompleteState={ this.resetAutocompleteState } />
 				</div>
 			);
 			items = this.props.data.map((item, index) => {
