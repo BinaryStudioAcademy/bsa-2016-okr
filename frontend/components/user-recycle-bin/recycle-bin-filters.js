@@ -42,12 +42,12 @@ class RecycleBinFilter extends Component {
 		return(
 
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
-				<div className="filter-box clearfix">
-						<div className="margin-left-4px">
-							<input type="checkbox" id="cbObjectives" defaultChecked={true} onClick={this.setObjectiveType.bind(this)}></input>
+				<div className="filter-box clearfix margin-left-4px">
+						<div className="checkbox-group">
+							<input type="checkbox" id="cbObjectives" checked defaultChecked={true} onClick={this.setObjectiveType.bind(this)}></input>
 							<label htmlFor="cbObjectives">Objectives</label>
 						</div>
-						<div>
+						<div className="checkbox-group">
 							<input type="checkbox" id="cbKey" defaultChecked={true}  onClick={this.setKeyType.bind(this)}></input>
 							<label htmlFor="cbKey">Key</label>
 						</div>
