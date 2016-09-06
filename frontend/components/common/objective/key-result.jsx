@@ -81,7 +81,7 @@ class KeyResult extends Component {
           <div></div>
           <div></div>
         </div>
-
+        <span className='difficulty-label'>Difficulty:</span>
       </li>
     )
   }

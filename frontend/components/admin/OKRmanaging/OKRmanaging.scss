@@ -71,7 +71,6 @@
         .description {
             color: #777;
             font-size: 15px;
-            font-style: italic;
             margin-bottom: 15px;
             width: 84%;
             line-height: 18px;
@@ -147,7 +146,7 @@
             margin-left: 18px;
             margin-bottom: 40px;
             .key-result-details{
-                margin-top: 23px;
+                margin-top: 20px;
                 margin-bottom: -20px;
             }
             .change {
@@ -187,10 +186,10 @@
                     display: inline-block;
                     float: right;
                     margin-right: 15px;
-                    margin-top: -6px;
+                    margin-top: 0;
                 }
                 .defaultKeyResultCheckbox.editing{
-                    margin-top: 0;
+                    margin-top: 6px;
                 }  
 
                 .key-result-item{
