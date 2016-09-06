@@ -13,8 +13,9 @@ router.post('/', (req, res, next) => {
 	var quarterId = req.body.quarterId || '';
 	// Not necessary field
 	var objectiveId = req.body.objectiveId || '';
-	var userId = req.session._id;
+	var userId = req.body.userId;
 	var isApproved = false;
+
 
 	if(isEmpty(title) || !isCorrectId(categoryId)
 	|| !isCorrectId(quarterId)) {

@@ -85,12 +85,19 @@ class Objectives extends Component {
 			let quarter = quarters.find((quarter) => {
 				return (quarter.index == selectedTab) && (quarter.year == selectedYear);
 			});
+			let userId;
+			if (this.props.userId == undefined) {
+				userId = session._id;
+			} else {
+				userId = this.props.userId;
+			}
 
 			let body = {
 				title: title,
 				objectiveId: objectiveId,
 				categoryId: categoryId,
 				quarterId: quarter._id,
+				userId: userId,
 			};
 
 			this.props.myStateActions.addNewObjective(body);
@@ -138,7 +145,7 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-
+		console.log('obj', userInfo.objectives)
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
@@ -190,9 +197,10 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let objectives = [];
 	let id = userObject._id;
 	let mentor;
+
 	if(userObject.mentor != undefined || userObject.mentor != null)
 		mentor = userObject.mentor._id;
-
+	console.log('userObject', userObject)
 	if (userObject.quarters != undefined) {
 		var current_quarter = userObject.quarters.find((quarter) => {
 			return (quarter.year == selectedYear) && (quarter.index == selectedTab)
