@@ -25,13 +25,13 @@ class RecycleBinFilter extends Component {
 		if (this.props.recycleBin.showRecycleBinFilters) {
 			
 			if (tbody != null)
-				tbody.style.height = "58vh";
+				tbody.style.height = "62vh";
 
 			return "show-container"
 		} 
 
 		if (tbody != null)
-				tbody.style.height = "66vh";
+				tbody.style.height = "70vh";
 
 		return "hide-container";
 	}
