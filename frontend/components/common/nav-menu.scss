@@ -84,3 +84,12 @@ aside#navbar #users-link{
       color: #ffffff;
    }
 }
+
+.nav-divider-before:before {
+   content: '';
+   display: block;
+   border: 1px solid $primary-color;
+   margin: 0 auto;
+   margin-bottom: 1em;
+   width: 75%;
+}

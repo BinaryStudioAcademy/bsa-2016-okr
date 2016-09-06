@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import CONST from '../../backend/config/constants';
 
 import Header from "./header.jsx";
 import NavMenu from "../components/common/nav-menu.jsx";
@@ -27,11 +28,13 @@ class App extends Component {
 	}
 
 	render() {
+		let localRole = this.props.localRole || CONST.user.role.USER;
+	  
 	  let ContentEl = (
 	   <div>
 	    <LoadingModal show={ this.props.isLoading } />
 	    <Header />
-	    <NavMenu />
+	    <NavMenu localRole={ localRole }/>
 	    <MainPage>
 	    { this.props.children }
 	    {
@@ -63,6 +66,7 @@ function mapStateToProps(state) {
 	return {
 		isLoading: state.app.isLoading,
 		isInitializing: state.app.isInitializing,
+		localRole: state.myState.me.localRole,
 	};
 }
 

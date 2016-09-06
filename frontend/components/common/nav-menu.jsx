@@ -1,8 +1,53 @@
 import React from 'react';
 import { Link } from 'react-router';
+import CONST from '../../../backend/config/constants';
+
 import './nav-menu.scss';
 
 const NavMenu = (props) => {
+	const isAdmin = (props.localRole === CONST.user.role.ADMIN);
+	
+	const AdminLinksEl = (
+		<ul className="nav-divider-before">
+			<li>
+				<Link to="/charts" activeClassName="active">
+					<i className="fa fa-bar-chart" aria-hidden="true"></i>
+					Statistics
+				</Link>
+			</li>
+			<li>
+				<Link to="/roles" activeClassName="active">
+					<i className="fi flaticon-folder-14" aria-hidden="true"></i>
+					Role mapping
+				</Link>
+			</li>
+			<li>
+				<Link to="/history" activeClassName="active">
+					<i className="fi flaticon-time" aria-hidden="true"></i>
+					History
+				</Link>
+			</li>
+			<li>
+				<Link to="/obj-accept" activeClassName="active">
+					<i className="fi flaticon-checked-1" aria-hidden="true"></i>
+					Accept Template
+				</Link>
+			</li>
+			<li>
+				<Link to="/okr-managing" activeClassName="active">
+					<i className="fi flaticon-app" aria-hidden="true"></i>
+					OKR managing
+				</Link>
+			</li>
+			<li>
+				<Link to="/admin-recycle-bin" activeClassName="active">
+					<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
+					Admin Recycle Bin
+				</Link>
+			</li>
+		</ul>
+	);
+	
 	return (
 		<aside id="navbar">
 			<nav onClick={ closeNav }>
@@ -18,48 +63,21 @@ const NavMenu = (props) => {
 							<i className="fi flaticon-users" aria-hidden="true"></i>
 							Users
 						</Link>
-					</li>
-					<li>
-						<Link to="/history" activeClassName="active">
-							<i className="fi flaticon-time" aria-hidden="true"></i>
-							History
-						</Link>
-					</li>
-					<li>
-						<Link to="/roles" activeClassName="active">
-							<i className="fi flaticon-folder-14" aria-hidden="true"></i>
-							Role mapping
-						</Link>
-					</li>
-					<li>
-						<Link to="/okr-managing" activeClassName="active">
-							<i className="fi flaticon-folder-19" aria-hidden="true"></i>
-							OKR managing
-						</Link>
-					</li>
+					</li>	
 					<li>
 						<Link to="/recycle-bin" activeClassName="active">
 							<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
 							Recycle Bin
 						</Link>
 					</li>
+				</ul>
+				{ isAdmin ? AdminLinksEl : '' }
+				<ul className="nav-divider-before">
 					<li>
-						<Link to="/admin-recycle-bin" activeClassName="active">
-							<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
-							Admin Recycle Bin
-						</Link>
-					</li>
-					<li>
-						<Link to="/charts" activeClassName="active">
-							<i className="fi flaticon-bookmark-1" aria-hidden="true"></i>
-							Statistics
-						</Link>
-					</li>
-					<li>
-						<Link to="/obj-accept" activeClassName="active">
-							<i className="fi flaticon-folder-17" aria-hidden="true"></i>
-							Accept Objective
-						</Link>
+						<a href="https://github.com/BinaryStudioAcademy/bsa-2016-okr" target="_blank" activeClassName="active">
+							<i className="fa fa-github" aria-hidden="true"></i>
+							Project source
+						</a>
 					</li>
 				</ul>
 			</nav>
