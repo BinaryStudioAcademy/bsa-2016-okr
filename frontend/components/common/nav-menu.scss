@@ -1,5 +1,6 @@
 @import "variables";
 
+//noinspection CssInvalidPropertyValue
 aside#navbar {
    position: fixed;
    top: $header-height;
@@ -11,12 +12,17 @@ aside#navbar {
    width: $left-nav-width;
    background-color: lighten($primary-color, 5%);
    overflow-x: hidden;
-   overflow-y: auto;
+   overflow-y: overlay;
    z-index: $navbar-index;
 
    /* Navbar opened */
-   &.opened{
+   &.opened {
       width: auto;
+   }
+
+   /* remove scrollbar visibility */
+   &::-webkit-scrollbar{
+      display: none;
    }
 }
 
