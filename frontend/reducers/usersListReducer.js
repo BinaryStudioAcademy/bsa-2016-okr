@@ -4,6 +4,7 @@ import {SEARCH_USER, GET_USERS_LIST,
 
 const initialState = {
 	user: [],
+	myApprentices: [],
 	searchValue: '',
     waiting: true
 }
@@ -47,10 +48,11 @@ export default function usersListReducer(state = initialState, action) {
 								myApprentices.push(data[i])
 							} else {elseUsers.push(data[i])}
 						}
-						var userList = myApprentices.concat(elseUsers);
+						//var userList = myApprentices.concat(elseUsers);
 
             return Object.assign({}, state, {
-                user: userList,
+                user: elseUsers,
+								myApprentices: myApprentices,
                 waiting: true,
                 searchValue: ''
             })
