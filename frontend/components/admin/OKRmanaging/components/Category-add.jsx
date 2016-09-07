@@ -48,8 +48,18 @@ class NewCategory extends Component {
 			<section className="add-new-key-result undisplay">
 				<input type='text' className='add-new-category' ref="newCategory" placeholder='Enter category' />
 				<div className='add-category-icon'>
-					<i className="fi-1 flaticon-1-check add" aria-hidden="true" title='Save' onClick={this.addNewCategory}></i>
-					<i className="fi flaticon-multiply delete" title='Cancel' onClick={ this.resetAddingCategoryInput } aria-hidden="true"></i>
+					<button  onClick={this.addNewCategory}
+									 className="btn btn-green add"
+									 aria-hidden="true"
+									 title="Save">
+									 <i className="fi-1 flaticon-1-check"></i>
+					</button>
+					<button onClick={ this.resetAddingCategoryInput }
+									className="btn btn-red delete"
+									title='Cancel'
+									aria-hidden="true">
+									<i className="fi flaticon-multiply"></i>
+					</button>
 				</div>
 			</section>
 		)

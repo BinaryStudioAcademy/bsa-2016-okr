@@ -92,28 +92,32 @@ class CategoryItem extends Component {
     										 className='category-edit-title' 
     										 defaultValue={ this.props.category.title } 
     						/> );
-	    edit 		= ( <i className='fi-1 flaticon-1-check save' 
-	    							 aria-hidden="true" 
-	    							 title='Save' 
-	    							 onClick={ this.saveChanges }>
-	    					</i> );
-	    cancel  = ( <i className="fi flaticon-multiply cancel" 
-	    							 title='Cancel' 
-	    							 aria-hidden="true"
-	    							 onClick={ this.cancelEdit }>
-	    					</i>);
+	    edit 		= ( <button  onClick={ this.saveChanges }
+									 				 className="btn btn-green save"
+													 aria-hidden="true"
+													 title="Save">
+									 				 <i className='fi-1 flaticon-1-check'></i> 
+									</button> );
+	    cancel  = ( <button onClick={ this.cancelEdit }
+													className="btn btn-red cancel"
+													title='Cancel'
+													aria-hidden="true">
+													<i className="fi flaticon-multiply cancel" ></i>
+									</button> );
     } else {
     	titleEl = ( <span>{ this.props.category.title }</span> );
-	    edit 		= ( <i className='fi flaticon-edit edit' 
-	    							 aria-hidden="true" 
-	    							 title='Edit' 
-	    							 onClick={this.editCategory}>
-	    					</i>);
-	    cancel  = (<i className='fi flaticon-garbage-2 delete' 
-	    							aria-hidden="true" 
-	    							title='Delete' 
-	    							onClick={this.delete}>
-	    					</i>);
+	    edit 		= ( <button aria-hidden="true"
+													title="Edit"
+												 	className="btn btn-blue-hover edit"
+												 	onClick={this.editCategory}>
+													<i className='fi flaticon-edit'></i>
+									</button>	);
+	    cancel  = ( <button title="Delete"
+			                    type="button"
+			                    className="btn btn-red-hover delete"
+			                    onClick={this.delete}>
+													<i className='fi flaticon-garbage-2'></i>
+									</button> );
     }
 
 		return (

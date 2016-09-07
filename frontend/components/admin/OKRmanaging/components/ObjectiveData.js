@@ -17,12 +17,12 @@ class ObjectiveData extends React.Component{
   }
 
   editObjective(event){
+    event.preventDefault();
     let index = this.props.objectivesList.active;
     let objective = this.props.objectivesList.visibleObjectives[index];
 
     if(this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index){
-      event.preventDefault();
-
+      
       let handler = function() {
         let reqBody = {};
         let objectiveDesctiption = document.querySelector("textarea.template-description").value;
@@ -79,9 +79,7 @@ class ObjectiveData extends React.Component{
     let titleEl;
     let descriptionEl;
     let categoryEl;
-    let edit;
-    let editSaveIcon;
-    let editSaveTitle;
+    let editSave;
     let cancel;
 
     if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
@@ -99,25 +97,34 @@ class ObjectiveData extends React.Component{
                                  return <option key={index} value={category._id}>{category.title}</option>
                                })}
                       </select>);
-      editSaveIcon  = 'fi-1 flaticon-1-check';
-      editSaveTitle = 'Save';
-      edit          = 'editing',
-      cancel        = (<i className="fi flaticon-multiply cancel"
-                          onClick={this.cancelEdit}
-                          title='Cancel'
-                          aria-hidden="true">
-                      </i> )
+      editSave      =  ( <button onClick={this.editObjective}
+                                 className='btn btn-green editing'
+                                 aria-hidden="true"
+                                 title='Save'>
+                                 <i className='fi-1 flaticon-1-check'></i>
+                        </button> );
+      cancel        =  (  <button onClick={ this.cancelEdit }
+                                  className="btn btn-red cancel"
+                                  title='Cancel'
+                                  aria-hidden="true">
+                                  <i className="fi flaticon-multiply"></i>
+                        </button> );
     } else {
-      titleEl       = (<div className='name'>{this.props.objective.title}</div>);
-      descriptionEl = (<div className='description'>{this.props.objective.description}</div>);
+      titleEl       = (<div className='name'>{ this.props.objective.title }</div>);
+      descriptionEl = (<div className='description'>{ this.props.objective.description }</div>);
       categoryEl    = (<div className='category'>{ category.title }</div>);
-      editSaveIcon  = 'fi flaticon-edit';
-      editSaveTitle = 'Edit';
-      edit          = 'edit';
-      cancel        = (<i className='fi flaticon-garbage-2 delete'
-                          aria-hidden="true"
-                          title='Delete'
-                          onClick={this.deleteObjective}></i>);
+      editSave      =  ( <button onClick= { this.editObjective }
+                                 className='btn btn-green-hover edit'
+                                 aria-hidden="true"
+                                 title='Edit'>
+                                 <i className='fi flaticon-edit'></i>
+                        </button> );   
+      cancel        =  ( <button title="Delete"
+                                 type="button"
+                                 className="btn btn-red-hover delete"
+                                 onClick={this.deleteObjective} >
+                                 <i className="fi flaticon-garbage-2"></i>
+                       </button> )
     }
 
 		return (
@@ -125,12 +132,8 @@ class ObjectiveData extends React.Component{
         <div className='objective-template'>
               <form onSubmit={this.editObjective}>
               <div className='edit-objective'>
-                    <i className={`${editSaveIcon} ${edit}`}
-                       aria-hidden="true"
-                       title={ editSaveTitle }
-                       onClick={this.editObjective}>
-                    </i>
-                    {cancel}
+                    { editSave }
+                    { cancel }
               </div>
               { categoryEl }
               { titleEl }
