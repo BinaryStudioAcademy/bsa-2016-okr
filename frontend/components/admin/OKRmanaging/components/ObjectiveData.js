@@ -114,7 +114,7 @@ class ObjectiveData extends React.Component{
       descriptionEl = (<div className='description'>{ this.props.objective.description }</div>);
       categoryEl    = (<div className='category'>{ category.title }</div>);
       editSave      =  ( <button onClick= { this.editObjective }
-                                 className='btn btn-green-hover edit'
+                                 className='btn btn-blue-hover edit'
                                  aria-hidden="true"
                                  title='Edit'>
                                  <i className='fi flaticon-edit'></i>

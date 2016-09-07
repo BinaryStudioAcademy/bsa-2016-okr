@@ -46,7 +46,7 @@ export default class DashboardStats extends React.Component {
 		return (
 			<div className="main">
 				<div className="countInfo" id="parent">
-					<p><span>Medium progress by all users</span>></p>
+					<p><span>Medium progress by all users</span></p>
 					<div className="progressBar">
 						<ProgressBar  strokeWidth="10" radius="80" percentage={Math.round(this.state.score.progress * 100)}/>
 					</div>

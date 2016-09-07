@@ -119,7 +119,7 @@ class KeyResult extends Component {
       titleEl 			=  (<div className='name'>{this.props.item.title}</div>);
       difficultyEl  =  (<div className='difficulty'>{this.props.item.difficulty}</div>);
       editSave 			=  ( <button onClick={this.editKeyResult}
-																 className='btn btn-green-hover edit'
+																 className='btn btn-blue-hover edit'
 																 aria-hidden="true"
 																 title='Edit'>
 																 <i className='fi flaticon-edit'></i>
