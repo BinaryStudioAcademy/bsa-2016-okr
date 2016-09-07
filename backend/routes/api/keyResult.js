@@ -18,19 +18,21 @@ router.post('/', adminOnly, (req, res, next) => {
 	difficulty = getValidDifficulty(difficulty.trim());
 	
 	if(!isCorrectId(objectiveId)
-	|| isEmpty(title) 
-	|| isEmpty(difficulty)) {
+	|| isEmpty(title)) {
 		return res.badRequest();
 	}
 
 	let data = {
 		creator: userId,
 		isApproved: true,
-		difficulty: difficulty,
 		objectiveId: objectiveId,
 		title: title,
 		used: 0,
 	};
+
+	if(!isEmpty(difficulty)) {
+		data.difficulty = difficulty;
+	}
 
 	return service.add(userId, data, res.callback);
 });
