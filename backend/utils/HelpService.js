@@ -4,6 +4,7 @@ module.exports = {
 	stringToBoolean: stringToBoolean,
 	debounce: debounce,
 	getDifficultyNumber: getDifficultyNumber,
+	getValidDifficulty: getValidDifficulty,
 };
 
 function debounce(func, wait, immediate) {
@@ -44,4 +45,8 @@ function getDifficultyNumber(str) {
 		return 3;
 	default: return 2;
 	}
+}
+
+function getValidDifficulty(value) {
+	return CONST.keyResult[value.toUpperCase()];
 }

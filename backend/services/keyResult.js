@@ -1,21 +1,73 @@
-var async = require('async');
-var _ = require('lodash');
-var KeyResultRepository = require('../repositories/keyResult');
-var UserObjectiveRepository = require('../repositories/userObjective');
-var UserObjectiveService = require('../services/userObjective');
-var HistoryRepository = require('../repositories/history');
+const async = require('async');
+const KeyResultRepository = require('../repositories/keyResult');
+const UserObjectiveRepository = require('../repositories/userObjective');
+const UserObjectiveService = require('../services/userObjective');
+const ObjectiveRepository = require('../repositories/objective');
+const HistoryRepository = require('../repositories/history');
+const ValidateService = require('../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
+
 
 const CONST = require('../config/constants');
 
 var KeyResultsService = function(){};
 
+KeyResultsService.prototype.add = function(userId, data, callback) {
+	async.waterfall([
+		(callback) => {
+			ObjectiveRepository.getById(data.objectiveId, (err, objective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(objective)) {
+					err = new Error('Objective does not exists');
+					return callback(err, null);
+				}
+
+				return callback(null);
+			});
+		}, (callback) => {
+			KeyResultRepository.getByTitleAndObjectiveId(data.title, data.objectiveId, (err, keyResult) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(!isEmpty(keyResult)) {
+					err = new Error('Key result for this objective with similar title already exists');
+					return callback(err, null);
+				}
+				
+				return callback(null);
+			});
+		}, (callback) => {
+			KeyResultRepository.add(data, (err, keyResult) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, keyResult);
+			});
+		}, (keyResult, callback) => {
+			HistoryRepository.addKeyResultEvent(userId, keyResult._id, CONST.history.type.ADD, (err, keyResult) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				return callback(null, keyResult);
+			});
+		},
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
 
 KeyResultsService.prototype.update = function(userId, keyResultId, data, callback) {
 	async.waterfall([
 		(callback) => {
 			KeyResultRepository.update(keyResultId, data, (err, keyResult) => {
 				if(err) {
-					return  callback(err, null);
+					return callback(err, null);
 				}
 				return callback(null, keyResult);
 			});
@@ -23,7 +75,7 @@ KeyResultsService.prototype.update = function(userId, keyResultId, data, callbac
 		(keyResult, callback) => {
 			HistoryRepository.addKeyResultEvent(userId, keyResultId, CONST.history.type.UPDATE, (err, keyResult) => {
 				if(err) {
-					return  callback(err, null);
+					return callback(err, null);
 				}
 
 				return callback(null, keyResult);
