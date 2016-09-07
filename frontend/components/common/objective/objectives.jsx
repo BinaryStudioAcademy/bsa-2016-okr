@@ -98,7 +98,7 @@ class Objectives extends Component {
 			let quarter = quarters.find((quarter) => {
 				return (quarter.index == selectedTab) && (quarter.year == selectedYear);
 			});
-			
+
 			let body = {
 				title: title,
 				objectiveId: objectiveId,
@@ -107,7 +107,7 @@ class Objectives extends Component {
 				userId: userId,
 			};
 			if (this.props.userId == undefined) {
-				this.props.myStateActions.addNewObjective(body); 
+				this.props.myStateActions.addNewObjective(body);
 			} else {
 				this.props.otherPersonActions.addNewObjective(body);
 			}
@@ -156,7 +156,7 @@ class Objectives extends Component {
 			archived = true;
 		}
 		console.log('objectives', userInfo.objectives)
-		
+
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
@@ -174,6 +174,7 @@ class Objectives extends Component {
 						archived = { archived }
 						objectives={ userInfo.objectives }
 						ObjectiveItem={ ObjectiveItem }
+						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
 						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
 						changeKeyResultScore={ this.changeKeyResultScore }
 						createObjective={ this.createObjective }

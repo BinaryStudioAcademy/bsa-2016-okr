@@ -18,6 +18,7 @@ class ObjectiveItem extends Component {
 		this.handleDelObj = this.handleDelObj.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleCancelEdit = this.handleCancelEdit.bind(this);
+		this.handleSave = this.handleSave.bind(this);
 	}
 
 	handleDelObj(e) {
@@ -43,6 +44,23 @@ class ObjectiveItem extends Component {
 		this.refs.descriptionEdit.classList.remove('hidden');
 		this.refs.cancelEdit.classList.remove('hidden');
 		this.refs.saveEdit.classList.remove('hidden');
+	}
+
+	handleSave() {
+		//handleCancelEdit();
+		// bad habbit copypaste code :/
+		let changedDescription = this.refs.descriptionEdit.value;
+		console.log(changedDescription);
+
+		this.props.updateUserObjectiveApi(this.props.item._id, changedDescription);
+		//updateUserObjectiveApi
+
+		this.refs.descriptionEdit.classList.add('hidden');
+		this.refs.description.refs.description.classList.remove('hidden');
+		this.refs.edit.classList.remove('hidden');
+		this.refs.deleteObjective.classList.remove('hidden');
+		this.refs.cancelEdit.classList.add('hidden');
+		this.refs.saveEdit.classList.add('hidden');
 	}
 
 	handleCancelEdit(){
@@ -73,6 +91,7 @@ class ObjectiveItem extends Component {
 											</button>);
 			saveButton 	= 	(<button ref="saveEdit"
 											className="btn btn-green save hidden"
+											onClick={ this.handleSave }
 											aria-hidden="true"
 											title="Save">
 												<i className="fi-1 flaticon-1-check"></i>
