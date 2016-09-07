@@ -24,7 +24,11 @@ var quarterSchema = new Schema({
 	userObjectives: [{
 		type: Schema.Types.ObjectId, 
 		ref: 'UserObjective'
-	}]
+	}],
+	isArchived: {
+		type: Boolean,
+		default: false,
+	}
 }, {
 	timestamps: true
 });

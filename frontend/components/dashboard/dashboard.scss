@@ -14,34 +14,14 @@
     }
     .countInfo{
         p{
-        box-sizing: border-box;
-        color: #aaa;
-        text-align: center;
-        position: relative;
-        padding: 2px;
-        margin: 0 0 10px;
-
-        
-        span{
-            font-size: 18px;
-            background-color: #F9FAFB;
-            display: inline-block;
+            box-sizing: border-box;
+            color: #aaa;
+            text-align: center;
             position: relative;
-            padding: 0 10px;
-            z-index: 10;
+            padding: 2px;
+            margin: 0 0 10px;
+
         }
-    }
-    p:before{
-        content: '';
-        display: block;
-        position: absolute;
-        top: 12px;
-        left: 0;
-        height: 0;
-        width: 100%;
-        border-top: 1px solid #aaaaaa;
-        z-index: 0;
-    }
     }
     .countInfo, .tableInfo{
         margin-bottom: 10px;
@@ -97,31 +77,12 @@
         margin-bottom: 10px;
 
         p{
-        box-sizing: border-box;
-        color: #aaa;
-        text-align: center;
-        position: relative;
-        padding: 2px;
-        margin: 0;
-            span{
-                font-size: 18px;
-                background-color: #F9FAFB;
-                display: inline-block;
-                position: relative;
-                padding: 0 10px;
-                z-index: 10;
-            }
-        }
-        p:before{
-            content: '';
-            display: block;
-            position: absolute;
-            top: 12px;
-            left: 0;
-            height: 0;
-            width: 100%;
-            border-top: 1px solid #aaaaaa;
-            z-index: 0;
+           box-sizing: border-box;
+            color: #aaa;
+            text-align: center;
+            position: relative;
+            padding: 2px;
+            margin: 0;
         }
     }
     
