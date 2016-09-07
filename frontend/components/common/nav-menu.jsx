@@ -5,7 +5,7 @@ import CONST from '../../../backend/config/constants';
 import './nav-menu.scss';
 
 const NavMenu = (props) => {
-	const isAdmin = (props.localRole === CONST.user.role.ADMIN);
+	const isAdmin = (props.localRole === CONST.user.localRole.ADMIN);
 	
 	const AdminLinksEl = (
 		<ul className="nav-divider-before">

@@ -29,7 +29,7 @@ class App extends Component {
 	}
 
 	render() {
-		let localRole = this.props.localRole || CONST.user.role.USER;
+		let localRole = this.props.localRole || CONST.user.localRole.USER;
 	  
 	  let ContentEl = (
 	   <div>

@@ -28,11 +28,19 @@ case 2:
 
 module.exports = {
 	user: {
-		role: {
+		localRole: {
 			USER: 'user',
 			MENTOR: 'mentor',
 			ADMIN: 'admin',
+			DEFAULT: 'default',
 		},
+		globalRole: {
+			ADMIN: 'Admin', 
+			DEVELOPER: 'Developer',
+			HR: 'HR', 
+			CEO: 'CEO', 
+			TECH_LEAD: 'Tech lead',
+		}
 	},
 	keyResult: {
 		EASY: 'easy',
