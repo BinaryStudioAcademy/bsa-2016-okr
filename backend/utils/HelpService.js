@@ -4,6 +4,7 @@ module.exports = {
 	stringToBoolean: stringToBoolean,
 	debounce: debounce,
 	getDifficultyNumber: getDifficultyNumber,
+	getNumberDifficulty: getNumberDifficulty,
 	getValidDifficulty: getValidDifficulty,
 };
 
@@ -44,6 +45,18 @@ function getDifficultyNumber(str) {
 	case CONST.keyResult.ADVANCED:
 		return 3;
 	default: return 2;
+	}
+}
+
+function getNumberDifficulty(num) {
+	switch(num) {
+	case 1:
+		return CONST.keyResult.EASY;
+	case 2:
+		return CONST.keyResult.INTERMEDIATE;
+	case 3:
+		return CONST.keyResult.ADVANCED;
+	default: return CONST.keyResult.INTERMEDIATE;
 	}
 }
 

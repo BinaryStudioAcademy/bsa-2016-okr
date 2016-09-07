@@ -1,36 +1,29 @@
 @import "../variables";
 
+.difficulty-label{
+  font-size: 0.75em;
+  display: inline-block;
+  background-color: $color-blue-grey;
+  padding: 2px 5px;
+  color: #fff;
+  border-radius: 2px;
+}
+
 .star-rating {
   float: right;
-  width: 4em;
-  position: relative;
+  width: 10em;
   text-align: center;
-  margin-top: -0.25em;
-
-  &-cover{
-    color: $color-grey;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    text-align: center;
-    background-color: #eaeaea;
-    font-size: 1.5em;
-  }
-
-  &:hover &-cover {
-    visibility: hidden;
-  }
+  margin-top: -0.5em;
 
   &__star {
     display: inline-block;
-    padding-left: 3px;
+    padding-left: 5px;
     vertical-align: middle;
     line-height: 1;
-    font-size: 1.5em;
+    font-size: 2em;
     color: $color-grey;
     transition: color .2s ease-out;
+    margin-top: -2px;
 
     &:hover {
       cursor: pointer;

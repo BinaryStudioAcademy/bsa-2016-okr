@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Rating from '../rating/rating.jsx';
-import { debounce, getDifficultyNumber } from '../../../../backend/utils/HelpService';
+import { debounce } from '../../../../backend/utils/HelpService';
 const session = require('../../../../backend/config/session');
 import sweetalert from 'sweetalert';
 import '../styles/sweetalert.css';
@@ -58,8 +58,6 @@ class KeyResult extends Component {
     let rangeEl;
     let deleteEl;
 
-    let rating = getDifficultyNumber(item.templateId.difficulty);
-
     if(!isArchived){
       score = this.state.score;
       rangeEl =(
@@ -85,10 +83,9 @@ class KeyResult extends Component {
         <span className='score'>{ score }</span>
         { rangeEl }
         <Rating
-          rating = { rating }
+          rating = { item.templateId.difficulty }
+          isEdit = { false }
         />
-        <span className='difficulty-label'>Difficulty:</span>
-
       </li>
     )
   }
