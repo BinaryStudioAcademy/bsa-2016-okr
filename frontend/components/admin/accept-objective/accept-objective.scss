@@ -19,9 +19,11 @@ accept-objective--search-bar button {
 }
 
 .objective-text-info {
-  width: 85%;
+  width: 100%;
   overflow: hidden;
-  min-height: 68px;
+  min-height: 67px;
+  margin-top: 8px;
+
 }
 
 .objective-general-info {
@@ -42,8 +44,9 @@ accept-objective--search-bar button {
   min-width: 550px; 
 }
 
-#accept-objective-wrapper .type {
-  float: right;
+#accept-objective-wrapper .row {
+  margin-top: 5px;
+ margin-bottom: -3px;
 }
 
 #accept-objective-wrapper p#main-title span {
@@ -89,13 +92,13 @@ accept-objective--search-bar button {
   }
 
 #accept-objective-wrapper .accept-objective-item h2 {
-  padding-left: 5px;
+  padding-top: 6px;
   color: #555;
   position: absolute;
   display: inline-block;
-  font-size: 18px;
-  font-weight: 700;
-  margin-left: -25px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 5px;
   }
 
 #accept-objective-wrapper .accept-objective-item h3 {
@@ -106,9 +109,9 @@ accept-objective--search-bar button {
 }
 
 #accept-objective-wrapper .accept-objective-item img {
-  width: 45px;
-  height: 45px;
-  border-radius: 3px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
   margin-top: 0px;
   }
 
@@ -139,9 +142,9 @@ accept-objective--search-bar button {
 }
 
 #accept-objective-wrapper .accept-objective-item .left-column {
-  width: 80px;
+  width: 40px;
   display: inline-block;
-  min-width: 80px;
+  min-width: 35px;
 }
 
 #accept-objective-wrapper .accept-objective-item span {
@@ -151,6 +154,7 @@ accept-objective--search-bar button {
   color: #fff;
   padding: 3px 6px;
   font-size: 13px;
+  margin-top: 5px;
 }
 
 
@@ -173,9 +177,7 @@ accept-objective--search-bar button {
 
 #accept-objective-wrapper .accept-objective-item  span.category {
   background-color: $color-green; 
-  float: right;
-  margin-top: 8px;
-  clear: both;
+  margin-left: 10px;
  }
 
 #accept-objective-wrapper .accept-objective-item  {

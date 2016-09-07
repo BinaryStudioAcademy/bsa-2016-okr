@@ -50,7 +50,7 @@ UserService.prototype.takeApprentice = function(userId, apprenticeId, userLocalR
 				err.status = 400;
 				return callback(err);
 			}
-      if(userLocalRole == CONST.user.role.ADMIN || userLocalRole == CONST.user.role.MENTOR) {
+      if(userLocalRole == CONST.user.localRole.ADMIN || userLocalRole == CONST.user.localRole.MENTOR) {
         UserRepository.getById(apprenticeId, (err, myApprentice) => {
   				if(err) {
   					return callback(err, null);
@@ -101,7 +101,7 @@ UserService.prototype.removeApprentice = function(userId, apprenticeId, userLoca
 				return callback(err);
 			}
 			*/
-      if(userLocalRole == CONST.user.role.ADMIN || userLocalRole == CONST.user.role.MENTOR) {
+      if(userLocalRole == CONST.user.localRole.ADMIN || userLocalRole == CONST.user.localRole.MENTOR) {
         UserRepository.getById(apprenticeId, (err, myApprentice) => {
   				if(err) {
   					return callback(err, null);

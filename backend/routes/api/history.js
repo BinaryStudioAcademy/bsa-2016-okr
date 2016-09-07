@@ -21,16 +21,6 @@ router.post('/', (req, res, next) => {
 	repository.add(req.body, res.callback);
 });
 
-router.get('/:id', (req, res, next) => {
-	var id = req.params.id;
-
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	};
-
-	repository.getHistoryById(id, res.callback);
-});
-
 router.get('/user/:id', (req, res, next) => {
 	var id = req.params.id;
 
@@ -39,6 +29,16 @@ router.get('/user/:id', (req, res, next) => {
 	};
 	service.getUserHistory(id, res.callback)
 	
+});
+
+router.get('/:id', (req, res, next) => {
+	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	repository.getHistoryById(id, res.callback);
 });
 
 module.exports = router;

@@ -3,6 +3,7 @@ var HistoryRepository = require('../repositories/history');
 var UserService = require('./user.js')
 var UserObjectiveRepository = require('../repositories/userObjective');
 var moment = require('moment');
+const async = require('async');
 
 var HistoryService = function(){
 

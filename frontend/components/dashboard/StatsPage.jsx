@@ -34,8 +34,8 @@ class StatsPage extends Component {
 		
 		return (
 			<div className="main-content">
-				<div className="page-title">
-					<p><span>OKR system overall stats</span></p>
+				<div className="stats-title">
+					<p><span>Useful statistics</span></p>
 				</div>
 				{ CategoriesChartEl }
 				{ KeyResultChartEl }

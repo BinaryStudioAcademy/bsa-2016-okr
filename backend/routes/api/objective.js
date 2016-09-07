@@ -1,15 +1,14 @@
 const router = require('express').Router();
 const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/objective');
-const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
-const cloneObjective = require('../../services/cloneObjective');
 const ValidateService = require('../../utils/ValidateService');
-const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
 const isValidYear = ValidateService.isValidYear;
 const isValidQuarter = ValidateService.isValidQuarter;
 const isCorrectId = ValidateService.isCorrectId;
+const HelpService = require('../../utils/HelpService');
+const getValidDifficulty = HelpService.getValidDifficulty;
 
 router.get('/', (req, res, next) => {
 	return service.getAll(res.callback);
@@ -31,7 +30,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	var keyResults = req.body.keyResults || [];
 
 	keyResults.forEach((keyResult) => {
-		keyResult.difficulty = ValidateService.getValidDifficulty(keyResult.difficulty || '');
+		keyResult.difficulty = getValidDifficulty(keyResult.difficulty || '');
 	});
 
 	var isKeyResultsInvalid = keyResults.some((keyResult) => {
@@ -224,7 +223,7 @@ module.exports = router;
 // 	}
 
 // 	keys.forEach((key) => {
-// 		key.difficulty = ValidateService.getValidDifficulty(key.difficulty);
+// 		key.difficulty = getValidDifficulty(key.difficulty);
 // 	});
 
 // 	var isKeysInvalid = keys.some((key) => {

@@ -19,13 +19,25 @@ class RecycleBinFilter extends Component {
 	}
 
 	showFiltersContainer() {
+
+		//let tbody = document.querySelector("#rec-bin-wrapper .filter-table tbody");
+		
 		if (this.props.recycleBin.showRecycleBinFilters) {
+			
+		/*	if (tbody != null)
+				tbody.style.height = "62vh";
+				*/
+
 			return "show-container"
-		} else {
-			return "hide-container"
-		}
+		} 
+/*
+		if (tbody != null)
+				tbody.style.height = "70vh";
+			*/
+
 		return "hide-container";
 	}
+
 
 	onChangeFrom(dateString, { dateMoment, timestamp }) {
 		this.props.setFilterDateFrom(dateString);

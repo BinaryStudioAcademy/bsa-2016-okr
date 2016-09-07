@@ -83,8 +83,7 @@ class KeyResult extends Component {
     let titleEl;
     let difficultyEl;
     let edit;
-    let editSaveIcon;
-    let editSaveTitle;
+    let editSave;
     let cancel;
     let isKeyResultDefault;
 
@@ -97,29 +96,47 @@ class KeyResult extends Component {
     	else  isKeyResultDefault = false;
 
     if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
-      titleEl = (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
-      difficultyEl = (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
-												<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
-												<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
-												<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
-											</select>);
-      editSaveIcon = 'fi-1 flaticon-1-check-rounded';
-      edit = 'editing';
-      editSaveTitle = 'Save';
-      cancel = (<i className="fi flaticon-multiply cancel" onClick={this.cancelEdit} aria-hidden="true"></i>);
+      titleEl 			=  (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
+      difficultyEl  =  (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
+											 	<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
+											 	<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
+											 	<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
+											 </select>) ;
+      edit 					=  'editing';
+      editSave 		  =  ( <button onClick={this.editKeyResult}
+																 className='btn btn-green editing'
+																 aria-hidden="true"
+																 title='Save'>
+																 <i className='fi-1 flaticon-1-check'></i>
+												</button> );
+      cancel 				=  (  <button onClick={ this.cancelEdit }
+																	className="btn btn-red cancel"
+																	title='Cancel'
+																	aria-hidden="true">
+																	<i className="fi flaticon-multiply"></i>
+												</button> );
     } else {
-      titleEl = (<div className='name'>{this.props.item.title}</div>);
-      difficultyEl = (<div className='difficulty'>{this.props.item.difficulty}</div>);
-      editSaveIcon = 'fi flaticon-edit';
-      editSaveTitle = 'Edit'
-      edit = 'edit';
-      cancel = (<i className="fi flaticon-garbage-2 delete" aria-hidden="true" title='Delete' onClick={this.deleteKeyResult}></i>)
+      titleEl 			=  (<div className='name'>{this.props.item.title}</div>);
+      difficultyEl  =  (<div className='difficulty'>{this.props.item.difficulty}</div>);
+      editSave 			=  ( <button onClick={this.editKeyResult}
+																 className='btn btn-blue-hover edit'
+																 aria-hidden="true"
+																 title='Edit'>
+																 <i className='fi flaticon-edit'></i>
+												</button> );
+      edit 					=  'edit';
+      cancel  			=  ( <button title="Delete"
+						                     type="button"
+						                     className="btn btn-red-hover delete"
+						                     onClick={this.deleteKeyResult} >
+																 <i className="fi flaticon-garbage-2"></i>
+											 </button> )
     }
 			return (
 				<li className="key-result-item" >
 					{titleEl}
-					<div className='edit-key-result '>
-						<i className={`${editSaveIcon} ${edit}`} aria-hidden="true" title={ editSaveTitle } onClick={this.editKeyResult}></i>
+					<div className='edit-key-result'>
+						{editSave}
 						{cancel}
 					</div>
 					{difficultyEl}

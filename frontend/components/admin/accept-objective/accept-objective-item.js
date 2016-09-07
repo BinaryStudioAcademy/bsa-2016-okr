@@ -10,14 +10,9 @@ class AcceptObjectiveItem extends Component {
 
 		  return (
 		  	<div className="accept-objective-item">
-			    <div className="row">
-			        <div className="left-column">
-				        <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
-			        </div>
-			        <h2>{this.props.item.userName}</h2>
-			        <button className="red-hover" onClick={this.decline.bind(this)}>Decline</button>
-			        <button className="green-hover" onClick={this.accept.bind(this)}>Accept</button>				   
-			    </div>
+		  		<button className="red-hover" onClick={this.decline.bind(this)}>Decline</button>
+			  	<button className="green-hover" onClick={this.accept.bind(this)}>Accept</button>	
+			  	
 			    <div className="objective-general-info">
 				    <span className="type">{this.props.item.type}</span>
 				    <span className="margin-right-23px category">{this.props.item.category}</span>
@@ -26,8 +21,15 @@ class AcceptObjectiveItem extends Component {
 				    <h3>{this.props.item.title}</h3>
 				    <div className="text-block">
 					    <p>{this.props.item.description}</p>
-					</div>
-			    </div>		    
+						</div>
+			    </div>
+			    <div className="row">
+			        <div className="left-column">
+				        <img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg"/>
+			        </div>
+			        <h2>{this.props.item.userName}</h2>			   
+			    </div>
+		    
 		    </div>
 		   )
 	}

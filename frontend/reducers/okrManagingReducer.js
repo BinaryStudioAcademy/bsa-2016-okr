@@ -207,12 +207,12 @@ export default function okrManagingReducer(state = initialState, action) {
         
         case RECIVED_NEW_KEY_RESULT : {
 
-            const {data} = action;
+            const { data } = action;
             
             return Object.assign({}, state, {
                 visibleObjectives: addKeyResult(state.visibleObjectives, data),
                 objectives: addKeyResult(state.objectives, data)
-            })
+            });
         }
              
         case RECIVED_DEFAULT_KEY_RESULT : {
@@ -246,14 +246,16 @@ function setDefaultKeyResult(objectives, data) {
     return objectives
 }
 
-function addKeyResult(visibleObjectives, keyResult) {
-     
-    let objectives = JSON.parse(JSON.stringify(visibleObjectives));
-    for (let i = 0; i < objectives.length; i++) {
-        if (objectives[i]._id == keyResult.objectiveId) {
-            objectives[i].keyResults.push(keyResult);
-        }
+function addKeyResult(objectives, keyResult) {
+    objectives = JSON.parse(JSON.stringify(objectives));
+    let objectiveIndex = objectives.findIndex((objective) => {
+        return objective._id === keyResult.objectiveId;
+    });
+
+    if(objectiveIndex !== -1) {
+        objectives[objectiveIndex].keyResults.push(keyResult);
     }
+
     return objectives
 }
 

@@ -51,35 +51,26 @@
 			.key-result-title{
 				width: 55%;
 			}
-			.difficulty-label{
-				 	font-size: 13px;
-					display: inline-block;
-					background-color: $color-blue-grey;
-					padding: 2px 5px;
-					margin-top: -1px;
-					color: #fff;
-					border-radius: 2px;
-					float: right;
-			}
-			.difficulty {
-					/* font-size: 13px;
-					padding: 2px 6px;
-					background-color:  $color-blue-grey;
-					color: #fff;
-					border-radius: 2px; */
-					float: right;
-					display: inline-block;
 
-					div{
-						display: inline-block;
-						margin-left: 5px;
-						height: 10px;
-						width: 10px;
-						border-radius: 50%;
-						border: 1px solid $color-green; 
-						cursor: pointer;           
-					}
-				}
+			//.difficulty {
+			//		/* font-size: 13px;
+			//		padding: 2px 6px;
+			//		background-color:  $color-blue-grey;
+			//		color: #fff;
+			//		border-radius: 2px; */
+			//		float: right;
+			//		display: inline-block;
+            //
+			//		div{
+			//			display: inline-block;
+			//			margin-left: 5px;
+			//			height: 10px;
+			//			width: 10px;
+			//			border-radius: 50%;
+			//			border: 1px solid $color-green;
+			//			cursor: pointer;
+			//		}
+			//	}
 		 		.easy {
 					:first-child {
 						background-color: $color-green; 

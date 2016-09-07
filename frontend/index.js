@@ -56,7 +56,7 @@ function adminOnly(nextState, transition, callback) {
 	let reducer = store.getState();
 	let localRole = reducer.myState.me.localRole;
 
-	if(localRole !== CONST.user.role.ADMIN) {
+	if(localRole !== CONST.user.localRole.ADMIN) {
 		// console.log('Redirecting to root')
 		transition(rootUrl);
 	}

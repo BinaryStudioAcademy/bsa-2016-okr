@@ -160,7 +160,7 @@ UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjec
 
 				if ((!userObjective.userId.equals(session._id))
 				&& (!userObjective.userId.equals(session.mentor))
-				&& (!session.localRole === CONST.user.role.ADMIN)) {
+				&& (!session.localRole === CONST.user.localRole.ADMIN)) {
 					err = new Error('Forbidden');
 					err.status = 403;
 					return callback(err, null);
@@ -220,7 +220,7 @@ UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, f
 
 				if ((!userObjective.userId.equals(session._id))
 				&& (!userObjective.userId.equals(session.mentor))
-				&& (!session.localRole === CONST.user.role.ADMIN)) {
+				&& (!session.localRole === CONST.user.localRole.ADMIN)) {
 					err = new Error('Forbidden');
 					err.status = 403;
 					return callback(err, null);

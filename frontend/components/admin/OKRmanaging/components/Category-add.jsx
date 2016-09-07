@@ -1,40 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import sweetalert from 'sweetalert';
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
 import '../../../common/styles/sweetalert.css';
 
-class NewCategory extends React.Component {
+class NewCategory extends Component {
 	constructor(props) {
 		super(props);
 
-		this.onDeleteCategory = this.onDeleteCategory.bind(this);
+		this.resetAddingCategoryInput = this.resetAddingCategoryInput.bind(this);
 		this.addNewCategory = this.addNewCategory.bind(this);
 	}
 
 	addNewCategory() {
-		let handler = function() {
-			let title = this.refs.newCategory.value;
-			const body = {
-				title: title,
-			};
+		let title = this.refs.newCategory.value.toLowerCase();
 
-			this.props.addCategory(body);
-			this.props.onDelete();
-			this.refs.newCategory.value = '';
-			
-		}.bind(this);
-
-		sweetalert({
-			title: "Do you really want to add new category?",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
-			closeOnConfirm: true
-		}, function(){handler();});
+		if(isEmpty(title)) {
+			sweetalert({
+  			title: 'Error!',
+  			text: 'Category title cannot be empty',
+  			type: 'error',
+  		}, () => {	
+  			ReactDOM.findDOMNode(this.refs.newCategory).focus(); 
+  		});
+		} else {
+			sweetalert({
+				title: "Do you really want to add new category?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#4caf50",
+				confirmButtonText: "OK",
+				closeOnConfirm: false,
+			}, () => {
+				this.props.addCategory(title);
+				this.resetAddingCategoryInput();
+			});
+		}
 	}
 
-	onDeleteCategory() {
-		this.props.onDelete();
+	resetAddingCategoryInput() {
+		this.props.hideAddInput();
 		this.refs.newCategory.value = '';
 	}
 
@@ -43,8 +48,18 @@ class NewCategory extends React.Component {
 			<section className="add-new-key-result undisplay">
 				<input type='text' className='add-new-category' ref="newCategory" placeholder='Enter category' />
 				<div className='add-category-icon'>
-					<i className="fi-1 flaticon-1-check-rounded add" aria-hidden="true" title='Save' onClick={this.addNewCategory}></i>
-					<i className="fi flaticon-multiply delete" title='Cancel' onClick={this.onDeleteCategory} aria-hidden="true"></i>
+					<button  onClick={this.addNewCategory}
+									 className="btn btn-green add"
+									 aria-hidden="true"
+									 title="Save">
+									 <i className="fi-1 flaticon-1-check"></i>
+					</button>
+					<button onClick={ this.resetAddingCategoryInput }
+									className="btn btn-red delete"
+									title='Cancel'
+									aria-hidden="true">
+									<i className="fi flaticon-multiply"></i>
+					</button>
 				</div>
 			</section>
 		)

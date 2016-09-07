@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router';
+import ProgressBar from './progressBar.jsx';
+import './progressBar.scss';
 
 export default class DashboardStats extends React.Component {
 	constructor(props) {
@@ -26,7 +29,8 @@ export default class DashboardStats extends React.Component {
 			)
 	}
 
-	componentDidMount() {
+
+	componentWillMount() {
 		axios.get(this.props.urlUsers)
 		.then(response => { this.setState({ rows: response.data }); });
 		axios.get(this.props.urlProgress)
@@ -37,14 +41,19 @@ export default class DashboardStats extends React.Component {
 
 
 	render() {
+		
+
 		return (
 			<div className="main">
-				<div className="countInfo">
-					<p><span>Medium progress by all users</span><b>{Math.round(this.state.score.progress * 100) + '%'}</b></p>
+				<div className="countInfo" id="parent">
+					<p>Medium progress by all users</p>
+					<div className="progressBar">
+						<ProgressBar  strokeWidth="10" radius="80" percentage={Math.round(this.state.score.progress * 100)}/>
+					</div>
 				</div>
 				<div className="tableInfo">
 					<table>
-						<caption><p><span>Top 5 Users by performance</span></p></caption>
+						<caption><p>Top 5 Users by performance</p></caption>
 						<th>Name</th><th>Completed</th>
 						{ this.state.rows.map(this.renderRow) }
 					</table>

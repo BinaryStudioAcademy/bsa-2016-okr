@@ -25,28 +25,32 @@ var keyResultSchema = new Schema({
 	used: {
 		type: Number,
 		default: 0,
-		min: 0
+		min: 0,
 	},
 	isApproved: {
 		type: Boolean,
-		default: false
+		default: false,
 	},
 	isDeclined: {
 		type: Boolean,
-		default: false
+		default: false,
 	},
 	isDeleted: {
 		type:	Boolean,
-		default: false
+		default: false,
 	},
 	deletedBy: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
-		required: false
+		required: false,
 	},
-	deletedDate: {}
+	deletedDate: {
+		type: Date,
+	}
 }, {
     timestamps: true
 });
+
+keyResultSchema.index({ objectiveId: 1, title: 1 }, { unique: true });
 
 module.exports = mongoose.model('KeyResult', keyResultSchema);

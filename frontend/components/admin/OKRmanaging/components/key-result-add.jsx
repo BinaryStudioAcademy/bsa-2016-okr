@@ -37,15 +37,25 @@ class KeyResult extends React.Component {
 		return (
 			<section className="add-new-key-result undisplay">
 				<input type='text' className='add-new-key-result-title' ref="keyResultTitle" placeholder='Enter key result title' />
+				<div className='add-key-result-icon'>
+					<button onClick={this.addNewKeyResult}
+									className="btn btn-green add"
+									aria-hidden="true"
+									title="Save">
+									<i className="fi-1 flaticon-1-check"></i>
+					</button>
+					<button onClick={this.onDeleteKeyResultClick}
+									className="btn btn-red delete"
+									title='Cancel'
+									aria-hidden="true">
+									<i className="fi flaticon-multiply"></i>
+					</button>
+				</div>
 				<select className='add-key-result-difficulty' ref="keyResultDifficulty" defaultValue={CONST.keyResult.EASY}>
 					<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
 					<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 					<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 				</select>
-				<div className='add-key-result-icon'>
-					<i className="fi-1 flaticon-1-check-rounded add" aria-hidden="true" title='Save' onClick={this.addNewKeyResult}></i>
-					<i className="fi flaticon-multiply delete" title='Cancel' onClick={this.onDeleteKeyResultClick} aria-hidden="true"></i>
-				</div>
 			</section>
 		)
 	}

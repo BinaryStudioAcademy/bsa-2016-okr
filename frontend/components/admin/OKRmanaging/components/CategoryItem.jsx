@@ -1,5 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import sweetalert from 'sweetalert';
+
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
+
 import '../../../common/styles/sweetalert.css';
 
 class CategoryItem extends Component {
@@ -16,7 +20,7 @@ class CategoryItem extends Component {
 		this.props.cancelEdit();
 	}
 
-	delete(){
+	delete() {
 		this.props.onDeleteNewCategory();
 
 		let category = this.props.objectives.find(item => {
@@ -44,77 +48,88 @@ class CategoryItem extends Component {
 			});
 	}
 
-	editCategory(){
+	editCategory() {
 		this.props.onDeleteNewCategory();
 		this.props.activeCategory(this.props.index);
 	}
 
-	saveChanges(){
-		let handler = function() {
-			let reqBody = {};
-      let categoryTitle = document.querySelector("input.category-title").value;
+	saveChanges() {
+    let title = this.refs.categoryInput.value.toLowerCase(); 
 
-      reqBody.title = categoryTitle;
-
-    	this.props.editCategory(this.props.category._id, reqBody);
-		}.bind(this);
-
-		sweetalert({
-			title: "Do you really want to save changes?",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
-			closeOnConfirm: true
-		}, function(){handler();});
+		if(isEmpty(title)) {
+			sweetalert({
+  			title: 'Error!',
+  			text: 'Category title cannot be empty',
+  			type: 'error',
+  		}, () => {	
+  			ReactDOM.findDOMNode(this.refs.categoryInput).focus(); 
+  		});
+		} else if(title === this.props.category.title) {
+			this.cancelEdit();
+		} else {
+			sweetalert({
+				title: "Do you really want to save changes?",
+				text: "This fill affect on all users",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#4caf50",
+				confirmButtonText: "OK",
+				closeOnConfirm: false,
+			}, () => {
+		    this.props.editCategory(this.props.category._id, title); 
+		 	});
+		}
 	}
 
-	render(){
+	render() {
 		let titleEl;
     let edit;
-    let editSaveIcon;
-    let editSaveTitle;
     let cancel;
+    
     if( this.props.categories.edit && 
     		this.props.categories.activeCategory == this.props.index ) {
-    	titleEl = ( <input type='text' 
+    	titleEl = ( <input type='text' ref="categoryInput"
     										 className='category-edit-title' 
-    										 defaultValue={this.props.category.title} 
+    										 defaultValue={ this.props.category.title } 
     						/> );
-	    edit 		= ( <i className='fi-1 flaticon-1-check-rounded save' 
-	    							 aria-hidden="true" 
-	    							 title='Save' 
-	    							 onClick={this.saveChanges}>
-	    					</i> );
-	    cancel  = ( <i className="fi flaticon-multiply cancel" 
-	    							 title='Cancel' 
-	    							 aria-hidden="true"
-	    							 onClick={this.cancelEdit}>
-	    					</i>);
+	    edit 		= ( <button  onClick={ this.saveChanges }
+									 				 className="btn btn-green save"
+													 aria-hidden="true"
+													 title="Save">
+									 				 <i className='fi-1 flaticon-1-check'></i> 
+									</button> );
+	    cancel  = ( <button onClick={ this.cancelEdit }
+													className="btn btn-red cancel"
+													title='Cancel'
+													aria-hidden="true">
+													<i className="fi flaticon-multiply cancel" ></i>
+									</button> );
     } else {
-    	titleEl = ( <span>{this.props.category.title} </span> );
-	    edit 		= ( <i className='fi flaticon-edit edit' 
-	    							 aria-hidden="true" 
-	    							 title='Edit' 
-	    							 onClick={this.editCategory}>
-	    					</i>);
-	    cancel  = (<i className='fi flaticon-garbage-2 delete' 
-	    							aria-hidden="true" 
-	    							title='Delete' 
-	    							onClick={this.delete}>
-	    					</i>);
+    	titleEl = ( <span>{ this.props.category.title }</span> );
+	    edit 		= ( <button aria-hidden="true"
+													title="Edit"
+												 	className="btn btn-blue-hover edit"
+												 	onClick={this.editCategory}>
+													<i className='fi flaticon-edit'></i>
+									</button>	);
+	    cancel  = ( <button title="Delete"
+			                    type="button"
+			                    className="btn btn-red-hover delete"
+			                    onClick={this.delete}>
+													<i className='fi flaticon-garbage-2'></i>
+									</button> );
     }
 
 		return (
 			<li className='category-item'>
-				{titleEl}
+				{ titleEl }
 				<div className='edit-category'>
-					{edit}
-					{cancel}
+					{ edit }
+					{ cancel }
 				</div>
 			</li>
 			)
 	}
 }
 
-export default CategoryItem
+export default CategoryItem;
