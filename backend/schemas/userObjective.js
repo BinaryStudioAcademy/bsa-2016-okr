@@ -67,4 +67,6 @@ var userObjective = new Schema({
 	timestamps: true
 });
 
+userObjective.index({ userId: 1,  templateId: 1 }, { unique: true });
+
 module.exports = mongoose.model('UserObjective', userObjective);

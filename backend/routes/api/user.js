@@ -3,8 +3,8 @@ const repository = require('../../repositories/user');
 const service = require('../../services/user');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
-const userMentorRepository = require('../../repositories/userMentor');
 const quarterRepository = require('../../repositories/quarter');
+// const userMentorRepository = require('../../repositories/userMentor');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 

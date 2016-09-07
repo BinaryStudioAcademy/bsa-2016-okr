@@ -29,4 +29,6 @@ var quarterSchema = new Schema({
 	timestamps: true
 });
 
+quarterSchema.index({ userId: 1, year: 1, index: 1 }, { unique: true });
+
 module.exports = mongoose.model('Quarter', quarterSchema);

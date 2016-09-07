@@ -51,4 +51,6 @@ var keyResultSchema = new Schema({
     timestamps: true
 });
 
+keyResultSchema.index({ objectiveId: 1, title: 1 }, { unique: true });
+
 module.exports = mongoose.model('KeyResult', keyResultSchema);
