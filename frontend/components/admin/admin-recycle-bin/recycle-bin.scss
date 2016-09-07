@@ -46,11 +46,12 @@ body {
     margin: 0 auto;
     font-size: 20px;
     min-width: 1100px;
+    padding: 4px;
 }
 
 .recycle-bin-header-row p span {
 	display: inline-block;
-    padding: 10px;
+    padding: 0 15px;
     position: relative;
     background: #f3f6f7;
     z-index: 10
@@ -60,7 +61,7 @@ body {
 	content: '';
     display: block;
     position: absolute;
-    top: 23px;
+    top: 15px;
     left: 0;
     height: 0;
     width: 100%;
@@ -74,8 +75,6 @@ body {
 	box-sizing: border-box;
     padding: 30px;
     overflow-y: hidden;
-    padding-bottom: 0;
-
 }
 
 #rec-bin-wrapper .not-display { display: none; }
@@ -130,7 +129,7 @@ body {
 }
 
 #rec-bin-wrapper .filter-table tbody {
-	height: 70vh;
+	/*height: 70vh;*/
     table-layout: fixed;
     display: block;
     overflow-y: overlay;
@@ -140,11 +139,7 @@ body {
 
 #rec-bin-wrapper .item-category {
     display: inline-block;
-   // border-radius: 20px;
     font-size: 14px;
-   // background-color: #607d8b;
-    //color: #fff;
-    //padding: 4px 8px;
 }
 
 #rec-bin-wrapper .btn-blue { margin-bottom: 12px; }
