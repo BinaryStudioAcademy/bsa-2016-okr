@@ -21,6 +21,7 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
 var mock = require('./mockData');
+var globalRoles = getGlobalRoles();
 
 var chance = new Chance();
 
@@ -49,13 +50,13 @@ function randomUser() {
 	var localRole;
 
 	if (randomValue <= 10)
-		localRole = "admin";
+		localRole = CONST.user.localRole.USER;
 	else if (randomValue > 10 && randomValue < 26)
-		localRole = "mentor";
+		localRole = CONST.user.localRole.MENTOR;
 	else if (randomValue > 25 && randomValue < 36)
-		localRole = "default";
+		localRole = CONST.user.localRole.DEFAULT;
 	else
-		localRole = "user";
+		localRole = CONST.user.localRole.ADMIN;
 
 	return new User({
 		localRole: localRole,
@@ -71,7 +72,7 @@ function generateMentors(users) {
 
 	for (let i = 0; i < users.length; i++) {
 
-		if (users[i].localRole === "mentor") {
+		if (users[i].localRole === CONST.user.localRole.MENTOR) {
 
 			apprenticeIndex = 0;
 			apprenticeNumbers = chance.integer({ min: 0, max: users.length });
@@ -84,7 +85,7 @@ function generateMentors(users) {
 				if (apprenticeIndex === users.length)
 					break;
 
-				if (apprenticeIndex === i || users[apprenticeIndex].localRole != "user") {
+				if (apprenticeIndex === i || users[apprenticeIndex].localRole != CONST.user.localRole.USER) {
 					++apprenticeIndex;
 					continue;
 				}
@@ -165,7 +166,7 @@ function randomObjective(users, categories, i) {
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
-*/
+	*/
 }
 
 function randomKeyResult(objectives, users, i) {
@@ -187,8 +188,9 @@ function randomKeyResult(objectives, users, i) {
 
 		while(!isDone) {
 			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
-			if (users[userWhoDidDeletionIndex].localRole === "admin")
+			if (users[userWhoDidDeletionIndex].localRole === CONST.user.localRole.ADMIN) {
 				isDone = true;
+			}
 		}
 
 		deletedBy = users[userWhoDidDeletionIndex]._id;
@@ -342,7 +344,7 @@ function baseCategories(users) {
 	})
 
 	res.push(myCategory.toObject());
-*/
+	*/
 	return res;
 }
 
@@ -447,7 +449,7 @@ function randomUserInfo(users) {
 	var info = {
 		firstName: chance.first(),
 		lastName: chance.last(),
-		globalRole: chance.pickone(['ADMIN', 'DEVELOPER', 'HR', 'CEO', 'Tech Lead']),
+		globalRole: chance.pickone(globalRoles),
 		email: chance.email()
 	};
 
@@ -458,6 +460,39 @@ function setInfoToUser(users, userinfos) {
 	users.forEach((user, i) => {
 		user.userInfo = userinfos[i]._id;
 	});
+}
+
+function getRoles() {
+	return [
+	{
+		globalRole: CONST.user.globalRole.ADMIN, 
+		localRole: CONST.user.localRole.USER
+	}, {
+		globalRole: CONST.user.globalRole.HR, 
+		localRole: CONST.user.localRole.USER,
+	}, {
+		globalRole: CONST.user.globalRole.DEVELOPER, 
+		localRole: CONST.user.localRole.USER,
+	}, {
+		globalRole: CONST.user.globalRole.CEO, 
+		localRole: CONST.user.localRole.ADMIN,
+	}, {
+		globalRole: CONST.user.globalRole.TECH_LEAD, 
+		localRole: CONST.user.localRole.ADMIN,
+	}
+	];
+}
+
+function getGlobalRoles() {
+	var globalRoles = [];
+
+	for(var role in CONST.user.globalRole) {
+		if(CONST.user.globalRole.hasOwnProperty(role)) {
+			globalRoles.push(CONST.user.globalRole[role]);
+		}
+	}
+
+	return globalRoles;
 }
 
 /*function randomHistory(users, keys, i) {
@@ -486,17 +521,10 @@ module.exports = function () {
 		var keyresults = new Array(mock.keyResultsMock.length).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(240).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
+		var roles = getRoles();
 
 		userobjectives = setArchivedToUserObjectives(userobjectives, quarters);
 		objectives = setDefaultKeyResultsForObjectives(objectives, keyresults);
-
-		var roles = [];
-
-		roles.push({globalRole: "ADMIN", localRole: "Admin"});
-		roles.push({globalRole: "DEVELOPER", localRole: "User"});
-		roles.push({globalRole: "HR", localRole: "User"});
-		roles.push({globalRole: "CEO", localRole: "Admin"});
-		roles.push({globalRole: "Tech Lead", localRole: "Admin"});
 
 		// var histories = new Array(10000).fill(0).map((_, i) => randomHistory(users, keys, i).toObject());
 

@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/objective');
-// const userMentorRepository = require('../../repositories/userMentor');
-// const cloneObjective = require('../../services/cloneObjective');
 const service = require('../../services/objective');
 const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;

@@ -152,6 +152,36 @@ router.get('/:id', (req, res, next) => {
 	return repository.getById(id, res.callback);
 });
 
+router.put('/:id', (req, res, next) => {
+	let userObjectiveId = req.params.id;
+	let title = req.body.title || '';
+	let description = req.body.description || '';
+	let session = req.session;
+
+	console.log("SES >>> ", req.session);
+
+	title = title.trim();
+	description = description.trim();
+
+	if(!ValidateService.isCorrectId(userObjectiveId)
+	|| (isEmpty(title) && isEmpty(description))) {
+		return res.badRequest();
+	};
+
+	let data = {};
+
+	if(!isEmpty(title)) {
+		data.title = title;
+	}
+
+	if(!isEmpty(description)) {
+		data.description = description;
+	}
+
+	return service.update(session, userObjectiveId, data, res.callback);
+});
+
+/* not sure if this is valid
 // TODO: Body validation
 router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
@@ -163,5 +193,5 @@ router.put('/:id', (req, res, next) => {
 
 	return service.update(req.session._id, id, body, res.callback);
 });
-
+*/
 module.exports = router;
