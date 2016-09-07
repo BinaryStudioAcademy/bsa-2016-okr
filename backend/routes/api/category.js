@@ -17,7 +17,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	var title = req.body.title || '';
 	var userId = req.session._id
 
-	title = title.trim();
+	title = title.trim().toLowerCase();
 	
 	if(ValidateService.isEmpty(title)) {
 		return res.badRequest();
@@ -31,8 +31,12 @@ router.post('/', adminOnly, (req, res, next) => {
 	categoryService.add(userId, data, res.callback);
 });
 
+router.put('/myupdate/:id', adminOnly, (req, res, next) => {
+	repository.update(req.params.id, req.body, res.callback);
+});
+
 router.delete('/:id/:flag', adminOnly, (req, res, next) => {
-	console.log('/:id/delete/:flag');
+	// console.log('/:id/delete/:flag');
 	var flag = req.params.flag || '';
 	var categoryId = req.params.id || '';
 	var userId = req.session._id;
@@ -57,7 +61,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	var title = req.body.title || '';
 	var userId = req.session._id;
 
-	title = title.trim();
+	title = title.trim().toLowerCase();
 	
 	if(!ValidateService.isCorrectId(categoryId)
 	|| ValidateService.isEmpty(title)) {
@@ -69,10 +73,6 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	};
 
 	categoryService.update(userId, categoryId, data, res.callback);
-});
-
-router.put('/myupdate/:id', adminOnly, (req, res, next) => {
-	repository.update(req.params.id, req.body, res.callback);
 });
 
 router.delete('/:id', adminOnly, (req, res, next) => {

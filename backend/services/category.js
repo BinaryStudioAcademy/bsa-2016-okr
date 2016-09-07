@@ -1,11 +1,12 @@
-var async = require('async');
-var ObjectId = require('mongoose').Types.ObjectId;
-var CategoryRepository = require('../repositories/category');
-var Category = require('../schemas/category');
-var HistoryRepository = require('../repositories/history');
+const async = require('async');
+const ObjectId = require('mongoose').Types.ObjectId;
+const CategoryRepository = require('../repositories/category');
+const Category = require('../schemas/category');
+const HistoryRepository = require('../repositories/history');
 
-var ValidateService = require('../utils/ValidateService');
-var CONST = require('../config/constants');
+const ValidateService = require('../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
+const CONST = require('../config/constants');
 
 var CategoryService = function() {};
 
@@ -17,7 +18,7 @@ CategoryService.prototype.add = function(userId, data, callback) {
 					return callback(err, null);
 				}
 
-				if(!ValidateService.isEmpty(category)) {
+				if(!isEmpty(category)) {
 					let err = new Error('Category already exists');
 					return callback(err, null);
 				}
@@ -56,7 +57,7 @@ CategoryService.prototype.softDelete = function(userId, categoryId, data, callba
 					return callback(err, null);
 				}
 
-				if(ValidateService.isEmpty(category)) {
+				if(isEmpty(category)) {
 					let err = new Error('Category does not exists');
 					return callback(err, null);
 				}
@@ -92,7 +93,7 @@ CategoryService.prototype.delete = function (userId, categoryId, callback) {
 					return callback(err, null);
 				};
 
-				if(ValidateService.isEmpty(category)) {
+				if(isEmpty(category)) {
 					let err = new Error('Category does not exists');
 					return callback(err, null);
 				}
@@ -119,12 +120,25 @@ CategoryService.prototype.delete = function (userId, categoryId, callback) {
 CategoryService.prototype.update = function (userId, categoryId, data, callback) {
 	 async.waterfall([
 		(callback) => {
+			CategoryRepository.getByTitle(data.title, (err, category) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(!isEmpty(category)) {
+					let err = new Error('Category already exists');
+					return callback(err, null);
+				}
+
+				return callback(null);
+			});
+		}, (callback) => {
 			Category.findOneAndUpdate({ _id: categoryId }, data, (err, category) => {
 				if(err) {
 					return callback(err, null);
 				}
 
-				if(ValidateService.isEmpty(category)) {
+				if(isEmpty(category)) {
 					let err = new Error('Category does not exists');
 					return callback(err, null);
 				}
