@@ -2,6 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userObjective = new Schema({
+  title: {
+    type: String
+  },
+  description: {
+    type: String
+  },
 	templateId: {
 		type: Schema.Types.ObjectId,
 		ref: 'Objective',

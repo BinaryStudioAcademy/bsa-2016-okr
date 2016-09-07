@@ -3,6 +3,8 @@ const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
 const CONST = require('../../config/constants');
 
+const ObjectiveService = require('../objective');
+const ObjectiveRepository = require('../../repositories/objective');
 const UserObjectiveRepository = require('../../repositories/userObjective');
 const QuarterRepository = require('../../repositories/quarter');
 const Quarter = require('../../schemas/quarter');
@@ -11,33 +13,49 @@ const HistoryRepository = require('../../repositories/history');
 
 const add = require('./add');
 const addKeyResult = require('./addKeyResult');
+const updateHelper = require('./updateHelper');
 
 var UserObjectiveService = function() {};
 
 UserObjectiveService.prototype.add = add;
 UserObjectiveService.prototype.addKeyResult = addKeyResult;
 
-UserObjectiveService.prototype.update = function(authorId, objectiveId, objective, callback){
+UserObjectiveService.prototype.update = function(session, userObjectiveId, data, callback){
 	async.waterfall([
 		(callback) => {
-			UserObjectiveRepository.update(objectiveId, objective, (err, oldObjective) => {
+			UserObjectiveRepository.getById(userObjectiveId, (err, userObjective) => {
 				if(err) {
 					return callback(err, null);
-				};
+				}
 
-				return callback(null, oldObjective);
-			})
-		},
-		(oldObjective, callback) => {
-			// console.log('update finished');
-			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
-			// 	if(err) {
-			// 		return callback(err, null);
-			// 	};
+				if(isEmpty(userObjective)) {
+					err = new Error('Objective not found');
+					return callback(err, null);
+				}
 
-			// 	return callback(null, objective);
-			// })
-			return callback(null, objective);
+				return callback(null, userObjective);
+			});
+		}, (userObjective, callback) => {
+			if(userObjective.isArchived == true){
+				err = new Error('Objective was archived');
+				return callback(err, null);
+			}
+			ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
+				if(templateObjective.isApproved == false){
+					//call another service
+					// if is not archived update template then
+					ObjectiveService.update(session._id, userObjective.templateId, data, callback);
+				} else if (templateObjective.isApproved == true) {
+					updateHelper(session._id, userObjective._id, data, (err, userObjectiveUpdated) => {
+						if(err) {
+							return callback(err, null);
+						};
+
+						return callback(null, userObjectiveUpdated);
+					});
+				}
+			//return callback(null, templateObjective);
+			});
 		}
 		], (err, result) => {
 			return callback(err, result)
