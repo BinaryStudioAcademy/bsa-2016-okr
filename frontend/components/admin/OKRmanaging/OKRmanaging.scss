@@ -272,12 +272,13 @@
             margin-top: 1px;
             
             .delete{
-                padding: 7px 10px;
+                padding: 6px 9px;
                 margin-left: 5px;
             }
 
             .add{
-                padding: 7px 10px;
+                padding: 6px 9px;
+                margin-left: 5px;
             }
             i{
                 font-size: 16px;  
@@ -285,7 +286,7 @@
             
         }
         .add-new-category{
-            width: 60%;
+            width: 150px;
             padding: 7px 12px;
         }
         .display{
@@ -362,6 +363,14 @@
 @media all and (max-width: 1300px) {
     .OKR-managing input.searchbar-input {
         width: 65%; 
+    }
+    #templates{
+        .template-description{
+            width: 40%;
+        }
+        .template-title{
+            width: 40%;
+        }
     }
 }
 
