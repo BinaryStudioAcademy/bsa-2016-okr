@@ -16,6 +16,7 @@ class UserHistory extends React.Component{
 
 	getHistoryType(item) {
 		let object = item.type.slice(item.type.indexOf(' ') + 1);
+		console.log('item',  item)
 		if(item.type.indexOf('ADD') != -1)
 			return (
 				<div className="action-text">

@@ -38,7 +38,7 @@
     display: flex;
     justify-content: center;
 	overflow: hidden;
-	padding-bottom: 20px;
+	padding-bottom: 15px;
 }
 
 #user-role-mapping-header-wrapper input {
@@ -235,12 +235,10 @@
     font-size: 16px;
     text-align: center;
     position: relative;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding: 0;
     width: 100%;
     min-width: 535px;
-    margin: 0 auto;
-    margin-bottom: 29px;
+    margin: 0 auto 40px;
 }
 
 #role-mapping-wrapper p span {
@@ -256,7 +254,7 @@
     content: '';
     display: block;
     position: absolute;
-    top: 25px;
+    top: 22px;
     left: 0;
     height: 0;
     width: 100%;

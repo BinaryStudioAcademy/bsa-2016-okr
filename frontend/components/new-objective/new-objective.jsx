@@ -11,6 +11,15 @@ class NewObjective extends React.Component{
    }
 
    handleCloseNewObjView(){
+      document.querySelector("textarea#new-obj-desc").value = '';
+      document.querySelector("input#new-obj-title").value = '';
+      const title = document.getElementsByClassName('new-key-result-title');
+      const difficulty = document.getElementsByClassName('new-key-result-difficulty');
+      for(let i=0; i<title.length; i++){
+         document.getElementsByClassName('new-key-result-title')[i].value = '';
+         document.getElementsByClassName('new-key-result-difficulty')[i].value = 'easy';
+      }
+
       close_window_handler.call(this);
    }
 
