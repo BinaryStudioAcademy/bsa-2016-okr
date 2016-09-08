@@ -1,157 +1,164 @@
 @import '../../common/styles/table.scss';
 
-.recycle-bin-header {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-
-	.recycle-bin-title {
-	  width: 30%;
-	  display: flex;
-	  justify-content: center;
-	  font-size: 28px;
-	  font-weight: bold;
-	}
-	.recycle-bin-header-row {
-	  width: 100%;
-	  margin-left: auto;
-	  margin-right: auto;
-	  display: flex;
-	  flex-direction: row;
-	  .filter-panel{
-	  	width: 70%;
-	    display: flex;
-	    justify-content: flex-end;
-	  }
-	  .recycle-bin-filter-bar-container {
-    		width: 100%;
-		}
-	}
-}
-
 body { 
 	overflow-y:hidden 
 }
 
-.recycle-bin-header-row p {
-    box-sizing: border-box;
-    color: #aaaaaa;
-    font-size: 16px;
-    text-align: center;
-    position: relative;
-    padding-top: 0;
-    padding-bottom: 0px;
-    width: 100%;
-    margin: 0 auto;
-    font-size: 20px;
-    min-width: 1100px;
-    padding: 4px;
-}
-
-.recycle-bin-header-row p span {
-	display: inline-block;
-    padding: 0 15px;
-    position: relative;
-    background: #f3f6f7;
-    z-index: 10
-}
-
-.recycle-bin-header-row p:after {
-	content: '';
-    display: block;
-    position: absolute;
-    top: 15px;
-    left: 0;
-    height: 0;
-    width: 100%;
-    border-top: 1px solid #aaaaaa;
-    z-index: 0;
-}
-
-#rec-bin-wrapper .no-hover { background: none; border:none;}
-
-#rec-bin-wrapper { 
+.recycle-bin-header {
+	width: 100%;
 	box-sizing: border-box;
-    padding: 30px;
-    overflow-y: hidden;
+	display: flex;
+	flex-direction: column;
+
+	.recycle-bin-title {
+		width: 30%;
+		display: flex;
+		justify-content: center;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+	.recycle-bin-header-row {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		display: flex;
+		flex-direction: row;
+		
+		& .filter-panel {
+			width: 70%;
+			display: flex;
+			justify-content: flex-end;
+		}
+
+		& .recycle-bin-filter-bar-container {
+			width: 100%;
+		}
+
+		& p {
+			box-sizing: border-box;
+			color: #aaaaaa;
+			font-size: 16px;
+			text-align: center;
+			position: relative;
+			padding-top: 0;
+			padding-bottom: 0px;
+			width: 100%;
+			margin: 0 auto;
+			font-size: 20px;
+			min-width: 1100px;
+			padding: 4px;
+
+			&:after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 15px;
+				left: 0;
+				height: 0;
+				width: 100%;
+				border-top: 1px solid #aaaaaa;
+				z-index: 0;
+			}
+
+			& span {
+				display: inline-block;
+				padding: 0 15px;
+				position: relative;
+				background: #f3f6f7;
+				z-index: 10
+			}
+		}
+
+		& button {
+			& i.flaticon-1-arrow-down,
+			& i.flaticon-1-arrow-up {
+				font-size: 10px;
+			}
+		}
+	}
 }
 
-#rec-bin-wrapper .not-display { display: none; }
+#rec-bin-wrapper {
+	box-sizing: border-box;
+	padding: 30px;
+	overflow-y: hidden;
+	
+	& .no-hover { background: none; border:none;}
+	
+	& .not-display { display: none; }
+	
+	& .item-deleted-by { white-space: nowrap;}
+	
+	& .no-wrap { white-space: nowrap; }
+	
+	& .width-20perc { width: 20%; }
 
-#rec-bin-wrapper .item-deleted-by { white-space: nowrap;}
+	& .width-15perc {
+		width: 16%;
+		white-space: nowrap
+	}
 
-#rec-bin-wrapper .no-wrap { white-space: nowrap; }
+	& .width-30perc { width: 25%; }
 
-#rec-bin-wrapper .width-20perc { width: 20%; }
+	& .width-5perc { width: 60px; }
 
-#rec-bin-wrapper .width-15perc {
-	width: 16%;
-	white-space: nowrap
+	& .width-85perc {
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	& td span { display: block; }
+
+	& #date-field {
+		margin-right: 7px;
+	}
+
+	& th.width-15perc { cursor: pointer; }
+
+	& .item-category {
+		display: inline-block;
+		font-size: 14px;
+	}
+
+	& .btn-blue { margin-bottom: 12px; }
+
+	& .filter-table {
+		width: 100%;
+		min-width: 1100px;
+		margin: 0 auto;
+		margin-top: 5px;
+
+		& tbody {
+			/*height: 70vh;*/
+			table-layout: fixed;
+			display: block;
+			overflow-y: overlay;
+		}
+
+		& th { white-space: nowrap; }
+
+		& td { 
+			text-overflow: ellipsis; 
+
+			& button { margin-left: -5px; }
+		}
+
+		& tr {
+			display: table;
+			width: 99.99%;
+			table-layout: fixed;
+		}
+	}
 }
-
-#rec-bin-wrapper .width-30perc { width: 25%; }
-
-#rec-bin-wrapper .width-5perc { width: 60px; }
-
-#rec-bin-wrapper .width-85perc {
-	width: 100%;
-	margin: 0 auto;
-}
-
-#rec-bin-wrapper .filter-table td button { margin-left: -5px; }
-
-#rec-bin-wrapper .filter-table tr {
-	display: table;
-    width: 99.99%;
-    table-layout: fixed;
-}
-
-#rec-bin-wrapper td span { display: block; }
-
-#rec-bin-wrapper .filter-table td { text-overflow: ellipsis;}
-
-#rec-bin-wrapper .filter-table th {
-	white-space: nowrap;
-}
-
-#rec-bin-wrapper .no-wrap { white-space: nowrap; }
-
-#rec-bin-wrapper #date-field {
-	margin-right: 7px;
-}
-
-#rec-bin-wrapper .filter-table {
-	width: 100%;
-	min-width: 1100px;
-	margin: 0 auto;
-	margin-top: 5px;
-}
-
-#rec-bin-wrapper .filter-table tbody {
-	/*height: 70vh;*/
-    table-layout: fixed;
-    display: block;
-    overflow-y: overlay;
-}
-
-#rec-bin-wrapper th.width-15perc { cursor: pointer; }
-
-#rec-bin-wrapper .item-category {
-    display: inline-block;
-    font-size: 14px;
-}
-
-#rec-bin-wrapper .btn-blue { margin-bottom: 12px; }
 
 .margin-left-3px { margin-left: 3px; }
 
 .cursor-pointer { cursor: pointer; }
 
 .filter-box {
-
-    height: 59px;
-    display: inline-block;
+	height: 59px;
+	display: inline-block;
 
 	& > div {
 		margin: 0 10px;
@@ -205,7 +212,7 @@ body {
 	.recycle-bin-filter-table {
 
 		font-size: 14px;
-	    display: inline-block;
+		display: inline-block;
 
 		td {
 			vertical-align: middle !important;
@@ -233,17 +240,17 @@ body {
 
 }
 
- @media all and (max-width: 1450px) {
+@media all and (max-width: 1450px) {
 
-	 .recucle-bin-filter-bar-container {
-	 
-		 .filter-box {
-		     display: block;
-		     width: 986px;
-		     height: auto;
-		     margin: 0 auto;
-		     margin-top: 12px;
-		 }
+	.recucle-bin-filter-bar-container {
+
+		.filter-box {
+			display: block;
+			width: 986px;
+			height: auto;
+			margin: 0 auto;
+			margin-top: 12px;
+		}
 
 		.filter-box label {
 			line-height: normal;
@@ -252,8 +259,8 @@ body {
 		.recycle-bin-filter-table {
 			font-size:14px;
 			margin: 0 auto;
-		    display: table;
+			display: table;
 		}
 	}
 
- }
+}
