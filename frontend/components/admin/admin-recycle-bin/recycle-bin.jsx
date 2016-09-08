@@ -47,6 +47,7 @@ class RecycleBin extends Component {
   	}
 
 	render() {
+		let showFilters = this.props.recycleBin.showRecycleBinFilters;
 
 		return (
 			<div id="rec-bin-wrapper">
@@ -56,10 +57,12 @@ class RecycleBin extends Component {
 							<p><span>Admin Recycle bin</span></p>
 						</div>
 
-						<div className="recycle-bin-header-row" className="width-85perc">
-							<button className={"btn btn-blue btn-filter " + this.filterButtonState(this.props.recycleBin.showRecycleBinFilters)} 
-									onClick={this.handleFilterButton}>
-							<i className="fa fa-filter"/> Filter <i className="fa fa-caret-down"/></button>
+						<div className="recycle-bin-header-row width-85perc">
+							<button className={"btn btn-blue btn-filter " + this.filterButtonState(showFilters)} 
+								onClick={ this.handleFilterButton }
+							>
+								<i className="fi flaticon-funnel"/> Filter <i className={ `fi-1 flaticon-1-arrow-${ showFilters ? 'up' : 'down' }` }/>
+							</button>
 						</div>
 
 						<div className="recycle-bin-header-row">
