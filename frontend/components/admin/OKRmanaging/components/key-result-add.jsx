@@ -1,36 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import sweetalert from 'sweetalert';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import * as actions from "../../../../actions/okrManagingActions.js";
 var CONST = require('../../../../../backend/config/constants');
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
-class KeyResult extends React.Component {
+class KeyResult extends Component {
 	constructor(props) {
 		super(props);
 
-		this.onDeleteKeyResultClick = this.onDeleteKeyResultClick.bind(this);
+		this.cancelAddingKeyResult = this.cancelAddingKeyResult.bind(this);
 		this.addNewKeyResult = this.addNewKeyResult.bind(this);
+		this.resetAddingKeyResultInput = this.resetAddingKeyResultInput.bind(this);
 	}
 
 	addNewKeyResult() {
-		let title = this.refs.keyResultTitle.value;
+		let title = this.refs.keyResultTitle.value.trim();
 		let difficulty = this.refs.keyResultDifficulty.value;
-		const body = {
-			title: title,
-			difficulty: difficulty,
-			objectiveId: this.props.objectiveId,
-		};
 
-		this.props.addKeyResult(body);
-		this.props.onDeleteKeyResultClick();
-		this.refs.keyResultTitle.value = '';
-		this.refs.keyResultDifficulty.value = CONST.keyResult.EASY;
+		if(isEmpty(title)) {
+			sweetalert({
+  			title: 'Error!',
+  			text: 'Key result title cannot be empty',
+  			type: 'error',
+  		}, () => {	
+  			ReactDOM.findDOMNode(this.refs.keyResultTitle).focus(); 
+  		});
+		} else {
+			let displayedTitle = title.length > 20 ? `${title.substr(0, 20)}...` : title;
+			sweetalert({
+				title: `Create key result '${ displayedTitle }'?`,
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, create',
+				closeOnConfirm: false,
+			}, () => {
+				this.props.addKeyResult(title, difficulty);
+				this.resetAddingKeyResultInput();
+				this.props.hideAddKeyResultInput();
+			});
+		}
 	};
 
-	onDeleteKeyResultClick() {
-		this.props.onDeleteKeyResultClick();
+	resetAddingKeyResultInput() {
+		this.refs.keyResultTitle.value = '';
+		this.refs.keyResultDifficulty.value = CONST.keyResult.EASY;
+	}
+
+	cancelAddingKeyResult() {
+		this.resetAddingKeyResultInput();
+		this.props.hideAddKeyResultInput();
 	}
 
 	render() {
@@ -44,7 +64,7 @@ class KeyResult extends React.Component {
 									title="Save">
 									<i className="fi-1 flaticon-1-check"></i>
 					</button>
-					<button onClick={this.onDeleteKeyResultClick}
+					<button onClick={this.cancelAddingKeyResult}
 									className="btn btn-red delete"
 									title='Cancel'
 									aria-hidden="true">
@@ -61,16 +81,4 @@ class KeyResult extends React.Component {
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
-function mapStateToProps(state) {
-	return {
-		okrManaging: state.okrManaging
-	};
-}
-
-const KeyResultConnected = connect(mapStateToProps, mapDispatchToProps)(KeyResult);
-
-export default KeyResultConnected;
+export default KeyResult

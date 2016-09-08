@@ -111,7 +111,7 @@ render() {
 															 activeCategory = { this.props.categoriesActions.activeCategory }
 															 cancelEdit = { this.props.categoriesActions.cancelEdit }
 															 deleteCategory = { this.props.categoriesActions.deleteCategory }
-															 onDeleteNewCategory = { this.hideAddInput }
+															 hideAddInput = { this.hideAddInput }
 									/>
 				})}
 			</ul>

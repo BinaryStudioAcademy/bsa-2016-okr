@@ -16,45 +16,50 @@ class CategoryItem extends Component {
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
+	componentDidUpdate() {
+		if (this.props.categories.edit && this.props.categories.activeCategory == this.props.index) {
+			let inputEl = this.refs.categoryInput;
+			ReactDOM.findDOMNode(inputEl).setSelectionRange(0, inputEl.value.length);
+		}
+	}
+
 	cancelEdit(){
 		this.props.cancelEdit();
 	}
 
 	delete() {
-		this.props.onDeleteNewCategory();
+		this.props.hideAddInput();
 
 		let category = this.props.objectives.find(item => {
 			return item.category == this.props.category._id
 		})
 
-		let handler = function() {
-			this.props.deleteCategory(this.props.category._id, true);
-		}.bind(this);
-
 		sweetalert({
-			title: "Do you really want to delete category?",
-			type: "warning",
+			title: `Delete category '${this.props.category.title}' ?`,
+			text: 'Category should be empty (without objectives)',
+			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonColor: '#f44336',
+			confirmButtonText: 'Yes, delete',
 			closeOnConfirm: false
-		}, function(isConfirm){
-				if(isConfirm && category == undefined){
-					handler();
+		}, (isConfirm) => {
+				if(isConfirm && category == undefined) {
+					this.props.deleteCategory(this.props.category._id, true);
 					sweetalert.close();
 				} else if(isConfirm && category != undefined){
-            sweetalert("This category isn't empty.", "error");
+          sweetalert('Cannot delete category', 'This category isn\'t empty.', 'error');
         }
 			});
 	}
 
 	editCategory() {
-		this.props.onDeleteNewCategory();
+		this.props.hideAddInput();
 		this.props.activeCategory(this.props.index);
 	}
 
 	saveChanges() {
-    let title = this.refs.categoryInput.value.toLowerCase(); 
+    let title = this.refs.categoryInput.value.toLowerCase();
+    let id = this.props.category._id;
 
 		if(isEmpty(title)) {
 			sweetalert({
@@ -68,15 +73,15 @@ class CategoryItem extends Component {
 			this.cancelEdit();
 		} else {
 			sweetalert({
-				title: "Do you really want to save changes?",
-				text: "This fill affect on all users",
-				type: "warning",
+				title: 'Save category changes?',
+				text: 'This fill affect on all users',
+				type: 'warning',
 				showCancelButton: true,
-				confirmButtonColor: "#4caf50",
-				confirmButtonText: "OK",
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, save',
 				closeOnConfirm: false,
 			}, () => {
-		    this.props.editCategory(this.props.category._id, title); 
+		    this.props.editCategory(id, title); 
 		 	});
 		}
 	}

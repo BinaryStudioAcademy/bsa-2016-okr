@@ -1,82 +1,98 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 import sweetalert from 'sweetalert';
 import '../../../common/styles/sweetalert.css';
 
-import * as actions from "../../../../actions/okrManagingActions.js";
-var CONST = require('../../../../../backend/config/constants');
+import CONST from '../../../../../backend/config/constants';
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
 class KeyResult extends Component {
 	constructor(props) {
 		super(props);
 
-	this.deleteKeyResult = this.deleteKeyResult.bind(this);
-	this.editKeyResult = this.editKeyResult.bind(this);
-	this.cancelEdit = this.cancelEdit.bind(this);
-	this.setDefaultKeyResult = this.setDefaultKeyResult.bind(this);
+		this.deleteKeyResult = this.deleteKeyResult.bind(this);
+		this.saveChanges = this.saveChanges.bind(this);
+		this.editKeyResult = this.editKeyResult.bind(this);
+		this.cancelEdit = this.cancelEdit.bind(this);
+		this.setDefaultKeyResult = this.setDefaultKeyResult.bind(this);
+	}
+
+	componentDidUpdate() {
+		if (this.props.editingKeyResult && this.props.item._id == this.props.activeKeyResult) {
+			let inputEl = this.refs.keyResultTitle;
+			ReactDOM.findDOMNode(inputEl).setSelectionRange(0, inputEl.value.length);
+		}
 	}
 
 	setDefaultKeyResult() {
 		this.props.cancelEdit();
-		this.props.onDeleteKeyResultClick();
+		this.props.hideAddKeyResultInput();
 
-		this.props.setDefaultKeyResult(this.props.objectiveId, this.props.item._id, this.refs.defaultKeyResult.checked);
+		this.props.setDefaultKeyResult(this.props.item._id, this.refs.defaultKeyResult.checked);
 	}
 
-	cancelEdit(){
+	cancelEdit() {
     this.props.cancelEdit();
   }
 
-	editKeyResult(e){
-		this.props.onDeleteKeyResultClick();
+	saveChanges(e) {
+		e.preventDefault();
+		this.props.hideAddKeyResultInput();
+		
+		let id = this.props.item._id;
+		let title = this.refs.keyResultTitle.value.trim();
+		let difficulty = this.refs.keyResultDifficulty.value;
+		let isNotChanged = (title === this.props.item.title && difficulty === this.props.item.difficulty);
 
-		if(this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult){
-			event.preventDefault();
-
-			let handler = function() {
-				let reqBody = {};
-				let keyResultDifficulty = this.refs.keyResultDifficulty.value;
-				let keyResultTitle = this.refs.keyResultTitle.value;
-
-		 		reqBody.difficulty = keyResultDifficulty;
-				reqBody.title = keyResultTitle;
-
-				this.props.editKeyResult(this.props.item._id, reqBody);
-			}.bind(this);
-
+		if(isEmpty(title)) {
 			sweetalert({
-				title: "Do you really want to save changes?",
-				type: "warning",
+  			title: 'Error!',
+  			text: 'Key result title cannot be empty',
+  			type: 'error',
+  		}, () => {	
+  			ReactDOM.findDOMNode(this.refs.keyResultTitle).focus();
+  		});
+		} else if(isNotChanged) {
+			this.cancelEdit();
+		} else {
+			sweetalert({
+				title: 'Save key result changes?',
+				text: 'This fill affect on all users',
+				type: 'warning',
 				showCancelButton: true,
-				confirmButtonColor: "#4caf50",
-				confirmButtonText: "OK",
-				closeOnConfirm: true
-			}, function(){handler();});
-
-		}
-
-		else {
-			this.props.activeKeyResult(this.props.item._id, true);
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, save',
+				closeOnConfirm: false
+			}, () => {
+				this.props.saveChanges(id, title, difficulty);
+			});
 		}
 	}
 
-	deleteKeyResult(){
-		this.props.onDeleteKeyResultClick();
+	editKeyResult(e) {
+		e.preventDefault();
+		this.props.hideAddKeyResultInput();
+		let id = this.props.item._id;
+		this.props.setActiveKeyResult(id, true);
+	}
 
-		let handler = function() {
-			let i = this.props.item._id;
-			this.props.deleteKeyResult(i, true)
-		}.bind(this);
+	deleteKeyResult() {
+		this.props.hideAddKeyResultInput();
+		let title = this.props.item.title;
+		let displayedTitle = title.length > 20 ? `${title.substr(0, 20)}...` : title;
 
 		sweetalert({
-			title: "Do you really want to delete key result?",
-			type: "warning",
+			title: `Delete key result '${displayedTitle}' ?`,
+			text: 'Key result will disappear from autocomplete' ,
+			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonColor: '#f44336',
+			confirmButtonText: 'Yes, delete',
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			let i = this.props.item._id;
+			this.props.deleteKeyResult(i, true)
+		});
 	}
 
 	render() {
@@ -87,15 +103,13 @@ class KeyResult extends Component {
     let cancel;
     let isKeyResultDefault;
 
-    let objective = this.props.objectivesList.objectives.find(item => {
-    	return item._id == this.props.objectiveId
-    });
-
-    if(objective.defaultKeyResults.includes(this.props.item._id))
+    if(this.props.objective.defaultKeyResults.includes(this.props.item._id)) {
     	isKeyResultDefault = true;
-    	else  isKeyResultDefault = false;
+    } else {
+    	isKeyResultDefault = false;
+    }
 
-    if (this.props.objectivesList.editingKeyResult && this.props.item._id == this.props.objectivesList.activeKeyResult) {
+    if (this.props.editingKeyResult && this.props.item._id == this.props.activeKeyResult) {
       titleEl 			=  (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
       difficultyEl  =  (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
 											 	<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
@@ -103,7 +117,7 @@ class KeyResult extends Component {
 											 	<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 											 </select>) ;
       edit 					=  'editing';
-      editSave 		  =  ( <button onClick={this.editKeyResult}
+      editSave 		  =  ( <button onClick={ this.saveChanges }
 																 className='btn btn-green editing'
 																 aria-hidden="true"
 																 title='Save'>
@@ -118,7 +132,7 @@ class KeyResult extends Component {
     } else {
       titleEl 			=  (<div className='name'>{this.props.item.title}</div>);
       difficultyEl  =  (<div className='difficulty'>{this.props.item.difficulty}</div>);
-      editSave 			=  ( <button onClick={this.editKeyResult}
+      editSave 			=  ( <button onClick={ this.editKeyResult }
 																 className='btn btn-blue-hover edit'
 																 aria-hidden="true"
 																 title='Edit'>
@@ -128,35 +142,26 @@ class KeyResult extends Component {
       cancel  			=  ( <button title="Delete"
 						                     type="button"
 						                     className="btn btn-red-hover delete"
-						                     onClick={this.deleteKeyResult} >
+						                     onClick={ this.deleteKeyResult } >
 																 <i className="fi flaticon-garbage-2"></i>
 											 </button> )
     }
-			return (
-				<li className="key-result-item" >
-					{titleEl}
-					<div className='edit-key-result'>
-						{editSave}
-						{cancel}
-					</div>
-					{difficultyEl}
-					<div className={ `defaultKeyResultCheckbox ${edit}` }>
-						<input type="checkbox" id={`defaultKeyResult-${this.props.item._id}`}  ref='defaultKeyResult' defaultChecked={isKeyResultDefault} onChange={this.setDefaultKeyResult}></input>
-						<label htmlFor={`defaultKeyResult-${this.props.item._id}`} >Default</label>
-					</div>
-				</li>
-			)
+		
+		return (
+			<li className="key-result-item" >
+				{titleEl}
+				<div className='edit-key-result'>
+					{editSave}
+					{cancel}
+				</div>
+				{difficultyEl}
+				<div className={ `defaultKeyResultCheckbox ${edit}` }>
+					<input type="checkbox" id={`defaultKeyResult-${this.props.item._id}`}  ref='defaultKeyResult' defaultChecked={isKeyResultDefault} onChange={this.setDefaultKeyResult}></input>
+					<label htmlFor={`defaultKeyResult-${this.props.item._id}`} >Default</label>
+				</div>
+			</li>
+		)
 	}
 }
-function mapDispatchToProps(dispatch) {
-		return bindActionCreators(actions, dispatch);
-}
 
-function mapStateToProps(state) {
-	return {
-		objectivesList: state.okrManaging
-	};
-}
-
-const KeyResultConnected = connect(mapStateToProps, mapDispatchToProps)(KeyResult);
-export default KeyResultConnected
+export default KeyResult;

@@ -36,7 +36,7 @@ class OKRmanaging extends Component {
 				</div>
 			</CentralWindow>
 			<StatPanel>
-				<div className="OKR-mnaging category">
+				<div className="OKR-managing category">
 						<CategoryList />
 				</div>
 			</StatPanel>

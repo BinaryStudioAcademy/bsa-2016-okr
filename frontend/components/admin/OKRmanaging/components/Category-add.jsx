@@ -24,12 +24,14 @@ class NewCategory extends Component {
   			ReactDOM.findDOMNode(this.refs.newCategory).focus(); 
   		});
 		} else {
+			let displayedTitle = title.length > 12 ? `${title.substr(0, 12)}...` : title;
+			
 			sweetalert({
-				title: "Do you really want to add new category?",
-				type: "warning",
+				title: `Create category '${displayedTitle}'?`,
+				type: 'warning',
 				showCancelButton: true,
-				confirmButtonColor: "#4caf50",
-				confirmButtonText: "OK",
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, create',
 				closeOnConfirm: false,
 			}, () => {
 				this.props.addCategory(title);

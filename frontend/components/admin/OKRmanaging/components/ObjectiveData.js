@@ -141,7 +141,7 @@ class ObjectiveData extends React.Component{
             </form>
         </div>
         <div className='key-result'>
-          <KeyResults objectiveId = { this.props.objective._id }
+          <KeyResults objective = { this.props.objective }
                       cancelEdit = { this.props.cancelEdit }
                       data = { this.props.objective.keyResults }
                       cancelEdit = { this.props.cancelEdit }/>
