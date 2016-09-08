@@ -111,22 +111,22 @@ class ObjectiveItem extends Component {
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
 		}
-
+		console.log("objective >>> ", objective);
 		return (
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
 
-				<div className='name'>{ objective.templateId.title }</div>
+				<div className='name'>{ objective.title ? objective.title : objective.templateId.title }</div>
 				<ObjectiveDescription
 						ref="description"
-						description={ objective.templateId.description }
+						description={ objective.description ? objective.description : objective.templateId.description }
 				/>
 				<textarea
 						ref="descriptionEdit"
 						name='description'
 						className='description-textarea hidden'
-						defaultValue={objective.templateId.description}/>
+						defaultValue={ objective.description ? objective.description : objective.templateId.description }/>
 				{ editButton }
 				{ saveButton }
 				{ deleteButton }

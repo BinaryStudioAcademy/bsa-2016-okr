@@ -158,8 +158,6 @@ router.put('/:id', (req, res, next) => {
 	let description = req.body.description || '';
 	let session = req.session;
 
-	console.log("SES >>> ", req.session);
-
 	title = title.trim();
 	description = description.trim();
 
