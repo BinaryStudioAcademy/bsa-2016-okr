@@ -33,8 +33,8 @@ UserService.prototype.getById = function(id, callback) {
 				}
 
 				quarters = quarters.map((quarter) => {
-					let userObjectivesNew = quarter.userObjectives.map((objective) => {
-						let keyResultsNotDeleted = objective.keyResults.filter((keyResult) => {
+					var userObjectivesNew = quarter.userObjectives.map((objective) => {
+						var keyResultsNotDeleted = objective.keyResults.filter((keyResult) => {
 							return keyResult.isDeleted == false;
 						})
 

@@ -35,7 +35,7 @@ ObjectiveService.prototype.getAll = function(callback) {
 		},
 		(objectives, keyResults, callback) => {
 			objectives = objectives.map((objective) => {
-				let objectiveKeyResults = keyResults.filter((keyResult) => {
+				var objectiveKeyResults = keyResults.filter((keyResult) => {
 					return keyResult.objectiveId.equals(objective._id);
 				});
 
@@ -116,10 +116,10 @@ ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, 
 			});
 		}, (objective, callback) => {
 
-			let keyResult = objective.defaultKeyResults.find((keyResult)=>{
+			var keyResult = objective.defaultKeyResults.find((keyResult)=>{
 				return keyResult.equals(keyResultId);
 			});
-			let index = objective.defaultKeyResults.findIndex((keyResult)=>{
+			var index = objective.defaultKeyResults.findIndex((keyResult)=>{
 				return keyResult.equals(keyResultId);
 			});
 
@@ -130,7 +130,7 @@ ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, 
 				objective.defaultKeyResults.splice(index, 1)
 
 			/*if(index === -1) {
-				let err = new Error('Key result not found in objective');
+				var err = new Error('Key result not found in objective');
 				return callback(err, null);
 			}
 
@@ -258,7 +258,7 @@ ObjectiveService.prototype.autocomplete = function(userId, categoryId, year, qua
 					return callback(err, null);
 				}
 
-				let objectiveIds = quarter.userObjectives;
+				var objectiveIds = quarter.userObjectives;
 
 				return callback(null, objectiveIds);
 			});
@@ -269,11 +269,11 @@ ObjectiveService.prototype.autocomplete = function(userId, categoryId, year, qua
 					return callback(err, null);
 				}
 
-				let filteredByCategory = userObjectiveTemplates.filter((userObjective) => {
+				var filteredByCategory = userObjectiveTemplates.filter((userObjective) => {
 					return userObjective.templateId.category.equals(categoryId);
 				});
 
-				let userObjectiveTemplateIds = filteredByCategory.map((userObjective) => {
+				var userObjectiveTemplateIds = filteredByCategory.map((userObjective) => {
 					return userObjective.templateId._id;
 				});
 

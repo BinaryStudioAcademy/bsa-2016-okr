@@ -113,9 +113,9 @@ router.put('/myupdate/:id', (req, res, next) => {
 
 router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	var id = req.params.id;
-	let flag = req.params.flag;
-	let deletedDate = new Date();
-	let userId = req.session._id || '';
+	var flag = req.params.flag;
+	var deletedDate = new Date();
+	var userId = req.session._id || '';
 
 	if(!ValidateService.isCorrectId(id)
 		|| !ValidateService.isStringBoolean(flag)) {
@@ -123,7 +123,7 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	};
 
 
-	let body = {
+	var body = {
 		isDeleted: HelpService.stringToBoolean(flag),
 		deletedDate: deletedDate,
 		deletedBy: userId
@@ -133,11 +133,11 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
-	let objectiveId = req.params.id;
-	let title = req.body.title || '';
-	let category = req.body.category || '';
-	let description = req.body.description || '';
-	let userId = req.session._id;
+	var objectiveId = req.params.id;
+	var title = req.body.title || '';
+	var category = req.body.category || '';
+	var description = req.body.description || '';
+	var userId = req.session._id;
 
 	title = title.trim();
 	description = description.trim();
@@ -149,7 +149,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 		return res.badRequest();
 	};
 
-	let data = {};
+	var data = {};
 	
 	if(!isEmpty(title)) {
 		data.title = title;
@@ -167,10 +167,10 @@ router.put('/:id', adminOnly, (req, res, next) => {
 });
 
 router.put('/:objectiveId/keyresult/:keyResultId/default/:flag', adminOnly, (req, res, next) => {
-	let objectiveId = req.params.objectiveId;
-	let keyResultId = req.params.keyResultId;
-	let userId = req.session._id;
-	let flag = req.params.flag;
+	var objectiveId = req.params.objectiveId;
+	var keyResultId = req.params.keyResultId;
+	var userId = req.session._id;
+	var flag = req.params.flag;
 
 	if(!ValidateService.isCorrectId(objectiveId)
 	|| !ValidateService.isCorrectId(keyResultId)) {

@@ -82,14 +82,14 @@ router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
 });
 
 router.post('/:id/keyresult/', (req, res, next) => {
-	let userObjectiveId = req.params.id || '';
-	let userId = req.session._id;
-	let isAdmin = req.session.isAdmin;
-	let title = req.body.title || '';
-	let keyResultId = req.body.keyResultId || '';
-	let isApproved = false;
+	var userObjectiveId = req.params.id || '';
+	var userId = req.session._id;
+	var isAdmin = req.session.isAdmin;
+	var title = req.body.title || '';
+	var keyResultId = req.body.keyResultId || '';
+	var isApproved = false;
 
-	let keyResultTitle = title.trim();
+	var keyResultTitle = title.trim();
 
 	if(!isCorrectId(userObjectiveId)
 	|| (isEmpty(title) && isEmpty(keyResultId))
@@ -105,10 +105,10 @@ router.post('/:id/keyresult/', (req, res, next) => {
 });
 
 router.put('/:id/keyresult/score', (req, res, next) => {
-	let userId = req.session._id;
-	let objectiveId = req.params.id || '';
-	let keyResultId = req.body.keyResultId || '';
-	let score = req.body.score || '';
+	var userId = req.session._id;
+	var objectiveId = req.params.id || '';
+	var keyResultId = req.body.keyResultId || '';
+	var score = req.body.score || '';
 
 	score = Number.parseFloat(score);
 
@@ -153,10 +153,10 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-	let userObjectiveId = req.params.id;
-	let title = req.body.title || '';
-	let description = req.body.description || '';
-	let session = req.session;
+	var userObjectiveId = req.params.id;
+	var title = req.body.title || '';
+	var description = req.body.description || '';
+	var session = req.session;
 
 	title = title.trim();
 	description = description.trim();
@@ -166,7 +166,7 @@ router.put('/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	let data = {};
+	var data = {};
 
 	if(!isEmpty(title)) {
 		data.title = title;
