@@ -10,12 +10,12 @@ class ObjectiveList extends React.Component{
     super(props);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.cancelEdit();
     this.props.getObjectivesList();
   }
 
-  render(){
+  render() {
     var objectives = [];
     objectives = this.props.objectivesList.visibleObjectives.map((objective, index) => {
       return <ObjectiveData objective = { objective } 
@@ -28,10 +28,11 @@ class ObjectiveList extends React.Component{
                             activeObjective = { this.props.activeObjective }
                             deleteObjective = { this.props.deleteObjective }
               />
-      })
+    });
+
     return (
       <div id='templates'>
-        {objectives}
+        { objectives }
       </div>  
     )
   }

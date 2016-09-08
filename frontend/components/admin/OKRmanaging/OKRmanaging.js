@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
-import CentralWindow from "../../../containers/central-window.jsx";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as actions from '../../../actions/okrManagingActions';
+
+import CentralWindow from '../../../containers/central-window.jsx';
 import ObjectiveList from './components/ObjectiveList';
 import CategoryList from './components/CategoryList.jsx';
 import Searchbar from './components/SearchBar';
 import Toolbar from './components/Toolbar';
-import StatPanel from "../../../containers/statistic-panel.jsx";
+import StatPanel from '../../../containers/statistic-panel.jsx';
 import NewObjective from '../../new-objective/new-objective.jsx';
 
 import './OKRmanaging.scss';
 
 class OKRmanaging extends Component {
   constructor(props) {
-    super(props); 
+    super(props);
+
+    this.searchObjective = this.searchObjective.bind(this);
+  }
+
+  searchObjective(e) {
+  	this.props.searchObjective(e.target.value);
   }
 
 	render() {
@@ -23,7 +34,7 @@ class OKRmanaging extends Component {
 						<Toolbar/>
 						<div className="OKR-managing fixed-header">
 							<div className="OKR-managing search">
-							<Searchbar />
+							<Searchbar searchObjective={ this.searchObjective } />
 						</div>
 						
 						<div id="OKR-managing-title"> 
@@ -45,4 +56,10 @@ class OKRmanaging extends Component {
 	}
 }
 
-export default OKRmanaging
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actions, dispatch);
+}
+
+
+const OKRmanagingConnected = connect(null, mapDispatchToProps)(OKRmanaging);
+export default OKRmanagingConnected;
