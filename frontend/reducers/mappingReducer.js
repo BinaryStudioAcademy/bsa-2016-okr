@@ -56,7 +56,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 			const {data} = action; 
 
-			console.log(data);  
+			//console.log(data);
 
 			for (let i = 0; i < data.length; i++) {
 

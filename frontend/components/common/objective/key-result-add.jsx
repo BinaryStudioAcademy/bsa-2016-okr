@@ -55,14 +55,16 @@ class KeyResult extends React.Component {
 			<section className="autocomplete undisplay">
 				<AutocompleteInput
 					getAutocompleteData={ this.getAutocompleteData }
-					setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
 					autocompleteData={ this.props.keyResultsReducer.data }
 					autocompletePlaceholder='key result'
+
+					setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
+					selectedItem={ this.props.keyResultsReducer.selectedItem }
+
 					addNewItem={ this.addNewItem }
 					resetAutocompleteState={ this.resetAutocompleteState }
 				  isValid={ this.isValid }
-					selectedItem={ this.props.keyResultsReducer.selectedItem }
-				  ref={ `autocompleteInput-${this.props.objectiveId}` }
+					refInput={ `autocompleteInput-${this.props.objectiveId}` }
 				/>
 			</section>
 		)

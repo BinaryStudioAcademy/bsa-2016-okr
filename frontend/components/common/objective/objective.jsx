@@ -130,7 +130,7 @@ class ObjectiveItem extends Component {
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
 		}
-		console.log("objective >>> ", objective);
+		//console.log("objective >>> ", objective);
 		return (
 			<div>
 			<div className='home-objective'>

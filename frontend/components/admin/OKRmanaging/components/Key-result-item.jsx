@@ -132,9 +132,8 @@ class KeyResult extends Component {
 											 	<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 											 	<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 											 </select>) ;
-      edit 					=  'editing';
       editSave 		  =  ( <button onClick={ this.saveChanges }
-																 className='btn btn-green editing'
+																 className='btn btn-green'
 																 aria-hidden="true"
 																 title='Save'>
 																 <i className='fi-1 flaticon-1-check'></i>
@@ -149,12 +148,11 @@ class KeyResult extends Component {
       titleEl 			=  (<div className='name'>{this.props.item.title}</div>);
       difficultyEl  =  (<div className='difficulty'>{this.props.item.difficulty}</div>);
       editSave 			=  ( <button onClick={ this.editKeyResult }
-																 className='btn btn-blue-hover edit'
+																 className='btn btn-blue-hover'
 																 aria-hidden="true"
 																 title='Edit'>
 																 <i className='fi flaticon-edit'></i>
 												</button> );
-      edit 					=  'edit';
       cancel  			=  ( <button title="Delete"
 						                     type="button"
 						                     className="btn btn-red-hover delete"
@@ -170,11 +168,11 @@ class KeyResult extends Component {
 					{editSave}
 					{cancel}
 				</div>
-				{difficultyEl}
-				<div className={ `defaultKeyResultCheckbox ${edit}` }>
+				<div className='defaultKeyResultCheckbox'>
 					<input type="checkbox" id={`defaultKeyResult-${this.props.item._id}`}  ref='defaultKeyResult' defaultChecked={isKeyResultDefault} onChange={this.setDefaultKeyResult}></input>
 					<label htmlFor={`defaultKeyResult-${this.props.item._id}`} >Default</label>
 				</div>
+				{difficultyEl}
 			</li>
 		)
 	}

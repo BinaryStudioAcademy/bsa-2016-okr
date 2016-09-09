@@ -179,6 +179,7 @@ router.put('/:id', (req, res, next) => {
 	return service.update(session, userObjectiveId, data, res.callback);
 });
 
+
 router.put('/:id/archive/:flag', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 	var flag = req.params.flag === "true" ? true : false;
@@ -190,6 +191,22 @@ router.put('/:id/archive/:flag', adminOnly, (req, res, next) => {
 
 	return service.changeArchiveStatus(id, flag, res.callback);
 })
+
+
+//this is temporary  solution
+router.put('/myupdate/:id', (req, res, next) => {
+
+	var id = req.params.id;
+	var body = req.body;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.update(id, body, res.callback);
+});
+
+
 
 /* not sure if this is valid
 // TODO: Body validation
