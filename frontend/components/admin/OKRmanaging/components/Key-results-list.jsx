@@ -8,7 +8,7 @@ import * as actions from "../../../../actions/okrManagingActions.js";
 
 import sweetalert from 'sweetalert';
 
-import KeyResultItem from './Key-result-item.js';
+import KeyResultItem from './Key-result-item.jsx';
 import KeyResultAdd from './key-result-add.jsx';
 
 import { isEmpty } from '../../../../../backend/utils/ValidateService';
