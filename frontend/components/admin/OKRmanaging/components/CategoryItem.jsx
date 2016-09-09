@@ -14,16 +14,27 @@ class CategoryItem extends Component {
 		this.cancelEdit = this.cancelEdit.bind(this);
 		this.editCategory = this.editCategory.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
+		this.focusEditTitle = this.focusEditTitle.bind(this);
+		this.selectEditTitle = this.selectEditTitle.bind(this);
 	}
 
 	componentDidUpdate() {
 		if (this.props.categories.edit && this.props.categories.activeCategory == this.props.index) {
-			let inputEl = this.refs.categoryInput;
-			ReactDOM.findDOMNode(inputEl).setSelectionRange(0, inputEl.value.length);
+			this.selectEditTitle();
 		}
 	}
 
-	cancelEdit(){
+	selectEditTitle() {
+		let inputEl = this.refs.categoryInput;
+		ReactDOM.findDOMNode(inputEl).setSelectionRange(0, inputEl.value.length);
+	}
+
+	focusEditTitle() {
+		let editEl = this.refs.categoryInput;
+		ReactDOM.findDOMNode(editEl).focus();
+	}
+
+	cancelEdit() {
 		this.props.cancelEdit();
 	}
 
@@ -67,7 +78,7 @@ class CategoryItem extends Component {
   			text: 'Category title cannot be empty',
   			type: 'error',
   		}, () => {	
-  			ReactDOM.findDOMNode(this.refs.categoryInput).focus(); 
+  			setTimeout(this.focusEditTitle, 0);
   		});
 		} else if(title === this.props.category.title) {
 			this.cancelEdit();

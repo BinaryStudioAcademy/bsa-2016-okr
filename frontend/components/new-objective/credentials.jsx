@@ -1,9 +1,10 @@
 import React from 'react';
 import './credentials.scss';
 import NewKeyResult from './key-result.jsx';
+import sweetalert from 'sweetalert';
+import { isEmpty } from '../../../backend/utils/ValidateService';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import * as actions from "../../actions/okrManagingActions.js";
 
 const title = document.getElementsByClassName('new-key-result-title');
@@ -61,8 +62,13 @@ class NewObjCredentials extends React.Component{
       let objectiveCategory = document.querySelector("select#new-obj-category").value;
       let keyResults = [];
       let data = {};
+      let correct = 0;
+
       for(let i=0; i<title.length; i++){
         data.title = title[i].value;
+        if(!isEmpty(title[i].value)){
+          correct++;
+        }
         data.difficulty = difficulty[i].value;
         keyResults.splice(i, 0, data);
         data= {}; 
@@ -72,20 +78,40 @@ class NewObjCredentials extends React.Component{
       reqBody.category = objectiveCategory;
       reqBody.keyResults = keyResults;
 
-      this.props.createNewTemplate(reqBody);
+      if(isEmpty(objectiveTitle)) {
+        sweetalert({
+          title: 'Error!',
+          text: 'Objective title cannot be empty',
+          type: 'error',
+        });
+       } else if(isEmpty(objectiveDesctiption)) {
+        sweetalert({
+          title: 'Error!',
+          text: 'Objective description cannot be empty',
+          type: 'error',
+        });
+      } else if(correct != title.length){
+        sweetalert({
+          title: 'Error!',
+          text: 'Key result title cannot be empty',
+          type: 'error',
+        });
+      } else {
+        this.props.createNewTemplate(reqBody);
 
-      document.querySelector("textarea#new-obj-desc").value = '';
-      document.querySelector("input#new-obj-title").value = '';
+        document.querySelector("textarea#new-obj-desc").value = '';
+        document.querySelector("input#new-obj-title").value = '';
 
-      for(let i=0; i<title.length; i++){
-        document.getElementsByClassName('new-key-result-title')[i].value = '';
-        document.getElementsByClassName('new-key-result-difficulty')[i].value = 'easy';
-      }
+        for(let i=0; i<title.length; i++){
+          document.getElementsByClassName('new-key-result-title')[i].value = '';
+          document.getElementsByClassName('new-key-result-difficulty')[i].value = 'easy';
+        }
 
-      keyResults = [''];
-      this.props.addKeyResultToTemplate(keyResults)
+        keyResults = [''];
+        this.props.addKeyResultToTemplate(keyResults)
 
-      this.props.handleCloseNewObjView();     
+        this.props.handleCloseNewObjView();    
+      } 
     }
 
    render(){

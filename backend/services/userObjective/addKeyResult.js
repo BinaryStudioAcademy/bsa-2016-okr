@@ -16,7 +16,7 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 				}
 
 				if (isEmpty(userObjective)) {
-					let err = new Error('Can not find user objective');
+					var err = new Error('Can not find user objective');
 					return callback(err, null);
 				}
 
@@ -34,7 +34,7 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 					}
 
 					if (isEmpty(keyResult)) {
-						let err = new Error('Can not find key result by selected id');
+						var err = new Error('Can not find key result by selected id');
 						return callback(err, null);
 					}
 
@@ -71,7 +71,7 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 				// console.log('KeyResult not found in DB. Creating new template...');
 				// console.log('-----------------------------------');
 				
-				let keyResultData = {
+				var keyResultData = {
 					title: keyResultTitle,
 					creator: userId,
 					objectiveId: userObjective.templateId,
@@ -111,7 +111,7 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 				});
 			}
 		}, (userObjective, keyResult, callback) => {		
-			let userObjectiveDataForUpdate = {
+			var userObjectiveDataForUpdate = {
 				$push: {
 					keyResults: {
 						'templateId': keyResult._id,
@@ -150,16 +150,16 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 					return callback(err, null);
 				}
 
-				let index = userObjective.keyResults.findIndex((keyResultItem) => {
+				var index = userObjective.keyResults.findIndex((keyResultItem) => {
 					return keyResult._id.equals(keyResultItem.templateId);
 				});
 
 				if(index === -1) {
-					let err = new Error('Key result not found');
+					var err = new Error('Key result not found');
 					return callback(err, null);
 				}
 
-				let keyResultIdInObjective = userObjective.keyResults[index]._id;
+				var keyResultIdInObjective = userObjective.keyResults[index]._id;
 
 				responseData = {
 					keyResultId: keyResultIdInObjective,

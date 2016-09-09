@@ -15,8 +15,8 @@ const User = require('../backend/schemas/user');
 
 const rootUrl = 'http://localhost:4444/';
 
-let users = [];
-let userInfos = [];
+var users = [];
+var userInfos = [];
 
 describe('Server start test', () => {
 
@@ -115,7 +115,7 @@ function getDirectories(srcPath) {
 function createUser(userInfo, user, callback) {
 	async.waterfall([
 		(callback) => {
-			let userInfoData = {
+			var userInfoData = {
 				firstName: userInfo.firstName,
 				lastName: userInfo.lastName,
 				globalRole: userInfo.globalRole,
@@ -134,7 +134,7 @@ function createUser(userInfo, user, callback) {
 				return callback(null, userInfo)
 			});
 		}, (userInfo, callback) => {
-			let userData = {
+			var userData = {
 				localRole: user.localRole,
 				mentor: user.mentor,
 				userInfo: userInfo._id,
@@ -157,14 +157,14 @@ function createUser(userInfo, user, callback) {
 }
 
 function createDefaultUser(callback) {
-	let userInfoData = {
+	var userInfoData = {
 		firstName: "User",
 		lastName: "Testerovich",
 		globalRole: "QA",
 		email: "user.testerovich@okr.bsa",
 	};
 
-	let userData = {
+	var userData = {
 		localRole: CONST.user.role.USER,
 		mentor: null,
 	};
@@ -173,14 +173,14 @@ function createDefaultUser(callback) {
 }
 
 function createMentor(callback) {
-	let userInfoData = {
+	var userInfoData = {
 		firstName: "Mentor",
 		lastName: "Testerovich",
 		globalRole: "Team Lead",
 		email: "mentor.testerovich@okr.bsa",
 	};
 
-	let userData = {
+	var userData = {
 		localRole: CONST.user.role.MENTOR,
 		mentor: null,
 	};
@@ -204,14 +204,14 @@ function createMentee(callback) {
 				return callback(null, mentor);
 			})
 		}, (mentor, callback) => {
-			let userInfoData = {
+			var userInfoData = {
 				firstName: "Mentee",
 				lastName: "Testerovich",
 				globalRole: "Developer",
 				email: "mentee.testerovich@okr.bsa",
 			};
 
-			let userData = {
+			var userData = {
 				localRole: CONST.user.role.USER,
 				mentor: mentor._id,
 			};
@@ -224,14 +224,14 @@ function createMentee(callback) {
 }
 
 function createAdmin(callback) {
-	let userInfoData = {
+	var userInfoData = {
 		firstName: "Admin",
 		lastName: "Testerovich",
 		globalRole: "CEO",
 		email: "admin.testerovich@okr.bsa",
 	};
 
-	let userData = {
+	var userData = {
 		localRole: CONST.user.role.ADMIN,
 		mentor: null,
 	};

@@ -68,9 +68,9 @@ function randomUser() {
 
 function generateMentors(users) {
 
-	let isCompleted, apprenticeNumbers;
+	var isCompleted, apprenticeNumbers;
 
-	for (let i = 0; i < users.length; i++) {
+	for (var i = 0; i < users.length; i++) {
 
 		if (users[i].localRole === CONST.user.localRole.MENTOR) {
 
@@ -113,17 +113,17 @@ function randomObjective(users, categories, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-	let isDeleted =  i % 10 === 0;
-	let deletedDate = null;
-	let deletedBy = null;
+	var isDeleted =  i % 10 === 0;
+	var deletedDate = null;
+	var deletedBy = null;
 
 	if (isDeleted) {
 
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-		let isDone = false;
+		var isDone = false;
 
-		let userWhoDidDeletionIndex;
+		var userWhoDidDeletionIndex;
 
 		while(!isDone) {
 			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -174,17 +174,17 @@ function randomKeyResult(objectives, users, i) {
 	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-	let isDeleted =  i % 8 === 0;
-	let deletedDate = null;
-	let deletedBy = null;
+	var isDeleted =  i % 8 === 0;
+	var deletedDate = null;
+	var deletedBy = null;
 
 	if (isDeleted) {
 
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-		let isDone = false;
+		var isDone = false;
 
-		let userWhoDidDeletionIndex;
+		var userWhoDidDeletionIndex;
 
 		while(!isDone) {
 			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -218,17 +218,17 @@ function randomUserObjective(objectives, users, keyResults, i) {
 	var createdAt = chance.date({ year: 2016, month: 7 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-	let isDeleted =  i % 10 === 0;
-	let deletedDate = null;
-	let deletedBy = null;
+	var isDeleted =  i % 10 === 0;
+	var deletedDate = null;
+	var deletedBy = null;
 
 	if (isDeleted) {
 
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-		let isDone = false;
+		var isDone = false;
 
-		let userWhoDidDeletionIndex;
+		var userWhoDidDeletionIndex;
 
 		while(!isDone) {
 			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -264,17 +264,17 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 		keyResults[userKeyResultIndex].used += 1;
 
-		let keyIsDeleted =  chance.pickone([false, false, false, true]);
-		let keyDeletedDate = null;
-		let keyDeletedBy = null;
+		var keyIsDeleted =  chance.pickone([false, false, false, true]);
+		var keyDeletedDate = null;
+		var keyDeletedBy = null;
 
 		if (keyIsDeleted) {
 
 			keyDeletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-			let isDone = false;
+			var isDone = false;
 
-			let userWhoDidDeletionIndex;
+			var userWhoDidDeletionIndex;
 
 			while(!isDone) {
 				userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -326,9 +326,9 @@ function baseCategories(users) {
 		res.push(category.toObject());
 	});
 
-	let isDone = false;
+	var isDone = false;
 
-	let userWhoDidDeletionIndex;
+	var userWhoDidDeletionIndex;
 
 	while(!isDone) {
 		userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -425,16 +425,16 @@ function getQuarters(users, userObjectives) {
 }
 
 function setArchivedToUserObjectives(userObjectives, quarters) {
-	let currentYear = CONST.currentYear;
-	let currentQuarter = CONST.currentQuarter;
+	var currentYear = CONST.currentYear;
+	var currentQuarter = CONST.currentQuarter;
 
-	let pastQuarters = quarters.filter((quarter) => {
+	var pastQuarters = quarters.filter((quarter) => {
 		return quarter.year <= currentYear && quarter.index < currentQuarter
 	});
 
 	pastQuarters.forEach((quarter) => {
 		quarter.userObjectives.forEach((userObjectiveId) => {
-			let index = userObjectives.findIndex((userObjective) => {
+			var index = userObjectives.findIndex((userObjective) => {
 				return userObjective._id.equals(userObjectiveId);
 			});
 

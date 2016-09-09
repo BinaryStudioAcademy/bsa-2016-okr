@@ -20,8 +20,8 @@ class NewCategory extends Component {
   			title: 'Error!',
   			text: 'Category title cannot be empty',
   			type: 'error',
-  		}, () => {	
-  			ReactDOM.findDOMNode(this.refs.newCategory).focus(); 
+  		}, () => {
+  			setTimeout(this.props.focusAddInput, 0);
   		});
 		} else {
 			let displayedTitle = title.length > 12 ? `${title.substr(0, 12)}...` : title;

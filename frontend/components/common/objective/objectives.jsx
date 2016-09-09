@@ -161,7 +161,7 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-		console.log('objectives', userInfo.objectives)
+		// console.log('objectives', userInfo.objectives)
 
 
 		return (

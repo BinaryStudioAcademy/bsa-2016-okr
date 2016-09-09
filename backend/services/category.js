@@ -13,13 +13,13 @@ var CategoryService = function() {};
 CategoryService.prototype.add = function(userId, data, callback) {
 	 async.waterfall([
 		(callback) => {
-			CategoryRepository.getByTitle(data.title, (err, category) => {
+			CategoryRepository.getByTitleAll(data.title, (err, category) => {
 				if(err) {
 					return callback(err, null);
 				}
 
 				if(!isEmpty(category)) {
-					let err = new Error('Category already exists');
+					var err = new Error('Category already exists');
 					return callback(err, null);
 				}
 
@@ -58,7 +58,7 @@ CategoryService.prototype.softDelete = function(userId, categoryId, data, callba
 				}
 
 				if(isEmpty(category)) {
-					let err = new Error('Category does not exists');
+					var err = new Error('Category does not exists');
 					return callback(err, null);
 				}
 
@@ -70,7 +70,7 @@ CategoryService.prototype.softDelete = function(userId, categoryId, data, callba
 				return callback(null);
 			}
 			
-			let type = data.isDeleted ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
+			var type = data.isDeleted ? CONST.history.type.SOFT_DELETE : CONST.history.type.RESTORE;
 
 			HistoryRepository.addCategoryEvent(userId, category._id, type, (err, history) => {
 				if(err) {
@@ -94,7 +94,7 @@ CategoryService.prototype.delete = function (userId, categoryId, callback) {
 				};
 
 				if(isEmpty(category)) {
-					let err = new Error('Category does not exists');
+					var err = new Error('Category does not exists');
 					return callback(err, null);
 				}
 
@@ -102,7 +102,7 @@ CategoryService.prototype.delete = function (userId, categoryId, callback) {
 			 });
 		},
 		(result, callback) =>{		
-			let type = CONST.history.type.HARD_DELETE;
+			var type = CONST.history.type.HARD_DELETE;
 			
 			HistoryRepository.addCategoryEvent(userId, categoryId, type, (err, history) => {
 				if(err) {
@@ -126,7 +126,7 @@ CategoryService.prototype.update = function (userId, categoryId, data, callback)
 				}
 
 				if(!isEmpty(category)) {
-					let err = new Error('Category already exists');
+					var err = new Error('Category already exists');
 					return callback(err, null);
 				}
 
@@ -139,7 +139,7 @@ CategoryService.prototype.update = function (userId, categoryId, data, callback)
 				}
 
 				if(isEmpty(category)) {
-					let err = new Error('Category does not exists');
+					var err = new Error('Category does not exists');
 					return callback(err, null);
 				}
 
@@ -147,7 +147,7 @@ CategoryService.prototype.update = function (userId, categoryId, data, callback)
 			});
 		},
 		(category, callback) => {
-			let type = CONST.history.type.UPDATE;
+			var type = CONST.history.type.UPDATE;
 
 			HistoryRepository.addCategoryEvent(userId, categoryId, type, (err, history) => {
 				if(err) {

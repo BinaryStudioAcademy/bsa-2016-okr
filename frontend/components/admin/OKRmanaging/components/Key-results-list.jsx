@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import KeyResultItem from './Key-result-item.js';
-import KeyResultAdd from './key-result-add.jsx';
-import sweetalert from 'sweetalert';
-
-import { isEmpty } from '../../../../../backend/utils/ValidateService';
+import ReactDOM from 'react-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as actions from "../../../../actions/okrManagingActions.js";
+
+import sweetalert from 'sweetalert';
+
+import KeyResultItem from './Key-result-item.jsx';
+import KeyResultAdd from './key-result-add.jsx';
+
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
 class KeyResults extends Component {
 	constructor(props) {
@@ -21,11 +24,13 @@ class KeyResults extends Component {
 		this.saveEditedKeyResult = this.saveEditedKeyResult.bind(this);
 		this.isNotDuplicate = this.isNotDuplicate.bind(this);
 		this.addKeyResult = this.addKeyResult.bind(this);
+		this.focusAddInput = this.focusAddInput.bind(this);
+		this.focusEditInput = this.focusEditInput.bind(this);
 	}
 
 	showAddKeyResultInput() {
 		this.props.cancelEdit();
-		
+
 		let keyResultAddBtn = this.refs.newKeyResultButton;
 		let keyResultAddElement = this.refs.newKeyResultButton.nextElementSibling;
 
@@ -38,7 +43,19 @@ class KeyResults extends Component {
 			keyResultAddBtn.classList.remove('display');
 			keyResultAddBtn.classList.add('undisplay');
 		}
+
+		this.focusAddInput();
 	}
+
+	focusAddInput() {
+		let inputEl = this.refs[`keyResultAdd-${ this.props.objective._id }`].refs.keyResultTitle;
+		ReactDOM.findDOMNode(inputEl).focus();
+	}
+
+	focusEditInput(id) {
+    let inputEl = this.refs[`keyResultTemplate-${ id }`].refs.keyResultTitle;
+    ReactDOM.findDOMNode(inputEl).focus();
+  }
 
 	hideAddKeyResultInput() {
 		let keyResultAddBtn = this.refs.newKeyResultButton;
@@ -86,6 +103,10 @@ class KeyResults extends Component {
 				title: 'Error!',
 				text: 'Key result with such title for that objective already exists',
 				type: 'error',
+			}, () => {
+				setTimeout(() => {
+					this.focusEditInput(id);
+				}, 0);
 			});
 
 			return false;
@@ -137,6 +158,7 @@ class KeyResults extends Component {
 														setDefaultKeyResult = { this.setDefaultKeyResult(this.props.objective._id) }
 														cancelEdit = { this.props.cancelEdit }
 														deleteKeyResult = { this.props.deleteKeyResult }
+														ref={ `keyResultTemplate-${ item._id }` }
 							/>
 		});
 		
@@ -150,11 +172,14 @@ class KeyResults extends Component {
 					</ul>
 					<div id="new-obj-keyresults">
 						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.showAddKeyResultInput }>
-							+Add new key result</a>
+							+Add new key result
+						</a>
 						<KeyResultAdd 
+							ref={`keyResultAdd-${this.props.objective._id}`}
 							objectiveId={ this.props.objective._id } 
 							hideAddKeyResultInput={ this.hideAddKeyResultInput }
 							addKeyResult={ this.addKeyResult }
+							focusAddInput={ this.focusAddInput }
 						/>
 					</div>
 				</div>

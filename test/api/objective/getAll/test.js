@@ -14,7 +14,7 @@ chai.use(require('chai-json-schema'));
 module.exports = function(unitUrl) {
 	return function() {
 		const url = unitUrl;
-		let id;
+		var id;
 
 		before((done) => {
 			User.findOne({ localRole: CONST.user.role.USER, mentor: null }, (err, user) => {

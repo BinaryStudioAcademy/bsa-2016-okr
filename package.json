@@ -20,6 +20,7 @@
     "test:watch": "better-npm-run test:watch",
     "start": "node server",
     "prod": "better-npm-run prod",
+    "prod:c9": "better-npm-run prod:c9",
     "prod:watch": "better-npm-run prod:watch",
     "seed": "node ./backend/seed/seed.js",
     "archive": "node ./backend/archive/archive.js",
@@ -33,6 +34,12 @@
       "env": {
         "NODE_ENV": "production",
         "PORT": "4444"
+      }
+    },
+    "prod:c9": {
+      "command": "npm run build && node server",
+      "env": {
+        "NODE_ENV": "production"
       }
     },
     "prod:watch": {

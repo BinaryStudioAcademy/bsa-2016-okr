@@ -27,12 +27,10 @@ UserObjectiveService.prototype.update = function(session, userObjectiveId, data,
 				if(err) {
 					return callback(err, null);
 				}
-
 				if(isEmpty(userObjective)) {
 					err = new Error('Objective not found');
 					return callback(err, null);
 				}
-
 				return callback(null, userObjective);
 			});
 		}, (userObjective, callback) => {
@@ -40,25 +38,39 @@ UserObjectiveService.prototype.update = function(session, userObjectiveId, data,
 				err = new Error('Objective was archived');
 				return callback(err, null);
 			}
-			ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
-				if(templateObjective.isApproved == false){
-					//call another service
-					// if is not archived update template then
-					ObjectiveService.update(session._id, userObjective.templateId, data, callback);
-				} else if (templateObjective.isApproved == true) {
-					updateHelper(session._id, userObjective._id, data, (err, userObjectiveUpdated) => {
-						if(err) {
-							return callback(err, null);
-						};
-
-						return callback(null, userObjectiveUpdated);
-					});
-				}
-			//return callback(null, templateObjective);
+			UserRepository.getByIdPopulate(userObjective.userId, (err, user) => {
+				if(err) {
+					return callback(err, null);
+				};
+				return callback(null, userObjective, user);
 			});
-		}
+		}, (userObjective, user, callback) => {
+			if(userObjective == undefined || userObjective.userId == undefined
+				|| user == undefined || user.mentor == undefined || user.mentor._id == undefined) {
+					err = new Error('userObjective or user not found');
+					return callback(err, null);}
+				if (session.localRole == CONST.user.localRole.ADMIN
+					|| session._id.toString() === userObjective.userId.toString()
+					|| (session.localRole == CONST.user.localRole.MENTOR && user.mentor._id.toString() == session._id.toString() )) {
+						ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
+							if(templateObjective.isApproved == false){
+										//call another service
+										// if is not archived update template then
+								ObjectiveService.update(session._id, userObjective.templateId, data, callback);
+							} else if (templateObjective.isApproved == true) {
+									updateHelper(session._id, userObjective._id, data, (err, userObjectiveUpdated) => {
+										if(err) {
+											return callback(err, null);
+										};
+									return callback(null, userObjectiveUpdated);
+										});
+									}
+
+								});
+					}
+			},
 		], (err, result) => {
-			return callback(err, result)
+			return callback(err, result);
 		})
 };
 
@@ -91,24 +103,24 @@ UserObjectiveService.prototype.cloneUserObjective = function(session, userObject
 				return callback(null, otherUserObjective, quarter);
 			});
 		}, (otherUserObjective, quarter, callback) => {
-			let existingUserObjectiveIndex = quarter.userObjectives.findIndex((userObjective) => {
+			var existingUserObjectiveIndex = quarter.userObjectives.findIndex((userObjective) => {
 				return userObjective.templateId.equals(otherUserObjective.templateId);
 			});
 
 			if(existingUserObjectiveIndex !== -1) {
-				let err = new Error('Objective with equal template already exists');
+				var err = new Error('Objective with equal template already exists');
 				return callback(err, null);
 			}
 
 			return callback(null, otherUserObjective, quarter);
 		}, (otherUserObjective, quarter, callback) => {
-			let newUserObjective = {
+			var newUserObjective = {
 				templateId: otherUserObjective.templateId,
 				userId: session._id,
 				creator: session._id,
 			};
 
-			let newKeyResults = otherUserObjective.keyResults.map((keyResult) => {
+			var newKeyResults = otherUserObjective.keyResults.map((keyResult) => {
 				return {
 					templateId: keyResult.templateId,
 					creator: session._id,
@@ -125,7 +137,7 @@ UserObjectiveService.prototype.cloneUserObjective = function(session, userObject
 				return callback(null, userObjective, quarter)
 			});
 		}, (userObjective, quarter, callback) => {
-			let updateData = {
+			var updateData = {
 				$push: {
 					userObjectives: userObjective._id,
 				},
@@ -170,12 +182,12 @@ UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjec
 			});
 		}, (userObjective, callback) => {
 
-			let index = userObjective.keyResults.findIndex((keyResult)=>{
+			var index = userObjective.keyResults.findIndex((keyResult)=>{
 				return keyResult._id.equals(keyResultId);
 			});
 
 			if(index === -1) {
-				let err = new Error('Key result not found in objective');
+				var err = new Error('Key result not found in objective');
 				return callback(err, null);
 			}
 
@@ -264,14 +276,14 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 				}
 
 				if(isEmpty(userObjective)) {
-					let err = new Error('Objective not found');
+					var err = new Error('Objective not found');
 					return callback(err, null);
 				}
 
 				// TODO: Should be check for userObjective.isArchived
 				// Removed temporary
 				if(!userObjective.userId.equals(userId)) {
-					let err = new Error('You are not allowed to do this');
+					var err = new Error('You are not allowed to do this');
 					return callback(err, null);
 				}
 
@@ -279,12 +291,12 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 			});
 		},
 		(userObjective, callback) => {
-			let index = userObjective.keyResults.findIndex((keyResult) => {
+			var index = userObjective.keyResults.findIndex((keyResult) => {
 				return keyResult._id.equals(keyResultId);
 			});
 
 			if(index === -1) {
-				let err = new Error('Key result not found');
+				var err = new Error('Key result not found');
 				return callback(err, null);
 			}
 

@@ -148,7 +148,7 @@ module.exports = function addUserObjective(userId, categoryId, quarterId, object
 				}
 
 				if(isEmpty(userObjective)) {
-					let err = new Error('Unexpected server error. How could that be? O_o');
+					var err = new Error('Unexpected server error. How could that be? O_o');
 					err.status = 500;
 					return callback(err, null);
 				}

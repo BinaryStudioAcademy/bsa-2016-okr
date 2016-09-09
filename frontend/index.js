@@ -10,7 +10,7 @@ import RolesPage from "./components/admin/role-mapping/role-mapping.js";
 import ObjAccept from "./components/admin/accept-objective/accept-objective.js";
 import UserPage from "./components/other-persons-page/other-persons-page.js";
 import ObjectiveView from "./components/objectiveView/objectiveView.js";
-import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.js";
+import OKRmanaging from "./components/admin/OKRmanaging/OKRmanaging.jsx";
 import UserRecycleBin from './components/user-recycle-bin/recycle-bin.jsx';
 import AdminRecycleBin from './components/admin/admin-recycle-bin/recycle-bin.jsx';
 import ListOfUsers from './components/list-of-users/list-of-users.jsx';

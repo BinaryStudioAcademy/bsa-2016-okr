@@ -9,10 +9,10 @@ const HelpService = require('../../utils/HelpService');
 const getValidDifficulty = HelpService.getValidDifficulty;
 
 router.post('/', adminOnly, (req, res, next) => {
-	let objectiveId = req.body.objectiveId || '';
-	let userId = req.session._id;
-	let title = req.body.title || '';
-	let difficulty = req.body.difficulty || '';
+	var objectiveId = req.body.objectiveId || '';
+	var userId = req.session._id;
+	var title = req.body.title || '';
+	var difficulty = req.body.difficulty || '';
 
 	title = title.trim();
 	difficulty = getValidDifficulty(difficulty.trim());
@@ -22,7 +22,7 @@ router.post('/', adminOnly, (req, res, next) => {
 		return res.badRequest();
 	}
 
-	let data = {
+	var data = {
 		creator: userId,
 		isApproved: true,
 		objectiveId: objectiveId,
@@ -69,16 +69,16 @@ router.put('/myupdate/:id', (req, res, next) => {
 
 router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	var id = req.params.id;
-	let flag = req.params.flag;
-	let deletedDate = new Date();
-	let userId = req.session._id
+	var flag = req.params.flag;
+	var deletedDate = new Date();
+	var userId = req.session._id
 
 	if(!isCorrectId(id)
 	|| !ValidateService.isStringBoolean(flag)) {
 		return res.badRequest();
 	};
 
-	let data = {
+	var data = {
 		isDeleted: HelpService.stringToBoolean(flag),
 		deletedDate: deletedDate,
 		deletedBy: userId
@@ -88,10 +88,10 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
- 	let userId = req.session._id
- 	let keyResultId = req.params.id;
- 	let title = req.body.title || '';
- 	let difficulty = req.body.difficulty || '';
+ 	var userId = req.session._id
+ 	var keyResultId = req.params.id;
+ 	var title = req.body.title || '';
+ 	var difficulty = req.body.difficulty || '';
 
  	title = title.trim();
  	difficulty = getValidDifficulty(difficulty.trim());
@@ -101,7 +101,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
  		return res.badRequest();
  	};
 
- 	let data = {};
+ 	var data = {};
 
  	if(!isEmpty(title)) {
  		data.title = title;

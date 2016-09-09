@@ -32,7 +32,25 @@ UserService.prototype.getById = function(id, callback) {
 					return callback(err, null);
 				}
 
-				user.quarters = quarters;
+				quarters = quarters.map((quarter) => {
+					var userObjectivesNew = quarter.userObjectives.map((objective) => {
+						var keyResultsNotDeleted = objective.keyResults.filter((keyResult) => {
+							return keyResult.isDeleted == false;
+						})
+
+						objective = objective.toObject();
+						objective.keyResults = keyResultsNotDeleted;
+
+						return objective;
+					});
+
+					quarter = quarter.toObject();
+					quarter.userObjectives = userObjectivesNew;
+
+					return quarter;
+				});
+
+				user.quarters = quarters;		
 
 				return callback(null, user);
 			});
