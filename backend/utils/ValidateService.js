@@ -6,7 +6,6 @@ module.exports = {
 	isEmptyObject: isEmptyObject,
 	isArray: isArray,
 	isObject: isObject,
-	getValidDifficulty: getValidDifficulty,
 	isStringBoolean: isStringBoolean,
 	isValidYear: isValidYear,
 	isValidQuarter: isValidQuarter
@@ -40,10 +39,6 @@ function isArray(value) {
 
 function isObject(value) {
   return typeof value === 'object';
-}
-
-function getValidDifficulty(value) {
-	return CONST.keyResult[value.toUpperCase()];
 }
 
 function isStringBoolean(value) {

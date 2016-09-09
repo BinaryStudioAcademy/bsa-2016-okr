@@ -4,17 +4,22 @@ var Schema = mongoose.Schema;
 var categorySchema = new Schema({
 	title: {
 		type: String,
-		required: true
+		required: true,
+		unique: true,
 	},
 	isDeleted: {
-		type: Boolean
+		type: Boolean,
+		default: false,
 	},
 	deletedBy: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 		required: false
 	},
-	deletedDate: {}
+	deletedDate: {
+		type: Date,
+		required: false,
+	}
 });
 
 module.exports = mongoose.model('Category', categorySchema);

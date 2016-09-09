@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 import * as myStateActions from "../../../actions/myStateActions";
 import * as objectiveActions from "../../../actions/objectiveActions";
+import * as otherPersonActions from "../../../actions/otherPersonActions";
 
 import './objectives.scss';
 
@@ -78,22 +79,38 @@ class Objectives extends Component {
 
 	createObjective(categoryId) {
 		return (title, objectiveId) => {
-			let quarters = this.props.myState.me.quarters;
-			let selectedYear = this.props.myState.selectedYear;
-			let selectedTab = this.props.myState.selectedTab;
+			let quarters;
+			let userId;
+			let selectedYear;
+			let selectedTab
+			if (this.props.userId == undefined) {
+				userId = session._id;
+				quarters = this.props.myState.me.quarters;
+				selectedYear = this.props.myState.selectedYear;
+				selectedTab = this.props.myState.selectedTab;
+			} else {
+				userId = this.props.userId;
+				quarters = this.props.user.user.quarters;
+				selectedYear = this.props.user.selectedYear;
+				selectedTab = this.props.user.selectedTab;
+			}
 
 			let quarter = quarters.find((quarter) => {
 				return (quarter.index == selectedTab) && (quarter.year == selectedYear);
 			});
-
+			
 			let body = {
 				title: title,
 				objectiveId: objectiveId,
 				categoryId: categoryId,
 				quarterId: quarter._id,
+				userId: userId,
 			};
-
-			this.props.myStateActions.addNewObjective(body);
+			if (this.props.userId == undefined) {
+				this.props.myStateActions.addNewObjective(body); 
+			} else {
+				this.props.otherPersonActions.addNewObjective(body);
+			}
 		};
 	}
 
@@ -138,7 +155,8 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-
+		console.log('objectives', userInfo.objectives)
+		
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
@@ -174,6 +192,7 @@ function mapDispatchToProps(dispatch) {
 	return {
 		myStateActions: bindActionCreators(myStateActions, dispatch),
 		objectiveActions: bindActionCreators(objectiveActions, dispatch),
+		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),
 	}
 }
 
@@ -190,9 +209,10 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let objectives = [];
 	let id = userObject._id;
 	let mentor;
+
 	if(userObject.mentor != undefined || userObject.mentor != null)
 		mentor = userObject.mentor._id;
-
+	console.log('userObject', userObject)
 	if (userObject.quarters != undefined) {
 		var current_quarter = userObject.quarters.find((quarter) => {
 			return (quarter.year == selectedYear) && (quarter.index == selectedTab)

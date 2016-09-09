@@ -2,6 +2,7 @@ var async = require('async');
 var ValidateService = require('../../utils/ValidateService');
 var isEmpty = ValidateService.isEmpty;
 var CONST = require('../../config/constants');
+var session = require('../../config/session');
 
 var ObjectiveRepository = require('../../repositories/objective');
 var UserObjectiveRepository = require('../../repositories/userObjective');
@@ -58,7 +59,7 @@ module.exports = function addUserObjective(userId, categoryId, quarterId, object
 					title: title,
 					description: '',
 					category: categoryId,
-					creator: userId,
+					creator: session._id,
 					used: 1,
 					defaultKeyResults: [],
 					isApproved: isApproved,
@@ -93,14 +94,14 @@ module.exports = function addUserObjective(userId, categoryId, quarterId, object
 			var keyResults = objective.defaultKeyResults.map((keyResultId) => {
 				return {
 					templateId: keyResultId,
-					creator: userId
+					creator: session._id
 				};
 			});
 			
 			var userObjectiveData = {
 				templateId: objective._id,
 				userId: userId,
-				creator: userId,
+				creator: session._id,
 				isDeleted: false,
 				keyResults: keyResults,
 			};
@@ -129,7 +130,7 @@ module.exports = function addUserObjective(userId, categoryId, quarterId, object
 				return callback(null, userObjective);
 			});
 		}, (userObjective, callback) => {
-			HistoryRepository.addUserObjective(userId, userObjective._id, CONST.history.type.ADD, (err) => {
+			HistoryRepository.addUserObjective(session._id, userObjective._id, CONST.history.type.ADD, (err) => {
 				if(err) {
 					return callback(err, null);
 				};
@@ -139,7 +140,8 @@ module.exports = function addUserObjective(userId, categoryId, quarterId, object
 				// console.log('-----------------------------------');
 				return callback(null, userObjective);
 			});
-		}, (userObjective, callback) => {
+		},
+		(userObjective, callback) => {
 			UserObjectiveRepository.getByIdPopulate(userObjective._id, (err, userObjective) => {
 				if(err) {
 					return callback(err, null)

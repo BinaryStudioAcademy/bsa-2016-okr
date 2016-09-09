@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CategoryItem from './CategoryItem.jsx'
-import NewCategory from './Category-add.jsx'
+import CategoryItem from './CategoryItem.jsx';
+import NewCategory from './Category-add.jsx';
+import sweetalert from 'sweetalert';
 
 import * as categoriesActions from "../../../../actions/categoriesActions.js";
 import * as okrManagingActions from "../../../../actions/okrManagingActions.js";
@@ -11,46 +12,87 @@ class CategoryList extends Component {
 	constructor(props){
 		super(props);
 
-		this.onDelete = this.onDelete.bind(this);
-		this.addNewCategory = this.addNewCategory.bind(this);
-  }
+		this.showAddCategoryInput = this.showAddCategoryInput.bind(this);
+		this.isTitleValid = this.isTitleValid.bind(this);
+		this.addCategory = this.addCategory.bind(this);
+		this.editCategory = this.editCategory.bind(this);
+		this.hideAddInput = this.hideAddInput.bind(this);
+	}
 
-	addNewCategory() {
-			this.props.categoriesActions.cancelEdit();
-			this.props.okrManagingActions.cancelEdit();
+	showAddCategoryInput() {
+		this.props.categoriesActions.cancelEdit();
+		this.props.okrManagingActions.cancelEdit();
 
-			let categoryAddBtn = this.refs.newCategoryButton;
-			let categoryAddElement = this.refs.newCategoryButton.nextElementSibling;
+		let categoryAddBtn = this.refs.newCategoryButton;
+		let categoryAddElement = this.refs.newCategoryButton.nextElementSibling;
 
-			if (categoryAddElement.classList.contains('undisplay')) {
-				categoryAddElement.classList.remove('undisplay');
-				categoryAddElement.classList.add('display');
-			}
-
-			if (categoryAddBtn.classList.contains('display')) {
-				categoryAddBtn.classList.remove('display');
-				categoryAddBtn.classList.add('undisplay');
-			}
+		if (categoryAddElement.classList.contains('undisplay')) {
+			categoryAddElement.classList.remove('undisplay');
+			categoryAddElement.classList.add('display');
 		}
 
-		onDelete() {
-			let categoryAddBtn = this.refs.newCategoryButton;
-			let categoryAddElement = this.refs.newCategoryButton.nextElementSibling;
+		if (categoryAddBtn.classList.contains('display')) {
+			categoryAddBtn.classList.remove('display');
+			categoryAddBtn.classList.add('undisplay');
+		}
+	}
 
-			if (categoryAddElement.classList.contains('display')) {
-				categoryAddElement.classList.remove('display');
-				categoryAddElement.classList.add('undisplay');
-			}
+	isTitleValid(title) {
+		let categoryIndex = this.props.category.list.findIndex((el) => {
+			return el.title === title;
+		});
 
-			if (categoryAddBtn.classList.contains('undisplay')) {
-				categoryAddBtn.classList.remove('undisplay');
-				categoryAddBtn.classList.add('display');
-			}
+		if(categoryIndex === -1) {
+			sweetalert.close();
+			return true;
+		} else {
+			sweetalert({
+				title: 'Error!',
+				text: 'Category with such title already exists',
+				type: 'error',
+			});
+			
+			return false;
+		}
+	}
+
+	addCategory(title) {
+		if(this.isTitleValid(title)) {
+			let reqBody = {
+				title,
+			};
+			this.props.categoriesActions.addCategory(reqBody);
+		}
+	}
+
+	editCategory(id, title) {
+		if(this.isTitleValid(title)) {
+			let reqBody = {
+				title,
+			};
+
+			this.props.categoriesActions.editCategory(id, reqBody);
+		}
+	}
+
+	hideAddInput() {
+		let categoryAddBtn = this.refs.newCategoryButton;
+		let categoryAddElement = this.refs.newCategoryButton.nextElementSibling;
+
+		if (categoryAddElement.classList.contains('display')) {
+			categoryAddElement.classList.remove('display');
+			categoryAddElement.classList.add('undisplay');
 		}
 
-		componentWillMount(){
-			this.props.categoriesActions.cancelEdit();
+		if (categoryAddBtn.classList.contains('undisplay')) {
+			categoryAddBtn.classList.remove('undisplay');
+			categoryAddBtn.classList.add('display');
 		}
+	}
+
+	componentWillMount(){
+		this.props.categoriesActions.cancelEdit();
+	}
 
 render() {
 	return(
@@ -59,26 +101,26 @@ render() {
 				<span>Categories</span>
 			</p>
 			<ul className='category-list'>
-			{this.props.category.list.map((item, index) => {
-				return <CategoryItem index = { index } 
-														 category = { item } 
-														 key = { index } 
-														 categories = { this.props.category } 
-														 objectives = { this.props.objectives } 
-														 editCategory = { this.props.categoriesActions.editCategory }
-														 activeCategory = { this.props.categoriesActions.activeCategory }
-														 cancelEdit = { this.props.categoriesActions.cancelEdit }
-														 deleteCategory = { this.props.categoriesActions.deleteCategory }
-														 onDeleteNewCategory = { this.onDelete }
-								/>
-			})}
+				{this.props.category.list.map((item, index) => {
+					return <CategoryItem index = { index } 
+															 category = { item } 
+															 key = { index } 
+															 categories = { this.props.category } 
+															 objectives = { this.props.objectives } 
+															 editCategory = { this.editCategory }
+															 activeCategory = { this.props.categoriesActions.activeCategory }
+															 cancelEdit = { this.props.categoriesActions.cancelEdit }
+															 deleteCategory = { this.props.categoriesActions.deleteCategory }
+															 onDeleteNewCategory = { this.hideAddInput }
+									/>
+				})}
 			</ul>
 			<div id="new-category">
-						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={this.addNewCategory}>
+						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={ this.showAddCategoryInput }>
 							+Add new category</a>
 						<NewCategory  category = { this.props.category }
-													addCategory = { this.props.categoriesActions.addCategory }
-													onDelete = { this.onDelete } 
+													addCategory = { this.addCategory }
+													hideAddInput = { this.hideAddInput } 
 						/>
 			</div>
 		</div>

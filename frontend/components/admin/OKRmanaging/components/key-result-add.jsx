@@ -43,7 +43,7 @@ class KeyResult extends React.Component {
 					<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 				</select>
 				<div className='add-key-result-icon'>
-					<i className="fi flaticon-success add" aria-hidden="true" title='Save' onClick={this.addNewKeyResult}></i>
+					<i className="fi-1 flaticon-1-check add" aria-hidden="true" title='Save' onClick={this.addNewKeyResult}></i>
 					<i className="fi flaticon-multiply delete" title='Cancel' onClick={this.onDeleteKeyResultClick} aria-hidden="true"></i>
 				</div>
 			</section>

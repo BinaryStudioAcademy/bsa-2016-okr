@@ -1,0 +1,35 @@
+@import '../common/variables';
+
+.stats-title {   
+        p {
+            color: #aaaaaa;
+            font-size: 20px;
+            text-align: center;
+            position: relative;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            min-width: 535px;
+            margin: 0;
+        }
+        
+        p > span {
+            font-size: 20px;
+            display: inline-block;
+            padding: 0 10px;
+            position: relative;
+            background: lighten($color-blue-grey, 50%);
+            z-index: 10;
+        }
+        
+        p:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 17px;
+            left: 0;
+            height: 0;
+            width: 100%;
+            border-top: 1px solid #aaaaaa;
+            z-index: 0;
+        }
+    }

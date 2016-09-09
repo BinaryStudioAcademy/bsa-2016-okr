@@ -19,11 +19,20 @@ class RecycleBinFilter extends Component {
 	}
 
 	showFiltersContainer() {
+
+		let tbody = document.querySelector("#rec-bin-wrapper .filter-table tbody");
+		
 		if (this.props.recycleBin.showRecycleBinFilters) {
+			
+			if (tbody != null)
+				tbody.style.height = "62vh";
+
 			return "show-container"
-		} else {
-			return "hide-container"
-		}
+		} 
+
+		if (tbody != null)
+				tbody.style.height = "70vh";
+
 		return "hide-container";
 	}
 
@@ -43,20 +52,20 @@ class RecycleBinFilter extends Component {
 
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
 				<div className="filter-box clearfix">
-						<div className="margin-left-4px">
+						<div className="checkbox-group margin-left-4px">
 							<input type="checkbox" id="cbObjectives" defaultChecked={true} onClick={this.setObjectiveType.bind(this)}></input>
 							<label htmlFor="cbObjectives">Objectives</label>
 						</div>
-						<div>
+						<div className="checkbox-group">
 							<input type="checkbox" id="cbKey" defaultChecked={true}  onClick={this.setKeyType.bind(this)}></input>
 							<label htmlFor="cbKey">Key</label>
 						</div>
-						<div>
+						<div className="checkbox-group">
 							<input type="checkbox" id="cbCategory" defaultChecked={true}  onClick={this.setCategoryType.bind(this)}></input>
 							<label htmlFor="cbCategory">Categories</label>
 						</div>
 					</div>
-				<table className="recycle-bin-filter-table table">
+				<table className="recycle-bin-filter-table">
 					<tbody>
 						<tr>
 						    <td className="cell-right-align">

@@ -3,7 +3,7 @@ var Repository = require('../units/Repository');
 var KeyResult = require('../schemas/keyResult');
 var UserObjectiveRepository = require('./userObjective');
 
-var KeyResultRepository = function(){
+var KeyResultRepository = function() {
 	Repository.prototype.constructor.call(this);
 	this.model = KeyResult;
 };

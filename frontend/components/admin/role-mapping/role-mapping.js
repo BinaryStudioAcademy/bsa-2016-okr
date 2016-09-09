@@ -66,7 +66,7 @@ class RoleMapping extends React.Component {
                              <h3 className="col-1">Avatar</h3>
                              <h3 className="col-2">Name</h3>
                              <h3 className="col-3">E-mail</h3>
-                             <h3 className="col-4" onClick={this.sortingByGlobalRole.bind(this)}><i className="fa fa-sort"></i>Global role</h3>
+                             <h3 className="col-4" onClick={this.sortingByGlobalRole.bind(this)}><i id="global-role" className="fa fa-sort-asc"></i>Global role</h3>
                              <h3 className="col-5">Local role</h3>
                        </div>
 
@@ -88,6 +88,23 @@ class RoleMapping extends React.Component {
    }
 
    sortingByGlobalRole() {
+    
+    let globalRole = document.querySelector(".table-head #global-role");
+
+    if (globalRole != null) {
+
+      if (globalRole.classList.contains("fa-sort-asc")) {
+
+        globalRole.classList.remove("fa-sort-asc");
+        globalRole.classList.add("fa-sort-desc");
+
+      }
+      else {
+        globalRole.classList.remove("fa-sort-desc");
+        globalRole.classList.add("fa-sort-asc");
+      }
+    } 
+
      this.props.sortingByGlobalRole(!this.props.stateFromReducer.mapping.sortByGlobalRole);
    }
 

@@ -103,12 +103,10 @@ export function activeCategory (activeCategory) {
 	return action;
 }
 
-export function editCategory(id, reqBody){
+export function editCategory(id, reqBody ) {
 	return(dispatch, getStore) => {
 
-		dispatch({
-			type: EDIT_CATEGORY
-		});
+		dispatch({ type: EDIT_CATEGORY });
 
 		return axios.put(`/api/category/${ id }/`, reqBody)
 			.then(response => dispatch(recivedEditCategory(response.data, reqBody)))
@@ -133,7 +131,7 @@ export function editCategoryError(data) {
 
 /*------ADD NEW CATEGORY------*/
 
-export function addCategory(reqBody){
+export function addCategory(reqBody) {
 	return (dispatch, getStore) => {
 
 	dispatch({
