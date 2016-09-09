@@ -49,13 +49,14 @@
             max-height: 100px;
         }
         .template-title{
+            margin-top: -1px;
             width: 65%;
             box-sizing: border-box;
         }
         .template-category{
             float: right;
             display: inline-block;
-            margin: 0 10px;
+            margin: -1px 10px;
             width: 20%;
         }
 
@@ -87,9 +88,6 @@
         .edit-objective{
             float: right;
             
-            .editing{
-                margin-top: 2px;
-            }
             button{
                 padding: 6px 9px;
                 margin-left: 5px;
@@ -108,8 +106,8 @@
                 .add-key-result-icon{
                     float: right;
                     display: inline-block;
-                    margin-top: 2px;
                     font-size: 16px;
+                    margin-top: -4px;
 
                     button {
                         padding: 6px 9px;
@@ -118,11 +116,15 @@
                 }
                 .add-new-key-result-title{
                     width: 50%;
-                    padding: 6px 5px;
+                    padding: 4px 5px;
+                    margin-top: -4px;
+                    margin-left: -7px;
                 }
                .add-key-result-difficulty{
                     float: right;
-                    margin-right: 10px
+                    padding: 3px auto;
+                    margin-right: 10px;
+                    margin-top: -5px;
                 }
         }
 
@@ -142,12 +144,17 @@
             }
             .keyResult-title{
                 width: 40%;
+                padding: 4px 8px;
+                margin-left: -9px;
+                margin-top: -4px;
             }
             .keyResult-difficulty{
+                margin-top: -5px;
                 margin-right: 10px;
+                padding: 4px 8px;
                 float: right;
                 display: inline-block;
-                width: 130px;
+                width: 135px;
             }
             .key-result-list{
                 margin-left: 10px;
@@ -169,30 +176,19 @@
                 padding: 0px;
                 list-style: none;
 
-                .defaultKeyResultCheckbox{
-                    display: inline-block;
-                    position: absolute;
-                    right: 210px;
-                    top: 3px;
-                    font-size: 16px;
-                }
-                .defaultKeyResultCheckbox.editing{
-                    margin-right: 40px;
-                    margin-top: 7px;
-                    font-size: 16px;
-                }  
-
                 .key-result-item{
                     position: relative;
                     border: 1px solid #c5c5c5;
                     border-top: none;
                     background-color: #eaeaea;
-                    padding: 10px 15px;
+                    padding: 12px 15px 0;
+                    min-height: 31px;
 
                     div{
                         display: inline-block;
                     }
                     .name{
+                        margin-top: 2px;
                         width: 45%;
                     }
                     .difficulty{
@@ -205,14 +201,19 @@
                         float: right;
                         display: inline-block;
                     }
+
+                    .defaultKeyResultCheckbox{
+                        display: inline-block;
+                        float: right;
+                        margin-right: 10px;
+                        margin-top: -7px;
+                        font-size: 16px;
+                    }
+
                     .edit-key-result{
                         display: inline-block;
                         float: right;
                         margin-top: -5px; 
-                        .editing{
-                            display: inline-block;
-                            margin-top: 7px;
-                        }
                         
                         button{
                             padding: 6px 9px;
@@ -268,7 +269,8 @@
         .add-category-icon{
             float: right;
             display: inline-block;
-            margin-top: 1px;
+            margin-top: -5px;
+            
             
             .delete{
                 padding: 6px 9px;
@@ -286,7 +288,8 @@
         }
         .add-new-category{
             width: 150px;
-            padding: 7px 12px;
+            padding: 4px;
+            margin-top: -5px;
         }
         .display{
             display: block;
@@ -302,18 +305,24 @@
         .category-item {
             border-bottom: 1px dotted #ddd;
             position: relative;
-            padding: 10px 30px;
+            padding: 0 30px;
+            height: 40px;
             color: #777;
-
+            span{
+                display: inline-block;
+                margin-top: 11px;
+            }
             .category-edit-title{
                 text-transform: lowercase; 
                 background-color: #fff;
                 width: 60%;
-                padding: 7px 12px;
+                padding: 4px;
+                margin-left: -5px;
+                margin-top: 5px;
             }
             .edit-category{
                 position: absolute;
-                top: 4px;
+                top: 5px;
                 right: 30px;
 
                 i{
@@ -322,12 +331,6 @@
                 button{
                     padding: 6px 9px;
                     margin-left: 5px;
-                }
-                .save{
-                    margin-top: 8px;
-                }
-                .cancel{
-                    margin-top: 8px;
                 }
             }
         }
