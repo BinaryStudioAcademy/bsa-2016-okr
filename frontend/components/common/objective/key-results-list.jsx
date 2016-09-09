@@ -92,7 +92,11 @@ class KeyResults extends Component {
 			});
 		} else {
 			items = this.props.data.map((item, index) => {
-				return <KeyResultItem index={index} key={index} item={item} id={routeId}/>
+				return <KeyResultItem index={index} 
+															key={index} 
+															item={item} 
+															id={routeId}
+															isArchived = { isArchived }/>
 			});
 		}
 

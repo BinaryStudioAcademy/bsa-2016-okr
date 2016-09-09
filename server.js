@@ -8,12 +8,15 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
 const bodyParser = require('body-parser');
 
-//connect to db
+// connect to db
 const dbConnectHandler = require('./backend/db/dbConnect');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
-const port = isDeveloping ? 4444 : process.env.PORT;
+const PORT = isDeveloping ? 4444 : process.env.PORT;
+const IP = process.env.IP || '127.0.0.1';
+
+console.log(process.env.PORT);
 
 const app = express();
 
@@ -50,11 +53,11 @@ if (isDeveloping) {
   });
 }
 
-var server = app.listen(port, '127.0.0.1', function onStart(err) {
+const server = app.listen(PORT, IP, function onStart(err) {
   if (err) {
     console.log(err);
   }
-  console.info('==> Listening on port %s. Open up http://127.0.0.1:%s/ in your browser.', port, port);
+  console.info('==> Listening on port %s. Open up http://%s:%s/ in your browser.', PORT, IP, PORT);
 });
 
 module.exports = server;

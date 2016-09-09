@@ -5,6 +5,7 @@ import {
 	RECEIVED_MY_OBJECTIVES,
 	CHANGE_TAB,
 	CHANGE_YEAR,
+	UPDATE_USER_OBJECTIVE,
 	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
 	ADDED_NEW_OBJECTIVE,
 	CHANGED_KEYRESULT_SCORE,
@@ -83,6 +84,15 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 		}
 
+		case UPDATE_USER_OBJECTIVE: {
+			const { id, description } = action;
+
+			return Object.assign({}, state, {
+				me: updateObjectiveDescription(state.me, id, description)
+			});
+
+		}
+
 		//case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API: {
 		//	return state;
 		//}
@@ -91,7 +101,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			const { objectiveId, keyResultId, data } = action;
 
 			//console.log('Reducer reached');
-			
+
 			return Object.assign({}, state, {
 				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, data)
 			});
@@ -155,7 +165,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 			console.log(CHANGED_KEYRESULT_SCORE_ERROR);
 			console.log(data);
-			
+
 			return state;
 		}
 
@@ -163,6 +173,18 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return state;
 		}
 	}
+}
+
+export function updateObjectiveDescription(me, id, description) {
+	var meCopy = Object.assign({}, me);
+	meCopy.quarters.forEach((quarter) => {
+		for(var i=0 ; i<quarter.userObjectives.length; i++) {
+			if(quarter.userObjectives[i]._id == id) {
+				quarter.userObjectives[i].description = description;
+			}
+		}
+	});
+	return meCopy;
 }
 
 function deleteObjectiveFromMe(me, id) {
@@ -180,7 +202,7 @@ function deleteObjectiveFromMe(me, id) {
 function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult) {
 	var meCopy = Object.assign({}, me);
 	let quarterIndex, objectiveIndex, keyResultIndex;
-	
+
 	quarterIndex = meCopy.quarters.findIndex((quarter) => {
 		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=>{
 			return userObjective._id === objectiveId;
@@ -222,7 +244,7 @@ function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
 			userObjectiveIndex = userObjectiveFoundedIndex;
 			return true;
 		}
-		
+
 		return false;
 	});
 
@@ -246,7 +268,7 @@ function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
 
 function addNewObjectiveToMe(me, quarterId, objective) {
 	let meCopy = Object.assign({}, me);
-	
+
 	let index = meCopy.quarters.findIndex((quarter) => {
 		return quarter._id == quarterId;
 	});

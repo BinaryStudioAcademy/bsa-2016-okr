@@ -35,7 +35,7 @@ class StatsPage extends Component {
 		return (
 			<div className="main-content">
 				<div className="stats-title">
-					<p><span>Useful statistic</span></p>
+					<p><span>Useful statistics</span></p>
 				</div>
 				{ CategoriesChartEl }
 				{ KeyResultChartEl }

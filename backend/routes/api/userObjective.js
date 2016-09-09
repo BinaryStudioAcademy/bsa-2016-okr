@@ -82,14 +82,14 @@ router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
 });
 
 router.post('/:id/keyresult/', (req, res, next) => {
-	let userObjectiveId = req.params.id || '';
-	let userId = req.session._id;
-	let isAdmin = req.session.isAdmin;
-	let title = req.body.title || '';
-	let keyResultId = req.body.keyResultId || '';
-	let isApproved = false;
+	var userObjectiveId = req.params.id || '';
+	var userId = req.session._id;
+	var isAdmin = req.session.isAdmin;
+	var title = req.body.title || '';
+	var keyResultId = req.body.keyResultId || '';
+	var isApproved = false;
 
-	let keyResultTitle = title.trim();
+	var keyResultTitle = title.trim();
 
 	if(!isCorrectId(userObjectiveId)
 	|| (isEmpty(title) && isEmpty(keyResultId))
@@ -105,10 +105,10 @@ router.post('/:id/keyresult/', (req, res, next) => {
 });
 
 router.put('/:id/keyresult/score', (req, res, next) => {
-	let userId = req.session._id;
-	let objectiveId = req.params.id || '';
-	let keyResultId = req.body.keyResultId || '';
-	let score = req.body.score || '';
+	var userId = req.session._id;
+	var objectiveId = req.params.id || '';
+	var keyResultId = req.body.keyResultId || '';
+	var score = req.body.score || '';
 
 	score = Number.parseFloat(score);
 
@@ -152,6 +152,34 @@ router.get('/:id', (req, res, next) => {
 	return repository.getById(id, res.callback);
 });
 
+router.put('/:id', (req, res, next) => {
+	var userObjectiveId = req.params.id;
+	var title = req.body.title || '';
+	var description = req.body.description || '';
+	var session = req.session;
+
+	title = title.trim();
+	description = description.trim();
+
+	if(!ValidateService.isCorrectId(userObjectiveId)
+	|| (isEmpty(title) && isEmpty(description))) {
+		return res.badRequest();
+	};
+
+	var data = {};
+
+	if(!isEmpty(title)) {
+		data.title = title;
+	}
+
+	if(!isEmpty(description)) {
+		data.description = description;
+	}
+
+	return service.update(session, userObjectiveId, data, res.callback);
+});
+
+/* not sure if this is valid
 // TODO: Body validation
 router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
@@ -163,5 +191,5 @@ router.put('/:id', (req, res, next) => {
 
 	return service.update(req.session._id, id, body, res.callback);
 });
-
+*/
 module.exports = router;

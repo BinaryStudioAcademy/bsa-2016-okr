@@ -49,7 +49,7 @@ KeyResultsService.prototype.add = function(userId, data, callback) {
 				return callback(null, keyResult);
 			});
 		}, (keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(userId, keyResult._id, CONST.history.type.ADD, (err, keyResult) => {
+			HistoryRepository.addKeyResultEvent(userId, keyResult._id, CONST.history.type.ADD, (err, historyEvent) => {
 				if(err) {
 					return callback(err, null);
 				}

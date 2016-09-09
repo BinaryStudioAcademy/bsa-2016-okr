@@ -24,9 +24,15 @@ var quarterSchema = new Schema({
 	userObjectives: [{
 		type: Schema.Types.ObjectId, 
 		ref: 'UserObjective'
-	}]
+	}],
+	isArchived: {
+		type: Boolean,
+		default: false,
+	}
 }, {
 	timestamps: true
 });
+
+quarterSchema.index({ userId: 1, year: 1, index: 1 }, { unique: true });
 
 module.exports = mongoose.model('Quarter', quarterSchema);

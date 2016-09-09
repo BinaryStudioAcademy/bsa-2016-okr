@@ -2,6 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userObjective = new Schema({
+	title: {
+		type: String
+	},
+	description: {
+		type: String
+	},
 	templateId: {
 		type: Schema.Types.ObjectId,
 		ref: 'Objective',
@@ -66,5 +72,7 @@ var userObjective = new Schema({
 }, {
 	timestamps: true
 });
+
+userObjective.index({ userId: 1,  templateId: 1 }, { unique: true });
 
 module.exports = mongoose.model('UserObjective', userObjective);

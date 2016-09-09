@@ -22,7 +22,7 @@ export default class DashboardStats extends React.Component {
 					{ `${ row.userInfo.firstName } ${ row.userInfo.lastName }` }
 					{/*<Link to={ `/user/${ row._id }` }>{ `${ row.userInfo.firstName } ${ row.userInfo.lastName }` }</Link>*/}
 				</td>
-				<td>
+				<td className="score">
 					{ Math.round(row.totalScore * 100) + '%' }
 				</td>
 			</tr>
@@ -46,7 +46,7 @@ export default class DashboardStats extends React.Component {
 		return (
 			<div className="main">
 				<div className="countInfo" id="parent">
-					<p><span>Medium progress by all users</span>></p>
+					<p><span>Average progress by all users</span></p>
 					<div className="progressBar">
 						<ProgressBar  strokeWidth="10" radius="80" percentage={Math.round(this.state.score.progress * 100)}/>
 					</div>
@@ -58,8 +58,8 @@ export default class DashboardStats extends React.Component {
 						{ this.state.rows.map(this.renderRow) }
 					</table>
 					<table className="second">
-						<tr><td>...</td><td>...</td></tr>
-						<tr><td>Lowest result</td><td>{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
+						<tr><td>...</td><td className="score">...</td></tr>
+						<tr><td>Lowest result</td><td className="score">{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
 					</table>
 				</div>
 			</div>

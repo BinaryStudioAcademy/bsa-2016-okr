@@ -15,10 +15,10 @@ router.post('/', (req, res, next) => {
 	var objectives = req.body.objectives || {"1": [], "2": [], "3": [], "4": []};
 
 	function objectivesValidation (obj = {}){
-		let isValid = true;
-		let quartals = ["1", "2", "3", "4"];
+		var isValid = true;
+		var quartals = ["1", "2", "3", "4"];
 
-		for (let key in obj) {
+		for (var key in obj) {
 			if( quartals.indexOf(key) === -1){
 				console.log("quartals incorrect " + key);
 				return false;

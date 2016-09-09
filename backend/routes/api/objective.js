@@ -1,14 +1,13 @@
 const router = require('express').Router();
 const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/objective');
-const userMentorRepository = require('../../repositories/userMentor');
 const service = require('../../services/objective');
-const cloneObjective = require('../../services/cloneObjective');
 const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
 const isValidYear = ValidateService.isValidYear;
 const isValidQuarter = ValidateService.isValidQuarter;
 const isCorrectId = ValidateService.isCorrectId;
+const isString = ValidateService.isString;
 const HelpService = require('../../utils/HelpService');
 const getValidDifficulty = HelpService.getValidDifficulty;
 
@@ -43,7 +42,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	if( isEmpty(title)
 		|| isEmpty(description)
 		|| isEmpty(keyResults)
-		|| !ValidateService.isCorrectId(category)
+		|| !isCorrectId(category)
 		|| !ValidateService.isArray(keyResults)
 		|| isKeyResultsInvalid)
 	{
@@ -106,26 +105,42 @@ router.put('/myupdate/:id', (req, res, next) => {
 	var id = req.params.id;
 	var body = req.body;
 
-	if(!ValidateService.isCorrectId(id)) {
+	if(!isCorrectId(id)) {
 		return res.badRequest();
 	};
 
 	return repository.update(id, body, res.callback);
 });
 
+router.put('/:objectiveId/keyresult/:keyResultId/default/:flag', adminOnly, (req, res, next) => {
+	var objectiveId = req.params.objectiveId;
+	var keyResultId = req.params.keyResultId;
+	var userId = req.session._id;
+	var flag = req.params.flag;
+
+	if(!isCorrectId(objectiveId)
+	|| !isCorrectId(keyResultId)) {
+		return res.badRequest();
+	};
+
+	flag = HelpService.stringToBoolean(flag);
+
+	return service.setDefaultKeyResult(userId, objectiveId, keyResultId, flag, res.callback);
+});
+
 router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	var id = req.params.id;
-	let flag = req.params.flag;
-	let deletedDate = new Date();
-	let userId = req.session._id || '';
+	var flag = req.params.flag;
+	var deletedDate = new Date();
+	var userId = req.session._id || '';
 
-	if(!ValidateService.isCorrectId(id)
+	if(!isCorrectId(id)
 		|| !ValidateService.isStringBoolean(flag)) {
 		return res.badRequest();
 	};
 
 
-	let body = {
+	var body = {
 		isDeleted: HelpService.stringToBoolean(flag),
 		deletedDate: deletedDate,
 		deletedBy: userId
@@ -135,190 +150,47 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {
-	let objectiveId = req.params.id;
-	let title = req.body.title || '';
-	let category = req.body.category || '';
-	let description = req.body.description || '';
-	let userId = req.session._id;
+	var objectiveId = req.params.id;
+	var title = req.body.title;
+	var category = req.body.category;
+	var description = req.body.description;
+	var userId = req.session._id;
 
-	title = title.trim();
-	description = description.trim();
-	category = category.trim();
+	if(!isCorrectId(objectiveId)) {
+		return res.badRequest('Wrong objective id');
+	}
 
-	if(!ValidateService.isCorrectId(objectiveId)
-	|| (isEmpty(title) && isEmpty(description) 
-	&& !ValidateService.isCorrectId(category))) {
-		return res.badRequest();
-	};
+	var isWrongBody = ( 
+		(isEmpty(title) || !isString(title))
+		&& (description == null || !isString(description))
+		&& (
+			isEmpty(category)
+			|| !isString(category)
+			|| !isCorrectId(category)
+		)
+	);
 
-	let data = {};
+	if(isWrongBody) {
+		return res.badRequest('Wrong request params')
+	}
+
+	var data = {};
 	
-	if(!isEmpty(title)) {
+	if(!isEmpty(title) && isString(title)) {
 		data.title = title;
 	}
 
-	if(!isEmpty(description)) {
+	if(isString(description)) {
 		data.description = description;
 	}
 
-	if(ValidateService.isCorrectId(objectiveId)) {
+	if(isString(category) && isCorrectId(category)) {
 		data.category = category;
 	}
+
+	console.log('Validation passed');
 
 	return service.update(userId, objectiveId, data, res.callback);
 });
 
-router.put('/:objectiveId/keyresult/:keyResultId/default/:flag', adminOnly, (req, res, next) => {
-	let objectiveId = req.params.objectiveId;
-	let keyResultId = req.params.keyResultId;
-	let userId = req.session._id;
-	let flag = req.params.flag;
-
-	if(!ValidateService.isCorrectId(objectiveId)
-	|| !ValidateService.isCorrectId(keyResultId)) {
-		return res.badRequest();
-	};
-
-	flag = HelpService.stringToBoolean(flag);
-
-	return service.setDefaultKeyResult(userId, objectiveId, keyResultId, flag, res.callback);
-});
-
-
-
 module.exports = router;
-
-/*router.delete('/:id', adminOnly, (req, res, next) => {
-	var id = req.params.id;
-
-	if(!ValidateService.isCorrectId(id)) {
-		return res.badRequest();
-	};
-
-	return service.delete(req.session._id, id, res.callback);
-});*/
-
-// router.post('/me/', (req, res, next) => {
-// 	var title = req.body.title || '';
-// 	var description = req.body.description || '';
-// 	var keys = req.body.keys || [];
-// 	var assignedTo = req.body.assignedTo;
-// 	var isApproved = false;
-
-// 	// Validate assignedTo param
-// 	// Should be correct ObjectId of user
-// 	if(!assignedTo) {
-// 		assignedTo = req.session._id;
-// 	} else {
-// 		if(!ValidateService.isCorrectId(assignedTo)) {
-// 			return res.badRequest();
-// 		}
-
-// 		// If assignedTo is correct ObjectId,
-// 		// but it doesn't equal to current userId
-// 		// then check current user to be a mentor for assinedTo or admin
-// 		if(assignedTo !== req.session._id
-// 			&& ( !userMentorRepository.checkUserMentor(assignedTo, req.session._id) || !req.session.isAdmin) )
-// 		{
-// 			return res.forbidden();
-// 		}
-// 	}
-
-// 	keys.forEach((key) => {
-// 		key.difficulty = getValidDifficulty(key.difficulty);
-// 	});
-
-// 	var isKeysInvalid = keys.some((key) => {
-// 		return !ValidateService.isObject(key)
-// 		|| ValidateService.isEmpty(key.title)
-// 		|| ValidateService.isEmpty(key.difficulty)
-// 		|| !key.difficulty;
-// 	});
-
-// 	if( ValidateService.isEmpty(title)
-// 		|| ValidateService.isEmpty(description)
-// 		|| !ValidateService.isArray(keys)
-// 		|| isKeysInvalid)
-// 	{
-// 		return res.badRequest();
-// 	}
-
-// 	if(req.session.isAdmin) {
-// 		isApproved = true;
-// 	}
-
-// 	var objective = {
-// 		createdBy: req.session._id,
-// 		title: title,
-// 		description: description,
-// 		keys: [],
-// 		cheers: [],
-// 		views: [],
-// 		forks: 1,
-// 		isApproved: isApproved,
-// 		isDeleted: false
-// 	}
-
-// 	keys = keys.map((item) => {
-// 		var key = {
-// 			title: item.title,
-// 			difficulty: item.difficulty,
-// 			forks: 1,
-// 			isApproved: isApproved,
-// 			isDeleted: false
-// 		};
-
-// 		return key;
-// 	});
-
-// 	return service.addToUser(objective, keys, assignedTo, res.callback);
-// });
-
-// router.post('/user/:id', (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(id !== req.session._id && !userMentorRepository.checkUserMentor(id, req.session._id)) {
-// 		return res.forbidden();
-// 	}
-
-// 	return repository.add(req.body, res.callback);
-// });
-
-// router.get('/user/:id', (req, res, next) => {
-// 	return repository.getByUserId(req.params.id, res.callback);
-// });
-
-// router.get('/deleted/', adminOnly, (req, res, next) => {
-// 	return repository.getAllDeleted(res.callback);
-// });
-
-// router.get('/notApproved/', adminOnly, (req, res, next) => {
-// 	return repository.getAllNotApproved(res.callback);
-// });
-
-// to clone template objective with keys to the user, id - objective id
-// router.get('/clone/:id', (req, res, next) => {
-// 	if(!ValidateService.isCorrectId(req.params.id)
-// 		|| !ValidateService.isCorrectId(req.session._id)){
-// 	return res.badRequest();
-// 	}
-// 	var data = {
-// 		objectiveId: req.params.id,
-// 		userId: req.session._id
-// 	}
-// 	cloneObjective.clone(data, res.callback);
-// });
-
-// router.get('/:id', (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	}
-
-// 	return repository.getById(id, res.callback);
-// });
-
-// router.put('/:id', (req, res, next) => {
-// 	return repository.update(req.params.id, req.body, res.callback);
-// });

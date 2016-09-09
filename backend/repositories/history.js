@@ -11,7 +11,7 @@ var HistoryRepository = function() {
 HistoryRepository.prototype = new Repository();
 
 HistoryRepository.prototype.getHistory = function (callback) {
-	let model = this.model;
+	var model = this.model;
 	model
 		.find()
 		.populate({
@@ -42,7 +42,7 @@ HistoryRepository.prototype.getHistory = function (callback) {
 }
 
 HistoryRepository.prototype.getHistoryById = function (id, callback) {
-	let model = this.model;
+	var model = this.model;
 	model
 		.find({_id: id})
 		.populate({
@@ -67,7 +67,7 @@ HistoryRepository.prototype.getHistoryById = function (id, callback) {
 }
 
 HistoryRepository.prototype.getByAuthorId = function (id, callback) {
-	let model = this.model;
+	var model = this.model;
 	model
 		.find({authorId: id})
 		.populate({
@@ -92,8 +92,8 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 };
 
 HistoryRepository.prototype.addKeyResultEvent = function(author, keyResult, type, callback) {
-	let model = this.model;
-	let newEvent = new model({
+	var model = this.model;
+	var newEvent = new model({
 		author,
 		keyResult,
 		type: type + ' ' + CONST.history.target.KEY_RESULT,
@@ -103,8 +103,8 @@ HistoryRepository.prototype.addKeyResultEvent = function(author, keyResult, type
 };
 
 HistoryRepository.prototype.addCategoryEvent = function(author, category, type, callback) {
-	let model = this.model;
-	let newEvent = new model({
+	var model = this.model;
+	var newEvent = new model({
 		author,
 		category,
 		type: type + ' ' + CONST.history.target.CATEGORY,
@@ -114,8 +114,8 @@ HistoryRepository.prototype.addCategoryEvent = function(author, category, type, 
 };
 
 HistoryRepository.prototype.addObjectiveEvent = function(author, objective, type, callback) {
-	let model = this.model;
-	let newEvent = new model({
+	var model = this.model;
+	var newEvent = new model({
 		author,
 		objective,
 		type: type + ' ' + CONST.history.target.OBJECTIVE,
@@ -125,8 +125,8 @@ HistoryRepository.prototype.addObjectiveEvent = function(author, objective, type
 };
 
 HistoryRepository.prototype.addApprenticeEvent = function(author, user, type, callback) {
-	let model = this.model;
-	let newEvent = new model({
+	var model = this.model;
+	var newEvent = new model({
 		author,
 		user,
 		type: type + ' ' + CONST.history.target.USER,

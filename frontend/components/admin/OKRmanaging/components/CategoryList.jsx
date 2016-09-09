@@ -1,22 +1,29 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CategoryItem from './CategoryItem.jsx';
-import NewCategory from './Category-add.jsx';
-import sweetalert from 'sweetalert';
 
 import * as categoriesActions from "../../../../actions/categoriesActions.js";
 import * as okrManagingActions from "../../../../actions/okrManagingActions.js";
+
+import sweetalert from 'sweetalert';
+
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
+
+import CategoryItem from './CategoryItem.jsx';
+import NewCategory from './Category-add.jsx';
 
 class CategoryList extends Component {
 	constructor(props){
 		super(props);
 
 		this.showAddCategoryInput = this.showAddCategoryInput.bind(this);
-		this.isTitleValid = this.isTitleValid.bind(this);
+		this.isNotDuplicate = this.isNotDuplicate.bind(this);
 		this.addCategory = this.addCategory.bind(this);
 		this.editCategory = this.editCategory.bind(this);
 		this.hideAddInput = this.hideAddInput.bind(this);
+		this.focusAddInput = this.focusAddInput.bind(this);
+		this.focusEditInput = this.focusEditInput.bind(this);
 	}
 
 	showAddCategoryInput() {
@@ -35,12 +42,25 @@ class CategoryList extends Component {
 			categoryAddBtn.classList.remove('display');
 			categoryAddBtn.classList.add('undisplay');
 		}
+
+		this.focusAddInput();
+	}
+	
+	focusAddInput() {
+		let inputEl = this.refs.newCategoryComponent.refs.newCategory;
+		ReactDOM.findDOMNode(inputEl).focus();
 	}
 
-	isTitleValid(title) {
+  focusEditInput(id) {
+    let inputEl = this.refs[`category-${ id }`].refs.categoryInput;
+    ReactDOM.findDOMNode(inputEl).focus();
+  }
+
+	isNotDuplicate(id, title) {
 		let categoryIndex = this.props.category.list.findIndex((el) => {
 			return el.title === title;
 		});
+		
 
 		if(categoryIndex === -1) {
 			sweetalert.close();
@@ -50,6 +70,12 @@ class CategoryList extends Component {
 				title: 'Error!',
 				text: 'Category with such title already exists',
 				type: 'error',
+			}, () => {
+				setTimeout(() => {
+					if(!isEmpty(id)) {
+	          this.focusEditInput(id);
+					}
+        }, 0);
 			});
 			
 			return false;
@@ -57,7 +83,7 @@ class CategoryList extends Component {
 	}
 
 	addCategory(title) {
-		if(this.isTitleValid(title)) {
+		if(this.isNotDuplicate(null, title)) {
 			let reqBody = {
 				title,
 			};
@@ -66,7 +92,7 @@ class CategoryList extends Component {
 	}
 
 	editCategory(id, title) {
-		if(this.isTitleValid(title)) {
+		if(this.isNotDuplicate(id, title)) {
 			let reqBody = {
 				title,
 			};
@@ -111,16 +137,20 @@ render() {
 															 activeCategory = { this.props.categoriesActions.activeCategory }
 															 cancelEdit = { this.props.categoriesActions.cancelEdit }
 															 deleteCategory = { this.props.categoriesActions.deleteCategory }
-															 onDeleteNewCategory = { this.hideAddInput }
+															 hideAddInput = { this.hideAddInput }
+															 ref={ `category-${ item._id }` }
 									/>
 				})}
 			</ul>
 			<div id="new-category">
 						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={ this.showAddCategoryInput }>
 							+Add new category</a>
-						<NewCategory  category = { this.props.category }
-													addCategory = { this.addCategory }
-													hideAddInput = { this.hideAddInput } 
+						<NewCategory 
+							ref={'newCategoryComponent'}
+							category={ this.props.category }
+							addCategory={ this.addCategory }
+							hideAddInput={ this.hideAddInput }
+							focusAddInput={ this.focusAddInput }
 						/>
 			</div>
 		</div>

@@ -30,6 +30,7 @@ class ObjectiveList extends React.Component{
  		const categories = this.props.categories || [];
 		const objectives = this.props.objectives || [];
 		const ObjectiveItem = this.props.ObjectiveItem;
+    const updateUserObjectiveApi = this.props.updateUserObjectiveApi;
 		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
 		const changeKeyResultScore = this.props.changeKeyResultScore;
 		const isArchived = this.props.archived;
@@ -40,22 +41,23 @@ class ObjectiveList extends React.Component{
 
 			categoryItems = categories.map((category, index) => {
 				let input;
-				
+
 				var objectiveItems = objectives
 					.filter((objective) => {
 						return objective.templateId.category == category._id
 					})
 					.map((item, index) => {
-						return <ObjectiveItem index={ index } key={ item._id } item={ item } 
+						return <ObjectiveItem index={ index } key={ item._id } item={ item }
 							isArchived = { isArchived }
-							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi } 
+              updateUserObjectiveApi = { updateUserObjectiveApi }
+							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
 							changeKeyResultScoreOne={ changeKeyResultScore }
 							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						/>
 					});
 
 				if(!isArchived) {
-					input = <ObjectiveInput 
+					input = <ObjectiveInput
 						createObjective={ this.props.createObjective(category._id) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }
 						key={ index }
@@ -80,12 +82,12 @@ class ObjectiveList extends React.Component{
 		}
 		return categoryItems;
  	}
- 	
+
  	render() {
 		return (
 			<div id="project-category" className="category">{ this.getCategoryItems() }</div>
 		);
-		
+
 	}
 }
 

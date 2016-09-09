@@ -9,7 +9,7 @@ var UserMentorService = function() {};
  * @param callback
  */
 UserMentorService.prototype.getByUserId = (data, callback) => {
-    let userId = data.userId;
+    var userId = data.userId;
 
     // Get by userId
     UserMentorRepository.getByUserId(userId, (err, data) => {
@@ -23,7 +23,7 @@ UserMentorService.prototype.getByUserId = (data, callback) => {
  * @param callback
  */
 UserMentorService.prototype.getByMentorId = (data, callback) => {
-    let mentorId = data.mentorId;
+    var mentorId = data.mentorId;
 
     // Get by mentorId
     UserMentorRepository.getByMentorId(mentorId, (err, data) => {
@@ -37,7 +37,7 @@ UserMentorService.prototype.getByMentorId = (data, callback) => {
  * @param callback
  */
 UserMentorService.prototype.setUserAsMentor = (data, callback) => {
-    let userId = data.userId,
+    var userId = data.userId,
         mentorId = data.mentorId;
 
     // Add relations User to Mentor in collection
@@ -52,7 +52,7 @@ UserMentorService.prototype.setUserAsMentor = (data, callback) => {
  * @param callback
  */
 UserMentorService.prototype.checkUserMentor = (data, callback) => {
-    let userId = data.userId,
+    var userId = data.userId,
         mentorId = data.mentorId;
 
     // Add relations User to Mentor in collection
@@ -67,7 +67,7 @@ UserMentorService.prototype.checkUserMentor = (data, callback) => {
  * @param callback
  */
 UserMentorService.prototype.deleteByUserId = (data, callback) => {
-    let userId = data.userId,
+    var userId = data.userId,
         mentorId = data.mentorId;
 
     // Delete by Id
@@ -82,7 +82,7 @@ UserMentorService.prototype.deleteByUserId = (data, callback) => {
  * @param callback
  */
 UserMentorService.prototype.deleteByMentorId = (data, callback) => {
-    let userId = data.userId,
+    var userId = data.userId,
         mentorId = data.mentorId;
 
     // Delete by Id

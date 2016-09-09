@@ -3,15 +3,15 @@ const router = require('express').Router();
 const user = require('./user');
 const objective = require('./objective');
 const keyResult = require('./keyResult');
-const comment = require('./comment');
 const category = require('./category');
-const plan = require('./plan');
 const history = require('./history');
-const userMentor = require('./userMentor');
 const role = require('./role');
 const userObjective = require('./userObjective');
 const stats = require('./stats');
 const quarter = require('./quarter');
+// const comment = require('./comment');
+// const plan = require('./plan');
+// const userMentor = require('./userMentor');
 
 module.exports = function (app) {
 

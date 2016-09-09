@@ -54,4 +54,6 @@ var objectiveSchema = new Schema({
     timestamps: true
 });
 
+objectiveSchema.index({ category: 1, title: 1 }, { unique: true });
+
 module.exports = mongoose.model('Objective', objectiveSchema);

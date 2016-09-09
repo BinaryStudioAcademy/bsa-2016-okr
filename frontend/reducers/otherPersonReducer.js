@@ -1,17 +1,19 @@
-import { GET_USER, 
-				 RECEIVED_USER, 
-				 CHANGE_TAB, 
-				 CHANGE_YEAR, 
-				 TOOK_APPRENTICE, 
+import { GET_USER,
+				 RECEIVED_USER,
+				 CHANGE_TAB,
+				 CHANGE_YEAR,
+				 TOOK_APPRENTICE,
 				 REMOVED_APPRENTICE,
 				 ADDED_NEW_OBJECTIVE_OTHER_USER } from '../actions/otherPersonActions.js'
-import { CHANGED_KEYRESULT_SCORE, 
-				 CHANGED_KEYRESULT_SCORE_ERROR, 
+import { CHANGED_KEYRESULT_SCORE,
+				 CHANGED_KEYRESULT_SCORE_ERROR,
 				 SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
-				 SOFT_DELETE_MY_OBJECTIVE_BY_ID } from '../actions/myStateActions.js'
+				 SOFT_DELETE_MY_OBJECTIVE_BY_ID,
+				 UPDATE_USER_OBJECTIVE } from '../actions/myStateActions.js'
 import { ADD_NEW_KEY_RESULT_TO_OBJECTIVE } from '../actions/keyResultActions';
 
 import { currentYear, currentQuarter } from '../../backend/config/constants'
+import { updateObjectiveDescription } from './myStateReducer';
 
 const initialState = {
 	user: {},
@@ -80,6 +82,15 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
+		case UPDATE_USER_OBJECTIVE: {
+			const { id, description } = action;
+
+			return Object.assign({}, state, {
+				me: updateObjectiveDescription(state.user, id, description)
+			});
+
+		}
+
 		case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
 			const { id } = action;
 
@@ -99,7 +110,7 @@ export default function otherPersonReducer(state = initialState, action) {
 		}
 		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS: {
 			const { objectiveId, keyResultId, data } = action;
-			
+
 			return Object.assign({}, state, {
 				user: deleteKeyResultFromObjective(state.user, objectiveId, keyResultId, data)
 			});
@@ -204,7 +215,7 @@ function setScoreToKeyResult(user, objectiveId, keyResultId, score) {
 
 function addNewObjectiveToUser(user, quarterId, objective) {
 	let userCopy = Object.assign({}, user);
-	
+
 	let index = userCopy.quarters.findIndex((quarter) => {
 		return quarter._id == quarterId;
 	});
@@ -219,7 +230,7 @@ function addNewObjectiveToUser(user, quarterId, objective) {
 function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResult) {
 	var userCopy = Object.assign({}, user);
 	let quarterIndex, objectiveIndex, keyResultIndex;
-	
+
 	quarterIndex = userCopy.quarters.findIndex((quarter) => {
 		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=>{
 			return userObjective._id === objectiveId;

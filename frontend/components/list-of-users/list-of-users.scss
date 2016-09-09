@@ -2,7 +2,7 @@
 @import '../common/styles/images';
 
 .list-of-users-dashboard{
-	margin:10px;
+	margin: 30px 15px 10px;
 }
 
 #usersList {
@@ -14,9 +14,9 @@
 			font-size: 20px;
 			text-align: center;
 			position: relative;
-			padding: 4px;
-			width: 98%;
-			margin: 0 5px;
+			padding: 0px;
+			width: 100%;
+			margin: 0px;
 		}
 
 		p > span {
@@ -31,7 +31,7 @@
 			content: '';
 			display: block;
 			position: absolute;
-			top: 28px;
+			top: 22px;
 			left: 0;
 			height: 0;
 			width: 100%;
@@ -41,11 +41,12 @@
 	}
 	.searchBar {
 		float: right;
-		width: 30%;
+		width: 100%;
 		padding: 10px;
-		margin-right: 5px;
+		box-sizing: border-box;
 		padding-left: 40px;
 		font-size: 16px;
+		margin-bottom: 15px;
 		background: $search-jpg no-repeat;
 		background-size: contain;
 		background-color: white;
@@ -54,14 +55,16 @@
 
 .listOfUsers {
 	list-style: none;
-	padding: 5px;
-	margin-top: 10px;
+	padding: 0px;
 	margin-left: -3%;
+	margin-top: 0;
+  margin-bottom: 0;
 
 	.userItemDiv{
 		background: #f9fafb;
 		border: 1px solid #dddddd;
 		margin-bottom: 15px;
+		margin-top: 15px;
 		padding: 10px 5px;
 		-webkit-transition: all .15s;
 		-moz-transition: all .15s;
@@ -138,7 +141,7 @@
 			padding-top: 23px;
 			
 			.progressValue {
-				top: 40px;
+				top: 43px;
 			}
 		}	
 
@@ -159,9 +162,10 @@ and (max-width: 1400px)
 and (min-width: 900px)
 {
 	.listOfUsers {
+		margin-left: 0%;
 		.userItemDiv{
-			width: 97%;
-			margin-left: 3%;
+			width: 100%;
+			margin-left: 0%;
 			display: block;
 
 			.progressTitle {

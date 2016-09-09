@@ -3,6 +3,8 @@ const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
 const CONST = require('../../config/constants');
 
+const ObjectiveService = require('../objective');
+const ObjectiveRepository = require('../../repositories/objective');
 const UserObjectiveRepository = require('../../repositories/userObjective');
 const QuarterRepository = require('../../repositories/quarter');
 const Quarter = require('../../schemas/quarter');
@@ -11,36 +13,60 @@ const HistoryRepository = require('../../repositories/history');
 
 const add = require('./add');
 const addKeyResult = require('./addKeyResult');
+const updateHelper = require('./updateHelper');
 
 var UserObjectiveService = function() {};
 
 UserObjectiveService.prototype.add = add;
 UserObjectiveService.prototype.addKeyResult = addKeyResult;
 
-UserObjectiveService.prototype.update = function(authorId, objectiveId, objective, callback){
+UserObjectiveService.prototype.update = function(session, userObjectiveId, data, callback){
 	async.waterfall([
 		(callback) => {
-			UserObjectiveRepository.update(objectiveId, objective, (err, oldObjective) => {
+			UserObjectiveRepository.getById(userObjectiveId, (err, userObjective) => {
+				if(err) {
+					return callback(err, null);
+				}
+				if(isEmpty(userObjective)) {
+					err = new Error('Objective not found');
+					return callback(err, null);
+				}
+				return callback(null, userObjective);
+			});
+		}, (userObjective, callback) => {
+			if(userObjective.isArchived == true){
+				err = new Error('Objective was archived');
+				return callback(err, null);
+			}
+			UserRepository.getByIdPopulate(userObjective.userId, (err, user) => {
 				if(err) {
 					return callback(err, null);
 				};
+				return callback(null, userObjective, user);
+			});
+		}, (userObjective, user, callback) => {
+				if (session.localRole == CONST.user.localRole.ADMIN
+					|| session._id.toString() === userObjective.userId.toString()
+					|| (session.localRole == CONST.user.localRole.MENTOR && user.mentor._id.toString() == session._id.toString() )) {
+						ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
+							if(templateObjective.isApproved == false){
+										//call another service
+										// if is not archived update template then
+								ObjectiveService.update(session._id, userObjective.templateId, data, callback);
+							} else if (templateObjective.isApproved == true) {
+									updateHelper(session._id, userObjective._id, data, (err, userObjectiveUpdated) => {
+										if(err) {
+											return callback(err, null);
+										};
+									return callback(null, userObjectiveUpdated);
+										});
+									}
 
-				return callback(null, oldObjective);
-			})
-		},
-		(oldObjective, callback) => {
-			// console.log('update finished');
-			// HistoryRepository.addUserObjective(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
-			// 	if(err) {
-			// 		return callback(err, null);
-			// 	};
-
-			// 	return callback(null, objective);
-			// })
-			return callback(null, objective);
-		}
+								});
+					}
+			},
 		], (err, result) => {
-			return callback(err, result)
+			return callback(err, result);
 		})
 };
 
@@ -73,24 +99,24 @@ UserObjectiveService.prototype.cloneUserObjective = function(session, userObject
 				return callback(null, otherUserObjective, quarter);
 			});
 		}, (otherUserObjective, quarter, callback) => {
-			let existingUserObjectiveIndex = quarter.userObjectives.findIndex((userObjective) => {
+			var existingUserObjectiveIndex = quarter.userObjectives.findIndex((userObjective) => {
 				return userObjective.templateId.equals(otherUserObjective.templateId);
 			});
 
 			if(existingUserObjectiveIndex !== -1) {
-				let err = new Error('Objective with equal template already exists');
+				var err = new Error('Objective with equal template already exists');
 				return callback(err, null);
 			}
 
 			return callback(null, otherUserObjective, quarter);
 		}, (otherUserObjective, quarter, callback) => {
-			let newUserObjective = {
+			var newUserObjective = {
 				templateId: otherUserObjective.templateId,
 				userId: session._id,
 				creator: session._id,
 			};
 
-			let newKeyResults = otherUserObjective.keyResults.map((keyResult) => {
+			var newKeyResults = otherUserObjective.keyResults.map((keyResult) => {
 				return {
 					templateId: keyResult.templateId,
 					creator: session._id,
@@ -107,7 +133,7 @@ UserObjectiveService.prototype.cloneUserObjective = function(session, userObject
 				return callback(null, userObjective, quarter)
 			});
 		}, (userObjective, quarter, callback) => {
-			let updateData = {
+			var updateData = {
 				$push: {
 					userObjectives: userObjective._id,
 				},
@@ -142,7 +168,7 @@ UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjec
 
 				if ((!userObjective.userId.equals(session._id))
 				&& (!userObjective.userId.equals(session.mentor))
-				&& (!session.localRole === CONST.user.role.ADMIN)) {
+				&& (!session.localRole === CONST.user.localRole.ADMIN)) {
 					err = new Error('Forbidden');
 					err.status = 403;
 					return callback(err, null);
@@ -152,12 +178,12 @@ UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjec
 			});
 		}, (userObjective, callback) => {
 
-			let index = userObjective.keyResults.findIndex((keyResult)=>{
+			var index = userObjective.keyResults.findIndex((keyResult)=>{
 				return keyResult._id.equals(keyResultId);
 			});
 
 			if(index === -1) {
-				let err = new Error('Key result not found in objective');
+				var err = new Error('Key result not found in objective');
 				return callback(err, null);
 			}
 
@@ -202,7 +228,7 @@ UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, f
 
 				if ((!userObjective.userId.equals(session._id))
 				&& (!userObjective.userId.equals(session.mentor))
-				&& (!session.localRole === CONST.user.role.ADMIN)) {
+				&& (!session.localRole === CONST.user.localRole.ADMIN)) {
 					err = new Error('Forbidden');
 					err.status = 403;
 					return callback(err, null);
@@ -246,14 +272,14 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 				}
 
 				if(isEmpty(userObjective)) {
-					let err = new Error('Objective not found');
+					var err = new Error('Objective not found');
 					return callback(err, null);
 				}
 
 				// TODO: Should be check for userObjective.isArchived
 				// Removed temporary
 				if(!userObjective.userId.equals(userId)) {
-					let err = new Error('You are not allowed to do this');
+					var err = new Error('You are not allowed to do this');
 					return callback(err, null);
 				}
 
@@ -261,12 +287,12 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 			});
 		},
 		(userObjective, callback) => {
-			let index = userObjective.keyResults.findIndex((keyResult) => {
+			var index = userObjective.keyResults.findIndex((keyResult) => {
 				return keyResult._id.equals(keyResultId);
 			});
 
 			if(index === -1) {
-				let err = new Error('Key result not found');
+				var err = new Error('Key result not found');
 				return callback(err, null);
 			}
 

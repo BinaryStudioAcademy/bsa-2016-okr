@@ -110,7 +110,7 @@ export function softDeleteObjective(id) {
 
 /*-----delete key result------*/
 
-export function deleteKeyResult(id, flag){
+export function deleteKeyResult(id, flag) {
 	return(dispatch, getStore) => {
 
 		dispatch({ type: DELETE_KEY_RESULT_TEMPLATE });
@@ -239,7 +239,7 @@ export function editKeyResultError(data) {
 	};
 }
 
-export function activeKeyResult(activeKeyResult) {
+export function setActiveKeyResult(activeKeyResult) {
 	const action = {
 		type: ACTIVE_KEY_RESULT,
 		activeKeyResult

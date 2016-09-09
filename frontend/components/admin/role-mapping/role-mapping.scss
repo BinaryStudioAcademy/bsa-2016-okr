@@ -38,7 +38,7 @@
     display: flex;
     justify-content: center;
 	overflow: hidden;
-	padding-bottom: 20px;
+	padding-bottom: 15px;
 }
 
 #user-role-mapping-header-wrapper input {
@@ -50,7 +50,7 @@
     border-radius: 3px;
     float: left;
 	width: 100%;
-	height: 40px;
+	
 	margin-top: 0;
 	outline:none;
 	-webkit-transition: all .3s;
@@ -105,7 +105,7 @@
 }
 
 #role-mapping-wrapper #central-window {
-    padding: 3%;
+    padding: 30px;
     padding-bottom: 0;
 }
 
@@ -177,22 +177,26 @@
 }
 
 #roles-table {
-    color: #777777;
-    background-color: #FFF;
-	width: 300px;
+    color: #777;
     min-width: 300px;
-	margin: 0 auto;
-    margin-top: -25px;
+	margin: 5px 15px 0;
+    font-size: 14px;
+
+    h3{
+        font-size: 14px;
+        font-weight: bold;
+    }
 }
 
 #roles-table .table-head {
-    color: #777777;
+    color: #777;
     background: #e4eaec;
     border: none;
 }
 
 #roles-table .col-2 {
-    width: 42%;
+    width: 40%;
+    margin-left: 10px;
 }
 
 #roles-table .table-row:hover {
@@ -201,15 +205,15 @@
 
 #roles-table .col-1 {
     width: 14%;
-    margin-left: 4%;
+    margin-left: 30px;
 }
 
 #role-mapping-wrapper #roles-table .col-1 {
-	width: 50%;
+	width: 40%;
 }
 
 #roles-table .table-row {
-	height: 45px;
+	height: 42px;
 	display: flex;
 	align-items: center;
     border: none;
@@ -217,8 +221,12 @@
 }
 
 #role-mapping-wrapper #global-roles-p {
-    width: 300px;
+    margin: 30px 15px 0;
     min-width: 300px;
+    width: 317px;
+    span{
+        font-size: 18px;
+    }
 }
 
 #role-mapping-wrapper  p {
@@ -227,12 +235,10 @@
     font-size: 16px;
     text-align: center;
     position: relative;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding: 0;
     width: 100%;
     min-width: 535px;
-    margin: 0 auto;
-    margin-bottom: 29px;
+    margin: 0 auto 35px;
 }
 
 #role-mapping-wrapper p span {
@@ -248,7 +254,7 @@
     content: '';
     display: block;
     position: absolute;
-    top: 23px;
+    top: 22px;
     left: 0;
     height: 0;
     width: 100%;
@@ -281,6 +287,3 @@
     background: #F9FAFB;
 }
 
-#role-mapping-wrapper aside p {
-    margin-top: 15px;
-}

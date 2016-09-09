@@ -20,18 +20,20 @@ class RecycleBinFilter extends Component {
 
 	showFiltersContainer() {
 
-		let tbody = document.querySelector("#rec-bin-wrapper .filter-table tbody");
+		//let tbody = document.querySelector("#rec-bin-wrapper .filter-table tbody");
 		
 		if (this.props.recycleBin.showRecycleBinFilters) {
 			
-			if (tbody != null)
+		/*	if (tbody != null)
 				tbody.style.height = "62vh";
+				*/
 
 			return "show-container"
 		} 
-
+/*
 		if (tbody != null)
 				tbody.style.height = "70vh";
+			*/
 
 		return "hide-container";
 	}
@@ -95,9 +97,9 @@ class RecycleBinFilter extends Component {
 								<select ref="userName" onChange={this.changeUserName.bind(this)}>
 								   <option id="reset-option" value="" disabled className="not-display">By User Name</option>
 								   <option value="">No one</option>
-								   {usersNames.map(function(name) {
-			                            return <option key={name.id} value={name.name}>{name.name}</option>
-			                       })}
+								   {usersNames.map((name) => {
+                   		return <option key={name.id} value={name.name}>{name.name}</option>
+                   })}
 								</select>
 							</td>
 							<td className="cell-right-align" colSpan="2">

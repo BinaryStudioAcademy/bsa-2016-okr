@@ -3,6 +3,7 @@ var HistoryRepository = require('../repositories/history');
 var UserService = require('./user.js')
 var UserObjectiveRepository = require('../repositories/userObjective');
 var moment = require('moment');
+const async = require('async');
 
 var HistoryService = function(){
 
@@ -21,7 +22,7 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			})
 		},
 		(objectives, callback) => {
-			let historyList =[];
+			var historyList =[];
 			objectives.forEach((obj) => {
 				historyList.push(obj._id);
 			})
@@ -29,8 +30,8 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			return callback(null, historyList);
 		},
 		(historyList, callback) => {
-			let list= [];
-			let i = 0;
+			var list= [];
+			var i = 0;
 			(function forEachInList () {
 				HistoryRepository.getUserObjectiveHistoryPopulate(historyList[i], (err, result) => {
 						if(err)
@@ -79,16 +80,16 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	switch(sortField){
 	 	case 'date':
 	 		sortedList.sort((a, b) => {
-	 			let dateA = Date.parse(a.createdAt);
-	 			let dateB = Date.parse(b.createdAt);
+	 			var dateA = Date.parse(a.createdAt);
+	 			var dateB = Date.parse(b.createdAt);
 
 	 			return (dateA - dateB) * sortWayNum;
 	 		});
 	 	break;
 	 	case 'user':
 	 		sortedList.sort((a, b) => {
-	 			let nameA = a.author.userInfo.firstName + " " + a.author.userInfo.lastName;
-	 			let nameB = b.author.userInfo.firstName + " " + b.author.userInfo.lastName;
+	 			var nameA = a.author.userInfo.firstName + " " + a.author.userInfo.lastName;
+	 			var nameB = b.author.userInfo.firstName + " " + b.author.userInfo.lastName;
 	 			if(nameA === nameB)
 	 				return 0
 	 			else if(nameA > nameB)
@@ -98,8 +99,8 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 	break;
 	 	case 'action':
 	 		function sorting (a, b) {
-	 			let actionA = a.type.split(' ')[0];
-	 			let actionB = b.type.split(' ')[0];
+	 			var actionA = a.type.split(' ')[0];
+	 			var actionB = b.type.split(' ')[0];
 
 	 			if(actionA > actionB)
 	 				return sortWayNum
@@ -121,8 +122,8 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
        			};
 
       			if(historyItem.type.indexOf('KEY_RESULT') !== -1){
-        			let keyResults = historyItem.userObjective.keyResults;
-        			let keyResult;
+        			var keyResults = historyItem.userObjective.keyResults;
+        			var keyResult;
         			keyResults.forEach((key) => {
         				if (key.templateId._id.toString() === historyItem.userKeyResult.toString() 
         					|| key._id.toString() === historyItem.userKeyResult.toString()){
@@ -134,8 +135,8 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
     		}
  			
 	 		sortedList.sort((a, b) => {
-	 			let targetA = getHistoryObjectName(a);
-	 			let targetB = getHistoryObjectName(b);
+	 			var targetA = getHistoryObjectName(a);
+	 			var targetB = getHistoryObjectName(b);
 	 			if(targetA === targetB)
 	 				return 0
 	 			else if(targetA > targetB)
@@ -160,11 +161,11 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 	}
 
 	var filteredList = eventList.filter( (item) => {
-		let isFiltered = true;
+		var isFiltered = true;
 
-		for (let key in filters)
+		for (var key in filters)
 		{
-			let type = item.type.toLowerCase();
+			var type = item.type.toLowerCase();
 			if( key  == "type" && filters[key] !== '' && filters[key] !== ' '){
 				if(type.indexOf(filters[key]) === -1)
 					{
@@ -185,7 +186,7 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 			};		
 
 			if(key == "name" && filters[key] !== '' && filters[key] !== ' '){
-				let name = item.author.userInfo.firstName + ' ' + item.author.userInfo.lastName;
+				var name = item.author.userInfo.firstName + ' ' + item.author.userInfo.lastName;
 				if(name.toLowerCase().indexOf(filters[key]) === -1)
 					isFiltered = false;
 			}

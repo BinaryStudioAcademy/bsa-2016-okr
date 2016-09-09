@@ -21,6 +21,7 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var CONST = require('../config/constants');
 var mock = require('./mockData');
+var globalRoles = getGlobalRoles();
 
 var chance = new Chance();
 
@@ -49,13 +50,13 @@ function randomUser() {
 	var localRole;
 
 	if (randomValue <= 10)
-		localRole = "admin";
+		localRole = CONST.user.localRole.USER;
 	else if (randomValue > 10 && randomValue < 26)
-		localRole = "mentor";
+		localRole = CONST.user.localRole.MENTOR;
 	else if (randomValue > 25 && randomValue < 36)
-		localRole = "default";
+		localRole = CONST.user.localRole.DEFAULT;
 	else
-		localRole = "user";
+		localRole = CONST.user.localRole.ADMIN;
 
 	return new User({
 		localRole: localRole,
@@ -67,11 +68,11 @@ function randomUser() {
 
 function generateMentors(users) {
 
-	let isCompleted, apprenticeNumbers;
+	var isCompleted, apprenticeNumbers;
 
-	for (let i = 0; i < users.length; i++) {
+	for (var i = 0; i < users.length; i++) {
 
-		if (users[i].localRole === "mentor") {
+		if (users[i].localRole === CONST.user.localRole.MENTOR) {
 
 			apprenticeIndex = 0;
 			apprenticeNumbers = chance.integer({ min: 0, max: users.length });
@@ -84,7 +85,7 @@ function generateMentors(users) {
 				if (apprenticeIndex === users.length)
 					break;
 
-				if (apprenticeIndex === i || users[apprenticeIndex].localRole != "user") {
+				if (apprenticeIndex === i || users[apprenticeIndex].localRole != CONST.user.localRole.USER) {
 					++apprenticeIndex;
 					continue;
 				}
@@ -112,17 +113,17 @@ function randomObjective(users, categories, i) {
 	var createdAt = chance.date({ year: 2016 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-	let isDeleted =  i % 10 === 0;
-	let deletedDate = null;
-	let deletedBy = null;
+	var isDeleted =  i % 10 === 0;
+	var deletedDate = null;
+	var deletedBy = null;
 
 	if (isDeleted) {
 
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-		let isDone = false;
+		var isDone = false;
 
-		let userWhoDidDeletionIndex;
+		var userWhoDidDeletionIndex;
 
 		while(!isDone) {
 			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -165,7 +166,7 @@ function randomObjective(users, categories, i) {
 		createdAt: createdAt,
 		updatedAt: updatedAt
 	});
-*/
+	*/
 }
 
 function randomKeyResult(objectives, users, i) {
@@ -173,22 +174,23 @@ function randomKeyResult(objectives, users, i) {
 	var createdAt = chance.date({ year: 2016, month: 6 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-	let isDeleted =  i % 8 === 0;
-	let deletedDate = null;
-	let deletedBy = null;
+	var isDeleted =  i % 8 === 0;
+	var deletedDate = null;
+	var deletedBy = null;
 
 	if (isDeleted) {
 
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-		let isDone = false;
+		var isDone = false;
 
-		let userWhoDidDeletionIndex;
+		var userWhoDidDeletionIndex;
 
 		while(!isDone) {
 			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
-			if (users[userWhoDidDeletionIndex].localRole === "admin")
+			if (users[userWhoDidDeletionIndex].localRole === CONST.user.localRole.ADMIN) {
 				isDone = true;
+			}
 		}
 
 		deletedBy = users[userWhoDidDeletionIndex]._id;
@@ -216,17 +218,17 @@ function randomUserObjective(objectives, users, keyResults, i) {
 	var createdAt = chance.date({ year: 2016, month: 7 });
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-	let isDeleted =  i % 10 === 0;
-	let deletedDate = null;
-	let deletedBy = null;
+	var isDeleted =  i % 10 === 0;
+	var deletedDate = null;
+	var deletedBy = null;
 
 	if (isDeleted) {
 
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-		let isDone = false;
+		var isDone = false;
 
-		let userWhoDidDeletionIndex;
+		var userWhoDidDeletionIndex;
 
 		while(!isDone) {
 			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -262,17 +264,17 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 		keyResults[userKeyResultIndex].used += 1;
 
-		let keyIsDeleted =  chance.pickone([false, false, false, true]);
-		let keyDeletedDate = null;
-		let keyDeletedBy = null;
+		var keyIsDeleted =  chance.pickone([false, false, false, true]);
+		var keyDeletedDate = null;
+		var keyDeletedBy = null;
 
 		if (keyIsDeleted) {
 
 			keyDeletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-			let isDone = false;
+			var isDone = false;
 
-			let userWhoDidDeletionIndex;
+			var userWhoDidDeletionIndex;
 
 			while(!isDone) {
 				userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -324,9 +326,9 @@ function baseCategories(users) {
 		res.push(category.toObject());
 	});
 
-	let isDone = false;
+	var isDone = false;
 
-	let userWhoDidDeletionIndex;
+	var userWhoDidDeletionIndex;
 
 	while(!isDone) {
 		userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
@@ -342,7 +344,7 @@ function baseCategories(users) {
 	})
 
 	res.push(myCategory.toObject());
-*/
+	*/
 	return res;
 }
 
@@ -423,16 +425,16 @@ function getQuarters(users, userObjectives) {
 }
 
 function setArchivedToUserObjectives(userObjectives, quarters) {
-	let currentYear = CONST.currentYear;
-	let currentQuarter = CONST.currentQuarter;
+	var currentYear = CONST.currentYear;
+	var currentQuarter = CONST.currentQuarter;
 
-	let pastQuarters = quarters.filter((quarter) => {
+	var pastQuarters = quarters.filter((quarter) => {
 		return quarter.year <= currentYear && quarter.index < currentQuarter
 	});
 
 	pastQuarters.forEach((quarter) => {
 		quarter.userObjectives.forEach((userObjectiveId) => {
-			let index = userObjectives.findIndex((userObjective) => {
+			var index = userObjectives.findIndex((userObjective) => {
 				return userObjective._id.equals(userObjectiveId);
 			});
 
@@ -447,7 +449,7 @@ function randomUserInfo(users) {
 	var info = {
 		firstName: chance.first(),
 		lastName: chance.last(),
-		globalRole: chance.pickone(['ADMIN', 'DEVELOPER', 'HR', 'CEO', 'Tech Lead']),
+		globalRole: chance.pickone(globalRoles),
 		email: chance.email()
 	};
 
@@ -458,6 +460,39 @@ function setInfoToUser(users, userinfos) {
 	users.forEach((user, i) => {
 		user.userInfo = userinfos[i]._id;
 	});
+}
+
+function getRoles() {
+	return [
+	{
+		globalRole: CONST.user.globalRole.ADMIN, 
+		localRole: CONST.user.localRole.USER
+	}, {
+		globalRole: CONST.user.globalRole.HR, 
+		localRole: CONST.user.localRole.USER,
+	}, {
+		globalRole: CONST.user.globalRole.DEVELOPER, 
+		localRole: CONST.user.localRole.USER,
+	}, {
+		globalRole: CONST.user.globalRole.CEO, 
+		localRole: CONST.user.localRole.ADMIN,
+	}, {
+		globalRole: CONST.user.globalRole.TECH_LEAD, 
+		localRole: CONST.user.localRole.ADMIN,
+	}
+	];
+}
+
+function getGlobalRoles() {
+	var globalRoles = [];
+
+	for(var role in CONST.user.globalRole) {
+		if(CONST.user.globalRole.hasOwnProperty(role)) {
+			globalRoles.push(CONST.user.globalRole[role]);
+		}
+	}
+
+	return globalRoles;
 }
 
 /*function randomHistory(users, keys, i) {
@@ -486,17 +521,10 @@ module.exports = function () {
 		var keyresults = new Array(mock.keyResultsMock.length).fill(0).map((_, i) => randomKeyResult(objectives, users, i).toObject());
 		var userobjectives = new Array(240).fill(0).map((_, i) => randomUserObjective(objectives, users, keyresults, i).toObject());
 		var quarters = getQuarters(users, userobjectives);
+		var roles = getRoles();
 
 		userobjectives = setArchivedToUserObjectives(userobjectives, quarters);
 		objectives = setDefaultKeyResultsForObjectives(objectives, keyresults);
-
-		var roles = [];
-
-		roles.push({globalRole: "ADMIN", localRole: "Admin"});
-		roles.push({globalRole: "DEVELOPER", localRole: "User"});
-		roles.push({globalRole: "HR", localRole: "User"});
-		roles.push({globalRole: "CEO", localRole: "Admin"});
-		roles.push({globalRole: "Tech Lead", localRole: "Admin"});
 
 		// var histories = new Array(10000).fill(0).map((_, i) => randomHistory(users, keys, i).toObject());
 

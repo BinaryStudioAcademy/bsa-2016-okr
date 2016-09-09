@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/HelpService';
 import './rating.scss';
 
 class Rating extends Component {
@@ -6,43 +7,48 @@ class Rating extends Component {
 		super(props);
 
 		this.state = {
-			rating: this.props.rating || null,
+			rating: getDifficultyNumber(this.props.rating) || null,
 			temp_rating: null
 		};
 
 		this.onClick = this.onClick.bind(this);
 		this.onMouseOver = this.onMouseOver.bind(this);
-		this.onMouseOut = this.onMouseOut.bind(this);
+		/*this.onMouseOut = this.onMouseOut.bind(this);*/
 
 	}
 
 	onClick(rating) {
 		return () => {
-			this.setState({
-				rating: rating,
-				temp_rating: rating
-			});
+			if (this.props.isEdit) {
+				this.setState({
+					rating: rating,
+					temp_rating: rating
+				});
+			}
 		}
 	}
 
 	onMouseOver(rating) {
 		return () => {
-			this.state.temp_rating = this.state.rating;
-			this.state.rating = rating;
+			if (this.props.isEdit) {
+				this.state.temp_rating = this.state.rating;
+				this.state.rating = rating;
 
-			this.setState({
-				rating: this.state.rating,
-				temp_rating: this.state.temp_rating
-			});
+				this.setState({
+					rating: this.state.rating,
+					temp_rating: this.state.temp_rating,
+				});
+			}
 		}
 	}
 
-	onMouseOut() {
+	// If we need return value after mouse move out component
+	/*onMouseOut() {
 		this.setState({
-			rating: this.props.rating || null
+			rating: this.state.rating//getDifficultyNumber(this.props.rating) || null,
 		});
-	}
-
+	}*/
+ /*onMouseOut={this.onMouseOut}*/
 	render() {
 
 		var stars = [];
@@ -59,20 +65,17 @@ class Rating extends Component {
 					className={klass}
 					onClick={this.onClick(i)}
 					onMouseOver={this.onMouseOver(i)}
-					onMouseOut={this.onMouseOut}
+				  title = { `${getNumberDifficulty(this.state.rating)}` }
 				>
 					●
 				</label>
 			);
-
 		}
 
 		return (
 			<div className="star-rating">
-				{stars}
-				<div className="star-rating-cover">
-					<i className={`fi-1 flaticon-1-weightlifter-${this.state.rating}`} aria-hidden="true"></i>
-				</div>
+				<div className='difficulty-label'>Difficulty: </div>
+				{ stars }
 			</div>
 		)
 	}

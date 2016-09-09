@@ -1,66 +1,84 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import sweetalert from 'sweetalert';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import * as actions from "../../../../actions/okrManagingActions.js";
 var CONST = require('../../../../../backend/config/constants');
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
-class KeyResult extends React.Component {
+class KeyResult extends Component {
 	constructor(props) {
 		super(props);
 
-		this.onDeleteKeyResultClick = this.onDeleteKeyResultClick.bind(this);
+		this.cancelAddingKeyResult = this.cancelAddingKeyResult.bind(this);
 		this.addNewKeyResult = this.addNewKeyResult.bind(this);
+		this.resetAddingKeyResultInput = this.resetAddingKeyResultInput.bind(this);
 	}
 
 	addNewKeyResult() {
-		let title = this.refs.keyResultTitle.value;
+		let title = this.refs.keyResultTitle.value.trim();
 		let difficulty = this.refs.keyResultDifficulty.value;
-		const body = {
-			title: title,
-			difficulty: difficulty,
-			objectiveId: this.props.objectiveId,
-		};
 
-		this.props.addKeyResult(body);
-		this.props.onDeleteKeyResultClick();
-		this.refs.keyResultTitle.value = '';
-		this.refs.keyResultDifficulty.value = CONST.keyResult.EASY;
+		if(isEmpty(title)) {
+			sweetalert({
+  			title: 'Error!',
+  			text: 'Key result title cannot be empty',
+  			type: 'error',
+  		}, () => {
+  			setTimeout(this.props.focusAddInput, 0);
+  		});
+		} else {
+			let displayedTitle = title.length > 20 ? `${title.substr(0, 20)}...` : title;
+			sweetalert({
+				title: `Create key result '${ displayedTitle }'?`,
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, create',
+				closeOnConfirm: false,
+			}, () => {
+				this.props.addKeyResult(title, difficulty);
+				this.resetAddingKeyResultInput();
+				this.props.hideAddKeyResultInput();
+			});
+		}
 	};
 
-	onDeleteKeyResultClick() {
-		this.props.onDeleteKeyResultClick();
+	resetAddingKeyResultInput() {
+		this.refs.keyResultTitle.value = '';
+		this.refs.keyResultDifficulty.value = CONST.keyResult.EASY;
+	}
+
+	cancelAddingKeyResult() {
+		this.resetAddingKeyResultInput();
+		this.props.hideAddKeyResultInput();
 	}
 
 	render() {
 		return (
 			<section className="add-new-key-result undisplay">
 				<input type='text' className='add-new-key-result-title' ref="keyResultTitle" placeholder='Enter key result title' />
+				<div className='add-key-result-icon'>
+					<button onClick={this.addNewKeyResult}
+									className="btn btn-green add"
+									aria-hidden="true"
+									title="Save">
+									<i className="fi-1 flaticon-1-check"></i>
+					</button>
+					<button onClick={this.cancelAddingKeyResult}
+									className="btn btn-red delete"
+									title='Cancel'
+									aria-hidden="true">
+									<i className="fi flaticon-multiply"></i>
+					</button>
+				</div>
 				<select className='add-key-result-difficulty' ref="keyResultDifficulty" defaultValue={CONST.keyResult.EASY}>
 					<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
 					<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 					<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
 				</select>
-				<div className='add-key-result-icon'>
-					<i className="fi-1 flaticon-1-check add" aria-hidden="true" title='Save' onClick={this.addNewKeyResult}></i>
-					<i className="fi flaticon-multiply delete" title='Cancel' onClick={this.onDeleteKeyResultClick} aria-hidden="true"></i>
-				</div>
 			</section>
 		)
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
-function mapStateToProps(state) {
-	return {
-		okrManaging: state.okrManaging
-	};
-}
-
-const KeyResultConnected = connect(mapStateToProps, mapDispatchToProps)(KeyResult);
-
-export default KeyResultConnected;
+export default KeyResult

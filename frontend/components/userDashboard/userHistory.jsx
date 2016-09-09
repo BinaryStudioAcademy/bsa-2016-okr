@@ -16,6 +16,7 @@ class UserHistory extends React.Component{
 
 	getHistoryType(item) {
 		let object = item.type.slice(item.type.indexOf(' ') + 1);
+		// console.log('item',  item)
 		if(item.type.indexOf('ADD') != -1)
 			return (
 				<div className="action-text">
@@ -70,6 +71,7 @@ class UserHistory extends React.Component{
 
 
 	getHistoryObjectName(historyItem){
+		if(historyItem.userObjective == undefined) {return (<span>historyItem.userObjective == undefined</span>);};
 	 	if(historyItem.type.indexOf('OBJECTIVE') !== -1){
 			return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
 	 	};
@@ -103,7 +105,7 @@ class UserHistory extends React.Component{
 				<div key={item._id} className="historyEvent">
 					<div className="aside">
 						<span> <i className={this.getIconType(item)} aria-hidden="true"></i> </span>
-						<div className="eventDate"> 
+						<div className="eventDate">
 							<div className="eventDate-day">{moment(item.createdAt).format('DD')}</div>
 							<div className="eventDate-month">{moment(item.createdAt).format('MMM')}</div>
 						</div>
