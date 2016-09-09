@@ -15,13 +15,24 @@ class KeyResult extends Component {
 		this.editKeyResult = this.editKeyResult.bind(this);
 		this.cancelEdit = this.cancelEdit.bind(this);
 		this.setDefaultKeyResult = this.setDefaultKeyResult.bind(this);
+		this.focusEditInput = this.focusEditInput.bind(this);
+		this.selectEditText = this.selectEditText.bind(this);
 	}
 
 	componentDidUpdate() {
 		if (this.props.editingKeyResult && this.props.item._id == this.props.activeKeyResult) {
-			let inputEl = this.refs.keyResultTitle;
-			ReactDOM.findDOMNode(inputEl).setSelectionRange(0, inputEl.value.length);
+			this.selectEditText();
 		}
+	}
+
+	selectEditText() {
+		let inputEl = this.refs.keyResultTitle;
+		ReactDOM.findDOMNode(inputEl).setSelectionRange(0, inputEl.value.length);
+	}
+
+	focusEditInput() {
+		let editEl = this.refs.keyResultTitle;
+		ReactDOM.findDOMNode(editEl).focus();
 	}
 
 	setDefaultKeyResult() {
@@ -50,7 +61,7 @@ class KeyResult extends Component {
   			text: 'Key result title cannot be empty',
   			type: 'error',
   		}, () => {	
-  			ReactDOM.findDOMNode(this.refs.keyResultTitle).focus();
+  			setTimeout(this.focusEditInput, 0);
   		});
 		} else if(isNotChanged) {
 			this.cancelEdit();

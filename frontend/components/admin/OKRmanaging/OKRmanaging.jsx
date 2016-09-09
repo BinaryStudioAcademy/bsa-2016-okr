@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import * as actions from '../../../actions/okrManagingActions';
 
 import CentralWindow from '../../../containers/central-window.jsx';
-import ObjectiveList from './components/ObjectiveList';
+import ObjectiveList from './components/ObjectiveList.jsx';
 import CategoryList from './components/CategoryList.jsx';
-import Searchbar from './components/SearchBar';
-import Toolbar from './components/Toolbar';
+import Searchbar from './components/SearchBar.jsx';
+import Toolbar from './components/Toolbar.jsx';
 import StatPanel from '../../../containers/statistic-panel.jsx';
 import NewObjective from '../../new-objective/new-objective.jsx';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import KeyResults from './Key-results-list.js';
+import KeyResults from './Key-results-list.jsx';
 import sweetalert from 'sweetalert';
 import '../../../common/styles/sweetalert.css';
 
@@ -21,9 +21,15 @@ class ObjectiveData extends React.Component{
     let index = this.props.objectivesList.active;
     let objective = this.props.objectivesList.visibleObjectives[index];
 
-    if(this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index){
-      
-      let handler = function() {
+    if(this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
+      sweetalert({
+        title: "Do you really want to save changes?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4caf50",
+        confirmButtonText: "OK",
+        closeOnConfirm: true
+      }, () => {
         let reqBody = {};
         let objectiveDesctiption = document.querySelector("textarea.template-description").value;
         let objectiveTitle = document.querySelector("input.template-title").value;
@@ -34,16 +40,7 @@ class ObjectiveData extends React.Component{
         reqBody.category = objectiveCategory;
 
         this.props.editObjectiveTemplate(objective._id, reqBody);
-      }.bind(this);
-
-      sweetalert({
-        title: "Do you really want to save changes?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#4caf50",
-        confirmButtonText: "OK",
-        closeOnConfirm: true
-      }, function(){handler();});
+      });
 
     }
 

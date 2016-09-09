@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CategoryItem from './CategoryItem.jsx';
-import NewCategory from './Category-add.jsx';
-import sweetalert from 'sweetalert';
 
 import * as categoriesActions from "../../../../actions/categoriesActions.js";
 import * as okrManagingActions from "../../../../actions/okrManagingActions.js";
+
+import sweetalert from 'sweetalert';
+
+import CategoryItem from './CategoryItem.jsx';
+import NewCategory from './Category-add.jsx';
 
 class CategoryList extends Component {
 	constructor(props){
@@ -17,6 +20,7 @@ class CategoryList extends Component {
 		this.addCategory = this.addCategory.bind(this);
 		this.editCategory = this.editCategory.bind(this);
 		this.hideAddInput = this.hideAddInput.bind(this);
+		this.focusInput = this.focusInput.bind(this);
 	}
 
 	showAddCategoryInput() {
@@ -35,6 +39,13 @@ class CategoryList extends Component {
 			categoryAddBtn.classList.remove('display');
 			categoryAddBtn.classList.add('undisplay');
 		}
+
+		this.focusInput();
+	}
+	
+	focusInput() {
+		let inputEl = this.refs.newCategoryComponent.refs.newCategory;
+		ReactDOM.findDOMNode(inputEl).focus();
 	}
 
 	isTitleValid(title) {
@@ -118,9 +129,12 @@ render() {
 			<div id="new-category">
 						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={ this.showAddCategoryInput }>
 							+Add new category</a>
-						<NewCategory  category = { this.props.category }
-													addCategory = { this.addCategory }
-													hideAddInput = { this.hideAddInput } 
+						<NewCategory 
+							ref={'newCategoryComponent'}
+							category={ this.props.category }
+							addCategory={ this.addCategory }
+							hideAddInput={ this.hideAddInput }
+							focusInput={ this.focusInput }
 						/>
 			</div>
 		</div>
