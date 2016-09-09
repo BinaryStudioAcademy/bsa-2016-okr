@@ -27,7 +27,7 @@ class ListOfUsers extends Component {
 
 	render() {
 		const {user, myApprentices, searchValue, name} = this.props.users;
-		const mentor = this.props.me.mentor;
+		var mentor;
 
 		var userNodes = user.map(function (user, index) {
 			if((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
@@ -49,34 +49,34 @@ class ListOfUsers extends Component {
 				return ;
 		}.bind(this));
 
-		var mentorNodes = user.map(function (user, index) {
-			if( ((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
-				user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0) && 
-				mentor._id == user.userId._id && 
-				mentor._id != null)
-				return(
-					<UserItem key={index} user={user} />
-				);
-			else
-				return ;
-		}.bind(this));
+
+		if (this.props.me.mentor != null) {
+			mentor = user.find(function (user, index) {
+				return ( ((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
+					user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0) && 
+					this.props.me.mentor._id == user.userId._id )						 
+			}.bind(this));
+
+			var mentorNodes = <UserItem user={mentor} />
+		}
+	
 
 		let apprentices = null;
 		let apprenticesList = null;
-		let mentorList = null;
-		let mentorTitle = null;
+		let mentorList;
+		let mentorTitle;
 
 		if (apprenticeNodes.length > 0) {
-		apprentices = (<div className='users-title'>
-												<p><span>Apprentices</span></p>
-											</div>)
+		apprentices = ( <div className='users-title'>
+											<p><span>Apprentices</span></p>
+										</div>)
 		apprenticesList = (<ul className='listOfUsers'>{apprenticeNodes}</ul>)
 		}
-
-		if (mentorNodes.length > 0) {
-		mentorTitle = (<div className='users-title'>
-												<p><span>Mentor</span></p>
-											</div>)
+		
+		if (mentor != undefined) {
+		mentorTitle = (	<div className='users-title'>
+											<p><span>Mentor</span></p>
+										</div>)
 		mentorList = (<ul className='listOfUsers'>{mentorNodes}</ul>)
 		}
 
