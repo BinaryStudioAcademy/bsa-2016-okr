@@ -16,6 +16,7 @@ export const RECEIVED_USER_DELETED_OBJECTIVES = 'RECEIVED_USER_DELETED_OBJECTIVE
 export const GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR = 'GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR';
 export const CATEGORY_TYPE_FILTER = 'CATEGORY_TYPE_FILTER';
 export const SET_SORTING_BY_DATE = 'SET_SORTING_BY_DATE';
+export const SET_SORTING_BY_TITLE = 'SET_SORTING_BY_TITLE';
 export const SET_OBJECTIVE_TYPE = 'SET_OBJECTIVE_TYPE';
 export const SET_CATEGORY_TYPE = 'SET_CATEGORY_TYPE';
 export const SET_KEY_TYPE = 'SET_KEY_TYPE';
@@ -361,6 +362,15 @@ export function typeOrCategoryFilter(value) {
 
 	const action = {
 		type: CATEGORY_TYPE_FILTER,
+		value: value
+	};
+	return action;
+}
+
+export function setSortingByTitle(value) {
+
+	const action = {
+		type: SET_SORTING_BY_TITLE,
 		value: value
 	};
 	return action;

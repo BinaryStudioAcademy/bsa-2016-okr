@@ -43,7 +43,7 @@ class RecycleBin extends Component {
   	}
 
 	renderItems(items, ref) {
-  		return ( <tr className="no-hover" ref={ref}>{items}</tr>)
+  		return ( <tbody className="no-hover" ref={ref}>{items}</tbody>)
   	}
 
 	render() {
@@ -76,24 +76,22 @@ class RecycleBin extends Component {
 						<table className='table filter-table'>
 							<thead>
 								<tr>
-									<th className="width-20perc">Title</th>
+									<th className="width-20perc cursor-pointer" onClick={this.setSortingByTitle.bind(this)}><i id="title-field" className="fa fa-sort"></i><span className="margin-left-3px">Title</span></th>
 									<th className="width-30perc">Description</th>
 									<th>Type</th>
 									<th>Category</th>
 									<th>Deleted By</th>
-									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i id="date-field" className="fa fa-sort-desc"></i><span className="margin-left-3px">Date</span></th>
+									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i id="date-field" className="fa fa-sort"></i><span className="margin-left-3px">Date</span></th>
 									<th className="actions" className="width-5perc">Actions</th>
 								</tr>
 							</thead>
-							   <tbody>
-									<ReactList
-										itemRenderer={this.renderItem.bind(this)}
-										itemsRenderer={this.renderItems.bind(this)}
-										length={this.props.recycleBin.visibleItems.length}
-										type='simple'
-										pageSize={5}
-									/>
-								</tbody>
+								<ReactList
+									itemRenderer={this.renderItem.bind(this)}
+									itemsRenderer={this.renderItems.bind(this)}
+									length={this.props.recycleBin.visibleItems.length}
+									type='simple'
+									pageSize={5}
+								/>
 						</table>
 					</div>
 			</div>
@@ -111,9 +109,49 @@ class RecycleBin extends Component {
     	this.props.clearRecycleBin();
     }
 
+
+	setSortingByTitle() {
+		
+		let titleField = document.querySelector(".filter-table #title-field");
+
+		this.props.setSortingByDate(0);
+
+		if (titleField != null) {
+
+			if (titleField.classList.contains("fa-sort-asc")) {
+
+				titleField.classList.remove("fa-sort-asc");
+				titleField.classList.add("fa-sort-desc");
+
+				this.props.setSortingByTitle(2);
+
+			}
+			else if (titleField.classList.contains("fa-sort-desc")){
+				titleField.classList.remove("fa-sort-desc");
+				titleField.classList.add("fa-sort-asc");
+				this.props.setSortingByTitle(1);
+			}
+			else {
+				titleField.classList.remove("fa-sort");
+				titleField.classList.add("fa-sort-asc");
+				this.props.setSortingByTitle(1);
+			}
+		} 
+
+		let dateField = document.querySelector(".filter-table #date-field");
+
+		if (dateField != null) {
+			dateField.classList.remove("fa-sort-asc");
+			dateField.classList.remove("fa-sort-desc");
+			dateField.classList.add("fa-sort");
+		}
+	}
+
 	setSortingByDate() {
 		
 		let dateField = document.querySelector(".filter-table #date-field");
+
+		this.props.setSortingByTitle(0);
 
 		if (dateField != null) {
 
@@ -122,14 +160,28 @@ class RecycleBin extends Component {
 				dateField.classList.remove("fa-sort-asc");
 				dateField.classList.add("fa-sort-desc");
 
+				this.props.setSortingByDate(2);
+
 			}
-			else {
+			else if (dateField.classList.contains("fa-sort-desc")){
 				dateField.classList.remove("fa-sort-desc");
 				dateField.classList.add("fa-sort-asc");
+				this.props.setSortingByDate(1);
+			}
+			else {
+				dateField.classList.remove("fa-sort");
+				dateField.classList.add("fa-sort-asc");
+				this.props.setSortingByDate(1);
 			}
 		} 
 
-		this.props.setSortingByDate(!this.props.recycleBin.sortByDate);
+		let titleField = document.querySelector(".filter-table #title-field");
+
+		if (titleField != null) {
+			titleField.classList.remove("fa-sort-asc");
+			titleField.classList.remove("fa-sort-desc");
+			titleField.classList.add("fa-sort");
+		}
 	}
 
 }
