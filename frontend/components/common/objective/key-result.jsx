@@ -77,7 +77,7 @@ class KeyResult extends Component {
     }
 
     return (
-      <li className="key-result">
+      <li className="key-result clearfix">
         <div className='key-result-title'>{ item.templateId.title }</div>
         { deleteEl }
         <span className='score'>{ score }</span>

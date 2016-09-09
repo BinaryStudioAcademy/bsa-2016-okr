@@ -155,7 +155,7 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-		// console.log('objectives', userInfo.objectives)
+		//console.log('objectives', userInfo.objectives)
 
 		return (
 			<div id="home-page-wrapper">
@@ -213,7 +213,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 
 	if(userObject.mentor != undefined || userObject.mentor != null)
 		mentor = userObject.mentor._id;
-	console.log('userObject', userObject)
+	//console.log('userObject', userObject)
 	if (userObject.quarters != undefined) {
 		var current_quarter = userObject.quarters.find((quarter) => {
 			return (quarter.year == selectedYear) && (quarter.index == selectedTab)

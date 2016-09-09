@@ -53,13 +53,16 @@ class ObjectiveInput extends Component {
 					<section className="autocomplete undisplay">
 						<AutocompleteInput className='red-border'
 							getAutocompleteData={ this.getAutocompleteData }
+              autocompleteData = { this.props.objectives }
+              autocompletePlaceholder = 'objective'
+
 							setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
-							autocompleteData = { this.props.objectives }
-							autocompletePlaceholder = 'objective'
+							selectedItem={ this.props.selectedTemplate }
+
 							addNewItem={ this.addNewItem }
 							resetAutocompleteState = { this.resetAutocompleteState }
 							isValid={ this.isValid }
-							ref={ `autocompleteInput-${this.props.key}` }
+							refInput={ `autocompleteInput-${this.props.key}` }
 						/>
 					</section>
 				</div>
