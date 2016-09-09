@@ -194,7 +194,7 @@ router.put('/:id/archive/:flag', adminOnly, (req, res, next) => {
 
 
 //this is temporary  solution
-router.put('/myupdate/:id', (req, res, next) => {
+router.put('/updateWithoutValidation/:id', adminOnly, (req, res, next) => {
 
 	var id = req.params.id;
 	var body = req.body;

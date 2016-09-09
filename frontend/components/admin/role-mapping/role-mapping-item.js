@@ -11,8 +11,7 @@ class RoleMappingItem extends React.Component {
 
    render() {
 
-
-   	       if (this.props.role.globalRole === "ADMIN") {
+   	   if (this.props.role.globalRole.toUpperCase() === "ADMIN") {
 
 		   		return (
 		   			<div className="table-row">

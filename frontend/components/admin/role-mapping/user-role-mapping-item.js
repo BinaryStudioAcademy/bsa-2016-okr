@@ -12,6 +12,20 @@ class UserRoleMappingItem extends React.Component {
 
    render() {
 
+		   	if (this.props.user.globalRole.toUpperCase() === "ADMIN") {
+			   	 return (
+		            <div className="table-row">
+		                   <div className="col-1">
+		                      <img/>
+		                   </div>
+		                   <h4 className="col-2">{this.props.user.name}</h4>
+		                   <h4 className="col-3">{this.props.user.email}</h4>
+		                   <h4 className="col-4">{this.props.user.globalRole}</h4>
+		                   <h4 className="col-5">Admin</h4>
+		            </div>
+	            );
+		   	}
+
    	        return (
 	            <div className="table-row">
 	                   <div className="col-1">

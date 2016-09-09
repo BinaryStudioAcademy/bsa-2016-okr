@@ -45,7 +45,7 @@ export function updateCategoryRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_CATEGORY_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/category/myupdate/' + id), body)
+		return axios.put(('/api/category/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -104,7 +104,7 @@ export function updateTemplateKeyResultRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_TEMPLATE_KEY_RESULT_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/keyResult/myupdate/' + id), body)
+		return axios.put(('/api/keyResult/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -130,7 +130,7 @@ export function updateTemplateObjectivesRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_TEMPLATE_OBJECTIVE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/objective/myupdate/' + id), body)
+		return axios.put(('/api/objective/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -268,7 +268,7 @@ export function updateUserObjectivesRequest(id, body, idItem) {
 		dispatch({ type: UPDATE_USER_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/userObjective/myupdate/' + id), body)
+		return axios.put(('/api/userObjective/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });

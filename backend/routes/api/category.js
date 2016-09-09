@@ -31,7 +31,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	categoryService.add(userId, data, res.callback);
 });
 
-router.put('/myupdate/:id', adminOnly, (req, res, next) => {
+router.put('/updateWithoutValidation/:id', adminOnly, (req, res, next) => {
 	repository.update(req.params.id, req.body, res.callback);
 });
 
