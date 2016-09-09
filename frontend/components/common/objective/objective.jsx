@@ -77,10 +77,29 @@ class ObjectiveItem extends Component {
 		let saveButton;
 		let deleteButton;
 		let cancelButton;
+		let archiveButton;
 		let isArchived = this.props.isArchived;
+		let isAdmin = this.props.isAdmin;
+		console.log('--------------' + isAdmin)
 
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
+		let changeArchive = this.props.changeArchive;
+
+		if(isAdmin) {
+			if(!isArchived)
+			archiveButton = (<button className="btn btn-blue-hover objective-archive"
+										title="archive"
+										onClick={() => {changeArchive(true, objective._id)}}>
+										<i className="fi flaticon-archive-2"></i>
+										</button>)
+		else 
+			archiveButton = (<button className="btn btn-blue-hover objective-archive"
+										title="unarchive"
+										onClick={() => {changeArchive(false, objective._id)}}>
+										<i className="fi flaticon-bookmark-1"></i>
+										</button>)
+		}
 
 		if(!isArchived){
 			editButton 	= 	(<button ref="edit"
@@ -131,6 +150,7 @@ class ObjectiveItem extends Component {
 				{ saveButton }
 				{ deleteButton }
 				{ cancelButton }
+				{ archiveButton }
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults

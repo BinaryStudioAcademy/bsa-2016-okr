@@ -30,10 +30,12 @@ class ObjectiveList extends React.Component{
  		const categories = this.props.categories || [];
 		const objectives = this.props.objectives || [];
 		const ObjectiveItem = this.props.ObjectiveItem;
-    const updateUserObjectiveApi = this.props.updateUserObjectiveApi;
+    	const updateUserObjectiveApi = this.props.updateUserObjectiveApi;
 		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
 		const changeKeyResultScore = this.props.changeKeyResultScore;
 		const isArchived = this.props.archived;
+		const isAdmin = this.props.isAdmin;
+		const changeArchive = this.props.changeArchive;
 
 		var categoryItems = [];
 
@@ -48,8 +50,10 @@ class ObjectiveList extends React.Component{
 					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
-							isArchived = { isArchived }
-              updateUserObjectiveApi = { updateUserObjectiveApi }
+							isArchived = { item.isArchived }
+							isAdmin = { isAdmin }
+							changeArchive = {changeArchive}
+              				updateUserObjectiveApi = { updateUserObjectiveApi }
 							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
 							changeKeyResultScoreOne={ changeKeyResultScore }
 							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }

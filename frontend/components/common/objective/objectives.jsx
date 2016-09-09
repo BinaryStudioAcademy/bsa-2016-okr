@@ -29,6 +29,7 @@ class Objectives extends Component {
 		this.createObjective = this.createObjective.bind(this);
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
+		this.handleArchive = this.handleArchive.bind(this);
 	}
 
 	changeTab(num) {
@@ -55,6 +56,10 @@ class Objectives extends Component {
 			confirmButtonText: "OK",
 			closeOnConfirm: true
 		}, function(){handler();});
+	}
+
+	handleArchive (changeTo, objectiveId) {
+
 	}
 
 	changeKeyResultScore(objectiveId) {
@@ -133,6 +138,7 @@ class Objectives extends Component {
 		let userInfo = {};
 		let ismyself = true;
 		let archived;
+		let isAdmin = this.props.myState.me.localRole === "admin" ? true : false;
 
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
 			/*console.log('user');*/
@@ -157,6 +163,7 @@ class Objectives extends Component {
 		}
 		console.log('objectives', userInfo.objectives)
 
+
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
@@ -164,16 +171,18 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    addNewQuarter={ this.handleAddingNewQuarter }
+				    	addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
 						me={ ismyself }
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
 						categories={ categories.list }
+						isAdmin={ isAdmin }
 						archived = { archived }
 						objectives={ userInfo.objectives }
 						ObjectiveItem={ ObjectiveItem }
+						changeArchive={ this.handleArchive }
 						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
 						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
 						changeKeyResultScore={ this.changeKeyResultScore }

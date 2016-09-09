@@ -11,6 +11,8 @@ export const SET_AUTOCOMPLETE_OBJECTIVES_SELECTED_ITEM = 'SET_AUTOCOMPLETE_OBJEC
 // Return AXIOS error
 export const RECEIVED_ERROR = 'RECEIVED_ERROR';
 
+export const CHANGE_ARCHIVE_STATUS = 'CHANGE_ARCHIVE_STATUS';
+
 export function getAutocompleteObjectives(categoryId, year, quarter, title) {
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_AUTOCOMPLETE_OBJECTIVES });
@@ -45,6 +47,24 @@ export function setAutocompleteObjectivesSelectedItem(selectedItem) {
 		type: SET_AUTOCOMPLETE_OBJECTIVES_SELECTED_ITEM,
 		selectedItem
 	};
+}
+
+export function changeArchiveStatus(changeTo, objectiveId) {
+	 return (dispatch, getStore) => {
+	 	dispatch({
+	 		type:CHANGE_ARCHIVE_STATUS
+	 	})
+
+	 // 	return axios.get(`/api/objective/category/${ categoryId }/year/${ year }/quarter/${ quarter }/${ encodeURIComponent(title) }`)
+		// .then(response => {
+		// 	dispatch(receivedAutocompleteObjectives(response.data))
+		// 	dispatch({ type: REMOVE_REQUEST	});
+		// })
+		// .catch(response => {
+		// 	dispatch(receivedError(response.data))
+		// 	dispatch({ type: REMOVE_REQUEST	});
+		// });
+	 }
 }
 
 export function receivedError(data) {
