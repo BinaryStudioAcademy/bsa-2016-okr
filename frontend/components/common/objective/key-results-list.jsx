@@ -73,14 +73,22 @@ class KeyResults extends Component {
 			var urlArray = this.props.route.split('/');
 			var routeId = urlArray[urlArray.length - 1];
 		}
+		// console.log('---===¯\\_(ツ)_/¯===---routeId',routeId);
+
 
 		if(!isArchived) {
 			addNewKeyResult = (
 				<div id="new-obj-keyresults">
-					<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.onAddNewKeyResultClick }>
-						+Add new key result</a>
-					<KeyResultAdd mentorId = {this.props.mentorId} 
-						objectiveId={ this.props.objectiveId } resetAutocompleteState={ this.resetAutocompleteState } />
+					<a ref="newKeyResultButton"
+					   className='add-new-keyresult-btn display'
+					   onClick={ this.onAddNewKeyResultClick }>
+						+Add new key result
+					</a>
+					<KeyResultAdd
+						objectiveId={ this.props.objectiveId }
+						resetAutocompleteState={ this.resetAutocompleteState }
+						routeId={ routeId }
+					/>
 				</div>
 			);
 			items = this.props.data.map((item, index) => {

@@ -8,6 +8,8 @@ export const RECEIVED_KEY_RESULTS = 'RECEIVED_KEY_RESULTS';
 // Add new key result to UserObjective
 export const ADD_NEW_KEY_RESULT = 'ADD_NEW_KEY_RESULT';
 export const ADD_NEW_KEY_RESULT_TO_OBJECTIVE = 'ADD_NEW_KEY_RESULT_TO_OBJECTIVE';
+export const ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON = 'ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON';
+
 
 // Set selected autocomplete key results to global store
 export const SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM = 'SET_AUTOCOMPLETE_KEY_RESULTS_SELECTED_ITEM';
@@ -22,8 +24,13 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 
 		return axios.post((`/api/userobjective/${ userObjectiveId }/keyresult/`), body)
 		.then(response => {
-			
-			dispatch(addNewKeyResultToObjective(response.data , userObjectiveId));
+			// console.log('---===¯\\_(ツ)_/¯===---body.routeId',body.routeId);
+
+			if (body.routeId === '') {
+				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
+			} else {
+				dispatch(addNewKeyResultToObjectiveOtherPerson(response.data, userObjectiveId));
+			}
 			dispatch({ type: REMOVE_REQUEST	});
 
 			/*
@@ -42,6 +49,14 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 export function addNewKeyResultToObjective(data, userObjectiveId) {
 	return {
 		type: ADD_NEW_KEY_RESULT_TO_OBJECTIVE,
+		response: data,
+		userObjectiveId: userObjectiveId,
+	};
+}
+
+export function addNewKeyResultToObjectiveOtherPerson(data, userObjectiveId) {
+	return {
+		type: ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON,
 		response: data,
 		userObjectiveId: userObjectiveId,
 	};

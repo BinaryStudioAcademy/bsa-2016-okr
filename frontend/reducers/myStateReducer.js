@@ -313,7 +313,6 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 			quarter.userObjectives[index].keyResults.push(keyResult);
 		}
 	});
-
 	return meCopy
 }
 

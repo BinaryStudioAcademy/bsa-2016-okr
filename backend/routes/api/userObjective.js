@@ -83,8 +83,8 @@ router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
 
 router.post('/:id/keyresult/', (req, res, next) => {
 	var userObjectiveId = req.params.id || '';
-	var userId = req.session._id;
-	var isAdmin = req.session.isAdmin;
+	var session = req.session;
+	var userId = req.body.routeId || req.session._id;
 	var title = req.body.title || '';
 	var keyResultId = req.body.keyResultId || '';
 	var isApproved = false;
@@ -101,7 +101,7 @@ router.post('/:id/keyresult/', (req, res, next) => {
 		isApproved = true;
 	}
 
-	service.addKeyResult(userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, res.callback);
+	service.addKeyResult(session, userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, res.callback);
 });
 
 router.put('/:id/keyresult/score', (req, res, next) => {

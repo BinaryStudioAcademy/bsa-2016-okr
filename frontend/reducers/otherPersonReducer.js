@@ -11,7 +11,7 @@ import { CHANGED_KEYRESULT_SCORE,
 				 SOFT_DELETE_MY_OBJECTIVE_BY_ID,
 				 UPDATE_USER_OBJECTIVE,
 				 CHANGE_ARCHIVE_STATUS_LOCAL } from '../actions/myStateActions.js'
-import { ADD_NEW_KEY_RESULT_TO_OBJECTIVE } from '../actions/keyResultActions';
+import { ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON } from '../actions/keyResultActions';
 
 import { currentYear, currentQuarter } from '../../backend/config/constants'
 import { updateObjectiveDescription } from './myStateReducer';
@@ -126,7 +126,7 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
-		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE: {
+		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON: {
 			const { response, userObjectiveId } = action;
 
 			let keyResultIdInObjective = response.keyResultId;
