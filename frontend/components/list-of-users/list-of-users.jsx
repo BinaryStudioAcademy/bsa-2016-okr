@@ -27,6 +27,8 @@ class ListOfUsers extends Component {
 
 	render() {
 		const {user, myApprentices, searchValue, name} = this.props.users;
+		const mentor = this.props.me.mentor;
+
 		var userNodes = user.map(function (user, index) {
 			if((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
 				user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0 )
@@ -46,8 +48,24 @@ class ListOfUsers extends Component {
 			else
 				return ;
 		}.bind(this));
+
+		var mentorNodes = user.map(function (user, index) {
+			if( ((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
+				user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0) && 
+				mentor._id == user.userId._id && 
+				mentor._id != null)
+				return(
+					<UserItem key={index} user={user} />
+				);
+			else
+				return ;
+		}.bind(this));
+
 		let apprentices = null;
 		let apprenticesList = null;
+		let mentorList = null;
+		let mentorTitle = null;
+
 		if (apprenticeNodes.length > 0) {
 		apprentices = (<div className='users-title'>
 												<p><span>Apprentices</span></p>
@@ -55,11 +73,20 @@ class ListOfUsers extends Component {
 		apprenticesList = (<ul className='listOfUsers'>{apprenticeNodes}</ul>)
 		}
 
+		if (mentorNodes.length > 0) {
+		mentorTitle = (<div className='users-title'>
+												<p><span>Mentor</span></p>
+											</div>)
+		mentorList = (<ul className='listOfUsers'>{mentorNodes}</ul>)
+		}
+
 		return (
 			<div>
 				<CentralWindow>
 					<div id='usersList'>
 					<input type='text' className="searchBar" onChange={this.search} name='search' placeholder='Enter name'/>
+						{ mentorTitle }
+						{ mentorList }
 						{ apprentices }
 						{ apprenticesList }
 						<div className='users-title'>
@@ -83,7 +110,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		users: state.usersList
+		users: state.usersList,
+		me: state.myState.me
 	};
 }
 
