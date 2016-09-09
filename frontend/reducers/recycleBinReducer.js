@@ -38,6 +38,8 @@ import {
     UPDATE_CATEGORY_REQUEST_ERROR
 } from '../actions/recycleBinActions';
 
+import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../backend/config/constants"; 
+
 const initialState = {
 	recycleBinItems: [],
 	searchValue: '',
@@ -626,26 +628,25 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		}
 	}
 
-	if (sortByDate > 0) {
 
-		if (sortByDate === 1) {
-			console.log("SRABOTALO D 1");
+	if (sortByDate != NOT_SORTED) {
+
+		if (sortByDate === SORTED_ASC) {
 			visibleItems.sort(function(a, b) {
 				return new Date(a.deletedDate) - new Date(b.deletedDate);
 			});
 		}
 		else {
-			console.log("SRABOTALO D 2");
 			visibleItems.sort(function(a, b) {
 				return new Date(b.deletedDate) - new Date(a.deletedDate);
 			});
 		}
 	}
 
-	if (sortByTitle > 0) {
+	if (sortByTitle != NOT_SORTED) {
 
-		if (sortByTitle === 1) {
-			console.log("SRABOTALO 1");
+		if (sortByTitle ===  SORTED_ASC) {
+
 			visibleItems.sort(function(a, b) {
 				if(a.title < b.title) return -1;
 			    if(a.title > b.title) return 1;
@@ -653,7 +654,7 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 			});
 		}
 		else {
-			console.log("SRABOTALO 2");
+
 			visibleItems.sort(function(a, b) {
 				if(a.title < b.title) return 1;
 			    if(a.title > b.title) return -1;

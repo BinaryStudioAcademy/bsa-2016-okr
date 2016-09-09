@@ -12,6 +12,8 @@ import * as actions from "../../actions/recycleBinActions.js";
 
 import ReactList from 'react-list';
 
+import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../../backend/config/constants";
+
 class RecycleBin extends Component {
 
 	constructor(props) {
@@ -114,7 +116,7 @@ class RecycleBin extends Component {
 		
 		let titleField = document.querySelector(".filter-table #title-field");
 
-		this.props.setSortingByDate(0);
+		this.props.setSortingByDate(NOT_SORTED);
 
 		if (titleField != null) {
 
@@ -123,18 +125,18 @@ class RecycleBin extends Component {
 				titleField.classList.remove("fa-sort-asc");
 				titleField.classList.add("fa-sort-desc");
 
-				this.props.setSortingByTitle(2);
+				this.props.setSortingByTitle(SORTED_DESC);
 
 			}
 			else if (titleField.classList.contains("fa-sort-desc")){
 				titleField.classList.remove("fa-sort-desc");
 				titleField.classList.add("fa-sort-asc");
-				this.props.setSortingByTitle(1);
+				this.props.setSortingByTitle(SORTED_ASC);
 			}
 			else {
 				titleField.classList.remove("fa-sort");
 				titleField.classList.add("fa-sort-asc");
-				this.props.setSortingByTitle(1);
+				this.props.setSortingByTitle(SORTED_ASC);
 			}
 		} 
 
@@ -151,7 +153,7 @@ class RecycleBin extends Component {
 		
 		let dateField = document.querySelector(".filter-table #date-field");
 
-		this.props.setSortingByTitle(0);
+		this.props.setSortingByTitle(NOT_SORTED);
 
 		if (dateField != null) {
 
@@ -160,18 +162,18 @@ class RecycleBin extends Component {
 				dateField.classList.remove("fa-sort-asc");
 				dateField.classList.add("fa-sort-desc");
 
-				this.props.setSortingByDate(2);
+				this.props.setSortingByDate(SORTED_DESC);
 
 			}
 			else if (dateField.classList.contains("fa-sort-desc")){
 				dateField.classList.remove("fa-sort-desc");
 				dateField.classList.add("fa-sort-asc");
-				this.props.setSortingByDate(1);
+				this.props.setSortingByDate(SORTED_ASC);
 			}
 			else {
 				dateField.classList.remove("fa-sort");
 				dateField.classList.add("fa-sort-asc");
-				this.props.setSortingByDate(1);
+				this.props.setSortingByDate(SORTED_ASC);
 			}
 		} 
 
@@ -183,6 +185,7 @@ class RecycleBin extends Component {
 			titleField.classList.add("fa-sort");
 		}
 	}
+
 
 }
 

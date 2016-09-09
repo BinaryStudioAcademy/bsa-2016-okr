@@ -215,9 +215,6 @@ export function receivedKeyResultsTemplatesError(data) {
 	};
 }
 
-
-
-
 export function search(value) {
 	const action = {
 		type: SEARCH_OBJECTS,
@@ -271,7 +268,7 @@ export function updateUserObjectivesRequest(id, body, idItem) {
 		dispatch({ type: UPDATE_USER_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.delete('/api/userObjective/' + id + '/' + body.isDeleted)
+		return axios.put(('/api/userObjective/myupdate/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
