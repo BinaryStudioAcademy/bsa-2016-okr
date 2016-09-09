@@ -27,12 +27,10 @@ UserObjectiveService.prototype.update = function(session, userObjectiveId, data,
 				if(err) {
 					return callback(err, null);
 				}
-
 				if(isEmpty(userObjective)) {
 					err = new Error('Objective not found');
 					return callback(err, null);
 				}
-
 				return callback(null, userObjective);
 			});
 		}, (userObjective, callback) => {
@@ -40,25 +38,35 @@ UserObjectiveService.prototype.update = function(session, userObjectiveId, data,
 				err = new Error('Objective was archived');
 				return callback(err, null);
 			}
-			ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
-				if(templateObjective.isApproved == false){
-					//call another service
-					// if is not archived update template then
-					ObjectiveService.update(session._id, userObjective.templateId, data, callback);
-				} else if (templateObjective.isApproved == true) {
-					updateHelper(session._id, userObjective._id, data, (err, userObjectiveUpdated) => {
-						if(err) {
-							return callback(err, null);
-						};
-
-						return callback(null, userObjectiveUpdated);
-					});
-				}
-			//return callback(null, templateObjective);
+			UserRepository.getByIdPopulate(userObjective.userId, (err, user) => {
+				if(err) {
+					return callback(err, null);
+				};
+				return callback(null, userObjective, user);
 			});
-		}
+		}, (userObjective, user, callback) => {
+				if (session.localRole == CONST.user.localRole.ADMIN
+					|| session._id.toString() === userObjective.userId.toString()
+					|| (session.localRole == CONST.user.localRole.MENTOR && user.mentor._id.toString() == session._id.toString() )) {
+						ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
+							if(templateObjective.isApproved == false){
+										//call another service
+										// if is not archived update template then
+								ObjectiveService.update(session._id, userObjective.templateId, data, callback);
+							} else if (templateObjective.isApproved == true) {
+									updateHelper(session._id, userObjective._id, data, (err, userObjectiveUpdated) => {
+										if(err) {
+											return callback(err, null);
+										};
+									return callback(null, userObjectiveUpdated);
+										});
+									}
+
+								});
+					}
+			},
 		], (err, result) => {
-			return callback(err, result)
+			return callback(err, result);
 		})
 };
 
