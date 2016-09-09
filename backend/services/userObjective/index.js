@@ -14,11 +14,13 @@ const HistoryRepository = require('../../repositories/history');
 const add = require('./add');
 const addKeyResult = require('./addKeyResult');
 const updateHelper = require('./updateHelper');
+const changeArchiveStatus = require('./archive.js');
 
 var UserObjectiveService = function() {};
 
 UserObjectiveService.prototype.add = add;
 UserObjectiveService.prototype.addKeyResult = addKeyResult;
+UserObjectiveService.prototype.changeArchiveStatus = changeArchiveStatus;
 
 UserObjectiveService.prototype.update = function(session, userObjectiveId, data, callback){
 	async.waterfall([

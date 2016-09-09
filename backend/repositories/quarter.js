@@ -61,6 +61,14 @@ QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
 	.exec(callback);
 };
 
+QuarterRepository.prototype.changeIsArchivedByObjectiveId = function(userObjectiveId, flag, callback) { // needed for archiving
+	var model = this.model;
+
+	model
+	.update({'userObjectives': userObjectiveId},{$set: {"isArchived": flag}})
+	.exec(callback);
+}
+
 QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 	var model = this.model;
 

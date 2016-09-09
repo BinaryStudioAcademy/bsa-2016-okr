@@ -59,7 +59,7 @@ class Objectives extends Component {
 	}
 
 	handleArchive (changeTo, objectiveId) {
-
+		this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
 	}
 
 	changeKeyResultScore(objectiveId) {

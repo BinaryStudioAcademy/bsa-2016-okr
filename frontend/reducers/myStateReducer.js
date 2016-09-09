@@ -13,7 +13,10 @@ import {
 	//SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	NEW_QUARTER_ADDED,
-	ADD_NEW_QUARTER_ERROR
+	ADD_NEW_QUARTER_ERROR,
+	CHANGE_ARCHIVE_STATUS,
+	CHANGE_ARCHIVE_STATUS_LOCAL
+
 } from '../actions/myStateActions';
 
 import {
@@ -83,6 +86,24 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 
 		}
+
+
+		case CHANGE_ARCHIVE_STATUS: {	
+
+			console.log('archive');
+
+			return state;
+		}
+
+		case CHANGE_ARCHIVE_STATUS_LOCAL: {
+			let id = action.id;
+			let flag = action.flag;
+
+			return Object.assign({}, state, {
+				me: changeArchiveInMyObjective(state.me, id, flag)
+			})
+		}
+
 
 		case UPDATE_USER_OBJECTIVE: {
 			const { id, description } = action;
@@ -294,4 +315,30 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 	});
 
 	return meCopy
+}
+
+export function changeArchiveInMyObjective (me, objectiveId, flag) {
+	var meCopy = Object.assign({}, me);
+	var done = false;
+
+console.log('IN ARCHIVE')
+	meCopy.quarters.forEach((quarter) => {
+		if(done)
+			return;
+console.log('IN QUARTER')
+		quarter.userObjectives.forEach((objective) => {
+console.log('----IN OBJ----')
+console.log(objective._id);
+console.log(objectiveId);
+			if (objective._id == objectiveId){
+				objective.isArchived = flag;
+				console.log('objective archived >>>>')
+				console.log(objective);
+				done = true;
+				return;
+			}
+		})
+	})
+
+	return meCopy;
 }

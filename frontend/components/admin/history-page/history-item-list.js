@@ -16,8 +16,6 @@ class HistoryItemList extends React.Component {
         super(props);
         this.onSort = this.onSort.bind(this);
         this.restoreDefaultIcons = this.restoreDefaultIcons.bind(this);
-        this.markSorted = this.markSorted.bind(this);
-        this.unmarkAll = this.unmarkAll.bind(this);
     }
 
     getObjectId(item) {
@@ -37,8 +35,6 @@ class HistoryItemList extends React.Component {
         this.props.getFilteredItems();
 
         this.restoreDefaultIcons()
-        this.unmarkAll();
-        this.markSorted(sort);
         if(this.props.sort.up)
            document.getElementById(sort).className = "fa fa-sort-desc"
          else document.getElementById(sort).className = "fa fa-sort-asc";
@@ -49,36 +45,6 @@ class HistoryItemList extends React.Component {
       document.getElementById('action').className = "fa fa-sort";
       document.getElementById('target').className = "fa fa-sort";
       document.getElementById('date').className = "fa fa-sort";
-    }
-
-    unmarkAll(){
-      let list = document.getElementsByClassName('user');
-      Array.prototype.forEach.call(list, (item) => {
-        if(item.className.indexOf('bold') !== -1)
-           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
-      });
-      list = document.getElementsByClassName('action');
-      Array.prototype.forEach.call(list, (item) => {
-        if(item.className.indexOf('bold') !== -1)
-           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
-      });
-      list = document.getElementsByClassName('target');
-      Array.prototype.forEach.call(list, (item) => {
-        if(item.className.indexOf('bold') !== -1)
-           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
-      });
-      list = document.getElementsByClassName('date');
-      Array.prototype.forEach.call(list, (item) => {
-        if(item.className.indexOf('bold') !== -1)
-           item.className = item.className.substr(0, item.className.indexOf('bold')-1);
-      });
-    }
-
-    markSorted(name){
-      let list = document.getElementsByClassName(name);
-      Array.prototype.forEach.call(list, (item) => {
-        item.className = item.className + " bold"
-      })
     }
 
     getHistoryType(item) {

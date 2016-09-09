@@ -19,6 +19,9 @@ export const CHANGED_KEYRESULT_SCORE_ERROR = 'CHANGED_KEYRESULT_SCORE_ERROR';
 export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API';
 export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS';
 
+export const CHANGE_ARCHIVE_STATUS = 'CHANGE_ARCHIVE_STATUS';
+export const CHANGE_ARCHIVE_STATUS_LOCAL = 'CHANGE_ARCHIVE_STATUS_LOCAL';
+
 const session = require('../../backend/config/session');
 
 export function getMe() {
@@ -211,6 +214,33 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId) {
 					dispatch({ type: REMOVE_REQUEST	});
 				});
 	};
+}
+
+export function changeArchiveStatus(changeTo, objectiveId) {
+	 return (dispatch, getStore) => {
+	 	dispatch({
+	 		type:CHANGE_ARCHIVE_STATUS
+	 	})
+	 	dispatch({ type: ADD_REQUEST });
+
+	 	return axios.put(`/api/userobjective/${objectiveId}/archive/${changeTo}`)
+	 	.then( response => {
+	 	 	dispatch( { type: REMOVE_REQUEST} );
+	 	 	dispatch( changeArchiveStatusLocal(changeTo, objectiveId)); 
+	 	 })
+	 	// .catch( response =>{ 
+	 	// 	dispatch( receivedMyObjectivesError(response.data));
+	 	// 	dispatch({ type: REMOVE_REQUEST	});
+	 	// } );
+	 }
+}
+
+export function changeArchiveStatusLocal (changeTo, objectiveId) {
+	 return {
+	 	type: CHANGE_ARCHIVE_STATUS_LOCAL,
+	 	flag: changeTo,
+	 	id: objectiveId
+	 }
 }
 
 export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, data) {
