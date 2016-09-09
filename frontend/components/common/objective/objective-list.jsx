@@ -36,6 +36,7 @@ class ObjectiveList extends React.Component{
 		const isArchived = this.props.archived;
 		const isAdmin = this.props.isAdmin;
 		const changeArchive = this.props.changeArchive;
+		const mentorId = this.props.mentorId;
 
 		var categoryItems = [];
 
@@ -52,6 +53,7 @@ class ObjectiveList extends React.Component{
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
 							isArchived = { item.isArchived }
 							isAdmin = { isAdmin }
+							mentorId = {mentorId}
 							changeArchive = {changeArchive}
               				updateUserObjectiveApi = { updateUserObjectiveApi }
 							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }

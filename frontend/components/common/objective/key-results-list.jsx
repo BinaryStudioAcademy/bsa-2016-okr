@@ -79,11 +79,13 @@ class KeyResults extends Component {
 				<div id="new-obj-keyresults">
 					<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.onAddNewKeyResultClick }>
 						+Add new key result</a>
-					<KeyResultAdd objectiveId={ this.props.objectiveId } resetAutocompleteState={ this.resetAutocompleteState } />
+					<KeyResultAdd mentorId = {this.props.mentorId} 
+						objectiveId={ this.props.objectiveId } resetAutocompleteState={ this.resetAutocompleteState } />
 				</div>
 			);
 			items = this.props.data.map((item, index) => {
 				return <KeyResultItem index={index} key={index} item={item}
+															mentorId = {this.props.mentorId}
 															isArchived = { isArchived }
 															changeScore={ changeScore(item._id) }
 															objectiveId={ this.props.objectiveId }

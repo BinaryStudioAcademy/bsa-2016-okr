@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import * as actions from "../../../actions/acceptObjective.js";
+const notifications = require("../../../actions/notifications.js");
+
 
 class AcceptObjectiveItem extends Component {
 	
@@ -41,7 +44,8 @@ class AcceptObjectiveItem extends Component {
 			let body = {};		
 			body.isDeclined = true;
 
-			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id);
+			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id, 
+				notifications.NotificationObjTemplateDeclined, this.props.item.userId);
 		}
 
 		if (this.props.item.type === "key result") {
@@ -51,6 +55,7 @@ class AcceptObjectiveItem extends Component {
 
 			this.props.updateKeyTemplateRequest(this.props.item.id, body, this.props.item.id);
 		}
+		
 	}
 
 	accept(id) {
@@ -60,7 +65,8 @@ class AcceptObjectiveItem extends Component {
 			let body = {};		
 			body.isApproved = true;
 
-			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id);
+			this.props.updateObjectiveTemplateRequest(this.props.item.id, body, this.props.item.id,
+				notifications.NotificationObjTemplateAccepted, this.props.item.userId);
 		}
 
 		if (this.props.item.type === "key result") {
@@ -68,7 +74,8 @@ class AcceptObjectiveItem extends Component {
 			let body = {};			
 			body.isApproved = true;
 
-			this.props.updateKeyTemplateRequest(this.props.item.id, body, this.props.item.id);
+			this.props.updateKeyTemplateRequest(this.props.item.id, body, this.props.item.id,
+				notifications.NotificationKeyTemplateAccepted, this.props.item.userId);
 		}
 
 	}

@@ -103,7 +103,7 @@ export function updateUserObjective(id, description) {
 	};
 }
 
-export function updateUserObjectiveApi(id, description) {
+export function updateUserObjectiveApi(id, description, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: UPDATE_USER_OBJECTIVE_API });
@@ -112,6 +112,12 @@ export function updateUserObjectiveApi(id, description) {
 		.then(response => {
 			dispatch(updateUserObjective(id, description));
 			dispatch({ type: REMOVE_REQUEST	});
+
+			/*
+			if (callback != null) {
+				dispatch(callback(userId));
+			}
+			*/
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
@@ -127,7 +133,7 @@ export function softDeleteMyObjectiveById(id) {
 	};
 }
 
-export function softDeleteMyObjectiveByIdApi(id) {
+export function softDeleteMyObjectiveByIdApi(id, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
@@ -136,6 +142,12 @@ export function softDeleteMyObjectiveByIdApi(id) {
 		.then(response => {
 			dispatch(softDeleteMyObjectiveById(id));
 			dispatch({ type: REMOVE_REQUEST	});
+
+			/*
+			if (callback != null) {
+				dispatch(callback(userId));
+			}
+			*/
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
@@ -144,7 +156,7 @@ export function softDeleteMyObjectiveByIdApi(id) {
 	};
 }
 
-export function addNewObjective(body) {
+export function addNewObjective(body, callback, userId)) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_NEW_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST	});
@@ -153,6 +165,12 @@ export function addNewObjective(body) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
+
+			/*
+			if (callback != null) {
+				dispatch(callback(userId));
+			}
+			*/
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
@@ -169,7 +187,7 @@ export function addedNewObjective(data, body) {
 	};
 }
 
-export function changeKeyResultScore(objectiveId, body) {
+export function changeKeyResultScore(objectiveId, body, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST });
 
@@ -177,6 +195,12 @@ export function changeKeyResultScore(objectiveId, body) {
 		.then(response => {
 			dispatch(keyResultScoreChanged(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
+
+			/*
+			if (callback != null) {
+				dispatch(callback(userId));
+			}
+			*/
 		})
 		.catch(response => {
 			dispatch(keyResultScoreChangedError(response.data));
@@ -199,7 +223,7 @@ export function keyResultScoreChangedError(data) {
 	};
 }
 
-export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId) {
+export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 		//dispatch({ type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API });
@@ -208,6 +232,12 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId) {
 				.then(response => {
 					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
+
+					/*
+					if (callback != null) {
+						dispatch(callback(userId));
+					}
+					*/
 				})
 				.catch(response => {
 					dispatch(receivedMyObjectivesError(response.data));

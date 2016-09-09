@@ -5,6 +5,8 @@ const session = require('../../../../backend/config/session');
 import sweetalert from 'sweetalert';
 import '../styles/sweetalert.css';
 
+const notifications = require("../../../actions/notifications.js");
+
 class KeyResult extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +22,13 @@ class KeyResult extends Component {
 
   handleDelKeyResult() {
     let handler = function() {
-      this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id);
+      
+      if (this.props.mentorId != undefined)
+        this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id,
+          notifications.otificationApprenticeDeletedKey, this.props.mentorId);
+      else
+        this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id);
+
     }.bind(this);
 
     sweetalert({
@@ -34,7 +42,7 @@ class KeyResult extends Component {
   }
 
   changeScore() {
-    this.props.changeScore(this.state.score);
+    this.props.changeScore(this.state.score, this.props.mentorId);
   }
 
   onChange(e) {

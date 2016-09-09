@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../../actions/myStateActions.js";
 
+const notifications = require("../../../actions/notifications.js");
+
 class ObjectiveItem extends Component {
 	constructor(props) {
 		super(props);
@@ -23,7 +25,11 @@ class ObjectiveItem extends Component {
 
 	handleDelObj(e) {
 		let handler = function() {
-			this.props.softDeleteMyObjectiveByIdApi(this.props.item._id);
+			if (this.props.mentorId != undefined)
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, notifications.notificationApprenticeDeletedObjective,
+				this.props.mentorId);
+			else
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id);
 		}.bind(this);
 
 		sweetalert({
@@ -50,9 +56,13 @@ class ObjectiveItem extends Component {
 		//handleCancelEdit();
 		// bad habbit copypaste code :/
 		let changedDescription = this.refs.descriptionEdit.value;
-		console.log(changedDescription);
 
-		this.props.updateUserObjectiveApi(this.props.item._id, changedDescription);
+
+		if (this.props.mentorId != undefined)
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription,
+			notifications.notificationApprenticeUpdateObjective, this.props.mentorId);
+		else
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription);
 		//updateUserObjectiveApi
 
 		this.refs.descriptionEdit.classList.add('hidden');

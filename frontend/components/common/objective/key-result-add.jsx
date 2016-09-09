@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 
 import * as actions from "../../../actions/keyResultActions";
 
+const notifications = require("../../../actions/notifications.js");
+
 class KeyResult extends React.Component {
 	constructor(props) {
 		super(props);
@@ -28,7 +30,12 @@ class KeyResult extends React.Component {
 
 			let userObjectiveId = this.props.objectiveId;
 
-			this.props.addNewKeyResults(userObjectiveId, body);
+			if (this.props.mentorId != undefined)
+				this.props.addNewKeyResults(userObjectiveId, body, 
+					notifications.notificationApprenticeAddedKeyResult, this.props.mentorId);
+			else
+				this.props.addNewKeyResults(userObjectiveId, body);
+
 			this.props.resetAutocompleteState();
 		}
 	};

@@ -19,6 +19,8 @@ import './objectives.scss';
 const CONST = require('../../../../backend/config/constants.js');
 const session = require('../../../../backend/config/session');
 
+const notifications = require("../../../actions/notifications.js");
+
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
@@ -34,6 +36,10 @@ class Objectives extends Component {
 
 	changeTab(num) {
 		this.props.myStateActions.setChangeTab(num);
+	}
+
+	handleArchive (changeTo, objectiveId) {
+		this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
 	}
 
 	changeYear(year) {
@@ -58,11 +64,7 @@ class Objectives extends Component {
 		}, function(){handler();});
 	}
 
-	handleArchive (changeTo, objectiveId) {
-		this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
-	}
-
-	changeKeyResultScore(objectiveId) {
+	changeKeyResultScore(objectiveId, mentorId) {
 		let apiCall = this.props.myStateActions.changeKeyResultScore;
 
 		return (keyResultId) => {
@@ -76,8 +78,10 @@ class Objectives extends Component {
 					keyResultId: keyResultId,
 					score: score
 				};
-
-				apiCall(objectiveId, body);
+				if (mentorId != undefined)
+					apiCall(objectiveId, body, notifications.notificationApprenticeUpdateKey, mentorId);
+				else
+					apiCall(objectiveId, body);
 			};
 		};
 	}
@@ -112,7 +116,10 @@ class Objectives extends Component {
 				userId: userId,
 			};
 			if (this.props.userId == undefined) {
-				this.props.myStateActions.addNewObjective(body);
+				if (this.props.mentorId != undefined)
+					this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
+				else
+					this.props.myStateActions.addNewObjective(body);
 			} else {
 				this.props.otherPersonActions.addNewObjective(body);
 			}
@@ -163,7 +170,6 @@ class Objectives extends Component {
 		}
 		//console.log('objectives', userInfo.objectives)
 
-
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
@@ -171,12 +177,13 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    	addNewQuarter={ this.handleAddingNewQuarter }
+				    addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
 						me={ ismyself }
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
+						mentorId={userInfo.mentorId}
 						categories={ categories.list }
 						isAdmin={ isAdmin }
 						archived = { archived }
