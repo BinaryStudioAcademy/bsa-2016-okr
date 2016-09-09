@@ -156,7 +156,7 @@ export function softDeleteMyObjectiveByIdApi(id, callback, userId) {
 	};
 }
 
-export function addNewObjective(body, callback, userId)) {
+export function addNewObjective(body, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_NEW_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST	});
