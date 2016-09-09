@@ -63,7 +63,6 @@ class CategoryList extends Component {
 		
 
 		if(categoryIndex === -1) {
-			sweetalert.close();
 			return true;
 		} else {
 			sweetalert({
@@ -87,7 +86,9 @@ class CategoryList extends Component {
 			let reqBody = {
 				title,
 			};
+			
 			this.props.categoriesActions.addCategory(reqBody);
+			sweetalert.close();
 		}
 	}
 
@@ -98,6 +99,7 @@ class CategoryList extends Component {
 			};
 
 			this.props.categoriesActions.editCategory(id, reqBody);
+			sweetalert.close();
 		}
 	}
 

@@ -96,7 +96,6 @@ class KeyResults extends Component {
 		});
 
 		if(keyResultIndex === -1 || (!isEmpty(id) && this.props.data[keyResultIndex]._id === id)) {
-			sweetalert.close();
 			return true;
 		} else {
 			sweetalert({
@@ -122,6 +121,7 @@ class KeyResults extends Component {
 			};
 			
 			this.props.addKeyResult(reqBody);
+			sweetalert.close();
 		}
 	}
 
@@ -133,6 +133,7 @@ class KeyResults extends Component {
 			}
 			
 			this.props.editKeyResult(id, reqBody);
+			sweetalert.close();
 		}
 	}
 

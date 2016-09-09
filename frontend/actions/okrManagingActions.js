@@ -14,7 +14,7 @@ export const DELETE_OBJECTIVE_ERROR = 'DELETE_OBJECTIVE_ERROR'
 export const SOFT_DELETE_OBJECTIVE = 'SOFT_DELETE_OBJECTIVE'
 
 export const EDIT_OBJECTIVE_TEMPLATE = 'EDIT_OBJECTIVE_TEMPLATE'
-export const RECIVED_EDIT_OBJECTIVE_TEMPLATE ='RECIVED_EDIT_OBJECTIVE_TEMPLATE'
+export const RECEIVED_EDIT_OBJECTIVE_TEMPLATE ='RECEIVED_EDIT_OBJECTIVE_TEMPLATE'
 export const EDIT_OBJECTIVE_TEMPLATE_ERROR = 'EDIT_OBJECTIVE_TEMPLATE_ERROR'
 
 export const DELETE_KEY_RESULT_TEMPLATE = 'DELETE_KEY_RESULT_TEMPLATE'
@@ -174,9 +174,9 @@ export function editObjectiveTemplate (id, reqBody) {
 		dispatch({ type: EDIT_OBJECTIVE_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put('/api/objective/'+id, reqBody)
+		return axios.put(`/api/objective/${ id }`, reqBody)
 			.then(response => {
-				dispatch(recivedEditObjectiveTemplate(id, reqBody));
+				dispatch(recivedEditObjectiveTemplate(response.data));
 				dispatch({ type: REMOVE_REQUEST });
 			})
 			.catch(response => {
@@ -188,11 +188,10 @@ export function editObjectiveTemplate (id, reqBody) {
 	return action;
 }
 
-export function recivedEditObjectiveTemplate(id, objective) {
+export function recivedEditObjectiveTemplate(objective) {
 	return {
-		type: RECIVED_EDIT_OBJECTIVE_TEMPLATE,
+		type: RECEIVED_EDIT_OBJECTIVE_TEMPLATE,
 		objective,
-		id
 	};
 }
 

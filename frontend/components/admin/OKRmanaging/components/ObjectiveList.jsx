@@ -49,7 +49,6 @@ class ObjectiveList extends Component {
     });
 
     if(objectiveIndex === -1 || (!isEmpty(id) && this.props.objectivesList.objectives[objectiveIndex]._id === id)) {
-      sweetalert.close();
       return true;
     } else {
       sweetalert({
@@ -67,8 +66,10 @@ class ObjectiveList extends Component {
   }
 
   saveChanges(id, data) {
-    if(isEmpty(data.title) || (!isEmpty(data.title) && this.isNotDuplicate(id, data.title, data.category))) {
+    if(isEmpty(data.title) 
+    || (!isEmpty(data.title) && this.isNotDuplicate(id, data.title, data.category))) {
       this.props.editObjectiveTemplate(id, data);
+      sweetalert.close();
     }
   }
 

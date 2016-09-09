@@ -84,7 +84,7 @@ class ObjectiveData extends Component {
 				if(isDescriptionChanged) {
 					data.description = description;
 				}
-
+				
 				if(isCategoryChanged) {
 					data.category = category;
 				}

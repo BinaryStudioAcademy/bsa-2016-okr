@@ -6,7 +6,7 @@ import { GET_OBJECTIVES_LIST,
          ACTIVE_OBJECTIVE,
          DELETE_OBJECTIVE_ERROR, 
          SOFT_DELETE_OBJECTIVE,
-         RECIVED_EDIT_OBJECTIVE_TEMPLATE, 
+         RECEIVED_EDIT_OBJECTIVE_TEMPLATE, 
          EDIT_OBJECTIVE_TEMPLATE, 
          ACTIVE_KEY_RESULT,
          SOFT_DELETE_KEY_RESULT, 
@@ -140,17 +140,17 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
         
-        case RECIVED_EDIT_OBJECTIVE_TEMPLATE: {
-            const {objective, id} = action;
+        case RECEIVED_EDIT_OBJECTIVE_TEMPLATE: {
+            const { objective } = action;
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
-                visibleObjectives: update(visibleObjectives, objective, id),
-                objectives: update(objectives, objective, id),
+                visibleObjectives: updateObjectiveList(visibleObjectives, objective),
+                objectives: updateObjectiveList(objectives, objective),
                 editing: false,
                 editingKeyResult: false
-            })
+            });
         }
 
         case RECIVED_EDIT_KEY_RESULT: {
@@ -274,16 +274,24 @@ function updateKeyResult(objectives, keyResult, id){
     }
     return objectives;
 }
-function update(objectives, objective, id){
-    for (let i = 0; i < objectives.length; i++) {
-        if (objectives[i]._id == id) {
-            objectives[i].title =objective.title;
-            objectives[i].description =objective.description;
-            objectives[i].category =objective.category;
-          }
+
+function updateObjectiveList(oldObjectives, objective) {
+    let newObjectives = [].concat(oldObjectives);
+    
+    let index = newObjectives.findIndex((el) => {
+    	return el._id === objective._id;
+    });
+
+    if(index !== -1) {
+    	newObjectives[index].title = objective.title;
+    	newObjectives[index].description = objective.description;
+    	newObjectives[index].category = objective.category;
+    	newObjectives[index].updatedAt = objective.updatedAt;
     }
-    return objectives
+    
+    return newObjectives;
 }
+
 function updateVisibleItems(visibleObjectives, objectives, searchValue){
     let objectivesAfterInputFilter = [];
     let newObjectivesList = JSON.parse(JSON.stringify(objectives));
