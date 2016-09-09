@@ -101,13 +101,16 @@ class ObjectiveData extends Component {
 
 	deleteObjective() {
 		this.props.cancelEdit();
-		
+		let title = this.props.objective.title;
+		let displayedTitle = title.length > 20 ? `${title.substr(0, 20)}...` : title;
+
 		sweetalert({
-			title: "Do you really want to delete objective?",
-			type: "warning",
+			title: `Delete objective '${displayedTitle}' ?`,
+			text: 'Objective will disappear from autocomplete' ,
+			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonColor: '#f44336',
+			confirmButtonText: 'Yes, delete',
 			closeOnConfirm: true
 		}, () => {
 			let i = this.props.objective._id;
@@ -115,7 +118,7 @@ class ObjectiveData extends Component {
 		});
 	}
 
-	render() {
+	render() {		
 		let categoryId = this.props.objective.category;
 		let category = this.props.categories.list.find((category) => {
 			return category._id === categoryId;
@@ -128,6 +131,9 @@ class ObjectiveData extends Component {
 		let cancel;
 
 		if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
+			let objectiveTitle = this.props.objective.title;
+			objectiveTitle = !isEmpty(objectiveTitle) ? objectiveTitle : 'No description yet...';
+			
 			titleEl       =   (<input type='text'
 																className='template-title'
 																defaultValue={ this.props.objective.title }

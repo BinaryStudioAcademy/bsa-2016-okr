@@ -22,8 +22,8 @@ export const DELETE_KEY_RESULT_ERROR = 'DELETE_KEY_RESULT_ERROR'
 export const SOFT_DELETE_KEY_RESULT = 'SOFT_DELETE_KEY_RESULT'
 
 export const EDIT_KEY_RESULT = 'EDIT_KEY_RESULT'
-export const RECIVED_EDIT_KEY_RESULT ='RECIVED_EDIT_KEY_RESULT'
-export const RECIVED_EDIT_KEY_RESULT_ERROR = 'RECIVED_EDIT_KEY_RESULT_ERROR'
+export const RECEIVED_EDIT_KEY_RESULT ='RECEIVED_EDIT_KEY_RESULT'
+export const RECEIVED_EDIT_KEY_RESULT_ERROR = 'RECEIVED_EDIT_KEY_RESULT_ERROR'
 
 export const CREATE_NEW_TEMPLATE = 'CREATE_NEW_TEMPLATE';
 export const RECEIVED_NEW_TEMPLATE = 'RECEIVED_NEW_TEMPLATE';
@@ -32,14 +32,14 @@ export const ADD_KEY_RESULT_TO_TEMPLATE ='ADD_KEY_RESULT_TO_TEMPLATE'
 export const REMOVE_KEY_RESULT_FROM_TAMPLATE = 'REMOVE_KEY_RESULT_FROM_TAMPLATE'
 
 export const ADD_KEY_RESULT = 'ADD_KEY_RESULT'
-export const RECIVED_NEW_KEY_RESULT = 'RECIVED_NEW_KEY_RESULT'
+export const RECEIVED_NEW_KEY_RESULT = 'RECEIVED_NEW_KEY_RESULT'
 
 export const CANCEL_EDIT_TEMPLATE = 'CANCEL_EDIT_TEMPLATE'
 export const RECEIVED_ERROR = 'RECEIVED_ERROR'
 
 export const SET_DEFAULT_KEY_RESULT = 'SET_DEFAULT_KEY_RESULT';
-export const RECIVED_DEFAULT_KEY_RESULT = 'RECIVED_DEFAULT_KEY_RESULT';
-export const RECIVED_DEFAULT_KEY_RESULT_ERROR = 'RECIVED_DEFAULT_KEY_RESULT_ERROR';
+export const RECEIVED_DEFAULT_KEY_RESULT = 'RECEIVED_DEFAULT_KEY_RESULT';
+export const RECEIVED_DEFAULT_KEY_RESULT_ERROR = 'RECEIVED_DEFAULT_KEY_RESULT_ERROR';
 
 const session = require('../../backend/config/session');
 
@@ -176,7 +176,7 @@ export function editObjectiveTemplate (id, reqBody) {
 
 		return axios.put(`/api/objective/${ id }`, reqBody)
 			.then(response => {
-				dispatch(recivedEditObjectiveTemplate(response.data));
+				dispatch(receivedEditObjectiveTemplate(response.data));
 				dispatch({ type: REMOVE_REQUEST });
 			})
 			.catch(response => {
@@ -188,7 +188,7 @@ export function editObjectiveTemplate (id, reqBody) {
 	return action;
 }
 
-export function recivedEditObjectiveTemplate(objective) {
+export function receivedEditObjectiveTemplate(objective) {
 	return {
 		type: RECEIVED_EDIT_OBJECTIVE_TEMPLATE,
 		objective,
@@ -211,7 +211,7 @@ export function editKeyResult (id, reqBody) {
 
 		return axios.put('/api/keyResult/'+id, reqBody)
 			.then(response => {
-				dispatch(recivedEditKeyResult(id, reqBody));
+				dispatch(receivedEditKeyResult(id, reqBody));
 				dispatch({ type: REMOVE_REQUEST });
 			})
 			.catch(response => {
@@ -223,9 +223,9 @@ export function editKeyResult (id, reqBody) {
 	return action;
 }
 
-export function recivedEditKeyResult(id, keyResult) {
+export function receivedEditKeyResult(id, keyResult) {
 	return {
-		type: RECIVED_EDIT_KEY_RESULT,
+		type: RECEIVED_EDIT_KEY_RESULT,
 		keyResult,
 		id
 	};
@@ -233,7 +233,7 @@ export function recivedEditKeyResult(id, keyResult) {
 
 export function editKeyResultError(data) {
 	return {
-		type: RECIVED_EDIT_KEY_RESULT_ERROR,
+		type: RECEIVED_EDIT_KEY_RESULT_ERROR,
 		data
 	};
 }
@@ -301,7 +301,7 @@ export function addKeyResult(body) {
 
 export function addKeyResultToObjective(data) {
 	return {
-			type: RECIVED_NEW_KEY_RESULT,
+			type: RECEIVED_NEW_KEY_RESULT,
 		  data
 	};
 }
@@ -353,7 +353,7 @@ export function setDefaultKeyResult(objectiveId, keyResultId, flag) {
 
 export function receivedDefaultKeyResult(data) {
 	return {
-			type: RECIVED_DEFAULT_KEY_RESULT,
+			type: RECEIVED_DEFAULT_KEY_RESULT,
 		  data
 	};
 }
@@ -362,7 +362,7 @@ export function receivedDefaultKeyResultError(data) {
 
 	return (dispatch, getStore) => {
 		dispatch({
-			type: RECIVED_DEFAULT_KEY_RESULT_ERROR,
+			type: RECEIVED_DEFAULT_KEY_RESULT_ERROR,
 			data
 		});
 	}

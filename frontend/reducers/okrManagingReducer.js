@@ -11,15 +11,15 @@ import { GET_OBJECTIVES_LIST,
          ACTIVE_KEY_RESULT,
          SOFT_DELETE_KEY_RESULT, 
          DELETE_KEY_RESULT_TEMPLATE, 
-         RECIVED_EDIT_KEY_RESULT,
+         RECEIVED_EDIT_KEY_RESULT,
          EDIT_KEY_RESULT, 
          RECEIVED_NEW_TEMPLATE, 
          CANCEL_EDIT_TEMPLATE, 
-         RECIVED_NEW_KEY_RESULT, 
+         RECEIVED_NEW_KEY_RESULT, 
          REMOVE_KEY_RESULT_FROM_TAMPLATE, 
          ADD_KEY_RESULT_TO_TEMPLATE,
-         RECIVED_DEFAULT_KEY_RESULT_ERROR, 
-         RECIVED_DEFAULT_KEY_RESULT } from '../actions/okrManagingActions.js'
+         RECEIVED_DEFAULT_KEY_RESULT_ERROR, 
+         RECEIVED_DEFAULT_KEY_RESULT } from '../actions/okrManagingActions.js'
 
 import { ACTIVE_CATEGORY } from '../actions/categoriesActions.js'
 
@@ -153,7 +153,7 @@ export default function okrManagingReducer(state = initialState, action) {
             });
         }
 
-        case RECIVED_EDIT_KEY_RESULT: {
+        case RECEIVED_EDIT_KEY_RESULT: {
             const {keyResult, id} = action;
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
@@ -205,7 +205,7 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
         
-        case RECIVED_NEW_KEY_RESULT : {
+        case RECEIVED_NEW_KEY_RESULT : {
 
             const { data } = action;
             
@@ -215,7 +215,7 @@ export default function okrManagingReducer(state = initialState, action) {
             });
         }
              
-        case RECIVED_DEFAULT_KEY_RESULT : {
+        case RECEIVED_DEFAULT_KEY_RESULT : {
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
             const {data} = action;
@@ -226,7 +226,7 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
 
-        case RECIVED_DEFAULT_KEY_RESULT_ERROR : {
+        case RECEIVED_DEFAULT_KEY_RESULT_ERROR : {
             return state
         }
         
