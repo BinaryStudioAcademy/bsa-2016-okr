@@ -23,8 +23,8 @@ class KeyResult extends Component {
   			title: 'Error!',
   			text: 'Key result title cannot be empty',
   			type: 'error',
-  		}, () => {	
-  			ReactDOM.findDOMNode(this.refs.keyResultTitle).focus(); 
+  		}, () => {
+  			setTimeout(this.props.focusInput, 0);
   		});
 		} else {
 			let displayedTitle = title.length > 20 ? `${title.substr(0, 20)}...` : title;
