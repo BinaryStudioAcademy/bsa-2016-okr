@@ -4,11 +4,13 @@ module.exports = {
 	isCorrectId: isCorrectId,
 	isEmpty: isEmpty,
 	isEmptyObject: isEmptyObject,
-	isArray: isArray,
+	isString: isString,
+	isNumber: isNumber,
 	isObject: isObject,
+	isArray: isArray,
 	isStringBoolean: isStringBoolean,
 	isValidYear: isValidYear,
-	isValidQuarter: isValidQuarter
+	isValidQuarter: isValidQuarter,
 };
 
 function isCorrectId(id) {
@@ -22,23 +24,30 @@ function isCorrectId(id) {
 	}
 
 	return true;
-
 }
 
 function isEmpty(value) {
-	return (value == null || value.length === 0) || isEmptyObject(value);
+	return value == null || value.length === 0 || isEmptyObject(value);
 }
 
 function isEmptyObject(obj) {
 	return (typeof obj === "object" && Object.getOwnPropertyNames(obj).length == 0);
 }
 
-function isArray(value) {
-  return Object.prototype.toString.call(value) === '[object Array]';
+function isString(value) {
+	return typeof value === typeof '';
+}
+
+function isNumber(value) {
+	return typeof value === typeof 1;
 }
 
 function isObject(value) {
-  return typeof value === 'object';
+	return typeof value === typeof {};
+}
+
+function isArray(value) {
+  return Object.prototype.toString.call(value) === '[object Array]';
 }
 
 function isStringBoolean(value) {

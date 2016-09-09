@@ -24,7 +24,7 @@ class KeyResult extends Component {
   			text: 'Key result title cannot be empty',
   			type: 'error',
   		}, () => {
-  			setTimeout(this.props.focusInput, 0);
+  			setTimeout(this.props.focusAddInput, 0);
   		});
 		} else {
 			let displayedTitle = title.length > 20 ? `${title.substr(0, 20)}...` : title;

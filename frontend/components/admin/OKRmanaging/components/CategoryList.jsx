@@ -8,6 +8,8 @@ import * as okrManagingActions from "../../../../actions/okrManagingActions.js";
 
 import sweetalert from 'sweetalert';
 
+import { isEmpty } from '../../../../../backend/utils/ValidateService';
+
 import CategoryItem from './CategoryItem.jsx';
 import NewCategory from './Category-add.jsx';
 
@@ -16,11 +18,12 @@ class CategoryList extends Component {
 		super(props);
 
 		this.showAddCategoryInput = this.showAddCategoryInput.bind(this);
-		this.isTitleValid = this.isTitleValid.bind(this);
+		this.isNotDuplicate = this.isNotDuplicate.bind(this);
 		this.addCategory = this.addCategory.bind(this);
 		this.editCategory = this.editCategory.bind(this);
 		this.hideAddInput = this.hideAddInput.bind(this);
-		this.focusInput = this.focusInput.bind(this);
+		this.focusAddInput = this.focusAddInput.bind(this);
+		this.focusEditInput = this.focusEditInput.bind(this);
 	}
 
 	showAddCategoryInput() {
@@ -40,18 +43,24 @@ class CategoryList extends Component {
 			categoryAddBtn.classList.add('undisplay');
 		}
 
-		this.focusInput();
+		this.focusAddInput();
 	}
 	
-	focusInput() {
+	focusAddInput() {
 		let inputEl = this.refs.newCategoryComponent.refs.newCategory;
 		ReactDOM.findDOMNode(inputEl).focus();
 	}
 
-	isTitleValid(title) {
+  focusEditInput(id) {
+    let inputEl = this.refs[`category-${ id }`].refs.categoryInput;
+    ReactDOM.findDOMNode(inputEl).focus();
+  }
+
+	isNotDuplicate(id, title) {
 		let categoryIndex = this.props.category.list.findIndex((el) => {
 			return el.title === title;
 		});
+		
 
 		if(categoryIndex === -1) {
 			sweetalert.close();
@@ -61,6 +70,12 @@ class CategoryList extends Component {
 				title: 'Error!',
 				text: 'Category with such title already exists',
 				type: 'error',
+			}, () => {
+				setTimeout(() => {
+					if(!isEmpty(id)) {
+	          this.focusEditInput(id);
+					}
+        }, 0);
 			});
 			
 			return false;
@@ -68,7 +83,7 @@ class CategoryList extends Component {
 	}
 
 	addCategory(title) {
-		if(this.isTitleValid(title)) {
+		if(this.isNotDuplicate(null, title)) {
 			let reqBody = {
 				title,
 			};
@@ -77,7 +92,7 @@ class CategoryList extends Component {
 	}
 
 	editCategory(id, title) {
-		if(this.isTitleValid(title)) {
+		if(this.isNotDuplicate(id, title)) {
 			let reqBody = {
 				title,
 			};
@@ -123,6 +138,7 @@ render() {
 															 cancelEdit = { this.props.categoriesActions.cancelEdit }
 															 deleteCategory = { this.props.categoriesActions.deleteCategory }
 															 hideAddInput = { this.hideAddInput }
+															 ref={ `category-${ item._id }` }
 									/>
 				})}
 			</ul>
@@ -134,7 +150,7 @@ render() {
 							category={ this.props.category }
 							addCategory={ this.addCategory }
 							hideAddInput={ this.hideAddInput }
-							focusInput={ this.focusInput }
+							focusAddInput={ this.focusAddInput }
 						/>
 			</div>
 		</div>

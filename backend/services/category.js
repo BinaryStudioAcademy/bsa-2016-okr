@@ -13,7 +13,7 @@ var CategoryService = function() {};
 CategoryService.prototype.add = function(userId, data, callback) {
 	 async.waterfall([
 		(callback) => {
-			CategoryRepository.getByTitle(data.title, (err, category) => {
+			CategoryRepository.getByTitleAll(data.title, (err, category) => {
 				if(err) {
 					return callback(err, null);
 				}

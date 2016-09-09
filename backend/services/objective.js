@@ -1,15 +1,16 @@
-var UserRepository = require('../repositories/user.js');
-var Objective = require('../schemas/objective');
-var User = require('../schemas/user');
-var KeyResult = require('../schemas/keyResult');
-var ObjectiveRepository = require('../repositories/objective.js');
-var UserObjectiveRepository = require('../repositories/userObjective.js');
-var QuarterRepository = require('../repositories/quarter');
-var KeyResultRepository = require('../repositories/keyResult.js');
-var HistoryRepository = require('../repositories/history.js');
+const UserRepository = require('../repositories/user.js');
+const Objective = require('../schemas/objective');
+const User = require('../schemas/user');
+const KeyResult = require('../schemas/keyResult');
+const ObjectiveRepository = require('../repositories/objective.js');
+const UserObjectiveRepository = require('../repositories/userObjective.js');
+const QuarterRepository = require('../repositories/quarter');
+const KeyResultRepository = require('../repositories/keyResult.js');
+const HistoryRepository = require('../repositories/history.js');
 const ValidateService = require('../utils/ValidateService');
-var async = require('async');
-var CONST = require('../config/constants.js');
+const isEmpty = ValidateService.isEmpty;
+const async = require('async');
+const CONST = require('../config/constants.js');
 
 var ObjectiveService = function() {};
 
@@ -204,30 +205,75 @@ ObjectiveService.prototype.softDelete = function(userId, objectiveId, objective,
 	})
 };
 
-ObjectiveService.prototype.update = function (authorId, objectiveId, objective, callback){
+ObjectiveService.prototype.update = function (userId, objectiveId, data, callback) {
 	async.waterfall([
 		(callback) => {
-			ObjectiveRepository.update(objectiveId, objective, (err, objective) => {
+			ObjectiveRepository.getById(objectiveId, (err, objective) => {
 				if (err) {
 					return callback(err, null);
 				}
-				return callback(null, objective);
-			});
-		},
-		(objective, callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, CONST.history.type.UPDATE, (err) => {
-				if(err) {
+
+				if(isEmpty(objective)) {
+					err = new Error('Objective does not exists');
 					return callback(err, null);
 				}
+
 				return callback(null, objective);
 			});
+		}, (objective, callback) => {
+			var isEmptyTitle = isEmpty(data.title);
+			var isEmptyDescription = data.description == null;
+			var isEmptyCategory = isEmpty(data.category);
+
+			var sameTitle = isEmptyTitle || (!isEmptyTitle && (objective.title === data.title));
+			var sameDescription = isEmptyDescription || (!isEmptyDescription && (objective.description === data.description));
+			var sameCategory = isEmptyCategory || (!isEmptyCategory && (objective.category.equals(data.category)));
+
+			if(sameTitle && sameDescription && sameCategory) {				
+				var updated = false;
+				return callback(null, objective, updated);
+			} else {
+				if(!sameTitle) {
+					objective.title = data.title;
+				}
+
+				if(!sameDescription) {
+					objective.description = data.description;
+				}
+
+				if(!sameCategory) {
+					// Maybe need to check category existance
+					objective.category = data.category;
+				}
+
+				objective.save((err, objective) => {
+					if (err) {
+						return callback(err, null);
+					}
+					
+					var updated = true;
+
+					return callback(null, objective, updated);
+				});
+			}
+		}, (objective, updated, callback) => {
+			if(updated) {
+				HistoryRepository.addObjectiveEvent(userId, objectiveId, CONST.history.type.UPDATE, (err, historyEvent) => {
+					if(err) {
+						return callback(err, null);
+					}
+					return callback(null, objective);
+				});
+			} else {
+				return callback(null, objective);
+			}
 		}
 	], (err, result) => {
 		return callback(err, result);
 	})
 };
 
-ObjectiveService.prototype.delete = function (authorId, objectiveId, callback){
+ObjectiveService.prototype.delete = function (userId, objectiveId, callback){
 	async.waterfall([
 		(callback) => {
 			ObjectiveRepository.delete(objectiveId, (err) => {
@@ -238,7 +284,7 @@ ObjectiveService.prototype.delete = function (authorId, objectiveId, callback){
 			});
 		},
 		(callback) => {
-			HistoryRepository.addObjectiveEvent(authorId, objectiveId, CONST.history.type.HARD_DELETE, (err) => {
+			HistoryRepository.addObjectiveEvent(userId, objectiveId, CONST.history.type.HARD_DELETE, (err) => {
 				if(err) {
 					return callback(err, null);
 				}

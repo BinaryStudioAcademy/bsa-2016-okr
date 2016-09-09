@@ -24,7 +24,8 @@ class KeyResults extends Component {
 		this.saveEditedKeyResult = this.saveEditedKeyResult.bind(this);
 		this.isNotDuplicate = this.isNotDuplicate.bind(this);
 		this.addKeyResult = this.addKeyResult.bind(this);
-		this.focusInput = this.focusInput.bind(this);
+		this.focusAddInput = this.focusAddInput.bind(this);
+		this.focusEditInput = this.focusEditInput.bind(this);
 	}
 
 	showAddKeyResultInput() {
@@ -43,13 +44,18 @@ class KeyResults extends Component {
 			keyResultAddBtn.classList.add('undisplay');
 		}
 
-		this.focusInput();
+		this.focusAddInput();
 	}
 
-	focusInput() {
+	focusAddInput() {
 		let inputEl = this.refs[`keyResultAdd-${ this.props.objective._id }`].refs.keyResultTitle;
 		ReactDOM.findDOMNode(inputEl).focus();
 	}
+
+	focusEditInput(id) {
+    let inputEl = this.refs[`keyResultTemplate-${ id }`].refs.keyResultTitle;
+    ReactDOM.findDOMNode(inputEl).focus();
+  }
 
 	hideAddKeyResultInput() {
 		let keyResultAddBtn = this.refs.newKeyResultButton;
@@ -97,6 +103,10 @@ class KeyResults extends Component {
 				title: 'Error!',
 				text: 'Key result with such title for that objective already exists',
 				type: 'error',
+			}, () => {
+				setTimeout(() => {
+					this.focusEditInput(id);
+				}, 0);
 			});
 
 			return false;
@@ -148,6 +158,7 @@ class KeyResults extends Component {
 														setDefaultKeyResult = { this.setDefaultKeyResult(this.props.objective._id) }
 														cancelEdit = { this.props.cancelEdit }
 														deleteKeyResult = { this.props.deleteKeyResult }
+														ref={ `keyResultTemplate-${ item._id }` }
 							/>
 		});
 		
@@ -168,7 +179,7 @@ class KeyResults extends Component {
 							objectiveId={ this.props.objective._id } 
 							hideAddKeyResultInput={ this.hideAddKeyResultInput }
 							addKeyResult={ this.addKeyResult }
-							focusInput={ this.focusInput }
+							focusAddInput={ this.focusAddInput }
 						/>
 					</div>
 				</div>

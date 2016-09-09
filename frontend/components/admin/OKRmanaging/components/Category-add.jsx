@@ -21,7 +21,7 @@ class NewCategory extends Component {
   			text: 'Category title cannot be empty',
   			type: 'error',
   		}, () => {
-  			setTimeout(this.props.focusInput, 0);
+  			setTimeout(this.props.focusAddInput, 0);
   		});
 		} else {
 			let displayedTitle = title.length > 12 ? `${title.substr(0, 12)}...` : title;

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
 import sweetalert from 'sweetalert';
-import '../../../common/styles/sweetalert.css';
 
 import CONST from '../../../../../backend/config/constants';
 import { isEmpty } from '../../../../../backend/utils/ValidateService';
+
+import '../../../common/styles/sweetalert.css';
 
 class KeyResult extends Component {
 	constructor(props) {
@@ -15,22 +17,22 @@ class KeyResult extends Component {
 		this.editKeyResult = this.editKeyResult.bind(this);
 		this.cancelEdit = this.cancelEdit.bind(this);
 		this.setDefaultKeyResult = this.setDefaultKeyResult.bind(this);
-		this.focusEditInput = this.focusEditInput.bind(this);
-		this.selectEditText = this.selectEditText.bind(this);
+		this.focusEditTitle = this.focusEditTitle.bind(this);
+		this.selectEditTitle = this.selectEditTitle.bind(this);
 	}
 
 	componentDidUpdate() {
 		if (this.props.editingKeyResult && this.props.item._id == this.props.activeKeyResult) {
-			this.selectEditText();
+			this.selectEditTitle();
 		}
 	}
 
-	selectEditText() {
+	selectEditTitle() {
 		let inputEl = this.refs.keyResultTitle;
 		ReactDOM.findDOMNode(inputEl).setSelectionRange(0, inputEl.value.length);
 	}
 
-	focusEditInput() {
+	focusEditTitle() {
 		let editEl = this.refs.keyResultTitle;
 		ReactDOM.findDOMNode(editEl).focus();
 	}
@@ -38,8 +40,11 @@ class KeyResult extends Component {
 	setDefaultKeyResult() {
 		this.props.cancelEdit();
 		this.props.hideAddKeyResultInput();
+		
+		let id = this.props.item._id;
+		let value = this.refs.defaultKeyResult.checked;
 
-		this.props.setDefaultKeyResult(this.props.item._id, this.refs.defaultKeyResult.checked);
+		this.props.setDefaultKeyResult(id, value);
 	}
 
 	cancelEdit() {
@@ -61,13 +66,13 @@ class KeyResult extends Component {
   			text: 'Key result title cannot be empty',
   			type: 'error',
   		}, () => {	
-  			setTimeout(this.focusEditInput, 0);
+  			setTimeout(this.focusEditTitle, 0);
   		});
 		} else if(isNotChanged) {
 			this.cancelEdit();
 		} else {
 			sweetalert({
-				title: 'Save key result changes?',
+				title: 'Save all changes?',
 				text: 'This fill affect on all users',
 				type: 'warning',
 				showCancelButton: true,
