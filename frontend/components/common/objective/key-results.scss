@@ -49,7 +49,7 @@
 				display: inline-block;
 			}
 			.key-result-title{
-				float: left;
+				width: 55%;
 			}
 
 		 		.easy {
@@ -85,7 +85,6 @@
 					color: $color-white;
 				}
 				.keyScore {
-					margin-left: 15px;
 					margin-top: 4px;
 					display: inline-block;
 					float: right;

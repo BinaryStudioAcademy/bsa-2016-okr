@@ -1,17 +1,18 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-
-export const GET_USER = 'OTHER_PERSON:GET_USER';
-export const RECEIVED_USER = 'OTHER_PERSON:RECEIVED_USER';
-export const RECEIVED_ERROR = 'OTHER_PERSON:RECEIVED_ERROR';
-export const CHANGE_TAB = 'OTHER_PERSON:CHANGE_TAB';
-export const CHANGE_YEAR = 'OTHER_PERSON:CHANGE_YEAR';
-export const TAKE_APPRENTICE = 'OTHER_PERSON:TAKE_APPRENTICE';
-export const TOOK_APPRENTICE = 'OTHER_PERSON:TOOK_APPRENTICE';
-export const REMOVE_APPRENTICE = 'OTHER_PERSON:REMOVE_APPRENTICE';
-export const REMOVED_APPRENTICE = 'OTHER_PERSON:REMOVED_APPRENTICE';
-export const ADDED_NEW_OBJECTIVE_OTHER_USER = 'OTHER_PERSON:ADDED_NEW_OBJECTIVE_OTHER_USER';
-export const ADD_NEW_OBJECTIVE_OTHER_USER = 'OTHER_PERSON:ADD_NEW_OBJECTIVE_OTHER_USER';
+import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
+				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
+export const GET_USER = 'GET_USER';
+export const RECEIVED_USER = 'RECEIVED_USER';
+export const RECEIVED_ERROR = 'RECEIVED_ERROR';
+export const CHANGE_TAB = 'CHANGE_TAB';
+export const CHANGE_YEAR = 'CHANGE_YEAR';
+export const TAKE_APPRENTICE = 'TAKE_APPRENTICE';
+export const TOOK_APPRENTICE = 'TOOK_APPRENTICE';
+export const REMOVE_APPRENTICE = 'REMOVE_APPRENTICE';
+export const REMOVED_APPRENTICE = 'REMOVED_APPRENTICE';
+export const ADDED_NEW_OBJECTIVE_OTHER_USER = 'ADDED_NEW_OBJECTIVE_OTHER_USER';
+export const ADD_NEW_OBJECTIVE_OTHER_USER = 'ADD_NEW_OBJECTIVE_OTHER_USER';
 
 export function getUser(id) {
 
@@ -54,6 +55,9 @@ export function addNewObjective(body) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
+
+			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
+			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 		})
 		.catch(response => {
 			dispatch(receivedError(response.data));

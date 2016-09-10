@@ -66,32 +66,32 @@ aside#navbar ul {
 		font-size: 30px;
 		pointer-events: none;
 
-	/* 	& .badge {
+	 	& .badge {
 			display: inline-block;
 			width: .5em;
 			height: .5em;
 			position: absolute;
-			right: -0.1em;
-			bottom: -0.1em;
+			right: -0.03em;
+			bottom: -0.03em;
 			border-radius: $border-radius;
 			text-align: center;
 
 			& i,
 			& .badge-counter {
-				background-color: $primary-color;
+				background-color: #354b60;
 				display: inline-block;
 				position: absolute;
 				width: 100%;
 				height: 100%;
 				top: 0;
 				left: 0;
-				font-size: .5em;
+				font-size: .55em;
 			}
 
 			& i {
 				border-radius: 100%;
 			}
-		} */
+		} 
 	}
 }
 

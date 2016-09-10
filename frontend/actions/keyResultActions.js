@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
+import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
+				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
 
 // Get key results for show autocomplete list
 export const GET_AUTOCOMPLETE_KEY_RESULTS = 'GET_AUTOCOMPLETE_KEY_RESULTS';
@@ -33,6 +35,8 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 			}
 			dispatch({ type: REMOVE_REQUEST	});
 
+			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
+			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));

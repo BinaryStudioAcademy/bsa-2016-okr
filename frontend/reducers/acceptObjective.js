@@ -12,7 +12,8 @@ import {
 
 const initialState = {
 	items: [],
-	visibleItems: []
+	visibleItems: [],
+	countObject: ''
 };
 
 export default function accObjReducer(state = initialState, action) {
@@ -47,7 +48,8 @@ export default function accObjReducer(state = initialState, action) {
 
 			return Object.assign({}, state, {
 				items: items,
-				visibleItems: items
+				visibleItems: items,
+				countObject: items.length
 			});
 
 		}
@@ -78,7 +80,8 @@ export default function accObjReducer(state = initialState, action) {
 
 				return Object.assign({}, state, {
 					recycleBinItems: state.items,
-					visibleItems: state.items
+					visibleItems: state.items,
+					countObject: state.items.length
 				})
 		}
 
@@ -108,7 +111,8 @@ export default function accObjReducer(state = initialState, action) {
 
 			return Object.assign({}, state, {
 				items: items,
-				visibleItems: items
+				visibleItems: items,
+				countObject: items.length
 			});
 
 		}
@@ -150,7 +154,7 @@ export default function accObjReducer(state = initialState, action) {
 		case CLEAR_OBJ_APPROVE_ITEMS: {
 			return Object.assign({}, state, {
 				items: [],
-				visibleItems: []								
+				visibleItems: [],						
 			});
 		}
 
