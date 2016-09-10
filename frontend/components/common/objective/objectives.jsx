@@ -39,7 +39,20 @@ class Objectives extends Component {
 	}
 
 	handleArchive (changeTo, objectiveId) {
-		this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		let handler = function () {
+			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		}.bind(this);
+
+		let arch = changeTo ? 'archive' : 'unarchive'
+
+		sweetalert({
+			title: `Do you really want to ${arch} this objective?`,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	changeYear(year) {
@@ -177,8 +190,9 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    addNewQuarter={ this.handleAddingNewQuarter }
+				    	addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
+						isAdmin={ isAdmin }
 						me={ ismyself }
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
