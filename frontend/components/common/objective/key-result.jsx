@@ -65,6 +65,7 @@ class KeyResult extends Component {
     let score;
     let rangeEl;
     let deleteEl;
+    let notApproved;
 
     if(!isArchived){
       score = this.state.score;
@@ -80,13 +81,16 @@ class KeyResult extends Component {
           <i className="fi flaticon-garbage-2" aria-hidden="true"></i>
         </button>
       );
+      if (!item.templateId.isApproved) {
+          notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
+        }
     } else {
       score = this.props.item.score;
     }
 
     return (
       <li className="key-result clearfix">
-        <div className='key-result-title'>{ item.templateId.title }</div>
+        { notApproved }<div className='key-result-title'>{ item.templateId.title }</div>
         { deleteEl }
         <span className='score'>{ score }</span>
         { rangeEl }
