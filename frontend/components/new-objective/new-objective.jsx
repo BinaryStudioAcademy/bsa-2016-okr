@@ -15,8 +15,7 @@ const NewObjective = (props) => {
 			</button>
 			<form action="">
 				<NewObjCredentials 
-					ref="newObjectiveCredentials"
-					closeNewObjectiveWindow={ closeNewObjectiveWindow }
+					closeNewObjectiveWindow={ props.closeNewObjectiveWindow }
 					createNewTemplate={ props.createNewTemplate }
 					addKeyResultToTemplate={ props.addKeyResultToTemplate }
 				/>
