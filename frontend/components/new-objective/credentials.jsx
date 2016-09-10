@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import './credentials.scss';
-import NewKeyResult from './key-result.jsx';
-import sweetalert from 'sweetalert';
-import { isEmpty } from '../../../backend/utils/ValidateService';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from "../../actions/okrManagingActions.js";
 
-const title = document.getElementsByClassName('new-key-result-title');
-const difficulty = document.getElementsByClassName('new-key-result-difficulty');
+import sweetalert from 'sweetalert';
+
+import { isEmpty } from '../../../backend/utils/ValidateService';
+import CONST from '../../../backend/config/constants';
+
+import NewKeyResult from './key-result.jsx';
+
+import './credentials.scss';
 
 class NewObjCredentials extends Component {
 	constructor(props) {
@@ -20,32 +22,37 @@ class NewObjCredentials extends Component {
 	}
 
 	addNewKeyResult() {
+		const keyResultTitleElements = document.getElementsByClassName('new-key-result-title');
+		const keyResultDifficultyElements = document.getElementsByClassName('new-key-result-difficulty');
+		
 		let keyResults = [''];
 		let data = {};
 		let count = 0;
 
-		for(let i = 0; i < title.length; i++) {
-			if(title[i].value != '') {
-				data.title = title[i].value;
-				data.difficulty = difficulty[i].value;
+		for(let i = 0; i < keyResultTitleElements.length; i++) {
+			if(keyResultTitleElements[i].value != '') {
+				data.title = keyResultTitleElements[i].value;
+				data.difficulty = keyResultDifficultyElements[i].value;
 				keyResults.splice(-1, 0, data);
 				data = {};
 				count++;
 			}
 		} 
 
-		if(title.length == count) {
+		if(keyResultTitleElements.length == count) {
 			this.props.addKeyResultToTemplate(keyResults)
 		}
 	}
 
 	delete(index) {
-
+		const keyResultTitleElements = document.getElementsByClassName('new-key-result-title');
+		const keyResultDifficultyElements = document.getElementsByClassName('new-key-result-difficulty');
 		let keyResults = [];
 		let data = {};
-		for(let i = 0; i < title.length; i++) {
-			data.title = title[i].value;
-			data.difficulty = difficulty[i].value;
+		
+		for(let i = 0; i < keyResultTitleElements.length; i++) {
+			data.title = keyResultTitleElements[i].value;
+			data.difficulty = keyResultDifficultyElements[i].value;
 			keyResults.splice(i, 0, data);
 			data = {}; 
 		}  
@@ -59,25 +66,31 @@ class NewObjCredentials extends Component {
 	createTemplate(event) {
 		event.preventDefault();
 
+		const keyResultTitleElements = document.getElementsByClassName('new-key-result-title');
+		const keyResultDifficultyElements = document.getElementsByClassName('new-key-result-difficulty');
+
 		let reqBody = {};
-		let objectiveDesctiption = document.querySelector("textarea#new-obj-desc").value;
-		let objectiveTitle = document.querySelector("input#new-obj-title").value;
-		let objectiveCategory = document.querySelector("select#new-obj-category").value;
+		let objectiveTitle = this.refs.newObjectiveTitle.value;
+		let objectiveDesctiption = this.refs.newObjectiveDescription.value;
+		let objectiveCategory = this.refs.newObjectiveCategory.value;
 		let keyResults = [];
 		let data = {};
 		let correct = 0;
 
-		for(let i = 0; i < title.length; i++) {
-			data.title = title[i].value;
-			if(!isEmpty(title[i].value)) {
+		for(let i = 0; i < keyResultTitleElements.length; i++) {
+			data.title = keyResultTitleElements[i].value;
+			
+			if(!isEmpty(keyResultTitleElements[i].value)) {
 				correct++;
 			}
-			data.difficulty = difficulty[i].value;
+
+			data.difficulty = keyResultDifficultyElements[i].value;
 			keyResults.splice(i, 0, data);
-			data= {}; 
-		}  
-		reqBody.description = objectiveDesctiption;
+			data = {}; 
+		}
+
 		reqBody.title = objectiveTitle;
+		reqBody.description = objectiveDesctiption;
 		reqBody.category = objectiveCategory;
 		reqBody.keyResults = keyResults;
 
@@ -93,7 +106,7 @@ class NewObjCredentials extends Component {
 				text: 'Objective description cannot be empty',
 				type: 'error',
 			});
-		} else if(correct != title.length) {
+		} else if(correct != keyResultTitleElements.length) {
 			sweetalert({
 				title: 'Error!',
 				text: 'Key result title cannot be empty',
@@ -102,19 +115,17 @@ class NewObjCredentials extends Component {
 		} else {
 			this.props.createNewTemplate(reqBody);
 
-			document.querySelector("textarea#new-obj-desc").value = '';
-			document.querySelector("input#new-obj-title").value = '';
+			// this.refs.newObjectiveTitle.value = '';
+			// this.refs.newObjectiveDescription.value = '';
 
-			for(let i=0; i < title.length; i++) {
-				document.getElementsByClassName('new-key-result-title')[i].value = '';
-				document.getElementsByClassName('new-key-result-difficulty')[i].value = 'easy';
-			}
+			// for(let i=0; i < keyResultTitleElements.length; i++) {
+			// 	keyResultTitleElements[i].value = '';
+			// 	keyResultDifficultyElements[i].value = CONST.keyResult.EASY;
+			// }
 
 			keyResults = [''];
-			this.props.addKeyResultToTemplate(keyResults)
-
-			this.props.handleCloseNewObjView();    
-		} 
+			this.props.addKeyResultToTemplate(keyResults);
+		}
 	}
 
 	render() {
@@ -122,41 +133,42 @@ class NewObjCredentials extends Component {
 		
 		if(this.props.okrManaging.keyResults.length != 0) {
 			keyResults = this.props.okrManaging.keyResults.map((keyResult, index) => {
-				return <NewKeyResult keyResult={this.props.okrManaging.keyResults} delete={this.delete} key={index} num={index}/>
+				return <NewKeyResult keyResult={ this.props.okrManaging.keyResults } delete={ this.delete } key={ index } num={ index }/>
 			});
 		} else {
-			keyResults = (<NewKeyResult delete={this.delete}/>);
-		} 
+			keyResults = (<NewKeyResult delete={ this.delete }/>);
+		}
 
 		return (
 			<div id="new-obj-creds">
 				<div className="title-group">
 					<label htmlFor="new-obj-title">New objective title</label>
-					<input type="text" placeholder="Title" id="new-obj-title" />
-					<select className='template-category' id="new-obj-category">
-						{this.props.categories.list.map((category, index) => {
-							return <option key={index} value={category._id}>{category.title}</option>
-						})}
+					<input ref="newObjectiveTitle" type="text" placeholder="Title" id="new-obj-title" />
+					<select ref="newObjectiveCategory" className='template-category' id="new-obj-category">
+						{ this.props.categories.list.map((category, index) => {
+								return <option key={ index } value={ category._id }>{ category.title }</option>
+							})
+						}
 					</select>
 				</div>
 				<div className="desc-group">
 					<label htmlFor="new-obj-desc">Description</label>
-					<textarea name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
+					<textarea id="newObjectiveTemplateDescription" ref="newObjectiveDescription" name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
 				</div>
 				<div>
 					<label htmlFor="new-key-result-title">Key result</label>
-					{keyResults}
-					<p className="new-key-result" onClick={this.addNewKeyResult}>Add new key results</p>
+					{ keyResults }
+					<p className="new-key-result" onClick={ this.addNewKeyResult }>Add new key results</p>
 				</div>
-				<button type="button" id="new-obj-submit-btn" onClick={this.createTemplate}>Add new objective</button>
+				<button type="button" id="new-obj-submit-btn" onClick={ this.createTemplate }>Add new objective</button>
 			</div>
 		);
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
+// function mapDispatchToProps(dispatch) {
+// 	return bindActionCreators(actions, dispatch);
+// }
 
 function mapStateToProps(state) {
 	return {
@@ -165,5 +177,5 @@ function mapStateToProps(state) {
 	};
 }
 
-const NewObjCredentialsConnected = connect(mapStateToProps, mapDispatchToProps)(NewObjCredentials);
+const NewObjCredentialsConnected = connect(mapStateToProps, null)(NewObjCredentials);
 export default NewObjCredentialsConnected

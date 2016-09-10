@@ -75,18 +75,13 @@ class ObjectiveData extends Component {
 				confirmButtonText: 'Yes, save',
 				closeOnConfirm: false
 			}, () => {
-				let data = {};
-
-				if(isTitleChanged) {
-					data.title = title;
-				}
+				let data = {
+					title: title,
+					category: category
+				};
 
 				if(isDescriptionChanged) {
 					data.description = description;
-				}
-				
-				if(isCategoryChanged) {
-					data.category = category;
 				}
 
 				this.props.saveChanges(id, data);

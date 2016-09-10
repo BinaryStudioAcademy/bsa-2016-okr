@@ -144,8 +144,6 @@ class KeyResults extends Component {
 	}
 
 	render() {
-		// console.log('state', this.props);
-
 		let item = this.props.data.map((item, index) => {
 			return <KeyResultItem index = { index } 
 														objective = { this.props.objective } 
