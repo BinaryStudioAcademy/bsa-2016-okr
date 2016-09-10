@@ -1,5 +1,7 @@
 @import "_variables";
 
+$table-height_local: calc(100vh - 211px);
+
 #historyTable{
 	i{
 		margin-right: 7px;
@@ -7,7 +9,7 @@
 	}
 
 	.table-th{
-		cursor:pointer;
+		cursor: pointer;
 	}
 
 	img{
@@ -21,8 +23,14 @@
 		float: left;
 	}
 	td{
-
 		vertical-align: middle;
+	}
+
+	thead{
+		th{
+			background-color: #d5e0e4;
+			color: #888;
+		}
 	}
 
 	tbody {
@@ -34,17 +42,22 @@
 		left: 0;
 		table-layout: fixed;
 		overflow-y: overlay;
-		height: 66vh;
-		& > tr {
-			border-bottom: none;
-			& > tr:last-child {
-				border-bottom: none;
+		height: $table-height_local;
+		max-height: $table-height_local;
+		tr{
+			border: none;
+			border-bottom: 1px solid #ddd;
+			&:not(:first-child):hover{
+				background: #f9f9f9;
 			}
+		}
+		tr:last-child{
+			border-bottom: none;
 		}
 	}
 	thead, tbody tr {
 	   	display:table;
-	 	width:99.99%;
+	 	width: 100%;
     	table-layout:fixed;/* even columns width , fix width of table too*/
 	}
 
@@ -83,6 +96,7 @@
 	table {
 		width: 100%;
 		margin: 0 auto;
+		color: #777;
 	}
 
 	.actionCreate {

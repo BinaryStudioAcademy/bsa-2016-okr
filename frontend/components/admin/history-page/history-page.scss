@@ -12,6 +12,9 @@
   margin-bottom: -30px;
   //display: flex;
   //flex-direction: column;
+  i.fi-1.flaticon-1-arrow-down{
+    font-size: 10px;
+  }
 }
 
 #top-panel {
@@ -26,6 +29,11 @@
   box-sizing: border-box;
   & > button{
     margin-bottom: 10px;
+    padding: 7px 15px;
+    &.active{
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
     span{
       pointer-events: none;
     }
@@ -34,6 +42,8 @@
 
 .history-filter-container {
   display: none;
+  position: relative;
+  z-index: 5;
   &.opened{
     display: block;
   }

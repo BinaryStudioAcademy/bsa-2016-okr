@@ -33,14 +33,22 @@ class HistoryItemList extends React.Component {
     onSort(sort) {
         this.props.setSort(sort);
         this.props.getFilteredItems();
-
-        this.restoreDefaultIcons()
-        if(this.props.sort.up)
-           document.getElementById(sort).className = "fa fa-sort-desc"
-         else document.getElementById(sort).className = "fa fa-sort-asc";
+        let dom_el = document.getElementById(sort);
+        this.restoreDefaultIcons();
+        dom_el.closest('th').style.color = "#555";
+        if(this.props.sort.up){
+           dom_el.className = "fa fa-sort-desc";
+        } else {
+           dom_el.className = "fa fa-sort-asc";
+        }
     }
 
     restoreDefaultIcons ()  {
+      let titles = document.querySelectorAll('#historyTable thead th');
+       titles.forEach(( title ) => {
+          title.style.color = "#888";
+          console.log(title.style.color);
+       });
       document.getElementById('user').className = "fa fa-sort";
       document.getElementById('action').className = "fa fa-sort";
       document.getElementById('target').className = "fa fa-sort";
