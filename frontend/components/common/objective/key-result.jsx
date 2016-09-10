@@ -53,21 +53,16 @@ class KeyResult extends Component {
     });
   }
 
-//<div className={ `difficulty ${item.templateId.difficulty}` } title={item.templateId.difficulty}>
-//<div></div>
-//<div></div>
-//<div></div>
-//</div>
-
   render() {
     let isArchived = this.props.isArchived;
     const item = this.props.item;
     let score;
     let rangeEl;
+	  let editSave;
     let deleteEl;
     let notApproved;
 
-    if(!isArchived){
+    if(!isArchived) {
       score = this.state.score;
       rangeEl =(
         <input type="range" min="0" max="1" step="0.1" className="range keyScore"
@@ -77,13 +72,24 @@ class KeyResult extends Component {
         <button
           type="button"
           className="btn btn-red-hover key-result-delete-button"
+          aria-hidden="true"
+          title='Delete'
           onClick={ this.handleDelKeyResult }>
-          <i className="fi flaticon-garbage-2" aria-hidden="true"></i>
+          <i className="fi flaticon-garbage-2" ></i>
         </button>
       );
       if (!item.templateId.isApproved) {
-          notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
-        }
+        notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
+
+        editSave = (
+	        <button onClick={ this.editKeyResult }
+                  className='btn btn-blue-hover key-result-edit-button'
+                  aria-hidden="true"
+                  title='Edit'>
+                  <i className='fi flaticon-edit'></i>
+          </button>
+        );
+      }
     } else {
       score = this.props.item.score;
     }
@@ -91,6 +97,7 @@ class KeyResult extends Component {
     return (
       <li className="key-result clearfix">
         { notApproved }<div className='key-result-title'>{ item.templateId.title }</div>
+	      { editSave }
         { deleteEl }
         <span className='score'>{ score }</span>
         { rangeEl }
