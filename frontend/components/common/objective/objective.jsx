@@ -95,6 +95,7 @@ class ObjectiveItem extends Component {
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
 		let changeArchive = this.props.changeArchive;
+		let isItHomePage = this.props.isItHomePage;
 
 		if(isAdmin) {
 			if(!isArchived)
@@ -175,6 +176,7 @@ class ObjectiveItem extends Component {
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+						isItHomePage = { isItHomePage }
 				/>
 			</div>
 			</div>

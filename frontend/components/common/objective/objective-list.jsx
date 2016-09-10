@@ -30,13 +30,14 @@ class ObjectiveList extends React.Component{
  		const categories = this.props.categories || [];
 		const objectives = this.props.objectives || [];
 		const ObjectiveItem = this.props.ObjectiveItem;
-    	const updateUserObjectiveApi = this.props.updateUserObjectiveApi;
+    const updateUserObjectiveApi = this.props.updateUserObjectiveApi;
 		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
 		const changeKeyResultScore = this.props.changeKeyResultScore;
 		const isArchived = this.props.archived;
 		const isAdmin = this.props.isAdmin;
 		const changeArchive = this.props.changeArchive;
 		const mentorId = this.props.mentorId;
+	  let isItHomePage = this.props.isItHomePage;
 
 		var categoryItems = [];
 
@@ -53,12 +54,13 @@ class ObjectiveList extends React.Component{
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
 							isArchived = { item.isArchived }
 							isAdmin = { isAdmin }
-							mentorId = {mentorId}
-							changeArchive = {changeArchive}
-              				updateUserObjectiveApi = { updateUserObjectiveApi }
+							mentorId = { mentorId }
+							changeArchive = { changeArchive }
+              updateUserObjectiveApi = { updateUserObjectiveApi }
 							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
 							changeKeyResultScoreOne={ changeKeyResultScore }
 							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+							isItHomePage = { isItHomePage }
 						/>
 					});
 
@@ -67,6 +69,7 @@ class ObjectiveList extends React.Component{
 						createObjective={ this.props.createObjective(category._id) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }
 						key={ index }
+						isItHomePage = { isItHomePage }
 					/>
 				}
 

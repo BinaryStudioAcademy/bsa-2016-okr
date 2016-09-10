@@ -26,7 +26,7 @@ class KeyResult extends React.Component {
 			const body = {
 				title: title,
 				keyResultId: this.props.keyResultsReducer.selectedItem._id || '',
-				routeId: this.props.routeId || '',
+				isItHomePage: this.props.isItHomePage || false,
 			};
 
 			let userObjectiveId = this.props.objectiveId;

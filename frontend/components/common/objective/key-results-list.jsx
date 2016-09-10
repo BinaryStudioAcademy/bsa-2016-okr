@@ -68,13 +68,7 @@ class KeyResults extends Component {
 		let changeScore = this.props.changeScore;
 		let addNewKeyResult;
 		let items;
-
-		if (this.props.route != undefined){
-			var urlArray = this.props.route.split('/');
-			var routeId = urlArray[urlArray.length - 1];
-		}
-		// console.log('---===¯\\_(ツ)_/¯===---routeId',routeId);
-
+		let isItHomePage = this.props.isItHomePage;
 
 		if(!isArchived) {
 			addNewKeyResult = (
@@ -87,7 +81,7 @@ class KeyResults extends Component {
 					<KeyResultAdd
 						objectiveId={ this.props.objectiveId }
 						resetAutocompleteState={ this.resetAutocompleteState }
-						routeId={ routeId }
+						isItHomePage = { isItHomePage }
 					/>
 				</div>
 			);
@@ -105,7 +99,6 @@ class KeyResults extends Component {
 				return <KeyResultItem index={index} 
 															key={index} 
 															item={item} 
-															id={routeId}
 															isArchived = { isArchived }/>
 			});
 		}
