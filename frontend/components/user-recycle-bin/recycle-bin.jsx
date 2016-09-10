@@ -50,6 +50,7 @@ class RecycleBin extends Component {
 
 
 	render() {
+		
 		let showFilters = this.props.recycleBin.showRecycleBinFilters;
 
 		return (

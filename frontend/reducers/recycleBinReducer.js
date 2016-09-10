@@ -159,7 +159,7 @@ export default function recBynReducer(state = initialState, action) {
 
 			let key = {};
 
-			key.type = "key";
+			key.type = "key result";
 
 			for (let i = 0; i < data.length; i++) {
 				
@@ -227,7 +227,7 @@ export default function recBynReducer(state = initialState, action) {
 
 				let key = {};
 
-				key.type = "key";
+				key.type = "key result";
 
 				for (let i = 0; i < data.length; i++) {
 					
@@ -308,7 +308,6 @@ export default function recBynReducer(state = initialState, action) {
 					newRecycleBinItems.push(copy);
 
 				}
-
 
 				return Object.assign({}, state, {
 					recycleBinItems: newRecycleBinItems,
@@ -620,7 +619,7 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		if (initVisibleItems[i].type === "objective" && objectiveType) {
 			visibleItems.push(initVisibleItems[i]);
 		}
-		if (initVisibleItems[i].type === "key" && keyType) {
+		if (initVisibleItems[i].type === "key result" && keyType) {
 			visibleItems.push(initVisibleItems[i]);
 		}
 		if (initVisibleItems[i].type === "category" && categoryType) {
