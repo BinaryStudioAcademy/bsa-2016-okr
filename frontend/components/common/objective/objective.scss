@@ -70,7 +70,11 @@
 	button i{
 		pointer-events: none;
 	}
-
+	.notApproved{
+		display: inline-block;
+		margin-right: 8px;
+		cursor: pointer;
+	}
 	.delete-button-objective{
 		position: absolute;
 		bottom: 13px;

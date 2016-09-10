@@ -90,7 +90,7 @@ class ObjectiveItem extends Component {
 		let archiveButton;
 		let isArchived = this.props.isArchived;
 		let isAdmin = this.props.isAdmin;
-		console.log('--------------' + isAdmin)
+		let notApproved;
 
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
@@ -139,13 +139,17 @@ class ObjectiveItem extends Component {
 			                       	onClick={ this.handleDelObj }>
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
+
+			if (!objective.templateId.isApproved) {
+        notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
+      }
 		}
-		//console.log("objective >>> ", objective);
+	//	console.log("objective >>> ", objective);
 		return (
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
-
+				{ notApproved }
 				<div className='name'>{ objective.title ? objective.title : objective.templateId.title }</div>
 				<ObjectiveDescription
 						ref="description"

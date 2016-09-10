@@ -44,7 +44,11 @@
 			border-top: none;
 			background-color: #eaeaea;
 			padding: 10px 15px;
-
+			.notApproved{
+				display: inline-block;
+				margin-right: 8px;
+				cursor: pointer;
+			}
 			div {
 				display: inline-block;
 			}
