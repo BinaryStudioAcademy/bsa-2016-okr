@@ -37,8 +37,6 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 		case MAPPING_CLEAR: {
 
-			console.log("VIZVAL");
-
 			return Object.assign({}, state, {
 				users : [],
 				visibleUsers : [],
@@ -89,9 +87,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 				data[i].avatar = "avatar1.png";
 				data[i].name = data[i].userInfo.firstName + " " + data[i].userInfo.lastName;
-				data[i].lastName = data[i].userInfo.lastName;
 				data[i].email = data[i].userInfo.email;
-				data[i].secondPartEmail = data[i].email.substr(data[i].email.indexOf('@') + 1);
 				data[i].globalRole = data[i].userInfo.globalRole;
 
 			}
@@ -195,10 +191,8 @@ function updateVisibleUsers(users, filter, sortByGlobalRole, sortByName, globalR
 	{
 		for (let i = 0; i < users.length; i++) {
 
-			if (users[i].name.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				users[i].lastName.toUpperCase().indexOf(filter.toUpperCase()) === 0  ||
-				users[i].email.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				users[i].secondPartEmail.toUpperCase().indexOf(filter.toUpperCase()) === 0) {
+			if (users[i].name.toUpperCase().indexOf(filter.toUpperCase()) >= 0 ||
+				users[i].email.toUpperCase().indexOf(filter.toUpperCase()) >= 0) {
 				visibleUsers.push(users[i]);
 			}
 		}

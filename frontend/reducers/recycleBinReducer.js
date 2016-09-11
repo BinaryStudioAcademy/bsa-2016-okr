@@ -591,8 +591,8 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		else {
 
 			for (let i = 0; i < initVisibleItems.length; i++) {
-				if (initVisibleItems[i].type.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0 ||
-					initVisibleItems[i].category.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0)  {
+				if (initVisibleItems[i].type.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) >= 0 ||
+					initVisibleItems[i].category.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) >= 0)  {
 					itemsAfterInputFilter.push(initVisibleItems[i]);
 			}
 		}
