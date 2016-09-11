@@ -4,7 +4,6 @@ const service = require('../../services/user');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 const quarterRepository = require('../../repositories/quarter');
-// const userMentorRepository = require('../../repositories/userMentor');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -49,7 +48,7 @@ router.put('/:id', (req, res, next) => {
 router.get('/me/', (req, res, next) => {
 	var id = req.session._id;
 
-	return service.getById(id, res.callback);
+	return service.getByIdWithQuarters(id, res.callback);
 });
 
 router.get('/:id', (req, res, next) => {
@@ -59,7 +58,7 @@ router.get('/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return service.getById(id, res.callback);
+	return service.getByIdWithQuarters(id, res.callback);
 });
 
 
