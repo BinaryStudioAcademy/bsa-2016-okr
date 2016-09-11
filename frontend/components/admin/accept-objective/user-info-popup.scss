@@ -1,0 +1,56 @@
+.hint {
+    background-color: #f3f6f7;
+    z-index: 69;
+    position: absolute;
+    width: 300px;
+    padding: 10px;
+    top: 65px;
+    left: 15px;
+    border-radius: 3px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+      outline: none;
+      -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+      -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+      box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+}
+
+.user-photo {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 3px !important;
+  margin: 0 10px;
+}
+
+.users-info {
+  margin: 6px 0;
+  position: relative;
+  //margin-left: 10px;
+  font-family: "Fira Sans", "Open Sans", sans-serif;
+  font-size:15px;
+  font-weight:bold;
+  display: inline-block;
+  color: #555;
+}
+
+.mentor-name {
+  display: inline-block;
+  padding-left: 5px;
+  color: #555;
+  font-size: 12px;
+  font-weight:normal;
+  margin-top: 20px;
+}
+
+.mentor-title {
+  display: inline-block;
+  color: #aaa;
+  font-size: 12px;
+  font-weight:normal;
+}
+
+.mentor {
+  font-size: 30px;
+}

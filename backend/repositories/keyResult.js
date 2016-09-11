@@ -11,7 +11,7 @@ var KeyResultRepository = function() {
 KeyResultRepository.prototype = new Repository();
 
 KeyResultRepository.prototype.getAll = function(callback) {
-	
+
 	var model = this.model;
 
 	model
@@ -23,7 +23,7 @@ KeyResultRepository.prototype.getAll = function(callback) {
 };
 
 KeyResultRepository.prototype.getAllDeletedPopulate = function(callback) {
-	
+
 	var model = this.model;
 
 	model
@@ -77,7 +77,7 @@ KeyResultRepository.prototype.getByTitleAndObjectiveId = function(title, objecti
 	var model = this.model;
 
 	model
-			.findOne({ 
+			.findOne({
 				title: title,
 				objectiveId: objectiveId,
 			})
@@ -85,9 +85,9 @@ KeyResultRepository.prototype.getByTitleAndObjectiveId = function(title, objecti
 };
 
 KeyResultRepository.prototype.getAllNotApproved = function(callback) {
- 	
+
 	var model = this.model;
-	
+
 	model
 		.find({
 			isApproved: false,
@@ -97,7 +97,10 @@ KeyResultRepository.prototype.getAllNotApproved = function(callback) {
 		.populate({
 			path: "creator",
 			populate: {
-				path: 'userInfo'
+				path: 'userInfo mentor',
+				populate: {
+					path: 'userInfo'
+				}
 			}
 		})
 		.populate('objectiveId')
