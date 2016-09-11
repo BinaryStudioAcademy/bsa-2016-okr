@@ -97,7 +97,7 @@ class KeyResult extends Component {
 
   handleDelKeyResult() {
     let handler = function() {
-      
+
       if (this.props.mentorId != undefined)
         this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id,
           notifications.otificationApprenticeDeletedKey, this.props.mentorId);
@@ -236,7 +236,7 @@ class KeyResult extends Component {
     }
 
     return (
-      <li className="key-result clearfix tabindex="0" tabIndex="0"">
+      <li className="key-result clearfix" tabIndex="0">
         { notApproved }
 	      { titleElement }
         { deleteElement }
