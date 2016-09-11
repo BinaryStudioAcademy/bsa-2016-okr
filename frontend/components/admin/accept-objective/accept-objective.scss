@@ -208,7 +208,11 @@ accept-objective--search-bar button {
     overflow: hidden;
     display: inline-table;
     margin-top: 20px;
- } }
+    .objective-text-info {
+      min-height: 20px;
+    }
+ } 
+}
  
 @media all and (max-width: 800px) {
   #accept-objective-wrapper .accept-objective-item {
