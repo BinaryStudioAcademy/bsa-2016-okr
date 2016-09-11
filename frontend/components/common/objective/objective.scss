@@ -84,6 +84,14 @@
 		padding: 7px 10px;
 		z-index: 1;
 	}
+
+	.objective-edit{
+		position: absolute;
+		top: 80px;
+		right: 57px;
+		padding: 7px 10px;
+		z-index: 1;
+	}
 	.cancel-button-objective{
 		position: absolute;
 		top: 80px;
@@ -120,14 +128,6 @@
 
 	.hidden {
 		display: none;
-	}
-
-	.objective-edit {
-		position: absolute;
-		bottom: 13px;
-		right: 57px;
-		padding: 7px 10px;
-		z-index: 1;
 	}
 
 	.objective-archive {

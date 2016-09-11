@@ -378,7 +378,7 @@ function setDefaultKeyResultsForObjectives(objectives, keyResults) {
 function getQuarters(users, userObjectives) {
 	var currentYear = CONST.currentYear;
 	var quarters = [1, 2, 3, 4];
-	var years = [currentYear, currentYear + 1];
+	var years = [currentYear];
 	var res = [];
 
 	users.forEach((user) => {
