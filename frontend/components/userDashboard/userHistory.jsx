@@ -14,6 +14,10 @@ class UserHistory extends React.Component{
 		this.getHistoryObjectName = this.getHistoryObjectName.bind(this);
 	}
 
+	componentWillUnmount() {
+		this.props.clearUserDashboardState();
+	}
+
 	getHistoryType(item) {
 		let object = item.type.slice(item.type.indexOf(' ') + 1);
 		if(item.type.indexOf('ADD') != -1)

@@ -50,7 +50,7 @@ class HistoryItemList extends React.Component {
     getHistoryType(item) {
       let object = item.type.slice(item.type.indexOf(' ') + 1);
       if(item.type.indexOf('ADD') != -1)
-        return 'added';
+        return 'added'
       else if (item.type.indexOf('UPDATE') != -1)
         return 'updated'
       else if (item.type.indexOf('CHANGE') != -1)
@@ -58,11 +58,15 @@ class HistoryItemList extends React.Component {
       else if (item.type.indexOf('DELETE') != -1)
         return 'deleted'
       else if (item.type.indexOf('RESTORE') != -1)
-        return 'restored';
+        return 'restored'
       else if (item.type.indexOf('TOOK_APPRENTICE') != -1)
-        return 'took apprentice';
+        return 'took apprentice'
       else if (item.type.indexOf('REMOVED_APPRENTICE') != -1)
-        return 'removed apprentice';
+        return 'removed apprentice'
+      else if (item.type.indexOf('UNARCHIVED') != -1)
+         return 'unarchived'
+      else if (item.type.indexOf('ARCHIVED') != -1)
+         return 'archived'
     }
 
     getHistoryObjectName(historyItem){
