@@ -6,6 +6,7 @@ import './nav-menu.scss';
 
 const NavMenu = (props) => {
 	const isAdmin = (props.localRole === CONST.user.localRole.ADMIN);
+	const count = props.acceptObjective.countObject;
 	
 	const AdminLinksEl = (
 		<ul className="nav-divider-before">
@@ -30,7 +31,7 @@ const NavMenu = (props) => {
 			<li>
 				<Link to="/obj-accept" activeClassName="active">
 					<i className="fi flaticon-checked-1" aria-hidden="true">
-						{/*<div className="badge"><div className="badge-counter">1000</div></div>*/}
+						<div className="badge"><div className="badge-counter">{ count }</div></div>
 					</i>
 					Accept Template
 				</Link>
@@ -44,9 +45,9 @@ const NavMenu = (props) => {
 			<li>
 				<Link to="/admin-recycle-bin" activeClassName="active">
 					<i className="fi flaticon-garbage-1" aria-hidden="true">
-						{/*<div className="badge">
+						<div className="badge">
 							<i className="fi flaticon-worldwide" aria-hidden="true"></i>	
-						</div>*/}
+						</div>
 					</i>
 					Admin Recycle Bin
 				</Link>
@@ -89,6 +90,10 @@ function closeNav() {
 
 	nav.classList.remove('opened');
 	menuBars.classList.remove('active');
+}
+
+function acceptObjectivesCount() {
+
 }
 
 export default NavMenu;

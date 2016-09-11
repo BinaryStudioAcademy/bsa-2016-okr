@@ -16,7 +16,6 @@ class UserHistory extends React.Component{
 
 	getHistoryType(item) {
 		let object = item.type.slice(item.type.indexOf(' ') + 1);
-		// console.log('item',  item)
 		if(item.type.indexOf('ADD') != -1)
 			return (
 				<div className="action-text">
@@ -67,6 +66,26 @@ class UserHistory extends React.Component{
 					<p className="action-description">restored {this.getHistoryObjectName(item)}</p>
 				</div>
 			)
+		else if (item.type.indexOf('UNARCHIVED') != -1)
+			return (
+				<div className="action-text">
+					<p className="author">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+					</p>
+					<p className="action-description">unarchived {this.getHistoryObjectName(item)}</p>
+				</div>
+			)
+		else if (item.type.indexOf('ARCHIVED') != -1)
+			return (
+				<div className="action-text">
+					<p className="author">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+					</p>
+					<p className="action-description">archived {this.getHistoryObjectName(item)}</p>
+				</div>
+			)
 	}
 
 
@@ -96,6 +115,10 @@ class UserHistory extends React.Component{
 			return "fi flaticon-error typeIcon red"
 		else if (item.type.indexOf('RESTORE') != -1)
 			return "fi flaticon-repeat-1 typeIcon green"
+		else if (item.type.indexOf('UNARCHIVED') != -1)
+			return "fi flaticon-bookmark-1 typeIcon green"
+		else if (item.type.indexOf('ARCHIVED') != -1)
+			return "fi flaticon-archive-2 typeIcon orange"
 	}
 
 	render() {

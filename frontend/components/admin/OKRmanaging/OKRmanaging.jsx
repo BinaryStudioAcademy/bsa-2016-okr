@@ -104,7 +104,6 @@ class OKRmanaging extends Component {
 						closeNewObjectiveWindow={ this.closeNewObjectiveWindow } 
 						createNewTemplate={ this.createNewTemplate }
 						addKeyResultToTemplate={ this.props.addKeyResultToTemplate }
-						ref="newObjectiveComponent"
 					/>
 					<div className="OKR-managing app container">
 						<Toolbar/>

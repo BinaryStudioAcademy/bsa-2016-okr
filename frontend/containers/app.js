@@ -12,6 +12,7 @@ import LoadingModal from '../components/common/LoadingModal.jsx';
 import * as categoriesActions from '../actions/categoriesActions';
 import * as myStateActions from '../actions/myStateActions';
 import * as appActions from '../actions/appActions';
+import * as acceptObjective from '../actions/acceptObjective.js';
 
 import '../components/common/fonts/flaticon/_flaticon.scss';
 import '../components/common/fonts/flaticon-1/_flaticon-1.scss';
@@ -26,6 +27,9 @@ class App extends Component {
 		this.props.categoriesActions.getAllCategories();
 		this.props.myStateActions.getMe();
 		this.props.appActions.init();
+
+		this.props.acceptObjective.getNotAprovedObjectivesRequest();
+	  this.props.acceptObjective.getNotAprovedKeysRequest();
 	}
 
 	render() {
@@ -35,7 +39,7 @@ class App extends Component {
 	   <div>
 	    <LoadingModal show={ this.props.isLoading } />
 	    <Header />
-	    <NavMenu localRole={ localRole }/>
+	    <NavMenu localRole={ localRole } acceptObjective={ this.props.acceptObjectives }/>
 	    <MainPage>
 	    { this.props.children }
 	    {
@@ -68,6 +72,7 @@ function mapStateToProps(state) {
 		isLoading: state.app.isLoading,
 		isInitializing: state.app.isInitializing,
 		localRole: state.myState.me.localRole,
+		acceptObjectives: state.acceptObj,
 	};
 }
 
@@ -75,7 +80,8 @@ function mapDispatchToProps(dispatch) {
 	return {
 		categoriesActions: bindActionCreators(categoriesActions, dispatch),
 		myStateActions: bindActionCreators(myStateActions, dispatch),
-		appActions: bindActionCreators(appActions, dispatch)
+		appActions: bindActionCreators(appActions, dispatch),
+		acceptObjective: bindActionCreators(acceptObjective, dispatch),
 	};
 }
 

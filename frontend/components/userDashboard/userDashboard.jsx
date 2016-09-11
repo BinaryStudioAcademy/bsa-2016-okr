@@ -20,8 +20,7 @@ class UserDashboard extends React.Component{
 	}
 
 	componentWillMount() {
-		this.props.getMyHistory(this.props.where)
-		console.log(this.props.historyList);
+		setInterval(() => {this.props.getMyHistory(this.props.where)}, 5000);
 	}
 	componentDidUpdate() {
 		//this.props.getMyHistory();

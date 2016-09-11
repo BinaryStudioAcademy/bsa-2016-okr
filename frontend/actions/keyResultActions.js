@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
+import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
+				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
 
 // Get key results for show autocomplete list
 export const GET_AUTOCOMPLETE_KEY_RESULTS = 'GET_AUTOCOMPLETE_KEY_RESULTS';
@@ -24,15 +26,17 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 
 		return axios.post((`/api/userobjective/${ userObjectiveId }/keyresult/`), body)
 		.then(response => {
-			// console.log('---===¯\\_(ツ)_/¯===---body.routeId',body.routeId);
 
-			if (body.routeId === '') {
+			if (body.isItHomePage === true) {
 				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
 			} else {
+				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
 				dispatch(addNewKeyResultToObjectiveOtherPerson(response.data, userObjectiveId));
 			}
 			dispatch({ type: REMOVE_REQUEST	});
 
+			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
+			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));

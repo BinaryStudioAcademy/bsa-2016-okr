@@ -39,7 +39,20 @@ class Objectives extends Component {
 	}
 
 	handleArchive (changeTo, objectiveId) {
-		this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		let handler = function () {
+			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		}.bind(this);
+
+		let arch = changeTo ? 'archive' : 'unarchive'
+
+		sweetalert({
+			title: `Do you really want to ${arch} this objective?`,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	changeYear(year) {
@@ -143,19 +156,20 @@ class Objectives extends Component {
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
-		let ismyself = true;
+		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
+		let isItHomePage;
 		let archived;
 		let isAdmin = this.props.myState.me.localRole === "admin" ? true : false;
 
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
 			/*console.log('user');*/
-			ismyself = false;
+			isItHomePage = false;
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
 		} else {
 			/*console.log('me');*/
-			ismyself = true;
+			isItHomePage = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
@@ -163,7 +177,7 @@ class Objectives extends Component {
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( ismyself || session._id == userInfo.mentorId || userId == session._id )) {
+				( isItHomePage || session._id == userInfo.mentorId || userId == session._id )) {
 			archived = false;
 		} else {
 			archived = true;
@@ -177,9 +191,10 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    addNewQuarter={ this.handleAddingNewQuarter }
+				    	addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
-						me={ ismyself }
+						isAdmin={ isAdmin }
+						me={ isItHomePage }
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
@@ -196,6 +211,7 @@ class Objectives extends Component {
 						createObjective={ this.createObjective }
 						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
+						isItHomePage={ isItHomePage }
 					/>
 				</div>
 			</div>

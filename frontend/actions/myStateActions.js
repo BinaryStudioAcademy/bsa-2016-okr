@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-
+import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
+				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
 export const GET_MY_OBJECTIVES = 'GET_MY_OBJECTIVES';
 export const RECEIVED_MY_OBJECTIVES_ERROR = 'RECEIVED_MY_OBJECTIVES_ERROR';
 export const RECEIVED_MY_OBJECTIVES = 'RECEIVED_MY_OBJECTIVES';
@@ -143,6 +144,8 @@ export function softDeleteMyObjectiveByIdApi(id, callback, userId) {
 			dispatch(softDeleteMyObjectiveById(id));
 			dispatch({ type: REMOVE_REQUEST	});
 
+			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
+			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));
@@ -165,6 +168,9 @@ export function addNewObjective(body, callback, userId) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
+			
+			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
+			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 
 			/*
 			if (callback != null) {
@@ -232,7 +238,9 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, ca
 				.then(response => {
 					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
-
+					
+					dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
+					dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 					/*
 					if (callback != null) {
 						dispatch(callback(userId));
