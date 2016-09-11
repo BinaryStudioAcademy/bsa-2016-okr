@@ -32,13 +32,12 @@ class ObjectiveList extends Component {
   }
 
   isNotDuplicate(id, title, category) {
-   
     let objectiveIndex = this.props.objectivesList.objectives.findIndex((objective) => {
-      if(objective.title === title && objective.category === category) { 
-        return true;
-      } else {
-        return false;
-      }
+      return (
+        (objective.title === title) 
+        && (objective.category === category) 
+        && (objective._id !== id)
+      );
     });
 
     if(objectiveIndex === -1) {
