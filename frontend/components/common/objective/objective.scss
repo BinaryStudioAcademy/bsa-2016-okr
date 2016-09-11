@@ -79,14 +79,14 @@
 	}
 	.delete-button-objective{
 		position: absolute;
-		bottom: 13px;
-		right: 15px;
+		top: 80px;
+		right: 17px;
 		padding: 7px 10px;
 		z-index: 1;
 	}
 	.cancel-button-objective{
 		position: absolute;
-		bottom: 15px;
+		top: 80px;
 		right: 17px;
 		padding: 7px 10px;
 		z-index: 1;
@@ -111,7 +111,7 @@
 
 	.save{
 		position: absolute;
-		bottom: 15px;
+		top: 80px;
 		right: 57px;
 		padding: 7px 10px;
 		background: #4caf50;
@@ -125,15 +125,15 @@
 	.objective-edit {
 		position: absolute;
 		bottom: 13px;
-		right: 55px;
+		right: 57px;
 		padding: 7px 10px;
 		z-index: 1;
 	}
 
 	.objective-archive {
 		position: absolute;
-		bottom: 49px;
-		right: 15px;
+		top: 45px;
+		right: 17px;
 		padding: 7px 10px;
 		z-index: 1;
 	}
@@ -144,6 +144,7 @@
 		width: 80%;
 		max-height: 80px;
 		margin-bottom: 10px;
+		margin-top: 7px;
 		padding: 10px;
 		margin-right: 50px;
 	}
