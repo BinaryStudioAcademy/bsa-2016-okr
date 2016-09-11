@@ -19,6 +19,8 @@ export const CHANGED_KEYRESULT_SCORE = 'CHANGED_KEYRESULT_SCORE';
 export const CHANGED_KEYRESULT_SCORE_ERROR = 'CHANGED_KEYRESULT_SCORE_ERROR';
 export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API';
 export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS';
+export const GET_ME_BASIC = 'GET_ME_BASIC';
+export const RECEIVED_ME_BASIC = 'RECEIVED_ME_BASIC';
 
 export const CHANGE_ARCHIVE_STATUS = 'CHANGE_ARCHIVE_STATUS';
 export const CHANGE_ARCHIVE_STATUS_LOCAL = 'CHANGE_ARCHIVE_STATUS_LOCAL';
@@ -45,6 +47,23 @@ export function getMe() {
 	};
 }
 
+export function getMeBasic() {
+	return (dispatch, getStore) => {
+		dispatch({ type: GET_ME_BASIC });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.get('/api/user/mebasic/')
+		.then(response => {
+			dispatch(receivedMeBasic(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			dispatch(receivedMyObjectivesError(response));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+	};
+}
+
 export function receivedMyObjectivesError(response) {
 	return {
 		type: RECEIVED_MY_OBJECTIVES_ERROR,
@@ -55,6 +74,13 @@ export function receivedMyObjectivesError(response) {
 export function receivedMyObjectives(data) {
 	return {
 		type: RECEIVED_MY_OBJECTIVES,
+		data: data
+	};
+}
+
+export function receivedMeBasic(data) {
+	return {
+		type: RECEIVED_ME_BASIC,
 		data: data
 	};
 }
@@ -171,7 +197,7 @@ export function addNewObjective(body, callback, userId) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
-			
+
 			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
 			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 
@@ -241,7 +267,7 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, ca
 				.then(response => {
 					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
-					
+
 					dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
 					dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 					/*
@@ -267,9 +293,9 @@ export function changeArchiveStatus(changeTo, objectiveId) {
 	 	return axios.put(`/api/userobjective/${objectiveId}/archive/${changeTo}`)
 	 	.then( response => {
 	 	 	dispatch( { type: REMOVE_REQUEST} );
-	 	 	dispatch( changeArchiveStatusLocal(changeTo, objectiveId)); 
+	 	 	dispatch( changeArchiveStatusLocal(changeTo, objectiveId));
 	 	 })
-	 	// .catch( response =>{ 
+	 	// .catch( response =>{
 	 	// 	dispatch( receivedMyObjectivesError(response.data));
 	 	// 	dispatch({ type: REMOVE_REQUEST	});
 	 	// } );

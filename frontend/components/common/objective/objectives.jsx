@@ -32,6 +32,8 @@ class Objectives extends Component {
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
+
+		this.props.myStateActions.getMe();
 	}
 
 	changeTab(num) {
@@ -149,6 +151,7 @@ class Objectives extends Component {
 	}
 
 	render() {
+		console.log("hey mount");
 		const userId = this.props.userId;
 		const categories = this.props.categories;
 		const { me } = this.props.myState;

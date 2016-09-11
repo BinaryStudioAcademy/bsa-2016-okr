@@ -51,6 +51,12 @@ router.get('/me/', (req, res, next) => {
 	return service.getByIdWithQuarters(id, res.callback);
 });
 
+router.get('/mebasic/', (req, res, next) => {
+	var id = req.session._id;
+
+	return service.getByIdPopulate(id, res.callback);
+});
+
 router.get('/:id', (req, res, next) => {
 	var id = req.params.id;
 

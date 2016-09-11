@@ -15,7 +15,8 @@ import {
 	NEW_QUARTER_ADDED,
 	ADD_NEW_QUARTER_ERROR,
 	CHANGE_ARCHIVE_STATUS,
-	CHANGE_ARCHIVE_STATUS_LOCAL
+	CHANGE_ARCHIVE_STATUS_LOCAL,
+	RECEIVED_ME_BASIC
 } from '../actions/myStateActions';
 
 import {
@@ -58,6 +59,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
+		case RECEIVED_ME_BASIC: {
+			const { data } = action;
+
+			return Object.assign({}, state, {
+				me: isEmpty(data) ? state.me : data,
+			});
+		}
+
 		case CHANGE_TAB: {
 			const { selectedTab } = action;
 
@@ -93,7 +102,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 
-		case CHANGE_ARCHIVE_STATUS: {	
+		case CHANGE_ARCHIVE_STATUS: {
 
 			console.log('archive');
 
