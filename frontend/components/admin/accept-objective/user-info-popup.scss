@@ -1,12 +1,13 @@
 .accept-objective-item{
   .hint {
       background-color: #f3f6f7;
-      z-index: 69;
+      z-index: 5;
       position: absolute;
       padding: 7px;
       padding-right: 10px;
-      top: 70px;
-      left: 50px;
+      //top: 70px;
+      left: 17px;
+      bottom: 17px;
       border-radius: 3px;
       -webkit-transition: all .2s;
       -moz-transition: all .2s;
@@ -51,7 +52,7 @@
     color: #555;
     font-size: 12px;
     font-weight:normal;
-    
+
   }
 
   .mentor-title {
