@@ -20,6 +20,9 @@ class Quarterbar extends Component {
          this.props.changeTab(parseInt(event.target.dataset.id));
          tab_click_feedback.call(this, event);
 
+         let quarter = document.querySelector('#quarters li.active');
+         quarter.blur();
+
       } else if(event.target.matches('li.not-exist')){
 
          //adding new quarter to database, API call
@@ -66,7 +69,8 @@ function getQuarters() {
 
    for(let i = 0; i < 4; i++){
       if(quarters[i] != undefined){
-         quarters_to_show.push( <li
+         quarters_to_show.push( <li 
+            tabIndex="0"
             key={i}
             data-id={quarters[i].index}
             className={quarters[i].index == current_tab ? 'active' : ''}>
@@ -74,11 +78,11 @@ function getQuarters() {
       } else {
          if(isMe != undefined && isMe == true || (mentorId == session._id)){
             quarters_to_show.push(
-               <li className="not-exist" data-id={i + 1} key={i + 1}>Open {quarters_prefixes[i]} quarter</li>
+               <li className="not-exist" data-id={i + 1} key={i + 1} tabIndex="0">Open {quarters_prefixes[i]} quarter</li>
             )
          } else {
             quarters_to_show.push(
-               <li className="disabled" key={i + 1}>{quarters_prefixes[i]} quarter</li>
+               <li className="disabled" key={i + 1} tabIndex="0">{quarters_prefixes[i]} quarter</li>
             )
          }
       }

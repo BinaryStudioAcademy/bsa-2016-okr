@@ -65,9 +65,9 @@ class RoleMapping extends React.Component {
                     <div className="table">
                        <div className="table-head">
                              <h3 className="col-1">Avatar</h3>
-                             <h3 className="col-2" onClick={this.setSortingByName.bind(this)} ><i id="name-field" className="fa fa-sort"></i>Name</h3>
+                             <h3 className="col-2" onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort"></i>Name</h3>
                              <h3 className="col-3">E-mail</h3>
-                             <h3 className="col-4" onClick={this.setSortingByGlobalRole.bind(this)} ><i id="global-role-field" className="fa fa-sort"></i>Global role</h3>
+                             <h3 className="col-4" onClick={this.setSortingByGlobalRole.bind(this)} tabIndex='0'><i id="global-role-field" className="fa fa-sort"></i>Global role</h3>
                              <h3 className="col-5">Local role</h3>
                        </div>
 
@@ -91,7 +91,7 @@ class RoleMapping extends React.Component {
   setSortingByGlobalRole() {
       
       let globalRoleField = document.querySelector(".table-head #global-role-field");
-
+      globalRoleField.parentElement.blur();
       this.props.setSortingByName(NOT_SORTED);
 
       if (globalRoleField != null) {
@@ -128,7 +128,7 @@ class RoleMapping extends React.Component {
   setSortingByName() {
       
       let nameField = document.querySelector(".table-head #name-field");
-
+      nameField.parentElement.blur();
       this.props.setSortingByGlobalRole(NOT_SORTED);
 
       if (nameField != null) {

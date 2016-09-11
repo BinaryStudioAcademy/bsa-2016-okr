@@ -30,6 +30,12 @@
       pointer-events: none;
     }
   }
+  button{
+    .btn-blue:focus{
+      background-color: darken($color-blue, 10%);
+      color: #fff;
+    }
+  }
 }
 
 .history-filter-container {

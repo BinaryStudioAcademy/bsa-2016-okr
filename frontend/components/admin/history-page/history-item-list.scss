@@ -75,6 +75,13 @@
 	.bold{
 		font-weight: bold;
 	}
+	.target{
+		a:focus{
+			i{
+				color: #2196f3;
+			}
+		}
+	}
 
 }
 

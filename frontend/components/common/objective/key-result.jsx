@@ -95,7 +95,7 @@ class KeyResult extends Component {
     }
 
     return (
-      <li className="key-result clearfix">
+      <li className="key-result clearfix" tabindex="0" tabIndex="0">
         { notApproved }<div className='key-result-title'>{ item.templateId.title }</div>
 	      { editSave }
         { deleteEl }

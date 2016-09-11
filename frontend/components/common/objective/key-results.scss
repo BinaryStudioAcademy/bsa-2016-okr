@@ -16,6 +16,13 @@
     cursor: pointer;
     padding: 7px 10px;
     margin-bottom: -4px;
+
+    &:focus{
+			outline: none;
+			-webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+			-moz-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+			box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+		}
   }
 
   .display {
@@ -45,6 +52,22 @@
         cursor: pointer;
       }
 
+      .btn-red-hover:focus{
+        color: #fff;
+        background-color: darken($color-red, 10%);
+      }
+      .btn-blue-hover:focus{
+        color: #fff;
+        background-color: darken($color-blue, 10%);
+      }
+     	.btn-red:focus{
+        color: #fff;
+        background-color: darken($color-red, 10%);
+      }
+      .btn-green:focus{
+        color: #fff;
+        background-color: darken($color-green, 10%);
+      }
       div {
         display: inline-block;
       }
@@ -153,4 +176,3 @@
     }
   }
 }
-

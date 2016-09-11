@@ -51,6 +51,15 @@
 		background-size: contain;
 		background-color: white;
 	}
+
+	a[href]:focus{
+		.userItemDiv{
+			background-color: #fff;
+		}
+		::-webkit-progress-bar{
+			border: 4px solid #fff;
+		}
+	}
 }
 
 .listOfUsers {
@@ -78,9 +87,10 @@
 		
 		&:hover{
 			background-color: #fff;
-		}
-		&:hover ::-webkit-progress-bar{
-			border: 4px solid #fff;
+			
+			::-webkit-progress-bar{
+				border: 4px solid #fff;
+			}
 		}
 	}
 	

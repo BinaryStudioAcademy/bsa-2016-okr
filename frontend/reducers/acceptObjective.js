@@ -190,10 +190,10 @@ function updateVisibleItems(items, filter) {
 	{
 		for (let i = 0; i < items.length; i++) {
 
-			if (items[i].userName.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				items[i].title.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				items[i].type.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				items[i].category.toUpperCase().indexOf(filter.toUpperCase()) === 0) {
+			if (items[i].userName.toUpperCase().indexOf(filter.toUpperCase()) !== -1 ||
+				items[i].title.toUpperCase().indexOf(filter.toUpperCase()) !== -1 ||
+				items[i].type.toUpperCase().indexOf(filter.toUpperCase()) !== -1 ||
+				items[i].category.toUpperCase().indexOf(filter.toUpperCase()) !== -1) {
 				visibleItems.push(items[i]);
 			}
 		}

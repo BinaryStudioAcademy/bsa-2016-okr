@@ -119,30 +119,31 @@ accept-objective--search-bar button {
   margin-top: 0px;
   }
 
-#accept-objective-wrapper .accept-objective-item .red-hover:hover {
-  background: $color-red;
-  color: white;
-}
 
-#accept-objective-wrapper .accept-objective-item .green-hover:hover {
-  background: $color-green;
-  color: white;
-}
+#accept-objective-wrapper .accept-objective-item {
+  .buttons{
+    float: right;
 
-#accept-objective-wrapper .accept-objective-item  button {
-  float: right;
-  height: 26px;
-  background: #CFD8DC;
-  border-radius: 4px;
-  border: none;
-  color: #555;
-  text-align: center;
-  -webkit-transition: all .1s;
-  -moz-transition: all .1s;
-  -o-transition: all .1s;
-  transition: all .1s;
-  margin-left: 15px;
-  padding: 5px 10px;
+    .btn-green-hover:focus,
+    .btn-red-hover:focus {
+      color: #fff;
+    }
+    .btn-green-hover {
+      &:focus {
+        background-color: darken($color-green, 10%);
+      }
+    }
+    .btn-red-hover {
+      &:focus {
+        background-color: darken($color-red, 10%);
+      }
+    }
+    button{
+      display: inline-block;
+      padding: 5px 10px;
+      margin-left: 10px;
+    }
+  }
 }
 
 #accept-objective-wrapper .accept-objective-item .left-column {

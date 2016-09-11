@@ -52,7 +52,9 @@
 		position: relative;
 		background: lighten($color-blue-grey, 50%);
 	}
-
+	.category-title:focus{
+		border-radius: 3px;
+	}
 	p:before {
 		content: '';
 		display: block;
@@ -89,6 +91,23 @@
 		padding: 7px 10px;
 		z-index: 1;
 	}
+
+	.btn-red-hover:focus{
+    color: #fff;
+    background-color: darken($color-red, 10%);
+ 	}
+  .btn-blue-hover:focus{
+    color: #fff;
+    background-color: darken($color-blue, 10%);
+  }
+  .btn-red:focus{
+  	color: #fff;
+  	background-color: darken($color-red, 10%);
+ 	}
+  .btn-green:focus{
+    color: #fff;
+    background-color: darken($color-green, 10%);
+  }
 
 	.save{
 		position: absolute;

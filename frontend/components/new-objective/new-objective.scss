@@ -42,7 +42,14 @@
     }
     &:focus{
       outline: none;
+      color: #000000;
+      box-shadow: none;
     }
+  }
+  .new-key-result:focus{
+    color: #449d48;
+    text-decoration: underline;
+    box-shadow: none;
   }
 }
 
@@ -57,4 +64,7 @@ button#new-obj-submit-btn {
   float: left;
   margin-right: 10px;
   color: #fffde8;
+  &:focus{
+    background-color: darken($color-green, 10%);
+  }
 }

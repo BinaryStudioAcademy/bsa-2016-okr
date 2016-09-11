@@ -27,7 +27,7 @@ class KeyResult extends React.Component {
 		}
 		return (
 				<li className="keyresult-group">
-					<i className="fi flaticon-multiply delete-new-key-result" title='Cancel' onClick={this.handleDelKeyRes} aria-hidden="true"></i>
+					<i className="fi flaticon-multiply delete-new-key-result" title='Cancel' tabIndex='0' onClick={this.handleDelKeyRes} aria-hidden="true"></i>
 					<input type='text' className='new-key-result-title' ref="keyResultTitle" 
 									 placeholder='Enter key result title' />
 					<select className='new-key-result-difficulty' ref="keyResultDifficulty" >

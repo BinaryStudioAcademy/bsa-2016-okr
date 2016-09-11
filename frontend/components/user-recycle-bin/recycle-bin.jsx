@@ -23,6 +23,8 @@ class RecycleBin extends Component {
 	}
 
 	handleFilterButton() {
+		let button = document.querySelector("button.btn-filter");
+      button.blur();
 		let show = this.props.recycleBin.showRecycleBinFilters;
 		this.props.showFilters(!show);
 	}

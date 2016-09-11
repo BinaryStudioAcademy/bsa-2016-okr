@@ -43,6 +43,11 @@ aside#navbar ul {
 			background-color: $primary-color;
 			color: #ffffff;
 		}
+		a:focus {
+			outline: none;
+			background-color: $primary-color;
+			color: #ffffff;
+		}
 		span {
 			pointer-events: none;
 		}

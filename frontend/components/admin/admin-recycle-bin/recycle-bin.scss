@@ -77,6 +77,10 @@ body {
 			}
 		}
 	}
+	button.btn-filter:focus{
+		background-color: darken($color-blue, 10%);
+		color: #fff;
+	}
 }
 
 #rec-bin-wrapper {
@@ -101,7 +105,20 @@ body {
 
 	& .width-30perc { width: 25%; }
 
-	& .width-5perc { width: 60px; }
+	& .width-5perc { 
+		width: 60px; 
+		padding: 4px;
+		button{
+			padding: 7px 16px;
+		}
+		button:focus{
+			background-color: $color-blue;
+			color: #fff;
+		}
+		i{
+			font-size: 20px;
+		}
+	}
 
 	& .width-85perc {
 		width: 100%;

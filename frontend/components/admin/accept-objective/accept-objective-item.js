@@ -13,9 +13,10 @@ class AcceptObjectiveItem extends Component {
 	render() {
 		  return (
 		  	<div className="accept-objective-item">
-		  		<button className="red-hover" onClick={this.decline.bind(this)}>Decline</button>
-			  	<button className="green-hover" onClick={this.accept.bind(this)}>Accept</button>
-
+			  	<div className='buttons'>
+			  		<button type='button' className="btn btn-green-hover" onClick={this.accept.bind(this)}>Accept</button>
+			  		<button type='button' className="btn btn-red-hover" onClick={this.decline.bind(this)}>Decline</button>	
+				  </div>
 			    <div className="objective-general-info">
 				    <span className="type">{this.props.item.type}</span>
 				    <span className="margin-right-23px category">{this.props.item.category}</span>

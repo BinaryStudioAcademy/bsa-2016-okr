@@ -158,7 +158,7 @@ class NewObjCredentials extends Component {
 				<div>
 					<label htmlFor="new-key-result-title">Key result</label>
 					{ keyResults }
-					<p className="new-key-result" onClick={ this.addNewKeyResult }>Add new key results</p>
+					<p className="new-key-result" onClick={ this.addNewKeyResult } tabIndex='0'>Add new key results</p>
 				</div>
 				<button type="button" id="new-obj-submit-btn" onClick={ this.createTemplate }>Add new objective</button>
 			</div>
