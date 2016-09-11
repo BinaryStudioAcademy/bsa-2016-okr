@@ -39,7 +39,6 @@ accept-objective--search-bar button {
   width: 100%;
   margin: 15px auto 0px;
   font-size: 20px;
-  min-width: 550px;
 }
 
 #accept-objective-wrapper .row {
@@ -188,7 +187,9 @@ accept-objective--search-bar button {
 
 #accept-objective-wrapper .accept-objective-item  span.category {
   background-color: $color-green;
-  margin-left: 10px;
+ }
+ #accept-objective-wrapper .accept-objective-item  span.type {
+  margin-right: 10px;
  }
 
 #accept-objective-wrapper .accept-objective-item  {
@@ -196,23 +197,10 @@ accept-objective--search-bar button {
   position: relative;
   clear: both;
 }
-/*
-@media screen and (max-width: 1475px) {
-  #accept-objective-wrapper .accept-objective-item {
-    width: 48.8%;
-    margin-right: 2%;
-    background: #f9fafb;
-    border: 1px solid #ddd;
-    border-radius: 3px 3px 0 3px;
-    overflow: hidden;
-    display: inline-table;
-    margin-top: 20px;
- } } */
 
  @media all and (max-width: 1300px) {
   #accept-objective-wrapper .accept-objective-item {
     width: 100%;
-    min-width: 550px;
     margin-right: 0;
     background: #f9fafb;
     border: 1px solid #ddd;
@@ -221,3 +209,11 @@ accept-objective--search-bar button {
     display: inline-table;
     margin-top: 20px;
  } }
+ 
+@media all and (max-width: 800px) {
+  #accept-objective-wrapper .accept-objective-item {
+    .objective-text-info {
+      min-height: 20px;
+    }
+  } 
+}

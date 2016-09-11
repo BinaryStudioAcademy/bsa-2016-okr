@@ -169,28 +169,57 @@
 
 @media all 
 and (max-width: 1400px)
-and (min-width: 900px)
+and (min-width: 550px)
 {
+	.list-of-users-dashboard{
+		margin: 10px auto;
+		.dashboard .countInfo p{
+			width: 287px;
+			margin: 0 auto;
+		}
+	}
 	.listOfUsers {
 		margin-left: 0%;
 		.userItemDiv{
 			width: 100%;
 			margin-left: 0%;
-			display: block;
+			display: block;	
+		}
+	}
+}
 
-			.progressTitle {
-				margin-left: 2%;
-				font-size: 14px;
+@media all 
+and (max-width: 550px)
+{
+	.list-of-users-dashboard{
+		margin: 10px auto;
+		.dashboard .countInfo p{
+			width: 287px;
+			margin: 0 auto;
+		}
+	}
+	.listOfUsers {
+		margin-left: 0%;
+			.userItemDiv{
+				width: 100%;
+				margin-left: 0%;
+				display: block;
+				height: auto;
 			}
-			.progress-bar{
-				margin-right: 50px; 
-				width: 30%;
-				padding-top: 10px;
-				
-				.progressValue {
-					top: 30px;
+			.userItem{
+				.userInfo {
+			    width: 100%;
+			  }
+				.progress-bar{
+					float: none;
+					width: 220px;
+					margin-left: 5px;
+					padding-top: 5px;
+					
+					.progressValue {
+						top: 25px;
+					}
 				}
 			}	
-		}
 	}
 }
