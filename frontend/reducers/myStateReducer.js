@@ -16,19 +16,24 @@ import {
 	ADD_NEW_QUARTER_ERROR,
 	CHANGE_ARCHIVE_STATUS,
 	CHANGE_ARCHIVE_STATUS_LOCAL
-
 } from '../actions/myStateActions';
 
 import {
 	ADD_NEW_KEY_RESULT_TO_OBJECTIVE
 } from '../actions/keyResultActions';
 
+import { SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE,
+		     CANCEL_EDIT_KEY_RESULT} from '../actions/myStateActions';
+
 const initialState = {
 	selectedTab: currentQuarter,
 	selectedYear: currentYear,
 	me: {
 		"localRole": ""
-	}
+	},
+	editing: false,
+	activeKeyResult: '',
+	editingKeyResult: false
 };
 
 export default function myObjectivesReducer(state = initialState, action = {}) {
@@ -188,6 +193,23 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			console.log(data);
 
 			return state;
+		}
+
+		case SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE: {
+			const { activeKeyResult } = action;
+
+			return Object.assign({}, state, {
+				activeKeyResult,
+				editingKeyResult: true,
+				editing: false
+			})
+		}
+
+		case CANCEL_EDIT_KEY_RESULT: {
+			return Object.assign({}, state, {
+				editing: false,
+				editingKeyResult: false
+			})
 		}
 
 		default: {

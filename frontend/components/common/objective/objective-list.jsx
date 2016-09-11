@@ -52,15 +52,20 @@ class ObjectiveList extends React.Component{
 					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
-							isArchived = { item.isArchived }
-							isAdmin = { isAdmin }
-							mentorId = { mentorId }
-							changeArchive = { changeArchive }
-              updateUserObjectiveApi = { updateUserObjectiveApi }
-							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
-							changeKeyResultScoreOne={ changeKeyResultScore }
-							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
-							isItHomePage = { isItHomePage }
+																	isArchived = { item.isArchived }
+																	isAdmin = { isAdmin }
+																	mentorId = { mentorId }
+																	changeArchive = { changeArchive }
+										              updateUserObjectiveApi = { updateUserObjectiveApi }
+																	softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
+																	changeKeyResultScoreOne={ changeKeyResultScore }
+																	softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+																	isItHomePage = { isItHomePage }
+																	setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
+																	editing = { this.props.editing }
+																	activeKeyResult = { this.props.activeKeyResult }
+																	editingKeyResult = { this.props.editingKeyResult }
+																	cancelEdit = { this.props.cancelEdit }
 						/>
 					});
 

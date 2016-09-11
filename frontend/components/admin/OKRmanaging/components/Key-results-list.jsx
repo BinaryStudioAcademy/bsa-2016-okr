@@ -130,7 +130,7 @@ class KeyResults extends Component {
 			let reqBody = {
 				title: title,
 				difficulty: difficulty
-			}
+			};
 			
 			this.props.editKeyResult(id, reqBody);
 			sweetalert.close();

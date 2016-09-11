@@ -156,6 +156,10 @@ class Objectives extends Component {
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
+		let editing = false;
+		let activeKeyResult = '';
+		let	editingKeyResult = false;
+
 		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
 		let isItHomePage;
 		let archived;
@@ -173,6 +177,9 @@ class Objectives extends Component {
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
+			editing = this.props.myState.editing;
+			activeKeyResult = this.props.myState.activeKeyResult;
+			editingKeyResult = this.props.myState.editingKeyResult;
 		}
 
 		if (( CONST.currentYear < selectedYear ||
@@ -191,7 +198,7 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    	addNewQuarter={ this.handleAddingNewQuarter }
+				    addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
 						me={ isItHomePage }
@@ -212,6 +219,11 @@ class Objectives extends Component {
 						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage={ isItHomePage }
+						setActiveKeyResultOnHomePage = { this.props.myStateActions.setActiveKeyResultOnHomePage }
+						editing = { editing }
+						activeKeyResult = { activeKeyResult }
+						editingKeyResult = { editingKeyResult }
+						cancelEdit = { this.props.myStateActions.cancelEdit }
 					/>
 				</div>
 			</div>

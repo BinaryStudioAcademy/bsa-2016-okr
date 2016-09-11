@@ -46,6 +46,12 @@
       background-color: #eaeaea;
       padding: 10px 15px;
 
+      .keyResult-title{
+        width: 40%;
+        padding: 4px 8px;
+        margin-top: -4px;
+      }
+
       .notApproved {
         display: inline-block;
         margin-right: 8px;
@@ -119,10 +125,23 @@
 
       .key-result-edit-button {
         margin-top: -4px;
-        //margin-left: 15px;
-        margin-right: 5px;
+        margin-left: 10px;
         display: inline-block;
-        float: left;
+        float: right;
+        box-sizing: border-box;
+        font-size: 15px;
+        padding: 2px;
+        height: 1.7em;
+        width: 1.7em;
+        line-height: 1.5em;
+        text-align: center;
+      }
+
+      .key-result-cancel-button {
+        margin-top: -4px;
+        margin-left: 5px;
+        display: inline-block;
+        float: right;
         box-sizing: border-box;
         font-size: 15px;
         padding: 2px;

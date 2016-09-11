@@ -23,6 +23,9 @@ export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS = 'SOFT_DELETE_OBJEC
 export const CHANGE_ARCHIVE_STATUS = 'CHANGE_ARCHIVE_STATUS';
 export const CHANGE_ARCHIVE_STATUS_LOCAL = 'CHANGE_ARCHIVE_STATUS_LOCAL';
 
+export const SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE = 'SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE';
+export const CANCEL_EDIT_KEY_RESULT = 'CANCEL_EDIT_KEY_RESULT';
+
 const session = require('../../backend/config/session');
 
 export function getMe() {
@@ -288,4 +291,20 @@ export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, data)
 		keyResultId,
 		data,
 	};
-};
+}
+
+export function setActiveKeyResultOnHomePage(activeKeyResult) {
+	const action = {
+		type: SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE,
+		activeKeyResult
+	};
+
+	return action;
+}
+
+export function cancelEdit() {
+	const action = {
+		type: CANCEL_EDIT_KEY_RESULT,
+	};
+	return action;
+}
