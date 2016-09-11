@@ -8,7 +8,7 @@ aside#navbar {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	width: $left-nav-width;
+	width: auto;
 	background-color: lighten($primary-color, 5%);
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -130,3 +130,9 @@ aside#navbar #users-link{
 	margin-bottom: 1em;
 	width: 75%;
 }
+
+@media all and (max-width: 1599px) {
+	 aside#navbar {
+		 width: $left-nav-width;
+	 }
+ }
