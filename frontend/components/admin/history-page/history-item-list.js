@@ -22,14 +22,6 @@ class HistoryItemList extends React.Component {
         return item.keyId || item.commentId || item.categoryId || item.userId || item.objectiveId;
     }
 
-    componentWillMount() {
-        this.props.getHistoryItems();
-    }
-
-    componentWillUnmount(){
-    	this.props.clearState();
-    }
-
     onSort(sort) {
         this.props.setSort(sort);
         this.props.getFilteredItems();
