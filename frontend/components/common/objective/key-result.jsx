@@ -177,6 +177,7 @@ class KeyResult extends Component {
 		      />
 	      );
 
+
 	      //THEN END**************************************
       } else {
 	      score = this.state.score;
@@ -227,7 +228,24 @@ class KeyResult extends Component {
 
       }
     } else {
+
       score = this.props.item.score;
+      
+    	  scoreElement = (
+		      <span className='score'>{ score }</span>
+	      );
+
+    	  titleElement = (
+		      <div className='key-result-title'>{ item.templateId.title }</div>
+		      );
+
+    	ratingElement = (
+		      <Rating
+			      rating = { this.state.rating }
+			      isEdit = { false }
+		      />
+	      );
+
     }
 
     return (
