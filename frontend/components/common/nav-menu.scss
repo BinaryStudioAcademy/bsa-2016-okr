@@ -83,6 +83,7 @@ aside#navbar ul {
 
 			& i,
 			& .badge-counter {
+				border-radius: 100px;
 				background-color: #354b60;
 				display: inline-block;
 				position: absolute;
@@ -93,10 +94,21 @@ aside#navbar ul {
 				font-size: .55em;
 			}
 
+			.badge-counter {
+				padding: 1px;
+			}
+
+			& .notification {				
+				background-color: $color-red;			
+				color: #FFF;
+				font-size: 15px;
+			}
+
 			& i {
 				border-radius: 100%;
 			}
 		} 
+
 	}
 }
 
