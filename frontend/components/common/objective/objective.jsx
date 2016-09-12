@@ -90,7 +90,7 @@ class ObjectiveItem extends Component {
 		let archiveButton;
 		let isArchived = this.props.isArchived;
 		let isAdmin = this.props.isAdmin;
-		let notApproved;
+		let approved;
 
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
@@ -104,7 +104,7 @@ class ObjectiveItem extends Component {
 										onClick={() => {changeArchive(true, objective._id)}}>
 										<i className="fi flaticon-archive-2"></i>
 										</button>)
-		else 
+		else
 			archiveButton = (<button className="btn btn-blue-hover objective-archive"
 										title="unarchive"
 										onClick={() => {changeArchive(false, objective._id)}}>
@@ -141,8 +141,8 @@ class ObjectiveItem extends Component {
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
 
-			if (!objective.templateId.isApproved) {
-        notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
+			if (objective.templateId.isApproved) {
+        approved = <span className='fi flaticon-push-pin approved' title='approved'></span>
       }
 		}
 	//	console.log("objective >>> ", objective);
@@ -150,7 +150,7 @@ class ObjectiveItem extends Component {
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
-				{ notApproved }
+				{ approved }
 				<div className='name'>{ objective.title ? objective.title : objective.templateId.title }</div>
 				<ObjectiveDescription
 						ref="description"

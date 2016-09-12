@@ -129,7 +129,7 @@ class KeyResult extends Component {
     let score;
 	  let editSave;
 	  let cancelElement;
-	  let notApproved;
+	  let approved;
 	  let titleElement;
 	  let rangeElement;
     let deleteElement;
@@ -196,8 +196,9 @@ class KeyResult extends Component {
 		        </button>
 		      );
 
-		      notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
-	      }
+	      } else {
+          approved = (<span className='fi flaticon-push-pin approved' title='approved'></span>);
+        }
 
 	      titleElement = (
 		      <div className='key-result-title'>{ item.templateId.title }</div>
@@ -230,7 +231,7 @@ class KeyResult extends Component {
     } else {
 
       score = this.props.item.score;
-      
+
     	  scoreElement = (
 		      <span className='score'>{ score }</span>
 	      );
@@ -250,7 +251,7 @@ class KeyResult extends Component {
 
     return (
       <li className="key-result clearfix" tabIndex="0">
-        { notApproved }
+        { approved }
 	      { titleElement }
         { deleteElement }
 	      { cancelElement }
