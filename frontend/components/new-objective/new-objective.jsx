@@ -34,7 +34,7 @@ const NewObjective = ({
 	);
 }
 
-NewObjective.PropTypes = {
+NewObjective.propTypes = {
 	createNewTemplate: PropTypes.func.isRequired,
 	addKeyResultToTemplate: PropTypes.func.isRequired,
 	removeKeyResultFromTemplate: PropTypes.func.isRequired,

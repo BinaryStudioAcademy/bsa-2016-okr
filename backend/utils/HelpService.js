@@ -6,6 +6,8 @@ module.exports = {
 	getDifficultyNumber: getDifficultyNumber,
 	getNumberDifficulty: getNumberDifficulty,
 	getValidDifficulty: getValidDifficulty,
+	getUniqueValuesFromArray: getUniqueValuesFromArray,
+	getUniqueValuesFromArrayOfObjects: getUniqueValuesFromArrayOfObjects,
 };
 
 function debounce(func, wait, immediate) {
@@ -62,4 +64,32 @@ function getNumberDifficulty(num) {
 
 function getValidDifficulty(value) {
 	return CONST.keyResult[value.toUpperCase()];
+}
+
+function getUniqueValuesFromArray(arr) {
+	var keys = {};
+	var res = [];
+
+	arr.forEach((el) => {
+		if(!keys[el]) {
+			keys[el] = true;
+			res.push(el);
+		}
+	});
+
+	return res;
+}
+
+function getUniqueValuesFromArrayOfObjects(arr, uniqueProp) {
+	var keys = {};
+	var res = [];
+
+	arr.forEach((el) => {
+		if(!keys[el[uniqueProp]]) {
+			keys[el[uniqueProp]] = true;
+			res.push(el);
+		}
+	});
+
+	return res;
 }
