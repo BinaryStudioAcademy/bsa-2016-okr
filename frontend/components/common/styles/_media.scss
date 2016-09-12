@@ -17,7 +17,7 @@ $desktop: 1440px;
 /* Tablet */
 @mixin tablet {
   @media screen
-  and ( min-width: #{$mobile + 1px} )
+  and ( min-width: #{$mobile} )
   and ( max-width: #{$tablet} ) {
     @content;
   }
@@ -26,7 +26,7 @@ $desktop: 1440px;
 /* Laptops */
 @mixin laptop {
   @media screen
-  and ( min-width: #{$tablet + 1px} )
+  and ( min-width: #{$tablet} )
   and ( max-width: #{$laptop} ) {
     @content;
   }
@@ -35,7 +35,7 @@ $desktop: 1440px;
 /* Desktops */
 @mixin desktop {
   @media screen
-  and ( min-width: #{$laptop + 1px} )
+  and ( min-width: #{$laptop} )
   and ( max-width: #{$desktop} ) {
     @content;
   }
@@ -44,7 +44,7 @@ $desktop: 1440px;
 /* Large desktops */
 @mixin desktopL {
   @media screen
-  and ( min-width: #{$desktop + 1px} ) {
+  and ( min-width: #{$desktop} ) {
     @content;
   }
 }
