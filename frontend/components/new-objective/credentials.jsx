@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from "../../actions/okrManagingActions.js";
+import React, { Component, PropTypes } from 'react';
 
 import sweetalert from 'sweetalert';
 
@@ -58,7 +55,7 @@ class NewObjCredentials extends Component {
 		}  
 
 		this.props.addKeyResultToTemplate(keyResults);
-		if(this.props.okrManaging.keyResults.length != 1) {
+		if(this.props.keyResults.length != 1) {
 			this.props.removeKeyResultFromTemplate(index);
 		}
 	}
@@ -115,14 +112,6 @@ class NewObjCredentials extends Component {
 		} else {
 			this.props.createNewTemplate(reqBody);
 
-			// this.refs.newObjectiveTitle.value = '';
-			// this.refs.newObjectiveDescription.value = '';
-
-			// for(let i=0; i < keyResultTitleElements.length; i++) {
-			// 	keyResultTitleElements[i].value = '';
-			// 	keyResultDifficultyElements[i].value = CONST.keyResult.EASY;
-			// }
-
 			keyResults = [''];
 			this.props.addKeyResultToTemplate(keyResults);
 		}
@@ -131,21 +120,20 @@ class NewObjCredentials extends Component {
 	render() {
 		let keyResults;
 		
-		if(this.props.okrManaging.keyResults.length != 0) {
-			keyResults = this.props.okrManaging.keyResults.map((keyResult, index) => {
-				return <NewKeyResult keyResult={ this.props.okrManaging.keyResults } delete={ this.delete } key={ index } num={ index }/>
+		if(this.props.keyResults.length != 0) {
+			keyResults = this.props.keyResults.map((keyResult, index) => {
+				return <NewKeyResult keyResult={ this.props.keyResults } delete={ this.delete } key={ index } num={ index }/>
 			});
 		} else {
 			keyResults = (<NewKeyResult delete={ this.delete }/>);
 		}
-
 		return (
 			<div id="new-obj-creds">
 				<div className="title-group">
 					<label htmlFor="new-obj-title">New objective title</label>
 					<input ref="newObjectiveTitle" type="text" placeholder="Title" id="new-obj-title" />
 					<select ref="newObjectiveCategory" className='template-category' id="new-obj-category">
-						{ this.props.categories.list.map((category, index) => {
+						{ this.props.categories.map((category, index) => {
 								return <option key={ index } value={ category._id }>{ category.title }</option>
 							})
 						}
@@ -166,16 +154,13 @@ class NewObjCredentials extends Component {
 	}
 }
 
-// function mapDispatchToProps(dispatch) {
-// 	return bindActionCreators(actions, dispatch);
-// }
+NewObjCredentials.propTypes = {
+	createNewTemplate: PropTypes.func.isRequired,
+	addKeyResultToTemplate: PropTypes.func.isRequired,
+	removeKeyResultFromTemplate: PropTypes.func.isRequired,
+	closeNewObjectiveWindow: PropTypes.func.isRequired,
+	categories: PropTypes.array.isRequired,
+	keyResults: PropTypes.array.isRequired,
+};
 
-function mapStateToProps(state) {
-	return {
-		okrManaging: state.okrManaging,
-		categories: state.categories
-	};
-}
-
-const NewObjCredentialsConnected = connect(mapStateToProps, null)(NewObjCredentials);
-export default NewObjCredentialsConnected
+export default NewObjCredentials;
