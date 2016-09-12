@@ -43,12 +43,35 @@ class HistoryPage extends React.Component {
    }
 
    render() {
+
+      if (this.props.history.historyItems.length === 0) {
+         
+         return (
+
+            <div>
+               <CentralWindow fullScreen={ true }>
+                  <div className="history-page">
+                     <div id="top-panel">
+                        <div className="history-page-header">
+                              <div className="history-page-title">
+                                 <p><span>History</span></p>
+                              </div>
+                        </div>
+                     </div>
+
+                     <h1 className="placeholder">History is empty!</h1>
+
+                  </div>
+               </CentralWindow>
+            </div>
+         );
+      }
+   
       return (
          <div>
             <CentralWindow fullScreen={ true }>
                <div className="history-page">
                   <div id="top-panel">
-                     {/*historyItems: {console.log(this.props.historyItems)}*/}
                      <div className="history-page-header">
                            <div className="history-page-title">
                               <p><span>History</span></p>
@@ -71,6 +94,14 @@ class HistoryPage extends React.Component {
          </div>
       )
    }
+
+    componentWillMount() {
+        this.props.getHistoryItems();
+    }
+
+    componentWillUnmount(){
+      this.props.clearState();
+    }
 }
 
 function mapDispatchToProps(dispatch) {

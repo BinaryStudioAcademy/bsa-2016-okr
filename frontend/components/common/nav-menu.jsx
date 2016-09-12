@@ -91,11 +91,15 @@ const NavMenu = (props) => {
 };
 
 function closeNav() {
+
 	let nav = document.getElementById('navbar');
 	let menuBars = document.getElementById('bars');
 
-	nav.classList.remove('opened');
-	menuBars.classList.remove('active');
+    if (nav != null && nav.classList.contains("opened"))
+		nav.classList.remove('opened');
+
+	if (menuBars != null && menuBars.classList.contains("active"))
+		menuBars.classList.remove('active');
 }
 
 function acceptObjectivesCount() {
