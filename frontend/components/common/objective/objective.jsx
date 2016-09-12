@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../../actions/myStateActions.js";
 
+const notifications = require("../../../actions/notifications.js");
+
 class ObjectiveItem extends Component {
 	constructor(props) {
 		super(props);
@@ -23,7 +25,11 @@ class ObjectiveItem extends Component {
 
 	handleDelObj(e) {
 		let handler = function() {
-			this.props.softDeleteMyObjectiveByIdApi(this.props.item._id);
+			if (this.props.mentorId != undefined)
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, notifications.notificationApprenticeDeletedObjective,
+				this.props.mentorId);
+			else
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id);
 		}.bind(this);
 
 		sweetalert({
@@ -50,9 +56,13 @@ class ObjectiveItem extends Component {
 		//handleCancelEdit();
 		// bad habbit copypaste code :/
 		let changedDescription = this.refs.descriptionEdit.value;
-		console.log(changedDescription);
 
-		this.props.updateUserObjectiveApi(this.props.item._id, changedDescription);
+
+		if (this.props.mentorId != undefined)
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription,
+			notifications.notificationApprenticeUpdateObjective, this.props.mentorId);
+		else
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription);
 		//updateUserObjectiveApi
 
 		this.refs.descriptionEdit.classList.add('hidden');
@@ -77,10 +87,30 @@ class ObjectiveItem extends Component {
 		let saveButton;
 		let deleteButton;
 		let cancelButton;
+		let archiveButton;
 		let isArchived = this.props.isArchived;
+		let isAdmin = this.props.isAdmin;
+		let notApproved;
 
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
+		let changeArchive = this.props.changeArchive;
+		let isItHomePage = this.props.isItHomePage;
+
+		if(isAdmin) {
+			if(!isArchived)
+			archiveButton = (<button className="btn btn-blue-hover objective-archive"
+										title="archive"
+										onClick={() => {changeArchive(true, objective._id)}}>
+										<i className="fi flaticon-archive-2"></i>
+										</button>)
+		else 
+			archiveButton = (<button className="btn btn-blue-hover objective-archive"
+										title="unarchive"
+										onClick={() => {changeArchive(false, objective._id)}}>
+										<i className="fi flaticon-bookmark-1"></i>
+										</button>)
+		}
 
 		if(!isArchived){
 			editButton 	= 	(<button ref="edit"
@@ -110,13 +140,17 @@ class ObjectiveItem extends Component {
 			                       	onClick={ this.handleDelObj }>
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
+
+			if (!objective.templateId.isApproved) {
+        notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
+      }
 		}
-		console.log("objective >>> ", objective);
+	//	console.log("objective >>> ", objective);
 		return (
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
-
+				{ notApproved }
 				<div className='name'>{ objective.title ? objective.title : objective.templateId.title }</div>
 				<ObjectiveDescription
 						ref="description"
@@ -131,6 +165,7 @@ class ObjectiveItem extends Component {
 				{ saveButton }
 				{ deleteButton }
 				{ cancelButton }
+				{ archiveButton }
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults
@@ -141,6 +176,12 @@ class ObjectiveItem extends Component {
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+						isItHomePage = { isItHomePage }
+						setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
+						editing = { this.props.editing }
+						activeKeyResult = { this.props.activeKeyResult }
+						editingKeyResult = { this.props.editingKeyResult }
+						cancelEdit = { this.props.cancelEdit }
 				/>
 			</div>
 			</div>

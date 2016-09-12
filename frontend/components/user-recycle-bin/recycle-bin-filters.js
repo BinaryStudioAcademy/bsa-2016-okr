@@ -20,20 +20,9 @@ class RecycleBinFilter extends Component {
 
 	showFiltersContainer() {
 
-		//let tbody = document.querySelector("#rec-bin-wrapper .filter-table tbody");
-		
 		if (this.props.recycleBin.showRecycleBinFilters) {
-			
-		/*	if (tbody != null)
-				tbody.style.height = "62vh";
-				*/
-
 			return "show-container"
 		} 
-/*
-		if (tbody != null)
-				tbody.style.height = "70vh";
-			*/
 
 		return "hide-container";
 	}
@@ -56,12 +45,12 @@ class RecycleBinFilter extends Component {
 			<div className={"recycle-bin-filter-bar "+ this.showFiltersContainer()}>
 				<div className="filter-box clearfix margin-left-4px">
 						<div className="checkbox-group">
-							<input type="checkbox" id="cbObjectives" checked defaultChecked={true} onClick={this.setObjectiveType.bind(this)}></input>
+							<input type="checkbox" id="cbObjectives" defaultChecked={true} onClick={this.setObjectiveType.bind(this)}></input>
 							<label htmlFor="cbObjectives">Objectives</label>
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" id="cbKey" defaultChecked={true}  onClick={this.setKeyType.bind(this)}></input>
-							<label htmlFor="cbKey">Key</label>
+							<label htmlFor="cbKey">Key results</label>
 						</div>
 					</div>
 				<table className="recycle-bin-filter-table">
@@ -151,6 +140,7 @@ class RecycleBinFilter extends Component {
 	}
 
     setObjectiveType() {
+
 		this.props.setObjectiveType(document.querySelector("#cbObjectives").checked);
 	}
 }

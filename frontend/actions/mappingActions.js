@@ -14,7 +14,9 @@ export const MAPPING_UPDATE_USER_ERROR = 'MAPPING_UPDATE_USER_ERROR';
 export const MAPPING_RECEIVED_ERROR = 'MAPPING_RECEIVED_ERROR';
 export const MAPPING_RECEIVED_GLOBAL_ROLES = 'MAPPING_RECEIVED_GLOBAL_ROLES';
 export const MAPPING_SORTING_BY_G_ROLE = 'MAPPING_SORTING_BY_G_ROLE';
+export const MAPPING_SORTING_BY_NAME = 'MAPPING_SORTING_BY_NAME';
 export const MAPPING_SET_GLOBAL_ROLE_FILTER = 'MAPPING_SET_GLOBAL_ROLE_FILTER';
+export const MAPPING_CLEAR= 'MAPPING_CLEAR';
 
 export function setGlobalRoleFilter(value) {
 	
@@ -25,10 +27,27 @@ export function setGlobalRoleFilter(value) {
 	return action;
 }
 
-export function sortingByGlobalRole(value) {
+export function clear() {
+	
+	const action = {
+		type: MAPPING_CLEAR
+	};
+	return action;
+}
+
+export function setSortingByGlobalRole(value) {
 	
 	const action = {
 		type: MAPPING_SORTING_BY_G_ROLE,
+		value: value
+	};
+	return action;
+}
+
+export function setSortingByName(value) {
+	
+	const action = {
+		type: MAPPING_SORTING_BY_NAME,
 		value: value
 	};
 	return action;

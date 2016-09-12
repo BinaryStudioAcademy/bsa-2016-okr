@@ -7,10 +7,12 @@ const UserObjectiveRepository = require('../../repositories/userObjective');
 const KeyResultRepository = require('../../repositories/keyResult');
 const HistoryRepository = require('../../repositories/history');
 
-module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, callback) {
+module.exports = function addKeyResultToUserObjective(
+	session, userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, callback) {
 	async.waterfall([
 		(callback) => {
 			UserObjectiveRepository.getById(userObjectiveId, (err, userObjective) => {
+
 				if (err) {
 					return callback(err, null);
 				}
@@ -26,9 +28,10 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 
 				return callback(null, userObjective);
 			});
-		}, (userObjective, callback) => {			
+		}, (userObjective, callback) => {
 			if(!isEmpty(keyResultId)) {
 				KeyResultRepository.getById(keyResultId, (err, keyResult) => {
+
 					if (err) {
 						return callback(err, null);
 					}
@@ -49,6 +52,7 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 			}
 		}, (userObjective, keyResult, callback) => {
 			if(isEmpty(keyResult)) {
+
 				KeyResultRepository.getByTitleAndObjectiveId(keyResultTitle, userObjective.templateId, (err, keyResult) => {
 					if(err) {
 						return callback(err, null);
@@ -66,6 +70,7 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 				return callback(null, userObjective, keyResult);
 			}
 		}, (userObjective, keyResult, callback) => {
+
 			if (isEmpty(keyResult)) {
 				// console.log('-----------------------------------');
 				// console.log('KeyResult not found in DB. Creating new template...');
@@ -110,7 +115,8 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 					return callback(null, userObjective, keyResult);
 				});
 			}
-		}, (userObjective, keyResult, callback) => {		
+		}, (userObjective, keyResult, callback) => {
+
 			var userObjectiveDataForUpdate = {
 				$push: {
 					keyResults: {
@@ -123,34 +129,43 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 				},
 			};
 
-			this.update(userId, userObjectiveId, userObjectiveDataForUpdate, (err, userObjectiveFromUpdate) => {
-				if (err) {
+			UserObjectiveRepository.update(userObjectiveId, userObjectiveDataForUpdate, (err, oldObjective) => {
+				if(err) {
 					return callback(err, null);
 				}
 
-				// console.log('-----------------------------------');
-				// console.log('UserObjective.keyResults updated');
-				// console.log('-----------------------------------');
-
 				return callback(null, userObjective, keyResult);
 			});
+
+			//this.update(session, userObjectiveId, userObjectiveDataForUpdate, (err, userObjectiveFromUpdate) => {
+			//
+			//	if (err) {
+			//		return callback(err, null);
+			//	}
+			//
+			//	// console.log('-----------------------------------');
+			//	// console.log('UserObjective.keyResults updated');
+			//	// console.log('-----------------------------------');
+			//
+			//	return callback(null, userObjective, keyResult);
+			//});
 		},
 		(userObjective, keyResult, callback) => {
 			// console.log('-----------------------------------');
 			// console.log('User objective', userObjective);
 			// console.log('-----------------------------------');
-			UserObjectiveRepository.getById(userObjective._id, (err, userObjective) => {
+			UserObjectiveRepository.getById(userObjective._id, (err, userObjectiveItem) => {
 				if (err) {
 					return callback(err, null);
 				}
 
 
-				if (!userObjective) {
+				if (!userObjectiveItem) {
 					err = new Error('Can not find user objective');
 					return callback(err, null);
 				}
 
-				var index = userObjective.keyResults.findIndex((keyResultItem) => {
+				var index = userObjectiveItem.keyResults.findIndex((keyResultItem) => {
 					return keyResult._id.equals(keyResultItem.templateId);
 				});
 
@@ -159,14 +174,14 @@ module.exports = function addKeyResultToUserObjective(userId, userObjectiveId, k
 					return callback(err, null);
 				}
 
-				var keyResultIdInObjective = userObjective.keyResults[index]._id;
+				var keyResultIdInObjective = userObjectiveItem.keyResults[index]._id;
 
 				responseData = {
 					keyResultId: keyResultIdInObjective,
 					keyResult: keyResult,
 				};
 
-				return callback(null, keyResult, userObjective, responseData);
+				return callback(null, keyResult, userObjectiveItem, responseData);
 			});
 		},
 		(keyResult, userObjective, responseData, callback) => {

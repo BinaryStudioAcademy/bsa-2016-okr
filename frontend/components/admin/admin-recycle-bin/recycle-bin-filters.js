@@ -19,21 +19,10 @@ class RecycleBinFilter extends Component {
 	}
 
 	showFiltersContainer() {
-
-		//let tbody = document.querySelector("#rec-bin-wrapper .filter-table tbody");
 		
 		if (this.props.recycleBin.showRecycleBinFilters) {
-			
-		/*	if (tbody != null)
-				tbody.style.height = "62vh";
-				*/
-
 			return "show-container"
 		} 
-/*
-		if (tbody != null)
-				tbody.style.height = "70vh";
-			*/
 
 		return "hide-container";
 	}
@@ -60,7 +49,7 @@ class RecycleBinFilter extends Component {
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" id="cbKey" defaultChecked={true}  onClick={this.setKeyType.bind(this)}></input>
-							<label htmlFor="cbKey">Key</label>
+							<label htmlFor="cbKey">Key results</label>
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" id="cbCategory" defaultChecked={true}  onClick={this.setCategoryType.bind(this)}></input>

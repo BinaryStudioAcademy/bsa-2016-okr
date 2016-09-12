@@ -66,7 +66,12 @@ $primary-color_local: #607D8B;
     &:not(.active):hover{
       background-color: lighten($color-blue-grey, 45%);
     }
-
+      &:focus {
+        color: $primary-color_local;
+        outline: none;
+        background-color: lighten($color-blue-grey, 45%);
+      }
+    
   }
 
   //disabled for other users

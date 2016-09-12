@@ -13,19 +13,28 @@ import {
 	//SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	NEW_QUARTER_ADDED,
-	ADD_NEW_QUARTER_ERROR
+	ADD_NEW_QUARTER_ERROR,
+	CHANGE_ARCHIVE_STATUS,
+	CHANGE_ARCHIVE_STATUS_LOCAL,
+	RECEIVED_ME_BASIC
 } from '../actions/myStateActions';
 
 import {
 	ADD_NEW_KEY_RESULT_TO_OBJECTIVE
 } from '../actions/keyResultActions';
 
+import { SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE,
+		     CANCEL_EDIT_KEY_RESULT} from '../actions/myStateActions';
+
 const initialState = {
 	selectedTab: currentQuarter,
 	selectedYear: currentYear,
 	me: {
 		"localRole": ""
-	}
+	},
+	editing: false,
+	activeKeyResult: '',
+	editingKeyResult: false
 };
 
 export default function myObjectivesReducer(state = initialState, action = {}) {
@@ -43,6 +52,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case RECEIVED_MY_OBJECTIVES: {
+			const { data } = action;
+
+			return Object.assign({}, state, {
+				me: isEmpty(data) ? state.me : data,
+			});
+		}
+
+		case RECEIVED_ME_BASIC: {
 			const { data } = action;
 
 			return Object.assign({}, state, {
@@ -83,6 +100,24 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 
 		}
+
+
+		case CHANGE_ARCHIVE_STATUS: {
+
+			console.log('archive');
+
+			return state;
+		}
+
+		case CHANGE_ARCHIVE_STATUS_LOCAL: {
+			let id = action.id;
+			let flag = action.flag;
+
+			return Object.assign({}, state, {
+				me: changeArchiveInMyObjective(state.me, id, flag)
+			})
+		}
+
 
 		case UPDATE_USER_OBJECTIVE: {
 			const { id, description } = action;
@@ -167,6 +202,23 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			console.log(data);
 
 			return state;
+		}
+
+		case SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE: {
+			const { activeKeyResult } = action;
+
+			return Object.assign({}, state, {
+				activeKeyResult,
+				editingKeyResult: true,
+				editing: false
+			})
+		}
+
+		case CANCEL_EDIT_KEY_RESULT: {
+			return Object.assign({}, state, {
+				editing: false,
+				editingKeyResult: false
+			})
 		}
 
 		default: {
@@ -292,6 +344,31 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 			quarter.userObjectives[index].keyResults.push(keyResult);
 		}
 	});
-
 	return meCopy
+}
+
+export function changeArchiveInMyObjective (me, objectiveId, flag) {
+	var meCopy = Object.assign({}, me);
+	var done = false;
+
+console.log('IN ARCHIVE')
+	meCopy.quarters.forEach((quarter) => {
+		if(done)
+			return;
+console.log('IN QUARTER')
+		quarter.userObjectives.forEach((objective) => {
+console.log('----IN OBJ----')
+console.log(objective._id);
+console.log(objectiveId);
+			if (objective._id == objectiveId){
+				objective.isArchived = flag;
+				console.log('objective archived >>>>')
+				console.log(objective);
+				done = true;
+				return;
+			}
+		})
+	})
+
+	return meCopy;
 }

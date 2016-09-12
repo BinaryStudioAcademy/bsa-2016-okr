@@ -100,7 +100,7 @@ router.get('/category/:categoryId/year/:year/quarter/:quarter/:title*?', (req, r
 	service.autocomplete(userId, categoryId, year, quarter, title, res.callback);
 });
 
-router.put('/myupdate/:id', (req, res, next) => {
+router.put('/updateWithoutValidation/:id', adminOnly,(req, res, next) => {
 
 	var id = req.params.id;
 	var body = req.body;

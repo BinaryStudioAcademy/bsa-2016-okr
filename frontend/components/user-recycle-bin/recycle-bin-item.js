@@ -36,8 +36,7 @@ class RecycleBinItem extends Component {
 			this.props.updateUserObjectivesRequest(this.props.item.id, body, this.props.item.id);
 		}
 
-		if (this.props.item.type === "key") {
-
+		if (this.props.item.type === "key result") {
 
 			let body = {};
 

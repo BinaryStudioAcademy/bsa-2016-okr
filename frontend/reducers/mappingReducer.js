@@ -12,16 +12,20 @@ import {
 	MAPPING_RECEIVED_ERROR,
 	MAPPING_RECEIVED_GLOBAL_ROLES,
 	MAPPING_SORTING_BY_G_ROLE,
-	MAPPING_SET_GLOBAL_ROLE_FILTER
+	MAPPING_SET_GLOBAL_ROLE_FILTER,
+	MAPPING_SORTING_BY_NAME,
+	MAPPING_CLEAR
 } from '../actions/mappingActions';
+
+import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../backend/config/constants"; 
 
 const initialState = {
 	users : [],
 	visibleUsers : [],
 	roles: [],
 	globalRoles: [],
-	sortByGlobalRole: false,
-	isSortingUsed: false,
+	sortByGlobalRole: NOT_SORTED,
+	sortByName: NOT_SORTED,
 	globalRoleFilter: "",
 	filter: "",
 };
@@ -31,13 +35,27 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 	switch (action.type) {
 
+		case MAPPING_CLEAR: {
+
+			return Object.assign({}, state, {
+				users : [],
+				visibleUsers : [],
+				roles: [],
+				globalRoles: [],
+				sortByGlobalRole: NOT_SORTED,
+				sortByName: NOT_SORTED,
+				globalRoleFilter: "",
+				filter: "",
+			})
+		}
+
 		case MAPPING_SET_GLOBAL_ROLE_FILTER: {
 
 				const {value} = action;
 
 				return Object.assign({}, state, {
 					globalRoleFilter: value,
-					visibleUsers: updateVisibleUsers(state.users, state.filter, state.sortByGlobalRole, state.isSortingUsed, value)
+					visibleUsers: updateVisibleUsers(state.users, state.filter, state.sortByGlobalRole, state.sortByName, value)
 				})
 		}
 
@@ -47,8 +65,17 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 				return Object.assign({}, state, {
 					sortByGlobalRole: value,
-					isSortingUsed: true,
-					visibleUsers: updateVisibleUsers(state.users, state.filter, value, true, state.globalRoleFilter)
+					visibleUsers: updateVisibleUsers(state.users, state.filter, value, state.sortByName, state.globalRoleFilter)
+				})
+		}
+
+		case MAPPING_SORTING_BY_NAME: {
+
+				const {value} = action;
+
+				return Object.assign({}, state, {
+					sortByName: value,
+					visibleUsers: updateVisibleUsers(state.users, state.filter, state.sortByGlobalRole, value, state.globalRoleFilter)
 				})
 		}
 
@@ -56,22 +83,18 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 			const {data} = action; 
 
-			console.log(data);  
-
 			for (let i = 0; i < data.length; i++) {
 
 				data[i].avatar = "avatar1.png";
 				data[i].name = data[i].userInfo.firstName + " " + data[i].userInfo.lastName;
-				data[i].lastName = data[i].userInfo.lastName;
 				data[i].email = data[i].userInfo.email;
-				data[i].secondPartEmail = data[i].email.substr(data[i].email.indexOf('@') + 1);
 				data[i].globalRole = data[i].userInfo.globalRole;
 
 			}
 
 			return Object.assign({}, state, {
-				users: JSON.parse(JSON.stringify(data)),
-				visibleUsers:  updateVisibleUsers(data, state.filter, state.sortByGlobalRole, state.isSortingUsed, state.globalRoleFilter),
+				users: JSON.parse(JSON.stringify(data)), 
+				visibleUsers:  updateVisibleUsers(data, state.filter, state.sortByGlobalRole, state.sortByName, state.globalRoleFilter),
 				globalRoles: getAllGlobalRoles(data)
 			})
 		}
@@ -119,7 +142,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 			const {filter} = action;
 
 			return Object.assign({}, state, {
-				visibleUsers: updateVisibleUsers(state.users, filter, state.sortByGlobalRole, state.isSortingUsed, state.globalRoleFilter),
+				visibleUsers: updateVisibleUsers(state.users, filter, state.sortByGlobalRole, state.sortByName, state.globalRoleFilter),
 				filter: filter
 			})
 		}
@@ -146,7 +169,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 
 			return Object.assign({}, state, {
 				users: updateLocRole(users, id, localRole),
-				visibleUsers: updateVisibleUsers(users, state.filter, state.sortByGlobalRole, state.isSortingUsed, state.globalRoleFilter)
+				visibleUsers: updateVisibleUsers(users, state.filter, state.sortByGlobalRole, state.sortByName, state.globalRoleFilter)
 			})
 		}
 
@@ -157,7 +180,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 }
 
 
-function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, globalRoleFilter) {
+function updateVisibleUsers(users, filter, sortByGlobalRole, sortByName, globalRoleFilter) {
 
 	
 	let visibleUsers = [];
@@ -168,10 +191,8 @@ function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, glob
 	{
 		for (let i = 0; i < users.length; i++) {
 
-			if (users[i].name.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				users[i].lastName.toUpperCase().indexOf(filter.toUpperCase()) === 0  ||
-				users[i].email.toUpperCase().indexOf(filter.toUpperCase()) === 0 ||
-				users[i].secondPartEmail.toUpperCase().indexOf(filter.toUpperCase()) === 0) {
+			if (users[i].name.toUpperCase().indexOf(filter.toUpperCase()) >= 0 ||
+				users[i].email.toUpperCase().indexOf(filter.toUpperCase()) >= 0) {
 				visibleUsers.push(users[i]);
 			}
 		}
@@ -186,22 +207,45 @@ function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, glob
 
 	}
 
-	if (!sortByGlobalRole) {
+	if (sortByGlobalRole != NOT_SORTED) {
 
-		visibleUsers.sort(function(a, b) {
+		if (sortByGlobalRole == SORTED_ASC) {
+
+			visibleUsers.sort(function(a, b) {
 			    if(a.globalRole < b.globalRole) return -1;
 			    if(a.globalRole > b.globalRole) return 1;
 			    return 0;
-		});
-	} else {
+			});
 
-		visibleUsers.sort(function(a, b) {
+		} else {
+
+			visibleUsers.sort(function(a, b) {
 				if(a.globalRole < b.globalRole) return 1;
 			    if(a.globalRole > b.globalRole) return -1;
 			    return 0;
-		});
+			});
+		}
 	}
 
+	if (sortByName != NOT_SORTED) {
+
+		if (sortByName == SORTED_ASC) {
+
+			visibleUsers.sort(function(a, b) {
+			    if(a.name < b.name) return -1;
+			    if(a.name > b.name) return 1;
+			    return 0;
+			});
+
+		} else {
+
+			visibleUsers.sort(function(a, b) {
+				if(a.name < b.name) return 1;
+			    if(a.name > b.name) return -1;
+			    return 0;
+			});
+		}
+	}
 
 	return visibleUsers;
 }
@@ -217,16 +261,17 @@ function updateVisibleUsers(users, filter, sortByGlobalRole, isSortingUsed, glob
 
 			for (let j = 0; j < globalRoles.length; j++) {
 
-				if (globalRoles[j].globalRole.indexOf(users[i].globalRole) != -1) {
+				if (globalRoles[j].globalRole === users[i].globalRole ) {
 					found = true;
 					++globalRoles[j].count;
 				}
 			}
 
 			if (!found) {
-				globalRoles.push({globalRole: users[i].globalRole, count: 0, id: globalRoles.length});
+				globalRoles.push({globalRole: users[i].globalRole, count: 1, id: globalRoles.length});
 			}
 		}
+
 
 		return globalRoles;
 }
@@ -246,5 +291,4 @@ function updateLocRole(array, id, localRole) {
 	}
 
 	return array;
-
 }

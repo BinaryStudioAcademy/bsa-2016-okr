@@ -14,11 +14,13 @@ const HistoryRepository = require('../../repositories/history');
 const add = require('./add');
 const addKeyResult = require('./addKeyResult');
 const updateHelper = require('./updateHelper');
+const changeArchiveStatus = require('./archive.js');
 
 var UserObjectiveService = function() {};
 
 UserObjectiveService.prototype.add = add;
 UserObjectiveService.prototype.addKeyResult = addKeyResult;
+UserObjectiveService.prototype.changeArchiveStatus = changeArchiveStatus;
 
 UserObjectiveService.prototype.update = function(session, userObjectiveId, data, callback){
 	async.waterfall([
@@ -45,15 +47,24 @@ UserObjectiveService.prototype.update = function(session, userObjectiveId, data,
 				return callback(null, userObjective, user);
 			});
 		}, (userObjective, user, callback) => {
-				if (session.localRole == CONST.user.localRole.ADMIN
-					|| session._id.toString() === userObjective.userId.toString()
-					|| (session.localRole == CONST.user.localRole.MENTOR && user.mentor._id.toString() == session._id.toString() )) {
+			if(userObjective == undefined || userObjective.userId == undefined
+				|| user == undefined) { //|| user.mentor == undefined || user.mentor._id == undefined
+					err = new Error('userObjective or user not found');
+					return callback(err, null);}
+
+			if (session.localRole == CONST.user.localRole.ADMIN
+					|| session._id.equals(userObjective.userId.toString)
+					|| (session.localRole == CONST.user.localRole.MENTOR
+						  && user.mentor._id.equals(session._id.toString) )) {
 						ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
+
 							if(templateObjective.isApproved == false){
 										//call another service
 										// if is not archived update template then
+
 								ObjectiveService.update(session._id, userObjective.templateId, data, callback);
 							} else if (templateObjective.isApproved == true) {
+
 									updateHelper(session._id, userObjective._id, data, (err, userObjectiveUpdated) => {
 										if(err) {
 											return callback(err, null);
@@ -61,8 +72,7 @@ UserObjectiveService.prototype.update = function(session, userObjectiveId, data,
 									return callback(null, userObjectiveUpdated);
 										});
 									}
-
-								});
+						});
 					}
 			},
 		], (err, result) => {

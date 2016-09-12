@@ -96,7 +96,6 @@ class KeyResults extends Component {
 		});
 
 		if(keyResultIndex === -1 || (!isEmpty(id) && this.props.data[keyResultIndex]._id === id)) {
-			sweetalert.close();
 			return true;
 		} else {
 			sweetalert({
@@ -122,6 +121,7 @@ class KeyResults extends Component {
 			};
 			
 			this.props.addKeyResult(reqBody);
+			sweetalert.close();
 		}
 	}
 
@@ -130,9 +130,10 @@ class KeyResults extends Component {
 			let reqBody = {
 				title: title,
 				difficulty: difficulty
-			}
+			};
 			
 			this.props.editKeyResult(id, reqBody);
+			sweetalert.close();
 		}
 	}
 
@@ -143,8 +144,6 @@ class KeyResults extends Component {
 	}
 
 	render() {
-		// console.log('state', this.props);
-
 		let item = this.props.data.map((item, index) => {
 			return <KeyResultItem index = { index } 
 														objective = { this.props.objective } 

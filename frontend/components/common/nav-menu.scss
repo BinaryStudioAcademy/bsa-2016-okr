@@ -8,7 +8,7 @@ aside#navbar {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	width: $left-nav-width;
+	width: auto;
 	background-color: lighten($primary-color, 5%);
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -43,6 +43,11 @@ aside#navbar ul {
 			background-color: $primary-color;
 			color: #ffffff;
 		}
+		a:focus {
+			outline: none;
+			background-color: $primary-color;
+			color: #ffffff;
+		}
 		span {
 			pointer-events: none;
 		}
@@ -66,32 +71,32 @@ aside#navbar ul {
 		font-size: 30px;
 		pointer-events: none;
 
-	/* 	& .badge {
+	 	& .badge {
 			display: inline-block;
 			width: .5em;
 			height: .5em;
 			position: absolute;
-			right: -0.1em;
-			bottom: -0.1em;
+			right: -0.03em;
+			bottom: -0.03em;
 			border-radius: $border-radius;
 			text-align: center;
 
 			& i,
 			& .badge-counter {
-				background-color: $primary-color;
+				background-color: #354b60;
 				display: inline-block;
 				position: absolute;
 				width: 100%;
 				height: 100%;
 				top: 0;
 				left: 0;
-				font-size: .5em;
+				font-size: .55em;
 			}
 
 			& i {
 				border-radius: 100%;
 			}
-		} */
+		} 
 	}
 }
 
@@ -125,3 +130,9 @@ aside#navbar #users-link{
 	margin-bottom: 1em;
 	width: 75%;
 }
+
+@media all and (max-width: 1599px) {
+	 aside#navbar {
+		 width: $left-nav-width;
+	 }
+ }

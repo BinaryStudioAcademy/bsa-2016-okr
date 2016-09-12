@@ -10,6 +10,7 @@ import '../../../containers/central-window.scss';
 
 import * as actions from "../../../actions/mappingActions";
 
+import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../../../backend/config/constants";
 
 class RoleMapping extends React.Component {
 
@@ -64,9 +65,9 @@ class RoleMapping extends React.Component {
                     <div className="table">
                        <div className="table-head">
                              <h3 className="col-1">Avatar</h3>
-                             <h3 className="col-2">Name</h3>
+                             <h3 className="col-2" onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort"></i>Name</h3>
                              <h3 className="col-3">E-mail</h3>
-                             <h3 className="col-4" onClick={this.sortingByGlobalRole.bind(this)}><i id="global-role" className="fa fa-sort-asc"></i>Global role</h3>
+                             <h3 className="col-4" onClick={this.setSortingByGlobalRole.bind(this)} tabIndex='0'><i id="global-role-field" className="fa fa-sort"></i>Global role</h3>
                              <h3 className="col-5">Local role</h3>
                        </div>
 
@@ -83,30 +84,84 @@ class RoleMapping extends React.Component {
    }
 
    callSetGlobalRoleFilter() {
-    let value = document.querySelector("#global-role-filter").value;
-    this.props.setGlobalRoleFilter(value);
+      let value = document.querySelector("#global-role-filter").value;
+      this.props.setGlobalRoleFilter(value);
    }
 
-   sortingByGlobalRole() {
-    
-    let globalRole = document.querySelector(".table-head #global-role");
+  setSortingByGlobalRole() {
+      
+      let globalRoleField = document.querySelector(".table-head #global-role-field");
+      globalRoleField.parentElement.blur();
+      this.props.setSortingByName(NOT_SORTED);
 
-    if (globalRole != null) {
+      if (globalRoleField != null) {
 
-      if (globalRole.classList.contains("fa-sort-asc")) {
+        if (globalRoleField.classList.contains("fa-sort-asc")) {
 
-        globalRole.classList.remove("fa-sort-asc");
-        globalRole.classList.add("fa-sort-desc");
+          globalRoleField.classList.remove("fa-sort-asc");
+          globalRoleField.classList.add("fa-sort-desc");
 
+          this.props.setSortingByGlobalRole(SORTED_DESC);
+
+        }
+        else if (globalRoleField.classList.contains("fa-sort-desc")){
+          globalRoleField.classList.remove("fa-sort-desc");
+          globalRoleField.classList.add("fa-sort-asc");
+          this.props.setSortingByGlobalRole(SORTED_ASC);
+        }
+        else {
+          globalRoleField.classList.remove("fa-sort");
+          globalRoleField.classList.add("fa-sort-asc");
+          this.props.setSortingByGlobalRole(SORTED_ASC);
+        }
+      } 
+
+      let nameField = document.querySelector(".table-head #name-field");
+
+      if (nameField != null) {
+        nameField.classList.remove("fa-sort-asc");
+        nameField.classList.remove("fa-sort-desc");
+        nameField.classList.add("fa-sort");
       }
-      else {
-        globalRole.classList.remove("fa-sort-desc");
-        globalRole.classList.add("fa-sort-asc");
-      }
-    } 
+  }
 
-     this.props.sortingByGlobalRole(!this.props.stateFromReducer.mapping.sortByGlobalRole);
-   }
+  setSortingByName() {
+      
+      let nameField = document.querySelector(".table-head #name-field");
+      nameField.parentElement.blur();
+      this.props.setSortingByGlobalRole(NOT_SORTED);
+
+      if (nameField != null) {
+
+        if (nameField.classList.contains("fa-sort-asc")) {
+
+          nameField.classList.remove("fa-sort-asc");
+          nameField.classList.add("fa-sort-desc");
+
+          this.props.setSortingByName(SORTED_DESC);
+
+        }
+        else if (nameField.classList.contains("fa-sort-desc")){
+          nameField.classList.remove("fa-sort-desc");
+          nameField.classList.add("fa-sort-asc");
+          this.props.setSortingByName(SORTED_ASC);
+        }
+        else {
+          nameField.classList.remove("fa-sort");
+          nameField.classList.add("fa-sort-asc");
+          this.props.setSortingByName(SORTED_ASC);
+        }
+      } 
+
+      let globalRoleField = document.querySelector(".table-head #global-role-field");
+
+      if (globalRoleField != null) {
+        globalRoleField.classList.remove("fa-sort-asc");
+        globalRoleField.classList.remove("fa-sort-desc");
+        globalRoleField.classList.add("fa-sort");
+      }
+  }
+
 
    filter() {
 
@@ -119,6 +174,10 @@ class RoleMapping extends React.Component {
   componentWillMount() {
      this.props.getUsers();
      this.props.getGlobalRoles();
+  }
+
+  componentWillUnmount() {
+    this.props.clear();
   }
 
 }

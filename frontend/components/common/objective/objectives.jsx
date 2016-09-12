@@ -19,6 +19,8 @@ import './objectives.scss';
 const CONST = require('../../../../backend/config/constants.js');
 const session = require('../../../../backend/config/session');
 
+const notifications = require("../../../actions/notifications.js");
+
 class Objectives extends Component {
 	constructor(props) {
 		super(props);
@@ -29,10 +31,30 @@ class Objectives extends Component {
 		this.createObjective = this.createObjective.bind(this);
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
+		this.handleArchive = this.handleArchive.bind(this);
+
+		this.props.myStateActions.getMe();
 	}
 
 	changeTab(num) {
 		this.props.myStateActions.setChangeTab(num);
+	}
+
+	handleArchive (changeTo, objectiveId) {
+		let handler = function () {
+			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		}.bind(this);
+
+		let arch = changeTo ? 'archive' : 'unarchive'
+
+		sweetalert({
+			title: `Do you really want to ${arch} this objective?`,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	changeYear(year) {
@@ -57,7 +79,7 @@ class Objectives extends Component {
 		}, function(){handler();});
 	}
 
-	changeKeyResultScore(objectiveId) {
+	changeKeyResultScore(objectiveId, mentorId) {
 		let apiCall = this.props.myStateActions.changeKeyResultScore;
 
 		return (keyResultId) => {
@@ -71,8 +93,10 @@ class Objectives extends Component {
 					keyResultId: keyResultId,
 					score: score
 				};
-
-				apiCall(objectiveId, body);
+				if (mentorId != undefined)
+					apiCall(objectiveId, body, notifications.notificationApprenticeUpdateKey, mentorId);
+				else
+					apiCall(objectiveId, body);
 			};
 		};
 	}
@@ -107,7 +131,10 @@ class Objectives extends Component {
 				userId: userId,
 			};
 			if (this.props.userId == undefined) {
-				this.props.myStateActions.addNewObjective(body);
+				if (this.props.mentorId != undefined)
+					this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
+				else
+					this.props.myStateActions.addNewObjective(body);
 			} else {
 				this.props.otherPersonActions.addNewObjective(body);
 			}
@@ -124,6 +151,7 @@ class Objectives extends Component {
 	}
 
 	render() {
+		console.log("hey mount");
 		const userId = this.props.userId;
 		const categories = this.props.categories;
 		const { me } = this.props.myState;
@@ -131,31 +159,40 @@ class Objectives extends Component {
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
-		let ismyself = true;
+		let editing = false;
+		let activeKeyResult = '';
+		let	editingKeyResult = false;
+
+		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
+		let isItHomePage;
 		let archived;
+		let isAdmin = this.props.myState.me.localRole === "admin" ? true : false;
 
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
 			/*console.log('user');*/
-			ismyself = false;
+			isItHomePage = false;
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
 		} else {
 			/*console.log('me');*/
-			ismyself = true;
+			isItHomePage = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
+			editing = this.props.myState.editing;
+			activeKeyResult = this.props.myState.activeKeyResult;
+			editingKeyResult = this.props.myState.editingKeyResult;
 		}
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( ismyself || session._id == userInfo.mentorId || userId == session._id )) {
+				( isItHomePage || session._id == userInfo.mentorId || userId == session._id )) {
 			archived = false;
 		} else {
 			archived = true;
 		}
-		// console.log('objectives', userInfo.objectives)
+		//console.log('objectives', userInfo.objectives)
 
 		return (
 			<div id="home-page-wrapper">
@@ -166,20 +203,30 @@ class Objectives extends Component {
 						selectedTab={ selectedTab }
 				    addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
-						me={ ismyself }
+						isAdmin={ isAdmin }
+						me={ isItHomePage }
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
+						mentorId={userInfo.mentorId}
 						categories={ categories.list }
+						isAdmin={ isAdmin }
 						archived = { archived }
 						objectives={ userInfo.objectives }
 						ObjectiveItem={ ObjectiveItem }
+						changeArchive={ this.handleArchive }
 						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
 						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
 						changeKeyResultScore={ this.changeKeyResultScore }
 						createObjective={ this.createObjective }
 						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
+						isItHomePage={ isItHomePage }
+						setActiveKeyResultOnHomePage = { this.props.myStateActions.setActiveKeyResultOnHomePage }
+						editing = { editing }
+						activeKeyResult = { activeKeyResult }
+						editingKeyResult = { editingKeyResult }
+						cancelEdit = { this.props.myStateActions.cancelEdit }
 					/>
 				</div>
 			</div>
@@ -213,7 +260,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 
 	if(userObject.mentor != undefined || userObject.mentor != null)
 		mentor = userObject.mentor._id;
-	console.log('userObject', userObject)
+	//console.log('userObject', userObject)
 	if (userObject.quarters != undefined) {
 		var current_quarter = userObject.quarters.find((quarter) => {
 			return (quarter.year == selectedYear) && (quarter.index == selectedTab)

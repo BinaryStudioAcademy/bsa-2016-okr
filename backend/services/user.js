@@ -1,17 +1,61 @@
-var UserRepository = require('../repositories/user');
-var QuarterRepository = require('../repositories/quarter');
-var HistoryRepository = require('../repositories/history');
-var async = require('async');
-var ObjectId = require('mongoose').Types.ObjectId;
+const UserRepository = require('../repositories/user');
+const RoleRepository = require('../repositories/role');
+const QuarterRepository = require('../repositories/quarter');
+const HistoryRepository = require('../repositories/history');
+const async = require('async');
+const ObjectId = require('mongoose').Types.ObjectId;
 const CONST = require('../config/constants');
+const ValidateService = require('../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
 
 var UserService = function() {};
 
-UserService.prototype.getById = function(id, callback) {
-
+UserService.prototype.getByIdPopulate = function(userId, callback) {
 	async.waterfall([
 		(callback) => {
-			UserRepository.getByIdPopulate(id, function(err, user) {
+			UserRepository.getByIdPopulate(userId, (err, user) => {
+				if(err) {
+  				return callback(err, null);
+				}
+
+				if(!user) {
+					err = new Error('User not found');
+					err.status = 400;
+					return callback(err);
+				}
+
+				return callback(null, user);
+			});
+		}, (user, callback) => {
+			if(user.localRole === CONST.user.localRole.DEFAULT) {
+				RoleRepository.findGlobal(user.userInfo.globalRole, (err, role) => {
+					if(err) {
+						return callback(err, null);
+					}
+
+					if(isEmpty(role)) {
+						err = new Error('Role not found');
+						err.status = 400;
+						return callback(err);
+					}
+
+					user.localRole = role.localRole;
+
+					return callback(null, user);
+				});
+			} else {
+				return callback(null, user);
+			}
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
+
+UserService.prototype.getByIdWithQuarters = function(id, callback) {
+	async.waterfall([
+		(callback) => {
+			this.getByIdPopulate(id, function(err, user) {
 				if(err) {
 					return callback(err, null);
 				};
@@ -105,8 +149,8 @@ UserService.prototype.takeApprentice = function(userId, apprenticeId, userLocalR
   			});
       }
     ], (err, result) => {
-  return callback(err, result);
-});
+  		return callback(err, result);
+		});
 };
 
 UserService.prototype.removeApprentice = function(userId, apprenticeId, userLocalRole, callback) {
@@ -155,10 +199,12 @@ UserService.prototype.removeApprentice = function(userId, apprenticeId, userLoca
   				return callback(null, historyEvent);
   			});
       }
-    ], (err, result) => {
-  return callback(err, result);
-});
+    ], (err, result) => { 
+    	return callback(err, result); 
+    });
 };
+
+module.exports = new UserService();
 
 // UserService.prototype.add = function(authorId, user, callback){
 //  	console.log('user default '+ user.objectives[0].keys[0].keyId );
@@ -360,5 +406,3 @@ UserService.prototype.removeApprentice = function(userId, apprenticeId, userLoca
 		callback(err, user);
 	});*/
 // };
-
-module.exports = new UserService();

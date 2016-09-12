@@ -34,6 +34,10 @@ class ObjectiveList extends React.Component{
 		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
 		const changeKeyResultScore = this.props.changeKeyResultScore;
 		const isArchived = this.props.archived;
+		const isAdmin = this.props.isAdmin;
+		const changeArchive = this.props.changeArchive;
+		const mentorId = this.props.mentorId;
+	  let isItHomePage = this.props.isItHomePage;
 
 		var categoryItems = [];
 
@@ -48,11 +52,20 @@ class ObjectiveList extends React.Component{
 					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
-							isArchived = { isArchived }
-              updateUserObjectiveApi = { updateUserObjectiveApi }
-							softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
-							changeKeyResultScoreOne={ changeKeyResultScore }
-							softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+																	isArchived = { item.isArchived }
+																	isAdmin = { isAdmin }
+																	mentorId = { mentorId }
+																	changeArchive = { changeArchive }
+										              updateUserObjectiveApi = { updateUserObjectiveApi }
+																	softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
+																	changeKeyResultScoreOne={ changeKeyResultScore }
+																	softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+																	isItHomePage = { isItHomePage }
+																	setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
+																	editing = { this.props.editing }
+																	activeKeyResult = { this.props.activeKeyResult }
+																	editingKeyResult = { this.props.editingKeyResult }
+																	cancelEdit = { this.props.cancelEdit }
 						/>
 					});
 
@@ -61,6 +74,7 @@ class ObjectiveList extends React.Component{
 						createObjective={ this.props.createObjective(category._id) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }
 						key={ index }
+						isItHomePage = { isItHomePage }
 					/>
 				}
 

@@ -33,23 +33,14 @@ class ObjectiveList extends Component {
 
   isNotDuplicate(id, title, category) {
     let objectiveIndex = this.props.objectivesList.objectives.findIndex((objective) => {
-      if(objective.title === title) {
-        let categoryIndex = this.props.categories.list.findIndex((category) => {
-          return category._id === objective.category;
-        });
-
-        if(this.props.categories[categoryIndex] === category) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
+      return (
+        (objective.title === title) 
+        && (objective.category === category) 
+        && (objective._id !== id)
+      );
     });
 
-    if(objectiveIndex === -1 || (!isEmpty(id) && this.props.objectivesList.objectives[objectiveIndex]._id === id)) {
-      sweetalert.close();
+    if(objectiveIndex === -1) {
       return true;
     } else {
       sweetalert({
@@ -67,8 +58,9 @@ class ObjectiveList extends Component {
   }
 
   saveChanges(id, data) {
-    if(isEmpty(data.title) || (!isEmpty(data.title) && this.isNotDuplicate(id, data.title, data.category))) {
+    if(this.isNotDuplicate(id, data.title, data.category)) {
       this.props.editObjectiveTemplate(id, data);
+      sweetalert.close();
     }
   }
 

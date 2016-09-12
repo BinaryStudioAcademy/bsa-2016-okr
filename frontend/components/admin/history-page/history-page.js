@@ -24,6 +24,8 @@ class HistoryPage extends React.Component {
    }
 
    handleFilterShow(event){
+      let filter = document.querySelector("button.btn.btn-blue");
+      filter.blur();
       handler_filter_click.call(this, event);
    }
 

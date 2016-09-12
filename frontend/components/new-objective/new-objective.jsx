@@ -1,48 +1,46 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+
+import CONST from '../../../backend/config/constants';
+
 import NewObjCredentials from './credentials.jsx';
 import NewKeyResult from './key-result.jsx';
+
 import './new-objective.scss';
 
-class NewObjective extends React.Component{
-   constructor(props){
-      super(props);
-
-      this.handleCloseNewObjView = this.handleCloseNewObjView.bind(this);
-   }
-
-   handleCloseNewObjView(){
-      document.querySelector("textarea#new-obj-desc").value = '';
-      document.querySelector("input#new-obj-title").value = '';
-      const title = document.getElementsByClassName('new-key-result-title');
-      const difficulty = document.getElementsByClassName('new-key-result-difficulty');
-      for(let i=0; i<title.length; i++){
-         document.getElementsByClassName('new-key-result-title')[i].value = '';
-         document.getElementsByClassName('new-key-result-difficulty')[i].value = 'easy';
-      }
-
-      close_window_handler.call(this);
-   }
-
-   render(){
-      return(
-         <div id="new-objective">
-            <button type="button" id="close-new-obj-window" onClick={this.handleCloseNewObjView}>
-               <i className="fi flaticon-multiply" aria-hidden="true"></i>
-            </button>
-            <form action="">
-               <NewObjCredentials handleCloseNewObjView={this.handleCloseNewObjView} />
-            </form>
-         </div>
-      )
-   }
+const NewObjective = ({ 
+	createNewTemplate,
+	addKeyResultToTemplate,
+	removeKeyResultFromTemplate,
+	closeNewObjectiveWindow,
+	keyResults,
+	categories
+}) => {
+	return (
+		<div id="new-objective">
+			<button type="button" id="close-new-obj-window" onClick={ closeNewObjectiveWindow }>
+				<i className="fi flaticon-multiply" aria-hidden="true"></i>
+			</button>
+			<form action="">
+				<NewObjCredentials 
+					createNewTemplate={ createNewTemplate }
+					addKeyResultToTemplate={ addKeyResultToTemplate }
+					removeKeyResultFromTemplate={ removeKeyResultFromTemplate }
+					closeNewObjectiveWindow={ closeNewObjectiveWindow }
+					keyResults={ keyResults }
+					categories={ categories }
+				/>
+			</form>
+		</div>
+	);
 }
+
+NewObjective.PropTypes = {
+	createNewTemplate: PropTypes.func.isRequired,
+	addKeyResultToTemplate: PropTypes.func.isRequired,
+	removeKeyResultFromTemplate: PropTypes.func.isRequired,
+	closeNewObjectiveWindow: PropTypes.func.isRequired,
+	keyResults: PropTypes.array.isRequired,
+	categories: PropTypes.array.isRequired,
+};
 
 export default NewObjective;
-
-function close_window_handler() {
-   var newObjWindow = document.getElementById('new-objective');
-
-   if(!newObjWindow.classList.contains('opened')){
-      newObjWindow.classList.add('opened');
-   } else { newObjWindow.classList.remove('opened'); }
-}

@@ -56,3 +56,13 @@
 		}
 	}
 }
+@media all 
+and (max-width: 900px)
+{
+   #central-window {
+		position: relative;
+		margin-right: 0;
+		overflow-y: overlay;
+		overflow-x: hidden;
+	}
+}

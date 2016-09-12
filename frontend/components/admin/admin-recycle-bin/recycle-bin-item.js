@@ -38,7 +38,7 @@ class RecycleBinItem extends Component {
 			this.props.updateTemplateObjectivesRequest(this.props.item.id, body, this.props.item.id);
 		}
 
-		if (this.props.item.type === "key") {
+		if (this.props.item.type === "key result") {
 			
 			let body = {};			
 			body.isDeleted = false;

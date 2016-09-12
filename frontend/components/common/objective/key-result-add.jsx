@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 
 import * as actions from "../../../actions/keyResultActions";
 
+const notifications = require("../../../actions/notifications.js");
+
 class KeyResult extends React.Component {
 	constructor(props) {
 		super(props);
@@ -24,11 +26,17 @@ class KeyResult extends React.Component {
 			const body = {
 				title: title,
 				keyResultId: this.props.keyResultsReducer.selectedItem._id || '',
+				isItHomePage: this.props.isItHomePage || false,
 			};
 
 			let userObjectiveId = this.props.objectiveId;
 
-			this.props.addNewKeyResults(userObjectiveId, body);
+			if (this.props.mentorId != undefined)
+				this.props.addNewKeyResults(userObjectiveId, body, 
+					notifications.notificationApprenticeAddedKeyResult, this.props.mentorId);
+			else
+				this.props.addNewKeyResults(userObjectiveId, body);
+
 			this.props.resetAutocompleteState();
 		}
 	};
@@ -55,14 +63,16 @@ class KeyResult extends React.Component {
 			<section className="autocomplete undisplay">
 				<AutocompleteInput
 					getAutocompleteData={ this.getAutocompleteData }
-					setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
 					autocompleteData={ this.props.keyResultsReducer.data }
 					autocompletePlaceholder='key result'
+
+					setAutocompleteSelectedItem={ this.setAutocompleteSelectedItem }
+					selectedItem={ this.props.keyResultsReducer.selectedItem }
+
 					addNewItem={ this.addNewItem }
 					resetAutocompleteState={ this.resetAutocompleteState }
 				  isValid={ this.isValid }
-					selectedItem={ this.props.keyResultsReducer.selectedItem }
-				  ref={ `autocompleteInput-${this.props.objectiveId}` }
+					refInput={ `autocompleteInput-${this.props.objectiveId}` }
 				/>
 			</section>
 		)

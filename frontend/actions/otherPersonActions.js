@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-
+import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
+				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
 export const GET_USER = 'GET_USER';
 export const RECEIVED_USER = 'RECEIVED_USER';
 export const RECEIVED_ERROR = 'RECEIVED_ERROR';
@@ -54,6 +55,9 @@ export function addNewObjective(body) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
+
+			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
+			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 		})
 		.catch(response => {
 			dispatch(receivedError(response.data));

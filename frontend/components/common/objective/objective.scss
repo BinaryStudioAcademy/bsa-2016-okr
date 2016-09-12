@@ -52,7 +52,9 @@
 		position: relative;
 		background: lighten($color-blue-grey, 50%);
 	}
-
+	.category-title:focus{
+		border-radius: 3px;
+	}
 	p:before {
 		content: '';
 		display: block;
@@ -70,25 +72,54 @@
 	button i{
 		pointer-events: none;
 	}
-
+	.notApproved{
+		display: inline-block;
+		margin-right: 8px;
+		cursor: pointer;
+	}
 	.delete-button-objective{
 		position: absolute;
-		bottom: 13px;
-		right: 15px;
-		padding: 7px 10px;
-		z-index: 1;
-	}
-	.cancel-button-objective{
-		position: absolute;
-		bottom: 15px;
+		top: 80px;
 		right: 17px;
 		padding: 7px 10px;
 		z-index: 1;
 	}
 
+	.objective-edit{
+		position: absolute;
+		top: 80px;
+		right: 57px;
+		padding: 7px 10px;
+		z-index: 1;
+	}
+	.cancel-button-objective{
+		position: absolute;
+		top: 80px;
+		right: 17px;
+		padding: 7px 10px;
+		z-index: 1;
+	}
+
+	.btn-red-hover:focus{
+    color: #fff;
+    background-color: darken($color-red, 10%);
+ 	}
+  .btn-blue-hover:focus{
+    color: #fff;
+    background-color: darken($color-blue, 10%);
+  }
+  .btn-red:focus{
+  	color: #fff;
+  	background-color: darken($color-red, 10%);
+ 	}
+  .btn-green:focus{
+    color: #fff;
+    background-color: darken($color-green, 10%);
+  }
+
 	.save{
 		position: absolute;
-		bottom: 15px;
+		top: 80px;
 		right: 57px;
 		padding: 7px 10px;
 		background: #4caf50;
@@ -99,10 +130,10 @@
 		display: none;
 	}
 
-	.objective-edit {
+	.objective-archive {
 		position: absolute;
-		bottom: 13px;
-		right: 55px;
+		top: 45px;
+		right: 17px;
 		padding: 7px 10px;
 		z-index: 1;
 	}
@@ -110,11 +141,10 @@
 	.description-textarea {
 		display: block;
 		resize: vertical;
-		width: 100%;
-		height: 50px;
-		min-height: 50px;
-		max-height: 70px;
+		width: 80%;
+		max-height: 80px;
 		margin-bottom: 10px;
+		margin-top: 7px;
 		padding: 10px;
 		margin-right: 50px;
 	}

@@ -44,7 +44,7 @@ export default class CircularProgress extends React.Component {
                     y={this.props.radius}
                     dy=".4em"
                     textAnchor="middle">
-                    {`${this.props.percentage}%`}
+                    {isNaN(this.props.percentage) ? 'loading' : `${this.props.percentage}%`}
                 </text>
             </svg>
         );
@@ -56,5 +56,3 @@ CircularProgress.defaultProps = {
     percentage: 50,
     strokeWidth: 1
 };
-
-    

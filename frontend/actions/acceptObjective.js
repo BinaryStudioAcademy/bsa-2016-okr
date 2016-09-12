@@ -46,7 +46,7 @@ export function updateKeyTemplateRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_KEY_TEMPLATE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/keyResult/myupdate/' + id), body)
+		return axios.put(('/api/keyResult/updateWithoutValidation/' + id), body)
 		.then(response => {
 			console.log(response);
 			dispatch(deleteItemFromState(idItem));
@@ -72,7 +72,7 @@ export function updateObjectiveTemplateRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_OBJECTIVE_TEMPLATE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/objective/myupdate/' + id), body)
+		return axios.put(('/api/objective/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });

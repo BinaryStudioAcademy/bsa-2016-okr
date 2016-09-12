@@ -2,6 +2,7 @@ const router = require('express').Router();
 const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/userObjective');
 const service = require('../../services/userObjective');
+const session = require('../../config/session.js');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const isCorrectId = ValidateService.isCorrectId;
@@ -83,8 +84,8 @@ router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
 
 router.post('/:id/keyresult/', (req, res, next) => {
 	var userObjectiveId = req.params.id || '';
-	var userId = req.session._id;
-	var isAdmin = req.session.isAdmin;
+	var session = req.session;
+	var userId = req.body.routeId || req.session._id;
 	var title = req.body.title || '';
 	var keyResultId = req.body.keyResultId || '';
 	var isApproved = false;
@@ -101,7 +102,7 @@ router.post('/:id/keyresult/', (req, res, next) => {
 		isApproved = true;
 	}
 
-	service.addKeyResult(userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, res.callback);
+	service.addKeyResult(session, userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, res.callback);
 });
 
 router.put('/:id/keyresult/score', (req, res, next) => {
@@ -178,6 +179,35 @@ router.put('/:id', (req, res, next) => {
 
 	return service.update(session, userObjectiveId, data, res.callback);
 });
+
+
+router.put('/:id/archive/:flag', adminOnly, (req, res, next) => {
+	var id = req.params.id;
+	var flag = req.params.flag === "true" ? true : false;
+
+	if(!isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+
+	return service.changeArchiveStatus(session._id, id, flag, res.callback);
+})
+
+
+//this is temporary  solution
+router.put('/updateWithoutValidation/:id', adminOnly, (req, res, next) => {
+
+	var id = req.params.id;
+	var body = req.body;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.update(id, body, res.callback);
+});
+
+
 
 /* not sure if this is valid
 // TODO: Body validation

@@ -1,0 +1,68 @@
+.accept-objective-item{
+  .hint {
+      background-color: #f3f6f7;
+      z-index: 5;
+      position: absolute;
+      padding: 7px;
+      padding-right: 10px;
+      //top: 70px;
+      left: 17px;
+      bottom: 17px;
+      border-radius: 3px;
+      -webkit-transition: all .2s;
+      -moz-transition: all .2s;
+      -o-transition: all .2s;
+      transition: all .2s;
+        outline: none;
+        -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+  }
+
+  .userItem{
+    padding-top: 3px;
+    padding-left: 3px;
+  }
+  .user-photo {
+    width: 55px !important;
+    height: 55px !important;
+    border-radius: 3px !important;
+    margin-top: 2px;
+  }
+
+  .users-info {
+    float: right;
+    position: relative;
+    margin-left: 10px;
+    font-family: "Fira Sans", "Open Sans", sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    display: inline-block;
+    margin-top: -2px;
+    color: #555;
+
+    .userName{
+      margin-bottom: 8px;
+    }
+  }
+
+  .mentor-name {
+    display: inline-block;
+    padding-left: 5px;
+    color: #555;
+    font-size: 12px;
+    font-weight:normal;
+
+  }
+
+  .mentor-title {
+    display: inline-block;
+    color: #aaa;
+    font-size: 12px;
+    font-weight:normal;
+  }
+
+  .mentor {
+    font-size: 30px;
+  }
+}

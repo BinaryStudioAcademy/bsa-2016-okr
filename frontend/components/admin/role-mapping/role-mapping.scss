@@ -4,6 +4,14 @@
 	width: 100%;
 }
 
+.table-head #global-role-field {
+    margin-right: 7px;
+}
+
+.table-head #name-field {
+    margin-right: 7px;
+}
+
 #role-mapping-wrapper button i {
     color: white;
     font-size: 26px;
@@ -21,12 +29,16 @@
    padding-right: 3px;
 }
 
+#role-mapping-wrapper .table-head h3.col-2 {
+    cursor: pointer;
+}
+
 #role-mapping-wrapper .table-head h3.col-4 {
     cursor: pointer;
 }
 
 .table-head h3 {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #role-mapping-wrapper #global-role {
@@ -110,7 +122,7 @@
 }
 
 #role-mapping-wrapper h3 {
-	height: 40px;
+	height: 38px;
 	line-height: 40px;
 	display: inline;
 	margin: 0;

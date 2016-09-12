@@ -56,7 +56,7 @@ router.get('/deleted', adminOnly, (req, res, next) => {
 	return repository.getAllDeletedPopulate(res.callback);
 });
 
-router.put('/myupdate/:id', (req, res, next) => {
+router.put('/updateWithoutValidation/:id', adminOnly, (req, res, next) => {
 
  	var id = req.params.id;
 

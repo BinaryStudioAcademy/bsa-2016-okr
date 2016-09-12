@@ -65,6 +65,8 @@ module.exports = {
 			CHANGE_APPROVE: 'CHANGE_APPROVE',
 			TOOK_APPRENTICE: 'TOOK_APPRENTICE',
 			REMOVED_APPRENTICE: 'REMOVED_APPRENTICE',
+			ARCHIVED: "ARCHIVED",
+			UNARCHIVED: "UNARCHIVED"
 		},
 		target: {
 			OBJECTIVE: 'OBJECTIVE',
@@ -78,4 +80,7 @@ module.exports = {
 	},
 	currentYear: currentYear,
 	currentQuarter: currentQuarter,
+	NOT_SORTED: 0,
+	SORTED_ASC: 1,
+	SORTED_DESC: 2
 };

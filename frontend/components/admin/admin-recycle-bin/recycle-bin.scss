@@ -77,6 +77,10 @@ body {
 			}
 		}
 	}
+	button.btn-filter:focus{
+		background-color: darken($color-blue, 10%);
+		color: #fff;
+	}
 }
 
 #rec-bin-wrapper {
@@ -101,7 +105,20 @@ body {
 
 	& .width-30perc { width: 25%; }
 
-	& .width-5perc { width: 60px; }
+	& .width-5perc { 
+		width: 60px; 
+		padding: 4px;
+		button{
+			padding: 7px 16px;
+		}
+		button:focus{
+			background-color: $color-blue;
+			color: #fff;
+		}
+		i{
+			font-size: 20px;
+		}
+	}
 
 	& .width-85perc {
 		width: 100%;
@@ -111,6 +128,10 @@ body {
 	& td span { display: block; }
 
 	& #date-field {
+		margin-right: 7px;
+	}
+
+	& #title-field {
 		margin-right: 7px;
 	}
 
@@ -231,6 +252,7 @@ body {
 	.show-container {
 		display: block;
 		padding: 0;
+		height: 59px;
 		text-align: center;
 	}
 
@@ -240,13 +262,13 @@ body {
 
 }
 
-@media all and (max-width: 1450px) {
+@media all and (max-width: 1460px) {
 
 	.recucle-bin-filter-bar-container {
 
 		.filter-box {
 			display: block;
-			width: 986px;
+			width: 977px;
 			height: auto;
 			margin: 0 auto;
 			margin-top: 12px;
@@ -254,6 +276,10 @@ body {
 
 		.filter-box label {
 			line-height: normal;
+		}
+
+		.show-container {
+			height: 92px;
 		}
 
 		.recycle-bin-filter-table {

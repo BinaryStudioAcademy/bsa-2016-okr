@@ -16,6 +16,7 @@ export const RECEIVED_USER_DELETED_OBJECTIVES = 'RECEIVED_USER_DELETED_OBJECTIVE
 export const GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR = 'GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR';
 export const CATEGORY_TYPE_FILTER = 'CATEGORY_TYPE_FILTER';
 export const SET_SORTING_BY_DATE = 'SET_SORTING_BY_DATE';
+export const SET_SORTING_BY_TITLE = 'SET_SORTING_BY_TITLE';
 export const SET_OBJECTIVE_TYPE = 'SET_OBJECTIVE_TYPE';
 export const SET_CATEGORY_TYPE = 'SET_CATEGORY_TYPE';
 export const SET_KEY_TYPE = 'SET_KEY_TYPE';
@@ -44,7 +45,7 @@ export function updateCategoryRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_CATEGORY_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/category/myupdate/' + id), body)
+		return axios.put(('/api/category/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -103,7 +104,7 @@ export function updateTemplateKeyResultRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_TEMPLATE_KEY_RESULT_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/keyResult/myupdate/' + id), body)
+		return axios.put(('/api/keyResult/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -129,7 +130,7 @@ export function updateTemplateObjectivesRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_TEMPLATE_OBJECTIVE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/objective/myupdate/' + id), body)
+		return axios.put(('/api/objective/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -214,9 +215,6 @@ export function receivedKeyResultsTemplatesError(data) {
 	};
 }
 
-
-
-
 export function search(value) {
 	const action = {
 		type: SEARCH_OBJECTS,
@@ -270,7 +268,7 @@ export function updateUserObjectivesRequest(id, body, idItem) {
 		dispatch({ type: UPDATE_USER_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.delete('/api/userObjective/' + id + '/' + body.isDeleted)
+		return axios.put(('/api/userObjective/updateWithoutValidation/' + id), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -361,6 +359,15 @@ export function typeOrCategoryFilter(value) {
 
 	const action = {
 		type: CATEGORY_TYPE_FILTER,
+		value: value
+	};
+	return action;
+}
+
+export function setSortingByTitle(value) {
+
+	const action = {
+		type: SET_SORTING_BY_TITLE,
 		value: value
 	};
 	return action;

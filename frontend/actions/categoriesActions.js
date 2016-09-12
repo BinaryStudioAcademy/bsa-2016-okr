@@ -66,12 +66,12 @@ export function deleteCategory(id, flag){
 		});
 
 		return axios.delete(`/api/category/${ id }/${ flag }`)
-			.then(response => dispatch(recivedDeleteCategory(id)))
+			.then(response => dispatch(receivedDeleteCategory(id)))
 			.catch(response => dispatch(deleteCategoryError(response.data)));
 	};
 }
 
-export function recivedDeleteCategory(id) {
+export function receivedDeleteCategory(id) {
 	return {
 		type: RECIVED_DELETE_CATEGORY,
 		id
@@ -109,12 +109,12 @@ export function editCategory(id, reqBody ) {
 		dispatch({ type: EDIT_CATEGORY });
 
 		return axios.put(`/api/category/${ id }/`, reqBody)
-			.then(response => dispatch(recivedEditCategory(response.data, reqBody)))
+			.then(response => dispatch(receivedEditCategory(response.data, reqBody)))
 			.catch(response => dispatch(editCategoryError(response.data)));
 	};
 }
 
-export function recivedEditCategory(data, reqBody) {
+export function receivedEditCategory(data, reqBody) {
 	return {
 		type: RECIVED_EDIT_CATEGORY,
 		data,
@@ -139,19 +139,19 @@ export function addCategory(reqBody) {
 	});
 
 	return axios.post('/api/category/', reqBody)
-			.then(response => dispatch(recivedNewCategory(response.data)))
-			.catch(response => dispatch(recivedNewCategoryError(response.data)));
+			.then(response => dispatch(receivedNewCategory(response.data)))
+			.catch(response => dispatch(receivedNewCategoryError(response.data)));
 	};
 }
 
-export function recivedNewCategory(data){
+export function receivedNewCategory(data){
 	return {
 		type: RECIVED_NEW_CATEGORY,
 		data
 	}
 }
 
-export function recivedNewCategoryError(data){
+export function receivedNewCategoryError(data){
 	return {
 		type: RECIVED_NEW_CATEGORY_ERROR,
 		data

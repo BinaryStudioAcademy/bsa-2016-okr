@@ -7,23 +7,24 @@
   padding: 2px 5px;
   color: #fff;
   border-radius: 2px;
+  margin-right: 5px;
 }
 
 .star-rating {
   float: right;
   width: 10em;
   text-align: center;
-  margin-top: -0.5em;
+  margin-top: -0.35em;
 
   &__star {
     display: inline-block;
-    padding-left: 5px;
+    padding-left: 1px;
     vertical-align: middle;
     line-height: 1;
-    font-size: 2em;
+    font-size: 1.7em;
     color: $color-grey;
     transition: color .2s ease-out;
-    margin-top: -2px;
+    //margin-top: -7px;
 
     &:hover {
       cursor: pointer;

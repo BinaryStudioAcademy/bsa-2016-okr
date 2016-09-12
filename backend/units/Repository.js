@@ -67,12 +67,18 @@ Repository.prototype.setToNotDeleted = function(id, callback) {
 };
 
 Repository.prototype.getCount = function() {
-
 	var model = this.model;
 
 	model.count({}, function(err, count) {
 		console.log( "Count :", count );
 	});
+}
+
+Repository.prototype.changeIsArchivedTo= function (id, flag, callback) {
+	var model = this.model;
+
+	var query = model.update({_id:id}, {$set: {'isArchived': flag}});
+	query.exec(callback);
 }
 
 module.exports = Repository;

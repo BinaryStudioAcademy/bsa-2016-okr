@@ -63,7 +63,6 @@ class CategoryList extends Component {
 		
 
 		if(categoryIndex === -1) {
-			sweetalert.close();
 			return true;
 		} else {
 			sweetalert({
@@ -87,7 +86,9 @@ class CategoryList extends Component {
 			let reqBody = {
 				title,
 			};
+			
 			this.props.categoriesActions.addCategory(reqBody);
+			sweetalert.close();
 		}
 	}
 
@@ -98,6 +99,7 @@ class CategoryList extends Component {
 			};
 
 			this.props.categoriesActions.editCategory(id, reqBody);
+			sweetalert.close();
 		}
 	}
 
@@ -118,6 +120,7 @@ class CategoryList extends Component {
 
 	componentWillMount(){
 		this.props.categoriesActions.cancelEdit();
+		this.props.categoriesActions.getAllCategories();
 	}
 
 render() {
@@ -143,7 +146,7 @@ render() {
 				})}
 			</ul>
 			<div id="new-category">
-						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={ this.showAddCategoryInput }>
+						<a ref="newCategoryButton" className='add-new-category-btn display' tabIndex='0' onClick={ this.showAddCategoryInput }>
 							+Add new category</a>
 						<NewCategory 
 							ref={'newCategoryComponent'}

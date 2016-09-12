@@ -8,13 +8,14 @@ class AutocompleteInput extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.refInput =  this.props.refInput;
+
 		this.state = {
 			isValid: true,
-			selectedLi: false,
+			selectedLi: false
 		};
 
 		this.onKeyPress = this.onKeyPress.bind(this);
-		// this.onKeyDown = this.onKeyDown.bind(this);
 		this.onFocus = this.onFocus.bind(this);
 		this.onBlur = this.onBlur.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -24,15 +25,21 @@ class AutocompleteInput extends React.Component {
 		this.getData = debounce(this.getData.bind(this), 500);
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if(this.state.selectedLi === true) {
+			setTimeout(() => {this.refs[this.refInput].focus()});
+		}
+	}
+
 	getData(title) {
 		this.props.getAutocompleteData(title);
 	}
 
 	onFocus(event) {
-		let title = this.refs.autocompleteInput.value;
+		let title = this.refs[this.refInput].value;
 		this.props.getAutocompleteData(title);
 
-		// this.setState({ selectedLi: false });
+		this.setState({ selectedLi: false });
 
 		// undisplay autocomplete results when item is selected
 		if (isEmpty(this.props.selectedItem)) {
@@ -58,13 +65,16 @@ class AutocompleteInput extends React.Component {
 
 		this.getData(title);
 		this.props.setAutocompleteSelectedItem(item);
+
+		// undisplay autocomplete results when item is selected
+		this.changeAutocompleteListVisibility('display');
 	}
 
 	onClickLi(item) {
 		// return function for create closure
 		return (event) => {
 			this.props.setAutocompleteSelectedItem(item);
-			this.refs.autocompleteInput.value = item.title;
+			this.refs[this.refInput].value = item.title;
 			this.setState({ selectedLi: true });
 		}
 	}
@@ -75,16 +85,9 @@ class AutocompleteInput extends React.Component {
 		}
 	}
 
-	// onKeyDown(event) {
-	// 	if(event.keyCode === 27) {
-	// 		// Escape pressed
-	// 		this.resetAutocompleteState();
-	// 	}
-	// }
-
 	addNewItem() {
 		// console.log('Trying to add new item...');
-		const title = this.refs.autocompleteInput.value;
+		const title = this.refs[this.refInput].value;
 		let isTitleValid = this.props.isValid(title);
 
 		if (!isTitleValid && this.state.isValid) {
@@ -95,7 +98,7 @@ class AutocompleteInput extends React.Component {
 		
 		if (isTitleValid) {
 			this.props.addNewItem(title);
-			this.refs.autocompleteInput.value = '';
+			this.refs[this.refInput].value = '';
 			this.props.setAutocompleteSelectedItem({});
 			this.setState({ selectedLi: false });
 			this.getData('');
@@ -103,7 +106,7 @@ class AutocompleteInput extends React.Component {
 	}
 
 	resetAutocompleteState() {
-		this.refs.autocompleteInput.value = '';
+		this.refs[this.refInput].value = '';
 		this.props.setAutocompleteSelectedItem({});
 		this.setState({ selectedLi: false });
 		this.props.resetAutocompleteState();
@@ -130,14 +133,6 @@ class AutocompleteInput extends React.Component {
 				autocompleteListElement.classList.remove('display');
 				autocompleteListElement.classList.add('undisplay');
 			}
-		}
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		// console.log('Autocomplete input did update');
-		if(prevState.selectedLi) {
-			// console.log('Some item was selected from autocomplete');
-			ReactDOM.findDOMNode(this.refs.autocompleteInput).focus();
 		}
 	}
 
@@ -171,7 +166,7 @@ class AutocompleteInput extends React.Component {
 		return (
 			<div className="autocomplete-component">
 				<input
-					ref="autocompleteInput"
+					ref={ this.refInput }
 					className={ `autocomplete-input ${validateClass}` } type="text"
 					placeholder={ `Start typing to get ${this.props.autocompletePlaceholder}...` }
 					onFocus={ this.onFocus }

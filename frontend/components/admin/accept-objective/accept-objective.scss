@@ -15,7 +15,7 @@
 
 accept-objective--search-bar button {
   float: right;
-  margin-right: 5%; 
+  margin-right: 5%;
 }
 
 .objective-text-info {
@@ -39,7 +39,6 @@ accept-objective--search-bar button {
   width: 100%;
   margin: 15px auto 0px;
   font-size: 20px;
-  min-width: 550px; 
 }
 
 #accept-objective-wrapper .row {
@@ -47,12 +46,20 @@ accept-objective--search-bar button {
  margin-bottom: -3px;
 }
 
+.popup-toogle:hover > a > div.hint {
+  display: block;
+}
+
+.popup-toogle > a > div.hint {
+  display: none;
+}
+
 #accept-objective-wrapper p#main-title span {
   display: inline-block;
   padding: 10px;
   position: relative;
   background: #f3f6f7;
-  z-index: 10; 
+  z-index: 10;
   }
 
 #accept-objective-wrapper p#main-title:after {
@@ -64,7 +71,7 @@ accept-objective--search-bar button {
   height: 0;
   width: 100%;
   border-top: 1px solid #aaaaaa;
-  z-index: 0; 
+  z-index: 0;
   }
 
 #accept-objective-wrapper .accept-objective-item {
@@ -86,17 +93,15 @@ accept-objective--search-bar button {
 
 #accept-objective-wrapper .accept-objective-item h2, h3 {
   padding: 0;
-  margin: 0; 
+  margin: 0;
   }
 
 #accept-objective-wrapper .accept-objective-item h2 {
-  padding-top: 6px;
+  padding-top: 7px;
   color: #555;
   position: absolute;
   display: inline-block;
-  font-size: 16px;
-  font-weight: 500;
-  margin-left: 5px;
+  font-size: 15px;
   }
 
 #accept-objective-wrapper .accept-objective-item h3 {
@@ -107,42 +112,49 @@ accept-objective--search-bar button {
 }
 
 #accept-objective-wrapper .accept-objective-item img {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   margin-top: 0px;
   }
 
-#accept-objective-wrapper .accept-objective-item .red-hover:hover {
-  background: $color-red;
-  color: white; 
-}
 
-#accept-objective-wrapper .accept-objective-item .green-hover:hover {
-  background: $color-green;
-  color: white; 
-}
+#accept-objective-wrapper .accept-objective-item {
+  .buttons{
+    float: right;
 
-#accept-objective-wrapper .accept-objective-item  button {
-  float: right;
-  height: 26px;
-  background: #CFD8DC;
-  border-radius: 4px;
-  border: none;
-  color: #555;
-  text-align: center;
-  -webkit-transition: all .1s;
-  -moz-transition: all .1s;
-  -o-transition: all .1s;
-  transition: all .1s;
-  margin-left: 15px;
-  padding: 5px 10px;
+    .btn-green-hover:focus,
+    .btn-red-hover:focus {
+      color: #fff;
+    }
+    .btn-green-hover {
+      &:focus {
+        background-color: darken($color-green, 10%);
+      }
+    }
+    .btn-red-hover {
+      &:focus {
+        background-color: darken($color-red, 10%);
+      }
+    }
+    button{
+      display: inline-block;
+      padding: 5px 10px;
+      margin-left: 10px;
+    }
+  }
 }
 
 #accept-objective-wrapper .accept-objective-item .left-column {
   width: 40px;
   display: inline-block;
-  min-width: 35px;
+  min-width: 30px;
+}
+
+.left-column:hover {
+  .userItem {
+    display: block;
+  }
 }
 
 #accept-objective-wrapper .accept-objective-item span {
@@ -174,32 +186,21 @@ accept-objective--search-bar button {
 }
 
 #accept-objective-wrapper .accept-objective-item  span.category {
-  background-color: $color-green; 
-  margin-left: 10px;
+  background-color: $color-green;
+ }
+ #accept-objective-wrapper .accept-objective-item  span.type {
+  margin-right: 10px;
  }
 
 #accept-objective-wrapper .accept-objective-item  {
- 
+
   position: relative;
   clear: both;
 }
-/* 
-@media screen and (max-width: 1475px) {
-  #accept-objective-wrapper .accept-objective-item {
-    width: 48.8%;
-    margin-right: 2%;
-    background: #f9fafb;
-    border: 1px solid #ddd;
-    border-radius: 3px 3px 0 3px;
-    overflow: hidden;
-    display: inline-table;
-    margin-top: 20px;
- } } */
 
  @media all and (max-width: 1300px) {
   #accept-objective-wrapper .accept-objective-item {
     width: 100%;
-    min-width: 550px;
     margin-right: 0;
     background: #f9fafb;
     border: 1px solid #ddd;
@@ -207,5 +208,16 @@ accept-objective--search-bar button {
     overflow: hidden;
     display: inline-table;
     margin-top: 20px;
- } }
-
+    .objective-text-info {
+      min-height: 20px;
+    }
+ } 
+}
+ 
+@media all and (max-width: 800px) {
+  #accept-objective-wrapper .accept-objective-item {
+    .objective-text-info {
+      min-height: 20px;
+    }
+  } 
+}

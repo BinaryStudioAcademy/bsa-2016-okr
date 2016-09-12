@@ -14,6 +14,7 @@ import {
 	GET_USER_DELETED_OBJECTIVES_REQUEST_ERROR,
 	CATEGORY_TYPE_FILTER,
 	SET_SORTING_BY_DATE,
+	SET_SORTING_BY_TITLE,
 	SET_OBJECTIVE_TYPE,
 	SET_CATEGORY_TYPE,
 	SET_KEY_TYPE,
@@ -37,6 +38,8 @@ import {
     UPDATE_CATEGORY_REQUEST_ERROR
 } from '../actions/recycleBinActions';
 
+import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../backend/config/constants"; 
+
 const initialState = {
 	recycleBinItems: [],
 	searchValue: '',
@@ -48,11 +51,11 @@ const initialState = {
 	usersNames: [],
 	objectiveType: true,
 	keyType: true,
-	sortByDate: false,
+	sortByDate: 0,
+	sortByTitle: 0,
 	categoryType: true,
 	categoryOrTypeFilter: "",
-	userName: "",
-	isSortingUsed: false
+	userName: ""
 };
 
 export default function recBynReducer(state = initialState, action) {
@@ -97,7 +100,7 @@ export default function recBynReducer(state = initialState, action) {
 				recycleBinItems: newRecycleBinItems,
 				visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
 					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-					state.keyType, state.sortByDate, state.categoryType, state.userName, state.isSortingUsed),
+					state.keyType, state.sortByDate, state.sortByTitle, state.categoryType, state.userName),
 				usersNames: getAllNames(newRecycleBinItems)
 
 			});
@@ -141,9 +144,8 @@ export default function recBynReducer(state = initialState, action) {
 				recycleBinItems: newRecycleBinItems,
 				visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
 					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-					state.keyType, state.sortByDate, state.categoryType, state.userName, state.isSortingUsed),
+					state.keyType, state.sortByDate, state.sortByTitle, state.categoryType, state.userName),
 				usersNames: getAllNames(newRecycleBinItems)
-
 			});
 
 		}
@@ -157,7 +159,7 @@ export default function recBynReducer(state = initialState, action) {
 
 			let key = {};
 
-			key.type = "key";
+			key.type = "key result";
 
 			for (let i = 0; i < data.length; i++) {
 				
@@ -187,7 +189,7 @@ export default function recBynReducer(state = initialState, action) {
 				recycleBinItems: newRecycleBinItems,
 				visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
 					state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-					state.keyType, state.sortByDate, state.categoryType, state.userName, state.isSortingUsed),
+					state.keyType, state.sortByDate, state.sortByTitle, state.categoryType, state.userName),
 				usersNames: getAllNames(newRecycleBinItems)
 
 			});
@@ -225,7 +227,7 @@ export default function recBynReducer(state = initialState, action) {
 
 				let key = {};
 
-				key.type = "key";
+				key.type = "key result";
 
 				for (let i = 0; i < data.length; i++) {
 					
@@ -268,7 +270,7 @@ export default function recBynReducer(state = initialState, action) {
 					recycleBinItems: newRecycleBinItems,
 					visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-						state.keyType, state.sortByDate, state.categoryType, state.userName, state.isSortingUsed),
+						state.keyType, state.sortByDate, state.sortByTitle, state.categoryType, state.userName),
 					usersNames: getAllNames(newRecycleBinItems),
 					objectiveForUpdate: objectiveForUpdate
 				})
@@ -307,12 +309,11 @@ export default function recBynReducer(state = initialState, action) {
 
 				}
 
-
 				return Object.assign({}, state, {
 					recycleBinItems: newRecycleBinItems,
 					visibleItems: updateVisibleItems(newRecycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-						state.keyType, state.sortByDate, state.categoryType, state.userName, state.isSortingUsed),
+						state.keyType, state.sortByDate, state.sortByTitle, state.categoryType, state.userName),
 					usersNames: getAllNames(newRecycleBinItems)
 
 				})
@@ -334,7 +335,7 @@ export default function recBynReducer(state = initialState, action) {
 					isSortingUsed: isSortingUsed,
 					visibleItems: updateVisibleItems(state.recycleBinItems, dateFrom,
 						dateTo, categoryOrTypeFilter, objectiveType, 
-						keyType, sortByDate, categoryType, userName, isSortingUsed)
+						keyType, sortByDate, state.sortByTitle,  categoryType, userName)
 				})
 			}
 
@@ -355,7 +356,7 @@ export default function recBynReducer(state = initialState, action) {
 					recycleBinItems: state.recycleBinItems,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-						state.keyType, state.sortByDate, state.categoryType, state.userName, state.isSortingUsed)
+						state.keyType, state.sortByDate, state.sortByTitle,  state.categoryType, state.userName)
 				})
 			}
 
@@ -374,7 +375,7 @@ export default function recBynReducer(state = initialState, action) {
 					userName: value,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-						state.keyType, state.sortByDate, state.categoryType, value, state.isSortingUsed)
+						state.keyType, state.sortByDate, state.sortByTitle, state.categoryType, value)
 				})
 			}
 
@@ -386,7 +387,7 @@ export default function recBynReducer(state = initialState, action) {
 					categoryOrTypeFilter: value,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, value, state.objectiveType, state.keyType, 
-						state.sortByDate, state.categoryType, state.userName, state.isSortingUsed)
+						state.sortByDate, state.sortByTitle, state.categoryType, state.userName)
 				})
 			}
 
@@ -398,7 +399,7 @@ export default function recBynReducer(state = initialState, action) {
 					categoryType: value,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, state.objectiveType, 
-						state.keyType, state.sortByDate, value, state.userName, state.isSortingUsed)
+						state.keyType, state.sortByDate, state.sortByTitle, value, state.userName)
 				})
 			}
 
@@ -410,7 +411,7 @@ export default function recBynReducer(state = initialState, action) {
 					objectiveType: value,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, value, state.keyType, 
-						state.sortByDate, state.categoryType, state.userName, state.isSortingUsed)
+						state.sortByDate, state.sortByTitle, state.categoryType, state.userName)
 				})
 			}
 
@@ -422,7 +423,19 @@ export default function recBynReducer(state = initialState, action) {
 					keyType: value,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom, 
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter, 
-						state.objectiveType, value, state.sortByDate, state.categoryType, state.userName, state.isSortingUsed)
+						state.objectiveType, value, state.sortByDate, state.sortByTitle,  state.categoryType, state.userName)
+				})
+			}
+
+			case SET_SORTING_BY_TITLE: {
+
+				const {value} = action;
+
+				return Object.assign({}, state, {
+					sortByTitle: value,
+					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
+						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter,
+						state.objectiveType, state.keyType, state.sortByDate, value,  state.categoryType, state.userName)
 				})
 			}
 
@@ -432,10 +445,9 @@ export default function recBynReducer(state = initialState, action) {
 
 				return Object.assign({}, state, {
 					sortByDate: value,
-					isSortingUsed: true,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom,
 						state.setRecycleBinFilterDateTo, state.categoryOrTypeFilter,
-						state.objectiveType, state.keyType, value, state.categoryType, state.userName, true)
+						state.objectiveType, state.keyType, value, state.sortByTitle, state.categoryType, state.userName)
 				})
 			}
 
@@ -455,8 +467,8 @@ export default function recBynReducer(state = initialState, action) {
 				return Object.assign({}, state, {
 					setRecycleBinFilterDateFrom,
 					visibleItems: updateVisibleItems(state.recycleBinItems, setRecycleBinFilterDateFrom, state.setRecycleBinFilterDateTo,
-						state.categoryOrTypeFilter, state.objectiveType, state.keyType, state.sortByDate, state.categoryType, 
-						state.userName, state.isSortingUsed)
+						state.categoryOrTypeFilter, state.objectiveType, state.keyType, state.sortByDate, state.sortByTitle,
+						  state.categoryType, state.userName)
 				})
 			}
 
@@ -467,8 +479,8 @@ export default function recBynReducer(state = initialState, action) {
 				return Object.assign({}, state, {
 					setRecycleBinFilterDateTo,
 					visibleItems: updateVisibleItems(state.recycleBinItems, state.setRecycleBinFilterDateFrom, setRecycleBinFilterDateTo,
-						state.categoryOrTypeFilter, state.objectiveType, state.keyType, state.sortByDate, state.categoryType, 
-						state.userName, state.isSortingUsed)
+						state.categoryOrTypeFilter, state.objectiveType, state.keyType, state.sortByDate, state.sortByTitle, 
+						 state.categoryType, state.userName)
 				})
 			}
 
@@ -567,7 +579,7 @@ export default function recBynReducer(state = initialState, action) {
 
 	}
 
-function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, categoryType, userName, isSortingUsed) {
+function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, sortByTitle, categoryType, userName) {
 
 	let initVisibleItems = filterDate(items, dateFrom, dateTo);
 
@@ -579,8 +591,8 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		else {
 
 			for (let i = 0; i < initVisibleItems.length; i++) {
-				if (initVisibleItems[i].type.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0 ||
-					initVisibleItems[i].category.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) === 0)  {
+				if (initVisibleItems[i].type.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) >= 0 ||
+					initVisibleItems[i].category.toUpperCase().indexOf(categoryOrTypeFilter.toUpperCase()) >= 0)  {
 					itemsAfterInputFilter.push(initVisibleItems[i]);
 			}
 		}
@@ -607,7 +619,7 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		if (initVisibleItems[i].type === "objective" && objectiveType) {
 			visibleItems.push(initVisibleItems[i]);
 		}
-		if (initVisibleItems[i].type === "key" && keyType) {
+		if (initVisibleItems[i].type === "key result" && keyType) {
 			visibleItems.push(initVisibleItems[i]);
 		}
 		if (initVisibleItems[i].type === "category" && categoryType) {
@@ -615,19 +627,40 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 		}
 	}
 
-	if (sortByDate) {
 
-		visibleItems.sort(function(a, b) {
-			return new Date(a.deletedDate) - new Date(b.deletedDate);
-		});
+	if (sortByDate != NOT_SORTED) {
 
-	} else {
-
-		visibleItems.sort(function(a, b) {
-			return new Date(b.deletedDate) - new Date(a.deletedDate);
-		});
+		if (sortByDate === SORTED_ASC) {
+			visibleItems.sort(function(a, b) {
+				return new Date(a.deletedDate) - new Date(b.deletedDate);
+			});
+		}
+		else {
+			visibleItems.sort(function(a, b) {
+				return new Date(b.deletedDate) - new Date(a.deletedDate);
+			});
+		}
 	}
 
+	if (sortByTitle != NOT_SORTED) {
+
+		if (sortByTitle ===  SORTED_ASC) {
+
+			visibleItems.sort(function(a, b) {
+				if(a.title < b.title) return -1;
+			    if(a.title > b.title) return 1;
+			    return 0;
+			});
+		}
+		else {
+
+			visibleItems.sort(function(a, b) {
+				if(a.title < b.title) return 1;
+			    if(a.title > b.title) return -1;
+			    return 0;
+			});
+		}
+	}
 
 	return visibleItems;
 }
