@@ -29,7 +29,7 @@ class UserHistory extends React.Component{
 					</p>
 					<p className="action-description">added {this.getHistoryObjectName(item)}</p>
 				</div>
-			)
+			);
 		else if (item.type.indexOf('UPDATE') != -1)
 			return (
 				<div className="action-text">
@@ -39,18 +39,42 @@ class UserHistory extends React.Component{
 					</p>
 					<p className="action-description">updated {this.getHistoryObjectName(item)}</p>
 				</div>
-			)
-		else if (item.type.indexOf('CHANGE') != -1)
-			return (
-				<div className="action-text">
-					<p className="author">
-						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
-					</p>
-					<p className="action-description">changed score {this.getHistoryObjectName(item)} to {item.userKeyResultScore}</p>
-				</div>
-			)
-		else if (item.type.indexOf('DELETE') != -1)
+			);
+		else if (item.type.indexOf('CHANGE') != -1) {
+			if (item.type.indexOf('SCORE') != -1)
+			  return (
+					<div className="action-text">
+						<p className="author">
+							<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+							<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						</p>
+						<p className="action-description">changed score {this.getHistoryObjectName(item)}
+							to {item.userKeyResultScore}</p>
+					</div>
+			  );
+			else if (item.type.indexOf('TITLE') != -1)
+				return (
+					<div className="action-text">
+						<p className="author">
+							<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+							<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						</p>
+						<p className="action-description">changed title to {item.userKeyResultTitle}</p>
+					</div>
+				);
+			else if (item.type.indexOf('DIFFICULTY') != -1)
+				return (
+					<div className="action-text">
+						<p className="author">
+							<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+							<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						</p>
+						<p className="action-description">changed difficulty {this.getHistoryObjectName(item)}
+							to {item.userKeyResultDifficulty}</p>
+					</div>
+				);
+
+		} else if (item.type.indexOf('DELETE') != -1)
 			return (
 				<div className="action-text">
 					<p className="author">

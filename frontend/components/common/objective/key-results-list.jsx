@@ -29,36 +29,42 @@ class KeyResults extends Component {
 		ReactDOM.findDOMNode(inputEl).focus();
 	}
 
-	isNotDuplicate(id, title) {
+	isNotDuplicate(id, title, difficulty) {
 		let keyResultIndex = this.props.data.findIndex((keyResult) => {
 			return keyResult.templateId.title === title;
 		});
 
-		if(keyResultIndex === -1 || (!isEmpty(id) && this.props.data[keyResultIndex].templateId._id === id)) {
+		if( keyResultIndex === -1 ) { //|| (!isEmpty(id) && this.props.data[keyResultIndex].templateId._id === id)
 			return true;
 		} else {
-			sweetalert({
-				title: 'Error!',
-				text: 'Key result with such title for that objective already exists',
-				type: 'error',
-			}, () => {
-				setTimeout(() => {
-					this.focusEditInput(id);
-				}, 0);
-			});
+			if(this.props.data[keyResultIndex].templateId.difficulty === difficulty) {
+				sweetalert({
+					title: 'Error!',
+					text: 'Key result with such title for that objective already exists',
+					type: 'error',
+				}, () => {
+					setTimeout(() => {
+						this.focusEditInput(id);
+					}, 0);
+				});
 
-			return false;
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
 
 	saveEditedKeyResult(id, title, difficulty) {
-		if(this.isNotDuplicate(id, title)) {
+		if(this.isNotDuplicate(id, title, difficulty)) {
+			let objectiveId = this.props.objectiveId;
 			let reqBody = {
+				keyResultId: id,
 				title: title,
 				difficulty: difficulty
 			};
 
-			//this.props.editKeyResult(id, reqBody);
+			this.props.editKeyResultTitleAndDifficulty(objectiveId, reqBody);
 			sweetalert.close();
 		}
 	}

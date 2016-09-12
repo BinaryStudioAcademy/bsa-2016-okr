@@ -182,6 +182,7 @@ class ObjectiveItem extends Component {
 						activeKeyResult = { this.props.activeKeyResult }
 						editingKeyResult = { this.props.editingKeyResult }
 						cancelEdit = { this.props.cancelEdit }
+						editKeyResultTitleAndDifficulty = { this.props.editKeyResultTitleAndDifficulty }
 				/>
 			</div>
 			</div>

@@ -227,6 +227,7 @@ class Objectives extends Component {
 						activeKeyResult = { activeKeyResult }
 						editingKeyResult = { editingKeyResult }
 						cancelEdit = { this.props.myStateActions.cancelEdit }
+						editKeyResultTitleAndDifficulty = { this.props.myStateActions.editKeyResultTitleAndDifficulty }
 					/>
 				</div>
 			</div>

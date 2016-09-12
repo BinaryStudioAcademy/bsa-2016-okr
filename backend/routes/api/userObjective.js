@@ -128,6 +128,21 @@ router.put('/:id/keyresult/score', (req, res, next) => {
 	service.setScoreToKeyResult(userId, objectiveId, keyResultId, score, res.callback);
 });
 
+router.put('/:id/keyresult/titleanddifficulty', (req, res, next) => {
+	var userId = req.session._id;
+	var objectiveId = req.params.id || '';
+	var keyResultId = req.body.keyResultId || '';
+	var title = req.body.title || '';
+	var difficulty = req.body.difficulty || '';
+
+	if(!isCorrectId(objectiveId)
+			|| !isCorrectId(keyResultId)) {
+		return res.badRequest();
+	}
+
+	service.setTitleAndDifficultyToKeyResult(userId, objectiveId, keyResultId, title, difficulty, res.callback);
+});
+
 router.delete('/:id/:flag', (req, res, next) => {
 	var flag = req.params.flag || '';
 	var userObjectiveId = req.params.id || '';

@@ -16,7 +16,9 @@ import {
 	ADD_NEW_QUARTER_ERROR,
 	CHANGE_ARCHIVE_STATUS,
 	CHANGE_ARCHIVE_STATUS_LOCAL,
-	RECEIVED_ME_BASIC
+	RECEIVED_ME_BASIC,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR
 } from '../actions/myStateActions';
 
 import {
@@ -204,6 +206,24 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return state;
 		}
 
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY: {
+			let { data } = action;
+			let { objectiveId, keyResultId, title, difficulty } = data;
+
+			return Object.assign({}, state, {
+				me: setTitleAndDifficultyToKeyResult(state.me, objectiveId, keyResultId, title, difficulty),
+			});
+		}
+
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR: {
+			let { data } = action;
+
+			console.log(EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR);
+			console.log(data);
+
+			return state;
+		}
+
 		case SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE: {
 			const { activeKeyResult } = action;
 
@@ -311,6 +331,46 @@ function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
 			if (keyResultFoundedIndex !== -1) {
 				keyResultIndex = keyResultFoundedIndex;
 				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
+			}
+		}
+	}
+
+	return meCopy;
+}
+
+function setTitleAndDifficultyToKeyResult(me, objectiveId, keyResultId, title, difficulty) {
+	const meCopy = Object.assign({}, me);
+
+	let quarterIndex = -1;
+	let	userObjectiveIndex = -1;
+	let	keyResultIndex = -1;
+
+	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
+		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
+			return userObjective._id === objectiveId
+		});
+
+		if(userObjectiveFoundedIndex !== -1) {
+			userObjectiveIndex = userObjectiveFoundedIndex;
+			return true;
+		}
+
+		return false;
+	});
+
+	if(quarterFoundedIndex !== -1) {
+		quarterIndex = quarterFoundedIndex;
+
+		if (userObjectiveIndex !== -1) {
+			let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
+				return keyResult._id === keyResultId;
+			});
+
+			if (keyResultFoundedIndex !== -1) {
+				keyResultIndex = keyResultFoundedIndex;
+
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].templateId.title = title;
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].templateId.difficulty = difficulty;
 			}
 		}
 	}

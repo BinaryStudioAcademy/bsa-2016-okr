@@ -43,11 +43,6 @@ class KeyResult extends Component {
 		let isNotChanged = (title === this.props.item.templateId.title &&
 		        this.state.rating === getDifficultyNumber(this.props.item.templateId.difficulty));
 
-		//console.log('---===¯\\_(ツ)_/¯===---id',id);
-		//console.log('---===¯\\_(ツ)_/¯===---title',title);
-		//console.log('---===¯\\_(ツ)_/¯===---difficulty',difficulty);
-		//console.log('---===¯\\_(ツ)_/¯===---isNotChanged',isNotChanged);
-
 		if(isEmpty(title)) {
 			sweetalert({
 				title: 'Error!',

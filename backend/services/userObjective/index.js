@@ -10,6 +10,7 @@ const QuarterRepository = require('../../repositories/quarter');
 const Quarter = require('../../schemas/quarter');
 const UserRepository = require('../../repositories/user');
 const HistoryRepository = require('../../repositories/history');
+const KeyResultRepository = require('../../repositories/keyResult');
 
 const add = require('./add');
 const addKeyResult = require('./addKeyResult');
@@ -325,6 +326,107 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 				if (err)
 					return callback(err, null);
 			})
+			return callback(null, result);
+		}
+		], (err, result) => {
+			return callback(err, result);
+		});
+};
+
+UserObjectiveService.prototype.setTitleAndDifficultyToKeyResult = function(userId, objectiveId, keyResultId, title, difficulty, callback) {
+	async.waterfall([
+		(callback) => {
+			UserObjectiveRepository.getByIdPopulate(objectiveId, (err, userObjective) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(userObjective)) {
+					var err = new Error('Objective not found');
+					return callback(err, null);
+				}
+
+				// TODO: Should be check for userObjective.isArchived
+				// Removed temporary
+				if(!userObjective.userId.equals(userId)) {
+					var err = new Error('You are not allowed to do this');
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective);
+			});
+		},
+		(userObjective, callback) => {
+			var index = userObjective.keyResults.findIndex((keyResult) => {
+				return keyResult._id.equals(keyResultId);
+			});
+
+			if(index === -1) {
+				var err = new Error('Key result not found');
+				return callback(err, null);
+			}
+
+
+			let userObjectiveId = userObjective._id;
+			let keyResultTemplateId = userObjective.keyResults[index].templateId._id;
+			let prevTitle = userObjective.keyResults[index].templateId.title;
+			let prevDifficulty = userObjective.keyResults[index].templateId.difficulty;
+
+			return callback(null,
+			   		userObjectiveId,
+					  keyResultId,
+					  keyResultTemplateId,
+						prevTitle,
+						prevDifficulty
+				);
+		},
+		(userObjectiveId, keyResultId, keyResultTemplateId, prevTitle,	prevDifficulty, callback) => {
+			KeyResultRepository.getById(keyResultTemplateId, (err, KeyResult) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(KeyResult)) {
+					var err = new Error('Key result not found');
+					return callback(err, null);
+				}
+
+				KeyResult.title = title;
+				KeyResult.difficulty = difficulty;
+
+				KeyResult.save((err, userObjective) => {
+					if(err) {
+						return callback(err, null);
+					}
+
+					return callback(null,
+							{
+								objectiveId: userObjectiveId,
+								keyResultId: keyResultId,
+								title: KeyResult.title,
+								difficulty: KeyResult.difficulty
+							},
+							prevTitle,
+							prevDifficulty
+					);
+				});
+			});
+		},
+		(result, prevTitle, prevDifficulty, callback) => {
+			if ( prevTitle.toString() !== result.title ) {
+				HistoryRepository.setTitleToKeyResult(userId, result, CONST.history.type.CHANGE_TITLE, (err) =>{
+					if (err)
+						return callback(err, null);
+				});
+			}
+
+			if ( prevDifficulty.toString() !== result.difficulty ) {
+				HistoryRepository.setDifficultyToKeyResult(userId, result, CONST.history.type.CHANGE_DIFFICULTY, (err) =>{
+					if (err)
+						return callback(err, null);
+				});
+			}
+
 			return callback(null, result);
 		}
 		], (err, result) => {
