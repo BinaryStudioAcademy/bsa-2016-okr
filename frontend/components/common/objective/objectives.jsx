@@ -32,6 +32,8 @@ class Objectives extends Component {
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
+
+		this.props.myStateActions.getMe();
 	}
 
 	changeTab(num) {
@@ -39,7 +41,20 @@ class Objectives extends Component {
 	}
 
 	handleArchive (changeTo, objectiveId) {
-		this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		let handler = function () {
+			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		}.bind(this);
+
+		let arch = changeTo ? 'archive' : 'unarchive'
+
+		sweetalert({
+			title: `Do you really want to ${arch} this objective?`,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, function(){handler();});
 	}
 
 	changeYear(year) {
@@ -136,6 +151,7 @@ class Objectives extends Component {
 	}
 
 	render() {
+		console.log("hey mount");
 		const userId = this.props.userId;
 		const categories = this.props.categories;
 		const { me } = this.props.myState;
@@ -143,27 +159,35 @@ class Objectives extends Component {
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
-		let ismyself = true;
+		let editing = false;
+		let activeKeyResult = '';
+		let	editingKeyResult = false;
+
+		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
+		let isItHomePage;
 		let archived;
 		let isAdmin = this.props.myState.me.localRole === "admin" ? true : false;
 
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
 			/*console.log('user');*/
-			ismyself = false;
+			isItHomePage = false;
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
 		} else {
 			/*console.log('me');*/
-			ismyself = true;
+			isItHomePage = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
+			editing = this.props.myState.editing;
+			activeKeyResult = this.props.myState.activeKeyResult;
+			editingKeyResult = this.props.myState.editingKeyResult;
 		}
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( ismyself || session._id == userInfo.mentorId || userId == session._id )) {
+				( isItHomePage || session._id == userInfo.mentorId || userId == session._id )) {
 			archived = false;
 		} else {
 			archived = true;
@@ -179,7 +203,8 @@ class Objectives extends Component {
 						selectedTab={ selectedTab }
 				    addNewQuarter={ this.handleAddingNewQuarter }
 						quarters={ userInfo.quarters }
-						me={ ismyself }
+						isAdmin={ isAdmin }
+						me={ isItHomePage }
 						mentorId = { userInfo.mentorId } />
 				<div id='objectives'>
 					<ObjectivesList
@@ -196,6 +221,13 @@ class Objectives extends Component {
 						createObjective={ this.createObjective }
 						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
+						isItHomePage={ isItHomePage }
+						setActiveKeyResultOnHomePage = { this.props.myStateActions.setActiveKeyResultOnHomePage }
+						editing = { editing }
+						activeKeyResult = { activeKeyResult }
+						editingKeyResult = { editingKeyResult }
+						cancelEdit = { this.props.myStateActions.cancelEdit }
+						editKeyResultTitleAndDifficulty = { this.props.myStateActions.editKeyResultTitleAndDifficulty }
 					/>
 				</div>
 			</div>

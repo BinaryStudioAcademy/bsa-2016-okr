@@ -50,14 +50,13 @@ class OKRmanaging extends Component {
 	resetNewObjectiveWindow() {
 		document.getElementById('new-obj-title').value = '';
 		document.getElementById('new-obj-desc').value = '';
-		
-		const keyResultTitleElements = document.getElementsByClassName('new-key-result-title');
-		const keyResultDifficultyElements = document.getElementsByClassName('new-key-result-difficulty');
 
-		for(let i = 0; i < keyResultTitleElements.length; i++) {
-			 keyResultTitleElements[i].value = '';
-			 keyResultDifficultyElements[i].value = CONST.keyResult.EASY;
-		}
+		let keyResults = [''];
+
+		this.props.addKeyResultToTemplate(keyResults);
+		
+		document.getElementsByClassName('new-key-result-title')[0].value = '';
+		document.getElementsByClassName('new-key-result-difficulty')[0].value = CONST.keyResult.EASY;
 	}
 
 	isNotDuplicateObjective(title, category, focusInputFn) {
@@ -101,10 +100,12 @@ class OKRmanaging extends Component {
 			<div>
 				<CentralWindow>
 					<NewObjective 
-						closeNewObjectiveWindow={ this.closeNewObjectiveWindow } 
+						closeNewObjectiveWindow={ this.closeNewObjectiveWindow }
 						createNewTemplate={ this.createNewTemplate }
 						addKeyResultToTemplate={ this.props.addKeyResultToTemplate }
-						ref="newObjectiveComponent"
+						removeKeyResultFromTemplate={ this.props.removeKeyResultFromTemplate }
+						keyResults={ this.props.okrManaging.keyResults }
+						categories={ this.props.categories.list }
 					/>
 					<div className="OKR-managing app container">
 						<Toolbar/>

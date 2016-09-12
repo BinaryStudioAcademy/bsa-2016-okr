@@ -146,7 +146,7 @@ render() {
 				})}
 			</ul>
 			<div id="new-category">
-						<a ref="newCategoryButton" className='add-new-category-btn display' onClick={ this.showAddCategoryInput }>
+						<a ref="newCategoryButton" className='add-new-category-btn display' tabIndex='0' onClick={ this.showAddCategoryInput }>
 							+Add new category</a>
 						<NewCategory 
 							ref={'newCategoryComponent'}

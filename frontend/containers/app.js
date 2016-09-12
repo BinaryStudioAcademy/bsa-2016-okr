@@ -25,7 +25,8 @@ class App extends Component {
 		super(props);
 
 		this.props.categoriesActions.getAllCategories();
-		this.props.myStateActions.getMe();
+		//this.props.myStateActions.getMe();
+		this.props.myStateActions.getMeBasic();
 		this.props.appActions.init();
 
 		this.props.acceptObjective.getNotAprovedObjectivesRequest();
@@ -34,7 +35,7 @@ class App extends Component {
 
 	render() {
 		let localRole = this.props.localRole || CONST.user.localRole.USER;
-	  
+
 	  let ContentEl = (
 	   <div>
 	    <LoadingModal show={ this.props.isLoading } />

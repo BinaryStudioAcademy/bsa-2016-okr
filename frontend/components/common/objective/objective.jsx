@@ -90,14 +90,15 @@ class ObjectiveItem extends Component {
 		let archiveButton;
 		let isArchived = this.props.isArchived;
 		let isAdmin = this.props.isAdmin;
-		console.log('--------------' + isAdmin)
+		let notApproved;
 
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
 		let changeArchive = this.props.changeArchive;
+		let isItHomePage = this.props.isItHomePage;
 
 		if(isAdmin) {
-			if(!isArchived)
+			/*if(!isArchived)
 			archiveButton = (<button className="btn btn-blue-hover objective-archive"
 										title="archive"
 										onClick={() => {changeArchive(true, objective._id)}}>
@@ -108,7 +109,7 @@ class ObjectiveItem extends Component {
 										title="unarchive"
 										onClick={() => {changeArchive(false, objective._id)}}>
 										<i className="fi flaticon-bookmark-1"></i>
-										</button>)
+										</button>) */
 		}
 
 		if(!isArchived){
@@ -139,13 +140,17 @@ class ObjectiveItem extends Component {
 			                       	onClick={ this.handleDelObj }>
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
+
+			if (!objective.templateId.isApproved) {
+        notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
+      }
 		}
-		//console.log("objective >>> ", objective);
+	//	console.log("objective >>> ", objective);
 		return (
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
-
+				{ notApproved }
 				<div className='name'>{ objective.title ? objective.title : objective.templateId.title }</div>
 				<ObjectiveDescription
 						ref="description"
@@ -160,7 +165,7 @@ class ObjectiveItem extends Component {
 				{ saveButton }
 				{ deleteButton }
 				{ cancelButton }
-				{ archiveButton }
+{/*				{ archiveButton }*/}
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults
@@ -171,6 +176,13 @@ class ObjectiveItem extends Component {
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
+						isItHomePage = { isItHomePage }
+						setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
+						editing = { this.props.editing }
+						activeKeyResult = { this.props.activeKeyResult }
+						editingKeyResult = { this.props.editingKeyResult }
+						cancelEdit = { this.props.cancelEdit }
+						editKeyResultTitleAndDifficulty = { this.props.editKeyResultTitleAndDifficulty }
 				/>
 			</div>
 			</div>

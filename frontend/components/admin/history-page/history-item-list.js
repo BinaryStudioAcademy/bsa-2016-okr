@@ -22,14 +22,6 @@ class HistoryItemList extends React.Component {
         return item.keyId || item.commentId || item.categoryId || item.userId || item.objectiveId;
     }
 
-    componentWillMount() {
-        this.props.getHistoryItems();
-    }
-
-    componentWillUnmount(){
-    	this.props.clearState();
-    }
-
     onSort(sort) {
         this.props.setSort(sort);
         this.props.getFilteredItems();
@@ -52,17 +44,27 @@ class HistoryItemList extends React.Component {
       if(item.type.indexOf('ADD') != -1)
         return 'added';
       else if (item.type.indexOf('UPDATE') != -1)
-        return 'updated'
-      else if (item.type.indexOf('CHANGE') != -1)
-        return 'has changed scrore to ' + item.userKeyResultScore;
+        return 'updated';
+      else if (item.type.indexOf('CHANGE') != -1) {
+        if (item.type.indexOf('SCORE') != -1)
+          return 'has changed score to ' + item.userKeyResultScore;
+        else if (item.type.indexOf('TITLE') != -1)
+          return 'has changed title to ' + item.userKeyResultTitle;
+        else if (item.type.indexOf('DIFFICULTY') != -1)
+          return 'has changed difficulty to ' + item.userKeyResultDifficulty;
+      }
       else if (item.type.indexOf('DELETE') != -1)
-        return 'deleted'
+        return 'deleted';
       else if (item.type.indexOf('RESTORE') != -1)
         return 'restored';
       else if (item.type.indexOf('TOOK_APPRENTICE') != -1)
         return 'took apprentice';
       else if (item.type.indexOf('REMOVED_APPRENTICE') != -1)
         return 'removed apprentice';
+      else if (item.type.indexOf('UNARCHIVED') != -1)
+         return 'unarchived';
+      else if (item.type.indexOf('ARCHIVED') != -1)
+         return 'archived'
     }
 
     getHistoryObjectName(historyItem){

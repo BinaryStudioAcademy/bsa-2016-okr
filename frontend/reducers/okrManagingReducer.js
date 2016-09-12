@@ -191,7 +191,7 @@ export default function okrManagingReducer(state = initialState, action) {
         }
         
         case ADD_KEY_RESULT_TO_TEMPLATE : {
-            const {keyResult} = action;
+            const { keyResult } = action;
             return Object.assign({}, state, {
                 keyResults: keyResult
             })

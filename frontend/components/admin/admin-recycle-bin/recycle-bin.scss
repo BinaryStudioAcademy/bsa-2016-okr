@@ -77,6 +77,11 @@ body {
 			}
 		}
 	}
+	
+	button.btn-filter:focus{
+		background-color: darken($color-blue, 10%);
+		color: #fff;
+	}
 }
 
 #rec-bin-wrapper {
@@ -101,7 +106,20 @@ body {
 
 	& .width-30perc { width: 25%; }
 
-	& .width-5perc { width: 60px; }
+	& .width-5perc { 
+		width: 60px; 
+		padding: 4px;
+		button{
+			padding: 7px 16px;
+		}
+		button:focus{
+			background-color: $color-blue;
+			color: #fff;
+		}
+		i{
+			font-size: 20px;
+		}
+	}
 
 	& .width-85perc {
 		width: 100%;
@@ -134,7 +152,6 @@ body {
 		margin-top: 5px;
 
 		& tbody {
-			/*height: 70vh;*/
 			table-layout: fixed;
 			display: block;
 			overflow-y: overlay;
@@ -152,6 +169,11 @@ body {
 			display: table;
 			width: 99.99%;
 			table-layout: fixed;
+			background: #FFF;
+		}
+
+		& tr:hover {
+			 background-color: #ECEFF1;
 		}
 	}
 }
@@ -245,13 +267,42 @@ body {
 
 }
 
-@media all and (max-width: 1450px) {
+.react-date-field__calendar-icon {
+	display: none;
+}
+
+#admin-recycle-bin .recucle-bin-filter-bar-container {
+
+	.filter-box {
+		display: block;
+		width: 934px;
+		height: auto;
+		margin: 0 auto;
+		margin-top: 12px;
+	}
+
+	.filter-box label {
+		line-height: normal;
+	}
+
+	.show-container {
+		height: 92px;
+	}
+
+	.recycle-bin-filter-table {
+		font-size:14px;
+		margin: 0 auto;
+		display: table;
+	}
+}
+
+@media all and (max-width: 1460px) {
 
 	.recucle-bin-filter-bar-container {
 
 		.filter-box {
 			display: block;
-			width: 986px;
+			width: 934px;
 			height: auto;
 			margin: 0 auto;
 			margin-top: 12px;

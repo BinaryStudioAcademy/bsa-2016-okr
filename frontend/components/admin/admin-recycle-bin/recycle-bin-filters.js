@@ -49,7 +49,7 @@ class RecycleBinFilter extends Component {
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" id="cbKey" defaultChecked={true}  onClick={this.setKeyType.bind(this)}></input>
-							<label htmlFor="cbKey">Key</label>
+							<label htmlFor="cbKey">Key results</label>
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" id="cbCategory" defaultChecked={true}  onClick={this.setCategoryType.bind(this)}></input>

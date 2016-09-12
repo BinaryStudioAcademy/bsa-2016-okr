@@ -26,11 +26,11 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 
 		return axios.post((`/api/userobjective/${ userObjectiveId }/keyresult/`), body)
 		.then(response => {
-			// console.log('---===¯\\_(ツ)_/¯===---body.routeId',body.routeId);
 
-			if (body.routeId === '') {
+			if (body.isItHomePage === true) {
 				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
 			} else {
+				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
 				dispatch(addNewKeyResultToObjectiveOtherPerson(response.data, userObjectiveId));
 			}
 			dispatch({ type: REMOVE_REQUEST	});

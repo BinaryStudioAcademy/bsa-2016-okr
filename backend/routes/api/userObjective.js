@@ -2,6 +2,7 @@ const router = require('express').Router();
 const adminOnly = require('../adminOnly');
 const repository = require('../../repositories/userObjective');
 const service = require('../../services/userObjective');
+const session = require('../../config/session.js');
 const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const isCorrectId = ValidateService.isCorrectId;
@@ -127,6 +128,21 @@ router.put('/:id/keyresult/score', (req, res, next) => {
 	service.setScoreToKeyResult(userId, objectiveId, keyResultId, score, res.callback);
 });
 
+router.put('/:id/keyresult/titleanddifficulty', (req, res, next) => {
+	var userId = req.session._id;
+	var objectiveId = req.params.id || '';
+	var keyResultId = req.body.keyResultId || '';
+	var title = req.body.title || '';
+	var difficulty = req.body.difficulty || '';
+
+	if(!isCorrectId(objectiveId)
+			|| !isCorrectId(keyResultId)) {
+		return res.badRequest();
+	}
+
+	service.setTitleAndDifficultyToKeyResult(userId, objectiveId, keyResultId, title, difficulty, res.callback);
+});
+
 router.delete('/:id/:flag', (req, res, next) => {
 	var flag = req.params.flag || '';
 	var userObjectiveId = req.params.id || '';
@@ -189,7 +205,7 @@ router.put('/:id/archive/:flag', adminOnly, (req, res, next) => {
 	};
 
 
-	return service.changeArchiveStatus(id, flag, res.callback);
+	return service.changeArchiveStatus(session._id, id, flag, res.callback);
 })
 
 

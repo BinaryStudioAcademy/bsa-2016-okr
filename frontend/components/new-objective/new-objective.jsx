@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import CONST from '../../../backend/config/constants';
 
@@ -7,22 +7,40 @@ import NewKeyResult from './key-result.jsx';
 
 import './new-objective.scss';
 
-const NewObjective = (props) => {
+const NewObjective = ({ 
+	createNewTemplate,
+	addKeyResultToTemplate,
+	removeKeyResultFromTemplate,
+	closeNewObjectiveWindow,
+	keyResults,
+	categories
+}) => {
 	return (
 		<div id="new-objective">
-			<button type="button" id="close-new-obj-window" onClick={ props.closeNewObjectiveWindow }>
+			<button type="button" id="close-new-obj-window" onClick={ closeNewObjectiveWindow }>
 				<i className="fi flaticon-multiply" aria-hidden="true"></i>
 			</button>
 			<form action="">
 				<NewObjCredentials 
-					ref="newObjectiveCredentials"
+					createNewTemplate={ createNewTemplate }
+					addKeyResultToTemplate={ addKeyResultToTemplate }
+					removeKeyResultFromTemplate={ removeKeyResultFromTemplate }
 					closeNewObjectiveWindow={ closeNewObjectiveWindow }
-					createNewTemplate={ props.createNewTemplate }
-					addKeyResultToTemplate={ props.addKeyResultToTemplate }
+					keyResults={ keyResults }
+					categories={ categories }
 				/>
 			</form>
 		</div>
 	);
 }
+
+NewObjective.propTypes = {
+	createNewTemplate: PropTypes.func.isRequired,
+	addKeyResultToTemplate: PropTypes.func.isRequired,
+	removeKeyResultFromTemplate: PropTypes.func.isRequired,
+	closeNewObjectiveWindow: PropTypes.func.isRequired,
+	keyResults: PropTypes.array.isRequired,
+	categories: PropTypes.array.isRequired,
+};
 
 export default NewObjective;

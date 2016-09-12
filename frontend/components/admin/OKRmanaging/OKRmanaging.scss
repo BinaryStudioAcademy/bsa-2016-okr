@@ -95,6 +95,23 @@
             i{  
                 font-size: 16px;
             }
+
+            .btn-red-hover:focus{
+                color: #fff;
+                background-color: darken($color-red, 10%);
+            }
+            .btn-blue-hover:focus{
+                color: #fff;
+                background-color: darken($color-blue, 10%);
+            }
+            .btn-red:focus{
+                color: #fff;
+                background-color: darken($color-red, 10%);
+            }
+            .btn-green:focus{
+                color: #fff;
+                background-color: darken($color-green, 10%);
+            }
         }
     }
 
@@ -114,7 +131,15 @@
                         margin-left: 5px;
                     }
                 }
-                .add-new-key-result-title{
+                .btn-red:focus{
+                    color: #fff;
+                    background-color: darken($color-red, 10%);
+                }
+                .btn-green:focus{
+                    color: #fff;
+                    background-color: darken($color-green, 10%);
+                }
+                    .add-new-key-result-title{
                     width: 50%;
                     padding: 4px 5px;
                     margin-top: -4px;
@@ -134,13 +159,27 @@
             position: relative;
             margin-left: 18px;
             margin-bottom: 40px;
+            .btn-blue-hover:focus{
+                -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+                -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+                box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+            }
             .key-result-details{
                 margin-top: 23px;
                 margin-bottom: -20px;
+
+                a:focus{
+                    text-decoration: underline;
+                }
             }
             .change {
                 cursor: pointer;
                 padding: 5px 10px;
+                &:focus{
+                    -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+                    -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+                    box-shadow: 0 0 7px rgba(0, 0, 0, .15);
+                }
             }
             .keyResult-title{
                 width: 40%;
@@ -214,7 +253,22 @@
                         display: inline-block;
                         float: right;
                         margin-top: -5px; 
-                        
+                        .btn-red-hover:focus{
+                            color: #fff;
+                            background-color: darken($color-red, 10%);
+                        }
+                        .btn-blue-hover:focus{
+                            color: #fff;
+                            background-color: darken($color-blue, 10%);
+                        }
+                        .btn-red:focus{
+                            color: #fff;
+                            background-color: darken($color-red, 10%);
+                        }
+                        .btn-green:focus{
+                            color: #fff;
+                            background-color: darken($color-green, 10%);
+                        }
                         button{
                             padding: 6px 9px;
                             margin-left: 5px;
@@ -290,7 +344,18 @@
             width: 150px;
             padding: 4px;
             margin-top: -5px;
+            a:focus{
+                text-decoration: underline;
+            }
         }
+            .btn-red:focus{
+                color: #fff;
+                background-color: darken($color-red, 10%);
+            }
+            .btn-green:focus{
+                color: #fff;
+                background-color: darken($color-green, 10%);
+            }
         .display{
             display: block;
         }
@@ -324,7 +389,22 @@
                 position: absolute;
                 top: 5px;
                 right: 30px;
-
+                .btn-red-hover:focus{
+                    color: #fff;
+                    background-color: darken($color-red, 10%);
+                }
+                .btn-blue-hover:focus{
+                    color: #fff;
+                    background-color: darken($color-blue, 10%);
+                }
+                .btn-red:focus{
+                    color: #fff;
+                    background-color: darken($color-red, 10%);
+                }
+                .btn-green:focus{
+                    color: #fff;
+                    background-color: darken($color-green, 10%);
+                }
                 i{
                     font-size: 16px;
                 }
@@ -344,8 +424,10 @@
 .OKR-managing button#add-new-objective {
     display: block;
     float: right;
-
-    &:hover, &:active {
+    &:focus{
+        background-color: darken($color-green, 10%);
+    }
+    &:hover, &:active{
     	background-color: #357a38;
     	border: none;
     	outline:none;

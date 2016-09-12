@@ -23,6 +23,8 @@ class RecycleBin extends Component {
 	}
 
 	handleFilterButton() {
+		let button = document.querySelector("button.btn-filter");
+      button.blur();
 		let show = this.props.recycleBin.showRecycleBinFilters;
 		this.props.showFilters(!show);
 	}
@@ -49,7 +51,24 @@ class RecycleBin extends Component {
   	}
 
 	render() {
+
 		let showFilters = this.props.recycleBin.showRecycleBinFilters;
+
+		if (this.props.recycleBin.recycleBinItems.length === 0) {
+
+			return (
+				<div id="rec-bin-wrapper">
+					<div className="recycle-bin-header">
+
+						<div className="recycle-bin-header-row">
+							<p><span>Admin Recycle bin</span></p>
+						</div>
+					</div>
+
+					<h1 className="placeholder">Recycle bin is empty!</h1>
+				</div>
+			);
+		}
 
 		return (
 			<div id="rec-bin-wrapper">
@@ -67,7 +86,7 @@ class RecycleBin extends Component {
 							</button>
 						</div>
 
-						<div className="recycle-bin-header-row">
+						<div className="recycle-bin-header-row" id="admin-recycle-bin">
 								<div className="recucle-bin-filter-bar-container">
 									<RecycleBinFilter/>
 								</div>

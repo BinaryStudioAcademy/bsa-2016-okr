@@ -19,9 +19,17 @@ export const CHANGED_KEYRESULT_SCORE = 'CHANGED_KEYRESULT_SCORE';
 export const CHANGED_KEYRESULT_SCORE_ERROR = 'CHANGED_KEYRESULT_SCORE_ERROR';
 export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API';
 export const SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS = 'SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS';
+export const GET_ME_BASIC = 'GET_ME_BASIC';
+export const RECEIVED_ME_BASIC = 'RECEIVED_ME_BASIC';
 
 export const CHANGE_ARCHIVE_STATUS = 'CHANGE_ARCHIVE_STATUS';
 export const CHANGE_ARCHIVE_STATUS_LOCAL = 'CHANGE_ARCHIVE_STATUS_LOCAL';
+
+export const SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE = 'SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE';
+export const CANCEL_EDIT_KEY_RESULT = 'CANCEL_EDIT_KEY_RESULT';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR';
+
 
 const session = require('../../backend/config/session');
 
@@ -42,6 +50,23 @@ export function getMe() {
 	};
 }
 
+export function getMeBasic() {
+	return (dispatch, getStore) => {
+		dispatch({ type: GET_ME_BASIC });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.get('/api/user/mebasic/')
+		.then(response => {
+			dispatch(receivedMeBasic(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.catch(response => {
+			dispatch(receivedMyObjectivesError(response));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+	};
+}
+
 export function receivedMyObjectivesError(response) {
 	return {
 		type: RECEIVED_MY_OBJECTIVES_ERROR,
@@ -52,6 +77,13 @@ export function receivedMyObjectivesError(response) {
 export function receivedMyObjectives(data) {
 	return {
 		type: RECEIVED_MY_OBJECTIVES,
+		data: data
+	};
+}
+
+export function receivedMeBasic(data) {
+	return {
+		type: RECEIVED_ME_BASIC,
 		data: data
 	};
 }
@@ -168,7 +200,7 @@ export function addNewObjective(body, callback, userId) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
-			
+
 			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
 			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 
@@ -215,6 +247,25 @@ export function changeKeyResultScore(objectiveId, body, callback, userId) {
 	};
 }
 
+export function editKeyResultTitleAndDifficulty (objectiveId, reqBody) {
+	return(dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
+				.then(response => {
+					dispatch(keyResultTitleAndDifficultyChanged(response.data));
+					dispatch({ type: CANCEL_EDIT_KEY_RESULT });
+					dispatch({ type: REMOVE_REQUEST });
+				})
+				.catch(response => {
+					dispatch(keyResultTitleAndDifficultyError(response.data));
+					dispatch({ type: REMOVE_REQUEST });
+				});
+	};
+
+	//return action;
+}
+
 export function keyResultScoreChanged(data) {
 	return {
 		type: CHANGED_KEYRESULT_SCORE,
@@ -229,6 +280,20 @@ export function keyResultScoreChangedError(data) {
 	};
 }
 
+export function keyResultTitleAndDifficultyChanged(data) {
+	return {
+		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY,
+		data,
+	};
+}
+
+export function keyResultTitleAndDifficultyError(data) {
+	return {
+		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR,
+		data,
+	};
+}
+
 export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
@@ -238,7 +303,7 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, ca
 				.then(response => {
 					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
-					
+
 					dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
 					dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
 					/*
@@ -264,9 +329,9 @@ export function changeArchiveStatus(changeTo, objectiveId) {
 	 	return axios.put(`/api/userobjective/${objectiveId}/archive/${changeTo}`)
 	 	.then( response => {
 	 	 	dispatch( { type: REMOVE_REQUEST} );
-	 	 	dispatch( changeArchiveStatusLocal(changeTo, objectiveId)); 
+	 	 	dispatch( changeArchiveStatusLocal(changeTo, objectiveId));
 	 	 })
-	 	// .catch( response =>{ 
+	 	// .catch( response =>{
 	 	// 	dispatch( receivedMyObjectivesError(response.data));
 	 	// 	dispatch({ type: REMOVE_REQUEST	});
 	 	// } );
@@ -288,4 +353,20 @@ export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, data)
 		keyResultId,
 		data,
 	};
-};
+}
+
+export function setActiveKeyResultOnHomePage(activeKeyResult) {
+	const action = {
+		type: SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE,
+		activeKeyResult
+	};
+
+	return action;
+}
+
+export function cancelEdit() {
+	const action = {
+		type: CANCEL_EDIT_KEY_RESULT,
+	};
+	return action;
+}

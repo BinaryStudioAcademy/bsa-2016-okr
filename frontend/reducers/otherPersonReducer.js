@@ -17,7 +17,11 @@ import { currentYear, currentQuarter } from '../../backend/config/constants'
 import { updateObjectiveDescription } from './myStateReducer';
 import { changeArchiveInMyObjective } from './myStateReducer.js';
 const initialState = {
-	user: {},
+	user: {
+		quarters: [{
+			userObjectives:[]
+		}]
+	},
 	waiting: true,
 	selectedTab: currentQuarter,
 	selectedYear: currentYear

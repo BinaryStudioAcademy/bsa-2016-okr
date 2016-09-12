@@ -38,9 +38,9 @@ class Header extends Component {
 
 		return (
 			<header>
-				<button id="bars" onClick={ this.onBarsClick } >
+				{/*<button id="bars" onClick={ this.onBarsClick } >
 					<i className="fi flaticon-menu-1" aria-hidden="true"></i>
-				</button>
+				</button>*/}
 				{/*<div className='mentor-info'>
 					{ photo }
 					<div className='mentorName'>

@@ -1,3 +1,4 @@
+
 input[type=text],
 select,
 textarea{
@@ -19,12 +20,33 @@ textarea{
 		box-shadow: 0 0 7px rgba(0, 0, 0, .15);
 	}
 }
+select{
+	cursor: pointer;
+}
 textarea{
 	width: 100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;;
 }
+
+a[href],
+area[href],
+input:not([disabled]),
+select:not([disabled]),
+textarea:not([disabled]),
+button:not([disabled]),
+iframe,
+[tabindex],
+[contentEditable=true]
+{
+  &:not([tabindex='-1']) {
+    &:focus{
+    	outline: none;
+    }   
+  }
+}
+
 .range {
   -webkit-appearance: none;
 	background: none;

@@ -7,6 +7,12 @@ import './nav-menu.scss';
 const NavMenu = (props) => {
 	const isAdmin = (props.localRole === CONST.user.localRole.ADMIN);
 	const count = props.acceptObjective.countObject;
+
+	let notificationClass = "";
+
+	if (count > 0) {
+		notificationClass = "notification"
+	}
 	
 	const AdminLinksEl = (
 		<ul className="nav-divider-before">
@@ -31,7 +37,7 @@ const NavMenu = (props) => {
 			<li>
 				<Link to="/obj-accept" activeClassName="active">
 					<i className="fi flaticon-checked-1" aria-hidden="true">
-						<div className="badge"><div className="badge-counter">{ count }</div></div>
+						<div className="badge"><div className={"badge-counter " + notificationClass}>{ count }</div></div>
 					</i>
 					Accept Template
 				</Link>
@@ -85,11 +91,15 @@ const NavMenu = (props) => {
 };
 
 function closeNav() {
+
 	let nav = document.getElementById('navbar');
 	let menuBars = document.getElementById('bars');
 
-	nav.classList.remove('opened');
-	menuBars.classList.remove('active');
+    if (nav != null && nav.classList.contains("opened"))
+		nav.classList.remove('opened');
+
+	if (menuBars != null && menuBars.classList.contains("active"))
+		menuBars.classList.remove('active');
 }
 
 function acceptObjectivesCount() {

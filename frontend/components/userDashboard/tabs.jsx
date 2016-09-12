@@ -16,6 +16,10 @@ class Tabs extends React.Component{
 	}
 
 	handleTabClick(index) {
+		let active = document.querySelectorAll('.tabLine li.tab');
+		for(let i=0; i<active.length; i++)
+			active[i].blur();
+
 		if(index === 1 && this.props.userDashboard.showTopTabs) 
 			this.props.changeShowTopTabs();
 		this.props.setTab(index);
@@ -45,8 +49,8 @@ class Tabs extends React.Component{
 			<div className="dashboard-tabs">
 				<div className="tab-wrapper mainTabs">
 					<ul className="tabLine">
-						<li className={this.activeTab(1)+" tab"} onClick={()=>this.handleTabClick(1)}>History</li>
-						<li className={this.activeTab(2)+" tab"} onClick={()=>this.handleTabClick(2)}>Statistic</li>
+						<li className={this.activeTab(1)+" tab"} onClick={()=>this.handleTabClick(1)} tabIndex="0">History</li>
+						<li className={this.activeTab(2)+" tab"} onClick={()=>this.handleTabClick(2)} tabIndex="0">Statistic</li>
 					</ul>
 				</div>
 			</div>

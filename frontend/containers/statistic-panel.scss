@@ -12,3 +12,27 @@ aside#inter-panel {
    overflow-y: overlay;
    overflow-x: hidden;
 }
+
+@media all 
+and (max-width: 900px)
+and (min-width: 500px)
+{
+   aside#inter-panel {
+      width: auto;
+      position: relative;
+      margin: 0 30px;
+      box-sizing: border-box;
+      border: 1px solid #DBDBDB;
+   }
+}
+
+@media all 
+and (max-width: 500px)
+{
+   aside#inter-panel {
+      position: relative;
+      margin: 0 30px;
+      width: auto;
+      border: 1px solid #DBDBDB;
+   }
+}

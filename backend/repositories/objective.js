@@ -11,7 +11,7 @@ ObjectiveRepository.prototype = new Repository();
 
 ObjectiveRepository.prototype.getAll = function(callback) {
 	var model = this.model;
-	
+
 	model
 		.find({
 			isApproved: true,
@@ -21,9 +21,9 @@ ObjectiveRepository.prototype.getAll = function(callback) {
 };
 
 ObjectiveRepository.prototype.getAllDeletedPopulate = function(callback) {
-	
+
 	var model = this.model;
-	
+
 	model
 		.find({
 			isDeleted: true
@@ -40,7 +40,7 @@ ObjectiveRepository.prototype.getAllDeletedPopulate = function(callback) {
 
 ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 	var model = this.model;
-	
+
 	model
 		.find({
 			isApproved: true,
@@ -103,9 +103,9 @@ ObjectiveRepository.prototype.autocomplete = function(title, categoryId, exclude
 };
 
 ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
- 	
+
 	var model = this.model;
-	
+
 	model
 		.find({
 			isApproved: false,
@@ -115,7 +115,10 @@ ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
 		.populate({
 			path: "creator",
 			populate: {
-				path: 'userInfo'
+				path: 'userInfo mentor',
+				populate: {
+					path: 'userInfo'
+				}
 			}
 		})
 		.populate('category')
@@ -143,10 +146,10 @@ ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
 
 // ObjectiveRepository.prototype.getByUserId = function(userId, callback) {
 // 	var model = this.model;
-// 	var query = model.find({ 
+// 	var query = model.find({
 // 		creator: userId
 // 	});
-	
+
 // 	query.exec(callback);
 // };
 
@@ -157,9 +160,8 @@ ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
 // 		isApproved: true,
 // 		isDeleted: false
 // 	});
-	
+
 // 	query.exec(callback);
 // };
 
 module.exports = new ObjectiveRepository();
-

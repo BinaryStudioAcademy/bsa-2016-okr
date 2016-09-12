@@ -164,10 +164,10 @@ HistoryRepository.prototype.addUserObjective = function (author, userObjective, 
 		author,
 		type: type + ' ' + CONST.history.target.USER_OBJECTIVE,
 		userObjective
-	})
+	});
 
 	newEvent.save(callback);
-}
+};
 
 HistoryRepository.prototype.addUserKeyResult = function (author, key, objective, type, callback) {
 	var model = this.model;
@@ -176,11 +176,10 @@ HistoryRepository.prototype.addUserKeyResult = function (author, key, objective,
 		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
 		userObjective: objective,
 		userKeyResult: key._id
-	})
+	});
 
 	newEvent.save(callback);
-}
-
+};
 
 HistoryRepository.prototype.setScoreToKeyResult = function (author, key, type, callback) {
 	var model = this.model;
@@ -193,6 +192,32 @@ HistoryRepository.prototype.setScoreToKeyResult = function (author, key, type, c
 	});
 
 	newEvent.save(callback);
-}
+};
+
+HistoryRepository.prototype.setTitleToKeyResult = function (author, key, type, callback) {
+	var model = this.model;
+	var newEvent = new model({
+		author,
+		userObjective: key.objectiveId,
+		userKeyResult: key.keyResultId,
+		userKeyResultTitle: key.title,
+		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
+	});
+
+	newEvent.save(callback);
+};
+
+HistoryRepository.prototype.setDifficultyToKeyResult = function (author, key, type, callback) {
+	var model = this.model;
+	var newEvent = new model({
+		author,
+		userObjective: key.objectiveId,
+		userKeyResult: key.keyResultId,
+		userKeyResultDifficulty: key.difficulty,
+		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
+	});
+
+	newEvent.save(callback);
+};
 
 module.exports = new HistoryRepository();

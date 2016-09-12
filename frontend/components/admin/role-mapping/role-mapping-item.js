@@ -7,11 +7,13 @@ import * as actions from "../../../actions/mappingActions";
 
 import './role-mapping.scss';
 
+const CONST = require("../../../../backend/config/constants");
+
 class RoleMappingItem extends React.Component {
 
    render() {
 
-   	   if (this.props.role.globalRole.toUpperCase() === "ADMIN") {
+   	   if (this.props.role.globalRole === CONST.user.globalRole.ADMIN) {
 
 		   		return (
 		   			<div className="table-row">
@@ -24,8 +26,8 @@ class RoleMappingItem extends React.Component {
 	            <div className="table-row" >
 	                   <h4 className="col-1">{this.props.role.globalRole}</h4>
 	                   <select className="col-2" id={"roles" + this.props.role._id}  onChange={this.changeLocalRole.bind(this)} ref="localRole" defaultValue="">
-			             <option value="User">User</option>
-			             <option value="Admin">Admin</option>
+			             <option value={CONST.user.localRole.USER}>User</option>
+			             <option value={CONST.user.localRole.ADMIN}>Admin</option>
 			           </select>
 	            </div>	            
             );
@@ -42,10 +44,11 @@ class RoleMappingItem extends React.Component {
 
    componentDidMount()  {
 
-   	 let adminOption = document.querySelector("select#roles" + this.props.role._id + " option[value=Admin]");
-   	 let userOption = document.querySelector("select#roles" + this.props.role._id + " option[value=User]");
 
-   	 if (this.props.role.localRole === "Admin") {
+   	 let adminOption = document.querySelector("select#roles" + this.props.role._id + " option[value=" + CONST.user.localRole.ADMIN + "]");
+   	 let userOption = document.querySelector("select#roles" + this.props.role._id + " option[value=" + CONST.user.localRole.USER + "]");
+
+   	 if (this.props.role.localRole === CONST.user.localRole.ADMIN) {
    	 	if (adminOption != undefined)
 	   	 	adminOption.selected = true;
    	 }

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const repository = require('../../repositories/quarter');
+const session = require('../../config/session.js');
 const service = require('../../services/quarter');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
@@ -23,6 +24,17 @@ router.get('/:id', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return repository.update(id, req.body, res.callback);
+})
+
+router.put('/:id/archive/:flag', (req, res, next) => {
+	var id = req.params.id;
+	var flag = req.params.flag === 'true' ? true : false;
 
 	if(!ValidateService.isCorrectId(id)) {
 		return res.badRequest();
