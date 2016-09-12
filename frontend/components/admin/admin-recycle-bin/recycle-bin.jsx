@@ -69,7 +69,7 @@ class RecycleBin extends Component {
 							</button>
 						</div>
 
-						<div className="recycle-bin-header-row">
+						<div className="recycle-bin-header-row" id="admin-recycle-bin">
 								<div className="recucle-bin-filter-bar-container">
 									<RecycleBinFilter/>
 								</div>
