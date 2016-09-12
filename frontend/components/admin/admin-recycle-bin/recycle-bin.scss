@@ -152,7 +152,6 @@ body {
 		margin-top: 5px;
 
 		& tbody {
-			/*height: 70vh;*/
 			table-layout: fixed;
 			display: block;
 			overflow-y: overlay;
@@ -170,6 +169,11 @@ body {
 			display: table;
 			width: 99.99%;
 			table-layout: fixed;
+			background: #FFF;
+		}
+
+		& tr:hover {
+			 background-color: #ECEFF1;
 		}
 	}
 }
