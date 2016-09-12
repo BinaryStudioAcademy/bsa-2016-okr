@@ -167,6 +167,7 @@ class KeyResults extends Component {
 				                      editingKeyResult = { this.props.editingKeyResult }
 				                      cancelEdit = { this.props.cancelEdit }
 				                      saveEditedKeyResult = { this.saveEditedKeyResult }
+				                      isItHomePage={ isItHomePage }
 				                      ref={ `keyResult-${ item._id }` }
 				/>
 			});
