@@ -98,7 +98,7 @@ class ObjectiveItem extends Component {
 		let isItHomePage = this.props.isItHomePage;
 
 		if(isAdmin) {
-			if(!isArchived)
+			/*if(!isArchived)
 			archiveButton = (<button className="btn btn-blue-hover objective-archive"
 										title="archive"
 										onClick={() => {changeArchive(true, objective._id)}}>
@@ -109,7 +109,7 @@ class ObjectiveItem extends Component {
 										title="unarchive"
 										onClick={() => {changeArchive(false, objective._id)}}>
 										<i className="fi flaticon-bookmark-1"></i>
-										</button>)
+										</button>) */
 		}
 
 		if(!isArchived){
@@ -165,7 +165,7 @@ class ObjectiveItem extends Component {
 				{ saveButton }
 				{ deleteButton }
 				{ cancelButton }
-				{ archiveButton }
+{/*				{ archiveButton }*/}
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults
@@ -182,7 +182,6 @@ class ObjectiveItem extends Component {
 						activeKeyResult = { this.props.activeKeyResult }
 						editingKeyResult = { this.props.editingKeyResult }
 						cancelEdit = { this.props.cancelEdit }
-						editKeyResultTitleAndDifficulty = { this.props.editKeyResultTitleAndDifficulty }
 				/>
 			</div>
 			</div>
