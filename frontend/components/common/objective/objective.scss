@@ -1,5 +1,6 @@
 @import '../../common/variables';
 @import '../../common/styles/commonStyles';
+@import "media";
 
 .category{
 	.visible-category-content{
@@ -67,6 +68,7 @@
 
 .home-objective{
 	@extend .clearfix;
+
 	button i{
 		pointer-events: none;
 	}
