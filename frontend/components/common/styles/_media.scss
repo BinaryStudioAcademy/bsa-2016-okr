@@ -1,0 +1,60 @@
+/*
+**  Breakpoints
+*/
+$mobile: 425px;
+$tablet: 768px;
+$laptop: 1024px;
+$desktop: 1440px;
+
+
+/* Mobile */
+@mixin mobile {
+  @media screen and ( max-width: #{$mobile} ) {
+    @content;
+  }
+}
+
+/* Tablet */
+@mixin tablet {
+  @media screen
+  and ( min-width: #{$mobile + 1px} )
+  and ( max-width: #{$tablet} ) {
+    @content;
+  }
+}
+
+/* Laptops */
+@mixin laptop {
+  @media screen
+  and ( min-width: #{$tablet + 1px} )
+  and ( max-width: #{$laptop} ) {
+    @content;
+  }
+}
+
+/* Desktops */
+@mixin desktop {
+  @media screen
+  and ( min-width: #{$laptop + 1px} )
+  and ( max-width: #{$desktop} ) {
+    @content;
+  }
+}
+
+/* Large desktops */
+@mixin desktopL {
+  @media screen
+  and ( min-width: #{$desktop + 1px} ) {
+    @content;
+  }
+}
+
+/*  > Example:
+**
+**    @inclue mobile{
+**      .home-objective{ genearal styles go here }
+**    }
+**
+**  > See also common/objective/media.scss
+**
+*/
