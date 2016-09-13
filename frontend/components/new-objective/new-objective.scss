@@ -111,3 +111,19 @@ and (min-width: 450px) {
     }
   }
 }
+
+@media all 
+and (max-width: 500px)
+and (min-width: 350px) {
+  #new-objective{
+    margin-right: 0px;
+    left: 0;
+  }
+  #new-objective form {
+    width: 94%;
+  }
+  #new-objective #close-new-obj-window{
+    right: 4%;
+    top: 30px;
+  }
+}

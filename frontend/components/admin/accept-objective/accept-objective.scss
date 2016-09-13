@@ -221,3 +221,8 @@ accept-objective--search-bar button {
     }
   } 
 }
+@media all and (max-width: 800px) {
+  #accept-objective-wrapper {
+    padding: 20px;
+  } 
+}

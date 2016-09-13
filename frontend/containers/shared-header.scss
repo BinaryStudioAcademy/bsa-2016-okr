@@ -4,6 +4,12 @@
 .hdr-header{
 	background-color: $primary-color;
 }
+@media all 
+and (max-width: 420px){
+	#searchBar{
+		display: none;
+	}
+}
 
 /* .hdr-header{
 	height: $header-height;
