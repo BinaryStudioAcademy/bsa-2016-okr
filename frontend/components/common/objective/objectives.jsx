@@ -151,7 +151,6 @@ class Objectives extends Component {
 	}
 
 	render() {
-		console.log("hey mount");
 		const userId = this.props.userId;
 		const categories = this.props.categories;
 		const { me } = this.props.myState;
