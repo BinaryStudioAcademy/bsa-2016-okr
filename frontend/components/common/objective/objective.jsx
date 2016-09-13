@@ -47,6 +47,9 @@ class ObjectiveItem extends Component {
 		this.refs.deleteObjective.classList.add('hidden');
 		this.refs.edit.classList.add('hidden');
 		this.refs.deleteObjective.classList.add('hidden');
+		this.refs.objectiveTitle.classList.add('hidden');
+
+		this.refs.objectiveTitleEdit.classList.remove('hidden');
 		this.refs.descriptionEdit.classList.remove('hidden');
 		this.refs.cancelEdit.classList.remove('hidden');
 		this.refs.saveEdit.classList.remove('hidden');
@@ -148,13 +151,21 @@ class ObjectiveItem extends Component {
         approved = <span className='fi flaticon-push-pin approved' title='approved'></span>
       }
 		}
-	//	console.log("objective >>> ", objective);
+
 		return (
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
 				{ approved }
-				<div className='name'>{ objective.title ? objective.title : objective.templateId.title }</div>
+				<div
+						ref="objectiveTitle"
+						className='name'>{ objective.title ? objective.title : objective.templateId.title }
+				</div>
+				<input
+						ref="objectiveTitleEdit"
+						className='name-input hidden'
+				/>
+
 				<ObjectiveDescription
 						ref="description"
 						description={ objective.description ? objective.description : objective.templateId.description }

@@ -3,8 +3,8 @@
 */
 $mobile: 425px;
 $tablet: 768px;
-$laptop: 1024px;
-$desktop: 1440px;
+$laptop: 1224px;
+$desktop: 1580px;
 
 
 /* Mobile */
@@ -18,6 +18,14 @@ $desktop: 1440px;
 @mixin tablet {
   @media screen
   and ( min-width: #{$mobile + 1px} )
+  and ( max-width: #{$tablet} ) {
+    @content;
+  }
+}
+
+/* Both mobile and tablet */
+@mixin mobile-tablet {
+  @media screen
   and ( max-width: #{$tablet} ) {
     @content;
   }

@@ -1,20 +1,16 @@
 @import "../components/common/variables";
+@import "../components/common/styles/media";
 
 #main {
    position: absolute;
    right: 0;
-   left: 208px;
+   left: $left-nav-width;
    top: $header-height;
    background-color: lighten($color-blue-grey, 50%);
    bottom: 0;
+   //noinspection CssInvalidPropertyValue
    overflow-y: overlay;
 }
-
-@media all and (max-width: 1599px) {
-	 #main {
-		  left: $left-nav-width;
-	 }
- }
 
  .placeholder {
     color: #555;
@@ -24,3 +20,15 @@
     padding: 0;
     margin-top: 5%;
 }
+
+ @include desktopL {
+    #main{
+       left: $left-nav-width-opened;
+    }
+  }
+
+@media all and (max-width: 500px) {
+   #main {
+      left: 0;
+   }
+ }

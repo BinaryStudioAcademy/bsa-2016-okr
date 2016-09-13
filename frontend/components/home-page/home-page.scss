@@ -1,5 +1,6 @@
 @import '../common/variables';
 @import '../common/styles/commonStyles';
+@import "../common/styles/media";
 
 /*
 **    Content Wrapper
@@ -44,5 +45,12 @@
         top: 4px;
       }
     }
+  }
+}
+
+@include desktopL {
+  #home-page-wrapper {
+    width: 85%;
+    margin: 0 auto;
   }
 }

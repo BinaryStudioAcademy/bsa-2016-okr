@@ -13,25 +13,13 @@ aside#inter-panel {
    overflow-x: hidden;
 }
 
-@media all 
-and (max-width: 900px)
-and (min-width: 500px)
-{
-   aside#inter-panel {
-      width: auto;
-      position: relative;
-      margin: 0 30px;
-      box-sizing: border-box;
-      border: 1px solid #DBDBDB;
-   }
-}
-
-@media all 
-and (max-width: 500px)
-{
+@media screen
+and (max-width: 1100px) {
    aside#inter-panel {
       position: relative;
+      display: block;
       margin: 0 30px;
+      margin-bottom: 30px;
       width: auto;
       border: 1px solid #DBDBDB;
    }
