@@ -94,7 +94,8 @@ class KeyResult extends Component {
 
 	deleteKeyResult() {
 		this.props.hideAddKeyResultInput();
-		let title = this.props.item.title;
+		const { item } = this.props;
+		let title = item.title;
 		let displayedTitle = title.length > 20 ? `${title.substr(0, 20)}...` : title;
 
 		sweetalert({
@@ -106,8 +107,9 @@ class KeyResult extends Component {
 			confirmButtonText: 'Yes, delete',
 			closeOnConfirm: true
 		}, () => {
-			let i = this.props.item._id;
-			this.props.deleteKeyResult(i, true)
+			let keyResultId = item._id;
+			let objectiveId = item.objectiveId;
+			this.props.deleteKeyResult(keyResultId, objectiveId, true);
 		});
 	}
 

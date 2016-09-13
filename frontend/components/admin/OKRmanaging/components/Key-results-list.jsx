@@ -22,7 +22,7 @@ class KeyResults extends Component {
 		this.showAddKeyResultInput = this.showAddKeyResultInput.bind(this);
 		this.hideAddKeyResultInput = this.hideAddKeyResultInput.bind(this);
 		this.saveEditedKeyResult = this.saveEditedKeyResult.bind(this);
-		this.isNotDuplicate = this.isNotDuplicate.bind(this);
+		this.getDuplicate = this.getDuplicate.bind(this);
 		this.addKeyResult = this.addKeyResult.bind(this);
 		this.focusAddInput = this.focusAddInput.bind(this);
 		this.focusEditInput = this.focusEditInput.bind(this);
@@ -90,13 +90,42 @@ class KeyResults extends Component {
 		this.setShowKeyResultElement(keyResultElement);
 	}
 
-	isNotDuplicate(id, title) {
-		let keyResultIndex = this.props.data.findIndex((keyResult) => {
+	getDuplicate(id, title) {
+		const { data } = this.props;
+		let keyResultIndex = data.findIndex((keyResult) => {
 			return keyResult.title === title;
 		});
 
-		if(keyResultIndex === -1 || (!isEmpty(id) && this.props.data[keyResultIndex]._id === id)) {
-			return true;
+		if(keyResultIndex === -1 || (!isEmpty(id) && data[keyResultIndex]._id === id)) {
+			return null;
+		} else {
+			return data[keyResultIndex];
+		}
+	}
+
+	addKeyResult(title, difficulty) {
+		let duplicateItem = this.getDuplicate(null, title);
+		
+		if(isEmpty(duplicateItem)) {
+			let reqBody = {
+				title: title,
+				difficulty: difficulty,
+				objectiveId: this.props.objective._id,
+			};
+			
+			this.props.addKeyResult(reqBody);
+			sweetalert.close();
+		} else if(duplicateItem.isDeleted) {
+			sweetalert({
+				title: 'Do you want to restore deleted key result?',
+				text: 'Key result with such title for that objective exists, but deleted by someone',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, restore'
+			}, () => {
+				this.props.deleteKeyResult(duplicateItem._id, duplicateItem.objectiveId, false);
+			});
 		} else {
 			sweetalert({
 				title: 'Error!',
@@ -107,26 +136,13 @@ class KeyResults extends Component {
 					this.focusEditInput(id);
 				}, 0);
 			});
-
-			return false;
-		}
-	}
-
-	addKeyResult(title, difficulty) {
-		if(this.isNotDuplicate(null, title)) {
-			let reqBody = {
-				title: title,
-				difficulty: difficulty,
-				objectiveId: this.props.objective._id,
-			};
-			
-			this.props.addKeyResult(reqBody);
-			sweetalert.close();
 		}
 	}
 
 	saveEditedKeyResult(id, title, difficulty) {
-		if(this.isNotDuplicate(id, title)) {
+		let duplicateItem = this.getDuplicate(id, title);
+		
+		if(isEmpty(duplicateItem)) {
 			let reqBody = {
 				title: title,
 				difficulty: difficulty
@@ -134,6 +150,27 @@ class KeyResults extends Component {
 			
 			this.props.editKeyResult(id, reqBody);
 			sweetalert.close();
+		} else if(duplicateItem.isDeleted) {
+			sweetalert({
+				title: 'Do you want to restore deleted key result?',
+				text: 'Key result with such title for that objective exists, but deleted by someone',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, restore'
+			}, () => {
+				this.props.deleteKeyResult(duplicateItem._id, duplicateItem.objectiveId, false);
+			});
+		} else {
+			sweetalert({
+				title: 'Error!',
+				text: 'Key result with such title for that objective already exists',
+				type: 'error',
+			}, () => {
+				setTimeout(() => {
+					this.focusEditInput(id);
+				}, 0);
+			});
 		}
 	}
 
@@ -167,7 +204,7 @@ class KeyResults extends Component {
 		
 		return (
 			<div className='key-results'>
-				<button className="btn btn-blue-hover change" onClick={this.textHandleShow}>Key results
+				<button className="btn btn-blue-hover change" onClick={ this.textHandleShow }>Key results
 				</button>
 				<div className='key-result-details undisplay'>
 					<ul>

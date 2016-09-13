@@ -113,9 +113,16 @@ class ObjectiveData extends Component {
 		});
 	}
 
-	render() {		
-		let categoryId = this.props.objective.category;
-		let category = this.props.categories.list.find((category) => {
+	render() {
+		const { 
+			objective, 
+			categories, 
+			objectivesList,
+			index,
+		} = this.props;
+
+		let categoryId = objective.category;
+		let category = categories.list.find((category) => {
 			return category._id === categoryId;
 		});
 
@@ -125,23 +132,23 @@ class ObjectiveData extends Component {
 		let editSave;
 		let cancel;
 
-		if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
-			let objectiveTitle = this.props.objective.title;
+		if (objectivesList.editing && objectivesList.active == index) {
+			let objectiveTitle = objective.title;
 			objectiveTitle = !isEmpty(objectiveTitle) ? objectiveTitle : 'No description yet...';
 			
 			titleEl       =   (<input type='text'
 																className='template-title'
-																defaultValue={ this.props.objective.title }
+																defaultValue={ objective.title }
 																ref='objectiveTitle'
 												/>);
 			descriptionEl = (<textarea className='template-description'
-																 defaultValue={this.props.objective.description}
+																 defaultValue={objective.description}
 																 ref='objectiveDescription'
 											/>);
 			categoryEl    = (<select className='template-category' 
 															 ref='selectCategory'  
 															 defaultValue={categoryId}>
-															 { this.props.categories.list.map((category, index) => {
+															 { categories.list.map((category, index) => {
 																 return <option key={index} value={category._id}>{category.title}</option>
 															 })}
 											</select>);
@@ -158,8 +165,8 @@ class ObjectiveData extends Component {
 																	<i className="fi flaticon-multiply"></i>
 												</button> );
 		} else {
-			titleEl       = (<div className='name'>{ this.props.objective.title }</div>);
-			descriptionEl = (<div className='description'>{ this.props.objective.description }</div>);
+			titleEl       = (<div className='name'>{ objective.title }</div>);
+			descriptionEl = (<div className='description'>{ objective.description }</div>);
 			categoryEl    = (<div className='category'>{ category.title }</div>);
 			editSave      =  ( <button onClick= { this.editObjective }
 																 className='btn btn-blue-hover edit'
@@ -189,10 +196,9 @@ class ObjectiveData extends Component {
 						</form>
 				</div>
 				<div className='key-result'>
-					<KeyResults objective = { this.props.objective }
-											cancelEdit = { this.props.cancelEdit }
-											data = { this.props.objective.keyResults }
-											cancelEdit = { this.props.cancelEdit }/>
+					<KeyResults objective = { objective }
+											cancelEdit = { this.cancelEdit }
+											data = { objective.keyResults } />
 				</div>
 			</div>
 		)

@@ -110,15 +110,15 @@ export function softDeleteObjective(id) {
 
 /*-----delete key result------*/
 
-export function deleteKeyResult(id, flag) {
+export function deleteKeyResult(keyResultId, objectiveId, flag) {
 	return(dispatch, getStore) => {
 
 		dispatch({ type: DELETE_KEY_RESULT_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.delete(`/api/keyResult/${ id }/${ flag }`)
+		return axios.delete(`/api/keyResult/${ keyResultId }/${ flag }`)
 			.then(response => {
-				dispatch(softDeleteKyeResult(id));
+				dispatch(softDeleteKeyResult(keyResultId, objectiveId, flag));
 				dispatch({ type: REMOVE_REQUEST });
 			})
 			.catch(response => {
@@ -135,10 +135,12 @@ export function deleteKeyResultError(data) {
 	};
 }
 
-export function softDeleteKyeResult(id) {
+export function softDeleteKeyResult(keyResultId, objectiveId, flag) {
 	return {
 		type: SOFT_DELETE_KEY_RESULT,
-		id
+		keyResultId, 
+		objectiveId,
+		flag
 	};
 }
 

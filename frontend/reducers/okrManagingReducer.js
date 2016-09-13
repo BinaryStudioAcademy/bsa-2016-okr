@@ -86,21 +86,21 @@ export default function okrManagingReducer(state = initialState, action) {
         }
 
         case SOFT_DELETE_KEY_RESULT: {
-            const{id} = action;
+            const { keyResultId, objectiveId, flag } = action;
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
-                visibleObjectives: softDeleteKeyResult(visibleObjectives, id),
-                objectives: softDeleteKeyResult(objectives, id),
+                visibleObjectives: softDeleteKeyResult(visibleObjectives, keyResultId, objectiveId, flag),
+                objectives: softDeleteKeyResult(objectives, keyResultId, objectiveId, flag),
                 waiting: false,
                 editing: false,
                 editingKeyResult:false
-            })
+            });
         }        
 
         case SEARCH_OBJECTIVE: {
-            const {searchValue} = action;
+            const { searchValue } = action;
             return Object.assign({}, state, {
                 active: '',
                 visibleObjectives: updateVisibleItems(state.visibleObjectives, state.objectives, searchValue),
@@ -270,6 +270,7 @@ function addNewTemplate(visibleObjectives, objective){
     objectives.push(objective);
     return objectives;
 }
+
 function updateKeyResult(objectives, keyResult, id){
     for (let i = 0; i < objectives.length; i++) 
         for (let j = 0; j < objectives[i].keyResults.length; j++){
@@ -299,41 +300,48 @@ function updateObjectiveList(oldObjectives, objective) {
 }
 
 function updateVisibleItems(visibleObjectives, objectives, searchValue){
-    let objectivesAfterInputFilter = [];
-    let newObjectivesList = JSON.parse(JSON.stringify(objectives));
-    if (searchValue === "") {
-        objectivesAfterInputFilter = newObjectivesList;
-    }
-    else {
-        for (let i = 0; i < newObjectivesList.length; i++) {
-          /*  let title = newObjectivesList[i].title.split(' ');
-            for (let j=0; j < title.length; j++)*/
-                if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0)
-                    objectivesAfterInputFilter.push(newObjectivesList[i])
-               /* break;*/
-                
-        }
-    }
-    return objectivesAfterInputFilter;
+	let objectivesAfterInputFilter = [];
+	let newObjectivesList = JSON.parse(JSON.stringify(objectives));
+	if (searchValue === "") {
+		objectivesAfterInputFilter = newObjectivesList;
+	} else {
+		for (let i = 0; i < newObjectivesList.length; i++) {
+		// let title = newObjectivesList[i].title.split(' ');
+		// for (let j=0; j < title.length; j++)
+		if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0)
+			objectivesAfterInputFilter.push(newObjectivesList[i])
+			// break;
+		}
+	}
+
+	return objectivesAfterInputFilter;
 }
 function softdelete(objectives, id) {
-     for (let i = 0; i < objectives.length; i++) {
+	for (let i = 0; i < objectives.length; i++) {
+		if (objectives[i]._id == id) {
+			objectives.splice(i, 1);
+		}
+	}
 
-          if (objectives[i]._id == id) {
-            objectives.splice(i, 1);
-
-          }
-    }
-
-    return objectives;
+	return objectives;
 }
 
-function softDeleteKeyResult(objectives, id) {
-    for (let i = 0; i < objectives.length; i++) 
-        for (let j = 0; j < objectives[i].keyResults.length; j++){
-            if (objectives[i].keyResults[j]._id == id) {
-                objectives[i].keyResults.splice(j, 1);
-          }
-    }
-    return objectives;
+function softDeleteKeyResult(oldObjectives, keyResultId, objectiveId, flag) {
+	let objectives = [].concat(oldObjectives);
+
+	let objectiveIndex = objectives.findIndex((objective) => {
+		return objective._id === objectiveId;
+	});
+
+	if(objectiveIndex !== -1) {
+		let keyResultIndex = objectives[objectiveIndex].keyResults.findIndex((keyResult) => {
+			return keyResult._id === keyResultId;
+		});
+
+		if(keyResultIndex !== -1) {
+			objectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = flag;
+		}
+	}
+  
+  return objectives;
 }
