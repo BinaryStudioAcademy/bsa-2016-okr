@@ -11,7 +11,7 @@ class SharedHeader extends Component {
 	render() {
 		const fullName = `${ this.props.firstName } ${ this.props.lastName }` || '';
 		const globalRole = this.props.globalRole || '';
-
+		/*getHeader();*/
 		return (
 			<header id='header'>
 				<div className='hdr-header'>
