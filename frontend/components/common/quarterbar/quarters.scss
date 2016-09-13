@@ -8,7 +8,7 @@ $primary-color_local: #607D8B;
 
   #business-year {
     float: left;
-    padding: 5px 10px;
+    padding: 4px 10px;
     padding-bottom: 6px;
     width: 120px;
     border-radius: 3px 0 0 3px;
@@ -16,7 +16,7 @@ $primary-color_local: #607D8B;
     background-color: #fff;
     color: $primary-color_local;
     transition: none;
-    //height: 34px;
+    height: 34px;
     
     &:hover {
       cursor: pointer;
@@ -53,14 +53,13 @@ $primary-color_local: #607D8B;
   justify-content: space-between;
   list-style-type: none;
   margin: 0;
-  //margin-left: 90px;
   padding: 0;
-  //height: 34px;
+  height: 34px;
 
   li {
     flex: 1 0 100px;
     text-align: center;
-    padding: 7px 10px;
+    padding: 6px 10px;
     color: $primary-color_local;
     background-color: #fff;
     border: 1px solid $primary-color_local;
