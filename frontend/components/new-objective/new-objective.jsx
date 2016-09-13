@@ -8,7 +8,7 @@ import NewKeyResult from './key-result.jsx';
 import './new-objective.scss';
 
 const NewObjective = ({ 
-	createNewTemplate,
+	saveEditObjective,
 	addKeyResultToTemplate,
 	removeKeyResultFromTemplate,
 	closeNewObjectiveWindow,
@@ -22,7 +22,7 @@ const NewObjective = ({
 			</button>
 			<form action="">
 				<NewObjCredentials 
-					createNewTemplate={ createNewTemplate }
+					saveEditObjective={ saveEditObjective }
 					addKeyResultToTemplate={ addKeyResultToTemplate }
 					removeKeyResultFromTemplate={ removeKeyResultFromTemplate }
 					closeNewObjectiveWindow={ closeNewObjectiveWindow }
@@ -35,7 +35,7 @@ const NewObjective = ({
 }
 
 NewObjective.propTypes = {
-	createNewTemplate: PropTypes.func.isRequired,
+	saveEditObjective: PropTypes.func.isRequired,
 	addKeyResultToTemplate: PropTypes.func.isRequired,
 	removeKeyResultFromTemplate: PropTypes.func.isRequired,
 	closeNewObjectiveWindow: PropTypes.func.isRequired,

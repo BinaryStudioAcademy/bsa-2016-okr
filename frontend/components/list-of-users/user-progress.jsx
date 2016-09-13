@@ -4,8 +4,9 @@ class UserProgress extends Component {
 	constructor(props) {
 		super(props);
 	}
-	
+
 	render() {
+		/*
 		var sum = 0,
 				count = 0,
 				progress = 0;
@@ -21,12 +22,12 @@ class UserProgress extends Component {
 			progress = 0;
 		else
 			progress = Math.round(100*sum/count);
-		
+*/
 		return (
 			<div className='progress-bar'>
 				<div className='progressTitle'>Current OKR score</div>
-				<progress max="100" value={progress}></progress>
-				<span className='progressValue'>{progress}%</span>
+				<progress max="100" ref="progress" value={this.props.userProgress}></progress>
+				<span className='progressValue'>{this.props.userProgress}%</span>
 			</div>
 		)
 	}

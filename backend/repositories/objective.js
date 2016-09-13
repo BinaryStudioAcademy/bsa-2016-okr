@@ -15,7 +15,6 @@ ObjectiveRepository.prototype.getAll = function(callback) {
 	model
 		.find({
 			isApproved: true,
-			isDeleted: false
 		})
 		.exec(callback);
 };
@@ -44,9 +43,8 @@ ObjectiveRepository.prototype.getAllPopulate = function(callback) {
 	model
 		.find({
 			isApproved: true,
-			isDeleted: false
 		})
-		.populate('defaultKeyResults', null, {isDeleted: false})
+		.populate('defaultKeyResults')
 		.populate('category')
 		.exec(callback);
 };

@@ -32,16 +32,39 @@ export default class DashboardStats extends React.Component {
 
 	componentWillMount() {
 		axios.get(this.props.urlUsers)
-		.then(response => { this.setState({ rows: response.data }); });
+		.then( response => {
+			this.setState({
+				rows:response.data.statArr,
+				bottom: response.data.bottomStats,
+				user: response.data.userStats
+			})
+		})
+		// axios.get(this.props.urlUsers)
+		// .then(response => { this.setState({ rows: response.data }); });
 		axios.get(this.props.urlProgress)
 		.then(response => { this.setState({ score: response.data }); });
-		axios.get(this.props.urlBottom)
-		.then(response => { this.setState({ bottom: response.data[0] }); });
+		// axios.get(this.props.urlBottom)
+		// .then(response => { this.setState({ bottom: response.data[0] }); });
 	}
 
 
 	render() {
-		
+		console.log(this.state.user)
+		if(this.state.user != undefined){
+				var userName = this.state.user.userInfo.firstName + " " +this.state.user.userInfo.lastName;
+				var userRow = (<tbody>
+									<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
+									<tr><td>{userName}</td><td className="score">{ Math.round(this.state.user.totalScore * 100) + '%' }</td></tr>
+									<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
+									<tr><td>Lowest result</td><td className="score">{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
+									</tbody>)
+		}
+		else {
+				var userRow = (<tbody>
+						<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
+						<tr><td>Lowest result</td><td className="score">{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
+						</tbody>)
+		}
 
 		return (
 			<div className="main">
@@ -58,8 +81,8 @@ export default class DashboardStats extends React.Component {
 						{ this.state.rows.map(this.renderRow) }
 					</table>
 					<table className="second">
-						<tr><td>...</td><td className="score">...</td></tr>
-						<tr><td>Lowest result</td><td className="score">{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
+						{userRow}
+						
 					</table>
 				</div>
 			</div>

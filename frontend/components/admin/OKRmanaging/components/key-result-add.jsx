@@ -36,7 +36,7 @@ class KeyResult extends Component {
 				confirmButtonText: 'Yes, create',
 				closeOnConfirm: false,
 			}, () => {
-				this.props.addKeyResult(title, difficulty);
+				this.props.saveEditKeyResult(null, title, difficulty);
 				this.resetAddingKeyResultInput();
 				this.props.hideAddKeyResultInput();
 			});

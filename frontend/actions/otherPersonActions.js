@@ -13,6 +13,10 @@ export const REMOVE_APPRENTICE = 'REMOVE_APPRENTICE';
 export const REMOVED_APPRENTICE = 'REMOVED_APPRENTICE';
 export const ADDED_NEW_OBJECTIVE_OTHER_USER = 'ADDED_NEW_OBJECTIVE_OTHER_USER';
 export const ADD_NEW_OBJECTIVE_OTHER_USER = 'ADD_NEW_OBJECTIVE_OTHER_USER';
+export const EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE = 'EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE';
+export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE = 'EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE';
 
 export function getUser(id) {
 
@@ -136,5 +140,52 @@ export function removedApprentice(response) {
 	return {
 		type: REMOVED_APPRENTICE,
 		response
+	};
+}
+
+export function editKeyResultEnableEditOnUserPage(editKeyResultId) {
+	const action = {
+		type: EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE,
+		editKeyResultId
+	};
+
+	return action;
+}
+
+export function editKeyResultDisabledEditOnUserPage() {
+	const action = {
+		type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE,
+	};
+	return action;
+}
+
+export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
+	return(dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
+				.then(response => {
+					dispatch(keyResultTitleAndDifficultyChanged(response.data));
+					dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE });
+					dispatch({ type: REMOVE_REQUEST });
+				})
+				.catch(response => {
+					dispatch(keyResultTitleAndDifficultyError(response.data));
+					dispatch({ type: REMOVE_REQUEST });
+				});
+	};
+}
+
+export function keyResultTitleAndDifficultyChanged(data) {
+	return {
+		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE,
+		data,
+	};
+}
+
+export function keyResultTitleAndDifficultyError(data) {
+	return {
+		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE,
+		data,
 	};
 }

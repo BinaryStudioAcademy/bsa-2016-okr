@@ -113,12 +113,6 @@ class ObjectiveItem extends Component {
 		}
 
 		if(!isArchived){
-			editButton 	= 	(<button ref="edit"
-											title="Edit"
-										 	className="btn btn-blue-hover objective-edit"
-										 	onClick={ this.handleEdit }>
-												<i className="fi flaticon-edit"></i>
-											</button>);
 			saveButton 	= 	(<button ref="saveEdit"
 											className="btn btn-green save hidden"
 											onClick={ this.handleSave }
@@ -140,6 +134,15 @@ class ObjectiveItem extends Component {
 			                       	onClick={ this.handleDelObj }>
 															<i className="fi flaticon-garbage-2"></i>
 											</button>);
+
+			if (!objective.templateId.isApproved) {
+				editButton = (<button ref="edit"
+											title="Edit"
+											className="btn btn-blue-hover objective-edit"
+											onClick={ this.handleEdit }>
+											<i className="fi flaticon-edit"></i>
+											</button>);
+			}
 
 			if (objective.templateId.isApproved) {
         approved = <span className='fi flaticon-push-pin approved' title='approved'></span>
@@ -177,12 +180,7 @@ class ObjectiveItem extends Component {
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage = { isItHomePage }
-						setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
-						editing = { this.props.editing }
-						activeKeyResult = { this.props.activeKeyResult }
-						editingKeyResult = { this.props.editingKeyResult }
-						cancelEdit = { this.props.cancelEdit }
-						editKeyResultTitleAndDifficulty = { this.props.editKeyResultTitleAndDifficulty }
+						editKeyResult = { this.props.editKeyResult }
 				/>
 			</div>
 			</div>

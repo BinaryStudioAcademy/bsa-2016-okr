@@ -21,9 +21,8 @@ class KeyResults extends Component {
 		this.setShowKeyResultElement = this.setShowKeyResultElement.bind(this);
 		this.showAddKeyResultInput = this.showAddKeyResultInput.bind(this);
 		this.hideAddKeyResultInput = this.hideAddKeyResultInput.bind(this);
-		this.saveEditedKeyResult = this.saveEditedKeyResult.bind(this);
-		this.isNotDuplicate = this.isNotDuplicate.bind(this);
-		this.addKeyResult = this.addKeyResult.bind(this);
+		this.saveEditKeyResult = this.saveEditKeyResult.bind(this);
+		this.getDuplicateKeyResult = this.getDuplicateKeyResult.bind(this);
 		this.focusAddInput = this.focusAddInput.bind(this);
 		this.focusEditInput = this.focusEditInput.bind(this);
 	}
@@ -90,13 +89,43 @@ class KeyResults extends Component {
 		this.setShowKeyResultElement(keyResultElement);
 	}
 
-	isNotDuplicate(id, title) {
-		let keyResultIndex = this.props.data.findIndex((keyResult) => {
-			return keyResult.title === title;
+	getDuplicateKeyResult(id, title) {
+		const { data } = this.props;
+		let keyResultIndex = data.findIndex((keyResult) => {
+			return (keyResult.title === title) && (keyResult._id !== id);
 		});
 
-		if(keyResultIndex === -1 || (!isEmpty(id) && this.props.data[keyResultIndex]._id === id)) {
-			return true;
+		return (keyResultIndex === -1) ? null : data[keyResultIndex];
+	}
+
+	saveEditKeyResult(id, title, difficulty) {
+		let duplicateItem = this.getDuplicateKeyResult(id, title);
+		
+		if(isEmpty(duplicateItem)) {
+			let reqBody = {
+				title: title,
+				difficulty: difficulty
+			};
+
+			if(!isEmpty(id)) {
+				this.props.editKeyResult(id, reqBody);
+			} else {
+				reqBody.objectiveId = this.props.objective._id,
+				this.props.addKeyResult(reqBody);
+			}
+			
+			sweetalert.close();
+		} else if(duplicateItem.isDeleted) {
+			sweetalert({
+				title: 'Do you want to restore deleted key result?',
+				text: 'Key result with such title for that objective exists, but deleted by someone',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, restore'
+			}, () => {
+				this.props.deleteKeyResult(duplicateItem._id, duplicateItem.objectiveId, false);
+			});
 		} else {
 			sweetalert({
 				title: 'Error!',
@@ -107,33 +136,6 @@ class KeyResults extends Component {
 					this.focusEditInput(id);
 				}, 0);
 			});
-
-			return false;
-		}
-	}
-
-	addKeyResult(title, difficulty) {
-		if(this.isNotDuplicate(null, title)) {
-			let reqBody = {
-				title: title,
-				difficulty: difficulty,
-				objectiveId: this.props.objective._id,
-			};
-			
-			this.props.addKeyResult(reqBody);
-			sweetalert.close();
-		}
-	}
-
-	saveEditedKeyResult(id, title, difficulty) {
-		if(this.isNotDuplicate(id, title)) {
-			let reqBody = {
-				title: title,
-				difficulty: difficulty
-			};
-			
-			this.props.editKeyResult(id, reqBody);
-			sweetalert.close();
 		}
 	}
 
@@ -144,13 +146,17 @@ class KeyResults extends Component {
 	}
 
 	render() {
-		let item = this.props.data.map((item, index) => {
+		const { data } = this.props;
+		
+		let displayedKeyResults = data.filter((keyResult) => {
+			return !keyResult.isDeleted;
+		}).map((item, index) => {
 			return <KeyResultItem index = { index } 
 														objective = { this.props.objective } 
 														key = { index } 
 														item = { item }
 														hideAddKeyResultInput = { this.hideAddKeyResultInput }
-														saveChanges = { this.saveEditedKeyResult }
+														saveChanges = { this.saveEditKeyResult }
 														editingKeyResult = { this.props.okrManaging.editingKeyResult }
 														activeKeyResult = { this.props.okrManaging.activeKeyResult }
 														setActiveKeyResult = { this.props.setActiveKeyResult }
@@ -163,11 +169,11 @@ class KeyResults extends Component {
 		
 		return (
 			<div className='key-results'>
-				<button className="btn btn-blue-hover change" onClick={this.textHandleShow}>Key results
+				<button className="btn btn-blue-hover change" onClick={ this.textHandleShow }>Key results
 				</button>
 				<div className='key-result-details undisplay'>
 					<ul>
-						{item}
+						{ displayedKeyResults }
 					</ul>
 					<div id="new-obj-keyresults">
 						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.showAddKeyResultInput }>
@@ -177,7 +183,7 @@ class KeyResults extends Component {
 							ref={`keyResultAdd-${this.props.objective._id}`}
 							objectiveId={ this.props.objective._id } 
 							hideAddKeyResultInput={ this.hideAddKeyResultInput }
-							addKeyResult={ this.addKeyResult }
+							saveEditKeyResult={ this.saveEditKeyResult }
 							focusAddInput={ this.focusAddInput }
 						/>
 					</div>

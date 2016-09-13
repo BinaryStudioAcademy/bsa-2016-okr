@@ -77,14 +77,14 @@ export function receivedObjectivesList(objectives) {
 
 /*-----delete template------*/
 
-export function deleteObjective(id, flag){
+export function deleteObjective(id, flag) {
 	return(dispatch, getStore) => {
 		dispatch({ type: DELETE_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST });
 
 		return axios.delete(`/api/objective/${ id }/${ flag }`)
 			.then(response => {
-				dispatch(softDeleteObjective(id));
+				dispatch(softDeleteObjective(id, flag));
 				dispatch({ type: REMOVE_REQUEST });
 			})
 			.catch(response => {
@@ -101,24 +101,25 @@ export function deleteObjectiveError(data) {
 	};
 }
 
-export function softDeleteObjective(id) {
+export function softDeleteObjective(id, flag) {
 	return {
 		type: SOFT_DELETE_OBJECTIVE,
-		id
+		id,
+		flag,
 	};
 }
 
 /*-----delete key result------*/
 
-export function deleteKeyResult(id, flag) {
+export function deleteKeyResult(keyResultId, objectiveId, flag) {
 	return(dispatch, getStore) => {
 
 		dispatch({ type: DELETE_KEY_RESULT_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.delete(`/api/keyResult/${ id }/${ flag }`)
+		return axios.delete(`/api/keyResult/${ keyResultId }/${ flag }`)
 			.then(response => {
-				dispatch(softDeleteKyeResult(id));
+				dispatch(softDeleteKeyResult(keyResultId, objectiveId, flag));
 				dispatch({ type: REMOVE_REQUEST });
 			})
 			.catch(response => {
@@ -135,10 +136,12 @@ export function deleteKeyResultError(data) {
 	};
 }
 
-export function softDeleteKyeResult(id) {
+export function softDeleteKeyResult(keyResultId, objectiveId, flag) {
 	return {
 		type: SOFT_DELETE_KEY_RESULT,
-		id
+		keyResultId, 
+		objectiveId,
+		flag
 	};
 }
 
