@@ -58,7 +58,15 @@ class UserDashboard extends React.Component{
 	}
 
 	render() {
-
+		let id;
+		if( this.props.where === "otherPersonPage"){
+			id = this.props.userPage.user._id;
+			console.log(this.props.userPage.user)
+		}
+		else{
+			id = this.props.myState.me._id;
+			console.log(this.props.myState.me)
+		}
 		return (
 			<div className="userDashboard">
 				<Tabs/>
@@ -66,7 +74,7 @@ class UserDashboard extends React.Component{
 					<UserHistory />
 				</div>
 				<div className={this.isVisibleContent(2)}>
-					<Dashboard />
+					<Dashboard userId={id} where={this.props.where}/>
 				</div>
 			</div>
 		)
@@ -82,7 +90,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 	return {
 		userDashboard: state.userDashboard,
-		myState: state.myState
+		myState: state.myState,
+		userPage: state.userPage
 	};
 }
 

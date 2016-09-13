@@ -71,7 +71,7 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	var id = req.params.id;
 	var flag = req.params.flag;
 	var deletedDate = new Date();
-	var userId = req.session._id
+	var session = req.session;
 
 	if(!isCorrectId(id)
 	|| !ValidateService.isStringBoolean(flag)) {
@@ -81,10 +81,10 @@ router.delete('/:id/:flag', adminOnly, (req, res, next) => {
 	var data = {
 		isDeleted: HelpService.stringToBoolean(flag),
 		deletedDate: deletedDate,
-		deletedBy: userId
+		deletedBy: session._id
 	}
 
-	return service.softDelete(userId, id, data, res.callback);
+	return service.softDelete(session, id, data, res.callback);
 });
 
 router.put('/:id', adminOnly, (req, res, next) => {

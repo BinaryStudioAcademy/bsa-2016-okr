@@ -95,4 +95,32 @@ QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 	})
 	.exec(callback);
 };
+
+QuarterRepository.prototype.getCurrentYear = function(callback) {
+	var model = this.model;
+
+	model
+	.find({ 'year': CONST.currentYear })
+	.populate({
+		path: 'userObjectives',
+		match: { isDeleted: false},
+		populate: {
+			path: 'templateId keyResults.templateId',
+			populate: {
+				path:	'category'
+			}
+		}
+	})
+	.populate({
+		path: 'userId',
+		populate: {
+			path: 'userInfo mentor',
+			populate: {
+				path: 'userInfo'
+			}
+		}
+	})
+	.exec(callback);
+};
+
 module.exports = new QuarterRepository();

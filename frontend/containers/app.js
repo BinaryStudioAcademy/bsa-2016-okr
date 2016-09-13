@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import CONST from '../../backend/config/constants';
 
-import Header from "./header.jsx";
+import Header from "./shared-header.jsx";
 import NavMenu from "../components/common/nav-menu.jsx";
 import MainPage from './main-page.jsx';
 import LoadingScreen from '../components/common/LoadingScreen.jsx';

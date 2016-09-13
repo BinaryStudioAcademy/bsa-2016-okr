@@ -53,28 +53,29 @@ export default function okrManagingReducer(state = initialState, action) {
             })
 
         case RECEIVED_OBJECTIVES_LIST: {
-            const {objectives} = action;
+            const { objectives } = action;
+            
             return Object.assign({}, state, {
                 objectives,
                 visibleObjectives: objectives,
                 waiting: false,
                 searchValue: '',
-            })
+            });
         }
 
         case SOFT_DELETE_OBJECTIVE: {
-            const{id} = action;
+            const{ id, flag } = action;
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
                 active: '',
-                visibleObjectives: softdelete(visibleObjectives, id),
-                objectives: softdelete(objectives, id),
+                visibleObjectives: softDeleteObjective(visibleObjectives, id, flag),
+                objectives: softDeleteObjective(objectives, id, flag),
                 waiting: false,
                 editing: false,
-                editingKeyResult:false
-            })
+                editingKeyResult: false
+            });
         }
 
         case DELETE_KEY_RESULT_TEMPLATE: {
@@ -85,21 +86,21 @@ export default function okrManagingReducer(state = initialState, action) {
         }
 
         case SOFT_DELETE_KEY_RESULT: {
-            const{id} = action;
+            const { keyResultId, objectiveId, flag } = action;
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
-                visibleObjectives: softDeleteKeyResult(visibleObjectives, id),
-                objectives: softDeleteKeyResult(objectives, id),
+                visibleObjectives: softDeleteKeyResult(visibleObjectives, keyResultId, objectiveId, flag),
+                objectives: softDeleteKeyResult(objectives, keyResultId, objectiveId, flag),
                 waiting: false,
                 editing: false,
                 editingKeyResult:false
-            })
+            });
         }        
 
         case SEARCH_OBJECTIVE: {
-            const {searchValue} = action;
+            const { searchValue } = action;
             return Object.assign({}, state, {
                 active: '',
                 visibleObjectives: updateVisibleItems(state.visibleObjectives, state.objectives, searchValue),
@@ -166,7 +167,8 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
         case RECEIVED_NEW_TEMPLATE: {
-            const {data} = action;
+            const { data } = action;
+
             
 
             var objective = {
@@ -218,16 +220,16 @@ export default function okrManagingReducer(state = initialState, action) {
         case RECEIVED_DEFAULT_KEY_RESULT : {
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
-            const {data} = action;
+            const { data } = action;
 
             return Object.assign({}, state, {
                 visibleObjectives: setDefaultKeyResult(visibleObjectives, data),
                 objectives: setDefaultKeyResult(objectives, data)
-            })
+            });
         }
 
         case RECEIVED_DEFAULT_KEY_RESULT_ERROR : {
-            return state
+            return state;
         }
         
         default: 
@@ -235,15 +237,19 @@ export default function okrManagingReducer(state = initialState, action) {
         
     }
 }
-function setDefaultKeyResult(objectives, data) {
 
-    for (let i = 0; i < objectives.length; i++) {
-        if (objectives[i]._id == data._id) {
-            objectives.defaultKeyResults.splice(i, 1, data.defaultKeyResults);
-        }
-    }
-    console.log(objectives);
-    return objectives
+function setDefaultKeyResult(oldObjectives, data) {
+		let objectives = [].concat(oldObjectives);
+
+		let index = objectives.findIndex((objective) => {
+				return objective._id === data._id;
+		});
+
+		if(index !== -1) {
+				objectives[index].defaultKeyResults = [].concat(data.defaultKeyResults);
+		}
+
+		return objectives;
 }
 
 function addKeyResult(objectives, keyResult) {
@@ -264,6 +270,7 @@ function addNewTemplate(visibleObjectives, objective){
     objectives.push(objective);
     return objectives;
 }
+
 function updateKeyResult(objectives, keyResult, id){
     for (let i = 0; i < objectives.length; i++) 
         for (let j = 0; j < objectives[i].keyResults.length; j++){
@@ -293,41 +300,53 @@ function updateObjectiveList(oldObjectives, objective) {
 }
 
 function updateVisibleItems(visibleObjectives, objectives, searchValue){
-    let objectivesAfterInputFilter = [];
-    let newObjectivesList = JSON.parse(JSON.stringify(objectives));
-    if (searchValue === "") {
-        objectivesAfterInputFilter = newObjectivesList;
-    }
-    else {
-        for (let i = 0; i < newObjectivesList.length; i++) {
-          /*  let title = newObjectivesList[i].title.split(' ');
-            for (let j=0; j < title.length; j++)*/
-                if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0)
-                    objectivesAfterInputFilter.push(newObjectivesList[i])
-               /* break;*/
-                
-        }
-    }
-    return objectivesAfterInputFilter;
-}
-function softdelete(objectives, id) {
-     for (let i = 0; i < objectives.length; i++) {
+	let objectivesAfterInputFilter = [];
+	let newObjectivesList = JSON.parse(JSON.stringify(objectives));
+	if (searchValue === "") {
+		objectivesAfterInputFilter = newObjectivesList;
+	} else {
+		for (let i = 0; i < newObjectivesList.length; i++) {
+		// let title = newObjectivesList[i].title.split(' ');
+		// for (let j=0; j < title.length; j++)
+		if (newObjectivesList[i].title.toUpperCase().search(searchValue.toUpperCase()) >= 0)
+			objectivesAfterInputFilter.push(newObjectivesList[i])
+			// break;
+		}
+	}
 
-          if (objectives[i]._id == id) {
-            objectives.splice(i, 1);
-
-          }
-    }
-
-    return objectives;
+	return objectivesAfterInputFilter;
 }
 
-function softDeleteKeyResult(objectives, id) {
-    for (let i = 0; i < objectives.length; i++) 
-        for (let j = 0; j < objectives[i].keyResults.length; j++){
-            if (objectives[i].keyResults[j]._id == id) {
-                objectives[i].keyResults.splice(j, 1);
-          }
-    }
-    return objectives;
+function softDeleteObjective(oldObjectives, id, flag) {
+	let objectives = [].concat(oldObjectives);
+
+	let index = objectives.findIndex((objective) => {
+		return objective._id === id;
+	});
+
+	if(index !== -1) {
+		objectives[index].isDeleted = flag;
+	}
+
+	return objectives;
+}
+
+function softDeleteKeyResult(oldObjectives, keyResultId, objectiveId, flag) {
+	let objectives = [].concat(oldObjectives);
+
+	let objectiveIndex = objectives.findIndex((objective) => {
+		return objective._id === objectiveId;
+	});
+
+	if(objectiveIndex !== -1) {
+		let keyResultIndex = objectives[objectiveIndex].keyResults.findIndex((keyResult) => {
+			return keyResult._id === keyResultId;
+		});
+
+		if(keyResultIndex !== -1) {
+			objectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = flag;
+		}
+	}
+  
+  return objectives;
 }

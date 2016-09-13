@@ -151,7 +151,6 @@ class Objectives extends Component {
 	}
 
 	render() {
-		console.log("hey mount");
 		const userId = this.props.userId;
 		const categories = this.props.categories;
 		const { me } = this.props.myState;
@@ -159,9 +158,9 @@ class Objectives extends Component {
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
-		let editing = false;
-		let activeKeyResult = '';
-		let	editingKeyResult = false;
+
+		// Edit key result on HomePage or UserPage
+		let editKeyResult = {};
 
 		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
 		let isItHomePage;
@@ -174,15 +173,30 @@ class Objectives extends Component {
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
+
+			// Edit key result on UserPage
+			editKeyResult = {
+				id: this.props.user.editKeyResultId,
+				isEditing: this.props.user.editKeyResultIsEditing,
+				enableEdit: this.props.otherPersonActions.editKeyResultEnableEditOnUserPage,
+				disableEdit: this.props.otherPersonActions.editKeyResultDisabledEditOnUserPage,
+				editTitleAndDifficulty: this.props.otherPersonActions.editKeyResultEditTitleAndDifficulty,
+			};
 		} else {
 			/*console.log('me');*/
 			isItHomePage = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
-			editing = this.props.myState.editing;
-			activeKeyResult = this.props.myState.activeKeyResult;
-			editingKeyResult = this.props.myState.editingKeyResult;
+
+			// Edit key result on HomePage
+			editKeyResult = {
+				id: this.props.myState.editKeyResultId,
+				isEditing: this.props.myState.editKeyResultIsEditing,
+				enableEdit: this.props.myStateActions.editKeyResultEnableEditOnHomePage,
+				disableEdit: this.props.myStateActions.editKeyResultDisabledEditOnHomePage,
+				editTitleAndDifficulty: this.props.myStateActions.editKeyResultEditTitleAndDifficulty,
+			};
 		}
 
 		if (( CONST.currentYear < selectedYear ||
@@ -192,7 +206,6 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-		//console.log('objectives', userInfo.objectives)
 
 		return (
 			<div id="home-page-wrapper">
@@ -222,12 +235,7 @@ class Objectives extends Component {
 						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage={ isItHomePage }
-						setActiveKeyResultOnHomePage = { this.props.myStateActions.setActiveKeyResultOnHomePage }
-						editing = { editing }
-						activeKeyResult = { activeKeyResult }
-						editingKeyResult = { editingKeyResult }
-						cancelEdit = { this.props.myStateActions.cancelEdit }
-						editKeyResultTitleAndDifficulty = { this.props.myStateActions.editKeyResultTitleAndDifficulty }
+						editKeyResult = { editKeyResult }
 					/>
 				</div>
 			</div>

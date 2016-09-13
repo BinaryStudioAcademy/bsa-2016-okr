@@ -15,10 +15,33 @@ class ListOfUsers extends Component {
 		super(props);
 
 		this.search = this.search.bind(this);
+		this.apprenticesSort = this.apprenticesSort.bind(this);
+		this.usersSort = this.usersSort.bind(this);
+		this.fakeState = {usersSort: '↓', apprenticesSort: '↓' };
 	}
 
 	search(e) {
 		this.props.search(e.target.value);
+	}
+
+	apprenticesSort(){
+		if(this.fakeState.apprenticesSort === '↓'){
+			this.fakeState.apprenticesSort = '↑';
+			this.props.sortApprentices("DESC");
+		} else {
+			this.fakeState.apprenticesSort = '↓';
+			this.props.sortApprentices("ASC");
+		}
+	}
+
+	usersSort(){
+		if(this.fakeState.usersSort === '↓'){
+			this.fakeState.usersSort = '↑';
+			this.props.sortUsers("DESC");
+		} else {
+			this.fakeState.usersSort = '↓';
+			this.props.sortUsers("ASC");
+		}
 	}
 
 	componentWillMount(){
@@ -26,6 +49,8 @@ class ListOfUsers extends Component {
 	}
 
 	render() {
+		var usersDirection = 'Users ' + this.fakeState.usersSort;
+		var ApprenticesDirection = 'Apprentices ' + this.fakeState.apprenticesSort;
 		const {user, myApprentices, searchValue, name} = this.props.users;
 		var mentor;
 
@@ -53,13 +78,13 @@ class ListOfUsers extends Component {
 		if (this.props.me.mentor != null) {
 			mentor = user.find(function (user, index) {
 				return ( ((user.userId.userInfo.firstName + ' ' + user.userId.userInfo.lastName).toLowerCase().indexOf(searchValue.toLowerCase()) === 0 ||
-					user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0) && 
-					this.props.me.mentor._id == user.userId._id )						 
+					user.userId.userInfo.lastName.toLowerCase().indexOf(searchValue.toLowerCase()) === 0) &&
+					this.props.me.mentor._id == user.userId._id )
 			}.bind(this));
 
 			var mentorNodes = <UserItem user={mentor} />
 		}
-	
+
 
 		let apprentices = null;
 		let apprenticesList = null;
@@ -68,11 +93,11 @@ class ListOfUsers extends Component {
 
 		if (apprenticeNodes.length > 0) {
 		apprentices = ( <div className='users-title'>
-											<p><span>Apprentices</span></p>
+											<p><span onClick={this.apprenticesSort}>{ApprenticesDirection}</span></p>
 										</div>)
 		apprenticesList = (<ul className='listOfUsers'>{apprenticeNodes}</ul>)
 		}
-		
+
 		if (mentor != undefined) {
 		mentorTitle = (	<div className='users-title'>
 											<p><span>Mentor</span></p>
@@ -90,7 +115,7 @@ class ListOfUsers extends Component {
 						{ apprentices }
 						{ apprenticesList }
 						<div className='users-title'>
-							<p><span>Users</span></p>
+							<p><span ref="usersSort" onClick={this.usersSort}>{usersDirection}</span></p>
 							</div>
 						<ul className='listOfUsers'>{userNodes}</ul>
 					</div>
