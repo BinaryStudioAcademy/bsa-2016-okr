@@ -17,16 +17,15 @@ import {
 	CHANGE_ARCHIVE_STATUS,
 	CHANGE_ARCHIVE_STATUS_LOCAL,
 	RECEIVED_ME_BASIC,
-	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY,
-	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR
+	EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE,
+	EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE
 } from '../actions/myStateActions';
 
 import {
 	ADD_NEW_KEY_RESULT_TO_OBJECTIVE
 } from '../actions/keyResultActions';
-
-import { SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE,
-		     CANCEL_EDIT_KEY_RESULT} from '../actions/myStateActions';
 
 const initialState = {
 	selectedTab: currentQuarter,
@@ -34,9 +33,8 @@ const initialState = {
 	me: {
 		"localRole": ""
 	},
-	editing: false,
-	activeKeyResult: '',
-	editingKeyResult: false
+	editKeyResultId: '',
+	editKeyResultIsEditing: false,
 };
 
 export default function myObjectivesReducer(state = initialState, action = {}) {
@@ -206,7 +204,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return state;
 		}
 
-		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY: {
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, title, difficulty } = data;
 
@@ -215,29 +213,27 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			});
 		}
 
-		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR: {
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE: {
 			let { data } = action;
 
-			console.log(EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR);
+			console.log(EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE);
 			console.log(data);
 
 			return state;
 		}
 
-		case SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE: {
-			const { activeKeyResult } = action;
+		case EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE: {
+			const { editKeyResultId } = action;
 
 			return Object.assign({}, state, {
-				activeKeyResult,
-				editingKeyResult: true,
-				editing: false
+				editKeyResultId,
+				editKeyResultIsEditing: true,
 			})
 		}
 
-		case CANCEL_EDIT_KEY_RESULT: {
+		case EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE: {
 			return Object.assign({}, state, {
-				editing: false,
-				editingKeyResult: false
+				editKeyResultIsEditing: false
 			})
 		}
 
@@ -411,24 +407,17 @@ export function changeArchiveInMyObjective (me, objectiveId, flag) {
 	var meCopy = Object.assign({}, me);
 	var done = false;
 
-console.log('IN ARCHIVE')
 	meCopy.quarters.forEach((quarter) => {
 		if(done)
 			return;
-console.log('IN QUARTER')
 		quarter.userObjectives.forEach((objective) => {
-console.log('----IN OBJ----')
-console.log(objective._id);
-console.log(objectiveId);
 			if (objective._id == objectiveId){
 				objective.isArchived = flag;
-				console.log('objective archived >>>>')
-				console.log(objective);
 				done = true;
 				return;
 			}
 		})
-	})
+	});
 
 	return meCopy;
 }

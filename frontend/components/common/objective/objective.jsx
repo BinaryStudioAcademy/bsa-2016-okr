@@ -180,12 +180,7 @@ class ObjectiveItem extends Component {
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage = { isItHomePage }
-						setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
-						editing = { this.props.editing }
-						activeKeyResult = { this.props.activeKeyResult }
-						editingKeyResult = { this.props.editingKeyResult }
-						cancelEdit = { this.props.cancelEdit }
-						editKeyResultTitleAndDifficulty = { this.props.editKeyResultTitleAndDifficulty }
+						editKeyResult = { this.props.editKeyResult }
 				/>
 			</div>
 			</div>

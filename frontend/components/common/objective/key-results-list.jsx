@@ -64,7 +64,7 @@ class KeyResults extends Component {
 				difficulty: difficulty
 			};
 
-			this.props.editKeyResultTitleAndDifficulty(objectiveId, reqBody);
+			this.props.editKeyResult.editTitleAndDifficulty(objectiveId, reqBody);
 			sweetalert.close();
 		}
 	}
@@ -161,13 +161,8 @@ class KeyResults extends Component {
 				                      objectiveId={ this.props.objectiveId }
 				                      softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 				                      hideAddKeyResultInput = { this.hideAddKeyResultInput }
-				                      setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
-				                      editing = { this.props.editing }
-				                      activeKeyResult = { this.props.activeKeyResult }
-				                      editingKeyResult = { this.props.editingKeyResult }
-				                      cancelEdit = { this.props.cancelEdit }
+				                      editKeyResult = { this.props.editKeyResult }
 				                      saveEditedKeyResult = { this.saveEditedKeyResult }
-				                      isItHomePage={ isItHomePage }
 				                      ref={ `keyResult-${ item._id }` }
 				/>
 			});

@@ -348,10 +348,10 @@ UserObjectiveService.prototype.setTitleAndDifficultyToKeyResult = function(userI
 
 				// TODO: Should be check for userObjective.isArchived
 				// Removed temporary
-				if(!userObjective.userId.equals(userId)) {
-					var err = new Error('You are not allowed to do this');
-					return callback(err, null);
-				}
+				//if(!userObjective.userId.equals(userId)) {
+				//	var err = new Error('You are not allowed to do this');
+				//	return callback(err, null);
+				//}
 
 				return callback(null, userObjective);
 			});
