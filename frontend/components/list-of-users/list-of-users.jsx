@@ -17,7 +17,7 @@ class ListOfUsers extends Component {
 		this.search = this.search.bind(this);
 		this.apprenticesSort = this.apprenticesSort.bind(this);
 		this.usersSort = this.usersSort.bind(this);
-		this.fakeState = {usersSort: '↓', apprenticesSort: '↓' };
+		this.fakeState = {usersSort: '↑', apprenticesSort: '↑' };
 	}
 
 	search(e) {
@@ -25,22 +25,22 @@ class ListOfUsers extends Component {
 	}
 
 	apprenticesSort(){
-		if(this.fakeState.apprenticesSort === '↓'){
-			this.fakeState.apprenticesSort = '↑';
-			this.props.sortApprentices("DESC");
-		} else {
+		if(this.fakeState.apprenticesSort === '↑'){
 			this.fakeState.apprenticesSort = '↓';
 			this.props.sortApprentices("ASC");
+		} else {
+			this.fakeState.apprenticesSort = '↑';
+			this.props.sortApprentices("DESC");
 		}
 	}
 
 	usersSort(){
-		if(this.fakeState.usersSort === '↓'){
-			this.fakeState.usersSort = '↑';
-			this.props.sortUsers("DESC");
-		} else {
+		if(this.fakeState.usersSort === '↑'){
 			this.fakeState.usersSort = '↓';
 			this.props.sortUsers("ASC");
+		} else {
+			this.fakeState.usersSort = '↑';
+			this.props.sortUsers("DESC");
 		}
 	}
 

@@ -68,8 +68,8 @@ export default function usersListReducer(state = initialState, action) {
 						}
 
             return Object.assign({}, state, {
-                user: sortByuserProgress(elseUsers, "ASC"),
-								myApprentices: sortByuserProgress(myApprentices, "ASC"),
+                user: sortByuserProgress(elseUsers, "DESC"),
+								myApprentices: sortByuserProgress(myApprentices, "DESC"),
                 waiting: true,
                 searchValue: ''
             })
