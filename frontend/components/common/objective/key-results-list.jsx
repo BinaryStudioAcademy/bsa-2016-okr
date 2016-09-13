@@ -130,7 +130,6 @@ class KeyResults extends Component {
 		this.setShowKeyResultElement(keyResultElement);
 	}
 
-
 	render() {
 		let isArchived = this.props.isArchived;
 		let changeScore = this.props.changeScore;
@@ -172,6 +171,7 @@ class KeyResults extends Component {
 				                      key={index}
 				                      item={item}
 				                      isArchived={ isArchived }
+				                      editKeyResult = { this.props.editKeyResult }
 				/>
 			});
 		}
