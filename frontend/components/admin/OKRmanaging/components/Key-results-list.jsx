@@ -22,7 +22,7 @@ class KeyResults extends Component {
 		this.showAddKeyResultInput = this.showAddKeyResultInput.bind(this);
 		this.hideAddKeyResultInput = this.hideAddKeyResultInput.bind(this);
 		this.saveEditKeyResult = this.saveEditKeyResult.bind(this);
-		this.getDuplicate = this.getDuplicate.bind(this);
+		this.getDuplicateKeyResult = this.getDuplicateKeyResult.bind(this);
 		this.focusAddInput = this.focusAddInput.bind(this);
 		this.focusEditInput = this.focusEditInput.bind(this);
 	}
@@ -89,21 +89,17 @@ class KeyResults extends Component {
 		this.setShowKeyResultElement(keyResultElement);
 	}
 
-	getDuplicate(id, title) {
+	getDuplicateKeyResult(id, title) {
 		const { data } = this.props;
 		let keyResultIndex = data.findIndex((keyResult) => {
-			return keyResult.title === title;
+			return (keyResult.title === title) && (keyResult._id !== id);
 		});
 
-		if(keyResultIndex === -1 || (!isEmpty(id) && data[keyResultIndex]._id === id)) {
-			return null;
-		} else {
-			return data[keyResultIndex];
-		}
+		return (keyResultIndex === -1) ? null : data[keyResultIndex];
 	}
 
 	saveEditKeyResult(id, title, difficulty) {
-		let duplicateItem = this.getDuplicate(id, title);
+		let duplicateItem = this.getDuplicateKeyResult(id, title);
 		
 		if(isEmpty(duplicateItem)) {
 			let reqBody = {

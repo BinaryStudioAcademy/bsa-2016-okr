@@ -84,7 +84,7 @@ class ObjectiveData extends Component {
 					data.description = description;
 				}
 
-				this.props.saveChanges(id, data);
+				this.props.saveEditObjective(id, data, this.focusEditTitle);
 			});
 		}
 	}

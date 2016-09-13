@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
 import sweetalert from 'sweetalert';
 
@@ -16,7 +17,13 @@ class NewObjCredentials extends Component {
 
 		this.createTemplate = this.createTemplate.bind(this);
 		this.addNewKeyResult = this.addNewKeyResult.bind(this);
+		this.focusAddObjectiveInput = this.focusAddObjectiveInput.bind(this);
 		this.delete = this.delete.bind(this);
+	}
+
+	focusAddObjectiveInput() {
+		let inputEl = document.getElementById('new-obj-title');
+		ReactDOM.findDOMNode(inputEl).focus();
 	}
 
 	addNewKeyResult() {
@@ -33,7 +40,6 @@ class NewObjCredentials extends Component {
 			if(!isEmpty(keyResultTitleElements[i].value)) {
 				keyResultItem.title = keyResultTitleElements[i].value;
 				keyResultItem.difficulty = keyResultDifficultyElements[i].value;
-				// keyResults.splice(-1, 0, keyResultItem);
 				keyResults.push(keyResultItem);
 				keyResultItem = {};
 				count++;
@@ -117,7 +123,7 @@ class NewObjCredentials extends Component {
 				keyResults: getUniqueValuesFromArrayOfObjects(keyResults, 'title')
 			};
 
-			this.props.createNewTemplate(reqBody);
+			this.props.saveEditObjective(null, reqBody, this.focusAddObjectiveInput);
 		}
 	}
 
@@ -159,7 +165,7 @@ class NewObjCredentials extends Component {
 }
 
 NewObjCredentials.propTypes = {
-	createNewTemplate: PropTypes.func.isRequired,
+	saveEditObjective: PropTypes.func.isRequired,
 	addKeyResultToTemplate: PropTypes.func.isRequired,
 	removeKeyResultFromTemplate: PropTypes.func.isRequired,
 	closeNewObjectiveWindow: PropTypes.func.isRequired,

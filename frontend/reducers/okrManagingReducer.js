@@ -64,18 +64,18 @@ export default function okrManagingReducer(state = initialState, action) {
         }
 
         case SOFT_DELETE_OBJECTIVE: {
-            const{id} = action;
+            const{ id, flag } = action;
             let visibleObjectives = JSON.parse(JSON.stringify(state.visibleObjectives));
             let objectives = JSON.parse(JSON.stringify(state.objectives));
 
             return Object.assign({}, state, {
                 active: '',
-                visibleObjectives: softdelete(visibleObjectives, id),
-                objectives: softdelete(objectives, id),
+                visibleObjectives: softDeleteObjective(visibleObjectives, id, flag),
+                objectives: softDeleteObjective(objectives, id, flag),
                 waiting: false,
                 editing: false,
-                editingKeyResult:false
-            })
+                editingKeyResult: false
+            });
         }
 
         case DELETE_KEY_RESULT_TEMPLATE: {
@@ -316,11 +316,16 @@ function updateVisibleItems(visibleObjectives, objectives, searchValue){
 
 	return objectivesAfterInputFilter;
 }
-function softdelete(objectives, id) {
-	for (let i = 0; i < objectives.length; i++) {
-		if (objectives[i]._id == id) {
-			objectives.splice(i, 1);
-		}
+
+function softDeleteObjective(oldObjectives, id, flag) {
+	let objectives = [].concat(oldObjectives);
+
+	let index = objectives.findIndex((objective) => {
+		return objective._id === id;
+	});
+
+	if(index !== -1) {
+		objectives[index].isDeleted = flag;
 	}
 
 	return objectives;

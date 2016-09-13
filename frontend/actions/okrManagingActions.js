@@ -77,14 +77,14 @@ export function receivedObjectivesList(objectives) {
 
 /*-----delete template------*/
 
-export function deleteObjective(id, flag){
+export function deleteObjective(id, flag) {
 	return(dispatch, getStore) => {
 		dispatch({ type: DELETE_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST });
 
 		return axios.delete(`/api/objective/${ id }/${ flag }`)
 			.then(response => {
-				dispatch(softDeleteObjective(id));
+				dispatch(softDeleteObjective(id, flag));
 				dispatch({ type: REMOVE_REQUEST });
 			})
 			.catch(response => {
@@ -101,10 +101,11 @@ export function deleteObjectiveError(data) {
 	};
 }
 
-export function softDeleteObjective(id) {
+export function softDeleteObjective(id, flag) {
 	return {
 		type: SOFT_DELETE_OBJECTIVE,
-		id
+		id,
+		flag,
 	};
 }
 
