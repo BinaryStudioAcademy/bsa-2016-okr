@@ -4,14 +4,40 @@ const isCorrectId = ValidateService.isCorrectId;
 
 const service = require('../../services/stats');
 
+// router.get('/users', (req, res, next) => {
+// 	var sort = req.query.sort === "desc" ? 1 : -1;
+// 	var limit = req.query.limit || 5;
+	
+// 	var limit = Number.parseInt(limit);
+
+// 	if(Number.isNaN(limit)) {
+// 		return res.badRequest('Limit param should be a number');
+// 	}
+
+// 	if(limit > 1000) {
+// 		limit = 1000;
+// 	}
+
+// 	if(limit <= 0) {
+// 		limit = 5;
+// 	}
+
+// 	service.getAllUsersStats(sort, limit, res.callback);
+// });
+
 router.get('/users', (req, res, next) => {
 	var sort = req.query.sort === "desc" ? 1 : -1;
 	var limit = req.query.limit || 5;
-	
+	var userId = req.query.id;
+
 	var limit = Number.parseInt(limit);
 
 	if(Number.isNaN(limit)) {
 		return res.badRequest('Limit param should be a number');
+	}
+
+	if(!isCorrectId(userId)) {
+		res.badRequest('Wrong user ID');
 	}
 
 	if(limit > 1000) {
@@ -21,8 +47,8 @@ router.get('/users', (req, res, next) => {
 	if(limit <= 0) {
 		limit = 5;
 	}
-
-	service.getAllUsersStats(sort, limit, res.callback);
+ 	console.log("++++++++++++++++++++++++++++++"+userId);
+	service.getAllUsersStatsWithQuarters(sort, limit, userId, res.callback);
 });
 
 router.get('/users/:id', (req, res, next) => {
