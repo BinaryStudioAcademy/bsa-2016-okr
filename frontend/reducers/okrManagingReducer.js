@@ -53,13 +53,14 @@ export default function okrManagingReducer(state = initialState, action) {
             })
 
         case RECEIVED_OBJECTIVES_LIST: {
-            const {objectives} = action;
+            const { objectives } = action;
+            
             return Object.assign({}, state, {
                 objectives,
                 visibleObjectives: objectives,
                 waiting: false,
                 searchValue: '',
-            })
+            });
         }
 
         case SOFT_DELETE_OBJECTIVE: {
@@ -166,7 +167,8 @@ export default function okrManagingReducer(state = initialState, action) {
             })
         }
         case RECEIVED_NEW_TEMPLATE: {
-            const {data} = action;
+            const { data } = action;
+
             
 
             var objective = {

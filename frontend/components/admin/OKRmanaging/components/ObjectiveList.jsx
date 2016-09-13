@@ -65,9 +65,11 @@ class ObjectiveList extends Component {
   }
 
   render() {
-    // console.log('objectivesList', this.props.objectivesList);
-    var objectives = [];
-    objectives = this.props.objectivesList.visibleObjectives.map((objective, index) => {
+    const { visibleObjectives } = this.props.objectivesList;
+    let displayedObjectives = [];
+    displayedObjectives = visibleObjectives.filter((objective) => {
+      return !objective.isDeleted;
+    }).map((objective, index) => {
       return <ObjectiveData objective = { objective } 
                             index = { index } 
                             key = { objective._id }
@@ -83,7 +85,7 @@ class ObjectiveList extends Component {
 
     return (
       <div id='templates'>
-        { objectives }
+        { displayedObjectives }
       </div>  
     )
   }

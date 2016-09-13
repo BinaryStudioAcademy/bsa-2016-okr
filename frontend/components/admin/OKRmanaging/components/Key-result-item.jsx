@@ -112,6 +112,8 @@ class KeyResult extends Component {
 	}
 
 	render() {
+    const { objective, item } = this.props;
+    
     let titleEl;
     let difficultyEl;
     let edit;
@@ -119,15 +121,11 @@ class KeyResult extends Component {
     let cancel;
     let isKeyResultDefault;
 
-    if(this.props.objective.defaultKeyResults.includes(this.props.item._id)) {
-    	isKeyResultDefault = true;
-    } else {
-    	isKeyResultDefault = false;
-    }
+    isKeyResultDefault = objective.defaultKeyResults.includes(item._id);
 
-    if (this.props.editingKeyResult && this.props.item._id == this.props.activeKeyResult) {
-      titleEl 			=  (<input type='text' className='keyResult-title' ref="keyResultTitle" defaultValue={this.props.item.title}/>);
-      difficultyEl  =  (<select className='keyResult-difficulty' ref="keyResultDifficulty" defaultValue={this.props.item.difficulty}>
+    if (this.props.editingKeyResult && item._id == this.props.activeKeyResult) {
+      titleEl 			=  (<input type="text" className="keyResult-title" ref="keyResultTitle" defaultValue={ item.title } />);
+      difficultyEl  =  (<select className="keyResult-difficulty" ref="keyResultDifficulty" defaultValue={ item.difficulty }>
 											 	<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
 											 	<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
 											 	<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
@@ -145,8 +143,8 @@ class KeyResult extends Component {
 																	<i className="fi flaticon-multiply"></i>
 												</button> );
     } else {
-      titleEl 			=  (<div className='name'>{this.props.item.title}</div>);
-      difficultyEl  =  (<div className='difficulty'>{this.props.item.difficulty}</div>);
+      titleEl 			=  (<div className='name'>{ item.title }</div>);
+      difficultyEl  =  (<div className='difficulty'>{ item.difficulty }</div>);
       editSave 			=  ( <button onClick={ this.editKeyResult }
 																 className='btn btn-blue-hover'
 																 aria-hidden="true"
@@ -163,22 +161,22 @@ class KeyResult extends Component {
 		
 		return (
 			<li className="key-result-item" >
-				{titleEl}
+				{ titleEl }
 				<div className='edit-key-result'>
-					{editSave}
-					{cancel}
+					{ editSave }
+					{ cancel }
 				</div>
 				<div className='defaultKeyResultCheckbox'>
 					<input 
 						type="checkbox" 
-						id={`defaultKeyResult-${this.props.item._id}`}  
+						id={ `defaultKeyResult-${item._id}` }  
 						ref='defaultKeyResult' 
-						defaultChecked={ isKeyResultDefault } 
+						checked={ isKeyResultDefault } 
 						onChange={ this.setDefaultKeyResult }
 					></input>
-					<label htmlFor={`defaultKeyResult-${this.props.item._id}`} >Default</label>
+					<label htmlFor={ `defaultKeyResult-${item._id}` } >Default</label>
 				</div>
-				{difficultyEl}
+				{ difficultyEl }
 			</li>
 		)
 	}

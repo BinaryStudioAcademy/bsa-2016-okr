@@ -144,7 +144,11 @@ class KeyResults extends Component {
 	}
 
 	render() {
-		let item = this.props.data.map((item, index) => {
+		const { data } = this.props;
+		
+		let displayedKeyResults = data.filter((keyResult) => {
+			return !keyResult.isDeleted;
+		}).map((item, index) => {
 			return <KeyResultItem index = { index } 
 														objective = { this.props.objective } 
 														key = { index } 
@@ -167,7 +171,7 @@ class KeyResults extends Component {
 				</button>
 				<div className='key-result-details undisplay'>
 					<ul>
-						{item}
+						{ displayedKeyResults }
 					</ul>
 					<div id="new-obj-keyresults">
 						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.showAddKeyResultInput }>

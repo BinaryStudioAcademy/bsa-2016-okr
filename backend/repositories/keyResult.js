@@ -17,7 +17,6 @@ KeyResultRepository.prototype.getAll = function(callback) {
 	model
 		.find({
 			isApproved: true,
-			isDeleted: false
 		})
 		.exec(callback);
 };
