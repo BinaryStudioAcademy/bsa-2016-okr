@@ -18,6 +18,7 @@ export default class DashboardStats extends React.Component {
 		};
 		this.handleUserClick = this.handleUserClick.bind(this);
 		this.renderRow = this.renderRow.bind(this);
+		this.getProgressBar = this.getProgressBar.bind(this);
 	}
 
 	handleUserClick (classname) {
@@ -45,6 +46,27 @@ export default class DashboardStats extends React.Component {
 				<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
 			</tr>
 			)
+	}
+
+	getProgressBar () {
+		if(this.props.where == undefined) {
+			return (
+				<div className="countInfo" id="parent">
+					<p><span>Average progress by all users</span></p>
+					<div className="progressBar">
+						<ProgressBar  strokeWidth="10" radius="80" percentage={Math.round(this.state.score.progress * 100)}/>
+					</div>
+				</div>)
+		}
+		else {
+			return (
+				<div className="countInfo" id="parent">
+					<p><span>Your progress in current year</span></p>
+					<div className="progressBar">
+						<ProgressBar  strokeWidth="10" radius="80" percentage={Math.round(this.state.user.totalScore * 100)}/>
+					</div>
+				</div>)
+		}
 	}
 
 
@@ -125,14 +147,10 @@ export default class DashboardStats extends React.Component {
 						</tbody>)
 		}
 
+
 		return (
 			<div className="main">
-				<div className="countInfo" id="parent">
-					<p><span>Average progress by all users</span></p>
-					<div className="progressBar">
-						<ProgressBar  strokeWidth="10" radius="80" percentage={Math.round(this.state.score.progress * 100)}/>
-					</div>
-				</div>
+				{this.getProgressBar()}
 				<div className="tableInfo">
 					<table>
 						<caption><p><span>Top 5 Users by performance</span></p></caption>

@@ -12,12 +12,9 @@ export default class Dashboard extends React.Component {
         var id = null;
         if (this.props.where == undefined){
             id = session._id;
-            console.log('fucking session')
         }
         else{
-            console.log(this.props.where);
             id = this.props.userId;
-            console.log('else session')
         }
         var urlUsers = "/api/stats/users?limit=5&&id=" + id;
         return (
@@ -25,7 +22,8 @@ export default class Dashboard extends React.Component {
                 <DashboardStats urlProgress="/api/stats/progress"
                     urlUsers= {urlUsers}
                     urlBottom="/api/stats/users?sort=desc&&limit=1"
-                    userId={id}/>
+                    userId={id}
+                    where={this.props.where}/>
             </div>
         )
     }
