@@ -57,12 +57,12 @@
 	}
 }
 @media all 
-and (max-width: 900px)
-{
+and (max-width: 1100px) {
    #central-window {
 		position: relative;
 		margin-right: 0;
-		overflow-y: overlay;
+	   //noinspection CssInvalidPropertyValue
+	   overflow-y: overlay;
 		overflow-x: hidden;
 	}
 }

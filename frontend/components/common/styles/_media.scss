@@ -3,8 +3,8 @@
 */
 $mobile: 425px;
 $tablet: 768px;
-$laptop: 1024px;
-$desktop: 1440px;
+$laptop: 1224px;
+$desktop: 1580px;
 
 
 /* Mobile */
@@ -17,7 +17,15 @@ $desktop: 1440px;
 /* Tablet */
 @mixin tablet {
   @media screen
-  and ( min-width: #{$mobile} )
+  and ( min-width: #{$mobile + 1px} )
+  and ( max-width: #{$tablet} ) {
+    @content;
+  }
+}
+
+/* Both mobile and tablet */
+@mixin mobile-tablet {
+  @media screen
   and ( max-width: #{$tablet} ) {
     @content;
   }
@@ -26,7 +34,7 @@ $desktop: 1440px;
 /* Laptops */
 @mixin laptop {
   @media screen
-  and ( min-width: #{$tablet} )
+  and ( min-width: #{$tablet + 1px} )
   and ( max-width: #{$laptop} ) {
     @content;
   }
@@ -35,7 +43,7 @@ $desktop: 1440px;
 /* Desktops */
 @mixin desktop {
   @media screen
-  and ( min-width: #{$laptop} )
+  and ( min-width: #{$laptop + 1px} )
   and ( max-width: #{$desktop} ) {
     @content;
   }
@@ -44,7 +52,7 @@ $desktop: 1440px;
 /* Large desktops */
 @mixin desktopL {
   @media screen
-  and ( min-width: #{$desktop} ) {
+  and ( min-width: #{$desktop + 1px} ) {
     @content;
   }
 }

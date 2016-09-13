@@ -1,4 +1,5 @@
 @import "variables";
+@import "./styles/media";
 
 aside#navbar {
 	position: fixed;
@@ -8,16 +9,11 @@ aside#navbar {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	width: auto;
+	width: $left-nav-width;
 	background-color: lighten($primary-color, 5%);
 	overflow-x: hidden;
 	overflow-y: auto;
 	z-index: $navbar-index;
-
-	/* Navbar opened */
-	&.opened {
-		width: auto;
-	}
 
 	/* remove scrollbar visibility */
 	&::-webkit-scrollbar{
@@ -143,8 +139,8 @@ aside#navbar #users-link{
 	width: 75%;
 }
 
-@media all and (max-width: 1599px) {
-	 aside#navbar {
-		 width: $left-nav-width;
-	 }
- }
+@include desktopL {
+	aside#navbar{
+		width: $left-nav-width-opened;
+	}
+}

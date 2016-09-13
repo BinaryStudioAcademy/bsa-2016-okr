@@ -16,7 +16,7 @@ $primary-color_local: #607D8B;
     background-color: #fff;
     color: $primary-color_local;
     transition: none;
-    height: 34px;
+    //height: 34px;
     
     &:hover {
       cursor: pointer;
@@ -26,6 +26,20 @@ $primary-color_local: #607D8B;
     & > option{
       background-color: #fff;
       color: $primary-color_local;
+    }
+  }
+
+  .quarters-wrapper {
+    margin-left: 120px;
+
+    #show-quarters{
+      display: none;
+      span, i{
+        pointer-events: none;
+      }
+      i{
+        font-size: 14px;
+      }
     }
   }
 }
@@ -39,9 +53,9 @@ $primary-color_local: #607D8B;
   justify-content: space-between;
   list-style-type: none;
   margin: 0;
-  margin-left: 90px;
+  //margin-left: 90px;
   padding: 0;
-  height: 34px;
+  //height: 34px;
 
   li {
     flex: 1 0 100px;
@@ -104,3 +118,5 @@ $primary-color_local: #607D8B;
     }
   }
 }
+
+@import "media";
