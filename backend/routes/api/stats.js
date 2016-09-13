@@ -47,7 +47,6 @@ router.get('/users', (req, res, next) => {
 	if(limit <= 0) {
 		limit = 5;
 	}
- 	console.log("++++++++++++++++++++++++++++++"+userId);
 	service.getAllUsersStatsWithQuarters(sort, limit, userId, res.callback);
 });
 

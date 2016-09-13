@@ -116,7 +116,6 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 				userStats,
 				bottomStats
 			}
-			console.log(respObj);
 			return callback(null,  respObj)
 		}
 	], (err, result) => {
