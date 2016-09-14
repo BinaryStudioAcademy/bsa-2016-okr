@@ -105,7 +105,6 @@ function mapStateToProps(state, ownProps) {
 	return {
 		me,
 		user: state.userPage,
-		categories: state.categories
 	};
 }
 

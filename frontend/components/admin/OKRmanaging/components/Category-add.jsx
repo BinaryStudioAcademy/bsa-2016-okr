@@ -34,7 +34,7 @@ class NewCategory extends Component {
 				confirmButtonText: 'Yes, create',
 				closeOnConfirm: false,
 			}, () => {
-				this.props.addCategory(title);
+				this.props.saveEditCategory(null, title);
 				this.resetAddingCategoryInput();
 			});
 		}

@@ -22,7 +22,8 @@ class ObjectiveData extends Component {
 	}
 
 	componentDidUpdate() {
-		if (this.props.objectivesList.editing && this.props.objectivesList.active == this.props.index) {
+		const { editing, active, index } = this.props;
+		if (editing && active == index) {
 			this.selectEditTitle();
 		}
 	}
@@ -119,10 +120,12 @@ class ObjectiveData extends Component {
 			categories, 
 			objectivesList,
 			index,
+			editing,
+			active,
 		} = this.props;
 
 		let categoryId = objective.category;
-		let category = categories.list.find((category) => {
+		let category = categories.find((category) => {
 			return category._id === categoryId;
 		});
 
@@ -132,7 +135,7 @@ class ObjectiveData extends Component {
 		let editSave;
 		let cancel;
 
-		if (objectivesList.editing && objectivesList.active == index) {
+		if (editing && active == index) {
 			let objectiveTitle = objective.title;
 			objectiveTitle = !isEmpty(objectiveTitle) ? objectiveTitle : 'No description yet...';
 			
@@ -148,7 +151,7 @@ class ObjectiveData extends Component {
 			categoryEl    = (<select className='template-category' 
 															 ref='selectCategory'  
 															 defaultValue={categoryId}>
-															 { categories.list.map((category, index) => {
+															 { categories.map((category, index) => {
 																 return <option key={index} value={category._id}>{category.title}</option>
 															 })}
 											</select>);

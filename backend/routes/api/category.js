@@ -6,7 +6,7 @@ const repository = require('../../repositories/category');
 const categoryService = require('../../services/category');
 
 router.get('/', (req, res, next) => {
-	repository.getAllNotDeleted(res.callback);
+	repository.getAll(res.callback);
 });
 
 router.get('/deleted', adminOnly, (req, res, next) => {

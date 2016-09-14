@@ -45,7 +45,7 @@ class Objectives extends Component {
 			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
 		}.bind(this);
 
-		let arch = changeTo ? 'archive' : 'unarchive'
+		let arch = changeTo ? 'archive' : 'unarchive';
 
 		sweetalert({
 			title: `Do you really want to ${arch} this objective?`,
@@ -152,7 +152,9 @@ class Objectives extends Component {
 
 	render() {
 		const userId = this.props.userId;
-		const categories = this.props.categories;
+		const displayedCategories = this.props.categories.list.filter((category) => {
+			return !category.isDeleted;
+		});
 		const { me } = this.props.myState;
 		const { user } = this.props.user;
 		let selectedYear = '';
@@ -222,7 +224,7 @@ class Objectives extends Component {
 				<div id='objectives'>
 					<ObjectivesList
 						mentorId={userInfo.mentorId}
-						categories={ categories.list }
+						categories={ displayedCategories }
 						isAdmin={ isAdmin }
 						archived = { archived }
 						objectives={ userInfo.objectives }
@@ -243,23 +245,7 @@ class Objectives extends Component {
 	}
 }
 
-Objectives.defaultProps = {today: new Date()};
-
-function mapDispatchToProps(dispatch) {
-	return {
-		myStateActions: bindActionCreators(myStateActions, dispatch),
-		objectiveActions: bindActionCreators(objectiveActions, dispatch),
-		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),
-	}
-}
-
-function mapStateToProps(state) {
-	return {
-		myState: state.myState,
-		categories: state.categories,
-		user: state.userPage,
-	};
-}
+Objectives.defaultProps = { today: new Date() };
 
 function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let quarters = [];
@@ -291,6 +277,22 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	  objectives: objectives,
 	  id: id,
 	  mentorId: mentor
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		myStateActions: bindActionCreators(myStateActions, dispatch),
+		objectiveActions: bindActionCreators(objectiveActions, dispatch),
+		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),
+	}
+}
+
+function mapStateToProps(state) {
+	return {
+		myState: state.myState,
+		categories: state.categories,
+		user: state.userPage,
 	};
 }
 

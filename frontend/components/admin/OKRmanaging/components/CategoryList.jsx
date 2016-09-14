@@ -7,6 +7,7 @@ import * as categoriesActions from "../../../../actions/categoriesActions.js";
 import * as okrManagingActions from "../../../../actions/okrManagingActions.js";
 
 import sweetalert from 'sweetalert';
+import '../../../common/styles/sweetalert.css';
 
 import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
@@ -18,9 +19,8 @@ class CategoryList extends Component {
 		super(props);
 
 		this.showAddCategoryInput = this.showAddCategoryInput.bind(this);
-		this.isNotDuplicate = this.isNotDuplicate.bind(this);
-		this.addCategory = this.addCategory.bind(this);
-		this.editCategory = this.editCategory.bind(this);
+		this.saveEditCategory = this.saveEditCategory.bind(this);
+		this.getDuplicateCategory = this.getDuplicateCategory.bind(this);
 		this.hideAddInput = this.hideAddInput.bind(this);
 		this.focusAddInput = this.focusAddInput.bind(this);
 		this.focusEditInput = this.focusEditInput.bind(this);
@@ -56,14 +56,41 @@ class CategoryList extends Component {
     ReactDOM.findDOMNode(inputEl).focus();
   }
 
-	isNotDuplicate(id, title) {
-		let categoryIndex = this.props.category.list.findIndex((el) => {
-			return el.title === title;
-		});
-		
+  getDuplicateCategory(id, title) {
+  	const { categories } = this.props;
 
-		if(categoryIndex === -1) {
-			return true;
+  	let categoryIndex = categories.findIndex((category) => {
+  		return (category.title === title) && (category._id !== id)
+  	});
+
+  	return (categoryIndex === -1) ? null : categories[categoryIndex];
+  }
+
+	saveEditCategory(id, title) {
+		let duplicateItem = this.getDuplicateCategory(id, title);
+
+		if(isEmpty(duplicateItem)) {
+			let reqBody = {	title	};
+
+			if(isEmpty(id)) {
+				this.props.categoriesActions.addCategory(reqBody);
+			} else {
+				this.props.categoriesActions.editCategory(id, reqBody);
+			}
+
+			sweetalert.close();
+		} else if(duplicateItem.isDeleted) {
+			sweetalert({
+				title: 'Do you want to restore deleted category?',
+				text: 'Category with such title exists, but deleted by someone',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, restore'
+			}, () => {
+				this.props.categoriesActions.deleteCategory(duplicateItem._id, false);
+				this.props.categoriesActions.cancelEdit();
+			});
 		} else {
 			sweetalert({
 				title: 'Error!',
@@ -72,34 +99,10 @@ class CategoryList extends Component {
 			}, () => {
 				setTimeout(() => {
 					if(!isEmpty(id)) {
-	          this.focusEditInput(id);
+						this.focusEditInput(id);
 					}
-        }, 0);
+				}, 0);
 			});
-			
-			return false;
-		}
-	}
-
-	addCategory(title) {
-		if(this.isNotDuplicate(null, title)) {
-			let reqBody = {
-				title,
-			};
-			
-			this.props.categoriesActions.addCategory(reqBody);
-			sweetalert.close();
-		}
-	}
-
-	editCategory(id, title) {
-		if(this.isNotDuplicate(id, title)) {
-			let reqBody = {
-				title,
-			};
-
-			this.props.categoriesActions.editCategory(id, reqBody);
-			sweetalert.close();
 		}
 	}
 
@@ -124,26 +127,42 @@ class CategoryList extends Component {
 	}
 
 render() {
+	const { edit, activeCategory } = this.props;
+	const { setActiveCategory, cancelEdit, deleteCategory } = this.props.categoriesActions;
+	
+	let displayedCategoriesEl = this.props.displayedCategories.map((category, index) => {
+		let objectiveIndex = this.props.objectives.findIndex((objective) => {
+			return objective.category === category._id;
+		});
+
+		let isEmptyCategory = (objectiveIndex === -1) ? true : false;
+		
+		return (
+			<CategoryItem
+				index={ index } 
+				category={ category } 
+				key={ index }
+				isEmptyCategory={ isEmptyCategory } 
+				edit={ edit }
+				saveEditCategory={ this.saveEditCategory }
+				activeCategory={ activeCategory }
+				setActiveCategory={ setActiveCategory }
+				cancelEdit={ cancelEdit }
+				deleteCategory={ deleteCategory }
+				hideAddInput={ this.hideAddInput }
+				ref={ `category-${ category._id }` }
+				id={ `category-${ category._id }` }
+			/>
+		);
+	});
+
 	return(
 		<div>
 			<p>
 				<span>Categories</span>
 			</p>
 			<ul className='category-list'>
-				{this.props.category.list.map((item, index) => {
-					return <CategoryItem index = { index } 
-															 category = { item } 
-															 key = { index } 
-															 categories = { this.props.category } 
-															 objectives = { this.props.objectives } 
-															 editCategory = { this.editCategory }
-															 activeCategory = { this.props.categoriesActions.activeCategory }
-															 cancelEdit = { this.props.categoriesActions.cancelEdit }
-															 deleteCategory = { this.props.categoriesActions.deleteCategory }
-															 hideAddInput = { this.hideAddInput }
-															 ref={ `category-${ item._id }` }
-									/>
-				})}
+				{ displayedCategoriesEl }
 			</ul>
 			<div id="new-category">
 						<a ref="newCategoryButton" className='add-new-category-btn display' tabIndex='0' onClick={ this.showAddCategoryInput }>
@@ -151,7 +170,7 @@ render() {
 						<NewCategory 
 							ref={'newCategoryComponent'}
 							category={ this.props.category }
-							addCategory={ this.addCategory }
+							saveEditCategory={ this.saveEditCategory }
 							hideAddInput={ this.hideAddInput }
 							focusAddInput={ this.focusAddInput }
 						/>
@@ -168,13 +187,6 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		category: state.categories,
-		objectives: state.okrManaging.objectives
-	};
-}
-
-const CategoryListConnected = connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+const CategoryListConnected = connect(null, mapDispatchToProps)(CategoryList);
 export default CategoryListConnected
 

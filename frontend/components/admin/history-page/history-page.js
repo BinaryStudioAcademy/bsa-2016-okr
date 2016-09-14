@@ -1,6 +1,6 @@
 import React from 'react'
 import StatPanel from '../../../containers/statistic-panel.jsx';
-import Dashboard from "../../dashboard/dashboard.jsx";
+// import Dashboard from "../../dashboard/dashboard.jsx";
 import CentralWindow from "../../../containers/central-window.jsx";
 // import HistoryItem from './history-item'
 import HistoryItemList from './history-item-list';

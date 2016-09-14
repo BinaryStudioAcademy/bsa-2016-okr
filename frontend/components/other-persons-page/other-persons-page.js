@@ -86,7 +86,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
 	return {
 		user: state.userPage,
-		categories: state.categories
 	};
 }
 

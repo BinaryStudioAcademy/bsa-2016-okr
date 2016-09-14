@@ -11,9 +11,25 @@ const bodyParser = require('body-parser');
 // connect to db
 const dbConnectHandler = require('./backend/db/dbConnect');
 
+
+var CronJob = require('cron').CronJob;
+var Archive = require('./backend/archive/archive.js')
+var job = new CronJob({
+  cronTime: '30 0 1 3,6,9,12 *',
+  //cronTime: '* * * * *',
+  onTick: function() {
+    console.log('Closing quarters');
+    console.log(Archive());
+  },
+  start: false,
+  timeZone: 'America/Los_Angeles'
+});
+
+job.start();
+
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
-const PORT = isDeveloping ? 4444 : process.env.PORT;
+const PORT = 4444;
 const IP = process.env.IP || '127.0.0.1';
 
 console.log(process.env.PORT);
@@ -51,6 +67,7 @@ if (isDeveloping) {
   app.get('*', function response(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
+  
 }
 
 const server = app.listen(PORT, IP, function onStart(err) {
