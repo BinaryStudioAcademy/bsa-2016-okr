@@ -14,13 +14,13 @@ class RecycleBinItem extends Component {
 		
 		return (
 			<tr key={this.props.item.id} className="bin-item-row">
-				<td className="width-20perc">{ this.props.item.title }</td>
-				<td className="width-30perc">{ this.props.item.description }</td>
-				<td className="item-title">{ this.props.item.type }</td>
-				<td> <span className="item-category">{ this.props.item.category }</span></td>
-				<td className="item-deleted-by">{ this.props.item.deletedBy}</td>
-				<td className="width-15perc">{ dateStr }</td>
-				<td className="width-5perc">
+				<td data-th="Title" className="width-20perc">{ this.props.item.title }</td>
+				<td data-th="Description" className="width-30perc">{ this.props.item.description }</td>
+				<td data-th="Type"  className="item-title">{ this.props.item.type }</td>
+				<td data-th="Categogory"> <span className="item-category">{ this.props.item.category }</span></td>
+				<td data-th="Deleted By" className="item-deleted-by">{ this.props.item.deletedBy}</td>
+				<td data-th="Date"  className="width-15perc">{ dateStr }</td>
+				<td data-th="Action" className="width-5perc">
 					<button className="btn btn-blue-hover"  title="Restore" onClick={this.restoreItem.bind(this)}><i className="fi flaticon-repeat-1"></i></button>
 				</td>
 			</tr>

@@ -77,3 +77,39 @@
 		}
 	}
 }
+
+@media all 
+and (max-width: 1100px) {
+
+}
+
+@media all 
+and (max-width: 540px) {
+
+	 .table {
+      margin: 1em 0;
+      min-width: 300px;
+            
+      th {
+        display: none;    
+      }
+
+      tr:first-child {
+          border-top: solid 1px rgb(224, 224, 224);
+      }
+      
+      td {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        
+        &:first-child {
+          padding-top: .5em;
+        }
+
+        &:last-child {
+          padding-bottom: .5em;
+        }
+			}
+		}
+}

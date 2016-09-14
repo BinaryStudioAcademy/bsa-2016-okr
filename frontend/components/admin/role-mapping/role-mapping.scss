@@ -466,6 +466,15 @@ $breakpoint-alpha: 540px;
     }
 }
 
+#role-mapping-wrapper th, #role-mapping-wrapper td {
+
+    margin: .5em 1em;
+
+    @media (min-width: $breakpoint-alpha) { 
+      padding: 1em; 
+    }
+}
+
 /* tables responsive end */
 
 @media all and (max-width: 400px) {
