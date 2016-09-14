@@ -47,6 +47,12 @@ UserObjectiveRepository.prototype.getByUserIdPopulate = function(userId, callbac
 		.exec(callback);
 };
 
+UserObjectiveRepository.prototype.findByIdAndUpdateArchive = function (id, flag, callback) {
+	var model = this.model;
+
+	model.findByIdAndUpdate(id, {'$set': {"isArchived":flag}}).exec(callback);
+}
+
 UserObjectiveRepository.prototype.getTemplateFieldByObjectiveIds = function(objectiveIds, callback) {
 	var model = this.model;
 

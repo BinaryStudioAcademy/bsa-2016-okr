@@ -3,19 +3,27 @@ import DashboardStats from './dashboardStats.jsx';
 import './dashboard.scss';
 import session from '../../../backend/config/session.js'
 
-export default class Dashboard extends React.Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as actions from "../../actions/userDashboardActions";
+
+class Dashboard extends React.Component {
     constructor() {
         super();
     }
 
     render() {
         var id = null;
+        var year = this.props.myState.selectedYear;
         if (this.props.where == undefined){
             id = session._id;
         }
         else{
             id = this.props.userId;
         }
+        if(this.props.where == "otherPersonPage")
+            year = this.props.userPage.selectedYear;
         var urlUsers = "/api/stats/users?limit=5&&id=" + id;
         return (
             <div className="dashboard">
@@ -30,3 +38,18 @@ export default class Dashboard extends React.Component {
 }
 
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+        userDashboard: state.userDashboard,
+        myState: state.myState,
+        userPage: state.userPage
+    };
+}
+
+const DashboardConnected = connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+
+export default DashboardConnected;

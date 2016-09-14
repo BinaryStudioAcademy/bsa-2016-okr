@@ -21,6 +21,16 @@ router.get('/:id', (req, res, next) => {
 
 	return repository.getById(id, res.callback);
 })
+router.put('/:id/archive/:flag', (req, res, next) => {
+	var id = req.params.id;
+	var flag = req.params.flag === "true" ? true : false;
+
+	if(!ValidateService.isCorrectId(id)) {
+		return res.badRequest();
+	};
+
+	return service.setArchivedStatusTo(id, flag, res.callback);
+})
 
 router.put('/:id', (req, res, next) => {
 	var id = req.params.id;
