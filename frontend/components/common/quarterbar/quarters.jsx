@@ -11,6 +11,9 @@ class Quarterbar extends Component {
       this.handleQuarterClick = this.handleQuarterClick.bind(this);
       this.handleYearChange = this.handleYearChange.bind(this);
       this.showQuarters = this.showQuarters.bind(this);
+      this.handleCallContextMenu = this.handleCallContextMenu.bind(this);
+      this.onContextItemClick = this.onContextItemClick.bind(this);
+      this.onContextWrapper = this.onContextWrapper.bind(this);
    }
 
    handleQuarterClick(event) {
@@ -45,6 +48,15 @@ class Quarterbar extends Component {
    showQuarters(event) {
       choose_quarter_for_tablet.call(this, event);
    }
+   handleCallContextMenu(event) {
+      call_context_menu.call(this, event);
+   }
+   onContextItemClick(event) {
+      on_context_item.call(this, event);
+   }
+   onContextWrapper(event) {
+      on_context_wrapper.call(this, event);
+   }
 
 
    render() {
@@ -58,8 +70,13 @@ class Quarterbar extends Component {
                   Quarters&nbsp;
                   <i className="fa fa-chevron-down"></i>
                </button>
-               <ul id="quarters" onClick={this.handleQuarterClick}>
+               <ul id="quarters" onClick={this.handleQuarterClick} onContextMenu={this.handleCallContextMenu}>
                   { getQuarters.call(this) }
+               </ul>
+            </div>
+            <div id="context-wrapper" onClick={this.onContextWrapper}>
+               <ul id="context" onClick={this.onContextItemClick}>
+                  <li data-action="archive">Archive</li>
                </ul>
             </div>
          </div>
@@ -142,5 +159,38 @@ function choose_quarter_for_tablet(event) {
       event.target.parentElement.classList.remove('visible');
       i.classList.remove('fa-chevron-up');
       i.classList.add('fa-chevron-down');
+   }
+}
+
+function call_context_menu(event) {
+   let   target = event.target,
+         context = document.getElementById('context-wrapper'),
+         contextMenu = document.getElementById('context');
+
+   if(target.matches('#quarters li')){
+      target.classList.add("oncontext");
+      contextMenu.style.top = event.clientY + "px";
+      contextMenu.style.left = event.clientX + "px";
+      context.classList.add("visible");
+      event.preventDefault();
+      return false;
+   }
+}
+function on_context_item(event) {
+   let   target = document.querySelector('.oncontext'),
+         context = document.getElementById('context-wrapper');
+   if(event.target.matches('#context li')){
+      if(event.target.dataset.action == 'archive'){
+         target.classList.remove('oncontext');
+         context.classList.remove('visible');
+         //do logic here
+      }
+   }
+}
+function on_context_wrapper(event) {
+   let context = document.getElementById('context-wrapper');
+   if(event.target.matches('#context-wrapper')){
+      context.classList.remove('visible');
+      event.target.classList.remove('oncontext');
    }
 }

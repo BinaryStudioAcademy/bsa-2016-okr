@@ -44,7 +44,7 @@ $primary-color_local: #607D8B;
   }
 }
 
-#quarter-bar ul {
+#quarter-bar #quarters {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -119,3 +119,4 @@ $primary-color_local: #607D8B;
 }
 
 @import "media";
+@import "context-menu";

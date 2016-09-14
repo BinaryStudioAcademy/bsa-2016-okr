@@ -1,0 +1,49 @@
+#quarter-bar ul#context{
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 5px 0;
+  margin: 0;
+  list-style-type: none;
+  white-space: nowrap;
+  background-color: #fff;
+  color: #aaa;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0,0,0,.4);
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 250;
+
+  li{
+    padding: 3px 20px;
+    cursor: pointer;
+    &:hover{
+      background-color: #e4eaec;
+      color: #777;
+    }
+    span{
+      pointer-events: none;
+    }
+  }
+}
+
+#context-wrapper{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 200;
+
+  &.visible{
+    pointer-events: auto;
+    visibility: visible;
+  }
+  &.visible #context {
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
