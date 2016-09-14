@@ -101,10 +101,10 @@ export default function otherPersonReducer(state = initialState, action) {
 
 		case UPDATE_USER_OBJECTIVE:
 		{
-			const { id, description } = action;
+			const { id, description, title } = action;
 
 			return Object.assign({}, state, {
-				me: updateObjectiveDescription(state.user, id, description)
+				me: updateObjectiveDescription(state.user, id, description, title)
 			});
 
 		}

@@ -120,10 +120,10 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 
 		case UPDATE_USER_OBJECTIVE: {
-			const { id, description } = action;
+			const { id, description, title } = action;
 
 			return Object.assign({}, state, {
-				me: updateObjectiveDescription(state.me, id, description)
+				me: updateObjectiveDescription(state.me, id, description, title)
 			});
 
 		}
@@ -243,11 +243,12 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 	}
 }
 
-export function updateObjectiveDescription(me, id, description) {
+export function updateObjectiveDescription(me, id, description, title) {
 	var meCopy = Object.assign({}, me);
 	meCopy.quarters.forEach((quarter) => {
 		for(var i=0 ; i<quarter.userObjectives.length; i++) {
 			if(quarter.userObjectives[i]._id == id) {
+				quarter.userObjectives[i].title = title;
 				quarter.userObjectives[i].description = description;
 			}
 		}

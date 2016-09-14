@@ -59,19 +59,23 @@ class ObjectiveItem extends Component {
 		//handleCancelEdit();
 		// bad habbit copypaste code :/
 		let changedDescription = this.refs.descriptionEdit.value;
-
+		let changedTitle = this.refs.objectiveTitleEdit.value;
+		let isItHomePage = this.props.isItHomePage;
 
 		if (this.props.mentorId != undefined)
-			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription,
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription, changedTitle,
 			notifications.notificationApprenticeUpdateObjective, this.props.mentorId);
 		else
-			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription);
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription, changedTitle);
 		//updateUserObjectiveApi
 
 		this.refs.descriptionEdit.classList.add('hidden');
 		this.refs.description.refs.description.classList.remove('hidden');
 		this.refs.edit.classList.remove('hidden');
 		this.refs.deleteObjective.classList.remove('hidden');
+		this.refs.objectiveTitle.classList.remove('hidden');
+
+		this.refs.objectiveTitleEdit.classList.add('hidden');
 		this.refs.cancelEdit.classList.add('hidden');
 		this.refs.saveEdit.classList.add('hidden');
 	}
@@ -81,6 +85,9 @@ class ObjectiveItem extends Component {
 		this.refs.description.refs.description.classList.remove('hidden');
 		this.refs.edit.classList.remove('hidden');
 		this.refs.deleteObjective.classList.remove('hidden');
+		this.refs.objectiveTitle.classList.remove('hidden');
+
+		this.refs.objectiveTitleEdit.classList.add('hidden');
 		this.refs.cancelEdit.classList.add('hidden');
 		this.refs.saveEdit.classList.add('hidden');
 	}
@@ -163,7 +170,9 @@ class ObjectiveItem extends Component {
 				</div>
 				<input
 						ref="objectiveTitleEdit"
+						type="text"
 						className='name-input hidden'
+						defaultValue={ objective.title ? objective.title : objective.templateId.title }
 				/>
 
 				<ObjectiveDescription
