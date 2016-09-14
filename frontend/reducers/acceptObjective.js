@@ -33,7 +33,7 @@ export default function accObjReducer(state = initialState, action) {
 			for (let i = 0; i < data.length; i++) {
 
 				key.title = data[i].title;
-				key.description = data[i].objectiveId.description;
+				key.description = data[i].objectiveId.title;
 				key.category = data[i].objectiveId.category.title;
 				key.userName = data[i].creator.userInfo.firstName + " " + data[i].creator.userInfo.lastName;
 				key.id = data[i]._id;
