@@ -4,7 +4,7 @@ import KeyResultItem from './key-result.jsx';
 import KeyResultAdd from './key-result-add.jsx';
 import './key-results.scss';
 import sweetalert from 'sweetalert';
-import '../styles/sweetalert.scss';
+import '../styles/sweetalert.css';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 
 const session = require('../../../../backend/config/session');

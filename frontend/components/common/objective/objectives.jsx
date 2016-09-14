@@ -3,7 +3,7 @@ import Quarterbar from '../quarterbar/quarters.jsx';
 import ObjectiveItem from './objective.jsx';
 import ObjectivesList from './objective-list.jsx';
 import sweetalert from 'sweetalert';
-import '../styles/sweetalert.scss';
+import '../styles/sweetalert.css';
 
 import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
 

@@ -20,7 +20,7 @@ body.stop-scrolling {
 
 .sweet-alert {
   background-color: white;
-  font-family: $primary-font; /* 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   width: 478px;
   padding: 17px;
   border-radius: 5px;
@@ -52,10 +52,10 @@ body.stop-scrolling {
     line-height: 40px;
     display: block; }
   .sweet-alert p {
-    color: $color-light-grey;
+    color: #6e6e6e;
     font-size: 16px;
     text-align: center;
-    font-weight: 400;
+    font-weight: 300;
     position: relative;
     text-align: inherit;
     float: none;

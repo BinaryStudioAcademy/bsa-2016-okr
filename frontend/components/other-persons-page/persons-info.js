@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import sweetalert from 'sweetalert';
-import '../common/styles/sweetalert.scss';
+import '../common/styles/sweetalert.css';
 
 import * as actions from "../../actions/otherPersonActions.js";
 
