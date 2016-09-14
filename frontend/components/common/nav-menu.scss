@@ -3,193 +3,282 @@
 @import "./styles/tooltips";
 
 aside#navbar {
-	position: fixed;
-	top: $header-height;
-	left: 0;
-	bottom: 0;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	width: $left-nav-width;
-	background-color: lighten($primary-color, 5%);
-	overflow-x: hidden;
-	overflow-y: auto;
-	z-index: $navbar-index;
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  bottom: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: $left-nav-width;
+  background-color: lighten($primary-color, 5%);
+  z-index: $navbar-index;
 
-	/* remove scrollbar visibility */
-	&::-webkit-scrollbar{
-		display: none;
-	}
+  /* remove scrollbar visibility */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 #bars {
-		display: none;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: $left-nav-width;
-		height: $header-height;
-		text-align: center;
-		background: none;
-		border: none;
-		cursor: pointer;
-		color: darken($color-white, 20%);
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $left-nav-width;
+  height: $header-height;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: darken($color-white, 20%);
 
-		i {
-			cursor: pointer;
-			font-size: 30px;
-			pointer-events: none;
-		}
+  i {
+    cursor: pointer;
+    font-size: 30px;
+    pointer-events: none;
+  }
 
-		&:focus,
-		&:active {
-			outline: none;
-		}
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
-		&:hover i {
-			color: $color-white;
-		}
+  &:hover i {
+    color: $color-white;
+  }
 
-		&.active i {
-			color: $color-white;
-		}
-	}
+  &.active i {
+    color: $color-white;
+  }
+}
+
 aside#navbar ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 20px 0 0;
-	li {
-		margin-bottom: 10px;
-		&:last-child {
-			margin-bottom: 0;
-		}
-		a:hover {
-			background-color: $primary-color;
-			color: #ffffff;
-		}
-		a.active {
-			background-color: $primary-color;
-			color: #ffffff;
-		}
-		a:focus {
-			outline: none;
-			background-color: $primary-color;
-			color: #ffffff;
-		}
-		span {
-			pointer-events: none;
-		}
-	}
-	li a,
-	button {
-		display: block;
-		position: relative;
-		white-space: nowrap;
-		padding: 15px 0;
-		padding-left: 60px;
-		padding-right: 15px;
-		text-align: left;
-		text-align: -moz-left;
-		color: #cccccc;
-	}
-	i {
-		position: absolute;
-		top: 8px;
-		left: 15px;
-		font-size: 30px;
-		pointer-events: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 20px 0 0;
+  li {
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    a:hover {
+      background-color: $primary-color;
+      color: #ffffff;
+    }
+    a.active {
+      background-color: $primary-color;
+      color: #ffffff;
+    }
+    a:focus {
+      outline: none;
+      background-color: $primary-color;
+      color: #ffffff;
+    }
+    span {
+      pointer-events: none;
+      display: none;
+    }
+  }
+  li a,
+  button {
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    padding: 25px 0;
+    padding-left: 60px;
+    text-align: left;
+    text-align: -moz-left;
+    color: #cccccc;
+  }
+  i {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    font-size: 30px;
+    pointer-events: none;
 
-	 	& .badge {
-			display: inline-block;
-			width: .5em;
-			height: .5em;
-			position: absolute;
-			right: -0.03em;
-			bottom: -0.03em;
-			border-radius: $border-radius;
-			text-align: center;
+    & .badge {
+      display: inline-block;
+      width: .5em;
+      height: .5em;
+      position: absolute;
+      right: -0.03em;
+      bottom: -0.03em;
+      border-radius: $border-radius;
+      text-align: center;
 
-			& i,
-			& .badge-counter {
-				border-radius: 100px;
-				background-color: #354b60;
-				display: inline-block;
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				top: 0;
-				left: 0;
-				font-size: .55em;
-			}
+      & i,
+      & .badge-counter {
+        border-radius: 100px;
+        background-color: #354b60;
+        display: inline-block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        font-size: .55em;
+      }
 
-			.badge-counter {
-				padding: 1px;
-			}
+      .badge-counter {
+        padding: 1px;
+      }
 
-			& .notification {				
-				background-color: $color-red;			
-				color: #FFF;
-				font-size: 15px;
-			}
+      & .notification {
+        background-color: $color-red;
+        color: #FFF;
+        font-size: 15px;
+      }
 
-			& i {
-				border-radius: 100%;
-			}
-		} 
+      & i {
+        border-radius: 100%;
+      }
+    }
 
-	}
+  }
 }
 
 /*
 ** Show users button
 */
-aside#navbar #users-link{
-	width: 100%;
-	background: none;
-	border: none;
-	white-space: nowrap;
-	cursor: pointer;
-	&:focus{
-		outline: none;
-	}
-	&:hover{
-		background-color: $primary-color;
-		color: #ffffff;
-	}
-	&.active{
-		background-color: $primary-color;
-		color: #ffffff;
-	}
+aside#navbar #users-link {
+  width: 100%;
+  background: none;
+  border: none;
+  white-space: nowrap;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background-color: $primary-color;
+    color: #ffffff;
+  }
+  &.active {
+    background-color: $primary-color;
+    color: #ffffff;
+  }
 }
 
 .nav-divider-before:before {
-	content: '';
-	display: block;
-	border: 1px solid $primary-color;
-	margin: 0 auto;
-	margin-bottom: 1em;
-	width: 75%;
+  content: '';
+  display: block;
+  border: 1px solid $primary-color;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  width: 75%;
 }
 
 @include desktopL {
-	aside#navbar{
-		width: $left-nav-width-opened;
-	}
+  aside#navbar {
+    width: $left-nav-width-opened;
+    ul li{
+      a{
+        padding: 15px 0;
+        padding-right: 15px;
+        padding-left: 60px;
+      }
+      a span{
+        display: inline-block;
+      }
+      a i{
+        top: 5px;
+      }
+    }
+  }
 }
 
- @media all and (max-width: 500px) {
- 	aside#navbar {
-		 width: auto;
-	 }
- 			aside.hideMenu {	
-		 		display: none;
-			}
-			aside.showMenu	{
-				display: block;
-			}
-	
-	#bars{
-			display: block;
-			z-index: 10;
-		}
+@media screen
+and (max-width: 768px)
+and (min-width: 501px){
+  aside#navbar {
+    width: auto;
+    height: 50px;
+    bottom: auto;
+    right: 0;
+    &:after{
+      content: '';
+      display: block;
+      height: 0;
+      visibility: hidden;
+      clear: both;
+    }
+    ul{
+      float: left;
+      padding: 0;
+    }
+    ul.nav-divider-before:before{
+      display: none;
+    }
+    ul:after{
+      content: '';
+      display: block;
+      height: 0;
+      visibility: hidden;
+      clear: both;
+    }
+
+    ul li {
+      float: left;
+      margin-right: 5px;
+      margin-bottom: 0;
+      a{
+        padding-top: 25px;
+        padding-bottom: 25px;
+        padding-right: 0;
+      }
+      a span{
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen
+and (max-width: 583px)
+and (min-width: 501px) {
+  aside#navbar{
+    height: 100px;
+  }
+}
+
+@media screen
+and (max-width: 500px) {
+  aside#navbar {
+    right: 0;
+    height: auto;
+    width: auto;
+    bottom: 0;
+    padding-bottom: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    ul{
+      display: block;
+    }
+    ul li{
+      display: block;
+      a{
+        display: block;
+        padding: 15px 0;
+        padding-right: 15px;
+        padding-left: 60px;
+      }
+      a span{
+        display: inline-block;
+      }
+    }
+  }
+  aside.hideMenu {
+    display: none;
+  }
+  aside.showMenu {
+    display: block;
+  }
+
+  #bars {
+    display: block;
+    z-index: 10;
+  }
 }

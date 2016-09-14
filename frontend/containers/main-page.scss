@@ -2,33 +2,49 @@
 @import "../components/common/styles/media";
 
 #main {
-   position: absolute;
-   right: 0;
-   left: $left-nav-width;
-   top: $header-height;
-   background-color: lighten($color-blue-grey, 50%);
-   bottom: 0;
-   //noinspection CssInvalidPropertyValue
-   overflow-y: overlay;
+  position: absolute;
+  right: 0;
+  left: $left-nav-width;
+  top: $header-height;
+  background-color: lighten($color-blue-grey, 50%);
+  bottom: 0;
+  //noinspection CssInvalidPropertyValue
+  overflow-y: overlay;
 }
 
- .placeholder {
-    color: #555;
-    text-align: center;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    margin-top: 5%;
+.placeholder {
+  color: #555;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  margin-top: 5%;
 }
 
- @include desktopL {
-    #main{
-       left: $left-nav-width-opened;
-    }
+@include desktopL {
+  #main {
+    left: $left-nav-width-opened;
   }
+}
+
+@include tablet {
+  #main{
+    top: 120px;
+    left: 0;
+  }
+}
+
+@media screen
+and (max-width: 590px)
+and (min-width: 501px) {
+  #main {
+    top: 170px;
+  }
+}
 
 @media all and (max-width: 500px) {
-   #main {
-      left: 0;
-   }
- }
+  #main {
+    left: 0;
+    top: 70px;
+  }
+}
