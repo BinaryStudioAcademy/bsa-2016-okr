@@ -4,7 +4,7 @@ import sweetalert from 'sweetalert';
 
 import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
-import '../../../common/styles/sweetalert.css';
+import '../../../common/styles/sweetalert.scss';
 
 class CategoryItem extends Component {
 	constructor(props){

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import sweetalert from 'sweetalert';
 import { isEmpty } from '../../../../../backend/utils/ValidateService';
-import '../../../common/styles/sweetalert.css';
+import '../../../common/styles/sweetalert.scss';
 
 class NewCategory extends Component {
 	constructor(props) {

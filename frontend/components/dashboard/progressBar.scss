@@ -1,3 +1,5 @@
+@import "../common/_variables";
+
 :root {
     --progress-bg-color: #ddd;
     --progress-fg-color: #2ecc40;
@@ -18,7 +20,7 @@
 }
 
 .CircularProgress-Text {
-    font-family: sans-serif;
+    font-family: $primary-font;
     font-size: 30px;
     fill: var(--progress-fg-color);
 

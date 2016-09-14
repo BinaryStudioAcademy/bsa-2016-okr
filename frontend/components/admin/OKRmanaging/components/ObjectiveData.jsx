@@ -7,7 +7,7 @@ import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
 import KeyResults from './Key-results-list.jsx';
 
-import '../../../common/styles/sweetalert.css';
+import '../../../common/styles/sweetalert.scss';
 
 class ObjectiveData extends Component {
 	constructor(props) {

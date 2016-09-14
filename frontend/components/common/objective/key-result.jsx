@@ -5,7 +5,7 @@ import { debounce, getDifficultyNumber, getNumberDifficulty } from '../../../../
 const session = require('../../../../backend/config/session');
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import sweetalert from 'sweetalert';
-import '../styles/sweetalert.css';
+import '../styles/sweetalert.scss';
 
 const notifications = require("../../../actions/notifications.js");
 

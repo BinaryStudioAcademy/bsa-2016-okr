@@ -6,7 +6,7 @@ import sweetalert from 'sweetalert';
 import CONST from '../../../../../backend/config/constants';
 import { isEmpty } from '../../../../../backend/utils/ValidateService';
 
-import '../../../common/styles/sweetalert.css';
+import '../../../common/styles/sweetalert.scss';
 
 class KeyResult extends Component {
 	constructor(props) {

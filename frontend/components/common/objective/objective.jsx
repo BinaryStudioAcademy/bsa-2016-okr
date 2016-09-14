@@ -4,7 +4,7 @@ import Progress from './progress-bar.jsx';
 import ObjectiveDescription from './objective-description.jsx';
 import './objective.scss';
 import sweetalert from 'sweetalert';
-import '../styles/sweetalert.css';
+import '../styles/sweetalert.scss';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
