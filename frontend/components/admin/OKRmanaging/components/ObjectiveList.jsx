@@ -30,27 +30,37 @@ class ObjectiveList extends Component {
   }
 
   render() {
-    const { visibleObjectives } = this.props.objectivesList;
-    let displayedObjectives = [];
-    displayedObjectives = visibleObjectives.filter((objective) => {
+    const { 
+      categories,
+      objectivesList, 
+      saveEditObjective, 
+      cancelEdit, 
+      activeObjective,
+      deleteObjective 
+    } = this.props;
+
+    const { visibleObjectives } = objectivesList;
+    let displayedObjectivesEl = visibleObjectives.filter((objective) => {
       return !objective.isDeleted;
     }).map((objective, index) => {
-      return <ObjectiveData objective = { objective } 
-                            index = { index } 
-                            key = { objective._id }
-                            categories = { this.props.categories }
-                            objectivesList = { this.props.objectivesList }
-                            saveEditObjective = { this.props.saveEditObjective }
-                            cancelEdit = { this.props.cancelEdit }
-                            activeObjective = { this.props.activeObjective }
-                            deleteObjective = { this.props.deleteObjective }
+      return <ObjectiveData objective={ objective } 
+                            index={ index } 
+                            key={ objective._id }
+                            categories={ categories }
+                            editing={ objectivesList.editing }
+                            active={ objectivesList.active }
+                            saveEditObjective={ saveEditObjective }
+                            cancelEdit={ cancelEdit }
+                            activeObjective={ activeObjective }
+                            deleteObjective={ deleteObjective }
                             ref={ `objectiveTemplate-${ objective._id }` }
+                            id={ `objectiveTemplate-${ objective._id }` }
               />
     });
 
     return (
       <div id='templates'>
-        { displayedObjectives }
+        { displayedObjectivesEl }
       </div>  
     )
   }
@@ -63,7 +73,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     objectivesList: state.okrManaging,
-    categories: state.categories
   };
 }
 

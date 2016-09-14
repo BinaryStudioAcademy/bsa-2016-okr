@@ -19,7 +19,9 @@ class CategoryItem extends Component {
 	}
 
 	componentDidUpdate() {
-		if (this.props.categories.edit && this.props.categories.activeCategory == this.props.index) {
+		const { edit, activeCategory, index } = this.props;
+		
+		if (edit && activeCategory == index) {
 			this.selectEditTitle();
 		}
 	}
@@ -40,32 +42,30 @@ class CategoryItem extends Component {
 
 	delete() {
 		this.props.hideAddInput();
-
-		let category = this.props.objectives.find(item => {
-			return item.category == this.props.category._id
-		})
-
-		sweetalert({
-			title: `Delete category '${this.props.category.title}' ?`,
-			text: 'Category should be empty (without objectives)',
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#f44336',
-			confirmButtonText: 'Yes, delete',
-			closeOnConfirm: false
-		}, (isConfirm) => {
-				if(isConfirm && category == undefined) {
-					this.props.deleteCategory(this.props.category._id, true);
-					sweetalert.close();
-				} else if(isConfirm && category != undefined){
-          sweetalert('Cannot delete category', 'This category isn\'t empty.', 'error');
-        }
+		
+		if(this.props.isEmptyCategory) {
+			sweetalert({
+				title: `Delete category '${this.props.category.title}' ?`,
+				text: 'Category should be empty (without objectives)',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#f44336',
+				confirmButtonText: 'Yes, delete',
+			}, (isConfirm) => {
+				this.props.deleteCategory(this.props.category._id, true);
 			});
+		} else {
+			sweetalert({
+				title: 'Cannot delete category', 
+				text: 'This category isn\'t empty.', 
+				type: 'error'
+			});
+		}
 	}
 
 	editCategory() {
 		this.props.hideAddInput();
-		this.props.activeCategory(this.props.index);
+		this.props.setActiveCategory(this.props.index);
 	}
 
 	saveChanges() {
@@ -92,43 +92,44 @@ class CategoryItem extends Component {
 				confirmButtonText: 'Yes, save',
 				closeOnConfirm: false,
 			}, () => {
-		    this.props.editCategory(id, title); 
+		    this.props.saveEditCategory(id, title); 
 		 	});
 		}
 	}
 
 	render() {
+    const { edit, activeCategory, index, category } = this.props;
+		
 		let titleEl;
-    let edit;
-    let cancel;
+    let editSaveBtn;
+    let cancelDeleteBtn;
     
-    if( this.props.categories.edit && 
-    		this.props.categories.activeCategory == this.props.index ) {
+    if( edit && activeCategory == index ) {
     	titleEl = ( <input type='text' ref="categoryInput"
     										 className='category-edit-title' 
-    										 defaultValue={ this.props.category.title } 
+    										 defaultValue={ category.title } 
     						/> );
-	    edit 		= ( <button  onClick={ this.saveChanges }
+	    editSaveBtn 		= ( <button  onClick={ this.saveChanges }
 									 				 className="btn btn-green save"
 													 aria-hidden="true"
 													 title="Save">
 									 				 <i className='fi-1 flaticon-1-check'></i> 
 									</button> );
-	    cancel  = ( <button onClick={ this.cancelEdit }
+	    cancelDeleteBtn  = ( <button onClick={ this.cancelEdit }
 													className="btn btn-red cancel"
 													title='Cancel'
 													aria-hidden="true">
 													<i className="fi flaticon-multiply cancel" ></i>
 									</button> );
     } else {
-    	titleEl = ( <span>{ this.props.category.title }</span> );
-	    edit 		= ( <button aria-hidden="true"
+    	titleEl = ( <span>{ category.title }</span> );
+	    editSaveBtn 		= ( <button aria-hidden="true"
 													title="Edit"
 												 	className="btn btn-blue-hover edit"
 												 	onClick={this.editCategory}>
 													<i className='fi flaticon-edit'></i>
 									</button>	);
-	    cancel  = ( <button title="Delete"
+	    cancelDeleteBtn  = ( <button title="Delete"
 			                    type="button"
 			                    className="btn btn-red-hover delete"
 			                    onClick={this.delete}>
@@ -140,8 +141,8 @@ class CategoryItem extends Component {
 			<li className='category-item'>
 				{ titleEl }
 				<div className='edit-category'>
-					{ edit }
-					{ cancel }
+					{ editSaveBtn }
+					{ cancelDeleteBtn }
 				</div>
 			</li>
 			)

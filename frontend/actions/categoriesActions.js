@@ -57,7 +57,7 @@ export function receivedError(data) {
 
 /*------delete category-------*/
 
-export function deleteCategory(id, flag){
+export function deleteCategory(id, flag) {
 
 	return(dispatch, getStore) => {
 
@@ -66,15 +66,16 @@ export function deleteCategory(id, flag){
 		});
 
 		return axios.delete(`/api/category/${ id }/${ flag }`)
-			.then(response => dispatch(receivedDeleteCategory(id)))
+			.then(response => dispatch(receivedDeleteCategory(id, flag)))
 			.catch(response => dispatch(deleteCategoryError(response.data)));
 	};
 }
 
-export function receivedDeleteCategory(id) {
+export function receivedDeleteCategory(id, flag) {
 	return {
 		type: RECIVED_DELETE_CATEGORY,
-		id
+		id,
+		flag,
 	};
 }
 
@@ -94,7 +95,7 @@ export function cancelEdit() {
 	return action;
 }
 
-export function activeCategory (activeCategory) {
+export function setActiveCategory(activeCategory) {
 	const action = {
 		type: ACTIVE_CATEGORY,
 		activeCategory

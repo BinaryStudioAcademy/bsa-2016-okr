@@ -83,6 +83,8 @@ class OKRmanaging extends Component {
 			} else {
 				this.props.editObjectiveTemplate(id, data);
 			}
+
+			sweetalert.close();
 		} else if(duplicateItem.isDeleted) {
 			sweetalert({
         title: 'Do you want to restore deleted objective?',
@@ -110,6 +112,12 @@ class OKRmanaging extends Component {
 	}
 
 	render() {
+		const { edit: editCategory, activeCategory, list: categories } = this.props.categories;
+		const { objectives } = this.props.okrManaging;
+		const displayedCategories = categories.filter((category) => {
+			return !category.isDeleted;
+		});
+		
 		return (
 			<div>
 				<CentralWindow>
@@ -119,7 +127,7 @@ class OKRmanaging extends Component {
 						addKeyResultToTemplate={ this.props.addKeyResultToTemplate }
 						removeKeyResultFromTemplate={ this.props.removeKeyResultFromTemplate }
 						keyResults={ this.props.okrManaging.keyResults }
-						categories={ this.props.categories.list }
+						categories={ displayedCategories }
 					/>
 					<div className="OKR-managing app container">
 						<Toolbar/>
@@ -133,13 +141,22 @@ class OKRmanaging extends Component {
 						</div>
 						</div>			
 						<div className="OKR-managing objective-list">
-							<ObjectiveList saveEditObjective={ this.saveEditObjective }/>
+							<ObjectiveList 
+								saveEditObjective={ this.saveEditObjective }
+								categories={ displayedCategories }
+								deleteObjective={ this.props.deleteObjective }
+							/>
 						</div>
 				</div>
 			</CentralWindow>
 			<StatPanel>
 				<div className="OKR-managing category">
-						<CategoryList />
+						<CategoryList
+							objectives={ objectives } 
+							categories={ categories }
+							displayedCategories={ displayedCategories } 
+							edit={ editCategory }
+							activeCategory={ activeCategory } />
 				</div>
 			</StatPanel>
 		</div>
