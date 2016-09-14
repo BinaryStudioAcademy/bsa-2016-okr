@@ -48,14 +48,19 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 
 					statsObj[user][quarter]['userObjectives'].forEach( (objective) => {
 						if(!objective.isDeleted){
+							let objectiveScore = 0; // score of obj
+							let keyResCount = 0;// count of keyRes in obj
 							objective.keyResults.forEach( (keyResult) => {
-								quarterScore += keyResult.score; // sum up keyRes scores
-								userObjectivesCount ++; 
+								 objectiveScore += keyResult.score;
+								 keyResCount++;
 							})
+							if(keyResCount != 0)
+								quarterScore += objectiveScore / keyResCount; // sum up keyRes scores
+							userObjectivesCount ++;
 						}
 					})
 
-					if(userObjectivesCount != 0){
+					if(userObjectivesCount != 0){ // if there was no objectives
 						quarterScore = quarterScore / userObjectivesCount;
 
 						statsObj[user][quarter] = quarterScore;//set quarter score
@@ -116,7 +121,6 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 				userStats,
 				bottomStats
 			}
-			console.log(respObj);
 			return callback(null,  respObj)
 		}
 	], (err, result) => {

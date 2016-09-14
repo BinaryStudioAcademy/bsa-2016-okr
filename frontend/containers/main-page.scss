@@ -25,4 +25,10 @@
     #main{
        left: $left-nav-width-opened;
     }
+  }
+
+@media all and (max-width: 500px) {
+   #main {
+      left: 0;
+   }
  }

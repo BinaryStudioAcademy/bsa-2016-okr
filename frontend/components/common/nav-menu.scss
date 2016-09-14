@@ -22,11 +22,42 @@ aside#navbar {
 	}
 }
 
+#bars {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: $left-nav-width;
+		height: $header-height;
+		text-align: center;
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: darken($color-white, 20%);
+
+		i {
+			cursor: pointer;
+			font-size: 30px;
+			pointer-events: none;
+		}
+
+		&:focus,
+		&:active {
+			outline: none;
+		}
+
+		&:hover i {
+			color: $color-white;
+		}
+
+		&.active i {
+			color: $color-white;
+		}
+	}
 aside#navbar ul {
 	list-style-type: none;
 	margin: 0;
-	margin-top: 20px;
-	padding: 0;
+	padding: 20px 0 0;
 	li {
 		margin-bottom: 10px;
 		&:last-child {
@@ -144,4 +175,21 @@ aside#navbar #users-link{
 	aside#navbar{
 		width: $left-nav-width-opened;
 	}
+}
+
+ @media all and (max-width: 500px) {
+ 	aside#navbar {
+		 width: auto;
+	 }
+ 			aside.hideMenu {	
+		 		display: none;
+			}
+			aside.showMenu	{
+				display: block;
+			}
+	
+	#bars{
+			display: block;
+			z-index: 10;
+		}
 }

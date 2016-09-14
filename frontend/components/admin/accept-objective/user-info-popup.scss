@@ -1,3 +1,5 @@
+@import "../../common/_variables";
+
 .accept-objective-item{
   .hint {
       background-color: #f3f6f7;
@@ -34,14 +36,14 @@
     float: right;
     position: relative;
     margin-left: 10px;
-    font-family: "Fira Sans", "Open Sans", sans-serif;
+    font-family: $primary-font;
     font-size:15px;
     font-weight:bold;
     display: inline-block;
     margin-top: -2px;
     color: #555;
 
-    .userName{
+    .userName {
       margin-bottom: 8px;
     }
   }
