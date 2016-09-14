@@ -113,7 +113,12 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 				return false
 				}) 
 				== undefined )
-					userStats = selectedUser;
+					userStats = selectedUser
+			else 
+				userStats = {
+					totalScore:selectedUser.totalScore,
+					inTop: true
+				}
 			
 			var bottomStats = statsArr[statsArr.length - 1];
 			var respObj = {

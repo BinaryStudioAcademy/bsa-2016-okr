@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Link } from 'react-router';
 import ProgressBar from './progressBar.jsx';
 import './progressBar.scss';
+import session from '../../../backend/config/session.js'
+
 
 export default class DashboardStats extends React.Component {
 	constructor(props) {
@@ -59,11 +61,25 @@ export default class DashboardStats extends React.Component {
 				</div>)
 		}
 		else {
+			// let score = 0;
+			// if(this.state.user == null){
+			// 	console.log(this.state);
+			// 	this.state.rows.forEach(( elem) => {
+			// 		console.log('-------------')
+			// 		console.log(elem.userInfo._id)
+			// 		console.log(session._id)
+			// 		if(elem.userInfo._id == session._id)
+			// 			score = Math.round(elem.totalScore * 100);
+			// 	})
+			// }
+			// else 
+			let score = Math.round(this.state.user.totalScore * 100);
+
 			return (
 				<div className="countInfo" id="parent">
 					<p><span>Your progress in current year</span></p>
 					<div className="progressBar">
-						<ProgressBar  strokeWidth="10" radius="80" percentage={Math.round(this.state.user.totalScore * 100)}/>
+						<ProgressBar  strokeWidth="10" radius="80" percentage={score}/>
 					</div>
 				</div>)
 		}
@@ -112,8 +128,12 @@ export default class DashboardStats extends React.Component {
 			obj = {name, totalScore:item[4]};
 			scores.push(obj);
 		})
-
-		if(this.state.user != undefined){
+		// let isUserInTop = this.state.rows.find((elem)=> { 
+		// 	if(elem.userInfo._id === this.state.user._id)
+		// 		return true
+		// 	else return false;			
+		// })
+		if(!this.state.user.inTop ){
 				var userRow = (<tbody>
 									<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
 									<tr onClick={() => {this.handleUserClick(-5)}}>
