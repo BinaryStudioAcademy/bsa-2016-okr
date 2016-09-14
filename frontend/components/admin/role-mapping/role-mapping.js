@@ -14,11 +14,6 @@ import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../../../backend/config/co
 
 class RoleMapping extends React.Component {
 
-    constructor(props) {
-        
-        super(props);
-    }
-
    render() {
 
       const { visibleUsers } = this.props.stateFromReducer.mapping;
@@ -28,23 +23,6 @@ class RoleMapping extends React.Component {
       return (
 
       <div id="role-mapping-wrapper">
-
-            <aside id="inter-panel">
-
-                 <p id="global-roles-p"><span>Global roles</span></p>
-
-                 <div id="roles-table">
-                      <div className="table-head">
-                            <h3 className="col-1">Global role</h3>
-                            <h3 className="col-2">Local role</h3>
-                      </div>
-
-                       {roles.map(function(role) {
-                            return  <RoleMappingItem key={role._id} role={role}/>;
-                       })}
-
-                  </div>
-             </aside>
 
           <div id="central-window">
            
@@ -62,21 +40,38 @@ class RoleMapping extends React.Component {
 
                     <p><span>Personal roles</span></p>
 
-                    <div className="table">
-                       <div className="table-head">
-                             <h3 className="col-1">Avatar</h3>
-                             <h3 className="col-2" onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort"></i>Name</h3>
-                             <h3 className="col-3">E-mail</h3>
-                             <h3 className="col-4" onClick={this.setSortingByGlobalRole.bind(this)} tabIndex='0'><i id="global-role-field" className="fa fa-sort"></i>Global role</h3>
-                             <h3 className="col-5">Local role</h3>
-                       </div>
+                    <table className="table">
+                       <thead>
+                         <tr>
+                            <th className="col-1">Avatar</th>
+                            <th className="cursor-pointer" onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort"></i>Name</th>
+                            <th>E-mail</th>
+                            <th className="cursor-pointer" onClick={this.setSortingByGlobalRole.bind(this)} tabIndex='0'><i id="global-role-field" className="fa fa-sort"></i>Global role</th>
+                            <th>Local role</th>
+                         </tr>
+                       </thead>
+                       <tbody>
+                        {visibleUsers.map(function(user) {
+                            return  <UserRoleMappingItem key={user._id} user={user}/>;
+                         })}
+                      </tbody>
 
-                      {visibleUsers.map(function(user) {
-                          return  <UserRoleMappingItem key={user._id} user={user}/>;
+                  </table>
+             </div>
+              <aside id="inter-panel">
+                 <p id="global-roles-p"><span>Global roles</span></p>
+                 <div id="roles-table">
+                      <div className="table-head">
+                            <h3 className="col-1">Global role</h3>
+                            <h3 className="col-2">Local role</h3>
+                      </div>
+                       {roles.map(function(role) {
+                            return  <RoleMappingItem key={role._id} role={role}/>;
                        })}
 
                   </div>
-             </div>
+             </aside>
+
       </div>
 
 
@@ -90,7 +85,7 @@ class RoleMapping extends React.Component {
 
   setSortingByGlobalRole() {
       
-      let globalRoleField = document.querySelector(".table-head #global-role-field");
+      let globalRoleField = document.querySelector(".table #global-role-field");
       globalRoleField.parentElement.blur();
       this.props.setSortingByName(NOT_SORTED);
 
@@ -127,7 +122,7 @@ class RoleMapping extends React.Component {
 
   setSortingByName() {
       
-      let nameField = document.querySelector(".table-head #name-field");
+      let nameField = document.querySelector(".table #name-field");
       nameField.parentElement.blur();
       this.props.setSortingByGlobalRole(NOT_SORTED);
 

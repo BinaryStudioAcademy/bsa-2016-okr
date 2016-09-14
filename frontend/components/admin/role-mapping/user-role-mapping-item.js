@@ -15,34 +15,36 @@ class UserRoleMappingItem extends React.Component {
 
 		    if (this.props.user.globalRole === CONST.user.globalRole.ADMIN) {
 			   	 return (
-		            <div className="table-row">
-		                   <div className="col-1">
+		            <tr key={this.props.user.id}>
+		                   <td data-th="Avatar" className="col-1">
 		                      <img/>
-		                   </div>
-		                   <h4 className="col-2">{this.props.user.name}</h4>
-		                   <h4 className="col-3">{this.props.user.email}</h4>
-		                   <h4 className="col-4">{this.props.user.globalRole}</h4>
-		                   <h4 className="col-5">Admin</h4>
-		            </div>
+		                   </td>
+		                   <td data-th="Name">{this.props.user.name}</td>
+		                   <td data-th="E-mail">{this.props.user.email}</td>
+		                   <td data-th="Global role">{this.props.user.globalRole}</td>
+		                   <td data-th="Local role">Admin</td>
+		            </tr>
 	            );
 		   	}
 
    	        return (
-	            <div className="table-row">
-	                   <div className="col-1">
+	            <tr key={this.props.user.id}>
+	                   <td data-th="Avatar" className="col-1">
 	                      <img/>
-	                   </div>
-	                   <h4 className="col-2">{this.props.user.name}</h4>
-	                   <h4 className="col-3">{this.props.user.email}</h4>
-	                    <h4 className="col-4">{this.props.user.globalRole}</h4>
-	                   <select className="col-5" id={"user-roles" + this.props.user._id} ref="userLocalRole"
-	                   onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
-		                 <option value = {CONST.user.localRole.DEFAULT}>Default</option>
-		                 <option value = {CONST.user.localRole.MENTOR}>Mentor</option>
-	                     <option value = {CONST.user.localRole.ADMIN}>Admin</option>
-	                     <option value = {CONST.user.localRole.USER}>User</option>
-	                   </select>
-	            </div>
+	                   </td>
+	                   <td data-th="Name">{this.props.user.name}</td>
+	                   <td data-th="E-mail">{this.props.user.email}</td>
+	                   <td data-th="Global role">{this.props.user.globalRole}</td>
+	                   <td data-th="Local role">
+		                   <select id={"user-roles" + this.props.user._id} ref="userLocalRole"
+		                   onChange={this.changeLocalRole.bind(this)} ref="userLocalRole" defaultValue="">
+			                 <option value = {CONST.user.localRole.DEFAULT}>Default</option>
+			                 <option value = {CONST.user.localRole.MENTOR}>Mentor</option>
+		                     <option value = {CONST.user.localRole.ADMIN}>Admin</option>
+		                     <option value = {CONST.user.localRole.USER}>User</option>
+		                   </select>
+		                </td>
+	            </tr>
             );
    }
 

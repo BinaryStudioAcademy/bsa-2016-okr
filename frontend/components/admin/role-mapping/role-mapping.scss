@@ -8,7 +8,23 @@
     margin-right: 7px;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .table-head #name-field {
+    margin-right: 7px;
+}
+
+#role-mapping-wrapper #name-field {
+    margin-right: 7px;
+}
+
+#role-mapping-wrapper td {
+    word-wrap: break-word;
+}
+
+#role-mapping-wrapper #global-role-field {
     margin-right: 7px;
 }
 
@@ -54,7 +70,7 @@
 }
 
 #user-role-mapping-header-wrapper input {
-    min-width: 435px;
+
     border: 1px solid #d3d3d3;
     box-sizing: border-box;
     padding: 10px;
@@ -62,7 +78,6 @@
     border-radius: 3px;
     float: left;
 	width: 100%;
-	
 	margin-top: 0;
 	outline:none;
 	-webkit-transition: all .3s;
@@ -107,13 +122,19 @@
 #role-mapping-wrapper .table {
     box-sizing: border-box;
     background-color: #FFF;
-    min-width: 535px;
 	width: 100%;
 	margin: 0 auto;
     margin-top: -20px;
     margin-bottom: 50px;
-    border: solid 1px #E0E0E0;
-    border-bottom: none;
+}
+
+#role-mapping-wrapper tbody {
+    table-layout: fixed;
+    display: block;
+}
+
+#role-mapping-wrapper tbody tr:hover {
+    background-color: #ECEFF1;
 }
 
 #role-mapping-wrapper #central-window {
@@ -132,7 +153,6 @@
 
 #role-mapping-wrapper .col-1 {
 	width: 14%;
-	margin-left: 1%;
 }
 
 #role-mapping-wrapper .col-2 {
@@ -159,9 +179,6 @@
 }
 
 #role-mapping-wrapper .table-row {
-	height: 50px;
-	display: flex;
-	align-items: center;
 	border-bottom: solid 1px #E0E0E0;
 }
 
@@ -169,7 +186,7 @@
 	background-color: #ECEFF1;
 }
 
-#role-mapping-wrapper .table-row img {
+#role-mapping-wrapper td img {
 	width: 32px;
 	height: 32px;
 	background: url("https://avatars3.githubusercontent.com/u/19537599?v=3&s=140") 100% 100% no-repeat;
@@ -193,6 +210,8 @@
     min-width: 300px;
 	margin: 5px 15px 0;
     font-size: 14px;
+
+    min-width: 300px;
 
     h3{
         font-size: 14px;
@@ -241,6 +260,18 @@
     }
 }
 
+#role-mapping-wrapper tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    background: #FFF;
+    box-sizing: border-box;
+}
+
+#role-mapping-wrapper thead tr {
+    border: none;
+}
+
 #role-mapping-wrapper  p {
     box-sizing: border-box;
     color: #aaaaaa;
@@ -249,7 +280,6 @@
     position: relative;
     padding: 0;
     width: 100%;
-    min-width: 535px;
     margin: 0 auto 35px;
 }
 
@@ -297,5 +327,167 @@
 
 #role-mapping-wrapper aside span {
     background: #F9FAFB;
+}
+
+
+@media all and (max-width: 900px) {
+
+    #role-mapping-wrapper {
+
+        & #roles-table {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+        #global-roles-p {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+        aside#inter-panel {
+            height: 315px;
+        }
+
+        #roles-table .col-2 {
+            width: auto;
+        }
+
+    }
+}
+
+@media all and (max-width: 685px) {
+
+   #role-mapping-wrapper {
+
+       & .table {
+
+           & th {
+               font-size: 12px;
+           }
+
+           & td {
+               font-size: 11px;
+           }
+       }
+   }
+}
+
+@media all and (max-width: 500px) {
+
+    #role-mapping-wrapper {
+
+        & #roles-table {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        #global-roles-p {
+            width: 100%;
+            margin: 0 auto;
+            min-width: 0;
+        }
+
+        #user-role-mapping-header-wrapper input {
+             width: 100%;
+             float: left;
+        }
+
+        #user-role-mapping-header-wrapper {
+            display: block;
+        }
+
+        #user-role-mapping-header-wrapper select {
+            clear: both;
+            margin-top: 5px;
+            width: 100%;
+            margin-left: 0;
+            height: 44px;
+        }
+
+    }
+}
+
+/* tables responsive start */
+
+$breakpoint-alpha: 540px;
+
+@media all and (max-width: 540px) {
+
+    #role-mapping-wrapper .col-1 {
+        width: auto;
+    }
+
+    #role-mapping-wrapper .table {
+
+      margin: 1em 0;
+      min-width: 300px;
+      
+      
+      th {
+        display: none;    
+      }
+
+      tr:first-child {
+          border-top: solid 1px rgb(224, 224, 224);
+      }
+      
+      td {
+
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        
+        &:first-child {
+          padding-top: .5em;
+        }
+
+        &:last-child {
+          padding-bottom: .5em;
+        }
+
+        &:before {
+          content: attr(data-th)": "; 
+          font-weight: bold;
+
+          font-size: 14px;
+
+          width: 50%; 
+          display: inline-block;
+          
+          @media (min-width: $breakpoint-alpha) {
+            display: none;
+          }
+        }
+      }
+    }
+}
+
+#role-mapping-wrapper  th, td {
+
+    margin: .5em 1em;
+
+    @media (min-width: $breakpoint-alpha) { 
+      padding: 1em !important; 
+    }
+}
+
+/* tables responsive end */
+
+@media all and (max-width: 400px) {
+
+    #role-mapping-wrapper #central-window {
+         padding-left: 5px;
+         padding-right: 15px;
+    }
+
+    aside#inter-panel {
+        margin-left: 5px;
+        margin-right: 15px;
+        min-width: 300px;
+    }
+}
+
+#role-mapping-wrapper td:before {
+    color: #607D8B
 }
 
