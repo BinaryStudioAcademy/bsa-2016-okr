@@ -1,0 +1,80 @@
+@import "../variables";
+
+.tooltip{
+  position: relative;
+}
+.tooltip:after,
+.tooltip:before{
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1;
+}
+.tooltip:after{
+  content: attr(data-tooltip-content);
+  padding: 5px 13px;
+  background-color: #555;
+  color: #eee;
+  border-radius: 4px;
+}
+.tooltip:before{
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 0;
+}
+.tooltip:hover:after,
+.tooltip:hover:before{
+  visibility: visible;
+  opacity: 1;
+  transition: all .2s;
+}
+
+/* Directions */
+
+/*
+**  Down
+*/
+
+.tooltip[data-tooltip-direction="down"]:after{
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 20%);
+}
+.tooltip[data-tooltip-direction="down"]:before{
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 30%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #555;
+}
+.tooltip[data-tooltip-direction="down"]:hover:before{
+  transform: translate(-50%, 100%);
+}
+.tooltip[data-tooltip-direction="down"]:hover:after{
+  transform: translate(-50%, 35%);
+}
+
+/*
+**  Right
+*/
+.tooltip[data-tooltip-direction="right"]:after{
+  top: 0;
+  left: 100%;
+  transform: translate(0, -5%);
+}
+.tooltip[data-tooltip-direction="right"]:before{
+  top: 50%;
+  left: 100%;
+  transform: translate(70%, -50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid #555;
+}
+.tooltip[data-tooltip-direction="right"]:hover:before{
+  transform: translate(120%, -50%);
+}
+.tooltip[data-tooltip-direction="right"]:hover:after{
+  transform: translate(15%, -5%);
+}
