@@ -29,7 +29,7 @@ class NewObjCredentials extends Component {
 	addNewKeyResult() {
 		const keyResultTitleElements = document.getElementsByClassName('new-key-result-title');
 		const keyResultDifficultyElements = document.getElementsByClassName('new-key-result-difficulty');
-		
+
 		let emptyKeyResult = '';
 
 		let keyResults = [];
@@ -58,13 +58,13 @@ class NewObjCredentials extends Component {
 		const keyResultDifficultyElements = document.getElementsByClassName('new-key-result-difficulty');
 		let keyResults = [];
 		let keyResultItem = {};
-		
+
 		for(let i = 0; i < keyResultTitleElements.length; i++) {
 			keyResultItem.title = keyResultTitleElements[i].value;
 			keyResultItem.difficulty = keyResultDifficultyElements[i].value;
 			keyResults.push(keyResultItem);
-			keyResultItem = {}; 
-		}  
+			keyResultItem = {};
+		}
 
 		this.props.addKeyResultToTemplate(keyResults);
 		if(this.props.keyResults.length != 1) {
@@ -87,7 +87,7 @@ class NewObjCredentials extends Component {
 
 		for(let i = 0; i < keyResultTitleElements.length; i++) {
 			keyResultItem.title = keyResultTitleElements[i].value;
-			
+
 			if(!isEmpty(keyResultTitleElements[i].value)) {
 				correct++;
 			}
@@ -115,7 +115,7 @@ class NewObjCredentials extends Component {
 				text: 'Key result title cannot be empty',
 				type: 'error',
 			});
-		} else { 
+		} else {
 			let reqBody = {
 				title: objectiveTitle,
 				description: objectiveDesctiption,
@@ -129,7 +129,7 @@ class NewObjCredentials extends Component {
 
 	render() {
 		let keyResults;
-		
+
 		if(this.props.keyResults.length != 0) {
 			keyResults = this.props.keyResults.map((keyResult, index) => {
 				return <NewKeyResult keyResult={ keyResult } delete={ this.delete } key={ index } num={ index } />
@@ -170,7 +170,7 @@ NewObjCredentials.propTypes = {
 	removeKeyResultFromTemplate: PropTypes.func.isRequired,
 	closeNewObjectiveWindow: PropTypes.func.isRequired,
 	categories: PropTypes.array.isRequired,
-	keyResults: PropTypes.array.isRequired,
+	//keyResults: PropTypes.array.isRequired, this throws error in browser console, not sure if this even needed
 };
 
 export default NewObjCredentials;

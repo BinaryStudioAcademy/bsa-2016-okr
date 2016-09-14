@@ -29,21 +29,21 @@ export default class DashboardStats extends React.Component {
 			if(quarter[0].className.indexOf('hidden') != -1)
 				quarter[0].className =  quarter[0].className.substring(0, quarter[0].className.indexOf('hidden'));
 			else
-				quarter[0].className = quarter[0].className + "hidden"		
+				quarter[0].className = quarter[0].className + "hidden"
 		}
 	}
 
 	renderRow(row, i) {
 		if(row.name){
 			return(
-				<tr className={`quarter-score ${i} hidden `}>
+				<tr key={i} className={`quarter-score ${i} hidden `}>
 					<td> { `${ row.name }` }</td>
 					<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
 				</tr>)
 		}
 		else
 		return (
-			<tr onClick={() => {this.handleUserClick(i)}}>
+			<tr key={i} onClick={() => {this.handleUserClick(i)}}>
 				<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
 				<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
 			</tr>
@@ -72,7 +72,7 @@ export default class DashboardStats extends React.Component {
 			// 			score = Math.round(elem.totalScore * 100);
 			// 	})
 			// }
-			// else 
+			// else
 			let score = Math.round(this.state.user.totalScore * 100);
 
 			return (
@@ -111,7 +111,7 @@ export default class DashboardStats extends React.Component {
 			let name;
 
 			scores.push(item);
-			
+
 			name = '1-st quarter';
 			obj = {name, totalScore:item[1]};
 			scores.push(obj);
@@ -128,10 +128,10 @@ export default class DashboardStats extends React.Component {
 			obj = {name, totalScore:item[4]};
 			scores.push(obj);
 		})
-		// let isUserInTop = this.state.rows.find((elem)=> { 
+		// let isUserInTop = this.state.rows.find((elem)=> {
 		// 	if(elem.userInfo._id === this.state.user._id)
 		// 		return true
-		// 	else return false;			
+		// 	else return false;
 		// })
 		if(!this.state.user.inTop ){
 				var userRow = (<tbody>
@@ -172,10 +172,17 @@ export default class DashboardStats extends React.Component {
 			<div className="main">
 				{this.getProgressBar()}
 				<div className="tableInfo">
+					<div><p><span>Top 5 Users by performance</span></p></div>
 					<table>
-						<caption><p><span>Top 5 Users by performance</span></p></caption>
-						<th>Name</th><th>Completed</th>
-						{ scores.map(this.renderRow) }
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Completed</th>
+							</tr>
+						</thead>
+						<tbody>
+							{ scores.map(this.renderRow) }
+						</tbody>
 					</table>
 					<table className="second">
 						{userRow}

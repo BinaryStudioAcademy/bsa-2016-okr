@@ -28,6 +28,7 @@ class Rating extends Component {
 
 			stars.push(
 					<label
+						key={i}
 						className={klass}
 						onMouseOver={this.onMouseOver(i)}
 				    title = { `${getNumberDifficulty(this.props.rating)}` }

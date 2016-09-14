@@ -24,10 +24,6 @@ export default function accObjReducer(state = initialState, action) {
 
 			const {data} = action;
 
-			console.log(data);
-
-			console.log(data);
-
 			let items = JSON.parse(JSON.stringify(state.items));
 
 			let key = {};
@@ -94,8 +90,6 @@ export default function accObjReducer(state = initialState, action) {
 		case RECEIVED_NOT_APPROVED_OBJECTIVES: {
 
 			const {data} = action;
-
-			console.log(RECEIVED_NOT_APPROVED_OBJECTIVES);
 
 			let items = JSON.parse(JSON.stringify(state.items));
 

@@ -23,12 +23,12 @@ import './app.scss';
 class App extends Component {
 	constructor(props) {
 		super(props);
+	}
 
+	componentWillMount() {
 		this.props.categoriesActions.getAllCategories();
-		//this.props.myStateActions.getMe();
 		this.props.myStateActions.getMeBasic();
 		this.props.appActions.init();
-
 		this.props.acceptObjective.getNotAprovedObjectivesRequest();
 	  this.props.acceptObjective.getNotAprovedKeysRequest();
 	}

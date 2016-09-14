@@ -32,7 +32,9 @@ class Objectives extends Component {
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
+	}
 
+	componentWillMount() {
 		this.props.myStateActions.getMe();
 	}
 

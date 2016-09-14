@@ -49,7 +49,7 @@ class UserDashboard extends React.Component{
 				return  //<KeyResultList/>
 				break;
 			case 5:
-				return 
+				return
 				break;
 			default:
 				return <UserHistory/>
@@ -61,11 +61,9 @@ class UserDashboard extends React.Component{
 		let id;
 		if( this.props.where === "otherPersonPage"){
 			id = this.props.userPage.user._id;
-			console.log(this.props.userPage.user)
 		}
 		else{
 			id = this.props.myState.me._id;
-			console.log(this.props.myState.me)
 		}
 		return (
 			<div className="userDashboard">

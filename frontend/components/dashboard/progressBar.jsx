@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export default class CircularProgress extends React.Component {
@@ -14,7 +13,10 @@ export default class CircularProgress extends React.Component {
         const height = this.props.radius * 2;
         const viewBox = `0 0 ${width} ${height}`;
         const dashArray = radius * Math.PI * 2;
-        const dashOffset = dashArray - dashArray * this.props.percentage / 100;
+        var dashOffset = 0;
+        if(!isNaN(this.props.percentage)){
+          dashOffset = dashArray - dashArray * this.props.percentage / 100;
+        }
 
         return (
             <svg
