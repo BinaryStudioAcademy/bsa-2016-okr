@@ -29,7 +29,7 @@ job.start();
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
-const PORT = isDeveloping ? 4444 : process.env.PORT;
+const PORT = 4444;
 const IP = process.env.IP || '127.0.0.1';
 
 console.log(process.env.PORT);
