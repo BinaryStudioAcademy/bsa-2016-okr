@@ -44,9 +44,9 @@ class RoleMapping extends React.Component {
                        <thead>
                          <tr>
                             <th className="col-1">Avatar</th>
-                            <th onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort"></i>Name</th>
+                            <th className="cursor-pointer" onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort"></i>Name</th>
                             <th>E-mail</th>
-                            <th onClick={this.setSortingByGlobalRole.bind(this)} tabIndex='0'><i id="global-role-field" className="fa fa-sort"></i>Global role</th>
+                            <th className="cursor-pointer" onClick={this.setSortingByGlobalRole.bind(this)} tabIndex='0'><i id="global-role-field" className="fa fa-sort"></i>Global role</th>
                             <th>Local role</th>
                          </tr>
                        </thead>
@@ -85,7 +85,7 @@ class RoleMapping extends React.Component {
 
   setSortingByGlobalRole() {
       
-      let globalRoleField = document.querySelector(".table-head #global-role-field");
+      let globalRoleField = document.querySelector(".table #global-role-field");
       globalRoleField.parentElement.blur();
       this.props.setSortingByName(NOT_SORTED);
 
@@ -122,7 +122,7 @@ class RoleMapping extends React.Component {
 
   setSortingByName() {
       
-      let nameField = document.querySelector(".table-head #name-field");
+      let nameField = document.querySelector(".table #name-field");
       nameField.parentElement.blur();
       this.props.setSortingByGlobalRole(NOT_SORTED);
 
