@@ -424,14 +424,18 @@ $breakpoint-alpha: 540px;
       
       
       th {
-        display: none;    
+        display: none;  
       }
 
       tr:first-child {
           border-top: solid 1px rgb(224, 224, 224);
       }
+
       
       td {
+
+        margin: .5em 1em;
+        padding: 1em !important;
 
         display: flex;
         align-items: center;
@@ -462,15 +466,6 @@ $breakpoint-alpha: 540px;
     }
 }
 
-#role-mapping-wrapper th, #role-mapping-wrapper td {
-
-    margin: .5em 1em;
-
-    @media (min-width: $breakpoint-alpha) { 
-      padding: 1em !important; 
-    }
-}
-
 /* tables responsive end */
 
 @media all and (max-width: 400px) {
@@ -479,6 +474,7 @@ $breakpoint-alpha: 540px;
          padding-left: 5px;
          padding-right: 15px;
     }
+
 
     aside#inter-panel {
         margin-left: 5px;
