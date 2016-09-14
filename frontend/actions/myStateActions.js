@@ -10,7 +10,6 @@ export const CHANGE_YEAR = 'CHANGE_YEAR';
 export const NEW_QUARTER_ADDED = 'NEW_QUARTER_ADDED';
 export const ADD_NEW_QUARTER_ERROR = 'ADD_NEW_QUARTER_ERROR';
 export const UPDATE_USER_OBJECTIVE = 'UPDATE_USER_OBJECTIVE';
-export const UPDATE_USER_OBJECTIVE_API = 'UPDATE_USER_OBJECTIVE_API';
 export const SOFT_DELETE_MY_OBJECTIVE_BY_ID = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID';
 export const SOFT_DELETE_MY_OBJECTIVE_BY_ID_API = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID_API';
 export const ADD_NEW_OBJECTIVE = 'ADD_NEW_OBJECTIVE';
@@ -128,22 +127,22 @@ export function addNewQuarterError(error) {
 	}
 }
 
-export function updateUserObjective(id, description) {
+export function updateUserObjective(id, description, title) {
 	return {
 		type: UPDATE_USER_OBJECTIVE,
 		id: id,
-		description
+		description,
+		title
 	};
 }
 
-export function updateUserObjectiveApi(id, description, callback, userId) {
+export function updateUserObjectiveApi(id, description, title, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
-		dispatch({ type: UPDATE_USER_OBJECTIVE_API });
 
-		return axios.put(('/api/userObjective/' + id), {"description": description})
+		return axios.put(('/api/userObjective/' + id), {"description": description, "title": title})
 		.then(response => {
-			dispatch(updateUserObjective(id, description));
+			dispatch(updateUserObjective(id, description, title));
 			dispatch({ type: REMOVE_REQUEST	});
 
 			/*

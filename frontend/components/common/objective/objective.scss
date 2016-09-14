@@ -2,152 +2,162 @@
 @import '../../common/styles/commonStyles';
 @import "media";
 
-.category{
-	.visible-category-content{
-		height: auto;
-	}
+.category {
+  .visible-category-content {
+    height: auto;
+  }
 
-	.hidden-category-content{
-		height:0;
-		overflow:hidden;
-	}
+  .hidden-category-content {
+    height: 0;
+    overflow: hidden;
+  }
 
-	.category-title{
-		cursor: pointer;
-		color: #777;
-		i{
-			margin-right: 8px;
-			font-size: 20px;
-			color: #aaa;  }
-		.obj-count-panel{
-			display: block;
-			float: right;
-			background: #cfd8dc;
-			padding: 3px 8px;
-			color: #fff;
-			font-size: 16px;
-			border-radius: 4px;
-			margin-left: 8px;
-		}
-	}
+  .category-title {
+    cursor: pointer;
+    color: #777;
+    i {
+      margin-right: 8px;
+      font-size: 20px;
+      color: #aaa;
+    }
+    .obj-count-panel {
+      display: block;
+      float: right;
+      background: #cfd8dc;
+      padding: 3px 8px;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+  }
 
-	.category-title-container{}
+  .category-title-container {
+  }
 
-	p {
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
-		color: #aaaaaa;
-		font-size: 20px;
-		text-align: center;
-		position: relative;
-		padding: 4px;
-		width: 100%;
-		margin: 10px auto;
-	}
+  p {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #aaaaaa;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    padding: 4px;
+    width: 100%;
+    margin: 10px auto;
+  }
 
-	.category-title {
-		text-transform: capitalize;
-		display: inline-block;
-		padding: 10px;
-		position: relative;
-		background: lighten($color-blue-grey, 50%);
-	}
-	.category-title:focus{
-		border-radius: 3px;
-	}
-	p:before {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 23px;
-		left: 0;
-		height: 0;
-		width: 100%;
-		border-top: 1px solid #aaaaaa;
-	}
+  .category-title {
+    text-transform: capitalize;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    background: lighten($color-blue-grey, 50%);
+  }
+  .category-title:focus {
+    border-radius: 3px;
+  }
+  p:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 23px;
+    left: 0;
+    height: 0;
+    width: 100%;
+    border-top: 1px solid #aaaaaa;
+  }
 }
 
-.home-objective{
-	@extend .clearfix;
+.home-objective {
+  @extend .clearfix;
 
-	button i{
-		pointer-events: none;
-	}
-	.approved{
-		display: inline-block;
-		margin-right: 8px;
-		cursor: pointer;
-	}
-	.delete-button-objective{
-		position: absolute;
-		top: 80px;
-		right: 17px;
-		padding: 7px 10px;
-		z-index: 1;
-	}
+  button i {
+    pointer-events: none;
+  }
 
-	.objective-edit{
-		position: absolute;
-		top: 80px;
-		right: 57px;
-		padding: 7px 10px;
-		z-index: 1;
-	}
-	.cancel-button-objective{
-		position: absolute;
-		top: 80px;
-		right: 17px;
-		padding: 7px 10px;
-		z-index: 1;
-	}
+  .approved {
+    display: inline-block;
+    margin-right: 8px;
+    cursor: pointer;
+  }
 
-	.btn-red-hover:focus{
+  .delete-button-objective {
+    position: absolute;
+    top: 80px;
+    right: 17px;
+    padding: 7px 10px;
+    z-index: 1;
+  }
+
+  .objective-edit {
+    position: absolute;
+    top: 80px;
+    right: 57px;
+    padding: 7px 10px;
+    z-index: 1;
+  }
+  .cancel-button-objective {
+    position: absolute;
+    top: 80px;
+    right: 17px;
+    padding: 7px 10px;
+    z-index: 1;
+  }
+
+  .btn-red-hover:focus {
     color: #fff;
     background-color: darken($color-red, 10%);
- 	}
-  .btn-blue-hover:focus{
+  }
+  .btn-blue-hover:focus {
     color: #fff;
     background-color: darken($color-blue, 10%);
   }
-  .btn-red:focus{
-  	color: #fff;
-  	background-color: darken($color-red, 10%);
- 	}
-  .btn-green:focus{
+  .btn-red:focus {
+    color: #fff;
+    background-color: darken($color-red, 10%);
+  }
+  .btn-green:focus {
     color: #fff;
     background-color: darken($color-green, 10%);
   }
 
-	.save{
-		position: absolute;
-		top: 80px;
-		right: 57px;
-		padding: 7px 10px;
-		background: #4caf50;
-		z-index: 1;
-	}
+  .save {
+    position: absolute;
+    top: 80px;
+    right: 57px;
+    padding: 7px 10px;
+    background: #4caf50;
+    z-index: 1;
+  }
 
-	.hidden {
-		display: none;
-	}
+  .hidden {
+    display: none;
+  }
 
-	.objective-archive {
-		position: absolute;
-		top: 45px;
-		right: 17px;
-		padding: 7px 10px;
-		z-index: 1;
-	}
+  .objective-archive {
+    position: absolute;
+    top: 45px;
+    right: 17px;
+    padding: 7px 10px;
+    z-index: 1;
+  }
 
-	.description-textarea {
-		display: block;
-		resize: vertical;
-		width: 80%;
-		max-height: 80px;
-		margin-bottom: 10px;
-		margin-top: 7px;
-		padding: 10px;
-		margin-right: 50px;
-	}
+  .name-input {
+    display: inline-block;
+    margin-bottom: 10px;
+    width: 60%;
+  }
+
+  .description-textarea {
+    display: block;
+    resize: vertical;
+    width: 80%;
+    max-height: 80px;
+    margin-bottom: 10px;
+    margin-top: 7px;
+    padding: 10px;
+    margin-right: 50px;
+  }
 }

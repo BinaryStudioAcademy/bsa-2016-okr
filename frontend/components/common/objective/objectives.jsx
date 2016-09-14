@@ -45,7 +45,7 @@ class Objectives extends Component {
 			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
 		}.bind(this);
 
-		let arch = changeTo ? 'archive' : 'unarchive'
+		let arch = changeTo ? 'archive' : 'unarchive';
 
 		sweetalert({
 			title: `Do you really want to ${arch} this objective?`,
