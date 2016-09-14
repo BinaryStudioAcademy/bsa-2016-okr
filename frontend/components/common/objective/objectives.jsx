@@ -45,7 +45,7 @@ class Objectives extends Component {
 			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
 		}.bind(this);
 
-		let arch = changeTo ? 'archive' : 'unarchive'
+		let arch = changeTo ? 'archive' : 'unarchive';
 
 		sweetalert({
 			title: `Do you really want to ${arch} this objective?`,
@@ -151,17 +151,18 @@ class Objectives extends Component {
 	}
 
 	render() {
-		console.log("hey mount");
 		const userId = this.props.userId;
-		const categories = this.props.categories;
+		const displayedCategories = this.props.categories.list.filter((category) => {
+			return !category.isDeleted;
+		});
 		const { me } = this.props.myState;
 		const { user } = this.props.user;
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
-		let editing = false;
-		let activeKeyResult = '';
-		let	editingKeyResult = false;
+
+		// Edit key result on HomePage or UserPage
+		let editKeyResult = {};
 
 		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
 		let isItHomePage;
@@ -174,15 +175,30 @@ class Objectives extends Component {
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
+
+			// Edit key result on UserPage
+			editKeyResult = {
+				id: this.props.user.editKeyResultId,
+				isEditing: this.props.user.editKeyResultIsEditing,
+				enableEdit: this.props.otherPersonActions.editKeyResultEnableEditOnUserPage,
+				disableEdit: this.props.otherPersonActions.editKeyResultDisabledEditOnUserPage,
+				editTitleAndDifficulty: this.props.otherPersonActions.editKeyResultEditTitleAndDifficulty,
+			};
 		} else {
 			/*console.log('me');*/
 			isItHomePage = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
-			editing = this.props.myState.editing;
-			activeKeyResult = this.props.myState.activeKeyResult;
-			editingKeyResult = this.props.myState.editingKeyResult;
+
+			// Edit key result on HomePage
+			editKeyResult = {
+				id: this.props.myState.editKeyResultId,
+				isEditing: this.props.myState.editKeyResultIsEditing,
+				enableEdit: this.props.myStateActions.editKeyResultEnableEditOnHomePage,
+				disableEdit: this.props.myStateActions.editKeyResultDisabledEditOnHomePage,
+				editTitleAndDifficulty: this.props.myStateActions.editKeyResultEditTitleAndDifficulty,
+			};
 		}
 
 		if (( CONST.currentYear < selectedYear ||
@@ -192,7 +208,6 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-		//console.log('objectives', userInfo.objectives)
 
 		return (
 			<div id="home-page-wrapper">
@@ -209,7 +224,7 @@ class Objectives extends Component {
 				<div id='objectives'>
 					<ObjectivesList
 						mentorId={userInfo.mentorId}
-						categories={ categories.list }
+						categories={ displayedCategories }
 						isAdmin={ isAdmin }
 						archived = { archived }
 						objectives={ userInfo.objectives }
@@ -222,11 +237,7 @@ class Objectives extends Component {
 						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage={ isItHomePage }
-						setActiveKeyResultOnHomePage = { this.props.myStateActions.setActiveKeyResultOnHomePage }
-						editing = { editing }
-						activeKeyResult = { activeKeyResult }
-						editingKeyResult = { editingKeyResult }
-						cancelEdit = { this.props.myStateActions.cancelEdit }
+						editKeyResult = { editKeyResult }
 					/>
 				</div>
 			</div>
@@ -234,23 +245,7 @@ class Objectives extends Component {
 	}
 }
 
-Objectives.defaultProps = {today: new Date()};
-
-function mapDispatchToProps(dispatch) {
-	return {
-		myStateActions: bindActionCreators(myStateActions, dispatch),
-		objectiveActions: bindActionCreators(objectiveActions, dispatch),
-		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),
-	}
-}
-
-function mapStateToProps(state) {
-	return {
-		myState: state.myState,
-		categories: state.categories,
-		user: state.userPage,
-	};
-}
+Objectives.defaultProps = { today: new Date() };
 
 function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let quarters = [];
@@ -282,6 +277,22 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	  objectives: objectives,
 	  id: id,
 	  mentorId: mentor
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		myStateActions: bindActionCreators(myStateActions, dispatch),
+		objectiveActions: bindActionCreators(objectiveActions, dispatch),
+		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),
+	}
+}
+
+function mapStateToProps(state) {
+	return {
+		myState: state.myState,
+		categories: state.categories,
+		user: state.userPage,
 	};
 }
 

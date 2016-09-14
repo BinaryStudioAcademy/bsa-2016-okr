@@ -1,4 +1,4 @@
-const authOnly = require('./authOnly')
+const authOnly = require('./authOnly');
 const response = require('./response');
 
 module.exports = function(app) {

@@ -16,15 +16,16 @@ import {
 	ADD_NEW_QUARTER_ERROR,
 	CHANGE_ARCHIVE_STATUS,
 	CHANGE_ARCHIVE_STATUS_LOCAL,
-	RECEIVED_ME_BASIC
+	RECEIVED_ME_BASIC,
+	EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE,
+	EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE
 } from '../actions/myStateActions';
 
 import {
 	ADD_NEW_KEY_RESULT_TO_OBJECTIVE
 } from '../actions/keyResultActions';
-
-import { SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE,
-		     CANCEL_EDIT_KEY_RESULT} from '../actions/myStateActions';
 
 const initialState = {
 	selectedTab: currentQuarter,
@@ -32,9 +33,8 @@ const initialState = {
 	me: {
 		"localRole": ""
 	},
-	editing: false,
-	activeKeyResult: '',
-	editingKeyResult: false
+	editKeyResultId: '',
+	editKeyResultIsEditing: false,
 };
 
 export default function myObjectivesReducer(state = initialState, action = {}) {
@@ -120,10 +120,10 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 
 		case UPDATE_USER_OBJECTIVE: {
-			const { id, description } = action;
+			const { id, description, title } = action;
 
 			return Object.assign({}, state, {
-				me: updateObjectiveDescription(state.me, id, description)
+				me: updateObjectiveDescription(state.me, id, description, title)
 			});
 
 		}
@@ -204,20 +204,36 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return state;
 		}
 
-		case SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE: {
-			const { activeKeyResult } = action;
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE: {
+			let { data } = action;
+			let { objectiveId, keyResultId, title, difficulty } = data;
 
 			return Object.assign({}, state, {
-				activeKeyResult,
-				editingKeyResult: true,
-				editing: false
+				me: setTitleAndDifficultyToKeyResult(state.me, objectiveId, keyResultId, title, difficulty),
+			});
+		}
+
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE: {
+			let { data } = action;
+
+			console.log(EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE);
+			console.log(data);
+
+			return state;
+		}
+
+		case EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE: {
+			const { editKeyResultId } = action;
+
+			return Object.assign({}, state, {
+				editKeyResultId,
+				editKeyResultIsEditing: true,
 			})
 		}
 
-		case CANCEL_EDIT_KEY_RESULT: {
+		case EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE: {
 			return Object.assign({}, state, {
-				editing: false,
-				editingKeyResult: false
+				editKeyResultIsEditing: false
 			})
 		}
 
@@ -227,11 +243,12 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 	}
 }
 
-export function updateObjectiveDescription(me, id, description) {
+export function updateObjectiveDescription(me, id, description, title) {
 	var meCopy = Object.assign({}, me);
 	meCopy.quarters.forEach((quarter) => {
 		for(var i=0 ; i<quarter.userObjectives.length; i++) {
 			if(quarter.userObjectives[i]._id == id) {
+				quarter.userObjectives[i].title = title;
 				quarter.userObjectives[i].description = description;
 			}
 		}
@@ -318,6 +335,46 @@ function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
 	return meCopy;
 }
 
+function setTitleAndDifficultyToKeyResult(me, objectiveId, keyResultId, title, difficulty) {
+	const meCopy = Object.assign({}, me);
+
+	let quarterIndex = -1;
+	let	userObjectiveIndex = -1;
+	let	keyResultIndex = -1;
+
+	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
+		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
+			return userObjective._id === objectiveId
+		});
+
+		if(userObjectiveFoundedIndex !== -1) {
+			userObjectiveIndex = userObjectiveFoundedIndex;
+			return true;
+		}
+
+		return false;
+	});
+
+	if(quarterFoundedIndex !== -1) {
+		quarterIndex = quarterFoundedIndex;
+
+		if (userObjectiveIndex !== -1) {
+			let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
+				return keyResult._id === keyResultId;
+			});
+
+			if (keyResultFoundedIndex !== -1) {
+				keyResultIndex = keyResultFoundedIndex;
+
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].templateId.title = title;
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].templateId.difficulty = difficulty;
+			}
+		}
+	}
+
+	return meCopy;
+}
+
 function addNewObjectiveToMe(me, quarterId, objective) {
 	let meCopy = Object.assign({}, me);
 
@@ -351,24 +408,17 @@ export function changeArchiveInMyObjective (me, objectiveId, flag) {
 	var meCopy = Object.assign({}, me);
 	var done = false;
 
-console.log('IN ARCHIVE')
 	meCopy.quarters.forEach((quarter) => {
 		if(done)
 			return;
-console.log('IN QUARTER')
 		quarter.userObjectives.forEach((objective) => {
-console.log('----IN OBJ----')
-console.log(objective._id);
-console.log(objectiveId);
 			if (objective._id == objectiveId){
 				objective.isArchived = flag;
-				console.log('objective archived >>>>')
-				console.log(objective);
 				done = true;
 				return;
 			}
 		})
-	})
+	});
 
 	return meCopy;
 }

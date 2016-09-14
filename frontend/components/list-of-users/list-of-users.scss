@@ -25,6 +25,7 @@
 			position: relative;
 			background: lighten($color-blue-grey, 50%);
 			z-index: 10;
+			cursor:pointer;
 		}
 
 		p:after {
@@ -84,16 +85,16 @@
 		box-sizing: border-box;
 		display: inline-block;
 		height: 92px;
-		
+
 		&:hover{
 			background-color: #fff;
-			
+
 			::-webkit-progress-bar{
 				border: 4px solid #fff;
 			}
 		}
 	}
-	
+
 	.userItem{
 		position: relative;
 		color: #555;
@@ -146,14 +147,14 @@
 			font-size: 14px;
 		}
 		.progress-bar{
-			margin-right: 50px; 
+			margin-right: 50px;
 			width: 37%;
 			padding-top: 23px;
-			
+
 			.progressValue {
 				top: 43px;
 			}
-		}	
+		}
 
 		img{
 			margin: 0 10px;
@@ -167,7 +168,7 @@
 	}
 }
 
-@media all 
+@media all
 and (max-width: 1400px)
 and (min-width: 550px)
 {
@@ -183,12 +184,12 @@ and (min-width: 550px)
 		.userItemDiv{
 			width: 100%;
 			margin-left: 0%;
-			display: block;	
+			display: block;
 		}
 	}
 }
 
-@media all 
+@media all
 and (max-width: 550px)
 {
 	.list-of-users-dashboard{
@@ -215,11 +216,11 @@ and (max-width: 550px)
 					width: 220px;
 					margin-left: 5px;
 					padding-top: 5px;
-					
+
 					.progressValue {
 						top: 25px;
 					}
 				}
-			}	
+			}
 	}
 }

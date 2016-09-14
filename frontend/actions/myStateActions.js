@@ -10,7 +10,6 @@ export const CHANGE_YEAR = 'CHANGE_YEAR';
 export const NEW_QUARTER_ADDED = 'NEW_QUARTER_ADDED';
 export const ADD_NEW_QUARTER_ERROR = 'ADD_NEW_QUARTER_ERROR';
 export const UPDATE_USER_OBJECTIVE = 'UPDATE_USER_OBJECTIVE';
-export const UPDATE_USER_OBJECTIVE_API = 'UPDATE_USER_OBJECTIVE_API';
 export const SOFT_DELETE_MY_OBJECTIVE_BY_ID = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID';
 export const SOFT_DELETE_MY_OBJECTIVE_BY_ID_API = 'SOFT_DELETE_MY_OBJECTIVE_BY_ID_API';
 export const ADD_NEW_OBJECTIVE = 'ADD_NEW_OBJECTIVE';
@@ -25,8 +24,11 @@ export const RECEIVED_ME_BASIC = 'RECEIVED_ME_BASIC';
 export const CHANGE_ARCHIVE_STATUS = 'CHANGE_ARCHIVE_STATUS';
 export const CHANGE_ARCHIVE_STATUS_LOCAL = 'CHANGE_ARCHIVE_STATUS_LOCAL';
 
-export const SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE = 'SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE';
-export const CANCEL_EDIT_KEY_RESULT = 'CANCEL_EDIT_KEY_RESULT';
+export const EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE = 'EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE';
+export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE = 'EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE';
+
 
 const session = require('../../backend/config/session');
 
@@ -125,22 +127,22 @@ export function addNewQuarterError(error) {
 	}
 }
 
-export function updateUserObjective(id, description) {
+export function updateUserObjective(id, description, title) {
 	return {
 		type: UPDATE_USER_OBJECTIVE,
 		id: id,
-		description
+		description,
+		title
 	};
 }
 
-export function updateUserObjectiveApi(id, description, callback, userId) {
+export function updateUserObjectiveApi(id, description, title, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
-		dispatch({ type: UPDATE_USER_OBJECTIVE_API });
 
-		return axios.put(('/api/userObjective/' + id), {"description": description})
+		return axios.put(('/api/userObjective/' + id), {"description": description, "title": title})
 		.then(response => {
-			dispatch(updateUserObjective(id, description));
+			dispatch(updateUserObjective(id, description, title));
 			dispatch({ type: REMOVE_REQUEST	});
 
 			/*
@@ -319,18 +321,49 @@ export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, data)
 	};
 }
 
-export function setActiveKeyResultOnHomePage(activeKeyResult) {
+export function editKeyResultEnableEditOnHomePage(editKeyResultId) {
 	const action = {
-		type: SET_ACTIVE_KEY_RESULT_ON_HOME_PAGE,
-		activeKeyResult
+		type: EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE,
+		editKeyResultId
 	};
 
 	return action;
 }
 
-export function cancelEdit() {
+export function editKeyResultDisabledEditOnHomePage() {
 	const action = {
-		type: CANCEL_EDIT_KEY_RESULT,
+		type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE,
 	};
 	return action;
+}
+
+export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
+	return(dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
+				.then(response => {
+					dispatch(keyResultTitleAndDifficultyChanged(response.data));
+					dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE });
+					dispatch({ type: REMOVE_REQUEST });
+				})
+				.catch(response => {
+					dispatch(keyResultTitleAndDifficultyError(response.data));
+					dispatch({ type: REMOVE_REQUEST });
+				});
+	};
+}
+
+export function keyResultTitleAndDifficultyChanged(data) {
+	return {
+		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE,
+		data,
+	};
+}
+
+export function keyResultTitleAndDifficultyError(data) {
+	return {
+		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE,
+		data,
+	};
 }

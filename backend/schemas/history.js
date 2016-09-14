@@ -6,6 +6,8 @@ var historySchema = new Schema({
 	keyResult: {type: mongoose.Schema.Types.ObjectId, ref: 'KeyResult'},
 	userObjective: {type: mongoose.Schema.Types.ObjectId, ref: 'UserObjective'},
 	userKeyResult: Schema.Types.ObjectId,
+	userKeyResultTitle: String,
+	userKeyResultDifficulty: String,
 	userKeyResultScore: Number,
 	objective: {type: mongoose.Schema.Types.ObjectId, ref: 'Objective'},
 	category: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},

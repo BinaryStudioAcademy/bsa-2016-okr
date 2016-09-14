@@ -1,54 +1,51 @@
-import React from 'react';
-import './key-result.scss';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import * as actions from "../../actions/okrManagingActions.js";
+import React, { Component, PropTypes } from 'react';
 
 var CONST = require('../../../backend/config/constants');
 
+import './key-result.scss';
 
-class KeyResult extends React.Component {
+class KeyResult extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleDelKeyRes = this.handleDelKeyRes.bind(this);
+		this.deleteKeyResult = this.deleteKeyResult.bind(this);
 	}
 
-	handleDelKeyRes() {
+	deleteKeyResult() {
 		this.props.delete(this.props.num);
 	}
 
-
 	render() {
-		if(this.props.keyResult[this.props.num].title != undefined && this.props.keyResult[this.props.num].difficulty != undefined){
-			this.refs.keyResultTitle.value = this.props.keyResult[this.props.num].title;
-			this.refs.keyResultDifficulty.value = this.props.keyResult[this.props.num].difficulty;
+		let { keyResult, num } = this.props;
+		
+		if(keyResult.title != undefined && keyResult.difficulty != undefined) {
+			this.refs.keyResultTitle.value = keyResult.title;
+			this.refs.keyResultDifficulty.value = keyResult.difficulty;
 		}
+
 		return (
 				<li className="keyresult-group">
-					<i className="fi flaticon-multiply delete-new-key-result" title='Cancel' tabIndex='0' onClick={this.handleDelKeyRes} aria-hidden="true"></i>
+					<i className="fi flaticon-multiply delete-new-key-result" 
+						title='Cancel' 
+						tabIndex='0' 
+						onClick={ this.deleteKeyResult } 
+						aria-hidden="true"
+					></i>
 					<input type='text' className='new-key-result-title' ref="keyResultTitle" 
 									 placeholder='Enter key result title' />
 					<select className='new-key-result-difficulty' ref="keyResultDifficulty" >
-						<option value={CONST.keyResult.EASY}>{CONST.keyResult.EASY}</option>
-						<option value={CONST.keyResult.INTERMEDIATE}>{CONST.keyResult.INTERMEDIATE}</option>
-						<option value={CONST.keyResult.ADVANCED}>{CONST.keyResult.ADVANCED}</option>
+						<option value={ CONST.keyResult.EASY }>{ CONST.keyResult.EASY }</option>
+						<option value={ CONST.keyResult.INTERMEDIATE }>{ CONST.keyResult.INTERMEDIATE }</option>
+						<option value={ CONST.keyResult.ADVANCED }>{ CONST.keyResult.ADVANCED }</option>
 					</select>
 				</li>
 		)
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actions, dispatch);
-}
+KeyResult.propTypes = {
+	keyResult: PropTypes.object.isRequired,
+	num: PropTypes.number.isRequired,
+};
 
-function mapStateToProps(state) {
-  return {
-    index: state.okrManaging.index
-  };
-}
-
-const KeyResultConnected = connect(mapStateToProps, mapDispatchToProps)(KeyResult);
-export default KeyResultConnected;
+export default KeyResult;

@@ -5,6 +5,8 @@ export const SEARCH_USER = 'SEARCH_USER';
 export const GET_USERS_LIST = 'GET_USERS_LIST';
 export const RECEIVED_USERS_LIST = 'RECEIVED_USERS_LIST';
 export const USERS_LIST_ERROR = 'USERS_LIST_ERROR';
+export const SORT_USERS = 'SORT_USERS';
+export const SORT_APPRENTICES = 'SORT_APPRENTICES';
 
 export function getUsersList() {
 
@@ -49,4 +51,18 @@ export function search(value) {
 		searchValue: value
 	};
 	return action;
+}
+
+export function sortUsers(order) {
+	return {
+		type: SORT_USERS,
+		order: order
+	};
+}
+
+export function sortApprentices(order) {
+	return {
+		type: SORT_APPRENTICES,
+		order: order
+	};
 }

@@ -4,9 +4,10 @@
 $primary-color: #2c3e50;
 $color-white: #fefefe;
 $color-grey: #616161;
+$color-blue-grey: #607d8b;
+$color-light-grey: #9E9E9E;
 $color-black: #212121;
 $color-blue: #2196f3;
-$color-blue-grey: #607d8b;
 $color-aliceblue: #acc;
 $color-green: #4caf50;
 $color-red:  #f44336;
@@ -18,7 +19,7 @@ $color-orange: #ffa502;
 */
 $header-height: 70px;
 $left-nav-width: 60px;
-$left-nav-width-opened: 190px;
+$left-nav-width-opened: 210px;
 $right-stat-panel-width: 350px;
 $border-radius: 4px;
 
@@ -39,8 +40,8 @@ $new-obj-index: 45;
 /*
 ** General styles to extend
 */
-.clearfix{
-  &:after{
+.clearfix {
+  &:after {
     content: '';
     display: block;
     height: 0;

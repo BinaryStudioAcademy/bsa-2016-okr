@@ -47,6 +47,9 @@ class ObjectiveItem extends Component {
 		this.refs.deleteObjective.classList.add('hidden');
 		this.refs.edit.classList.add('hidden');
 		this.refs.deleteObjective.classList.add('hidden');
+		this.refs.objectiveTitle.classList.add('hidden');
+
+		this.refs.objectiveTitleEdit.classList.remove('hidden');
 		this.refs.descriptionEdit.classList.remove('hidden');
 		this.refs.cancelEdit.classList.remove('hidden');
 		this.refs.saveEdit.classList.remove('hidden');
@@ -56,19 +59,23 @@ class ObjectiveItem extends Component {
 		//handleCancelEdit();
 		// bad habbit copypaste code :/
 		let changedDescription = this.refs.descriptionEdit.value;
-
+		let changedTitle = this.refs.objectiveTitleEdit.value;
+		let isItHomePage = this.props.isItHomePage;
 
 		if (this.props.mentorId != undefined)
-			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription,
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription, changedTitle,
 			notifications.notificationApprenticeUpdateObjective, this.props.mentorId);
 		else
-			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription);
+			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription, changedTitle);
 		//updateUserObjectiveApi
 
 		this.refs.descriptionEdit.classList.add('hidden');
 		this.refs.description.refs.description.classList.remove('hidden');
 		this.refs.edit.classList.remove('hidden');
 		this.refs.deleteObjective.classList.remove('hidden');
+		this.refs.objectiveTitle.classList.remove('hidden');
+
+		this.refs.objectiveTitleEdit.classList.add('hidden');
 		this.refs.cancelEdit.classList.add('hidden');
 		this.refs.saveEdit.classList.add('hidden');
 	}
@@ -78,6 +85,9 @@ class ObjectiveItem extends Component {
 		this.refs.description.refs.description.classList.remove('hidden');
 		this.refs.edit.classList.remove('hidden');
 		this.refs.deleteObjective.classList.remove('hidden');
+		this.refs.objectiveTitle.classList.remove('hidden');
+
+		this.refs.objectiveTitleEdit.classList.add('hidden');
 		this.refs.cancelEdit.classList.add('hidden');
 		this.refs.saveEdit.classList.add('hidden');
 	}
@@ -90,7 +100,7 @@ class ObjectiveItem extends Component {
 		let archiveButton;
 		let isArchived = this.props.isArchived;
 		let isAdmin = this.props.isAdmin;
-		let notApproved;
+		let approved;
 
 		let objective = this.props.item;
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
@@ -98,27 +108,21 @@ class ObjectiveItem extends Component {
 		let isItHomePage = this.props.isItHomePage;
 
 		if(isAdmin) {
-			if(!isArchived)
+			/*if(!isArchived)
 			archiveButton = (<button className="btn btn-blue-hover objective-archive"
 										title="archive"
 										onClick={() => {changeArchive(true, objective._id)}}>
 										<i className="fi flaticon-archive-2"></i>
 										</button>)
-		else 
+		else
 			archiveButton = (<button className="btn btn-blue-hover objective-archive"
 										title="unarchive"
 										onClick={() => {changeArchive(false, objective._id)}}>
 										<i className="fi flaticon-bookmark-1"></i>
-										</button>)
+										</button>) */
 		}
 
 		if(!isArchived){
-			editButton 	= 	(<button ref="edit"
-											title="Edit"
-										 	className="btn btn-blue-hover objective-edit"
-										 	onClick={ this.handleEdit }>
-												<i className="fi flaticon-edit"></i>
-											</button>);
 			saveButton 	= 	(<button ref="saveEdit"
 											className="btn btn-green save hidden"
 											onClick={ this.handleSave }
@@ -142,16 +146,35 @@ class ObjectiveItem extends Component {
 											</button>);
 
 			if (!objective.templateId.isApproved) {
-        notApproved = <span className='fi flaticon-push-pin notApproved' title='not approved'></span>
+				editButton = (<button ref="edit"
+											title="Edit"
+											className="btn btn-blue-hover objective-edit"
+											onClick={ this.handleEdit }>
+											<i className="fi flaticon-edit"></i>
+											</button>);
+			}
+
+			if (objective.templateId.isApproved) {
+        approved = <span className='fi flaticon-push-pin approved' title='approved'></span>
       }
 		}
-	//	console.log("objective >>> ", objective);
+
 		return (
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
-				{ notApproved }
-				<div className='name'>{ objective.title ? objective.title : objective.templateId.title }</div>
+				{ approved }
+				<div
+						ref="objectiveTitle"
+						className='name'>{ objective.title ? objective.title : objective.templateId.title }
+				</div>
+				<input
+						ref="objectiveTitleEdit"
+						type="text"
+						className='name-input hidden'
+						defaultValue={ objective.title ? objective.title : objective.templateId.title }
+				/>
+
 				<ObjectiveDescription
 						ref="description"
 						description={ objective.description ? objective.description : objective.templateId.description }
@@ -165,7 +188,7 @@ class ObjectiveItem extends Component {
 				{ saveButton }
 				{ deleteButton }
 				{ cancelButton }
-				{ archiveButton }
+{/*				{ archiveButton }*/}
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults
@@ -177,11 +200,7 @@ class ObjectiveItem extends Component {
 						changeScore={ changeKeyResultScore }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage = { isItHomePage }
-						setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
-						editing = { this.props.editing }
-						activeKeyResult = { this.props.activeKeyResult }
-						editingKeyResult = { this.props.editingKeyResult }
-						cancelEdit = { this.props.cancelEdit }
+						editKeyResult = { this.props.editKeyResult }
 				/>
 			</div>
 			</div>

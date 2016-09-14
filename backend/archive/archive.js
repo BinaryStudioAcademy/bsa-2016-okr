@@ -1,20 +1,29 @@
-var util = require('util');
-var mongoose = require('mongoose');
-var async = require('async');
-var dbConfig = require('../config/db');
-var UserObjective = require('../schemas/userObjective');
-var Quarter = require('../schemas/quarter');
-var QuarterRepository = require('../repositories/quarter.js');
-var CONST = require('../config/constants.js');
-var Objective = require('../schemas/objective.js');
-var KeyResult = require('../schemas/keyResult.js');
-mongoose.connect(dbConfig.uri, dbConfig.opts);
 
-mongoose.connection.once('open', () => {
-	archive();
-});
+// mongoose.connect(dbConfig.uri, dbConfig.opts);
 
-function archive() {
+// mongoose.connection.once('open', () => {
+// 	archive();
+// });
+
+module.exports = function () {
+	var util = require('util');
+	var mongoose = require('mongoose');
+	var async = require('async');
+	var dbConfig = require('../config/db');
+	var UserObjective = require('../schemas/userObjective');
+	var Quarter = require('../schemas/quarter');
+	var QuarterRepository = require('../repositories/quarter.js');
+	var CONST = require('../config/constants.js');
+	var Objective = require('../schemas/objective.js');
+	var KeyResult = require('../schemas/keyResult.js');
+	// mongoose.connect(dbConfig.uri, dbConfig.opts);
+
+	// mongoose.connection.once('open', () => {
+	// 	archive();
+	// });
+
+	console.log('doing')
+
 	var quarterModel = Quarter;
 	var userObjectiveModel = UserObjective;
 	var idList =[];
@@ -60,6 +69,6 @@ function archive() {
 	], (err) => {
 		if(err)
 			console.log(err);
-		mongoose.connection.close();
+		//mongoose.connection.close();
 	})
 }

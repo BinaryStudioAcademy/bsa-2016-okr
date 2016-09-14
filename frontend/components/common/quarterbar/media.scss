@@ -1,0 +1,134 @@
+@import "../styles/commonStyles";
+@import "../variables";
+@import "../styles/media";
+
+
+@include mobile {
+  #quarter-bar{
+    .quarters-wrapper{
+      margin-left: 0;
+      border: 1px solid #607D8B;
+      border-radius: 0 0 3px 3px;
+      position: relative;
+      height: 32px;
+      text-align: center;
+      background-color: #fff;
+      overflow: hidden;
+      &.visible{
+        overflow: visible;
+        border-radius: 0;
+        #show-quarters{
+          background-color: lighten($color-blue-grey, 45%);
+        }
+      }
+
+      #show-quarters{
+        display: block;
+        width: 100%;
+        padding: 7px 0;
+        border-radius: 0;
+        color: #607D8B;
+        background-color: transparent;
+        &:hover{
+          background-color: lighten($color-blue-grey, 45%);
+        }
+      }
+    }
+
+    #business-year {
+      display: block;
+      float: none;
+      width: 100%;
+      border-radius: 3px 3px 0 0;
+      border-bottom: none;
+    }
+  }
+
+  #quarter-bar ul {
+    display: block;
+    position: absolute;
+    top: 33px;
+    left: -1px;
+    right: -1px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
+    z-index: 5;
+
+    li{
+      display: block;
+      border: 1px solid #607D8B;
+      border-radius: 0;
+      border-bottom: none;
+    }
+    li:first-child{
+      border-top: none;
+      border-radius: 0 ;
+    }
+    li:last-child{
+      border-bottom: 1px solid #607D8B;
+      border-radius: 0 0 3px 3px;
+    }
+  }
+}
+
+@include tablet {
+  #quarter-bar{
+
+    .quarters-wrapper{
+      margin-left: 120px;
+      border: 1px solid #607D8B;
+      position: relative;
+      height: 32px;
+      text-align: center;
+      background-color: #fff;
+      border-radius: 0 3px 3px 0;
+      overflow: hidden;
+      &.visible{
+        overflow: visible;
+        border-radius: 0 3px 0 0;
+        #show-quarters{
+          background-color: lighten($color-blue-grey, 45%);
+        }
+      }
+
+      #show-quarters{
+        display: block;
+        width: 100%;
+        padding: 7px 0;
+        border-radius: 0;
+        color: #607D8B;
+        background-color: transparent;
+        &:hover{
+          background-color: lighten($color-blue-grey, 45%);;
+        }
+      }
+    }
+
+    #business-year {
+      border-radius: 3px 0 0 3px;
+      border-right-width: 0;
+    }
+  }
+
+  #quarter-bar ul {
+    display: block;
+    position: absolute;
+    top: 32px;
+    left: -1px;
+    right: -1px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
+    z-index: 5;
+    li{
+      display: block;
+      border: 1px solid #607D8B;
+      border-radius: 0;
+      border-bottom: none;
+    }
+    li:first-child{
+      border-radius: 0;
+    }
+    li:last-child{
+      border-bottom: 1px solid #607D8B;
+      border-radius: 0 0 3px 3px;
+    }
+  }
+}

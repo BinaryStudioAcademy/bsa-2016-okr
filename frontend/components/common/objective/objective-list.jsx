@@ -61,11 +61,7 @@ class ObjectiveList extends React.Component{
 																	changeKeyResultScoreOne={ changeKeyResultScore }
 																	softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 																	isItHomePage = { isItHomePage }
-																	setActiveKeyResultOnHomePage = { this.props.setActiveKeyResultOnHomePage }
-																	editing = { this.props.editing }
-																	activeKeyResult = { this.props.activeKeyResult }
-																	editingKeyResult = { this.props.editingKeyResult }
-																	cancelEdit = { this.props.cancelEdit }
+																	editKeyResult = { this.props.editKeyResult }
 						/>
 					});
 

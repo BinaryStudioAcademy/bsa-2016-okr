@@ -55,6 +55,23 @@ class RecycleBin extends Component {
 		
 		let showFilters = this.props.recycleBin.showRecycleBinFilters;
 
+
+		if (this.props.recycleBin.recycleBinItems.length === 0) {
+
+			return (
+				<div id="rec-bin-wrapper">
+					<div className="recycle-bin-header">
+
+						<div className="recycle-bin-header-row">
+							<p><span>Recycle bin</span></p>
+						</div>
+					</div>
+
+						<h1 className="placeholder">Recycle bin is empty!</h1>
+				</div>
+			);
+		}
+
 		return (
 			<div id="rec-bin-wrapper">
 					<div className="recycle-bin-header">

@@ -1,0 +1,31 @@
+@import "../styles/media";
+
+/*
+**  Desktops
+*/
+@include desktop {
+  #objectives .home-objective {
+    //styles go here
+  }
+}
+
+/*
+**  Laptop
+*/
+@include laptop {
+
+}
+
+/*
+**  Tablet
+*/
+@include tablet {
+
+}
+
+/*
+**  Mobile
+*/
+@include mobile {
+
+}

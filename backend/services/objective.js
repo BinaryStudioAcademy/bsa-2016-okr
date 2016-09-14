@@ -99,8 +99,9 @@ ObjectiveService.prototype.add = function(authorId, objective, keyResults, callb
 	});
 };
 
-ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, keyResultId, flag, callback){
+ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, keyResultId, flag, callback) {
 	var historyType = CONST.history.type.UPDATE;
+	
 	async.waterfall([
 		(callback) => {
 			ObjectiveRepository.getById(objectiveId, (err, objective) => {
@@ -108,7 +109,7 @@ ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, 
 					return callback(err, null);
 				}
 
-				if(ValidateService.isEmpty(objective)) {
+				if(isEmpty(objective)) {
 					err = new Error('Objective not found');
 					return callback(err, null);
 				}
@@ -120,15 +121,16 @@ ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, 
 			var keyResult = objective.defaultKeyResults.find((keyResult)=>{
 				return keyResult.equals(keyResultId);
 			});
+
 			var index = objective.defaultKeyResults.findIndex((keyResult)=>{
 				return keyResult.equals(keyResultId);
 			});
 
 			if (flag && keyResult == undefined) {
-				objective.defaultKeyResults.push(keyResultId)
+				objective.defaultKeyResults.push(keyResultId);
+			} else if (!flag && keyResult != undefined) {
+				objective.defaultKeyResults.splice(index, 1);
 			}
-			else if (!flag && keyResult != undefined)
-				objective.defaultKeyResults.splice(index, 1)
 
 			/*if(index === -1) {
 				var err = new Error('Key result not found in objective');

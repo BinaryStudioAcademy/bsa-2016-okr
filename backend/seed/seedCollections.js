@@ -458,6 +458,11 @@ function randomUserInfo(users) {
 
 function setInfoToUser(users, userinfos) {
 	users.forEach((user, i) => {
+		
+		if (userinfos[i].globalRole === CONST.user.globalRole.ADMIN) {
+			users[i].localRole = CONST.user.localRole.ADMIN;
+		}
+
 		user.userInfo = userinfos[i]._id;
 	});
 }

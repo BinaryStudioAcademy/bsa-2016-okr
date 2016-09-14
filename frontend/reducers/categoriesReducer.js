@@ -51,10 +51,10 @@ export default function categoriesReducer(state = initialState, action = {}) {
 		return state;
 
   case RECIVED_DELETE_CATEGORY: {
-		const { id } = action;
+		const { id = '', flag } = action;
 
 		return Object.assign({}, state, {
-			list: softDelete(state.list, id),
+			list: softDelete(state.list, id, flag),
 		});
 	}
 
@@ -107,14 +107,18 @@ function addCategory(list, data){
 	return categories
 }
 
-function softDelete(list, id){
-	 let categories = JSON.parse(JSON.stringify(list));
-	  for (let i = 0; i < categories.length; i++) {
-          if (categories[i]._id == id) {
-            categories.splice(i, 1);
-          }
-    }
-    return categories;
+function softDelete(oldCategories, id, flag) {
+	let categories = [].concat(oldCategories);
+
+	let index = categories.findIndex((category) => {
+		return category._id === id;
+	});
+
+	if(index !== -1) {
+		categories[index].isDeleted = flag;
+	}
+
+	return categories;
 }
 
 function update(list, id, category){

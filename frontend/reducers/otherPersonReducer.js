@@ -1,16 +1,20 @@
 import { GET_USER,
-				 RECEIVED_USER,
-				 CHANGE_TAB,
-				 CHANGE_YEAR,
-				 TOOK_APPRENTICE,
-				 REMOVED_APPRENTICE,
-				 ADDED_NEW_OBJECTIVE_OTHER_USER } from '../actions/otherPersonActions.js'
+	RECEIVED_USER,
+	CHANGE_TAB,
+	CHANGE_YEAR,
+	TOOK_APPRENTICE,
+	REMOVED_APPRENTICE,
+	ADDED_NEW_OBJECTIVE_OTHER_USER,
+	EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE,
+	EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE } from '../actions/otherPersonActions.js'
 import { CHANGED_KEYRESULT_SCORE,
-				 CHANGED_KEYRESULT_SCORE_ERROR,
-				 SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
-				 SOFT_DELETE_MY_OBJECTIVE_BY_ID,
-				 UPDATE_USER_OBJECTIVE,
-				 CHANGE_ARCHIVE_STATUS_LOCAL } from '../actions/myStateActions.js'
+	CHANGED_KEYRESULT_SCORE_ERROR,
+	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
+	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
+	UPDATE_USER_OBJECTIVE,
+	CHANGE_ARCHIVE_STATUS_LOCAL } from '../actions/myStateActions.js'
 import { ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON } from '../actions/keyResultActions';
 
 import { currentYear, currentQuarter } from '../../backend/config/constants'
@@ -19,23 +23,27 @@ import { changeArchiveInMyObjective } from './myStateReducer.js';
 const initialState = {
 	user: {
 		quarters: [{
-			userObjectives:[]
+			userObjectives: []
 		}]
 	},
 	waiting: true,
 	selectedTab: currentQuarter,
-	selectedYear: currentYear
+	selectedYear: currentYear,
+	editKeyResultId: '',
+	editKeyResultIsEditing: false,
 };
 
 export default function otherPersonReducer(state = initialState, action) {
 
 	switch (action.type) {
-		case GET_USER: {
+		case GET_USER:
+		{
 			return Object.assign({}, state, {
 				waiting: true,
 			});
 		}
-		case RECEIVED_USER: {
+		case RECEIVED_USER:
+		{
 			const {data} = action;
 
 			return Object.assign({}, state, {
@@ -46,7 +54,8 @@ export default function otherPersonReducer(state = initialState, action) {
 			})
 		}
 
-		case CHANGE_TAB: {
+		case CHANGE_TAB:
+		{
 			const { selectedTab } = action;
 
 			return Object.assign({}, state, {
@@ -54,7 +63,8 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
-		case CHANGE_YEAR: {
+		case CHANGE_YEAR:
+		{
 			const { selectedYear } = action;
 
 			return Object.assign({}, state, {
@@ -62,41 +72,45 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
-		case TOOK_APPRENTICE: {
+		case TOOK_APPRENTICE:
+		{
 			const { response, me } = action;
 			let userCopy = Object.assign({}, state.user);
 			userCopy.mentor = {
-				_id : me._id,
-				createdAt : me.createdAt,
-				localRole : me.localRole,
-				menor : me.mentor,
-				updatedAt : me.updatedAt,
-				userInfo : me.userInfo
+				_id: me._id,
+				createdAt: me.createdAt,
+				localRole: me.localRole,
+				menor: me.mentor,
+				updatedAt: me.updatedAt,
+				userInfo: me.userInfo
 			}
 			return Object.assign({}, state, {
-				user : userCopy
+				user: userCopy
 			});
 		}
 
-		case REMOVED_APPRENTICE: {
+		case REMOVED_APPRENTICE:
+		{
 			const { response } = action;
 			let userCopy = Object.assign({}, state.user);
 			userCopy.mentor = null;
 			return Object.assign({}, state, {
-				user : userCopy
+				user: userCopy
 			});
 		}
 
-		case UPDATE_USER_OBJECTIVE: {
-			const { id, description } = action;
+		case UPDATE_USER_OBJECTIVE:
+		{
+			const { id, description, title } = action;
 
 			return Object.assign({}, state, {
-				me: updateObjectiveDescription(state.user, id, description)
+				me: updateObjectiveDescription(state.user, id, description, title)
 			});
 
 		}
 
-		case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
+		case SOFT_DELETE_MY_OBJECTIVE_BY_ID:
+		{
 			const { id } = action;
 
 			return Object.assign({}, state, {
@@ -105,7 +119,8 @@ export default function otherPersonReducer(state = initialState, action) {
 
 		}
 
-		case CHANGE_ARCHIVE_STATUS_LOCAL: {
+		case CHANGE_ARCHIVE_STATUS_LOCAL:
+		{
 			let id = action.id;
 			let flag = action.flag;
 
@@ -114,7 +129,8 @@ export default function otherPersonReducer(state = initialState, action) {
 			})
 		}
 
-		case ADDED_NEW_OBJECTIVE_OTHER_USER: {
+		case ADDED_NEW_OBJECTIVE_OTHER_USER:
+		{
 			const { responseData, requestData } = action;
 
 			let newUser = addNewObjectiveToUser(state.user, requestData.quarterId, responseData);
@@ -122,7 +138,8 @@ export default function otherPersonReducer(state = initialState, action) {
 				user: newUser
 			});
 		}
-		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS: {
+		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS:
+		{
 			const { objectiveId, keyResultId, data } = action;
 
 			return Object.assign({}, state, {
@@ -130,7 +147,8 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
-		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON: {
+		case ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON:
+		{
 			const { response, userObjectiveId } = action;
 
 			let keyResultIdInObjective = response.keyResultId;
@@ -163,27 +181,46 @@ export default function otherPersonReducer(state = initialState, action) {
 				user: newUser,
 			});
 		}
-/*		case CHANGED_KEYRESULT_SCORE: {
+
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE:
+		{
 			let { data } = action;
-			let { objectiveId, keyResultId, score } = data;
-			console.log(data)
+			let { objectiveId, keyResultId, title, difficulty } = data;
+
 			return Object.assign({}, state, {
-				user: setScoreToKeyResult(state.user, objectiveId, keyResultId, score),
+				user: setTitleAndDifficultyToKeyResult(state.user, objectiveId, keyResultId, title, difficulty),
 			});
 		}
 
-		case CHANGED_KEYRESULT_SCORE_ERROR: {
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE:
+		{
 			let { data } = action;
 
-			console.log(CHANGED_KEYRESULT_SCORE_ERROR);
+			console.log(EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE);
 			console.log(data);
 
 			return state;
 		}
-*/
+
+		case EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE:
+		{
+			const { editKeyResultId } = action;
+
+			return Object.assign({}, state, {
+				editKeyResultId,
+				editKeyResultIsEditing: true,
+			})
+		}
+
+		case EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE:
+		{
+			return Object.assign({}, state, {
+				editKeyResultIsEditing: false
+			})
+		}
 
 		default:
-		return state;
+			return state;
 
 	}
 }
@@ -193,15 +230,15 @@ function setScoreToKeyResult(user, objectiveId, keyResultId, score) {
 	const userCopy = Object.assign({}, user);
 
 	let quarterIndex = -1;
-	let	userObjectiveIndex = -1;
-	let	keyResultIndex = -1;
+	let userObjectiveIndex = -1;
+	let keyResultIndex = -1;
 
 	let quarterFoundedIndex = userCopy.quarters.findIndex((quarter) => {
 		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
 			return userObjective._id === objectiveId
 		});
 
-		if(userObjectiveFoundedIndex !== -1) {
+		if (userObjectiveFoundedIndex !== -1) {
 			userObjectiveIndex = userObjectiveFoundedIndex;
 			return true;
 		}
@@ -209,7 +246,7 @@ function setScoreToKeyResult(user, objectiveId, keyResultId, score) {
 		return false;
 	});
 
-	if(quarterFoundedIndex !== -1) {
+	if (quarterFoundedIndex !== -1) {
 		quarterIndex = quarterFoundedIndex;
 
 		if (userObjectiveIndex !== -1) {
@@ -234,7 +271,7 @@ function addNewObjectiveToUser(user, quarterId, objective) {
 		return quarter._id == quarterId;
 	});
 
-	if(index !== -1) {
+	if (index !== -1) {
 		userCopy.quarters[index].userObjectives.push(objective);
 	}
 
@@ -246,7 +283,7 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResu
 	let quarterIndex, objectiveIndex, keyResultIndex;
 
 	quarterIndex = userCopy.quarters.findIndex((quarter) => {
-		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=>{
+		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=> {
 			return userObjective._id === objectiveId;
 		});
 		if (objectiveIndex !== -1) {
@@ -258,11 +295,11 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResu
 
 	//console.log('Quarter index founded',quarterIndex,'objectiveIndex',objectiveIndex);
 
-	if(quarterIndex !== -1) {
+	if (quarterIndex !== -1) {
 		keyResultIndex = userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.findIndex((keyResult) => {
 			return keyResult._id === keyResultId;
 		});
-		if(keyResultIndex !== -1) {
+		if (keyResultIndex !== -1) {
 			userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
 		}
 	}
@@ -273,14 +310,15 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResu
 function deleteObjectiveFromMe(user, id) {
 	var userCopy = Object.assign({}, user);
 	userCopy.quarters.forEach((quarter) => {
-		for(var i=0 ; i<quarter.userObjectives.length; i++) {
-			if(quarter.userObjectives[i]._id == id) {
+		for (var i = 0; i < quarter.userObjectives.length; i++) {
+			if (quarter.userObjectives[i]._id == id) {
 				quarter.userObjectives.splice(i, 1);
 			}
 		}
 	});
 	return userCopy;
 }
+
 function addNewKeyResultToMe(user, objectiveId, keyResult) {
 	var userCopy = Object.assign({}, user);
 
@@ -297,3 +335,42 @@ function addNewKeyResultToMe(user, objectiveId, keyResult) {
 	return userCopy
 }
 
+function setTitleAndDifficultyToKeyResult(me, objectiveId, keyResultId, title, difficulty) {
+	const meCopy = Object.assign({}, me);
+
+	let quarterIndex = -1;
+	let userObjectiveIndex = -1;
+	let keyResultIndex = -1;
+
+	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
+		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
+			return userObjective._id === objectiveId
+		});
+
+		if (userObjectiveFoundedIndex !== -1) {
+			userObjectiveIndex = userObjectiveFoundedIndex;
+			return true;
+		}
+
+		return false;
+	});
+
+	if (quarterFoundedIndex !== -1) {
+		quarterIndex = quarterFoundedIndex;
+
+		if (userObjectiveIndex !== -1) {
+			let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
+				return keyResult._id === keyResultId;
+			});
+
+			if (keyResultFoundedIndex !== -1) {
+				keyResultIndex = keyResultFoundedIndex;
+
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].templateId.title = title;
+				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].templateId.difficulty = difficulty;
+			}
+		}
+	}
+
+	return meCopy;
+}

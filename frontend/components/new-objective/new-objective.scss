@@ -68,3 +68,62 @@ button#new-obj-submit-btn {
     background-color: darken($color-green, 10%);
   }
 }
+@media all 
+and (max-width: 1100px)
+and (min-width: 901px) {
+  #new-objective form {
+    width: 90%;
+  }
+  #new-objective #close-new-obj-window{
+    right: 4%;
+    top: 30px;
+  }
+}
+@media all 
+and (max-width: 900px)
+and (min-width: 450px) {
+
+   #new-objective form {
+    width: 90%;
+  }
+  #new-objective #close-new-obj-window{
+    right: 4%;
+    top: 30px;
+  }
+
+  #new-objective{
+    margin-right: 0px;
+  }
+}
+
+@media all 
+and (max-width: 540px)
+and (min-width: 450px) {
+
+  #new-obj-creds {
+    .new-key-result-title {
+      width: 90%
+    }
+    .new-key-result-difficulty {
+      display: inline-block;
+      right: 9%;
+      width: 110px;
+    }
+  }
+}
+
+@media all 
+and (max-width: 500px)
+and (min-width: 350px) {
+  #new-objective{
+    margin-right: 0px;
+    left: 0;
+  }
+  #new-objective form {
+    width: 94%;
+  }
+  #new-objective #close-new-obj-window{
+    right: 4%;
+    top: 30px;
+  }
+}

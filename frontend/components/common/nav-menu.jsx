@@ -7,9 +7,15 @@ import './nav-menu.scss';
 const NavMenu = (props) => {
 	const isAdmin = (props.localRole === CONST.user.localRole.ADMIN);
 	const count = props.acceptObjective.countObject;
+	let notificationClass = "";
+	
+	if (count > 0) {
+		notificationClass = "notification"
+	}
 	
 	const AdminLinksEl = (
 		<ul className="nav-divider-before">
+
 			<li>
 				<Link to="/charts" activeClassName="active">
 					<i className="fi-1 flaticon-1-arrow-chart" aria-hidden="true"></i>
@@ -31,7 +37,7 @@ const NavMenu = (props) => {
 			<li>
 				<Link to="/obj-accept" activeClassName="active">
 					<i className="fi flaticon-checked-1" aria-hidden="true">
-						<div className="badge"><div className="badge-counter">{ count }</div></div>
+						<div className="badge"><div className={"badge-counter " + notificationClass}>{ count }</div></div>
 					</i>
 					Accept Template
 				</Link>
@@ -56,7 +62,11 @@ const NavMenu = (props) => {
 	);
 	
 	return (
-		<aside id="navbar">
+		<div>
+		<button id="bars" onClick={ onBarsClick } >
+			<i className="fi flaticon-menu-1" aria-hidden="true"></i>
+		</button>
+		<aside id="navbar" className='hideMenu'>
 			<nav onClick={ closeNav }>
 				<ul>
 					<li>
@@ -81,18 +91,40 @@ const NavMenu = (props) => {
 				{ isAdmin ? AdminLinksEl : '' }
 			</nav>
 		</aside>
+		</div>
 	)
 };
 
+function onBarsClick(event) {
+		let target = event.target;
+		let nav = document.querySelector('aside#navbar');
+		console.log(nav)
+		if(!target.classList.contains('active')){
+			target.classList.add('active');
+			nav.classList.add('showMenu');
+			nav.classList.remove('hideMenu');
+		} else {
+			target.classList.remove('active');
+			nav.classList.remove('showMenu');
+			nav.classList.add('hideMenu');
+		}
+	}
 function closeNav() {
+
 	let nav = document.getElementById('navbar');
 	let menuBars = document.getElementById('bars');
+	let navbar = document.querySelector('aside#navbar');
 
-	nav.classList.remove('opened');
-	menuBars.classList.remove('active');
-}
+    if (nav != null && nav.classList.contains("opened"))
+		nav.classList.remove('opened');
 
-function acceptObjectivesCount() {
+	if (menuBars != null && menuBars.classList.contains("active"))
+		menuBars.classList.remove('active');
+
+	if(navbar.classList.contains('showMenu')) {
+		nav.classList.remove('showMenu');
+		nav.classList.add('hideMenu');
+	}
 
 }
 

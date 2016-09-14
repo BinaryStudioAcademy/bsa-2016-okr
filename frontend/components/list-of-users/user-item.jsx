@@ -13,7 +13,7 @@ class UserItem extends Component {
 		if(this.props.user.userId.mentor == null) {
 			mentor = 'Is not assigned';
 			photo = (<i className='fi flaticon-user-3'></i>);
-		} else { 
+		} else {
 			mentor = (this.props.user.userId.mentor.userInfo.firstName +' '+ this.props.user.userId.mentor.userInfo.lastName)
 			photo = (<img src='https://pp.vk.me/c628730/v628730341/2e5d5/GGZg2j32zm4.jpg'/>);
 		}
@@ -26,12 +26,12 @@ class UserItem extends Component {
 							<div className='userName'>{this.props.user.userId.userInfo.firstName} {this.props.user.userId.userInfo.lastName}</div>
 							<div>{ photo }
 								<span className='mentorName'>
-									<span className='mentorTitle'>Mentor:</span> 
-									<br /> {mentor} 
+									<span className='mentorTitle'>Mentor:</span>
+									<br /> {mentor}
 								</span>
 							</div>
 						</div>
-						<UserProgress userObjectives={this.props.user.userObjectives}/>
+						<UserProgress ref="progress" userProgress={this.props.user.userProgress}/>
 					</li>
 				</div>
 			</Link>

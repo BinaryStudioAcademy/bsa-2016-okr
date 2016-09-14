@@ -8,6 +8,7 @@ import * as actions from '../../../actions/okrManagingActions';
 import sweetalert from 'sweetalert';
 
 import CONST from '../../../../backend/config/constants';
+import { isEmpty } from '../../../../backend/utils/ValidateService';
 
 import CentralWindow from '../../../containers/central-window.jsx';
 import ObjectiveList from './components/ObjectiveList.jsx';
@@ -26,9 +27,8 @@ class OKRmanaging extends Component {
 		this.searchObjective = this.searchObjective.bind(this);
 		this.closeNewObjectiveWindow = this.closeNewObjectiveWindow.bind(this);
 		this.resetNewObjectiveWindow = this.resetNewObjectiveWindow.bind(this);
-		this.createNewTemplate = this.createNewTemplate.bind(this);
-		this.isNotDuplicateObjective = this.isNotDuplicateObjective.bind(this);
-		this.focusAddObjectiveInput = this.focusAddObjectiveInput.bind(this);
+		this.saveEditObjective = this.saveEditObjective.bind(this);
+		this.getDuplicateObjective = this.getDuplicateObjective.bind(this);
 	}
 
 	searchObjective(e) {
@@ -50,63 +50,84 @@ class OKRmanaging extends Component {
 	resetNewObjectiveWindow() {
 		document.getElementById('new-obj-title').value = '';
 		document.getElementById('new-obj-desc').value = '';
-		
-		const keyResultTitleElements = document.getElementsByClassName('new-key-result-title');
-		const keyResultDifficultyElements = document.getElementsByClassName('new-key-result-difficulty');
 
-		for(let i = 0; i < keyResultTitleElements.length; i++) {
-			 keyResultTitleElements[i].value = '';
-			 keyResultDifficultyElements[i].value = CONST.keyResult.EASY;
-		}
+		let keyResults = [''];
+
+		this.props.addKeyResultToTemplate(keyResults);
+		
+		document.getElementsByClassName('new-key-result-title')[0].value = '';
+		document.getElementsByClassName('new-key-result-difficulty')[0].value = CONST.keyResult.EASY;
 	}
 
-	isNotDuplicateObjective(title, category, focusInputFn) {
-		let objectiveIndex = this.props.okrManaging.objectives.findIndex((objective) => {
-			if(objective.title === title && objective.category === category) {
-				return true;
-			} else {
-				return false;
-			}
-		});
+	getDuplicateObjective(id, title, category) {
+    const { objectives } = this.props.okrManaging;
+    
+    let objectiveIndex = objectives.findIndex((objective) => {
+      return (
+        (objective.title === title) 
+        && (objective.category === category) 
+        && (objective._id !== id)
+      );
+    });
 
-		if(objectiveIndex === -1) {
-			return true;
+    return (objectiveIndex === -1) ? null : objectives[objectiveIndex];
+  }
+
+	saveEditObjective(id, data, focusWrongInputFn) {
+		let duplicateItem = this.getDuplicateObjective(null, data.title, data.category);
+		
+		if(isEmpty(duplicateItem)) {
+			if(isEmpty(id)) {
+				this.props.createNewTemplate(data);
+				this.closeNewObjectiveWindow();
+			} else {
+				this.props.editObjectiveTemplate(id, data);
+			}
+
+			sweetalert.close();
+		} else if(duplicateItem.isDeleted) {
+			sweetalert({
+        title: 'Do you want to restore deleted objective?',
+        text: 'Objective with such title for that category exists, but deleted by someone',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4caf50',
+        confirmButtonText: 'Yes, restore'
+      }, () => {
+        this.props.deleteObjective(duplicateItem._id, false);
+        
+        if(isEmpty(id)) {
+	        this.closeNewObjectiveWindow();
+	      }
+      });
 		} else {
 			sweetalert({
 				title: 'Error!',
 				text: 'Objective with such title for that category already exists',
 				type: 'error',
 			}, () => {
-				setTimeout(focusInputFn, 0);
+				setTimeout(focusWrongInputFn, 0);
 			});
-
-			return false;
-		}
-	}
-
-	focusAddObjectiveInput() {
-		let inputEl = document.getElementById('new-obj-title');
-		ReactDOM.findDOMNode(inputEl).focus();
-	}
-
-	createNewTemplate(data) {
-		if(this.isNotDuplicateObjective(data.title, data.category, this.focusAddObjectiveInput)) {
-			this.props.createNewTemplate(data);
-			this.closeNewObjectiveWindow();
 		}
 	}
 
 	render() {
+		const { edit: editCategory, activeCategory, list: categories } = this.props.categories;
+		const { objectives } = this.props.okrManaging;
+		const displayedCategories = categories.filter((category) => {
+			return !category.isDeleted;
+		});
+		
 		return (
 			<div>
 				<CentralWindow>
 					<NewObjective 
 						closeNewObjectiveWindow={ this.closeNewObjectiveWindow }
-						createNewTemplate={ this.createNewTemplate }
+						saveEditObjective={ this.saveEditObjective }
 						addKeyResultToTemplate={ this.props.addKeyResultToTemplate }
 						removeKeyResultFromTemplate={ this.props.removeKeyResultFromTemplate }
 						keyResults={ this.props.okrManaging.keyResults }
-						categories={ this.props.categories.list }
+						categories={ displayedCategories }
 					/>
 					<div className="OKR-managing app container">
 						<Toolbar/>
@@ -120,13 +141,22 @@ class OKRmanaging extends Component {
 						</div>
 						</div>			
 						<div className="OKR-managing objective-list">
-							<ObjectiveList />
+							<ObjectiveList 
+								saveEditObjective={ this.saveEditObjective }
+								categories={ displayedCategories }
+								deleteObjective={ this.props.deleteObjective }
+							/>
 						</div>
 				</div>
 			</CentralWindow>
 			<StatPanel>
 				<div className="OKR-managing category">
-						<CategoryList />
+						<CategoryList
+							objectives={ objectives } 
+							categories={ categories }
+							displayedCategories={ displayedCategories } 
+							edit={ editCategory }
+							activeCategory={ activeCategory } />
 				</div>
 			</StatPanel>
 		</div>

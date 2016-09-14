@@ -1,5 +1,6 @@
 @import '../common/variables';
 @import '../common/styles/commonStyles';
+@import "../common/styles/media";
 
 /*
 **    Content Wrapper
@@ -28,7 +29,9 @@
       color: #555;
       font-size: 18px;
       font-weight: bold;
+      width: 60%;
     }
+
     .description {
       color: #777;
       font-size: 15px;
@@ -36,6 +39,7 @@
       width: 80%;
       line-height: 18px;
     }
+
     .progress-bar {
       padding-top: 0;
       margin-right: 40px;
@@ -43,5 +47,12 @@
         top: 4px;
       }
     }
+  }
+}
+
+@include desktopL {
+  #home-page-wrapper {
+    width: 85%;
+    margin: 0 auto;
   }
 }

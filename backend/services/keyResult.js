@@ -3,6 +3,7 @@ const KeyResultRepository = require('../repositories/keyResult');
 const UserObjectiveRepository = require('../repositories/userObjective');
 const UserObjectiveService = require('../services/userObjective');
 const ObjectiveRepository = require('../repositories/objective');
+const ObjectiveService = require('../services/objective');
 const HistoryRepository = require('../repositories/history');
 const ValidateService = require('../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
@@ -109,18 +110,38 @@ KeyResultsService.prototype.delete = function(userId, keyResultId, callback) {
 	});
 };
 
-KeyResultsService.prototype.softDelete = function(userId, keyResultId, data, callback){
+KeyResultsService.prototype.softDelete = function(session, keyResultId, data, callback) {
 	 async.waterfall([
 		(callback) => {
-			KeyResultRepository.update(keyResultId, data, (err, keyResult) => {
+			KeyResultRepository.getById(keyResultId, (err, keyResult) => {
 				if(err) {
 					return  callback(err, null);
 				}
+
+				if(isEmpty(keyResult)) {
+					err = new Error('keyResult not found');
+					return callback(err, null);
+				}
+
 				return callback(null, keyResult);
 			});
 		},
 		(keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(userId, keyResultId, CONST.history.type.SOFT_DELETE, (err, keyResult) => {
+			keyResult = Object.assign(keyResult, data);
+
+			keyResult.save((err, keyResult) => {
+				if(err) {
+					return  callback(err, null);
+				}
+
+				return callback(null, keyResult);
+			});
+		},
+		(keyResult, callback) => {
+			ObjectiveService.setDefaultKeyResult(session, keyResult.objectiveId, keyResult._id, false, callback);
+		},
+		(keyResult, callback) => {
+			HistoryRepository.addKeyResultEvent(session._id, keyResultId, CONST.history.type.SOFT_DELETE, (err, historyEvent) => {
 				if(err) {
 					return  callback(err, null);
 				}
@@ -171,9 +192,9 @@ KeyResultsService.prototype.changeApprove = function(userId, keyResultId, callba
 	async.waterfall([
 		(callback) => {
 			KeyResultRepository.getById(keyResultId, function(err, keyResult){
-				if (err){
+				if (err) {
 					return callback(err, null);
-				};	
+				};
 				return callback(null, userId, keyResult);
 			});
 		},

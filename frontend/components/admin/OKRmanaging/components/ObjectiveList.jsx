@@ -15,9 +15,7 @@ import ObjectiveData from './ObjectiveData.jsx';
 class ObjectiveList extends Component {
   constructor(props) {
     super(props);
-
-    this.saveChanges = this.saveChanges.bind(this);
-    this.isNotDuplicate = this.isNotDuplicate.bind(this);
+    
     this.focusEditInput = this.focusEditInput.bind(this);
   }
 
@@ -31,59 +29,38 @@ class ObjectiveList extends Component {
     ReactDOM.findDOMNode(inputEl).focus();
   }
 
-  isNotDuplicate(id, title, category) {
-    let objectiveIndex = this.props.objectivesList.objectives.findIndex((objective) => {
-      return (
-        (objective.title === title) 
-        && (objective.category === category) 
-        && (objective._id !== id)
-      );
-    });
-
-    if(objectiveIndex === -1) {
-      return true;
-    } else {
-      sweetalert({
-        title: 'Error!',
-        text: 'Objective with such title for that category already exists',
-        type: 'error',
-      }, () => {
-        setTimeout(() => {
-          this.focusEditInput(id);
-        }, 0);
-      });
-
-      return false;
-    }
-  }
-
-  saveChanges(id, data) {
-    if(this.isNotDuplicate(id, data.title, data.category)) {
-      this.props.editObjectiveTemplate(id, data);
-      sweetalert.close();
-    }
-  }
-
   render() {
-    // console.log('objectivesList', this.props.objectivesList);
-    var objectives = [];
-    objectives = this.props.objectivesList.visibleObjectives.map((objective, index) => {
-      return <ObjectiveData objective = { objective } 
-                            index = { index } 
-                            key = { objective._id }
-                            categories = { this.props.categories }
-                            objectivesList = { this.props.objectivesList }
-                            saveChanges = { this.saveChanges }
-                            cancelEdit = { this.props.cancelEdit }
-                            activeObjective = { this.props.activeObjective }
-                            deleteObjective = { this.props.deleteObjective }
+    const { 
+      categories,
+      objectivesList, 
+      saveEditObjective, 
+      cancelEdit, 
+      activeObjective,
+      deleteObjective 
+    } = this.props;
+
+    const { visibleObjectives } = objectivesList;
+    let displayedObjectivesEl = visibleObjectives.filter((objective) => {
+      return !objective.isDeleted;
+    }).map((objective, index) => {
+      return <ObjectiveData objective={ objective } 
+                            index={ index } 
+                            key={ objective._id }
+                            categories={ categories }
+                            editing={ objectivesList.editing }
+                            active={ objectivesList.active }
+                            saveEditObjective={ saveEditObjective }
+                            cancelEdit={ cancelEdit }
+                            activeObjective={ activeObjective }
+                            deleteObjective={ deleteObjective }
                             ref={ `objectiveTemplate-${ objective._id }` }
+                            id={ `objectiveTemplate-${ objective._id }` }
               />
     });
 
     return (
       <div id='templates'>
-        { objectives }
+        { displayedObjectivesEl }
       </div>  
     )
   }
@@ -96,7 +73,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     objectivesList: state.okrManaging,
-    categories: state.categories
   };
 }
 
