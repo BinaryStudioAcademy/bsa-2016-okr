@@ -70,25 +70,35 @@ class HistoryItemList extends React.Component {
     getHistoryObjectName(historyItem){
       if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
         return ` user objective \'${historyItem.userObjective.templateId.title}\'`;
-      };
-
-      if(historyItem.type.indexOf('OBJECTIVE') !== -1){
-        return `objective \'${historyItem.objective.title}\'`;
-       };
-
-      if(historyItem.type.indexOf('KEY_RESULT') !== -1){
-        let keyResults = historyItem.userObjective.keyResults;
-        let keyResult;
-        keyResults.forEach((key) => {
-          if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
-          keyResult = key;
-        })
-        return `key result \'${keyResult.templateId.title} \'`;
       }
-      if(historyItem.type.indexOf('CATEGORY') !== -1){
+
+      else if(historyItem.type.indexOf('OBJECTIVE') !== -1){
+        return `objective \'${historyItem.objective.title}\'`;
+       }
+
+      else if(historyItem.type.indexOf('KEY_RESULT') !== -1){
+         let keyResult;
+        if (historyItem.userObjective){
+          let keyResults = historyItem.userObjective.keyResults;
+         
+          keyResults.forEach((key) => {
+            if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
+            keyResult = key;
+         
+          })
+          return `key result \'${keyResult.templateId.title} \'`;
+     
+        }
+        else {
+          keyResult = historyItem.keyResult;
+          return `key result \'${keyResult.title} \'`;
+        }
+
+    }  
+      else if(historyItem.type.indexOf('CATEGORY') !== -1){
         return `category \'${historyItem.category.title}\'`;
-       };
-      if(historyItem.type.indexOf('USER') !== -1){
+       }
+      else if(historyItem.type.indexOf('USER') !== -1){
         return `user \'${historyItem.user.userInfo.firstName} ${historyItem.user.userInfo.lastName}\'`;
       };
 
