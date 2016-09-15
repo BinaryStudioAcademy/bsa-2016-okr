@@ -594,6 +594,7 @@ and (min-width: 450px) {
   }
   .OKR-managing button#add-new-objective {
     margin-bottom: 10px;
+    width: 100%;
   }
 }
 
@@ -682,6 +683,6 @@ and (min-width: 350px) {
       }
       .OKR-managing button#add-new-objective {
         margin-bottom: 10px;
-        width: 50%;
+        width: 100%;
       }
 }
