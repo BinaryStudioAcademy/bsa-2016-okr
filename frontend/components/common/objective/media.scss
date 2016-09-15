@@ -20,12 +20,60 @@
 **  Tablet
 */
 @include tablet {
-
+	.range{
+		width: 75px;
+	}
+	#objectives {
+		.home-objective {
+			.name {
+	    	width: 50%;
+	    }
+	    .name-input {
+		    width: 50%;
+			}
+			.description-textarea {
+     		width: 70%;
+  		}
+		}
+	}
+	.key-results .key-result-details-ul li.key-result .key-result-title {
+    width: 92%;
+    margin-bottom: 12px;
+	}
+	.star-rating {
+    width: 8em;
+    margin-top: -0.35em;
+	}
 }
 
 /*
 **  Mobile
 */
 @include mobile {
-
+	.range{
+		width: 75px;
+	}
+	#objectives {
+		.home-objective {
+			.name {
+	    	width: 40%;
+	    }
+	    .name-input {
+		    width: 40%;
+			}
+			.description-textarea {
+     		width: 65%;
+  		}
+		}
+	}
+	.key-results .key-result-details-ul li.key-result .key-result-title {
+    width: 88%;
+    margin-bottom: 12px;
+	}
+	.star-rating {
+    width: 8em;
+    margin-top: 0.65em;
+    clear: both;
+    float: right;
+	}
 }
