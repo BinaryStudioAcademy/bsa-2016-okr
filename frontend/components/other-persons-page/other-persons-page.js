@@ -34,25 +34,16 @@ class OtherPersonsPage extends Component {
 	// 	console.log('nextProps user is empty: ', isEmpty(nextProps.user.user));
 
 	// 	let userLoaded = this.props.user.waiting && !nextProps.user.waiting;
-		
+
 	// 	return userLoaded;
 	// }
 
 	componentWillMount() {
-		console.log('other-persons-page.js mounted');
-		console.log('Mounted props: ', this.props);
-		console.log('Getting user info...');
 		let id = this.props.routeParams.id;
 		this.props.getUser(id);
 	}
 
 	render() {
-		console.log('other-persons-page.js RENDER');
-		console.log('this.props.user', this.props.user);
-		console.log('Props', this.props);
-
-		console.log('other-persons-page.js USER_ID:', this.props.routeParams.id);
-
 		if (this.props.user.waiting) {
 			return <div></div>
 		} else {

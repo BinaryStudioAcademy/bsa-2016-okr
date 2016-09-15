@@ -1,5 +1,5 @@
 import {
-	SET_TAB, 
+	SET_TAB,
 	CHANGE_SHOW_TABS,
 	GET_MY_HISTORY,
 	RECEIVED_MY_HISTORY,
@@ -17,7 +17,6 @@ export default function userDashboardReducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_TAB: {
 			let tabIndex = action.tabIndex;
-			console.log('set to ' + tabIndex);
 			return Object.assign({}, state, {
 				tabIndex
 			})

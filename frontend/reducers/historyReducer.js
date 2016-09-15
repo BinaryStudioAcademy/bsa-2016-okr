@@ -46,7 +46,6 @@ export default function historyReducer(state = initialState, action) {
 		}
 
 		case GET_HISTORY_ITEMS: {
-			console.log("get historyItems");
 			return Object.assign({}, state)
 		}
 
@@ -85,7 +84,7 @@ export default function historyReducer(state = initialState, action) {
 		//     console.log('received');
 
 		//     return Object.assign({}, state, {
-		//         historyItems  
+		//         historyItems
 		//     })
 		// }
 
@@ -95,14 +94,13 @@ export default function historyReducer(state = initialState, action) {
 			console.log('received');
 			console.log(historyItems);
 			return Object.assign({}, state, {
-				historyItems  
+				historyItems
 			})
 		}
 
 		case RECEIVED_HISTORY_ITEMS: {
 
 			const historyItems = action.historyItems;
-			console.log('received');
 
 			return Object.assign({}, state, {
 				historyItems ,
@@ -124,7 +122,7 @@ export default function historyReducer(state = initialState, action) {
 			return Object.assign({}, state, {
 				nameFilter
 			})
-		}   
+		}
 
 		case SET_TYPE_FILTER: {
 			const {typeFilter} = action;
@@ -132,7 +130,7 @@ export default function historyReducer(state = initialState, action) {
 			return Object.assign({}, state, {
 				typeFilter
 			})
-		}   
+		}
 
 		case SHOW_FILTERS: {
 			const {showHistoryFilters} = action;
@@ -163,7 +161,7 @@ export default function historyReducer(state = initialState, action) {
 	}
 }
 
-function filterDate(items, dateFrom, dateTo, historyItems) { 
+function filterDate(items, dateFrom, dateTo, historyItems) {
 	items = historyItems;
 	let visibleItems = [];
 	if(dateFrom == undefined && dateTo == undefined) {
