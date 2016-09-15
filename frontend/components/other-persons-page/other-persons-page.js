@@ -13,7 +13,9 @@ import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
 import UserDashboard from "../userDashboard/userDashboard.jsx";
 
-const session = require("../../../backend/config/session");
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 class OtherPersonsPage extends Component {
 	constructor(props) {
@@ -59,7 +61,7 @@ class OtherPersonsPage extends Component {
 			var id = this.props.routeParams.id;
 			var personInfo;
 
-			if (id != session._id) {
+			if (id != session) {
 				personInfo = (<PersonInfo userId={ this.props.routeParams.id } />);
 			}
 

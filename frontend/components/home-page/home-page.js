@@ -12,6 +12,7 @@ import UserDashboard from "../userDashboard/userDashboard.jsx"
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import cookie from 'react-cookie';
 
 class Home extends React.Component {
 	constructor() {
@@ -20,6 +21,14 @@ class Home extends React.Component {
 
 
 	render() {
+
+		cookie.save('my-cookie', {id: 1});
+		
+		console.log("DOCUMENT COOKIES ==== " + document.cookie);
+
+		console.log("MY COOKIE !!!!!! " + cookie.load('my-cookie'));
+
+		console.log("COOOOKIES !!!!!!!!! " +  cookie.load('user-id'));
 		return (
 			<div>
 				<CentralWindow>

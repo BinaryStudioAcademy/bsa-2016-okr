@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
+	globalId: Schema.Types.ObjectId,
 	localRole: {
 		type: String,
 		required: true,

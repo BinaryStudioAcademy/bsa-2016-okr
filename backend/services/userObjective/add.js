@@ -2,14 +2,13 @@ var async = require('async');
 var ValidateService = require('../../utils/ValidateService');
 var isEmpty = ValidateService.isEmpty;
 var CONST = require('../../config/constants');
-var session = require('../../config/session');
 
 var ObjectiveRepository = require('../../repositories/objective');
 var UserObjectiveRepository = require('../../repositories/userObjective');
 var QuarterRepository = require('../../repositories/quarter');
 var HistoryRepository = require('../../repositories/history');
 
-module.exports = function addUserObjective(userId, categoryId, quarterId, objectiveId, title, isApproved, callback) {
+module.exports = function add(userId, categoryId, quarterId, objectiveId, title, isApproved, callback) {
 	async.waterfall([
 		(callback) => {
 			if(!isEmpty(objectiveId)) {

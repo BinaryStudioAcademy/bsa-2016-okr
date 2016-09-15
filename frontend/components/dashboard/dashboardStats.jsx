@@ -4,7 +4,10 @@ import axios from 'axios';
 import { Link } from 'react-router';
 import ProgressBar from './progressBar.jsx';
 import './progressBar.scss';
-import session from '../../../backend/config/session.js'
+
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 
 export default class DashboardStats extends React.Component {

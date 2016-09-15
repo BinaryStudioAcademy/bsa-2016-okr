@@ -1,4 +1,5 @@
 const UserRepository = require('../repositories/user');
+const UserInfoRepository = require('../repositories/userInfo');
 const RoleRepository = require('../repositories/role');
 const QuarterRepository = require('../repositories/quarter');
 const HistoryRepository = require('../repositories/history');
@@ -9,6 +10,46 @@ const ValidateService = require('../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
 
 var UserService = function() {};
+
+UserService.prototype.createUser = function(data, callback) {
+
+	async.waterfall([
+		(callback) => {
+			
+			var body  = {};
+			body.firstName = "DefaultFName";
+			body.lastName = "DefaultLName";
+			body.email = data.email;
+			body.globalRole = data.globalRole;
+
+			UserInfoRepository.add(body, (err, userInfo) => {
+
+				if (err)
+					return callback(err, null);
+
+
+
+				return callback(null, userInfo);
+			});
+		},
+		(userInfo, callback) => {
+
+			var body = {};
+			body.globalId = data.id;
+			body.localRole = CONST.user.localRole.DEFAULT;
+			body.userInfo = userInfo._id;
+
+			UserRepository.add(body, (err, user) => {
+				if (err)
+					return callback(err, null);
+
+				return callback(null, user);
+			});
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
+}
 
 UserService.prototype.getByIdPopulate = function(userId, callback) {
 	async.waterfall([
@@ -51,6 +92,55 @@ UserService.prototype.getByIdPopulate = function(userId, callback) {
 		return callback(err, result);
 	});
 };
+
+UserService.prototype.getByGlobalIdPopulate = function(data, callback) {
+	async.waterfall([
+		(callback) => {
+			
+			UserRepository.getByGlobalIdPopulate(data.id, (err, user) => {
+				
+				if(err) {
+	  				return callback(err, null);
+				}
+
+				return callback(null, user);
+			});
+		}, (user, callback) => {
+			
+			if (!user) {
+				this.createUser(data, callback);
+			}
+			else {
+				return callback(null, user);
+			}
+
+		}, (user, callback) => {
+			if(user.localRole === CONST.user.localRole.DEFAULT) {
+				RoleRepository.findGlobal(user.userInfo.globalRole, (err, role) => {
+					
+					if(err) {
+						return callback(err, null);
+					}
+
+					if(isEmpty(role)) {
+						err = new Error('Role not found');
+						err.status = 400;
+						return callback(err);
+					}
+
+					user.localRole = role.localRole;
+
+					return callback(null, user);
+				});
+			} else {
+				return callback(null, user);
+			}
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
+
 
 UserService.prototype.getByIdWithQuarters = function(id, callback) {
 	async.waterfall([

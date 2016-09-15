@@ -1,7 +1,10 @@
 import React from 'react';
 import DashboardStats from './dashboardStats.jsx';
 import './dashboard.scss';
-import session from '../../../backend/config/session.js'
+
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -17,7 +20,7 @@ class Dashboard extends React.Component {
         var id = null;
         var year = this.props.myState.selectedYear;
         if (this.props.where == undefined){
-            id = session._id;
+            id = session;
         }
         else{
             id = this.props.userId;

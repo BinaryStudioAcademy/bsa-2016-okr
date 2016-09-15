@@ -8,6 +8,10 @@ const User = require('../schemas/user');
 const QuarterRepository = require('../repositories/quarter.js');
 const UserRepository = require ('../repositories/user.js')
 
+const validateService = require('../utils/ValidateService')
+
+const isEmpty = validateService.isEmpty;
+
 var StatsService = function() {};
 
 StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId, callback) {
@@ -37,9 +41,13 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 
 		},
 		(callback) => {
+			
+			console.log("STATS OBJ +++ ", statsObj);
+
 			for(user in statsObj) { //for each user
 				let yearScore = 0; // score for year
 				let quartersCount = 0; // count of quarters in year
+
 				let userInfo = statsObj[user]['1'].userId.userInfo;
 				
 				for (quarter in statsObj[user]){ // for each user's quarter
@@ -71,17 +79,21 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 					else 
 						statsObj[user][quarter] = 0;
 				}
-				
+				if(statsObj[user].userInfo == undefined){
+					statsObj[user].userInfo = userInfo;	
+				}
+
 				if(quartersCount != 0){
 					yearScore = yearScore / quartersCount;
 					statsObj[user].totalScore = yearScore;// set year's score}
-					if(statsObj[user].userInfo == undefined){
 
-						statsObj[user].userInfo = userInfo;	
-					}
 				}
-				else
+				else {
 					statsObj[user].totalScore = 0;
+				}
+
+				console.log("USER !!!!!!!", user);
+				console.log("CURRENT USER ID !!!", currentUserId);
 
 				if(user == currentUserId){
 					console.log('selected');
@@ -105,12 +117,20 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 			return callback(null, statsArr);
 		},
 		(statsArr, callback) => { // setting the limit
+
 			var statArr = statsArr.slice(0, limit)
 			var userStats = null;
+		
+
 			if (statArr.find( (elem) => {
-				if (selectedUser.userInfo._id == elem.userInfo._id)
-					return true
-				return false
+
+				   console.log("ELEM ++++ ", elem);
+				   console.log("SELECTED USER ++++ ", selectedUser);
+
+					if (selectedUser.userInfo._id == elem.userInfo._id)
+						return true;
+					else
+						return false;
 				}) 
 				== undefined )
 					userStats = selectedUser

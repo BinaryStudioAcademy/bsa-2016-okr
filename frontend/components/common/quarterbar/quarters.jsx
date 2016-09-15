@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import "./quarters.scss";
 import { currentYear, currentQuarter } from '../../../../backend/config/constants';
 
-const session = require('../../../../backend/config/session');
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 class Quarterbar extends Component {
    constructor(props) {
@@ -104,7 +106,7 @@ function getQuarters() {
             className={quarters[i].index == current_tab ? 'active' : ''}>
             {quarters_prefixes[i]} quarter</li>)
       } else {
-         if (isMe != undefined && isMe == true || (mentorId == session._id)) {
+         if (isMe != undefined && isMe == true || (mentorId == session)) {
             quarters_to_show.push(
                <li className="not-exist" data-id={i + 1} key={i + 1} tabIndex="0">Open {quarters_prefixes[i]}
                   quarter</li>

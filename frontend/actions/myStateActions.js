@@ -29,8 +29,13 @@ export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE = 'EDIT_KEY_RESULT_DISAB
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE';
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE';
 
+import cookie from 'react-cookie';
 
-const session = require('../../backend/config/session');
+const session = cookie.load('user-id');
+
+console.log("SESSIONNNNNNN ---- " + session);
+
+console.log(document.cookie);
 
 export function getMe() {
 	return (dispatch, getStore) => {

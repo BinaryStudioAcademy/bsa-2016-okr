@@ -39,4 +39,19 @@ UserRepository.prototype.getByIdPopulate = function(id, callback) {
 		.exec(callback);
 };
 
+UserRepository.prototype.getByGlobalIdPopulate = function(id, callback) {
+	var model = this.model;
+
+	model
+		.findOne({ globalId: id })
+		.populate('userInfo')
+		.populate({
+			path: 'mentor',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
 module.exports = new UserRepository();

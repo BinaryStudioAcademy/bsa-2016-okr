@@ -17,7 +17,10 @@ import * as otherPersonActions from "../../../actions/otherPersonActions";
 import './objectives.scss';
 
 const CONST = require('../../../../backend/config/constants.js');
-const session = require('../../../../backend/config/session');
+
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 const notifications = require("../../../actions/notifications.js");
 
@@ -110,7 +113,7 @@ class Objectives extends Component {
 			let selectedYear;
 			let selectedTab
 			if (this.props.userId == undefined) {
-				userId = session._id;
+				userId = session;
 				quarters = this.props.myState.me.quarters;
 				selectedYear = this.props.myState.selectedYear;
 				selectedTab = this.props.myState.selectedTab;
@@ -205,7 +208,7 @@ class Objectives extends Component {
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( isItHomePage || session._id == userInfo.mentorId || userId == session._id )) {
+				( isItHomePage || session == userInfo.mentorId || userId == session )) {
 			archived = false;
 		} else {
 			archived = true;
