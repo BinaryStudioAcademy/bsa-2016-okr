@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import * as myStateActions from "../../../actions/myStateActions";
 import * as objectiveActions from "../../../actions/objectiveActions";
 import * as otherPersonActions from "../../../actions/otherPersonActions";
+import * as userDashboardActions from "../../../actions/userDashboardActions";
 
 import './objectives.scss';
 
@@ -61,7 +62,14 @@ class Objectives extends Component {
 	}
 
 	changeYear(year) {
+
+		const { user } = this.props.user;
+		const userId = this.props.userId || session._id;
 		this.props.myStateActions.setChangeYear(year);
+		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
+			this.props.userDashboardActions.getStats("otherPersonPage")
+		else
+			this.props.userDashboardActions.getStats();
 	}
 
 	handleAddingNewQuarter(newQuarter) {
@@ -80,6 +88,10 @@ class Objectives extends Component {
 			confirmButtonText: "OK",
 			closeOnConfirm: true
 		}, function(){handler();});
+	}
+
+	componentWillUnmount() {
+		this.props.myStateActions.reset();
 	}
 
 	handleArchivingQuarter(index) {
@@ -318,6 +330,7 @@ function mapDispatchToProps(dispatch) {
 		myStateActions: bindActionCreators(myStateActions, dispatch),
 		objectiveActions: bindActionCreators(objectiveActions, dispatch),
 		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),
+		userDashboardActions: bindActionCreators(userDashboardActions, dispatch)
 	}
 }
 

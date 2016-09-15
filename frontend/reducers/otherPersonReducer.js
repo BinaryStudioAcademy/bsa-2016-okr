@@ -15,6 +15,7 @@ import { CHANGED_KEYRESULT_SCORE,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
 	UPDATE_USER_OBJECTIVE,
+	RESET,
 	CHANGE_ARCHIVE_STATUS_LOCAL } from '../actions/myStateActions.js'
 import { ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON } from '../actions/keyResultActions';
 
@@ -52,6 +53,15 @@ export default function otherPersonReducer(state = initialState, action) {
 				waiting: false,
 				// selectedTab: currentQuarter,
 				// selectedYear: currentYear
+			})
+		}
+
+		case RESET: {
+			return Object.assign({}, state, {
+				selectedTab: initialState.selectedTab,
+				selectedYear: initialState.selectedYear,
+				editKeyResult: initialState.editKeyResult,
+				editKeyResultIsEditing: initialState.editKeyResultIsEditing
 			})
 		}
 

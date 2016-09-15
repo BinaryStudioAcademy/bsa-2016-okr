@@ -6,6 +6,9 @@ export const GET_MY_HISTORY = 'GET_MY_HISTORY';
 export const RECEIVED_MY_HISTORY = 'RECEIVED_MY_HISTORY';
 export const MY_HISTORY_ERROR = 'MY_HISTORY_ERROR';
 export const CLEAR_USER_DASHBOARD_STATE = 'CLEAR_USER_DASHBOARD_STATE';
+export const GET_STATS = 'GET_STATS';
+export const RECEIVED_STATS = 'RECEIVED_STATS';
+
 
 export function clearUserDashboardState() {
 	const action = {
@@ -30,6 +33,35 @@ export function getMyHistory(type) {
 			.catch( (response) => dispatch(myHistoryError(response.data)));
 		}
 	 }
+}
+
+export function getStats(type) {
+	return (dispatch, getStore) => {
+		var id;
+		var year;
+		dispatch({type: GET_STATS});
+		if(type !== "otherPersonPage"){
+	 		id = getStore().myState.me._id;
+	 		year = getStore().myState.selectedYear;
+	
+		} else {
+			console.log(getStore());
+			id = getStore().userPage.user._id;
+			year = getStore().userPage.selectedYear;
+		}
+
+ 		return axios.get('/api/stats/users?limit=5&&id='+ id + "&&year=" + year)
+ 		.then( (response) => dispatch(receivedStats(response.data)))
+		.catch( (response) => dispatch(myHistoryError(response.data)));
+		
+	}
+}
+
+export function receivedStats(data) {
+	return {
+		type:RECEIVED_STATS,
+		data
+	}
 }
 
 export function receivedMyHistory(data) {

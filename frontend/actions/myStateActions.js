@@ -30,6 +30,7 @@ export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE = 'EDIT_KEY_RESUL
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE';
 
 export const ARCHIVE_MY_QUARTER = 'ARCHIVE_MY_QUARTER';
+export const RESET = 'RESET';
 
 const session = require('../../backend/config/session');
 
@@ -48,6 +49,13 @@ export function archiveMyQuarter(id, flag) {
 			dispatch({ type: REMOVE_REQUEST	});
 		})
 	}
+}
+
+
+export function reset () {
+	 return {
+	 	type: RESET
+	 }  
 }
 
 export function getMe() {

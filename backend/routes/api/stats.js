@@ -29,14 +29,14 @@ router.get('/users', (req, res, next) => {
 	var sort = req.query.sort === "desc" ? 1 : -1;
 	var limit = req.query.limit || 5;
 	var userId = req.query.id;
-
+	var year = req.query.year;
 	var limit = Number.parseInt(limit);
 
 	if(Number.isNaN(limit)) {
 		return res.badRequest('Limit param should be a number');
 	}
 
-	if(!isCorrectId(userId)) {
+	if(!isCorrectId(userId) || userId == undefined) {
 		res.badRequest('Wrong user ID');
 	}
 
@@ -47,7 +47,7 @@ router.get('/users', (req, res, next) => {
 	if(limit <= 0) {
 		limit = 5;
 	}
-	service.getAllUsersStatsWithQuarters(sort, limit, userId, res.callback);
+	service.getAllUsersStatsWithQuarters(sort, limit, userId, year, res.callback);
 });
 
 router.get('/users/:id', (req, res, next) => {

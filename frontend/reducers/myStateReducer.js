@@ -21,7 +21,8 @@ import {
 	EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE,
-	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE,
+	RESET
 } from '../actions/myStateActions';
 
 import {
@@ -49,6 +50,15 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			console.log("state.me >>>", state.me);
 			return Object.assign({}, state, {
 				me: state.me
+			});
+		}
+
+		case RESET: {
+			return Object.assign({}, state, {
+				selectedTab: initialState.selectedTab,
+				selectedYear: initialState.selectedYear,
+				editKeyResult: initialState.editKeyResult,
+				editKeyResultIsEditing: initialState.editKeyResultIsEditing
 			});
 		}
 

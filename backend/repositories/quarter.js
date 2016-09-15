@@ -104,11 +104,11 @@ QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 	.exec(callback);
 };
 
-QuarterRepository.prototype.getCurrentYear = function(callback) {
+QuarterRepository.prototype.getYear = function(year, callback) {
 	var model = this.model;
 
 	model
-	.find({ 'year': CONST.currentYear })
+	.find({ 'year': year })
 	.populate({
 		path: 'userObjectives',
 		match: { isDeleted: false},

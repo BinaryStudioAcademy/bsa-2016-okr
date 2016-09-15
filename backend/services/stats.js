@@ -10,13 +10,13 @@ const UserRepository = require ('../repositories/user.js')
 
 var StatsService = function() {};
 
-StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId, callback) {
+StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId,year, callback) {
 	var statsObj = {};
 	var selectedUser = null;
 
 	async.waterfall([
 		(callback) => {
-			QuarterRepository.getCurrentYear((err, result) => {
+			QuarterRepository.getYear(year, (err, result) => {
 				if(err)
 					return callback(err, null)
 				return callback(null, new Object(result));
@@ -40,7 +40,7 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 			for(user in statsObj) { //for each user
 				let yearScore = 0; // score for year
 				let quartersCount = 0; // count of quarters in year
-				let userInfo = statsObj[user]['1'].userId.userInfo;
+				let userInfo = statsObj[user]['1'].userId.userInfo || null;
 				
 				for (quarter in statsObj[user]){ // for each user's quarter
 					let quarterScore = 0; //score for quarter
@@ -107,18 +107,28 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 		(statsArr, callback) => { // setting the limit
 			var statArr = statsArr.slice(0, limit)
 			var userStats = null;
-			if (statArr.find( (elem) => {
-				if (selectedUser.userInfo._id == elem.userInfo._id)
-					return true
-				return false
-				}) 
-				== undefined )
-					userStats = selectedUser
-			else 
-				userStats = {
-					totalScore:selectedUser.totalScore,
-					inTop: true
+			if(selectedUser == null || selectedUser.userInfo == undefined  )
+			{
+				userStats= {
+					totalScore: 0,
+					inTop: false
 				}
+			}
+
+			else {
+				if (statArr.find( (elem) => {
+					if (selectedUser.userInfo._id == elem.userInfo._id)
+						return true
+					return false
+					}) 
+					== undefined )
+						userStats = selectedUser
+				else 
+					userStats = {
+						totalScore:selectedUser.totalScore,
+						inTop: true
+					}
+			}
 			
 			var bottomStats = statsArr[statsArr.length - 1];
 			var respObj = {
