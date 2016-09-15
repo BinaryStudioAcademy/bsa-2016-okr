@@ -32,6 +32,7 @@ class Objectives extends Component {
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
+		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
 	}
 
 	componentWillMount() {
@@ -79,6 +80,35 @@ class Objectives extends Component {
 			confirmButtonText: "OK",
 			closeOnConfirm: true
 		}, function(){handler();});
+	}
+
+	handleArchivingQuarter(index) {
+		var quarterId;
+		var flag;
+		const { user } = this.props.user;
+		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) 
+			{
+			this.props.user.user.quarters.forEach( (quarter) => {
+				if (quarter.index == index && quarter.year == this.props.user.selectedYear)
+				{
+					quarterId = quarter._id;
+					flag = !quarter.isArchived;
+				}
+			})
+			this.props.otherPersonActions.archiveUserQuarter(quarterId, flag);
+		}			
+		else	
+		{
+			this.props.myState.me.quarters.forEach( (quarter) => {
+				if (quarter.index == index && quarter.year == this.props.myState.selectedYear)
+				{
+					quarterId = quarter._id;
+					flag = !quarter.isArchived;
+				}
+			})
+			this.props.myStateActions.archiveMyQuarter(quarterId, flag);
+		}
+		//console.log(this.props.myState);
 	}
 
 	changeKeyResultScore(objectiveId, mentorId) {
@@ -218,7 +248,8 @@ class Objectives extends Component {
 						changeYear={this.changeYear}
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    addNewQuarter={ this.handleAddingNewQuarter }
+				    	addNewQuarter={ this.handleAddingNewQuarter }
+				    	archiveQuarter={this.handleArchivingQuarter }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
 						me={ isItHomePage }

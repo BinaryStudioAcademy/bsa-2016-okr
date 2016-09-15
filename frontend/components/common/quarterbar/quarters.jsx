@@ -76,7 +76,8 @@ class Quarterbar extends Component {
             </div>
             <div id="context-wrapper" onClick={this.onContextWrapper}>
                <ul id="context" onClick={this.onContextItemClick}>
-                  <li data-action="archive">Archive</li>
+                  <li id="archive" data-action="archive">Archive</li>
+                  <li id="unarchive" data-action="unarchive">Unarchive</li>
                </ul>
             </div>
          </div>
@@ -94,12 +95,13 @@ function getQuarters() {
       isMe = this.props.me,
       mentorId = this.props.mentorId,
       quarters_to_show = [];
-
+      console.log(quarters)
    for (let i = 0; i < 4; i++) {
       if (quarters[i] != undefined) {
          quarters_to_show.push(<li
             tabIndex="0"
             key={i}
+            data-isarchived={quarters[i].isArchived} 
             data-id={quarters[i].index}
             className={quarters[i].index == current_tab ? 'active' : ''}>
             {quarters_prefixes[i]} quarter</li>)
@@ -163,27 +165,37 @@ function choose_quarter_for_tablet(event) {
 }
 
 function call_context_menu(event) {
-   let   target = event.target,
-         context = document.getElementById('context-wrapper'),
-         contextMenu = document.getElementById('context');
-
-   if(target.matches('#quarters li')){
-      target.classList.add("oncontext");
-      contextMenu.style.top = event.clientY + "px";
-      contextMenu.style.left = event.clientX + "px";
-      context.classList.add("visible");
-      event.preventDefault();
-      return false;
+   if(this.props.isAdmin){
+      let   target = event.target,
+            context = document.getElementById('context-wrapper'),
+            contextMenu = document.getElementById('context');
+   
+      if(target.matches('#quarters li')){
+         if(target.getAttribute("data-isarchived") == "true"){
+               document.getElementById('archive').className = "hidden"
+               document.getElementById('unarchive').className = ""
+            }
+         else{
+               document.getElementById('archive').className = ""
+               document.getElementById('unarchive').className = "hidden"
+            }
+         target.classList.add("oncontext");
+         contextMenu.style.top = event.clientY + "px";
+         contextMenu.style.left = event.clientX + "px";
+         context.classList.add("visible");
+         event.preventDefault();
+         return false;
+      }
    }
 }
 function on_context_item(event) {
    let   target = document.querySelector('.oncontext'),
          context = document.getElementById('context-wrapper');
    if(event.target.matches('#context li')){
-      if(event.target.dataset.action == 'archive'){
+      if(event.target.dataset.action == 'archive' || event.target.dataset.action == 'unarchive' ){
          target.classList.remove('oncontext');
          context.classList.remove('visible');
-         //do logic here
+         this.props.archiveQuarter(target.getAttribute("data-id"))
       }
    }
 }

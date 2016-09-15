@@ -29,8 +29,26 @@ export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE = 'EDIT_KEY_RESULT_DISAB
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE';
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE';
 
+export const ARCHIVE_MY_QUARTER = 'ARCHIVE_MY_QUARTER';
 
 const session = require('../../backend/config/session');
+
+export function archiveMyQuarter(id, flag) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ARCHIVE_MY_QUARTER});
+		dispatch({ type: ADD_REQUEST });
+		let url = '/api/quarters/' + id + '/archive/' + flag;
+		return axios.put(url)
+		.then( response => {
+			dispatch({ type: REMOVE_REQUEST	});
+			dispatch(getMe());
+		})
+		.catch( response => {
+			dispatch(receivedMyObjectivesError(response));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+	}
+}
 
 export function getMe() {
 	return (dispatch, getStore) => {

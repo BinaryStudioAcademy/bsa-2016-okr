@@ -17,6 +17,25 @@ export const EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE = 'EDIT_KEY_RESULT_ENABLE_
 export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE = 'EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE';
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE';
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE';
+export const ARCHIVE_USER_QUARTER = 'ARCHIVE_USER_QUARTER';
+
+
+export function arhiveUserQuarter(id, flag) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ARCHIVE_USER_QUARTER});
+		dispatch({ type: ADD_REQUEST });
+		let url = '/api/quarters/' + id + '/archive/' + flag;
+		return axios.put(url)
+		.then( response => {
+			dispatch({ type: REMOVE_REQUEST	});
+			dispatch(getUser());
+		})
+		.catch( response => {
+			dispatch(receivedError(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+	}
+}
 
 export function getUser(id) {
 
