@@ -18,7 +18,7 @@ class Quarterbar extends Component {
 
    handleQuarterClick(event) {
       let target = event.target;
-
+      let userId;
       if (target.matches('li:not(.not-exist)') && target.matches('li:not(.disabled)')) {
 
          this.props.changeTab(parseInt(event.target.dataset.id));
@@ -28,14 +28,19 @@ class Quarterbar extends Component {
          quarter.blur();
 
       } else if (event.target.matches('li.not-exist')) {
-
+         if(this.props.mentorId == session._id) {
+            userId = this.props.routeId;
+         } else {
+            userId = session._id;
+         }
          //adding new quarter to database, API call
          this.props.addNewQuarter({
             year: this.props.selectedYear,
             index: parseInt(target.dataset.id),
             createdAt: Date.now(),
             updatedAt: Date.now(),
-            userObjectives: []
+            userObjectives: [],
+            userId: userId
          });
       }
    }
