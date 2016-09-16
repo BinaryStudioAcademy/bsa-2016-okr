@@ -9,21 +9,24 @@ var quarterSchema = new Schema({
 		required: true,
 		type: Number,
 		min: CONST.currentYear,
-		max: CONST.currentYear + 1
+		max: CONST.currentYear + 1,
+		default: CONST.currentYear,
 	},
 	index: {
 		required: true,
 		type: Number,
 		min: 1,
-		max: 4
+		max: 4,
+		default: CONST.currentQuarter,
 	},
 	userId: {
+		required: true,
 		type: Schema.Types.ObjectId, 
-		ref: 'User'
-	}, 
+		ref: 'User',
+	},
 	userObjectives: [{
 		type: Schema.Types.ObjectId, 
-		ref: 'UserObjective'
+		ref: 'UserObjective',
 	}],
 	isArchived: {
 		type: Boolean,

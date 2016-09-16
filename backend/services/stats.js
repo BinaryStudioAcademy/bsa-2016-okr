@@ -21,8 +21,10 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 	async.waterfall([
 		(callback) => {
 			QuarterRepository.getCurrentYear((err, result) => {
-				if(err)
+				if(err) {
 					return callback(err, null)
+				}
+
 				return callback(null, new Object(result));
 			})
 
@@ -38,19 +40,22 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 					return callback(err);
 				return callback(null);
 			})
-
 		},
 		(callback) => {
 			
-			console.log("STATS OBJ +++ ", statsObj);
-
 			for(user in statsObj) { //for each user
 				let yearScore = 0; // score for year
 				let quartersCount = 0; // count of quarters in year
 
-				let userInfo = statsObj[user]['1'].userId.userInfo;
+				let anyQuarter = Object.keys(statsObj[user])[0];
+
+				if(isEmpty(anyQuarter)) {
+					break;
+				}
+
+				let userInfo = statsObj[user][anyQuarter].userId.userInfo;
 				
-				for (quarter in statsObj[user]){ // for each user's quarter
+				for (quarter in statsObj[user]) { // for each user's quarter
 					let quarterScore = 0; //score for quarter
 					let userObjectivesCount = 0; // count of objectives in quarter
 
@@ -68,89 +73,84 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 						}
 					})
 
-					if(userObjectivesCount != 0){ // if there was no objectives
+					if(userObjectivesCount != 0) { // if there was no objectives
 						quarterScore = quarterScore / userObjectivesCount;
 
 						statsObj[user][quarter] = quarterScore;//set quarter score
 
 						quartersCount ++;
 						yearScore += quarterScore;// sum up quarter's scores}
-					}
-					else 
+					}	else {
 						statsObj[user][quarter] = 0;
+					}
 				}
+				
 				if(statsObj[user].userInfo == undefined){
 					statsObj[user].userInfo = userInfo;	
 				}
 
-				if(quartersCount != 0){
+				if(quartersCount != 0) {
 					yearScore = yearScore / quartersCount;
 					statsObj[user].totalScore = yearScore;// set year's score}
-
-				}
-				else {
+				} else {
 					statsObj[user].totalScore = 0;
 				}
 
 				console.log("USER !!!!!!!", user);
 				console.log("CURRENT USER ID !!!", currentUserId);
 
-				if(user == currentUserId){
+				if(user == currentUserId) {
 					console.log('selected');
 					selectedUser = Object.assign({}, statsObj[user]);
-
 				}
 			}
+
 			return callback(null);
 		},
 		(callback) => { // transforming obj into arr
-			let statsArr = []
+			let statsArr = [];
+			
 			for(user in statsObj) {
 				statsArr.push(statsObj[user]);
-			} 
+			}
+
 			return callback(null, statsArr);
-		},
-		(statsArr, callback) => { // sorting
-			statsArr.sort( (a,b) => {
+		}, (statsArr, callback) => { // sorting
+			statsArr.sort((a,b) => {
 				return b.totalScore - a.totalScore;
-			})
+			});
+
 			return callback(null, statsArr);
-		},
-		(statsArr, callback) => { // setting the limit
+		}, (statsArr, callback) => { // setting the limit
 
 			var statArr = statsArr.slice(0, limit)
 			var userStats = null;
-		
+			
+			var inTop = statArr.some((elem) => {
+				return selectedUser.userInfo._id === elem.userInfo._id;
+			});
 
-			if (statArr.find( (elem) => {
-
-				   console.log("ELEM ++++ ", elem);
-				   console.log("SELECTED USER ++++ ", selectedUser);
-
-					if (selectedUser.userInfo._id == elem.userInfo._id)
-						return true;
-					else
-						return false;
-				}) 
-				== undefined )
-					userStats = selectedUser
-			else 
+			if (inTop) {
 				userStats = {
-					totalScore:selectedUser.totalScore,
-					inTop: true
-				}
+					totalScore: selectedUser.totalScore,
+					inTop: true,
+				};
+			}	else {
+				userStats = selectedUser;
+			}
 			
 			var bottomStats = statsArr[statsArr.length - 1];
 			var respObj = {
 				statArr,
 				userStats,
 				bottomStats
-			}
-			return callback(null,  respObj)
+			};
+			
+			return callback(null, respObj);
 		}
 	], (err, result) => {
 		return callback(err, result);
-	})
+	});
 }
 
 StatsService.prototype.getAllUsersStats = function(sort, limit, callback) {

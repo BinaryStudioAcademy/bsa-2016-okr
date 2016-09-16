@@ -28,8 +28,8 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
-	selectedTab: currentQuarter,
-	selectedYear: currentYear,
+	selectedTab: null,
+	selectedYear: null,
 	me: {
 		"localRole": ""
 	},
@@ -53,9 +53,21 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 		case RECEIVED_MY_OBJECTIVES: {
 			const { data } = action;
+			let index;
+			let year;
+
+			if(!state.selectedTab || !state.selectedYear) {
+				let quarters = data.quarters.map((quarter) => {
+					return getIndexAndYearFromQuarter(quarter);
+				});
+
+				({ index, year } = quarters[quarters.length - 1]);
+			}
 
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
+				selectedTab: index || state.selectedTab,
+				selectedYear: year || state.selectedYear,
 			});
 		}
 
@@ -421,4 +433,8 @@ export function changeArchiveInMyObjective (me, objectiveId, flag) {
 	});
 
 	return meCopy;
+}
+
+function getIndexAndYearFromQuarter({ index, year }) {
+	return { index, year };
 }

@@ -17,6 +17,7 @@ import * as acceptObjective from '../actions/acceptObjective.js';
 import '../components/common/fonts/flaticon/_flaticon.scss';
 import '../components/common/fonts/flaticon-1/_flaticon-1.scss';
 import '../components/common/fonts/fira/_fira.scss';
+import '../components/common/styles/scrollbar.scss';
 import './app.scss';
 
 

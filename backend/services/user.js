@@ -17,31 +17,38 @@ UserService.prototype.createUser = function(data, callback) {
 		(callback) => {
 			
 			var body  = {};
-			body.firstName = "DefaultFName";
-			body.lastName = "DefaultLName";
+			body.firstName = "FirstN";
+			body.lastName = "LastN";
 			body.email = data.email;
 			body.globalRole = data.globalRole;
 
 			UserInfoRepository.add(body, (err, userInfo) => {
-
-				if (err)
+				if (err) {
 					return callback(err, null);
-
-
+				}
 
 				return callback(null, userInfo);
 			});
-		},
-		(userInfo, callback) => {
-
-			var body = {};
-			body.globalId = data.id;
-			body.localRole = CONST.user.localRole.DEFAULT;
-			body.userInfo = userInfo._id;
+		}, (userInfo, callback) => {
+			var body = {
+				globalId: data.id,
+				localRole: CONST.user.localRole.DEFAULT,
+				userInfo: userInfo._id,
+			};
 
 			UserRepository.add(body, (err, user) => {
-				if (err)
+				if (err) {
 					return callback(err, null);
+				}
+
+				return callback(null, user);
+			});
+		}, (user, callback) => {
+			var body = {
+				userId: user._id,
+			};
+			
+			QuarterRepository.add(body, (err, quarter) => {
 
 				return callback(null, user);
 			});

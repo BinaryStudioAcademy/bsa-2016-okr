@@ -218,7 +218,7 @@ class Objectives extends Component {
 			<div id="home-page-wrapper">
 				<Quarterbar
 						changeTab={ this.changeTab }
-						changeYear={this.changeYear}
+						changeYear={ this.changeYear }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
 				    addNewQuarter={ this.handleAddingNewQuarter }
