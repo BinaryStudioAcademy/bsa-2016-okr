@@ -21,42 +21,18 @@ class RecycleBinItem extends Component {
 				<td data-th="Deleted By" className="item-deleted-by">{ this.props.item.deletedBy}</td>
 				<td data-th="Date" className="width-15perc">{ dateStr }</td>
 				<td data-th="Action" className="width-5perc">
-					<button className="btn btn-blue-hover"  title="Restore" onClick={this.restoreItem.bind(this)}><i className="fi flaticon-repeat-1"></i></button>
+					<button className="btn btn-blue-hover"  title="Restore" onClick={this.restore.bind(this)}><i className="fi flaticon-repeat-1"></i></button>
 				</td>
 			</tr>
 		);
 	}
 
-	restoreItem(id) {
-
-
-		if (this.props.item.type === "objective") {
-			
-			let body = {};		
-			body.isDeleted = false;
-
-			this.props.updateTemplateObjectivesRequest(this.props.item.id, body, this.props.item.id);
-		}
-
-		if (this.props.item.type === "key result") {
-			
-			let body = {};			
-			body.isDeleted = false;
-
-			this.props.updateTemplateKeyResultRequest(this.props.item.id, body, this.props.item.id);
-		}
-
-		if (this.props.item.type === "category") {
-			
-			let body = {};			
-			body.isDeleted = false;
-
-			this.props.updateCategoryRequest(this.props.item.id, body, this.props.item.id);
-		}
-
+	restore() {
+		this.props.restoreItem(this.props.item);
 	}
-
 }
+
+
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(actions, dispatch);

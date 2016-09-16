@@ -42,7 +42,7 @@ class RecycleBin extends Component {
 		let item = this.props.recycleBin.visibleItems[index];
 
    		return (
-	   			<RecBinItem item={item} key={item.id} />
+	   			<RecBinItem item={item} key={item.id} restoreItem={this.props.restoreItem}/>
    		);
   	}
 
@@ -61,7 +61,7 @@ class RecycleBin extends Component {
 					<div className="recycle-bin-header">
 
 						<div className="recycle-bin-header-row">
-							<p><span>Admin Recycle bin</span></p>
+							<p><span>{this.props.title}</span></p>
 						</div>
 					</div>
 
@@ -75,7 +75,7 @@ class RecycleBin extends Component {
 					<div className="recycle-bin-header">
 
 						<div className="recycle-bin-header-row">
-							<p><span>Admin Recycle bin</span></p>
+							<p><span>{this.props.title}</span></p>
 						</div>
 
 						<div className="recycle-bin-header-row width-85perc">
@@ -86,9 +86,9 @@ class RecycleBin extends Component {
 							</button>
 						</div>
 
-						<div className="recycle-bin-header-row" id="admin-recycle-bin">
+						<div className="recycle-bin-header-row" >
 								<div className="recucle-bin-filter-bar-container">
-									<RecycleBinFilter/>
+									<RecycleBinFilter visibleFilterCategories = {this.props.visibleFilterCategories}/>
 								</div>
 						</div>
 					</div>
@@ -121,9 +121,7 @@ class RecycleBin extends Component {
 
     componentWillMount() {
        this.props.clearRecycleBin();
-       this.props.getObjectiveTemplatesRequest();
-       this.props.getKeyResultsTemplatesRequest();
-       this.props.getDeletedCategoriesRequest();
+       this.props.getData();
     }
 
     componentWillUnmount() {

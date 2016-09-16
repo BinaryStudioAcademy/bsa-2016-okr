@@ -160,8 +160,6 @@ body {
 
 		& td { 
 			text-overflow: ellipsis; 
-
-			& button { margin-left: -5px; }
 		}
 
 		& tr {
@@ -192,6 +190,10 @@ body {
 }
 
 .recucle-bin-filter-bar-container {
+
+   .not-dispaly {
+	   display: none;
+   }
 	
 	width: 100%;
 
@@ -265,6 +267,8 @@ body {
 
 }
 
+
+
 .react-date-field__calendar-icon {
 	display: none;
 }
@@ -304,6 +308,7 @@ body {
 			height: auto;
 			margin: 0 auto;
 			margin-top: 12px;
+			padding-left: 10px;
 		}
 
 		.filter-box label {
