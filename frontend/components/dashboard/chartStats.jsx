@@ -41,7 +41,6 @@ class ChartStats extends Component {
 			{
 				eventName: 'ready',
 				callback: (Chart) => {
-					console.log('¯\\_(ツ)_/¯: Chart rendered');
 				}
 			}
 		];

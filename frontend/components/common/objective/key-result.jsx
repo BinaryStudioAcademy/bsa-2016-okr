@@ -63,7 +63,7 @@ class KeyResult extends Component {
 				confirmButtonText: 'Yes, save',
 				closeOnConfirm: false
 			}, () => {
-				this.props.saveEditedKeyResult(id, title, difficulty);
+				this.props.saveEditKeyResult(id, title, difficulty);
 			});
 		}
 	}
@@ -91,15 +91,6 @@ class KeyResult extends Component {
 	}
 
 	handleDelKeyResult() {
-		let handler = function () {
-
-			if (this.props.mentorId != undefined)
-				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id,
-					notifications.otificationApprenticeDeletedKey, this.props.mentorId);
-			else
-				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id);
-
-		}.bind(this);
 
 		sweetalert({
 			title: "Do you really want to delete this key result?",
@@ -108,8 +99,12 @@ class KeyResult extends Component {
 			confirmButtonColor: "#4caf50",
 			confirmButtonText: "OK",
 			closeOnConfirm: true
-		}, function () {
-			handler();
+		}, () => {
+			if (this.props.mentorId != undefined)
+				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id, true,
+						notifications.otificationApprenticeDeletedKey, this.props.mentorId);
+			else
+				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id, true);
 		});
 	}
 

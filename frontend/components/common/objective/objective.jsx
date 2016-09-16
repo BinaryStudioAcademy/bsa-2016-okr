@@ -201,6 +201,9 @@ class ObjectiveItem extends Component {
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage = { isItHomePage }
 						editKeyResult = { this.props.editKeyResult }
+						addNewKeyResults = { this.props.addNewKeyResults }
+						getAutocompleteKeyResults = { this.props.getAutocompleteKeyResults }
+						setAutocompleteKeyResultsSelectedItem = { this.props.setAutocompleteKeyResultsSelectedItem }
 				/>
 			</div>
 			</div>

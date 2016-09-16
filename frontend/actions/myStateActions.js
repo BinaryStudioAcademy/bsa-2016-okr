@@ -286,23 +286,17 @@ export function keyResultScoreChangedError(data) {
 	};
 }
 
-export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, callback, userId) {
+export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, flag, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
-		//dispatch({ type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API });
 
-		return axios.delete('/api/userObjective/' + objectiveId +'/keyResult/'+ keyResultId +'/true')
+		return axios.delete('/api/userObjective/' + objectiveId +'/keyResult/'+ keyResultId +'/'+flag)
 				.then(response => {
-					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, response.data));
+					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, flag, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
 
 					dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
 					dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
-					/*
-					if (callback != null) {
-						dispatch(callback(userId));
-					}
-					*/
 				})
 				.catch(response => {
 					dispatch(receivedMyObjectivesError(response.data));
@@ -338,11 +332,12 @@ export function changeArchiveStatusLocal (changeTo, objectiveId) {
 	 }
 }
 
-export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, data) {
+export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, flag, data) {
 	return {
 		type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 		objectiveId,
 		keyResultId,
+		flag,
 		data,
 	};
 }

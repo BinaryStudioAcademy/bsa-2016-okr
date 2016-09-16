@@ -9,6 +9,8 @@ import { isEmpty } from '../../../../backend/utils/ValidateService';
 
 const session = require('../../../../backend/config/session');
 
+
+
 class KeyResults extends Component {
 	constructor(props) {
 		super(props);
@@ -19,9 +21,9 @@ class KeyResults extends Component {
 		this.onAddNewKeyResultClick = this.onAddNewKeyResultClick.bind(this);
 		this.resetAutocompleteState = this.resetAutocompleteState.bind(this);
 		this.hideAddKeyResultInput = this.hideAddKeyResultInput.bind(this);
-		this.saveEditedKeyResult = this.saveEditedKeyResult.bind(this);
-		this.isNotDuplicate = this.isNotDuplicate.bind(this);
+		this.saveEditKeyResult = this.saveEditKeyResult.bind(this);
 		this.focusEditInput = this.focusEditInput.bind(this);
+		this.getDuplicateKeyResult = this.getDuplicateKeyResult.bind(this);
 	}
 
 	focusEditInput(id) {
@@ -29,43 +31,58 @@ class KeyResults extends Component {
 		ReactDOM.findDOMNode(inputEl).focus();
 	}
 
-	isNotDuplicate(id, title, difficulty) {
-		let keyResultIndex = this.props.data.findIndex((keyResult) => {
-			return keyResult.templateId.title === title;
+	getDuplicateKeyResult(id, title) {
+		const { data } = this.props;
+		let keyResultIndex = data.findIndex((keyResult) => {
+			return (keyResult.templateId.title === title) && (keyResult._id !== id);
 		});
 
-		if( keyResultIndex === -1 ) { //|| (!isEmpty(id) && this.props.data[keyResultIndex].templateId._id === id)
-			return true;
-		} else {
-			if(this.props.data[keyResultIndex].templateId.difficulty === difficulty) {
-				sweetalert({
-					title: 'Error!',
-					text: 'Key result with such title for that objective already exists',
-					type: 'error',
-				}, () => {
-					setTimeout(() => {
-						this.focusEditInput(id);
-					}, 0);
-				});
-
-				return false;
-			} else {
-				return true;
-			}
-		}
+		return (keyResultIndex === -1) ? null : data[keyResultIndex];
 	}
 
-	saveEditedKeyResult(id, title, difficulty) {
-		if(this.isNotDuplicate(id, title, difficulty)) {
-			let objectiveId = this.props.objectiveId;
-			let reqBody = {
-				keyResultId: id,
-				title: title,
-				difficulty: difficulty
-			};
+	saveEditKeyResult(id, title, difficulty, selectedItemId) {
+		let duplicateItem = this.getDuplicateKeyResult(id, title);
+		let userObjectiveId = this.props.objectiveId;
 
-			this.props.editKeyResult.editTitleAndDifficulty(objectiveId, reqBody);
+		if(isEmpty(duplicateItem)) {
+			if(!isEmpty(id)) {
+
+				let reqBody = {
+					keyResultId: id,
+					title: title,
+					difficulty: difficulty
+				};
+
+				this.props.editKeyResult.editTitleAndDifficulty(userObjectiveId, reqBody);
+				sweetalert.close();
+			} else {
+				const body = {
+					title: title,
+					keyResultId: selectedItemId,
+					isItHomePage: this.props.isItHomePage || false,
+				};
+					this.props.addNewKeyResults(userObjectiveId, body);
+			}
+
 			sweetalert.close();
+		} else if(duplicateItem.isDeleted) {
+			sweetalert({
+				title: 'Do you want to restore deleted key result?',
+				text: 'Key result with such title for that objective exists, but deleted by someone',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#4caf50',
+				confirmButtonText: 'Yes, restore'
+			}, () => {
+				this.props.softDeleteObjectiveKeyResultByIdApi(userObjectiveId,
+					duplicateItem._id, false);
+			});
+		} else {
+			sweetalert({
+				title: 'Error!',
+				text: 'Key result with such title for that objective already exists',
+				type: 'error',
+			});
 		}
 	}
 
@@ -148,11 +165,17 @@ class KeyResults extends Component {
 					<KeyResultAdd
 						objectiveId={ this.props.objectiveId }
 						resetAutocompleteState={ this.resetAutocompleteState }
-						isItHomePage={ isItHomePage }
+						saveEditKeyResult={ this.saveEditKeyResult }
+						getAutocompleteKeyResults = { this.props.getAutocompleteKeyResults }
+						setAutocompleteKeyResultsSelectedItem = { this.props.setAutocompleteKeyResultsSelectedItem }
 					/>
 				</div>
 			);
-			items = this.props.data.map((item, index) => {
+			items = this.props.data
+				.filter((item) => {
+					return (!item.isDeleted)
+				})
+				.map((item, index) => {
 				return <KeyResultItem index={index} key={index} item={item}
 				                      mentorId={this.props.mentorId}
 				                      isArchived={ isArchived }
@@ -161,12 +184,16 @@ class KeyResults extends Component {
 				                      softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 				                      hideAddKeyResultInput = { this.hideAddKeyResultInput }
 				                      editKeyResult = { this.props.editKeyResult }
-				                      saveEditedKeyResult = { this.saveEditedKeyResult }
+				                      saveEditKeyResult = { this.saveEditKeyResult }
 				                      ref={ `keyResult-${ item._id }` }
 				/>
 			});
 		} else {
-			items = this.props.data.map((item, index) => {
+			items = this.props.data
+				.filter((item) => {
+					return (!item.isDeleted)
+				})
+				.map((item, index) => {
 				return <KeyResultItem index={index}
 				                      key={index}
 				                      item={item}

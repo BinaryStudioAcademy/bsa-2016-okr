@@ -49,8 +49,8 @@ KeyResultRepository.prototype.getAllDeletedPopulate = function(callback) {
 KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callback) {
 	var model = this.model;
 	var options = {
-		isApproved: true,
-		isDeleted: false,
+		//isApproved: true,
+		//isDeleted: false,
 		objectiveId: objectiveId
 	};
 

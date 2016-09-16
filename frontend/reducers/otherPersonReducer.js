@@ -151,10 +151,10 @@ export default function otherPersonReducer(state = initialState, action) {
 		}
 		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS:
 		{
-			const { objectiveId, keyResultId, data } = action;
+			const { objectiveId, keyResultId, flag, data } = action;
 
 			return Object.assign({}, state, {
-				user: deleteKeyResultFromObjective(state.user, objectiveId, keyResultId, data)
+				user: deleteKeyResultFromObjective(state.user, objectiveId, keyResultId, flag, data)
 			});
 		}
 
@@ -289,7 +289,7 @@ function addNewObjectiveToUser(user, quarterId, objective) {
 	return userCopy;
 }
 
-function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResult) {
+function deleteKeyResultFromObjective(user, objectiveId, keyResultId, flag, newKeyResult) {
 	var userCopy = Object.assign({}, user);
 	let quarterIndex, objectiveIndex, keyResultIndex;
 
@@ -311,8 +311,15 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResu
 			return keyResult._id === keyResultId;
 		});
 		if (keyResultIndex !== -1) {
-			userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+			//userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+			if (flag) {
+				//meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+				userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = true;
+			} else {
+				userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = false;
+			}
 		}
+
 	}
 	//console.log('Success deleting keyResult from objective');
 	return userCopy;

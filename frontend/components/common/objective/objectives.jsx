@@ -10,6 +10,7 @@ import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as keyResultActions from "../../../actions/keyResultActions";
 import * as myStateActions from "../../../actions/myStateActions";
 import * as objectiveActions from "../../../actions/objectiveActions";
 import * as otherPersonActions from "../../../actions/otherPersonActions";
@@ -283,6 +284,9 @@ class Objectives extends Component {
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage={ isItHomePage }
 						editKeyResult = { editKeyResult }
+						addNewKeyResults = { this.props.keyResultActions.addNewKeyResults }
+						getAutocompleteKeyResults = { this.props.keyResultActions.getAutocompleteKeyResults }
+						setAutocompleteKeyResultsSelectedItem = { this.props.keyResultActions.setAutocompleteKeyResultsSelectedItem }
 					/>
 				</div>
 			</div>
@@ -327,6 +331,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+		keyResultActions: bindActionCreators(keyResultActions, dispatch),
 		myStateActions: bindActionCreators(myStateActions, dispatch),
 		objectiveActions: bindActionCreators(objectiveActions, dispatch),
 		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),

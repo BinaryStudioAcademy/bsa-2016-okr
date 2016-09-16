@@ -48,7 +48,7 @@ class ObjectiveList extends React.Component{
 
 				var objectiveItems = objectives
 					.filter((objective) => {
-						return objective.templateId.category == category._id
+						return ((objective.templateId.category == category._id) && (!objective.isDeleted))
 					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
@@ -62,6 +62,9 @@ class ObjectiveList extends React.Component{
 																	softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 																	isItHomePage = { isItHomePage }
 																	editKeyResult = { this.props.editKeyResult }
+																	addNewKeyResults = { this.props.addNewKeyResults }
+																	getAutocompleteKeyResults = { this.props.getAutocompleteKeyResults }
+																	setAutocompleteKeyResultsSelectedItem = { this.props.setAutocompleteKeyResultsSelectedItem }
 						/>
 					});
 

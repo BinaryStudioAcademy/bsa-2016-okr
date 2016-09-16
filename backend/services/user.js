@@ -78,12 +78,12 @@ UserService.prototype.getByIdWithQuarters = function(id, callback) {
 
 				quarters = quarters.map((quarter) => {
 					var userObjectivesNew = quarter.userObjectives.map((objective) => {
-						var keyResultsNotDeleted = objective.keyResults.filter((keyResult) => {
-							return keyResult.isDeleted == false;
-						})
+						//var keyResultsNotDeleted = objective.keyResults.filter((keyResult) => {
+						//	return keyResult.isDeleted == false;
+						//});
 
 						objective = objective.toObject();
-						objective.keyResults = keyResultsNotDeleted;
+						//objective.keyResults = keyResultsNotDeleted;
 
 						return objective;
 					});
