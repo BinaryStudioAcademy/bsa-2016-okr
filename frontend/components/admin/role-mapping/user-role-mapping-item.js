@@ -13,9 +13,12 @@ class UserRoleMappingItem extends React.Component {
 
    render() {
 
+   	        console.log(this.props.user._id);
+   	        console.log(this.props.currentUser);
+
 		    if (this.props.user.globalRole === CONST.user.globalRole.ADMIN) {
 			   	 return (
-		            <tr key={this.props.user.id}>
+		            <tr key={this.props.user._id} className={this.props.currentUser === this.props.user._id ? 'me' : ''}>
 		                   <td data-th="Avatar" className="col-1">
 		                      <img/>
 		                   </td>
@@ -28,7 +31,7 @@ class UserRoleMappingItem extends React.Component {
 		   	}
 
    	        return (
-	            <tr key={this.props.user.id}>
+	            <tr key={this.props.user._id} className={this.props.currentUser === this.props.user._id ? 'me' : ''}>
 	                   <td data-th="Avatar" className="col-1">
 	                      <img/>
 	                   </td>

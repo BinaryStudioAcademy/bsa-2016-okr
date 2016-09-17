@@ -12,6 +12,9 @@ import * as actions from "../../../actions/mappingActions";
 
 import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../../../backend/config/constants";
 
+const session = require("../../../../backend/config/session.js");
+
+
 class RoleMapping extends React.Component {
 
    render() {
@@ -19,6 +22,9 @@ class RoleMapping extends React.Component {
       const { visibleUsers } = this.props.stateFromReducer.mapping;
       const { roles } = this.props.stateFromReducer.mapping;
       const { globalRoles} =  this.props.stateFromReducer.mapping;
+
+      console.log(session._id);
+      console.log(session);
 
       return (
 
@@ -52,7 +58,7 @@ class RoleMapping extends React.Component {
                        </thead>
                        <tbody>
                         {visibleUsers.map(function(user) {
-                            return  <UserRoleMappingItem key={user._id} user={user}/>;
+                            return  <UserRoleMappingItem currentUser={session._id} key={user._id} user={user}/>;
                          })}
                       </tbody>
 

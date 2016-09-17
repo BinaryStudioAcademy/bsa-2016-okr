@@ -8,6 +8,10 @@
     margin-right: 7px;
 }
 
+#role-mapping-wrapper .me {
+    background: #eee;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -468,9 +472,7 @@ $breakpoint-alpha: 540px;
 
 #role-mapping-wrapper th, #role-mapping-wrapper td {
 
-    margin: .5em 1em;
-
-    @media (min-width: $breakpoint-alpha) { 
+    @media (max-width: $breakpoint-alpha) { 
       padding: 1em; 
     }
 }
