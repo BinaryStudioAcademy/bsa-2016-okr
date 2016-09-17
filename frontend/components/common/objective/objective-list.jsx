@@ -52,9 +52,12 @@ class ObjectiveList extends React.Component{
 					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
-																	isArchived = { item.isArchived }
+																	isArchived = { isArchived }
+																	isArchivedObjective = { item.isArchived }
 																	isAdmin = { isAdmin }
 																	mentorId = { mentorId }
+																	selectedYear= { this.props.selectedYear }
+																	selectedTab={ this.props.selectedTab }
 																	changeArchive = { changeArchive }
 										              updateUserObjectiveApi = { updateUserObjectiveApi }
 																	softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }

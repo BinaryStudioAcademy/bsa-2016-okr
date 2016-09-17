@@ -274,6 +274,8 @@ class Objectives extends Component {
 						isAdmin={ isAdmin }
 						archived = { archived }
 						objectives={ userInfo.objectives }
+						selectedYear= { selectedYear }
+						selectedTab={ selectedTab }
 						ObjectiveItem={ ObjectiveItem }
 						changeArchive={ this.handleArchive }
 						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
