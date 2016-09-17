@@ -51,8 +51,8 @@ const initialState = {
 	usersNames: [],
 	objectiveType: true,
 	keyType: true,
-	sortByDate: 0,
-	sortByTitle: 0,
+	sortByDate: SORTED_ASC,
+	sortByTitle: NOT_SORTED,
 	categoryType: true,
 	categoryOrTypeFilter: "",
 	userName: ""
@@ -208,11 +208,10 @@ export default function recBynReducer(state = initialState, action) {
 				usersNames: [],
 				objectiveType: true,
 				keyType: true,
-				sortByDate: false,
-				categoryType: true,
+				sortByDate: SORTED_ASC,
+				categoryType: NOT_SORTED,
 				categoryOrTypeFilter: "",
-				userName: "",
-				isSortingUsed: false									
+				userName: "",								
 			});
 		}
 
@@ -582,7 +581,6 @@ export default function recBynReducer(state = initialState, action) {
 function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, sortByTitle, categoryType, userName) {
 
 	let initVisibleItems = filterDate(items, dateFrom, dateTo);
-
 	let itemsAfterInputFilter = [];
 
 	if (categoryOrTypeFilter === "") {

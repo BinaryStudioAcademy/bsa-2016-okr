@@ -102,7 +102,7 @@ class RecycleBin extends Component {
 									<th>Type</th>
 									<th>Category</th>
 									<th>Deleted By</th>
-									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i id="date-field" className="fa fa-sort"></i><span className="margin-left-3px">Date</span></th>
+									<th className="cursor-pointer" className="width-15perc" onClick={this.setSortingByDate.bind(this)}><i id="date-field" className="fa fa-sort-asc"></i><span className="margin-left-3px">Date</span></th>
 									<th className="actions" className="width-5perc">Actions</th>
 								</tr>
 							</thead>

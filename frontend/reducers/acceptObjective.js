@@ -176,8 +176,6 @@ function updateVisibleItems(items, filter) {
 
 	let visibleItems = [];
 
-	console.log(filter);
-
 	if (filter === "")
 		visibleItems = JSON.parse(JSON.stringify(items));
 	else
@@ -192,8 +190,6 @@ function updateVisibleItems(items, filter) {
 			}
 		}
     }
-
-    console.log(visibleItems);
 
 
 	return visibleItems;
