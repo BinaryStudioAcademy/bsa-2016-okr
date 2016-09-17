@@ -44,28 +44,28 @@ class HistoryPage extends React.Component {
 
    render() {
 
-      // if (this.props.history.historyItems.length === 0) {
+       // if (this.props.history.historyItems.length === 0) {
          
-      //    return (
+       //    return (
 
-      //       <div>
-      //          <CentralWindow fullScreen={ true }>
-      //             <div className="history-page">
-      //                <div id="top-panel">
-      //                   <div className="history-page-header">
-      //                         <div className="history-page-title">
-      //                            <p><span>History</span></p>
-      //                         </div>
-      //                   </div>
-      //                </div>
+       //       <div>
+       //          <CentralWindow fullScreen={ true }>
+       //           <div className="history-page">
+       //              <div id="top-panel">
+       //                   <div className="history-page-header">
+       //                         <div className="history-page-title">
+       //                            <p><span>History</span></p>
+       //                         </div>
+       //                   </div>
+       //                </div>
 
-      //                <h1 className="placeholder">History is empty!</h1>
+       //                <h1 className="placeholder">History is empty!</h1>
 
-      //             </div>
-      //          </CentralWindow>
-      //       </div>
-      //    );
-      // }
+       //             </div>
+       //          </CentralWindow>
+       //       </div>
+       //    );
+       // }
    
       return (
          <div>
@@ -118,15 +118,13 @@ const HistoryPageConnected = connect(mapStateToProps, mapDispatchToProps)(Histor
 export default HistoryPageConnected
 
 function handler_filter_click(event) {
-   let   filter_container = document.querySelector('.history-filter-container'),
-         t_body = document.querySelector('#historyTable tbody');
+
+   let filter_container = document.querySelector('.history-filter-container');
 
    if(!filter_container.classList.contains('opened')){
       filter_container.classList.add('opened');
-      t_body.style.height = 'calc(100vh - 222px - 75px)';
    }
    else {
       filter_container.classList.remove('opened');
-      t_body.style.height = 'calc(100vh - 222px)';
    }
 }

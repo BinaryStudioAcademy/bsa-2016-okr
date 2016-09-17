@@ -1,6 +1,9 @@
 @import "_variables";
 
-#historyTable{
+#historyTable {
+
+    margin-bottom: 30px;
+
 	i{
 		margin-right: 7px;
 		float: left;
@@ -34,7 +37,6 @@
 		left: 0;
 		table-layout: fixed;
 		overflow-y: overlay;
-		height: calc(100vh - 222px);
 		1
 		& > tr {
 			
