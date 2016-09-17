@@ -65,7 +65,6 @@ export function setNameFilter (nameFilter) {
 }
 
 export function setTypeFilter (typeFilter) {
-	console.log(typeFilter);
 	const action = {
 		type: SET_TYPE_FILTER,
 		typeFilter
@@ -100,7 +99,6 @@ export function setSort (sortField) {
 	// return action;
 	return (dispatch, getStore) => {
 		let store = getStore().history;
-		console.log(sortField);
 		dispatch({
 			type: 'SET_SORT',
 			sort: {
@@ -159,7 +157,7 @@ export function getHistoryItems(filter, sprt){
 
 		return axios.get('/api/history/')
 		.then( (response) => dispatch(receivedHistoryItems(response.data)))
-		//.catch( (response) => dispatch(historyItemsError(response.data)));
+		.catch( (response) => dispatch(historyItemsError(response.data)));
 	};
 }
 

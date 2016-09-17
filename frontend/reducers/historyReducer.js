@@ -50,7 +50,6 @@ export default function historyReducer(state = initialState, action) {
 		}
 
 		case RESET_FILTERS: {
-			console.log("reset");
 			return Object.assign({}, state, {
 				nameFilter: '',
 				typeFilter: '',
@@ -58,13 +57,8 @@ export default function historyReducer(state = initialState, action) {
 				setHistoryFilterDateTo: ''
 			})
 		}
-		// case GET_SORTED_ITEMS: {
-		//     console.log("get sortedItems");
-		//     return Object.assign({}, state)
-		// }
 
 		case GET_FILTERED_ITEMS: {
-			console.log("get filteredItems");
 			return Object.assign({}, state)
 		}
 
@@ -78,21 +72,9 @@ export default function historyReducer(state = initialState, action) {
 			return Object.assign({}, state)
 		}
 
-		// case RECEIVED_SORTED_ITEMS: {
-
-		//     const historyItems = action.historyItems;
-		//     console.log('received');
-
-		//     return Object.assign({}, state, {
-		//         historyItems
-		//     })
-		// }
-
 		case RECEIVED_FILTERED_ITEMS: {
 
 			const historyItems = action.historyItems;
-			console.log('received');
-			console.log(historyItems);
 			return Object.assign({}, state, {
 				historyItems
 			})
@@ -110,7 +92,6 @@ export default function historyReducer(state = initialState, action) {
 
 		case SET_SORT: {
 			const sort = action.sort;
-			console.log(sort);
 
 			return Object.assign({}, state, {
 				sort
@@ -126,7 +107,6 @@ export default function historyReducer(state = initialState, action) {
 
 		case SET_TYPE_FILTER: {
 			const {typeFilter} = action;
-			console.log('reduser: ' + typeFilter);
 			return Object.assign({}, state, {
 				typeFilter
 			})

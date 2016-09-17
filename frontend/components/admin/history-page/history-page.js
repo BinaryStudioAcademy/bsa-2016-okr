@@ -44,28 +44,28 @@ class HistoryPage extends React.Component {
 
    render() {
 
-      if (this.props.history.historyItems.length === 0) {
+      // if (this.props.history.historyItems.length === 0) {
          
-         return (
+      //    return (
 
-            <div>
-               <CentralWindow fullScreen={ true }>
-                  <div className="history-page">
-                     <div id="top-panel">
-                        <div className="history-page-header">
-                              <div className="history-page-title">
-                                 <p><span>History</span></p>
-                              </div>
-                        </div>
-                     </div>
+      //       <div>
+      //          <CentralWindow fullScreen={ true }>
+      //             <div className="history-page">
+      //                <div id="top-panel">
+      //                   <div className="history-page-header">
+      //                         <div className="history-page-title">
+      //                            <p><span>History</span></p>
+      //                         </div>
+      //                   </div>
+      //                </div>
 
-                     <h1 className="placeholder">History is empty!</h1>
+      //                <h1 className="placeholder">History is empty!</h1>
 
-                  </div>
-               </CentralWindow>
-            </div>
-         );
-      }
+      //             </div>
+      //          </CentralWindow>
+      //       </div>
+      //    );
+      // }
    
       return (
          <div>
