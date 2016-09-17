@@ -53,6 +53,7 @@ export default function otherPersonReducer(state = initialState, action) {
 			return Object.assign({}, state, {
 				user: data,
 				waiting: false,
+				error:false
 				// selectedTab: currentQuarter,
 				// selectedYear: currentYear
 			})
