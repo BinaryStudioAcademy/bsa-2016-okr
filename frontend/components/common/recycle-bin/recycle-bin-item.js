@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import moment from 'moment';
+import sweetalert from 'sweetalert';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../../actions/recycleBinActions.js";
+import * as actions from "../../../actions/categoriesActions.js";
 
 class RecycleBinItem extends Component {
 
@@ -27,8 +28,20 @@ class RecycleBinItem extends Component {
 		);
 	}
 
-	restore() {
-		this.props.restoreItem(this.props.item);
+	restore() {		
+		let categoryIndex = this.props.categories.list.findIndex((category) => {
+			return (!category.isDeleted && this.props.item.category == category.title);
+		});
+
+		if(categoryIndex !== -1 || this.props.item.category == 'categories'){
+			this.props.restoreItem(this.props.item);
+		} else {
+			sweetalert({
+				title: 'Cannot restore object', 
+				text: "Please, restore it's category.", 
+				type: 'error'
+			});
+		}
 	}
 }
 
@@ -40,7 +53,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
 	return {
-		recycleBin: state.recycleBin
+		recycleBin: state.recycleBin,
+		categories: state.categories
 	};
 }
 

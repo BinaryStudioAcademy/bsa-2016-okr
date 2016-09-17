@@ -3,8 +3,8 @@ import RecycleBin from '../../common/recycle-bin/recycle-bin.js';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from "../../../actions/recycleBinActions.js";
-
+import * as recycleBinActions from "../../../actions/recycleBinActions.js";
+import * as categoriesActions from "../../../actions/categoriesActions.js";
 
 class AdminRecycleBin extends Component {
 
@@ -21,20 +21,19 @@ class AdminRecycleBin extends Component {
 
     getData() {
 
-       this.props.getObjectiveTemplatesRequest();
-       this.props.getKeyResultsTemplatesRequest();
-       this.props.getDeletedCategoriesRequest();
+       this.props.recycleBinActions.getObjectiveTemplatesRequest();
+       this.props.recycleBinActions.getKeyResultsTemplatesRequest();
+       this.props.recycleBinActions.getDeletedCategoriesRequest();
     }
 
     restoreItem(item) {
-
 
 		if (item.type === "objective") {
 			
 			let body = {};		
 			body.isDeleted = false;
 
-			this.props.updateTemplateObjectivesRequest(item.id, body, item.id);
+			this.props.recycleBinActions.updateTemplateObjectivesRequest(item.id, body, item.id);
 		}
 
 		if (item.type === "key result") {
@@ -42,7 +41,7 @@ class AdminRecycleBin extends Component {
 			let body = {};			
 			body.isDeleted = false;
 
-			this.props.updateTemplateKeyResultRequest(item.id, body, item.id);
+			this.props.recycleBinActions.updateTemplateKeyResultRequest(item.id, body, item.id);
 		}
 
 		if (item.type === "category") {
@@ -50,7 +49,8 @@ class AdminRecycleBin extends Component {
 			let body = {};			
 			body.isDeleted = false;
 
-			this.props.updateCategoryRequest(item.id, body, item.id);
+			this.props.recycleBinActions.updateCategoryRequest(item.id, body, item.id);
+			this.props.categoriesActions.getAllCategories();
 		}
 
 	}
@@ -58,7 +58,10 @@ class AdminRecycleBin extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
+	return {
+		categoriesActions : bindActionCreators(categoriesActions, dispatch),
+		recycleBinActions: bindActionCreators(recycleBinActions, dispatch)
+	}
 }
 
 function mapStateToProps(state) {

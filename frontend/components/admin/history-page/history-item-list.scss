@@ -34,7 +34,7 @@
 		left: 0;
 		table-layout: fixed;
 		overflow-y: overlay;
-		height: 70vh;
+		height: calc(100vh - 222px);
 		1
 		& > tr {
 			

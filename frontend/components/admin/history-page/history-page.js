@@ -123,10 +123,10 @@ function handler_filter_click(event) {
 
    if(!filter_container.classList.contains('opened')){
       filter_container.classList.add('opened');
-      t_body.style.height = '60vh';
+      t_body.style.height = 'calc(100vh - 222px - 75px)';
    }
    else {
       filter_container.classList.remove('opened');
-      t_body.style.height = '70vh';
+      t_body.style.height = 'calc(100vh - 222px)';
    }
 }
