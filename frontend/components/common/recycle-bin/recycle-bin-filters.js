@@ -65,7 +65,7 @@ class RecycleBinFilter extends Component {
 								<DateField
 									className="date-field"
 									placeholder="From"
-									dateFormat="YYYY-MM-DD"
+									dateFormat="D MMMM YYYY"
 									onChange={this.onChangeFrom}
 									footer={false}
 									updateOnDateClick={true}
@@ -75,7 +75,7 @@ class RecycleBinFilter extends Component {
 								<DateField
 									className="date-field"
 									placeholder="To"
-									dateFormat="YYYY-MM-DD"
+									dateFormat="D MMMM YYYY"
 									onChange={this.onChangeTo}
 									footer={false}
 									updateOnDateClick={true}
