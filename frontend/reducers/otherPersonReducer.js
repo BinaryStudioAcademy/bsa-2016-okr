@@ -8,6 +8,7 @@ import { GET_USER,
 	EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE,
 	EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE,
 	ARCHIVE_USER_QUARTER,
+	RECEIVED_USER_ERROR,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE } from '../actions/otherPersonActions.js'
 import { CHANGED_KEYRESULT_SCORE,
@@ -33,6 +34,7 @@ const initialState = {
 	selectedYear: currentYear,
 	editKeyResultId: '',
 	editKeyResultIsEditing: false,
+	error: false
 };
 
 export default function otherPersonReducer(state = initialState, action) {
@@ -53,6 +55,13 @@ export default function otherPersonReducer(state = initialState, action) {
 				waiting: false,
 				// selectedTab: currentQuarter,
 				// selectedYear: currentYear
+			})
+		}
+
+		case RECEIVED_USER_ERROR: {
+			return Object.assign({}, initialState, {
+				error:true,
+				waiting: false
 			})
 		}
 

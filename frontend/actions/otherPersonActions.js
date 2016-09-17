@@ -5,6 +5,7 @@ import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
 export const GET_USER = 'GET_USER';
 export const RECEIVED_USER = 'RECEIVED_USER';
 export const RECEIVED_ERROR = 'RECEIVED_ERROR';
+export const RECEIVED_USER_ERROR = 'RECEIVED_USER_ERROR';
 export const CHANGE_TAB = 'CHANGE_TAB';
 export const CHANGE_YEAR = 'CHANGE_YEAR';
 export const TAKE_APPRENTICE = 'TAKE_APPRENTICE';
@@ -49,15 +50,15 @@ export function getUser(id) {
 			dispatch({ type: REMOVE_REQUEST });
 		})
 		.catch(response => {
-			dispatch(receivedError(response.data));
+			dispatch(receivedUserError(response));
 			dispatch({ type: REMOVE_REQUEST });
 		});
 	};
 }
 
-export function receivedError(data) {
+export function receivedUserError(data) {
 	return {
-		type: RECEIVED_ERROR,
+		type: RECEIVED_USER_ERROR,
 		data
 	};
 }

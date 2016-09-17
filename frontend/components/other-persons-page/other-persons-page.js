@@ -13,6 +13,8 @@ import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
 import UserDashboard from "../userDashboard/userDashboard.jsx";
 
+import './error.scss';
+
 const session = require("../../../backend/config/session");
 
 class OtherPersonsPage extends Component {
@@ -44,6 +46,8 @@ class OtherPersonsPage extends Component {
 	}
 
 	render() {
+		console.log('render');
+		
 		if (this.props.user.waiting) {
 			return <div></div>
 		} else {
@@ -53,7 +57,14 @@ class OtherPersonsPage extends Component {
 			if (id != session._id) {
 				personInfo = (<PersonInfo userId={ this.props.routeParams.id } />);
 			}
-
+			if(this.props.user.error){
+				console.log(this.props.user.error);
+				return(
+					<div className="nothing-found">
+						<h3> {this.props.user.error}Whoops, nothing found </h3>
+					</div>)
+			}
+			else
 			return (
 				<div>
 					<CentralWindow>
