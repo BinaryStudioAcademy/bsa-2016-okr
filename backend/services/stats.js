@@ -26,7 +26,7 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 				}
 
 				return callback(null, new Object(result));
-			})
+			});
 
 		},
 		(quarterList, callback) => {

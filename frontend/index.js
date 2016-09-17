@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { IndexRoute, Route, Router, IndexRedirect, browserHistory } from 'react-router';
 import CONST from '../backend/config/constants';
+import { isEmpty } from '../backend/utils/ValidateService';
 
 import App from "./containers/app";
 import History from "./components/admin/history-page/history-page.js";
@@ -19,15 +20,17 @@ import NotFound from './components/common/notFound.jsx';
 
 import configureStore from './store/configureStore';
 
-import { Provider } from 'react-redux'
-import logger from 'redux-logger'
-import { syncHistoryWithStore } from 'react-router-redux'
+import { Provider } from 'react-redux';
+import logger from 'redux-logger';
+import { syncHistoryWithStore } from 'react-router-redux';
 
-import reducer from './reducers/commonReducer'
+import { setRedirectUrl } from './actions/appActions';
+
+import reducer from './reducers/commonReducer';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
-const rootUrl = '/';
+const ROOT_URL = '/';
 
 render(
 	(<Provider store={store}>
@@ -56,9 +59,11 @@ function adminOnly(nextState, transition, callback) {
 	let reducer = store.getState();
 	let localRole = reducer.myState.me.localRole;
 
-	if(localRole !== CONST.user.localRole.ADMIN) {
-		// console.log('Redirecting to root')
-		transition(rootUrl);
+	if(isEmpty(localRole)) {
+		store.dispatch(setRedirectUrl(nextState.location.pathname));
+		transition(ROOT_URL);
+	} else if(localRole !== CONST.user.localRole.ADMIN) {
+		transition(ROOT_URL);
 	}
 
 	return callback();

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
+
+import { ADD_REQUEST, REMOVE_REQUEST, redirectAfterAuth } from './appActions';
 import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
 				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
 export const GET_MY_OBJECTIVES = 'GET_MY_OBJECTIVES';
@@ -55,6 +56,9 @@ export function getMeBasic() {
 		.then(response => {
 			dispatch(receivedMeBasic(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.then(() => {
+			dispatch(redirectAfterAuth());
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response));

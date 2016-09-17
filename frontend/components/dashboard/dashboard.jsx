@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import DashboardStats from './dashboardStats.jsx';
 import './dashboard.scss';
 
@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 
 import * as actions from "../../actions/userDashboardActions";
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
     constructor() {
         super();
     }

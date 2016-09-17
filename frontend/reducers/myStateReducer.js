@@ -20,7 +20,7 @@ import {
 	EDIT_KEY_RESULT_ENABLE_EDIT_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE,
-	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE,
 } from '../actions/myStateActions';
 
 import {
@@ -413,7 +413,8 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 			quarter.userObjectives[index].keyResults.push(keyResult);
 		}
 	});
-	return meCopy
+	
+	return meCopy;
 }
 
 export function changeArchiveInMyObjective (me, objectiveId, flag) {
