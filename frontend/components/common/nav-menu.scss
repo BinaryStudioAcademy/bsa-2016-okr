@@ -91,7 +91,7 @@ aside#navbar ul {
     text-align: -moz-left;
     color: #cccccc;
   }
-  i {
+  i:not(.tooltip) {
     position: absolute;
     top: 8px;
     left: 15px;
@@ -185,6 +185,9 @@ aside#navbar #users-link {
       a i{
         top: 5px;
       }
+      a .tooltip {
+        display: none;
+      }
     }
   }
 }
@@ -231,6 +234,9 @@ and (min-width: 501px){
       a span{
         display: none;
       }
+      a .tooltip {
+        display: none;
+      }
     }
   }
 }
@@ -240,6 +246,11 @@ and (max-width: 583px)
 and (min-width: 501px) {
   aside#navbar{
     height: 100px;
+
+    ul li {
+      a .tooltip {
+        display: none; }
+    }
   }
 }
 
@@ -267,6 +278,9 @@ and (max-width: 500px) {
       }
       a span{
         display: inline-block;
+      }
+      a .tooltip {
+        display: none;
       }
     }
   }

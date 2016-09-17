@@ -1,4 +1,5 @@
 @import '../styles/commonStyles';
+@import "context-menu";
 
 //local palette
 $primary-color_local: #607D8B;
@@ -119,4 +120,3 @@ $primary-color_local: #607D8B;
 }
 
 @import "media";
-@import "context-menu";
