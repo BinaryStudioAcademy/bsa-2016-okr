@@ -1,16 +1,37 @@
-var async = require('async');
-var ValidateService = require('../../utils/ValidateService');
-var isEmpty = ValidateService.isEmpty;
-var CONST = require('../../config/constants');
+const async = require('async');
+const ValidateService = require('../../utils/ValidateService');
+const isEmpty = ValidateService.isEmpty;
+const HelpService = require('../../utils/HelpService');
+const isMentorActionAllowed = HelpService.isMentorActionAllowed;
+const CONST = require('../../config/constants');
 
-var ObjectiveRepository = require('../../repositories/objective');
-var UserObjectiveRepository = require('../../repositories/userObjective');
-var QuarterRepository = require('../../repositories/quarter');
-var HistoryRepository = require('../../repositories/history');
+const ObjectiveRepository = require('../../repositories/objective');
+const UserObjectiveRepository = require('../../repositories/userObjective');
+const QuarterRepository = require('../../repositories/quarter');
+const HistoryRepository = require('../../repositories/history');
+const UserRepository = require('../../repositories/user');
 
-module.exports = function add(userId, categoryId, quarterId, objectiveId, title, isApproved, callback) {
+module.exports = function add(session, userId, categoryId, quarterId, objectiveId, title, isApproved, callback) {
 	async.waterfall([
 		(callback) => {
+			UserRepository.getById(userId, (err, user) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(user)) {
+					err = new Error('User not found');
+					return callback(err, null);
+				}
+
+				if(!isMentorActionAllowed) {
+					err = new Error('You are not allowed to perform this action');
+					return callback(err, null);
+				}
+
+				return callback(null);
+			});
+		}, (callback) => {
 			if(!isEmpty(objectiveId)) {
 				// console.log('ObjectiveId not empty');
 				ObjectiveRepository.getById(objectiveId, (err, objective) => {

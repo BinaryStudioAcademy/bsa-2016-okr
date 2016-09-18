@@ -1,129 +1,123 @@
-import React from 'react';
-import './userHistory.scss';
+import React, { Component } from 'react';
 import moment from 'moment';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import * as actions from "../../actions/userDashboardActions.js";
+import './userHistory.scss';
 
-class UserHistory extends React.Component{
-	constructor(props){
+class UserHistory extends Component {
+	constructor(props) {
 		super(props);
 
 		this.getHistoryType= this.getHistoryType.bind(this);
 		this.getHistoryObjectName = this.getHistoryObjectName.bind(this);
 	}
 
-	componentWillUnmount() {
-		this.props.clearUserDashboardState();
-	}
-
 	getHistoryType(item) {
 		let object = item.type.slice(item.type.indexOf(' ') + 1);
-		if(item.type.indexOf('ADD') != -1)
+		
+		if(item.type.indexOf('ADD') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">added {this.getHistoryObjectName(item)}</p>
+					<p className="action-description">added { this.getHistoryObjectName(item) }</p>
 				</div>
 			);
-		else if (item.type.indexOf('UPDATE') != -1)
+		} else if (item.type.indexOf('UPDATE') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">updated {this.getHistoryObjectName(item)}</p>
+					<p className="action-description">updated { this.getHistoryObjectName(item) }</p>
 				</div>
 			);
-		else if (item.type.indexOf('CHANGE') != -1) {
-			if (item.type.indexOf('SCORE') != -1)
-			  return (
-					<div className="action-text">
-						<p className="author">
-							<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-							<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
-						</p>
-						<p className="action-description">changed score {this.getHistoryObjectName(item)}
-							to {item.userKeyResultScore}</p>
-					</div>
-			  );
-			else if (item.type.indexOf('TITLE') != -1)
-				return (
-					<div className="action-text">
-						<p className="author">
-							<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-							<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
-						</p>
-						<p className="action-description">changed title to {item.userKeyResultTitle}</p>
-					</div>
-				);
-			else if (item.type.indexOf('DIFFICULTY') != -1)
-				return (
-					<div className="action-text">
-						<p className="author">
-							<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-							<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
-						</p>
-						<p className="action-description">changed difficulty {this.getHistoryObjectName(item)}
-							to {item.userKeyResultDifficulty}</p>
-					</div>
-				);
-
-		} else if (item.type.indexOf('DELETE') != -1)
+		} else if ((item.type.indexOf('CHANGE') != -1) && (item.type.indexOf('SCORE') != -1)) {
 			return (
 				<div className="action-text">
 					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">deleted {this.getHistoryObjectName(item)}</p>
+					<p className="action-description">
+						changed score { this.getHistoryObjectName(item) }	to { item.userKeyResultScore }
+					</p>
 				</div>
-			)
-		else if (item.type.indexOf('RESTORE') != -1)
+			);
+		} else if (item.type.indexOf('TITLE') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">restored {this.getHistoryObjectName(item)}</p>
+					<p className="action-description">changed title to { item.userKeyResultTitle }</p>
 				</div>
-			)
-		else if (item.type.indexOf('UNARCHIVED') != -1)
+			);
+		} else if (item.type.indexOf('DIFFICULTY') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">unarchived {this.getHistoryObjectName(item)}</p>
+					<p className="action-description">
+						changed difficulty { this.getHistoryObjectName(item) } to { item.userKeyResultDifficulty }
+					</p>
 				</div>
-			)
-		else if (item.type.indexOf('ARCHIVED') != -1)
+			);
+		} else if(item.type.indexOf('DELETE') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
-						<span className="author-name">{item.author.userInfo.firstName} {item.author.userInfo.lastName}</span>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">archived {this.getHistoryObjectName(item)}</p>
+					<p className="action-description">deleted { this.getHistoryObjectName(item) }</p>
 				</div>
-			)
+			);
+		} else if (item.type.indexOf('RESTORE') != -1) {
+			return (
+				<div className="action-text">
+					<p className="author">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
+					</p>
+					<p className="action-description">restored { this.getHistoryObjectName(item) }</p>
+				</div>
+			);
+		} else if (item.type.indexOf('UNARCHIVED') != -1) {
+			return (
+				<div className="action-text">
+					<p className="author">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
+					</p>
+					<p className="action-description">unarchived { this.getHistoryObjectName(item) }</p>
+				</div>
+			);
+		} else if (item.type.indexOf('ARCHIVED') != -1) {
+			return (
+				<div className="action-text">
+					<p className="author">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
+					</p>
+					<p className="action-description">archived { this.getHistoryObjectName(item) }</p>
+				</div>
+			);
+		}
 	}
 
-
-	getHistoryObjectName(historyItem){
+	getHistoryObjectName(historyItem) {
 		if(historyItem.userObjective == undefined) {return (<span>historyItem.userObjective == undefined</span>);};
 	 	if(historyItem.type.indexOf('OBJECTIVE') !== -1){
 			return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
 	 	};
 
-		if(historyItem.type.indexOf('KEY_RESULT') !== -1){
+		if(historyItem.type.indexOf('KEY_RESULT') !== -1) {
 			let keyResults = historyItem.userObjective.keyResults;
 			let keyResult;
 			keyResults.forEach((key) => {
@@ -134,7 +128,7 @@ class UserHistory extends React.Component{
 		}
 	}
 
-	getIconType(item){
+	getIconType(item) {
 		if(item.type.indexOf('ADD') != -1)
 			return "fi flaticon-plus typeIcon green"
 		else if (item.type.indexOf('UPDATE') != -1 || item.type.indexOf('CHANGE') != -1)
@@ -150,17 +144,17 @@ class UserHistory extends React.Component{
 	}
 
 	render() {
-		let itemList = this.props.userDashboard.historyList.map((item, i) => {
+		let itemList = this.props.historyList.map((item, i) => {
 			return (
-				<div key={item._id} className="historyEvent">
+				<div key={ item._id } className="historyEvent">
 					<div className="aside">
-						<span> <i className={this.getIconType(item)} aria-hidden="true"></i> </span>
+						<span> <i className={ this.getIconType(item) } aria-hidden="true"></i></span>
 						<div className="eventDate">
-							<div className="eventDate-day">{moment(item.createdAt).format('DD')}</div>
-							<div className="eventDate-month">{moment(item.createdAt).format('MMM')}</div>
+							<div className="eventDate-day">{ moment(item.createdAt).format('DD') }</div>
+							<div className="eventDate-month">{ moment(item.createdAt).format('MMM') }</div>
 						</div>
 					</div>
-					{this.getHistoryType(item)}
+					{ this.getHistoryType(item) }
 				</div>
 			)
 		})
@@ -176,18 +170,4 @@ class UserHistory extends React.Component{
 	}
 }
 
-
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
-function mapStateToProps(state) {
-	return {
-		userDashboard: state.userDashboard,
-		myState: state.myState
-	};
-}
-
-const UserHistoryConnected = connect(mapStateToProps, mapDispatchToProps)(UserHistory);
-
-export default UserHistoryConnected;
+export default UserHistory;

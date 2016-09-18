@@ -27,6 +27,7 @@ case 2:
 }
 
 module.exports = {
+	isDeveloping: process.env.NODE_ENV !== 'production',
 	user: {
 		localRole: {
 			USER: 'user',

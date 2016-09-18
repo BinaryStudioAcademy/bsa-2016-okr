@@ -1,16 +1,37 @@
 const async = require('async');
 const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
+const HelpService = require('../../utils/HelpService');
+const isMentorActionAllowed = HelpService.isMentorActionAllowed;
 const CONST = require('../../config/constants.js');
 
 const UserObjectiveRepository = require('../../repositories/userObjective');
 const KeyResultRepository = require('../../repositories/keyResult');
 const HistoryRepository = require('../../repositories/history');
+const UserRepository = require('../../repositories/user');
 
 module.exports = function addKeyResultToUserObjective(
 	session, userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, callback) {
 	async.waterfall([
 		(callback) => {
+			UserRepository.getById(userId, (err, user) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(user)) {
+					err = new Error('User not found');
+					return callback(err, null);
+				}
+
+				if(!isMentorActionAllowed) {
+					err = new Error('You are not allowed to perform this action');
+					return callback(err, null);
+				}
+
+				return callback(null);
+			});
+		}, (callback) => {
 			UserObjectiveRepository.getById(userObjectiveId, (err, userObjective) => {
 
 				if (err) {

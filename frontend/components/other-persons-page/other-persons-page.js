@@ -60,7 +60,7 @@ class OtherPersonsPage extends Component {
 			if(this.props.user.error) {
 				otherPersonContent = (
 					<div className="nothing-found">
-						<h3> {this.props.user.error}Whoops, nothing found </h3>
+						<h3>{ this.props.user.error } Whoops, nothing found</h3>
 					</div>
 				);
 			}	else {
@@ -79,7 +79,7 @@ class OtherPersonsPage extends Component {
 			}
 		}
 
-		return ({ otherPersonContent });
+		return (<div>{ otherPersonContent }</div>);
 	}
 }
 

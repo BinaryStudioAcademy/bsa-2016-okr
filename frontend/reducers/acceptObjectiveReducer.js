@@ -8,7 +8,7 @@ import {
 	UPDATE_OBJECTIVE_TEMPLATE_ERROR,
 	UPDATE_KEY_TEMPLATE_ERROR,
 	SET_ACC_OBJ_FILTER
-} from '../actions/acceptObjective';
+} from '../actions/acceptObjectiveActions';
 
 const initialState = {
 	items: [],

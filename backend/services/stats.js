@@ -248,7 +248,9 @@ StatsService.prototype.getUserStatsById = function(userId, callback) {
 			return callback(err, null);
 		}
 
-		return callback(null, data[0]);
+		var response = isEmpty(data) ? data : data[0];
+
+		return callback(null, response);
 	});
 };
 
@@ -276,7 +278,9 @@ StatsService.prototype.getProgressStats = function(callback) {
 			return callback(err, null);
 		}
 
-		callback(null, { progress: data[0].progress });
+		var progress = isEmpty(data) ? data : data[0].progress;
+
+		callback(null, { progress: progress });
 	});
 };
 

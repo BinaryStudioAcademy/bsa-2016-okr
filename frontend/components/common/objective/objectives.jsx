@@ -260,8 +260,8 @@ class Objectives extends Component {
 						changeYear={ this.changeYear }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    	addNewQuarter={ this.handleAddingNewQuarter }
-				    	archiveQuarter={this.handleArchivingQuarter }
+						addNewQuarter={ this.handleAddingNewQuarter }
+						archiveQuarter={this.handleArchivingQuarter }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
 						me={ isItHomePage }

@@ -7,6 +7,8 @@ const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
 const bodyParser = require('body-parser');
+const CONST = require('./backend/config/constants');
+const isDeveloping = CONST.isDeveloping;
 
 // connect to db
 const dbConnectHandler = require('./backend/db/dbConnect');
@@ -27,12 +29,8 @@ var job = new CronJob({
 
 job.start();
 
-const isDeveloping = process.env.NODE_ENV !== 'production';
-
 const PORT = 4444;
 const IP = process.env.IP || '127.0.0.1';
-
-console.log(process.env.PORT);
 
 const app = express();
 

@@ -14,7 +14,7 @@ export function init() {
 export function setRedirectUrl(url) {
 	return {
 		type: SET_REDIRECT_URL,
-		url, 
+		url,
 	}
 }
 

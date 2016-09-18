@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
-				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
+import { 
+	getNotAprovedObjectivesRequest,
+	getNotAprovedKeysRequest, 
+} from './acceptObjectiveActions.js'
+
+import { getStats, getMyHistory, OTHER_PERSON_PAGE } from './userDashboardActions';
 
 // Get key results for show autocomplete list
 export const GET_AUTOCOMPLETE_KEY_RESULTS = 'GET_AUTOCOMPLETE_KEY_RESULTS';
@@ -27,21 +31,31 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 		return axios.post((`/api/userobjective/${ userObjectiveId }/keyresult/`), body)
 		.then(response => {
 
-			if (body.isItHomePage === true) {
-				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
-			} else {
-				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
+			if (!body.isItHomePage) {
 				dispatch(addNewKeyResultToObjectiveOtherPerson(response.data, userObjectiveId));
 			}
-			dispatch({ type: REMOVE_REQUEST	});
 
-			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
-			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
+			dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
+			dispatch({ type: REMOVE_REQUEST	});
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));
 			}
 			*/
+		})
+		.then(() => {
+			let type = body.isItHomePage ? '' : OTHER_PERSON_PAGE;
+			
+			dispatch(getStats(type));
+			dispatch(getMyHistory(type));
+		})
+		.then(() => {
+			let localRole = getStore().myState.me.localRole;
+			
+			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(getNotAprovedObjectivesRequest());
+				dispatch(getNotAprovedKeysRequest());
+			}
 		})
 		.catch(response => {
 			dispatch(receivedError(response.data));

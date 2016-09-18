@@ -9,7 +9,8 @@ var userSchema = new Schema({
 	},
 	mentor: {
 		type: Schema.Types.ObjectId, 
-		ref: 'User'
+		ref: 'User',
+		default: null,
 	},
 	userInfo: {
 		type: Schema.Types.ObjectId, 

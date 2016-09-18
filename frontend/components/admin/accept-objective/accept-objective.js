@@ -9,7 +9,7 @@ import CentralWindow from "../../../containers/central-window.jsx";
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from "../../../actions/acceptObjective.js";
+import * as actions from '../../../actions/acceptObjectiveActions';
 
 
 

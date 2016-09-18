@@ -7,6 +7,7 @@ const ValidateService = require('../../utils/ValidateService');
 const HelpService = require('../../utils/HelpService');
 const isCorrectId = ValidateService.isCorrectId;
 const isEmpty = ValidateService.isEmpty;
+const CONST = require('../../config/constants');
 
 router.post('/', (req, res, next) => {
 	var title = req.body.title || '';
@@ -16,6 +17,7 @@ router.post('/', (req, res, next) => {
 	var objectiveId = req.body.objectiveId || '';
 	var userId = req.body.userId;
 	var isApproved = false;
+	var session = req.session;
 
 
 	if(isEmpty(title) || !isCorrectId(categoryId)
@@ -23,11 +25,11 @@ router.post('/', (req, res, next) => {
 		return res.badRequest();
 	}
 
-	if(req.session.isAdmin) {
+	if(req.session.localRole === CONST.user.localRole.ADMIN) {
 		isApproved = true;
 	}
 
-	return service.add(userId, categoryId, quarterId, objectiveId, title, isApproved, res.callback)
+	return service.add(session, userId, categoryId, quarterId, objectiveId, title, isApproved, res.callback)
 });
 
 router.post('/clone', (req, res, next) => {
@@ -98,7 +100,7 @@ router.post('/:id/keyresult/', (req, res, next) => {
 		return res.badRequest();
 	}
 
-	if(req.session.isAdmin) {
+	if(req.session.localRole === CONST.user.localRole.ADMIN) {
 		isApproved = true;
 	}
 

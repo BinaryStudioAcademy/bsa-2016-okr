@@ -4,7 +4,8 @@ import UserInfoPopup from './user-info-popup.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../../actions/acceptObjective.js";
+import * as actions from '../../../actions/acceptObjectiveActions';
+
 const notifications = require("../../../actions/notifications.js");
 
 

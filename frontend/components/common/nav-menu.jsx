@@ -107,7 +107,6 @@ const NavMenu = (props) => {
 function onBarsClick(event) {
 		let target = event.target;
 		let nav = document.querySelector('aside#navbar');
-		console.log(nav)
 		if(!target.classList.contains('active')){
 			target.classList.add('active');
 			nav.classList.add('showMenu');

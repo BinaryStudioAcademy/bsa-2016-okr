@@ -75,10 +75,13 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 				({ index, year } = quarters[quarters.length - 1]);
 			}
 
+			let selectedTab = index || state.selectedTab;
+			let selectedYear = year || state.selectedYear;
+
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
-				selectedTab: index || state.selectedTab,
-				selectedYear: year || state.selectedYear,
+				selectedTab: selectedTab,
+				selectedYear: selectedYear,
 			});
 		}
 
@@ -109,8 +112,6 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case NEW_QUARTER_ADDED : {
 			const { quarter: newQuarter } = action;
 			const { quarters: oldQuarters } = state.me;
-
-			console.log('¯\\_(ツ)_/¯: quarter', newQuarter);
 
 			return Object.assign({}, state, {
 				selectedYear: newQuarter.year,
@@ -223,7 +224,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case CHANGED_KEYRESULT_SCORE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, score } = data;
-			console.log('myRed', data )
+	
 			return Object.assign({}, state, {
 				me: setScoreToKeyResult(state.me, objectiveId, keyResultId, score),
 			});
