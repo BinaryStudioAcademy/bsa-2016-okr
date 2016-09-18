@@ -17,7 +17,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: '/okr/frontend/index.html',
+      template: 'frontend/index.html',
       inject: 'body',
       filename: 'index.html'
     }),

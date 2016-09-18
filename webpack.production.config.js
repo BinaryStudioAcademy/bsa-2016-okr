@@ -18,7 +18,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      template: '/okr/frontend/index.html',
+      template: 'frontend/index.html',
       inject: 'body',
       filename: 'index.html'
     }),
