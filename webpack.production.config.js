@@ -8,7 +8,7 @@ var StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: [
-    path.join(__dirname, '/okr/frontend/index.js')
+    path.join(__dirname, 'frontend/index.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -18,7 +18,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      template: 'frontend/index.html',
+      template: 'index.html',
       inject: 'body',
       filename: 'index.html'
     }),
