@@ -12,7 +12,7 @@ import {
 const initialState = {
 	categories: [],
 	keyResults: [],
-}
+};
 
 export default function statsReducer(state = initialState, action) {
 	switch (action.type) {

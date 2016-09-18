@@ -1,7 +1,14 @@
 import axios from 'axios';
-import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
-				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
+
+import CONST from '../../backend/config/constants';
+
+import { ADD_REQUEST, REMOVE_REQUEST, redirectAfterAuth } from './appActions';
+import {
+	getNotAprovedObjectivesRequest,
+	getNotAprovedKeysRequest,
+} from './acceptObjectiveActions';
+import { getStats, getMyHistory } from './userDashboardActions';
+
 export const GET_MY_OBJECTIVES = 'GET_MY_OBJECTIVES';
 export const RECEIVED_MY_OBJECTIVES_ERROR = 'RECEIVED_MY_OBJECTIVES_ERROR';
 export const RECEIVED_MY_OBJECTIVES = 'RECEIVED_MY_OBJECTIVES';
@@ -32,17 +39,18 @@ export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE = 'EDIT_KEY
 export const ARCHIVE_MY_QUARTER = 'ARCHIVE_MY_QUARTER';
 export const RESET = 'RESET';
 
-const session = require('../../backend/config/session');
-
 export function archiveMyQuarter(id, flag) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ARCHIVE_MY_QUARTER});
 		dispatch({ type: ADD_REQUEST });
-		let url = '/api/quarters/' + id + '/archive/' + flag;
-		return axios.put(url)
+		let url = `/api/quarters/${ id }/archive/${ flag }`;
+		return axios.put()
 		.then( response => {
 			dispatch({ type: REMOVE_REQUEST	});
 			dispatch(getMe());
+		})
+		.then(() => {
+			dispatch(getMyHistory());
 		})
 		.catch( response => {
 			dispatch(receivedMyObjectivesError(response));
@@ -51,8 +59,7 @@ export function archiveMyQuarter(id, flag) {
 	}
 }
 
-
-export function reset () {
+export function reset() {
 	 return {
 	 	type: RESET
 	 }  
@@ -67,6 +74,10 @@ export function getMe() {
 		.then(response => {
 			dispatch(receivedMyObjectives(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.then(() => {
+			dispatch(getStats());
+			dispatch(getMyHistory());
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response));
@@ -84,6 +95,17 @@ export function getMeBasic() {
 		.then(response => {
 			dispatch(receivedMeBasic(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
+		})
+		.then(() => {
+			dispatch(redirectAfterAuth());
+		})
+		.then(() => {
+			let localRole = getStore().myState.me.localRole;
+			
+			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(getNotAprovedObjectivesRequest());
+				dispatch(getNotAprovedKeysRequest());
+			}
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response));
@@ -121,25 +143,33 @@ export function setChangeTab(num) {
 }
 
 export function setChangeYear(year) {
-	return {
-		type: CHANGE_YEAR,
-		selectedYear: year
-	};
-}
-
-export function createQuarter(quarter){
-	return(dispatch) => {
-		axios.post('/api/quarters/', quarter)
+	return (dispatch, getStore) => {
+		dispatch({
+			type: CHANGE_YEAR,
+			selectedYear: year
+		})
 		.then(() => {
-			dispatch(newQuarterAdded(quarter));
-		})
-		.catch((error) => {
-			dispatch(addNewQuarterError(error));
-		})
+			dispatch(getStats());
+		});
 	}
 }
 
-export function newQuarterAdded(quarter){
+export function createQuarter(quarter) {
+	return (dispatch, getStore) => {
+		axios.post('/api/quarters/', quarter)
+		.then((response) => {
+			dispatch(newQuarterAdded(response.data));
+		})
+		.then(() => {
+			dispatch(getMyHistory());
+		})
+		.catch((error) => {
+			dispatch(addNewQuarterError(error));
+		});
+	};
+}
+
+export function newQuarterAdded(quarter) {
 	return {
 		type: NEW_QUARTER_ADDED,
 		quarter: quarter
@@ -170,12 +200,14 @@ export function updateUserObjectiveApi(id, description, title, callback, userId)
 		.then(response => {
 			dispatch(updateUserObjective(id, description, title));
 			dispatch({ type: REMOVE_REQUEST	});
-
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));
 			}
 			*/
+		})
+		.then(() => {
+			dispatch(getMyHistory());
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
@@ -202,13 +234,24 @@ export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
 			dispatch(softDeleteMyObjectiveById(id, flag));
 			dispatch({ type: REMOVE_REQUEST	});
 
-			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
-			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
+			
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));
 			}
 			*/
+		})
+		.then(() => {
+			dispatch(getStats());
+			dispatch(getMyHistory());
+		})
+		.then(() => {
+			let localRole = getStore().myState.me.localRole;
+			
+			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(getNotAprovedObjectivesRequest());
+				dispatch(getNotAprovedKeysRequest());
+			}
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
@@ -226,15 +269,23 @@ export function addNewObjective(body, callback, userId) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
-
-			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
-			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
-
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));
 			}
 			*/
+		})
+		.then(() => {
+			dispatch(getStats());
+			dispatch(getMyHistory());
+		})
+		.then(() => {
+			let localRole = getStore().myState.me.localRole;
+					
+			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(getNotAprovedObjectivesRequest());
+				dispatch(getNotAprovedKeysRequest());
+			}
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
@@ -266,6 +317,10 @@ export function changeKeyResultScore(objectiveId, body, callback, userId) {
 			}
 			*/
 		})
+		.then(() => {
+			dispatch(getStats());
+			dispatch(getMyHistory());
+		})
 		.catch(response => {
 			dispatch(keyResultScoreChangedError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -295,9 +350,18 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, fl
 				.then(response => {
 					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, flag, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
-
-					dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
-					dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
+				})
+				.then(() => {
+					dispatch(getStats());
+					dispatch(getMyHistory());
+				})
+				.then(() => {
+					let localRole = getStore().myState.me.localRole;
+					
+					if(localRole === CONST.user.localRole.ADMIN) {
+						dispatch(getNotAprovedObjectivesRequest());
+						dispatch(getNotAprovedKeysRequest());
+					}
 				})
 				.catch(response => {
 					dispatch(receivedMyObjectivesError(response.data));
@@ -307,22 +371,25 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, fl
 }
 
 export function changeArchiveStatus(changeTo, objectiveId) {
-	 return (dispatch, getStore) => {
-	 	dispatch({
-	 		type:CHANGE_ARCHIVE_STATUS
-	 	})
-	 	dispatch({ type: ADD_REQUEST });
+	return (dispatch, getStore) => {
+		dispatch({
+			type:CHANGE_ARCHIVE_STATUS
+		})
+		dispatch({ type: ADD_REQUEST });
 
-	 	return axios.put(`/api/userobjective/${objectiveId}/archive/${changeTo}`)
-	 	.then( response => {
-	 	 	dispatch( { type: REMOVE_REQUEST} );
-	 	 	dispatch( changeArchiveStatusLocal(changeTo, objectiveId));
-	 	 })
+		return axios.put(`/api/userobjective/${objectiveId}/archive/${changeTo}`)
+		.then( response => {
+			dispatch( { type: REMOVE_REQUEST} );
+			dispatch( changeArchiveStatusLocal(changeTo, objectiveId));
+		})
+		.then(() => {
+			dispatch(getMyHistory());
+		})
 	 	// .catch( response =>{
 	 	// 	dispatch( receivedMyObjectivesError(response.data));
 	 	// 	dispatch({ type: REMOVE_REQUEST	});
-	 	// } );
-	 }
+	 	// });
+	};
 }
 
 export function changeArchiveStatusLocal (changeTo, objectiveId) {
@@ -368,6 +435,9 @@ export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
 					dispatch(keyResultTitleAndDifficultyChanged(response.data));
 					dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE });
 					dispatch({ type: REMOVE_REQUEST });
+				})
+				.then(() => {
+					dispatch(getMyHistory());
 				})
 				.catch(response => {
 					dispatch(keyResultTitleAndDifficultyError(response.data));

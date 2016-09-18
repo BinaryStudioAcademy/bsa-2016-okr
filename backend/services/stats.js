@@ -8,6 +8,10 @@ const User = require('../schemas/user');
 const QuarterRepository = require('../repositories/quarter.js');
 const UserRepository = require ('../repositories/user.js')
 
+const validateService = require('../utils/ValidateService')
+
+const isEmpty = validateService.isEmpty;
+
 var StatsService = function() {};
 
 StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId,year, callback) {
@@ -17,13 +21,13 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 	async.waterfall([
 		(callback) => {
 			QuarterRepository.getYear(year, (err, result) => {
-				if(err)
+				if(err) {
 					return callback(err, null)
-				return callback(null, new Object(result));
-			})
+				}
 
-		},
-		(quarterList, callback) => {
+				return callback(null, new Object(result));
+			});
+		}, (quarterList, callback) => {
 			async.each(quarterList,
 			 (quarter, callback) => {
 			 	statsObj[quarter.userId._id] = statsObj[quarter.userId._id] || {};// creating object with quarters for each user
@@ -34,15 +38,21 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 					return callback(err);
 				return callback(null);
 			})
-
-		},
-		(callback) => {
+		}, (callback) => {
+			
 			for(user in statsObj) { //for each user
 				let yearScore = 0; // score for year
 				let quartersCount = 0; // count of quarters in year
-				let userInfo = statsObj[user]['1'].userId.userInfo || null;
 				
-				for (quarter in statsObj[user]){ // for each user's quarter
+				let anyQuarter = Object.keys(statsObj[user])[0];
+
+				if(isEmpty(anyQuarter)) {
+					break;
+				}
+
+				let userInfo = statsObj[user][anyQuarter].userId.userInfo;
+				
+				for (quarter in statsObj[user]) { // for each user's quarter
 					let quarterScore = 0; //score for quarter
 					let userObjectivesCount = 0; // count of objectives in quarter
 
@@ -60,74 +70,70 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 						}
 					})
 
-					if(userObjectivesCount != 0){ // if there was no objectives
+					if(userObjectivesCount != 0) { // if there was no objectives
 						quarterScore = quarterScore / userObjectivesCount;
 
 						statsObj[user][quarter] = quarterScore;//set quarter score
 
 						quartersCount ++;
 						yearScore += quarterScore;// sum up quarter's scores}
-					}
-					else 
+					}	else {
 						statsObj[user][quarter] = 0;
+					}
 				}
 				
-				if(quartersCount != 0){
+				if(statsObj[user].userInfo == undefined){
+					statsObj[user].userInfo = userInfo;	
+				}
+
+				if(quartersCount != 0) {
 					yearScore = yearScore / quartersCount;
 					statsObj[user].totalScore = yearScore;// set year's score}
-					if(statsObj[user].userInfo == undefined){
-
-						statsObj[user].userInfo = userInfo;	
-					}
-				}
-				else
+				} else {
 					statsObj[user].totalScore = 0;
+				}
 
-				if(user == currentUserId){
+				console.log("USER !!!!!!!", user);
+				console.log("CURRENT USER ID !!!", currentUserId);
+
+				if(user == currentUserId) {
 					console.log('selected');
 					selectedUser = Object.assign({}, statsObj[user]);
-
 				}
 			}
+
 			return callback(null);
 		},
 		(callback) => { // transforming obj into arr
-			let statsArr = []
+			let statsArr = [];
+			
 			for(user in statsObj) {
 				statsArr.push(statsObj[user]);
-			} 
-			return callback(null, statsArr);
-		},
-		(statsArr, callback) => { // sorting
-			statsArr.sort( (a,b) => {
-				return b.totalScore - a.totalScore;
-			})
-			return callback(null, statsArr);
-		},
-		(statsArr, callback) => { // setting the limit
-			var statArr = statsArr.slice(0, limit)
-			var userStats = null;
-			if(selectedUser == null || selectedUser.userInfo == undefined  )
-			{
-				userStats= {
-					totalScore: 0,
-					inTop: false
-				}
 			}
 
-			else {
-				if (statArr.find( (elem) => {
-					if (selectedUser.userInfo._id == elem.userInfo._id)
-						return true
-					return false
-					}) 
-					== undefined )
-						userStats = selectedUser
-				else 
-					userStats = {
-						totalScore:selectedUser.totalScore,
-						inTop: true
-					}
+			return callback(null, statsArr);
+		}, (statsArr, callback) => { // sorting
+			statsArr.sort((a,b) => {
+				return b.totalScore - a.totalScore;
+			});
+
+			return callback(null, statsArr);
+		}, (statsArr, callback) => { // setting the limit
+
+			var statArr = statsArr.slice(0, limit)
+			var userStats = null;
+			
+			var inTop = statArr.some((elem) => {
+				return selectedUser.userInfo._id === elem.userInfo._id;
+			});
+
+			if (inTop) {
+				userStats = {
+					totalScore: selectedUser.totalScore,
+					inTop: true,
+				};
+			}	else {
+				userStats = selectedUser;
 			}
 			
 			var bottomStats = statsArr[statsArr.length - 1];
@@ -135,12 +141,13 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 				statArr,
 				userStats,
 				bottomStats
-			}
-			return callback(null,  respObj)
+			};
+			
+			return callback(null, respObj);
 		}
 	], (err, result) => {
 		return callback(err, result);
-	})
+	});
 }
 
 StatsService.prototype.getAllUsersStats = function(sort, limit, callback) {
@@ -241,7 +248,9 @@ StatsService.prototype.getUserStatsById = function(userId, callback) {
 			return callback(err, null);
 		}
 
-		return callback(null, data[0]);
+		var response = isEmpty(data) ? data : data[0];
+
+		return callback(null, response);
 	});
 };
 
@@ -269,7 +278,9 @@ StatsService.prototype.getProgressStats = function(callback) {
 			return callback(err, null);
 		}
 
-		callback(null, { progress: data[0].progress });
+		var progress = isEmpty(data) ? data : data[0].progress;
+
+		callback(null, { progress: progress });
 	});
 };
 

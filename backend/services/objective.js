@@ -306,7 +306,11 @@ ObjectiveService.prototype.autocomplete = function(userId, categoryId, year, qua
 					return callback(err, null);
 				}
 
-				var objectiveIds = quarter.userObjectives;
+				var objectiveIds = [];
+
+				if (!isEmpty(quarter)) {
+					objectiveIds = quarter.userObjectives; 
+				}
 
 				return callback(null, objectiveIds);
 			});

@@ -27,6 +27,7 @@ case 2:
 }
 
 module.exports = {
+	isDeveloping: process.env.NODE_ENV !== 'production',
 	user: {
 		localRole: {
 			USER: 'user',
@@ -35,11 +36,11 @@ module.exports = {
 			DEFAULT: 'default',
 		},
 		globalRole: {
-			ADMIN: 'Admin', 
-			DEVELOPER: 'Developer',
+			ADMIN: 'ADMIN', 
+			DEVELOPER: 'DEVELOPER',
 			HR: 'HR', 
 			CEO: 'CEO', 
-			TECH_LEAD: 'Tech lead',
+			TECH_LEAD: 'Tech Lead',
 		}
 	},
 	keyResult: {

@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-import { GET_NOT_APPROVED_OBJECTIVES_REQUEST,
-				 GET_NOT_APPROVED_KEYS_REQUEST } from './acceptObjective.js'
+import { 
+	getNotAprovedObjectivesRequest,
+	getNotAprovedKeysRequest, 
+} from './acceptObjectiveActions.js'
+
+import { 
+	getStats, 
+	getMyHistory, 
+	OTHER_PERSON_PAGE 
+} from './userDashboardActions';
+
 export const GET_USER = 'GET_USER';
 export const RECEIVED_USER = 'RECEIVED_USER';
 export const RECEIVED_ERROR = 'RECEIVED_ERROR';
@@ -20,16 +29,19 @@ export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE = 'EDIT_KEY_RESUL
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE';
 export const ARCHIVE_USER_QUARTER = 'ARCHIVE_USER_QUARTER';
 
-
 export function arhiveUserQuarter(id, flag) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ARCHIVE_USER_QUARTER});
 		dispatch({ type: ADD_REQUEST });
-		let url = '/api/quarters/' + id + '/archive/' + flag;
+		let url = `/api/quarters/${ id }/archive/${ flag }`;
+		
 		return axios.put(url)
 		.then( response => {
 			dispatch({ type: REMOVE_REQUEST	});
 			dispatch(getUser());
+		})
+		.then(() => {
+			dispatch(getMyHistory(OTHER_PERSON_PAGE));
 		})
 		.catch( response => {
 			dispatch(receivedError(response.data));
@@ -48,6 +60,10 @@ export function getUser(id) {
 		.then(response => {
 			dispatch(receivedUser(response.data));
 			dispatch({ type: REMOVE_REQUEST });
+		})
+		.then(() => {
+			dispatch(getStats(OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(OTHER_PERSON_PAGE));
 		})
 		.catch(response => {
 			dispatch(receivedUserError(response));
@@ -79,9 +95,18 @@ export function addNewObjective(body) {
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
-
-			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
-			dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
+		})
+		.then(() => {	
+			dispatch(getStats(OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+		})
+		.then(() => {
+			let localRole = getStore().myState.me.localRole;
+			
+			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(getNotAprovedObjectivesRequest());
+				dispatch(getNotAprovedKeysRequest());
+			}
 		})
 		.catch(response => {
 			dispatch(receivedError(response.data));
@@ -98,13 +123,13 @@ export function addedNewObjective(data, body) {
 	};
 }
 
-
 export function changeTab(num) {
 	return {
 		type: CHANGE_TAB,
 		selectedTab: num
 	};
 }
+
 export function changeYear(year) {
 	return {
 		type: CHANGE_YEAR,
@@ -184,15 +209,18 @@ export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
 		dispatch({ type: ADD_REQUEST });
 
 		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
-				.then(response => {
-					dispatch(keyResultTitleAndDifficultyChanged(response.data));
-					dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE });
-					dispatch({ type: REMOVE_REQUEST });
-				})
-				.catch(response => {
-					dispatch(keyResultTitleAndDifficultyError(response.data));
-					dispatch({ type: REMOVE_REQUEST });
-				});
+		.then(response => {
+			dispatch(keyResultTitleAndDifficultyChanged(response.data));
+			dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE });
+			dispatch({ type: REMOVE_REQUEST });
+		})
+		.then(() => {	
+			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+		})
+		.catch(response => {
+			dispatch(keyResultTitleAndDifficultyError(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		});
 	};
 }
 

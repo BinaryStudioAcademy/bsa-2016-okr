@@ -19,7 +19,10 @@ import * as userDashboardActions from "../../../actions/userDashboardActions";
 import './objectives.scss';
 
 const CONST = require('../../../../backend/config/constants.js');
-const session = require('../../../../backend/config/session');
+
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 const notifications = require("../../../actions/notifications.js");
 
@@ -75,21 +78,17 @@ class Objectives extends Component {
 	}
 
 	handleAddingNewQuarter(newQuarter) {
-		let handler = function() {
-			//API call
-			this.props.myStateActions.createQuarter(newQuarter);
-			this.props.myStateActions.getMe();
-			this.changeTab(newQuarter.index);
-		}.bind(this);
-
 		sweetalert({
-			title: "Do you really want to create new quarter?",
+			title: "Create new quarter?",
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonText: "Yes, create",
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			this.props.myStateActions.createQuarter(newQuarter);
+			// this.changeTab(newQuarter.index);
+		});
 	}
 
 	componentWillUnmount() {
@@ -282,7 +281,7 @@ class Objectives extends Component {
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( isItHomePage || session._id == userInfo.mentorId || userId == session._id )) {
+				( isItHomePage || session == userInfo.mentorId || userId == session )) {
 			archived = false;
 		} else {
 			archived = true;
@@ -292,11 +291,11 @@ class Objectives extends Component {
 			<div id="home-page-wrapper">
 				<Quarterbar
 						changeTab={ this.changeTab }
-						changeYear={this.changeYear}
+						changeYear={ this.changeYear }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    	addNewQuarter={ this.handleAddingNewQuarter }
-				    	archiveQuarter={this.handleArchivingQuarter }
+						addNewQuarter={ this.handleAddingNewQuarter }
+						archiveQuarter={this.handleArchivingQuarter }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
 						me={ isItHomePage }

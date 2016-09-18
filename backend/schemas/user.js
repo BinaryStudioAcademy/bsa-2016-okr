@@ -2,13 +2,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
+	globalId: Schema.Types.ObjectId,
 	localRole: {
 		type: String,
 		required: true,
 	},
 	mentor: {
 		type: Schema.Types.ObjectId, 
-		ref: 'User'
+		ref: 'User',
+		default: null,
 	},
 	userInfo: {
 		type: Schema.Types.ObjectId, 

@@ -47,6 +47,7 @@ router.get('/users', (req, res, next) => {
 	if(limit <= 0) {
 		limit = 5;
 	}
+
 	service.getAllUsersStatsWithQuarters(sort, limit, userId, year, res.callback);
 });
 
