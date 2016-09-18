@@ -108,12 +108,12 @@ class HistoryItemList extends React.Component {
 		let item = this.props.historyItems[index];
    		return(
    			<tr key={item._id}>
-				<td className="user"><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>
+				<td className="user" data-th="User"><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>
           <span className="author-name">{item.author.userInfo.firstName + " " +item.author.userInfo.lastName}</span>
         </td>
-				<td className="action">{this.getHistoryType(item)}</td>
-				<td className="target"><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getHistoryObjectName(item)}</span></td>
-				<td className="date"><span className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</span></td>
+				<td className="action" data-th="Action">{this.getHistoryType(item)}</td>
+				<td className="target" data-th="Object"><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getHistoryObjectName(item)}</span></td>
+				<td className="date" data-th="Date"><span className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</span></td>
 			</tr>)
   	}
 
