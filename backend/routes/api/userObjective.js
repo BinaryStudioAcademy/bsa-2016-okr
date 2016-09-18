@@ -19,7 +19,6 @@ router.post('/', (req, res, next) => {
 	var isApproved = false;
 	var session = req.session;
 
-
 	if(isEmpty(title) || !isCorrectId(categoryId)
 	|| !isCorrectId(quarterId)) {
 		return res.badRequest();

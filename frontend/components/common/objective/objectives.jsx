@@ -50,12 +50,7 @@ class Objectives extends Component {
 	}
 
 	handleArchive (changeTo, objectiveId) {
-		let handler = function () {
-			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
-		}.bind(this);
-
 		let arch = changeTo ? 'archive' : 'unarchive';
-
 		sweetalert({
 			title: `Do you really want to ${arch} this objective?`,
 			type: "warning",
@@ -63,13 +58,15 @@ class Objectives extends Component {
 			confirmButtonColor: "#4caf50",
 			confirmButtonText: "OK",
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		});
 	}
 
 	changeYear(year) {
 
 		const { user } = this.props.user;
-		const userId = this.props.userId || session._id;
+		const userId = this.props.userId || session;
 		this.props.myStateActions.setChangeYear(year);
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
 			this.props.userDashboardActions.getStats("otherPersonPage")
@@ -164,7 +161,7 @@ class Objectives extends Component {
 				let selectedYear;
 				let selectedTab;
 				if (this.props.userId == undefined) {
-					userId = session._id;
+					userId = session;
 					quarters = this.props.myState.me.quarters;
 					selectedYear = this.props.myState.selectedYear;
 					selectedTab = this.props.myState.selectedTab;
