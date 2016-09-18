@@ -158,7 +158,6 @@ class DashboardStats extends Component {
 					<tr><td>Lowest result</td><td className="score">{ Math.round(this.props.userDashboard.bottomStats.totalScore * 100) + '%' }</td></tr>
 				</tbody>
 			);
->>>>>>> auth
 		}
 
 		return (
