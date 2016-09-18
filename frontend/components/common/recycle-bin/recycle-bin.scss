@@ -341,6 +341,20 @@ and (min-width: 1100px) {
 
 @media all 
 and (max-width: 1100px) {
+	.recucle-bin-filter-bar-container .filter-box {
+    width: 685px;
+    padding-left: 0px;
+  }
+	#rec-bin-wrapper .no-wrap {
+	    width: 195px;
+	    white-space: nowrap;
+	    padding: 0;
+	}
+	.recucle-bin-filter-bar-container {
+		.show-container {
+			height: auto;
+		}
+	}
 	#admin-recycle-bin .recucle-bin-filter-bar-container .show-container {
     min-height: 132px;
 	}
@@ -379,6 +393,16 @@ and (max-width: 1100px) {
 
 @media all 
 and (max-width: 800px) {	
+	#rec-bin-wrapper .no-wrap {
+	    width: 195px;
+	    white-space: nowrap;
+	    padding: 0;
+	}
+	.recucle-bin-filter-bar-container {
+		.show-container {
+			height: auto;
+		}
+	}
 	#rec-bin-wrapper{
 		& .width-20perc { width: 97%; }
 
@@ -433,5 +457,45 @@ and (max-width: 800px) {
 	      }
 			}
 		}
+	}
+}
+@media all 
+and (max-width: 750px) {
+	.filter-box > div {
+    margin: 3px 10px;
+  }
+  .recucle-bin-filter-bar-container .filter-box label {
+    line-height: 18px;
+	}
+	.recucle-bin-filter-bar-container .filter-box {
+    width: 200px;
+    padding-left: 0px;
+  }
+	#rec-bin-wrapper .no-wrap {
+	    white-space: wrap;
+	    padding: 0;
+	    margin-left: 5px;
+	    display: flex;
+
+	}
+	.recucle-bin-filter-bar-container
+	.recycle-bin-filter-table{
+	 	td {
+	    display: flex;
+	    align-items: center;
+	    font-size: 15px;
+
+	    select, button{
+	    	width: 181px;
+	    }
+        
+      &:first-child {
+        padding-top: .5em;
+      }
+
+      &:last-child {
+        padding-bottom: .5em;
+      }
+    }
 	}
 }
