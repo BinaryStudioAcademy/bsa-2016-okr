@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import { IndexRoute, Route, Router, IndexRedirect, browserHistory , useRouterHistory} from 'react-router';
+import { IndexRoute, Route, Router, IndexRedirect, browserHistory } from 'react-router';
 import CONST from '../backend/config/constants';
 import { isEmpty } from '../backend/utils/ValidateService';
 
@@ -18,8 +18,6 @@ import ListOfUsers from './components/list-of-users/list-of-users.jsx';
 import StatsPage from './components/dashboard/StatsPage.jsx';
 import NotFound from './components/common/notFound.jsx';
 
-import { createHistory } from 'history';
-
 import configureStore from './store/configureStore';
 
 import { Provider } from 'react-redux';
@@ -31,16 +29,12 @@ import { setRedirectUrl } from './actions/appActions';
 import reducer from './reducers/commonReducer';
 
 const store = configureStore();
-
+const history = syncHistoryWithStore(browserHistory, store);
 const ROOT_URL = '/';
-
-const history = useRouterHistory(createHistory)({
-    basename: '/okr'
-});
 
 render(
 	(<Provider store={store}>
-		<Router history={history} onUpdate={() => window.scrollTo(0, 0)} >
+		<Router history={history}>
 			<Route path="/" component={App}>
 				<IndexRoute component={HomePage} />
 				<Route path="users" component={ListOfUsers} />
