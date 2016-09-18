@@ -33,7 +33,7 @@ class DashboardStats extends React.Component {
 	}
 
 	renderRow(row, i) {
-		if(row.userInfo){
+		if(row.userInfo || row.name){
 				if(row.name){
 					return(
 						<tr key={i} className={`quarter-score ${i} hidden `}>
@@ -92,26 +92,27 @@ class DashboardStats extends React.Component {
 		var obj;
 		this.props.userDashboard.topUsersList.forEach( (item) => {
 			let name;
-
-			scores.push(item);
-
-			name = '1-st quarter';
-			obj = {name, totalScore:item[1]};
-			scores.push(obj);
-
-			name = '2-nd quarter';
-			obj = {name, totalScore:item[2]};
-			scores.push(obj);
-
-			name = '3-rd quarter';
-			obj = {name, totalScore:item[3]};
-			scores.push(obj);
-
-			name = '4-th quarter';
-			obj = {name, totalScore:item[4]};
-			scores.push(obj);
+			if(item.userInfo){
+				scores.push(item);
+				
+				name = '1-st quarter';
+				obj = {name, totalScore:item[1]};
+				scores.push(obj);
+	
+				name = '2-nd quarter';
+				obj = {name, totalScore:item[2]};
+				scores.push(obj);
+	
+				name = '3-rd quarter';
+				obj = {name, totalScore:item[3]};
+				scores.push(obj);
+	
+				name = '4-th quarter';
+				obj = {name, totalScore:item[4]};
+				scores.push(obj);
+			}
 		})
-		console.log(this.props.userDashboard)
+
 		if(!this.props.userDashboard.userStats.inTop && this.props.userDashboard.userStats.userInfo ){
 				var userRow = (<tbody>
 									<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
