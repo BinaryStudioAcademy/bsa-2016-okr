@@ -8,7 +8,7 @@ var StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: [
-    path.join(__dirname, '/frontend/index.js')
+    path.join(__dirname, 'okr/frontend/index.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -51,11 +51,9 @@ module.exports = {
     }, {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract('style', 'css!postcss')
-      // loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
     }, {
       test: /\.scss$/,
       loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
-      // loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss!sass')
     }, { 
       test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
       loader: 'file?name=fonts/[name].[ext]'
