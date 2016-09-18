@@ -13,7 +13,6 @@ const isDeveloping = CONST.isDeveloping;
 // connect to db
 const dbConnectHandler = require('./backend/db/dbConnect');
 
-
 var CronJob = require('cron').CronJob;
 var Archive = require('./backend/archive/archive.js')
 var job = new CronJob({
@@ -57,13 +56,14 @@ if (isDeveloping) {
   app.use(webpackHotMiddleware(compiler));
 
   app.get('*', function response(req, res) {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
+    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, './indexLocal.html')));
     res.end();
   });
 } else {
+
   app.use(express.static(__dirname + '/dist'));
   app.get('*', function response(req, res) {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
+    res.sendFile(path.join(__dirname, './index.html'));
   });
   
 }
