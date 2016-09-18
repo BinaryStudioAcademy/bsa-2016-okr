@@ -102,19 +102,19 @@ export function setChangeYear(year) {
 	};
 }
 
-export function createQuarter(quarter){
-	return(dispatch) => {
+export function createQuarter(quarter) {
+	return (dispatch, getStore) => {
 		axios.post('/api/quarters/', quarter)
-		.then(() => {
-			dispatch(newQuarterAdded(quarter));
+		.then((response) => {
+			dispatch(newQuarterAdded(response.data));
 		})
 		.catch((error) => {
 			dispatch(addNewQuarterError(error));
-		})
-	}
+		});
+	};
 }
 
-export function newQuarterAdded(quarter){
+export function newQuarterAdded(quarter) {
 	return {
 		type: NEW_QUARTER_ADDED,
 		quarter: quarter

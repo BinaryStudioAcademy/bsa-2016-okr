@@ -96,7 +96,18 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case NEW_QUARTER_ADDED : {
-			return Object.assign({}, state);
+			const { quarter: newQuarter } = action;
+			const { quarters: oldQuarters } = state.me;
+
+			console.log('¯\\_(ツ)_/¯: quarter', newQuarter);
+
+			return Object.assign({}, state, {
+				selectedYear: newQuarter.year,
+				selectedTab: newQuarter.index,
+				me: {
+					quarters: addNewQuarter(oldQuarters, newQuarter)
+				}
+			});
 		}
 
 		case ADD_NEW_QUARTER_ERROR : {
@@ -438,4 +449,18 @@ export function changeArchiveInMyObjective (me, objectiveId, flag) {
 
 function getIndexAndYearFromQuarter({ index, year }) {
 	return { index, year };
+}
+
+function addNewQuarter(oldQuarters, newQuarter) {
+	let quarters = [].concat(oldQuarters);
+
+	let quarterIndex = quarters.find((quarter) => {
+		return (quarter.year === newQuarter.year) && (quarter.index === quarter.index);
+	});
+
+	if(quarterIndex === -1) {
+		quarters.push(newQuarter);
+	}
+
+	return quarters;
 }

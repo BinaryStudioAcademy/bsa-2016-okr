@@ -67,21 +67,17 @@ class Objectives extends Component {
 	}
 
 	handleAddingNewQuarter(newQuarter) {
-		let handler = function() {
-			//API call
-			this.props.myStateActions.createQuarter(newQuarter);
-			this.props.myStateActions.getMe();
-			this.changeTab(newQuarter.index);
-		}.bind(this);
-
 		sweetalert({
-			title: "Do you really want to create new quarter?",
+			title: "Create new quarter?",
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonText: "Yes, create",
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			this.props.myStateActions.createQuarter(newQuarter);
+			// this.changeTab(newQuarter.index);
+		});
 	}
 
 	changeKeyResultScore(objectiveId, mentorId) {
