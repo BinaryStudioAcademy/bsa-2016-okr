@@ -12,7 +12,9 @@ import * as actions from "../../../actions/mappingActions";
 
 import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../../../backend/config/constants";
 
-const session = require("../../../../backend/config/session.js");
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 
 class RoleMapping extends React.Component {
@@ -55,7 +57,7 @@ class RoleMapping extends React.Component {
                        </thead>
                        <tbody>
                         {visibleUsers.map(function(user) {
-                            return  <UserRoleMappingItem currentUser={session._id} key={user._id} user={user}/>;
+                            return  <UserRoleMappingItem currentUser={session} key={user._id} user={user}/>;
                          })}
                       </tbody>
 

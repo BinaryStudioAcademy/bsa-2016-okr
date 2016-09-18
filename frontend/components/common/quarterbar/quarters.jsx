@@ -103,10 +103,10 @@ class Quarterbar extends Component {
          quarter.blur();
 
       } else if (event.target.matches('li.not-exist')) {
-         if(this.props.mentorId == session._id) {
+         if(this.props.mentorId == session) {
             userId = this.props.routeId;
          } else {
-            userId = session._id;
+            userId = session;
          }
          //adding new quarter to database, API call
          this.props.addNewQuarter({
