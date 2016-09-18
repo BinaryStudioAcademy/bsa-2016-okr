@@ -76,7 +76,7 @@ ObjectiveRepository.prototype.autocomplete = function(title, categoryId, exclude
 	var model = this.model;
 	var options = {
 		isApproved: true,
-		isDeleted: false,
+		//isDeleted: false,
 		category: categoryId,
 		_id: {
 			$not: {

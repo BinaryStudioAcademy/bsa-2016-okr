@@ -184,21 +184,22 @@ export function updateUserObjectiveApi(id, description, title, callback, userId)
 	};
 }
 
-export function softDeleteMyObjectiveById(id) {
+export function softDeleteMyObjectiveById(id, flag) {
 	return {
 		type: SOFT_DELETE_MY_OBJECTIVE_BY_ID,
-		id: id
+		id: id,
+		flag: flag,
 	};
 }
 
-export function softDeleteMyObjectiveByIdApi(id, callback, userId) {
+export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
 
-		return axios.delete('/api/userObjective/' + id + '/true')
+		return axios.delete('/api/userObjective/' + id + '/' + flag)
 		.then(response => {
-			dispatch(softDeleteMyObjectiveById(id));
+			dispatch(softDeleteMyObjectiveById(id, flag));
 			dispatch({ type: REMOVE_REQUEST	});
 
 			dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })

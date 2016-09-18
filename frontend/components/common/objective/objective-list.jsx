@@ -73,7 +73,7 @@ class ObjectiveList extends React.Component{
 
 				if(!isArchived) {
 					input = <ObjectiveInput
-						createObjective={ this.props.createObjective(category._id) }
+						createObjective={ this.props.createObjective(category._id, objectives) }
 						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }
 						key={ index }
 						isItHomePage = { isItHomePage }

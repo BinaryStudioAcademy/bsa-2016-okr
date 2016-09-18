@@ -23,15 +23,7 @@ class ObjectiveItem extends Component {
 		this.handleSave = this.handleSave.bind(this);
 	}
 
-	handleDelObj(e) {
-		let handler = function() {
-			if (this.props.mentorId != undefined)
-				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, notifications.notificationApprenticeDeletedObjective,
-				this.props.mentorId);
-			else
-				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id);
-		}.bind(this);
-
+	handleDelObj() {
 		sweetalert({
 			title: "Do you really want to delete this objective?",
 			type: "warning",
@@ -39,7 +31,14 @@ class ObjectiveItem extends Component {
 			confirmButtonColor: "#4caf50",
 			confirmButtonText: "OK",
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			if (this.props.mentorId != undefined) {
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, true, notifications.notificationApprenticeDeletedObjective,
+						this.props.mentorId);
+			}	else {
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, true);
+			}
+		});
 	}
 
 	handleEdit() {

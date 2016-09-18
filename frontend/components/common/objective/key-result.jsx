@@ -136,21 +136,22 @@ class KeyResult extends Component {
 		if (!isArchived) {
 			if (isEditing && item._id == id) {
 				// ---=== THEN BEGIN ===---
-				if (!item.templateId.isApproved) {
+				if (item.templateId.isApproved) {
+					//notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
+				} else {
 					editSave = (
-						<button onClick={ this.saveChanges }
-						        className='btn btn-green key-result-edit-button' aria-hidden="true" title='Save'>
-							<i className='fi-1 flaticon-1-check'></i>
-						</button>
+							<button onClick={ this.saveChanges }
+							        className='btn btn-green key-result-edit-button' aria-hidden="true" title='Save'>
+								<i className='fi-1 flaticon-1-check'></i>
+							</button>
 					);
 
 					cancelElement = (
-						<button onClick={ this.cancelEdit }
-						        className="btn btn-red key-result-cancel-button" aria-hidden="true" title='Cancel'>
-							<i className="fi flaticon-multiply"></i>
-						</button>
+							<button onClick={ this.cancelEdit }
+							        className="btn btn-red key-result-cancel-button" aria-hidden="true" title='Cancel'>
+								<i className="fi flaticon-multiply"></i>
+							</button>
 					);
-					//notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
 				}
 
 				titleElement = (
@@ -174,17 +175,17 @@ class KeyResult extends Component {
 
 				scoreElement = ( <span className='score'>{ score }</span> );
 
-				if (!item.templateId.isApproved) {
-					editSave = (
-						<button onClick={ this.editKeyResult }
-						        className='btn btn-blue-hover key-result-edit-button'
-						        aria-hidden="true"
-						        title='Edit'>
-							<i className='fi flaticon-edit'></i>
-						</button>
-					);
-
+				if (item.templateId.isApproved) {
 					notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
+				} else {
+					editSave = (
+							<button onClick={ this.editKeyResult }
+							        className='btn btn-blue-hover key-result-edit-button'
+							        aria-hidden="true"
+							        title='Edit'>
+								<i className='fi flaticon-edit'></i>
+							</button>
+					);
 				}
 
 				titleElement = (

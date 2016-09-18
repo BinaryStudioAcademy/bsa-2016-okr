@@ -65,24 +65,26 @@ class KeyResults extends Component {
 			}
 
 			sweetalert.close();
-		} else if(duplicateItem.isDeleted) {
-			sweetalert({
-				title: 'Do you want to restore deleted key result?',
-				text: 'Key result with such title for that objective exists, but deleted by someone',
-				type: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#4caf50',
-				confirmButtonText: 'Yes, restore'
-			}, () => {
-				this.props.softDeleteObjectiveKeyResultByIdApi(userObjectiveId,
-					duplicateItem._id, false);
-			});
 		} else {
-			sweetalert({
-				title: 'Error!',
-				text: 'Key result with such title for that objective already exists',
-				type: 'error',
-			});
+			if (duplicateItem.isDeleted) {
+				sweetalert({
+					title: 'Do you want to restore deleted key result?',
+					text: 'Key result with such title for that objective exists, but deleted by someone',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#4caf50',
+					confirmButtonText: 'Yes, restore'
+				}, () => {
+					this.props.softDeleteObjectiveKeyResultByIdApi(userObjectiveId,
+							duplicateItem._id, false);
+				});
+			} else {
+				sweetalert({
+					title: 'Error!',
+					text: 'Key result with such title for that objective already exists',
+					type: 'error',
+				});
+			}
 		}
 	}
 

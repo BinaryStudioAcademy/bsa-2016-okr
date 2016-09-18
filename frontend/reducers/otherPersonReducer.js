@@ -132,10 +132,10 @@ export default function otherPersonReducer(state = initialState, action) {
 
 		case SOFT_DELETE_MY_OBJECTIVE_BY_ID:
 		{
-			const { id } = action;
+			const { id, flag } = action;
 
 			return Object.assign({}, state, {
-				user: deleteObjectiveFromMe(state.user, id)
+				user: deleteObjectiveFromMe(state.user, id, flag)
 			});
 
 		}
@@ -335,12 +335,13 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, flag, newK
 	return userCopy;
 }
 
-function deleteObjectiveFromMe(user, id) {
+function deleteObjectiveFromMe(user, id, flag) {
 	var userCopy = Object.assign({}, user);
 	userCopy.quarters.forEach((quarter) => {
 		for (var i = 0; i < quarter.userObjectives.length; i++) {
 			if (quarter.userObjectives[i]._id == id) {
-				quarter.userObjectives.splice(i, 1);
+				//quarter.userObjectives.splice(i, 1);
+				quarter.userObjectives[i].isDeleted = flag;
 			}
 		}
 	});

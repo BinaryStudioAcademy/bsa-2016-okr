@@ -104,10 +104,10 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
-			const { id } = action;
+			const { id, flag } = action;
 
 			return Object.assign({}, state, {
-				me: deleteObjectiveFromMe(state.me, id)
+				me: deleteObjectiveFromMe(state.me, id, flag)
 			});
 
 		}
@@ -267,12 +267,13 @@ export function updateObjectiveDescription(me, id, description, title) {
 	return meCopy;
 }
 
-function deleteObjectiveFromMe(me, id) {
+function deleteObjectiveFromMe(me, id, flag) {
 	var meCopy = Object.assign({}, me);
 	meCopy.quarters.forEach((quarter) => {
 		for(var i=0 ; i<quarter.userObjectives.length; i++) {
 			if(quarter.userObjectives[i]._id == id) {
-				quarter.userObjectives.splice(i, 1);
+				//quarter.userObjectives.splice(i, 1);
+				quarter.userObjectives[i].isDeleted = flag;
 			}
 		}
 	});

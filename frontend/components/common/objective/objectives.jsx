@@ -35,6 +35,7 @@ class Objectives extends Component {
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
 		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
+		this.getDuplicateObjectiveByTitle = this.getDuplicateObjectiveByTitle.bind(this);
 	}
 
 	componentWillMount() {
@@ -146,42 +147,75 @@ class Objectives extends Component {
 		};
 	}
 
-	createObjective(categoryId) {
+	getDuplicateObjectiveByTitle(title, data) {
+		let objectiveIndex = data.findIndex((objective) => {
+			return (objective.templateId.title.toUpperCase() === title.toUpperCase());
+		});
+
+		return (objectiveIndex === -1) ? null : data[objectiveIndex];
+	}
+
+	createObjective(categoryId, objectives) {
 		return (title, objectiveId) => {
-			let quarters;
-			let userId;
-			let selectedYear;
-			let selectedTab
-			if (this.props.userId == undefined) {
-				userId = session._id;
-				quarters = this.props.myState.me.quarters;
-				selectedYear = this.props.myState.selectedYear;
-				selectedTab = this.props.myState.selectedTab;
-			} else {
-				userId = this.props.userId;
-				quarters = this.props.user.user.quarters;
-				selectedYear = this.props.user.selectedYear;
-				selectedTab = this.props.user.selectedTab;
-			}
+			let duplicateItem = this.getDuplicateObjectiveByTitle(title, objectives);
 
-			let quarter = quarters.find((quarter) => {
-				return (quarter.index == selectedTab) && (quarter.year == selectedYear);
-			});
+			if(isEmpty(duplicateItem)) {
+				let quarters;
+				let userId;
+				let selectedYear;
+				let selectedTab;
+				if (this.props.userId == undefined) {
+					userId = session._id;
+					quarters = this.props.myState.me.quarters;
+					selectedYear = this.props.myState.selectedYear;
+					selectedTab = this.props.myState.selectedTab;
+				} else {
+					userId = this.props.userId;
+					quarters = this.props.user.user.quarters;
+					selectedYear = this.props.user.selectedYear;
+					selectedTab = this.props.user.selectedTab;
+				}
 
-			let body = {
-				title: title,
-				objectiveId: objectiveId,
-				categoryId: categoryId,
-				quarterId: quarter._id,
-				userId: userId,
-			};
-			if (this.props.userId == undefined) {
-				if (this.props.mentorId != undefined)
-					this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
-				else
-					this.props.myStateActions.addNewObjective(body);
+				let quarter = quarters.find((quarter) => {
+					return (quarter.index == selectedTab) && (quarter.year == selectedYear);
+				});
+
+				let body = {
+					title: title,
+					objectiveId: objectiveId,
+					categoryId: categoryId,
+					quarterId: quarter._id,
+					userId: userId,
+				};
+				if (this.props.userId == undefined) {
+					if (this.props.mentorId != undefined)
+						this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
+					else
+						this.props.myStateActions.addNewObjective(body);
+				} else {
+					this.props.otherPersonActions.addNewObjective(body);
+				}
 			} else {
-				this.props.otherPersonActions.addNewObjective(body);
+				if (duplicateItem.isDeleted) {
+					sweetalert({
+						title: 'Do you want to restore deleted key result?',
+						text: 'Key result with such title for that objective exists, but deleted by someone',
+						type: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#4caf50',
+						confirmButtonText: 'Yes, restore'
+					}, () => {
+						this.props.myStateActions.softDeleteMyObjectiveByIdApi(duplicateItem._id, false);
+						//this.props.softDeleteObjectiveKeyResultByIdApi(userObjectiveId,
+						//		duplicateItem._id, false);
+					});
+				} else {
+					sweetalert({
+						title: 'Error!',
+						text: 'Key result with such title for that objective already exists',
+						type: 'error',
+					});
+				}
 			}
 		};
 	}
