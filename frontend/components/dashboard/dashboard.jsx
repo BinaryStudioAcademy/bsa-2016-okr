@@ -18,21 +18,10 @@ class Dashboard extends Component {
 
     render() {
         var id = null;
-        var year = this.props.myState.selectedYear;
-        if (this.props.where == undefined){
-            id = session;
-        }
-        else{
-            id = this.props.userId;
-        }
-        if(this.props.where == "otherPersonPage")
-            year = this.props.userPage.selectedYear;
-        var urlUsers = "/api/stats/users?limit=5&&id=" + id;
+        
         return (
             <div className="dashboard">
                 <DashboardStats urlProgress="/api/stats/progress"
-                    urlUsers= {urlUsers}
-                    urlBottom="/api/stats/users?sort=desc&&limit=1"
                     userId={id}
                     where={this.props.where}/>
             </div>

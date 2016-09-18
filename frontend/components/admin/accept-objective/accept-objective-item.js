@@ -11,6 +11,7 @@ const notifications = require("../../../actions/notifications.js");
 class AcceptObjectiveItem extends Component {
 
 	render() {
+
 		  return (
 		  	<div className="accept-objective-item">
 			  	<div className='buttons'>

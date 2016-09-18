@@ -9,17 +9,16 @@ import cookie from 'react-cookie';
 
 const session = cookie.load('user-id');
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class DashboardStats extends React.Component {
+import * as actions from "../../actions/userDashboardActions";
+
+class DashboardStats extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			rows: [],
-			score: {},
-			user: {
-				userInfo: ""
-			},
-			bottom: {}
+			score: {}
 		};
 		this.handleUserClick = this.handleUserClick.bind(this);
 		this.renderRow = this.renderRow.bind(this);
@@ -37,20 +36,22 @@ export default class DashboardStats extends React.Component {
 	}
 
 	renderRow(row, i) {
-		if(row.name){
-			return(
-				<tr key={i} className={`quarter-score ${i} hidden `}>
-					<td> { `${ row.name }` }</td>
-					<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
-				</tr>)
+		if(row.userInfo){
+				if(row.name){
+					return(
+						<tr key={i} className={`quarter-score ${i} hidden `}>
+							<td> { `${ row.name }` }</td>
+							<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
+						</tr>)
+				}
+				else
+				return (
+					<tr key={i} onClick={() => {this.handleUserClick(i)}}>
+						<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
+						<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
+					</tr>
+					)
 		}
-		else
-		return (
-			<tr key={i} onClick={() => {this.handleUserClick(i)}}>
-				<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
-				<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
-			</tr>
-			)
 	}
 
 	getProgressBar () {
@@ -64,23 +65,15 @@ export default class DashboardStats extends React.Component {
 				</div>)
 		}
 		else {
-			// let score = 0;
-			// if(this.state.user == null){
-			// 	console.log(this.state);
-			// 	this.state.rows.forEach(( elem) => {
-			// 		console.log('-------------')
-			// 		console.log(elem.userInfo._id)
-			// 		console.log(session._id)
-			// 		if(elem.userInfo._id == session._id)
-			// 			score = Math.round(elem.totalScore * 100);
-			// 	})
-			// }
-			// else
-			let score = Math.round(this.state.user.totalScore * 100);
 
+			let score = Math.round(this.props.userDashboard.userStats.totalScore * 100);
+			if(this.props.where === "otherPersonPage")
+				var year = this.props.userPage.selectedYear;
+			else
+				var year = this.props.myState.selectedYear;
 			return (
 				<div className="countInfo" id="parent">
-					<p><span>Your progress in current year</span></p>
+					<p><span>{`Your progress in ${year} year`}</span></p>
 					<div className="progressBar">
 						<ProgressBar  strokeWidth="10" radius="80" percentage={score}/>
 					</div>
@@ -90,27 +83,17 @@ export default class DashboardStats extends React.Component {
 
 
 	componentWillMount() {
-		axios.get(this.props.urlUsers)
-		.then( response => {
-			this.setState({
-				rows:response.data.statArr,
-				bottom: response.data.bottomStats,
-				user: response.data.userStats
-			})
-		})
-		// axios.get(this.props.urlUsers)
-		// .then(response => { this.setState({ rows: response.data }); });
+
+		this.props.getStats(this.props.where);
 		axios.get(this.props.urlProgress)
 		.then(response => { this.setState({ score: response.data }); });
-		// axios.get(this.props.urlBottom)
-		// .then(response => { this.setState({ bottom: response.data[0] }); });
 	}
 
 
 	render() {
 		var scores = [];
 		var obj;
-		this.state.rows.forEach( (item) => {
+		this.props.userDashboard.topUsersList.forEach( (item) => {
 			let name;
 
 			scores.push(item);
@@ -131,42 +114,38 @@ export default class DashboardStats extends React.Component {
 			obj = {name, totalScore:item[4]};
 			scores.push(obj);
 		})
-		// let isUserInTop = this.state.rows.find((elem)=> {
-		// 	if(elem.userInfo._id === this.state.user._id)
-		// 		return true
-		// 	else return false;
-		// })
-		if(!this.state.user.inTop ){
+		console.log(this.props.userDashboard)
+		if(!this.props.userDashboard.userStats.inTop && this.props.userDashboard.userStats.userInfo ){
 				var userRow = (<tbody>
 									<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
 									<tr onClick={() => {this.handleUserClick(-5)}}>
-										<td  className="pointer">{ `${ this.state.user.userInfo.firstName } ${ this.state.user.userInfo.lastName }` }</td>
-										<td className="score">{ Math.round(this.state.user.totalScore * 100) + '%' }</td>
+										<td className="pointer bold">{ `${ this.props.userDashboard.userStats.userInfo.firstName } ${ this.props.userDashboard.userStats.userInfo.lastName }` }</td>
+										<td className="score bold">{ Math.round(this.props.userDashboard.userStats.totalScore * 100) + '%' }</td>
 									</tr>
 									<tr className={`quarter-score -4 hidden `}>
 										<td>1-st quarter</td>
-										<td className="score">{ Math.round(this.state.user[1] * 100) + '%' }</td>
+										<td className="score">{ Math.round(this.props.userDashboard.userStats[1] * 100) + '%' }</td>
 									</tr>
 									<tr className={`quarter-score -3 hidden `}>
 										<td>2-nd quarter</td>
-										<td className="score">{ Math.round(this.state.user[2] * 100) + '%' }</td>
+										<td className="score">{ Math.round(this.props.userDashboard.userStats[2] * 100) + '%' }</td>
 									</tr>
 									<tr className={`quarter-score -2 hidden `}>
 										<td>3-rd quarter</td>
-										<td className="score">{ Math.round(this.state.user[3] * 100) + '%' }</td>
+										<td className="score">{ Math.round(this.props.userDashboard.userStats[3] * 100) + '%' }</td>
 									</tr>
 									<tr className={`quarter-score -1 hidden `}>
 										<td>4-th quarter</td>
-										<td className="score">{ Math.round(this.state.user[4] * 100) + '%' }</td>
+										<td className="score">{ Math.round(this.props.userDashboard.userStats[4] * 100) + '%' }</td>
 									</tr>
 									<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
-									<tr><td>Lowest result</td><td className="score">{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
+									<tr><td>Lowest result</td><td className="score">{ Math.round(this.props.userDashboard.bottomStats.totalScore * 100) + '%' }</td></tr>
 								</tbody>)
 		}
 		else {
 				var userRow = (<tbody>
 						<tr><td className="dots">● ● ●</td><td className="score">● ● ●</td></tr>
-						<tr><td>Lowest result</td><td className="score">{ Math.round(this.state.bottom.totalScore * 100) + '%' }</td></tr>
+						<tr><td>Lowest result</td><td className="score">{ Math.round(this.props.userDashboard.bottomStats.totalScore * 100) + '%' }</td></tr>
 						</tbody>)
 		}
 
@@ -195,3 +174,19 @@ export default class DashboardStats extends React.Component {
 			)
 	}
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actions, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+        userDashboard: state.userDashboard,
+        myState: state.myState,
+        userPage: state.userPage
+    };
+}
+
+const DashboardStatsConnected = connect(mapStateToProps, mapDispatchToProps)(DashboardStats);
+
+export default DashboardStatsConnected;

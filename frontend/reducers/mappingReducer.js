@@ -25,7 +25,7 @@ const initialState = {
 	roles: [],
 	globalRoles: [],
 	sortByGlobalRole: NOT_SORTED,
-	sortByName: NOT_SORTED,
+	sortByName: SORTED_ASC,
 	globalRoleFilter: "",
 	filter: "",
 };
@@ -84,7 +84,7 @@ export default function mappingReducer(state = initialState, action = {}) {
 			const {data} = action; 
 
 			for (let i = 0; i < data.length; i++) {
-
+		
 				data[i].avatar = "avatar1.png";
 				data[i].name = data[i].userInfo.firstName + " " + data[i].userInfo.lastName;
 				data[i].email = data[i].userInfo.email;

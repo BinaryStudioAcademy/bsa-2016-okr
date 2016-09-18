@@ -70,25 +70,35 @@ class HistoryItemList extends React.Component {
     getHistoryObjectName(historyItem){
       if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
         return ` user objective \'${historyItem.userObjective.templateId.title}\'`;
-      };
-
-      if(historyItem.type.indexOf('OBJECTIVE') !== -1){
-        return `objective \'${historyItem.objective.title}\'`;
-       };
-
-      if(historyItem.type.indexOf('KEY_RESULT') !== -1){
-        let keyResults = historyItem.userObjective.keyResults;
-        let keyResult;
-        keyResults.forEach((key) => {
-          if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
-          keyResult = key;
-        })
-        return `key result \'${keyResult.templateId.title} \'`;
       }
-      if(historyItem.type.indexOf('CATEGORY') !== -1){
+
+      else if(historyItem.type.indexOf('OBJECTIVE') !== -1){
+        return `objective \'${historyItem.objective.title}\'`;
+       }
+
+      else if(historyItem.type.indexOf('KEY_RESULT') !== -1){
+         let keyResult;
+        if (historyItem.userObjective){
+          let keyResults = historyItem.userObjective.keyResults;
+         
+          keyResults.forEach((key) => {
+            if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
+            keyResult = key;
+         
+          })
+          return `key result \'${keyResult.templateId.title} \'`;
+     
+        }
+        else {
+          keyResult = historyItem.keyResult;
+          return `key result \'${keyResult.title} \'`;
+        }
+
+    }  
+      else if(historyItem.type.indexOf('CATEGORY') !== -1){
         return `category \'${historyItem.category.title}\'`;
-       };
-      if(historyItem.type.indexOf('USER') !== -1){
+       }
+      else if(historyItem.type.indexOf('USER') !== -1){
         return `user \'${historyItem.user.userInfo.firstName} ${historyItem.user.userInfo.lastName}\'`;
       };
 
@@ -112,27 +122,43 @@ class HistoryItemList extends React.Component {
   	}
 
     render() {
+      // if (this.props.historyItems.length === 0) {
+      //   return (<div className="history-page">   
+      //             <table className="table" id="historyTable">
+      //               <thead>
+      //                 <tr>
+      //                   <th ><span className="table-th" onClick={() => this.onSort("user")}><i id="user" className="fa fa-sort"></i>User</span></th>
+      //                   <th ><span className="table-th" onClick={() => this.onSort("action")}><i id="action" className="fa fa-sort"></i>Action</span></th>
+      //                   <th ><span className="table-th" onClick={() => this.onSort("target")}><i id="target" className="fa fa-sort"></i>Target</span></th>
+      //                   <th ><span className="table-th" onClick={() => this.onSort("date")}><i id="date" className="fa fa-sort"></i>Date</span></th>
+      //                 </tr>
+      //               </thead>
+      //             </table>  
+      //             <h1 className="placeholder">History is empty!</h1>
+      //           </div>) 
+      // }
+      // else
         return(
             <div className="history-item-list">
             	<table className="table" id="historyTable">
-					<thead>
-						<tr>
-							<th ><span className="table-th" onClick={() => this.onSort("user")}><i id="user" className="fa fa-sort"></i>User</span></th>
-							<th ><span className="table-th" onClick={() => this.onSort("action")}><i id="action" className="fa fa-sort"></i>Action</span></th>
-							<th ><span className="table-th" onClick={() => this.onSort("target")}><i id="target" className="fa fa-sort"></i>Target</span></th>
-							<th ><span className="table-th" onClick={() => this.onSort("date")}><i id="date" className="fa fa-sort"></i>Date</span></th>
-						</tr>
-					</thead>
-					<tbody>
-	               		<ReactList
-							itemRenderer={::this.renderItem}
-							itemsRenderer={::this.renderItems}
-							length={this.props.historyItems.length}
-							type='simple'
-							pageSize={10}
-						/>
-						</tbody>
-				</table>
+      					<thead>
+      						<tr>
+      							<th ><span className="table-th" onClick={() => this.onSort("user")}><i id="user" className="fa fa-sort"></i>User</span></th>
+      							<th ><span className="table-th" onClick={() => this.onSort("action")}><i id="action" className="fa fa-sort"></i>Action</span></th>
+      							<th ><span className="table-th" onClick={() => this.onSort("target")}><i id="target" className="fa fa-sort"></i>Target</span></th>
+      							<th ><span className="table-th" onClick={() => this.onSort("date")}><i id="date" className="fa fa-sort"></i>Date</span></th>
+      						</tr>
+      					</thead>
+      					<tbody>
+      	               		<ReactList
+      							itemRenderer={::this.renderItem}
+      							itemsRenderer={::this.renderItems}
+      							length={this.props.historyItems.length}
+      							type='simple'
+      							pageSize={10}
+      						/>
+      						</tbody>
+				      </table>
             </div>
         )
     }

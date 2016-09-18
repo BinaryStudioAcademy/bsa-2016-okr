@@ -20,27 +20,6 @@ class Quarterbar extends Component {
 		this.getYears = this.getYears.bind(this);
 	}
 
-	handleQuarterClick(event) {
-		let target = event.target;
-
-		if (target.matches('li:not(.not-exist)') && target.matches('li:not(.disabled)')) {
-
-			this.props.changeTab(parseInt(event.target.dataset.id));
-			tab_click_feedback.call(this, event);
-
-			let quarter = document.querySelector('#quarters li.active');
-			quarter.blur();
-
-		} else if (event.target.matches('li.not-exist')) {
-
-			//adding new quarter to database, API call
-			this.props.addNewQuarter({
-				year: this.props.selectedYear,
-				index: parseInt(target.dataset.id)
-			});
-		}
-	}
-
 	handleYearChange(event) {
 		// this.props.changeTab(currentQuarter);
 		this.props.changeYear(event.target.value);
@@ -112,41 +91,74 @@ class Quarterbar extends Component {
 		});
 	}
 
-	showQuarters(event) {
-		choose_quarter_for_tablet.call(this, event);
-	}
-	handleCallContextMenu(event) {
-		call_context_menu.call(this, event);
-	}
-	onContextItemClick(event) {
-		on_context_item.call(this, event);
-	}
-	onContextWrapper(event) {
-		on_context_wrapper.call(this, event);
-	}
+   handleQuarterClick(event) {
+      let target = event.target;
+      let userId;
+      if (target.matches('li:not(.not-exist)') && target.matches('li:not(.disabled)')) {
 
-	render() {
-		return (
-			<div id="quarter-bar">
-				<select id="business-year" onChange={ this.handleYearChange }>
-					{ this.getYears() }
-				</select>
-				<div className="quarters-wrapper">
-					<button id="show-quarters" className="btn" onClick={ this.showQuarters }>
-						Quarters&nbsp;<i className="fa fa-chevron-down"></i>
-					</button>
-					<ul id="quarters" onClick={ this.handleQuarterClick } onContextMenu={ this.handleCallContextMenu }>
-						{ this.getQuarters() }
-					</ul>
-				</div>
-				<div id="context-wrapper" onClick={ this.onContextWrapper }>
-					<ul id="context" onClick={ this.onContextItemClick }>
-						<li data-action="archive">Archive</li>
-					</ul>
-				</div>
-			</div>
-		);
-	}
+         this.props.changeTab(parseInt(event.target.dataset.id));
+         tab_click_feedback.call(this, event);
+
+         let quarter = document.querySelector('#quarters li.active');
+         quarter.blur();
+
+      } else if (event.target.matches('li.not-exist')) {
+         if(this.props.mentorId == session._id) {
+            userId = this.props.routeId;
+         } else {
+            userId = session._id;
+         }
+         //adding new quarter to database, API call
+         this.props.addNewQuarter({
+            year: this.props.selectedYear,
+            index: parseInt(target.dataset.id),
+            userId: userId
+         });
+      }
+   }
+
+   handleYearChange(event) {
+      this.props.changeTab(currentQuarter);
+      this.props.changeYear(event.target.value);
+   }
+
+   showQuarters(event) {
+      choose_quarter_for_tablet.call(this, event);
+   }
+   handleCallContextMenu(event) {
+      call_context_menu.call(this, event);
+   }
+   onContextItemClick(event) {
+      on_context_item.call(this, event);
+   }
+   onContextWrapper(event) {
+      on_context_wrapper.call(this, event);
+   }
+
+   render() {
+      return (
+         <div id="quarter-bar">
+            <select id="business-year" onChange={this.handleYearChange}>
+               { this.getYears() }
+            </select>
+            <div className="quarters-wrapper">
+               <button id="show-quarters" className="btn" onClick={this.showQuarters}>
+                  Quarters&nbsp;
+                  <i className="fa fa-chevron-down"></i>
+               </button>
+               <ul id="quarters" onClick={this.handleQuarterClick} onContextMenu={this.handleCallContextMenu}>
+                  { this.getQuarters() }
+               </ul>
+            </div>
+            <div id="context-wrapper" onClick={this.onContextWrapper}>
+               <ul id="context" onClick={this.onContextItemClick}>
+                  <li id="archive" data-action="archive">Archive</li>
+                  <li id="unarchive" data-action="unarchive">Unarchive</li>
+               </ul>
+            </div>
+         </div>
+      )
+   }
 }
 
 export default Quarterbar;
@@ -185,29 +197,40 @@ function choose_quarter_for_tablet(event) {
 }
 
 function call_context_menu(event) {
-	let   target = event.target,
-	context = document.getElementById('context-wrapper'),
-	contextMenu = document.getElementById('context');
-
-	if(target.matches('#quarters li')){
-		target.classList.add("oncontext");
-		contextMenu.style.top = event.clientY + "px";
-		contextMenu.style.left = event.clientX + "px";
-		context.classList.add("visible");
-		event.preventDefault();
-		return false;
-	}
+   if(this.props.isAdmin) {
+      let   target = event.target,
+            context = document.getElementById('context-wrapper'),
+            contextMenu = document.getElementById('context');
+   
+      if(target.matches('#quarters li')){
+         if(target.getAttribute("data-isarchived") == "true"){
+               document.getElementById('archive').className = "hidden"
+               document.getElementById('unarchive').className = ""
+            }
+         else{
+               document.getElementById('archive').className = ""
+               document.getElementById('unarchive').className = "hidden"
+            }
+         target.classList.add("oncontext");
+         contextMenu.style.top = event.clientY + "px";
+         contextMenu.style.left = event.clientX + "px";
+         context.classList.add("visible");
+         event.preventDefault();
+         return false;
+      }
+   }
 }
 
 function on_context_item(event) {
-	let   target = document.querySelector('.oncontext'),
-	context = document.getElementById('context-wrapper');
-	if(event.target.matches('#context li')){
-		if(event.target.dataset.action == 'archive'){
-			target.classList.remove('oncontext');
-			context.classList.remove('visible');
-		}
-	}
+   let   target = document.querySelector('.oncontext'),
+         context = document.getElementById('context-wrapper');
+   if(event.target.matches('#context li')){
+      if(event.target.dataset.action == 'archive' || event.target.dataset.action == 'unarchive' ){
+         target.classList.remove('oncontext');
+         context.classList.remove('visible');
+         this.props.archiveQuarter(target.getAttribute("data-id"))
+      }
+   }
 }
 
 function on_context_wrapper(event) {

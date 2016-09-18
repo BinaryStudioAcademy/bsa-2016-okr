@@ -132,7 +132,7 @@ render() {
 	
 	let displayedCategoriesEl = this.props.displayedCategories.map((category, index) => {
 		let objectiveIndex = this.props.objectives.findIndex((objective) => {
-			return objective.category === category._id;
+			return objective.category === category._id && objective.isDeleted == false;
 		});
 
 		let isEmptyCategory = (objectiveIndex === -1) ? true : false;

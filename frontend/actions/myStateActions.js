@@ -30,6 +30,33 @@ export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE = 'EDIT_KEY_RESULT_DISAB
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE';
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE';
 
+export const ARCHIVE_MY_QUARTER = 'ARCHIVE_MY_QUARTER';
+export const RESET = 'RESET';
+
+export function archiveMyQuarter(id, flag) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ARCHIVE_MY_QUARTER});
+		dispatch({ type: ADD_REQUEST });
+		let url = '/api/quarters/' + id + '/archive/' + flag;
+		return axios.put(url)
+		.then( response => {
+			dispatch({ type: REMOVE_REQUEST	});
+			dispatch(getMe());
+		})
+		.catch( response => {
+			dispatch(receivedMyObjectivesError(response));
+			dispatch({ type: REMOVE_REQUEST	});
+		})
+	}
+}
+
+
+export function reset () {
+	 return {
+	 	type: RESET
+	 }  
+}
+
 export function getMe() {
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_MY_OBJECTIVES });
@@ -261,23 +288,17 @@ export function keyResultScoreChangedError(data) {
 	};
 }
 
-export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, callback, userId) {
+export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, flag, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
-		//dispatch({ type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API });
 
-		return axios.delete('/api/userObjective/' + objectiveId +'/keyResult/'+ keyResultId +'/true')
+		return axios.delete('/api/userObjective/' + objectiveId +'/keyResult/'+ keyResultId +'/'+flag)
 				.then(response => {
-					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, response.data));
+					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, flag, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
 
 					dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST })
 					dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST })
-					/*
-					if (callback != null) {
-						dispatch(callback(userId));
-					}
-					*/
 				})
 				.catch(response => {
 					dispatch(receivedMyObjectivesError(response.data));
@@ -313,11 +334,12 @@ export function changeArchiveStatusLocal (changeTo, objectiveId) {
 	 }
 }
 
-export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, data) {
+export function softDeleteObjectiveKeyResultById(objectiveId, keyResultId, flag, data) {
 	return {
 		type: SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 		objectiveId,
 		keyResultId,
+		flag,
 		data,
 	};
 }

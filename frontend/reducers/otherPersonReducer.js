@@ -7,6 +7,8 @@ import { GET_USER,
 	ADDED_NEW_OBJECTIVE_OTHER_USER,
 	EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE,
 	EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE,
+	ARCHIVE_USER_QUARTER,
+	RECEIVED_USER_ERROR,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE } from '../actions/otherPersonActions.js'
 import { CHANGED_KEYRESULT_SCORE,
@@ -14,6 +16,7 @@ import { CHANGED_KEYRESULT_SCORE,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
 	UPDATE_USER_OBJECTIVE,
+	RESET,
 	CHANGE_ARCHIVE_STATUS_LOCAL } from '../actions/myStateActions.js'
 import { ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON } from '../actions/keyResultActions';
 
@@ -31,6 +34,7 @@ const initialState = {
 	selectedYear: currentYear,
 	editKeyResultId: '',
 	editKeyResultIsEditing: false,
+	error: false
 };
 
 export default function otherPersonReducer(state = initialState, action) {
@@ -49,8 +53,25 @@ export default function otherPersonReducer(state = initialState, action) {
 			return Object.assign({}, state, {
 				user: data,
 				waiting: false,
+				error:false
 				// selectedTab: currentQuarter,
 				// selectedYear: currentYear
+			})
+		}
+
+		case RECEIVED_USER_ERROR: {
+			return Object.assign({}, initialState, {
+				error:true,
+				waiting: false
+			})
+		}
+
+		case RESET: {
+			return Object.assign({}, state, {
+				selectedTab: initialState.selectedTab,
+				selectedYear: initialState.selectedYear,
+				editKeyResult: initialState.editKeyResult,
+				editKeyResultIsEditing: initialState.editKeyResultIsEditing
 			})
 		}
 
@@ -140,10 +161,10 @@ export default function otherPersonReducer(state = initialState, action) {
 		}
 		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS:
 		{
-			const { objectiveId, keyResultId, data } = action;
+			const { objectiveId, keyResultId, flag, data } = action;
 
 			return Object.assign({}, state, {
-				user: deleteKeyResultFromObjective(state.user, objectiveId, keyResultId, data)
+				user: deleteKeyResultFromObjective(state.user, objectiveId, keyResultId, flag, data)
 			});
 		}
 
@@ -278,7 +299,7 @@ function addNewObjectiveToUser(user, quarterId, objective) {
 	return userCopy;
 }
 
-function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResult) {
+function deleteKeyResultFromObjective(user, objectiveId, keyResultId, flag, newKeyResult) {
 	var userCopy = Object.assign({}, user);
 	let quarterIndex, objectiveIndex, keyResultIndex;
 
@@ -300,8 +321,15 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, newKeyResu
 			return keyResult._id === keyResultId;
 		});
 		if (keyResultIndex !== -1) {
-			userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+			//userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+			if (flag) {
+				//meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+				userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = true;
+			} else {
+				userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = false;
+			}
 		}
+
 	}
 	//console.log('Success deleting keyResult from objective');
 	return userCopy;

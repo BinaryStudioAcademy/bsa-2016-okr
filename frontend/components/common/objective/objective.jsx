@@ -108,7 +108,7 @@ class ObjectiveItem extends Component {
 		let isItHomePage = this.props.isItHomePage;
 
 		if(isAdmin) {
-			/*if(!isArchived)
+			if(!this.props.isArchivedObjective)
 			archiveButton = (<button className="btn btn-blue-hover objective-archive"
 										title="archive"
 										onClick={() => {changeArchive(true, objective._id)}}>
@@ -119,7 +119,7 @@ class ObjectiveItem extends Component {
 										title="unarchive"
 										onClick={() => {changeArchive(false, objective._id)}}>
 										<i className="fi flaticon-bookmark-1"></i>
-										</button>) */
+										</button>) 
 		}
 
 		if(!isArchived){
@@ -198,9 +198,14 @@ class ObjectiveItem extends Component {
 						data={ objective.keyResults }
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
+						selectedYear= { this.props.selectedYear }
+						selectedTab={ this.props.selectedTab }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage = { isItHomePage }
 						editKeyResult = { this.props.editKeyResult }
+						addNewKeyResults = { this.props.addNewKeyResults }
+						getAutocompleteKeyResults = { this.props.getAutocompleteKeyResults }
+						setAutocompleteKeyResultsSelectedItem = { this.props.setAutocompleteKeyResultsSelectedItem }
 				/>
 			</div>
 			</div>

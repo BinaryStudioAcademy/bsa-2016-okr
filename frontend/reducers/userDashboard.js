@@ -1,30 +1,50 @@
 import {
-	SET_TAB, 
+	SET_TAB,
 	CHANGE_SHOW_TABS,
 	GET_MY_HISTORY,
 	RECEIVED_MY_HISTORY,
 	MY_HISTORY_ERROR,
+	GET_STATS,
+	RECEIVED_STATS,
 	CLEAR_USER_DASHBOARD_STATE} from '../actions/userDashboardActions.js';
 
 
 const initialState = {
 	tabIndex: 1,
 	historyList: [],
-	showTopTabs: false
+	showTopTabs: false,
+	topUsersList: [],
+	userStats: {
+		userInfo: {},
+		inTop: ""
+	},
+	bottomStats: {}
 }
 
 export default function userDashboardReducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_TAB: {
 			let tabIndex = action.tabIndex;
-			console.log('set to ' + tabIndex);
 			return Object.assign({}, state, {
 				tabIndex
 			})
 		}
 
+		case GET_STATS: {
+			return Object.assign({}, state);
+		}
+
 		case GET_MY_HISTORY: {
 			return Object.assign({}, state);
+		}
+
+		case RECEIVED_STATS: {
+
+			return Object.assign({}, state, {
+				topUsersList: action.data.statArr,
+				userStats: action.data.userStats,
+				bottomStats: action.data.bottomStats
+			})
 		}
 
 		case RECEIVED_MY_HISTORY: {

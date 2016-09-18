@@ -6,7 +6,6 @@ const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 
 router.post('/',  (req, res, next) => {
-	req.body.userId = req.session._id;
 	req.body.userObjectives = [];
 	console.log("", req.body.userObjectives, req.body.userId);
 	return repository.add(req.body, res.callback);

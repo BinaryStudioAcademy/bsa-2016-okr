@@ -8,6 +8,14 @@
     margin-right: 7px;
 }
 
+#role-mapping-wrapper .me {
+    background: #eee;
+}
+
+#role-mapping-wrapper .me:hover {
+    background: #ECEFF1;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -463,6 +471,13 @@ $breakpoint-alpha: 540px;
           }
         }
       }
+    }
+}
+
+#role-mapping-wrapper th, #role-mapping-wrapper td {
+
+    @media (max-width: $breakpoint-alpha) { 
+      padding: 1em; 
     }
 }
 

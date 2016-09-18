@@ -48,7 +48,6 @@ export function updateKeyTemplateRequest(id, body, idItem) {
 
 		return axios.put(('/api/keyResult/updateWithoutValidation/' + id), body)
 		.then(response => {
-			console.log(response);
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
 		})

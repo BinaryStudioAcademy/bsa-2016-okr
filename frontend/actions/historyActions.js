@@ -65,7 +65,6 @@ export function setNameFilter (nameFilter) {
 }
 
 export function setTypeFilter (typeFilter) {
-	console.log(typeFilter);
 	const action = {
 		type: SET_TYPE_FILTER,
 		typeFilter
@@ -100,7 +99,6 @@ export function setSort (sortField) {
 	// return action;
 	return (dispatch, getStore) => {
 		let store = getStore().history;
-		console.log(sortField);
 		dispatch({
 			type: 'SET_SORT',
 			sort: {

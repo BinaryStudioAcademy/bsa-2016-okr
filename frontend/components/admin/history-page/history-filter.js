@@ -26,15 +26,24 @@ class HistoryFilter extends Component {
 	}
 
 	setFilters() {
-		console.log(`type: ${type}\n name: ${name}\n date: ${date}\n`)
 		this.props.getFilteredItems();
 	}
 
 	onReset(){
+		var sel = document.getElementsByClassName("select")[0];
+		sel.selectedIndex = 0;
+
+		var nameInput = document.getElementsByClassName("history-filter-bar-input")[0];
+		nameInput.value="";
+
+		this.refs.dateFrom.onFieldChange('');
+		this.refs.dateTo.onFieldChange('');
+		
 		this.props.resetFilters();
 		this.props.getFilteredItems();
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
+
 		this.restoreDefaultIcons();
 		this.unmarkAll();
 	}
@@ -87,6 +96,7 @@ class HistoryFilter extends Component {
 
 	onChangeType(event) {
 		var value = event.target.value;
+		var className;
 		this.props.setTypeFilter(value);
 		this.props.getFilteredItems();
 	}
@@ -98,13 +108,13 @@ class HistoryFilter extends Component {
 				<table className="history-filter-table">
 					<tbody>
 						<tr>
-							<td><input className="history-filter-bar-input" type="text" placeholder="Username" onChange={this.onChangeName}/></td>
+							<td><input className="history-filter-bar-input" type="text" placeholder="Username" ref="name" onChange={this.onChangeName}/></td>
 							<td>
-								<select onChange={this.onChangeType}>
-									<option selected value="">Action</option>
-									<option value="add">Create</option>
-									<option value="update">Update</option>
-									<option value="delete">Delete</option>
+								<select className="select" onChange={this.onChangeType}>
+									<option selected className="action" value="">Action</option>
+									<option className="add" value="add">Create</option>
+									<option className="update" value="update">Update</option>
+									<option className="delete" value="delete">Delete</option>
 								</select>
 							</td>
 							<td className="cell-right-align">Date: </td>
@@ -112,7 +122,7 @@ class HistoryFilter extends Component {
 								<DateField
 									className="date-field"
 									placeholder="From"
-									dateFormat="YYYY-MM-DD"
+									dateFormat="D MMMM YYYY"
 									onChange={this.onChangeFrom}
 									footer={false}
 									updateOnDateClick={true}
@@ -122,7 +132,7 @@ class HistoryFilter extends Component {
 								<DateField
 									className="date-field"
 									placeholder="To"
-									dateFormat="YYYY-MM-DD"
+									dateFormat="D MMMM YYYY"
 									onChange={this.onChangeTo}
 									footer={false}
 									updateOnDateClick={true}

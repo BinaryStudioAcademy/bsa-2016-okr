@@ -10,9 +10,11 @@ import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as keyResultActions from "../../../actions/keyResultActions";
 import * as myStateActions from "../../../actions/myStateActions";
 import * as objectiveActions from "../../../actions/objectiveActions";
 import * as otherPersonActions from "../../../actions/otherPersonActions";
+import * as userDashboardActions from "../../../actions/userDashboardActions";
 
 import './objectives.scss';
 
@@ -35,6 +37,7 @@ class Objectives extends Component {
 		this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
+		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
 	}
 
 	componentWillMount() {
@@ -63,7 +66,14 @@ class Objectives extends Component {
 	}
 
 	changeYear(year) {
+
+		const { user } = this.props.user;
+		const userId = this.props.userId || session._id;
 		this.props.myStateActions.setChangeYear(year);
+		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
+			this.props.userDashboardActions.getStats("otherPersonPage")
+		else
+			this.props.userDashboardActions.getStats();
 	}
 
 	handleAddingNewQuarter(newQuarter) {
@@ -78,6 +88,39 @@ class Objectives extends Component {
 			this.props.myStateActions.createQuarter(newQuarter);
 			// this.changeTab(newQuarter.index);
 		});
+	}
+
+	componentWillUnmount() {
+		this.props.myStateActions.reset();
+	}
+
+	handleArchivingQuarter(index) {
+		var quarterId;
+		var flag;
+		const { user } = this.props.user;
+		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) 
+			{
+			this.props.user.user.quarters.forEach( (quarter) => {
+				if (quarter.index == index && quarter.year == this.props.user.selectedYear)
+				{
+					quarterId = quarter._id;
+					flag = !quarter.isArchived;
+				}
+			})
+			this.props.otherPersonActions.archiveUserQuarter(quarterId, flag);
+		}			
+		else	
+		{
+			this.props.myState.me.quarters.forEach( (quarter) => {
+				if (quarter.index == index && quarter.year == this.props.myState.selectedYear)
+				{
+					quarterId = quarter._id;
+					flag = !quarter.isArchived;
+				}
+			})
+			this.props.myStateActions.archiveMyQuarter(quarterId, flag);
+		}
+		//console.log(this.props.myState);
 	}
 
 	changeKeyResultScore(objectiveId, mentorId) {
@@ -217,7 +260,8 @@ class Objectives extends Component {
 						changeYear={ this.changeYear }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    addNewQuarter={ this.handleAddingNewQuarter }
+				    	addNewQuarter={ this.handleAddingNewQuarter }
+				    	archiveQuarter={this.handleArchivingQuarter }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
 						me={ isItHomePage }
@@ -229,6 +273,8 @@ class Objectives extends Component {
 						isAdmin={ isAdmin }
 						archived = { archived }
 						objectives={ userInfo.objectives }
+						selectedYear= { selectedYear }
+						selectedTab={ selectedTab }
 						ObjectiveItem={ ObjectiveItem }
 						changeArchive={ this.handleArchive }
 						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
@@ -239,6 +285,9 @@ class Objectives extends Component {
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage={ isItHomePage }
 						editKeyResult = { editKeyResult }
+						addNewKeyResults = { this.props.keyResultActions.addNewKeyResults }
+						getAutocompleteKeyResults = { this.props.keyResultActions.getAutocompleteKeyResults }
+						setAutocompleteKeyResultsSelectedItem = { this.props.keyResultActions.setAutocompleteKeyResultsSelectedItem }
 					/>
 				</div>
 			</div>
@@ -283,9 +332,11 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+		keyResultActions: bindActionCreators(keyResultActions, dispatch),
 		myStateActions: bindActionCreators(myStateActions, dispatch),
 		objectiveActions: bindActionCreators(objectiveActions, dispatch),
 		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),
+		userDashboardActions: bindActionCreators(userDashboardActions, dispatch)
 	}
 }
 

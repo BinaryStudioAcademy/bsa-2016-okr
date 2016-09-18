@@ -10,6 +10,7 @@ import {
 	ADDED_NEW_OBJECTIVE,
 	CHANGED_KEYRESULT_SCORE,
 	CHANGED_KEYRESULT_SCORE_ERROR,
+	ARCHIVE_MY_QUARTER,
 	//SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_API,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	NEW_QUARTER_ADDED,
@@ -21,6 +22,7 @@ import {
 	EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE,
+	RESET,
 } from '../actions/myStateActions';
 
 import {
@@ -48,6 +50,15 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			console.log("state.me >>>", state.me);
 			return Object.assign({}, state, {
 				me: state.me
+			});
+		}
+
+		case RESET: {
+			return Object.assign({}, state, {
+				selectedTab: initialState.selectedTab,
+				selectedYear: initialState.selectedYear,
+				editKeyResult: initialState.editKeyResult,
+				editKeyResultIsEditing: initialState.editKeyResultIsEditing
 			});
 		}
 
@@ -156,12 +167,12 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		//}
 
 		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS: {
-			const { objectiveId, keyResultId, data } = action;
+			const { objectiveId, keyResultId, flag, data } = action;
 
 			//console.log('Reducer reached');
 
 			return Object.assign({}, state, {
-				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, data)
+				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, flag, data)
 			});
 		}
 
@@ -291,7 +302,7 @@ function deleteObjectiveFromMe(me, id) {
 	return meCopy;
 }
 
-function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult) {
+function deleteKeyResultFromObjective(me, objectiveId, keyResultId, flag, newKeyResult) {
 	var meCopy = Object.assign({}, me);
 	let quarterIndex, objectiveIndex, keyResultIndex;
 
@@ -306,14 +317,18 @@ function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult
 		return false;
 	});
 
-	//console.log('Quarter index founded',quarterIndex,'objectiveIndex',objectiveIndex);
-
 	if(quarterIndex !== -1) {
 		keyResultIndex = meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.findIndex((keyResult) => {
 			return keyResult._id === keyResultId;
 		});
+
 		if(keyResultIndex !== -1) {
-			meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+			if (flag) {
+				//meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+				meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = true;
+			} else {
+				meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = false;
+			}
 		}
 	}
 	//console.log('Success deleting keyResult from objective');

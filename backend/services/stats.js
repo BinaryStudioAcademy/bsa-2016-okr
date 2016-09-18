@@ -14,22 +14,20 @@ const isEmpty = validateService.isEmpty;
 
 var StatsService = function() {};
 
-StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId, callback) {
+StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId,year, callback) {
 	var statsObj = {};
 	var selectedUser = null;
 
 	async.waterfall([
 		(callback) => {
-			QuarterRepository.getCurrentYear((err, result) => {
+			QuarterRepository.getYear(year, (err, result) => {
 				if(err) {
 					return callback(err, null)
 				}
 
 				return callback(null, new Object(result));
 			});
-
-		},
-		(quarterList, callback) => {
+		}, (quarterList, callback) => {
 			async.each(quarterList,
 			 (quarter, callback) => {
 			 	statsObj[quarter.userId._id] = statsObj[quarter.userId._id] || {};// creating object with quarters for each user
@@ -40,13 +38,12 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 					return callback(err);
 				return callback(null);
 			})
-		},
-		(callback) => {
+		}, (callback) => {
 			
 			for(user in statsObj) { //for each user
 				let yearScore = 0; // score for year
 				let quartersCount = 0; // count of quarters in year
-
+				
 				let anyQuarter = Object.keys(statsObj[user])[0];
 
 				if(isEmpty(anyQuarter)) {
