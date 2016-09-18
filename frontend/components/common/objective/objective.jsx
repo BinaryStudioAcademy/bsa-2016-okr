@@ -162,10 +162,9 @@ class ObjectiveItem extends Component {
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
-				{ approved }
 				<div
 						ref="objectiveTitle"
-						className='name'>{ objective.title ? objective.title : objective.templateId.title }
+						className='name'>{ approved } { objective.title ? objective.title : objective.templateId.title }
 				</div>
 				<input
 						ref="objectiveTitleEdit"
