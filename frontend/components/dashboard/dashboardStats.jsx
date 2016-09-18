@@ -16,7 +16,7 @@ class DashboardStats extends Component {
 		this.getProgressBar = this.getProgressBar.bind(this);
 	}
 
-	handleUserClick (classname) {
+	handleUserClick(classname) {
 		for (let i = 1; i < 5; i++) {
 			let quarter = document.getElementsByClassName(parseInt(classname) + i)
 			
@@ -30,32 +30,31 @@ class DashboardStats extends Component {
 
 	renderRow(row, i) {
 		if(row.userInfo || row.name) {
-				if(row.name) {
-					return(
-						<tr key={i} className={`quarter-score ${i} hidden `}>
-							<td> { `${ row.name }` }</td>
-							<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
-						</tr>)
-				}	else {
-					return (
-						<tr key={i} className={`quarter-score ${i} hidden `}>
-							<td> { `${ row.name }` }</td>
-							<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
-						</tr>
-					);
-				}
+			if(row.name) {
+				return(
+					<tr key={i} className={`quarter-score ${i} hidden `}>
+						<td> { `${ row.name }` }</td>
+						<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
+					</tr>)
 			}	else {
 				return (
-					<tr key={i} onClick={() => { this.handleUserClick(i) }}>
-						<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
-						<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
+					<tr key={i} className={`quarter-score ${i} hidden `}>
+						<td> { `${ row.name }` }</td>
+						<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
 					</tr>
-				);
+					);
 			}
+		}	else {
+			return (
+				<tr key={i} onClick={() => { this.handleUserClick(i) }}>
+					<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
+					<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
+				</tr>
+			);
 		}
 	}
 
-	getProgressBar () {
+	getProgressBar() {
 		let score;
 		let { where } = this.props;
 		
@@ -77,7 +76,7 @@ class DashboardStats extends Component {
 			let selectedYear;
 			score = Math.round(this.props.userDashboard.userStats.totalScore * 100);
 
-			if(where === "otherPersonPage") {
+			if(where === actions.OTHER_PERSON_PAGE) {
 				({ selectedYear } = this.props.userPage);
 			} else {
 				({ selectedYear } = this.props.myState);
