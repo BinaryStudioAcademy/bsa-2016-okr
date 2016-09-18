@@ -8,7 +8,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, '/frontend/index.js')
+    path.join(__dirname, '/okr/frontend/index.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -17,7 +17,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'frontend/index.html',
+      template: '/okr/frontend/index.html',
       inject: 'body',
       filename: 'index.html'
     }),
