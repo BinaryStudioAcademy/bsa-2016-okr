@@ -7,6 +7,8 @@ const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
 const bodyParser = require('body-parser');
+const HelpService = require('./backend/utils/HelpService');
+const stringToBoolean = HelpService.stringToBoolean;
 const CONST = require('./backend/config/constants');
 const isDeveloping = CONST.isDeveloping;
 
@@ -30,6 +32,11 @@ job.start();
 
 const PORT = 4444;
 const IP = process.env.IP || '127.0.0.1';
+var hotReload = true;
+
+if(process.env.WEBPACK != undefined) {
+  hotReload = stringToBoolean(process.env.WEBPACK);
+}
 
 const app = express();
 
@@ -37,7 +44,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 const routes = require('./backend/routes/routes')(app);
 
-if (isDeveloping) {
+if (isDeveloping && hotReload) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
