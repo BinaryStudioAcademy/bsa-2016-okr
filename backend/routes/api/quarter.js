@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const repository = require('../../repositories/quarter');
-const session = require('../../config/session.js');
+
 const service = require('../../services/quarter');
 const ValidateService = require('../../utils/ValidateService');
 const adminOnly = require('../adminOnly');
 
 router.post('/',  (req, res, next) => {
-	req.body.userId = req.session._id;
 	req.body.userObjectives = [];
 	console.log("", req.body.userObjectives, req.body.userId);
 	return repository.add(req.body, res.callback);

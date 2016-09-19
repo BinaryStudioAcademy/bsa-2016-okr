@@ -10,6 +10,7 @@ import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as keyResultActions from "../../../actions/keyResultActions";
 import * as myStateActions from "../../../actions/myStateActions";
 import * as objectiveActions from "../../../actions/objectiveActions";
 import * as otherPersonActions from "../../../actions/otherPersonActions";
@@ -18,7 +19,10 @@ import * as userDashboardActions from "../../../actions/userDashboardActions";
 import './objectives.scss';
 
 const CONST = require('../../../../backend/config/constants.js');
-const session = require('../../../../backend/config/session');
+
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 const notifications = require("../../../actions/notifications.js");
 
@@ -34,6 +38,7 @@ class Objectives extends Component {
 		this.getObjectiveAutocompleteData = this.getObjectiveAutocompleteData.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
 		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
+		this.getDuplicateObjectiveByTitle = this.getDuplicateObjectiveByTitle.bind(this);
 	}
 
 	componentWillMount() {
@@ -45,12 +50,7 @@ class Objectives extends Component {
 	}
 
 	handleArchive (changeTo, objectiveId) {
-		let handler = function () {
-			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
-		}.bind(this);
-
 		let arch = changeTo ? 'archive' : 'unarchive';
-
 		sweetalert({
 			title: `Do you really want to ${arch} this objective?`,
 			type: "warning",
@@ -58,13 +58,15 @@ class Objectives extends Component {
 			confirmButtonColor: "#4caf50",
 			confirmButtonText: "OK",
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
+		});
 	}
 
 	changeYear(year) {
 
 		const { user } = this.props.user;
-		const userId = this.props.userId || session._id;
+		const userId = this.props.userId || session;
 		this.props.myStateActions.setChangeYear(year);
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
 			this.props.userDashboardActions.getStats("otherPersonPage")
@@ -73,21 +75,17 @@ class Objectives extends Component {
 	}
 
 	handleAddingNewQuarter(newQuarter) {
-		let handler = function() {
-			//API call
-			this.props.myStateActions.createQuarter(newQuarter);
-			this.props.myStateActions.getMe();
-			this.changeTab(newQuarter.index);
-		}.bind(this);
-
 		sweetalert({
-			title: "Do you really want to create new quarter?",
+			title: "Create new quarter?",
 			type: "warning",
 			showCancelButton: true,
 			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonText: "Yes, create",
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			this.props.myStateActions.createQuarter(newQuarter);
+			// this.changeTab(newQuarter.index);
+		});
 	}
 
 	componentWillUnmount() {
@@ -145,42 +143,75 @@ class Objectives extends Component {
 		};
 	}
 
-	createObjective(categoryId) {
+	getDuplicateObjectiveByTitle(title, data) {
+		let objectiveIndex = data.findIndex((objective) => {
+			return (objective.templateId.title.toUpperCase() === title.toUpperCase());
+		});
+
+		return (objectiveIndex === -1) ? null : data[objectiveIndex];
+	}
+
+	createObjective(categoryId, objectives) {
 		return (title, objectiveId) => {
-			let quarters;
-			let userId;
-			let selectedYear;
-			let selectedTab
-			if (this.props.userId == undefined) {
-				userId = session._id;
-				quarters = this.props.myState.me.quarters;
-				selectedYear = this.props.myState.selectedYear;
-				selectedTab = this.props.myState.selectedTab;
-			} else {
-				userId = this.props.userId;
-				quarters = this.props.user.user.quarters;
-				selectedYear = this.props.user.selectedYear;
-				selectedTab = this.props.user.selectedTab;
-			}
+			let duplicateItem = this.getDuplicateObjectiveByTitle(title, objectives);
 
-			let quarter = quarters.find((quarter) => {
-				return (quarter.index == selectedTab) && (quarter.year == selectedYear);
-			});
+			if(isEmpty(duplicateItem)) {
+				let quarters;
+				let userId;
+				let selectedYear;
+				let selectedTab;
+				if (this.props.userId == undefined) {
+					userId = session;
+					quarters = this.props.myState.me.quarters;
+					selectedYear = this.props.myState.selectedYear;
+					selectedTab = this.props.myState.selectedTab;
+				} else {
+					userId = this.props.userId;
+					quarters = this.props.user.user.quarters;
+					selectedYear = this.props.user.selectedYear;
+					selectedTab = this.props.user.selectedTab;
+				}
 
-			let body = {
-				title: title,
-				objectiveId: objectiveId,
-				categoryId: categoryId,
-				quarterId: quarter._id,
-				userId: userId,
-			};
-			if (this.props.userId == undefined) {
-				if (this.props.mentorId != undefined)
-					this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
-				else
-					this.props.myStateActions.addNewObjective(body);
+				let quarter = quarters.find((quarter) => {
+					return (quarter.index == selectedTab) && (quarter.year == selectedYear);
+				});
+
+				let body = {
+					title: title,
+					objectiveId: objectiveId,
+					categoryId: categoryId,
+					quarterId: quarter._id,
+					userId: userId,
+				};
+				if (this.props.userId == undefined) {
+					if (this.props.mentorId != undefined)
+						this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
+					else
+						this.props.myStateActions.addNewObjective(body);
+				} else {
+					this.props.otherPersonActions.addNewObjective(body);
+				}
 			} else {
-				this.props.otherPersonActions.addNewObjective(body);
+				if (duplicateItem.isDeleted) {
+					sweetalert({
+						title: 'Do you want to restore deleted key result?',
+						text: 'Key result with such title for that objective exists, but deleted by someone',
+						type: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#4caf50',
+						confirmButtonText: 'Yes, restore'
+					}, () => {
+						this.props.myStateActions.softDeleteMyObjectiveByIdApi(duplicateItem._id, false);
+						//this.props.softDeleteObjectiveKeyResultByIdApi(userObjectiveId,
+						//		duplicateItem._id, false);
+					});
+				} else {
+					sweetalert({
+						title: 'Error!',
+						text: 'Key result with such title for that objective already exists',
+						type: 'error',
+					});
+				}
 			}
 		};
 	}
@@ -247,7 +278,7 @@ class Objectives extends Component {
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( isItHomePage || session._id == userInfo.mentorId || userId == session._id )) {
+				( isItHomePage || session == userInfo.mentorId || userId == session )) {
 			archived = false;
 		} else {
 			archived = true;
@@ -257,11 +288,11 @@ class Objectives extends Component {
 			<div id="home-page-wrapper">
 				<Quarterbar
 						changeTab={ this.changeTab }
-						changeYear={this.changeYear}
+						changeYear={ this.changeYear }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-				    	addNewQuarter={ this.handleAddingNewQuarter }
-				    	archiveQuarter={this.handleArchivingQuarter }
+						addNewQuarter={ this.handleAddingNewQuarter }
+						archiveQuarter={this.handleArchivingQuarter }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
 						me={ isItHomePage }
@@ -273,6 +304,8 @@ class Objectives extends Component {
 						isAdmin={ isAdmin }
 						archived = { archived }
 						objectives={ userInfo.objectives }
+						selectedYear= { selectedYear }
+						selectedTab={ selectedTab }
 						ObjectiveItem={ ObjectiveItem }
 						changeArchive={ this.handleArchive }
 						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
@@ -283,6 +316,9 @@ class Objectives extends Component {
 						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage={ isItHomePage }
 						editKeyResult = { editKeyResult }
+						addNewKeyResults = { this.props.keyResultActions.addNewKeyResults }
+						getAutocompleteKeyResults = { this.props.keyResultActions.getAutocompleteKeyResults }
+						setAutocompleteKeyResultsSelectedItem = { this.props.keyResultActions.setAutocompleteKeyResultsSelectedItem }
 					/>
 				</div>
 			</div>
@@ -327,6 +363,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+		keyResultActions: bindActionCreators(keyResultActions, dispatch),
 		myStateActions: bindActionCreators(myStateActions, dispatch),
 		objectiveActions: bindActionCreators(objectiveActions, dispatch),
 		otherPersonActions : bindActionCreators(otherPersonActions, dispatch),

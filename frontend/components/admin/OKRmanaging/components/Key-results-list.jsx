@@ -92,7 +92,7 @@ class KeyResults extends Component {
 	getDuplicateKeyResult(id, title) {
 		const { data } = this.props;
 		let keyResultIndex = data.findIndex((keyResult) => {
-			return (keyResult.title === title) && (keyResult._id !== id);
+			return (keyResult.title.toUpperCase() === title.toUpperCase()) && (keyResult._id !== id);
 		});
 
 		return (keyResultIndex === -1) ? null : data[keyResultIndex];

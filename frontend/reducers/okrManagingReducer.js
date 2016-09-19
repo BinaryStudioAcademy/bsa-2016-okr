@@ -338,8 +338,6 @@ function softDeleteKeyResult(oldObjectives, keyResultId, objectiveId, flag) {
 		return objective._id === objectiveId;
 	});
 
-	console.log('¯\\_(ツ)_/¯: objectives', objectives);
-
 	if(objectiveIndex !== -1) {
 		let keyResultIndex = objectives[objectiveIndex].keyResults.findIndex((keyResult) => {
 			return keyResult._id === keyResultId;

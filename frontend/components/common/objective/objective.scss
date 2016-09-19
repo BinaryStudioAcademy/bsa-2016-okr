@@ -81,11 +81,12 @@
     display: inline-block;
     margin-right: 8px;
     cursor: pointer;
+    font-size: 18px;
   }
 
   .delete-button-objective {
     position: absolute;
-    top: 80px;
+    bottom: 17px;
     right: 17px;
     padding: 7px 10px;
     z-index: 1;
@@ -93,14 +94,14 @@
 
   .objective-edit {
     position: absolute;
-    top: 80px;
+    bottom: 17px;
     right: 57px;
     padding: 7px 10px;
     z-index: 1;
   }
   .cancel-button-objective {
     position: absolute;
-    top: 80px;
+    bottom: 17px;
     right: 17px;
     padding: 7px 10px;
     z-index: 1;
@@ -125,7 +126,7 @@
 
   .save {
     position: absolute;
-    top: 80px;
+    bottom: 17px;
     right: 57px;
     padding: 7px 10px;
     background: #4caf50;

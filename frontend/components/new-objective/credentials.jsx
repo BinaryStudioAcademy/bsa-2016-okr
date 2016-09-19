@@ -140,7 +140,7 @@ class NewObjCredentials extends Component {
 		return (
 			<div id="new-obj-creds">
 				<div className="title-group">
-					<label htmlFor="new-obj-title">New objective title</label>
+					<label htmlFor="new-obj-title">New objective template title</label>
 					<input ref="newObjectiveTitle" type="text" placeholder="Title" id="new-obj-title" />
 					<select ref="newObjectiveCategory" className='template-category' id="new-obj-category">
 						{ this.props.categories.map((category, index) => {
@@ -154,7 +154,7 @@ class NewObjCredentials extends Component {
 					<textarea id="newObjectiveTemplateDescription" ref="newObjectiveDescription" name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
 				</div>
 				<div>
-					<label htmlFor="new-key-result-title">Key result</label>
+					<label htmlFor="new-key-result-title">Key result templates</label>
 					{ keyResults }
 					<p className="new-key-result" onClick={ this.addNewKeyResult } tabIndex='0'>Add new key results</p>
 				</div>

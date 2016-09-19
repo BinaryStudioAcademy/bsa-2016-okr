@@ -53,7 +53,7 @@ QuarterRepository.prototype.getByUserIdPopulate = function(id, callback) {
 	.find({ userId: id })
 	.populate({
 		path: 'userObjectives',
-		match: { isDeleted: false },
+		//match: { isDeleted: false },
 		populate: {
 			path: 'templateId keyResults.templateId',
 		}

@@ -8,6 +8,14 @@
     margin-right: 7px;
 }
 
+#role-mapping-wrapper .me {
+    background: #eee;
+}
+
+#role-mapping-wrapper .me:hover {
+    background: #ECEFF1;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
@@ -433,9 +441,7 @@ $breakpoint-alpha: 540px;
 
       
       td {
-
-        margin: .5em 1em;
-        padding: 1em !important;
+        padding: .5em 1em !important;
 
         display: flex;
         align-items: center;
@@ -455,7 +461,7 @@ $breakpoint-alpha: 540px;
 
           font-size: 14px;
 
-          width: 50%; 
+          width: 35%; 
           display: inline-block;
           
           @media (min-width: $breakpoint-alpha) {
@@ -468,9 +474,7 @@ $breakpoint-alpha: 540px;
 
 #role-mapping-wrapper th, #role-mapping-wrapper td {
 
-    margin: .5em 1em;
-
-    @media (min-width: $breakpoint-alpha) { 
+    @media (max-width: $breakpoint-alpha) { 
       padding: 1em; 
     }
 }

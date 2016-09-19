@@ -28,9 +28,8 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			})
 
 			return callback(null, historyList);
-		},
-		(historyList, callback) => {
-			var list= [];
+		}, (historyList, callback) => {
+			var list = [];
 			var i = 0;
 			(function forEachInList () {
 				HistoryRepository.getUserObjectiveHistoryPopulate(historyList[i], (err, result) => {
@@ -52,14 +51,12 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 						}
 				})
 			})();
-		},
-		(historyList, callback) => {
-			if(historyList.length > 0)
+		}, (historyList, callback) => {
+			if(historyList.length > 0) {
 				this.sortBy(historyList, 'date', true, (historyList) => {					
 					return callback(null, historyList)
-				})
-			else {
-				historyList = ['empty'];
+				});
+			}	else {
 				return callback(null, historyList)
 			}
 		}
@@ -122,15 +119,18 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
        			};
 
       			if(historyItem.type.indexOf('KEY_RESULT') !== -1){
-        			var keyResults = historyItem.userObjective.keyResults;
-        			var keyResult;
-        			keyResults.forEach((key) => {
-        				if (key.templateId._id.toString() === historyItem.userKeyResult.toString() 
-        					|| key._id.toString() === historyItem.userKeyResult.toString()){
-          					keyResult = key;
-          				}
-       				})
-      				return keyResult.templateId.title;
+      				if(historyItem.userObjective){
+        				var keyResults = historyItem.userObjective.keyResults;
+	        			var keyResult;
+	        			keyResults.forEach((key) => {
+	        				if (key.templateId._id.toString() === historyItem.userKeyResult.toString() 
+	        					|| key._id.toString() === historyItem.userKeyResult.toString()){
+	          					keyResult = key;
+	          				}
+	       				})
+	      				return keyResult.templateId.title;
+	      			}
+	      			else return historyItem.keyResult.title;
       			}
     		}
  			
@@ -187,7 +187,7 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 
 			if(key == "name" && filters[key] !== '' && filters[key] !== ' '){
 				var name = item.author.userInfo.firstName + ' ' + item.author.userInfo.lastName;
-				if(name.toLowerCase().indexOf(filters[key]) === -1)
+				if(name.toLowerCase().indexOf(filters[key].toLowerCase()) === -1)
 					isFiltered = false;
 			}
 		}

@@ -8,7 +8,7 @@ import {
 	UPDATE_OBJECTIVE_TEMPLATE_ERROR,
 	UPDATE_KEY_TEMPLATE_ERROR,
 	SET_ACC_OBJ_FILTER
-} from '../actions/acceptObjective';
+} from '../actions/acceptObjectiveActions';
 
 const initialState = {
 	items: [],
@@ -176,8 +176,6 @@ function updateVisibleItems(items, filter) {
 
 	let visibleItems = [];
 
-	console.log(filter);
-
 	if (filter === "")
 		visibleItems = JSON.parse(JSON.stringify(items));
 	else
@@ -192,8 +190,6 @@ function updateVisibleItems(items, filter) {
 			}
 		}
     }
-
-    console.log(visibleItems);
 
 
 	return visibleItems;

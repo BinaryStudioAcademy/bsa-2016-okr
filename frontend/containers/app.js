@@ -12,11 +12,12 @@ import LoadingModal from '../components/common/LoadingModal.jsx';
 import * as categoriesActions from '../actions/categoriesActions';
 import * as myStateActions from '../actions/myStateActions';
 import * as appActions from '../actions/appActions';
-import * as acceptObjective from '../actions/acceptObjective.js';
+import * as acceptObjective from '../actions/acceptObjectiveActions';
 
 import '../components/common/fonts/flaticon/_flaticon.scss';
 import '../components/common/fonts/flaticon-1/_flaticon-1.scss';
 import '../components/common/fonts/fira/_fira.scss';
+import '../components/common/styles/scrollbar.scss';
 import './app.scss';
 
 
@@ -29,42 +30,40 @@ class App extends Component {
 		this.props.categoriesActions.getAllCategories();
 		this.props.myStateActions.getMeBasic();
 		this.props.appActions.init();
-		this.props.acceptObjective.getNotAprovedObjectivesRequest();
-	  this.props.acceptObjective.getNotAprovedKeysRequest();
 	}
 
 	render() {
 		let localRole = this.props.localRole || CONST.user.localRole.USER;
 
-	  let ContentEl = (
-	   <div>
-	    <LoadingModal show={ this.props.isLoading } />
-	    <Header />
-	    <NavMenu localRole={ localRole } acceptObjective={ this.props.acceptObjectives }/>
-	    <MainPage>
-	    { this.props.children }
-	    {
-	     (() => {
-	      if (process.env.NODE_ENV !== 'production') {
-	       const DevTools = require('../shared/devtools/DevTools').default;
-	       return <DevTools />;
-	      }
-	     })()
-	    }
-	    </MainPage>
-	   </div>
-	  );
+		let ContentEl = (
+		 <div>
+			<LoadingModal show={ this.props.isLoading } />
+			<Header />
+			<NavMenu localRole={ localRole } acceptObjective={ this.props.acceptObjectives }/>
+			<MainPage>
+			{ this.props.children }
+			{
+			 (() => {
+				if (process.env.NODE_ENV !== 'production') {
+				 const DevTools = require('../shared/devtools/DevTools').default;
+				 return <DevTools />;
+				}
+			 })()
+			}
+			</MainPage>
+		 </div>
+		);
 
-	  if(this.props.isInitializing) {
-	   ContentEl = <div></div>
-	  }
+		if(this.props.isInitializing) {
+		 ContentEl = <div></div>
+		}
 
-	  return (
-	   <div id="application">
-	    <LoadingScreen show={ this.props.isInitializing } />
-	    { ContentEl }
-	   </div>
-	   );
+		return (
+		 <div id="application">
+			<LoadingScreen show={ this.props.isInitializing } />
+			{ ContentEl }
+		 </div>
+		 );
 	 }
 }
 

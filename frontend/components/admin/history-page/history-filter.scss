@@ -71,3 +71,32 @@
 .hide-container {
 	display: none;
 }
+
+@media all 
+and (max-width: 1020px) {
+	.history-filter-table {   
+      td {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+
+        select, button{
+        	width: 181px;
+        }
+        .btn-filter {
+				  margin-left: 0px;
+				}
+        &:first-child {
+          padding-top: .5em;
+        }
+
+        &:last-child {
+          padding-bottom: .5em;
+        }
+       
+			}
+		.date-field {
+	    margin-left: 0px;
+		}
+	}
+}

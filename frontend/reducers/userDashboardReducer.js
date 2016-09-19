@@ -6,7 +6,10 @@ import {
 	MY_HISTORY_ERROR,
 	GET_STATS,
 	RECEIVED_STATS,
-	CLEAR_USER_DASHBOARD_STATE} from '../actions/userDashboardActions.js';
+	CLEAR_USER_DASHBOARD_STATE,
+	RECEIVED_TOTAL_SCORE,
+	ERROR,
+} from '../actions/userDashboardActions.js';
 
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
 	historyList: [],
 	showTopTabs: false,
 	topUsersList: [],
+	totalScore: '0',
 	userStats: {
 		userInfo: {},
 		inTop: ""
@@ -48,9 +52,8 @@ export default function userDashboardReducer(state = initialState, action) {
 		}
 
 		case RECEIVED_MY_HISTORY: {
-			let historyList = action.data;
-			if (historyList[0] === 'empty')
-				historyList= [];
+			const { data: historyList = [] } = action;
+
 			return Object.assign({}, state, { historyList });
 		}
 
@@ -69,8 +72,21 @@ export default function userDashboardReducer(state = initialState, action) {
 			return Object.assign({}, state, initialState);
 		}
 
-        default: {
-            return state;
-        }
+		case RECEIVED_TOTAL_SCORE: {
+			const { data } = action;
+
+			return Object.assign({}, state, {
+				totalScore: data
+			});
+		}
+
+		case ERROR: {
+			console.log('¯\\_(ツ)_/¯: userDashboard ERROR', data);
+			return state;
+		}
+
+    default: {
+        return state;
     }
+  }
 }

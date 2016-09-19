@@ -13,7 +13,10 @@ import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
 import UserDashboard from "../userDashboard/userDashboard.jsx";
 
-const session = require("../../../backend/config/session");
+import cookie from 'react-cookie';
+const session = cookie.load('user-id');
+
+import './error.scss';
 
 class OtherPersonsPage extends Component {
 	constructor(props) {
@@ -44,29 +47,39 @@ class OtherPersonsPage extends Component {
 	}
 
 	render() {
-		if (this.props.user.waiting) {
-			return <div></div>
-		} else {
+		let otherPersonContent = (<div></div>);
+		
+		if (!this.props.user.waiting) {
 			var id = this.props.routeParams.id;
 			var personInfo;
 
-			if (id != session._id) {
+			if (id != session) {
 				personInfo = (<PersonInfo userId={ this.props.routeParams.id } />);
 			}
 
-			return (
-				<div>
-					<CentralWindow>
-						{ personInfo }
-						<UserOjectives userId={ this.props.routeParams.id } />
-					</CentralWindow>
-					<StatPanel>
-						<UserDashboard where="otherPersonPage"/>
-						{/*<Dashboard></Dashboard>*/}
-					</StatPanel>
-				</div>
-			)
+			if(this.props.user.error) {
+				otherPersonContent = (
+					<div className="nothing-found">
+						<h3>{ this.props.user.error } Whoops, nothing found</h3>
+					</div>
+				);
+			}	else {
+				otherPersonContent = (
+					<div>
+						<CentralWindow>
+							{ personInfo }
+							<UserOjectives userId={ this.props.routeParams.id } />
+						</CentralWindow>
+						<StatPanel>
+							<UserDashboard where="otherPersonPage"/>
+							{/*<Dashboard></Dashboard>*/}
+						</StatPanel>
+					</div>
+				);
+			}
 		}
+
+		return (<div>{ otherPersonContent }</div>);
 	}
 }
 

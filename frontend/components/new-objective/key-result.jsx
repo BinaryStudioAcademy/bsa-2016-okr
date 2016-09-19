@@ -17,7 +17,7 @@ class KeyResult extends Component {
 
 	render() {
 		let { keyResult, num } = this.props;
-		
+
 		if(keyResult.title != undefined && keyResult.difficulty != undefined) {
 			this.refs.keyResultTitle.value = keyResult.title;
 			this.refs.keyResultDifficulty.value = keyResult.difficulty;

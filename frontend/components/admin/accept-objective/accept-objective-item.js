@@ -4,14 +4,15 @@ import UserInfoPopup from './user-info-popup.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as actions from "../../../actions/acceptObjective.js";
+import * as actions from '../../../actions/acceptObjectiveActions';
+
 const notifications = require("../../../actions/notifications.js");
 
 
 class AcceptObjectiveItem extends Component {
 
 	render() {
-		console.log('qwwe', this.props.item)
+
 		  return (
 		  	<div className="accept-objective-item">
 			  	<div className='buttons'>

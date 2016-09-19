@@ -1,9 +1,10 @@
-import { ADD_REQUEST, REMOVE_REQUEST, INIT } from '../actions/appActions';
+import { ADD_REQUEST, REMOVE_REQUEST, INIT, SET_REDIRECT_URL } from '../actions/appActions';
 
 const initialState = {
   requestCount: 0,
   isLoading: false,
   isInitializing: true,
+  redirectUrl: '/',
 };
 
 export default function appReducer(state = initialState, action = {}) {
@@ -44,6 +45,14 @@ export default function appReducer(state = initialState, action = {}) {
 	case INIT: {
 		return Object.assign({}, state, {
 			isInitializing: !!state.requestCount
+		});
+	}
+
+	case SET_REDIRECT_URL: {
+		const { url } = action;
+
+		return Object.assign({}, state, {
+			redirectUrl: url,
 		});
 	}
 

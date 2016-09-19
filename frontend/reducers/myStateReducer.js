@@ -22,7 +22,7 @@ import {
 	EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_HOME_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE,
-	RESET
+	RESET,
 } from '../actions/myStateActions';
 
 import {
@@ -30,8 +30,8 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
-	selectedTab: currentQuarter,
-	selectedYear: currentYear,
+	selectedTab: null,
+	selectedYear: null,
 	me: {
 		"localRole": ""
 	},
@@ -64,9 +64,24 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 		case RECEIVED_MY_OBJECTIVES: {
 			const { data } = action;
+			let index;
+			let year;
+
+			if(!state.selectedTab || !state.selectedYear) {
+				let quarters = data.quarters.map((quarter) => {
+					return getIndexAndYearFromQuarter(quarter);
+				});
+
+				({ index, year } = quarters[quarters.length - 1]);
+			}
+
+			let selectedTab = index || state.selectedTab;
+			let selectedYear = year || state.selectedYear;
 
 			return Object.assign({}, state, {
 				me: isEmpty(data) ? state.me : data,
+				selectedTab: selectedTab,
+				selectedYear: selectedYear,
 			});
 		}
 
@@ -95,7 +110,16 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case NEW_QUARTER_ADDED : {
-			return Object.assign({}, state);
+			const { quarter: newQuarter } = action;
+			const { quarters: oldQuarters } = state.me;
+
+			return Object.assign({}, state, {
+				selectedYear: newQuarter.year,
+				selectedTab: newQuarter.index,
+				me: {
+					quarters: addNewQuarter(oldQuarters, newQuarter)
+				}
+			});
 		}
 
 		case ADD_NEW_QUARTER_ERROR : {
@@ -104,10 +128,10 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case SOFT_DELETE_MY_OBJECTIVE_BY_ID: {
-			const { id } = action;
+			const { id, flag } = action;
 
 			return Object.assign({}, state, {
-				me: deleteObjectiveFromMe(state.me, id)
+				me: deleteObjectiveFromMe(state.me, id, flag)
 			});
 
 		}
@@ -144,12 +168,12 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		//}
 
 		case SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS: {
-			const { objectiveId, keyResultId, data } = action;
+			const { objectiveId, keyResultId, flag, data } = action;
 
 			//console.log('Reducer reached');
 
 			return Object.assign({}, state, {
-				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, data)
+				me: deleteKeyResultFromObjective(state.me, objectiveId, keyResultId, flag, data)
 			});
 		}
 
@@ -200,7 +224,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case CHANGED_KEYRESULT_SCORE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, score } = data;
-			console.log('myRed', data )
+	
 			return Object.assign({}, state, {
 				me: setScoreToKeyResult(state.me, objectiveId, keyResultId, score),
 			});
@@ -267,19 +291,20 @@ export function updateObjectiveDescription(me, id, description, title) {
 	return meCopy;
 }
 
-function deleteObjectiveFromMe(me, id) {
+function deleteObjectiveFromMe(me, id, flag) {
 	var meCopy = Object.assign({}, me);
 	meCopy.quarters.forEach((quarter) => {
 		for(var i=0 ; i<quarter.userObjectives.length; i++) {
 			if(quarter.userObjectives[i]._id == id) {
-				quarter.userObjectives.splice(i, 1);
+				//quarter.userObjectives.splice(i, 1);
+				quarter.userObjectives[i].isDeleted = flag;
 			}
 		}
 	});
 	return meCopy;
 }
 
-function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult) {
+function deleteKeyResultFromObjective(me, objectiveId, keyResultId, flag, newKeyResult) {
 	var meCopy = Object.assign({}, me);
 	let quarterIndex, objectiveIndex, keyResultIndex;
 
@@ -294,14 +319,18 @@ function deleteKeyResultFromObjective(me, objectiveId, keyResultId, newKeyResult
 		return false;
 	});
 
-	//console.log('Quarter index founded',quarterIndex,'objectiveIndex',objectiveIndex);
-
 	if(quarterIndex !== -1) {
 		keyResultIndex = meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.findIndex((keyResult) => {
 			return keyResult._id === keyResultId;
 		});
+
 		if(keyResultIndex !== -1) {
-			meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+			if (flag) {
+				//meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
+				meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = true;
+			} else {
+				meCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults[keyResultIndex].isDeleted = false;
+			}
 		}
 	}
 	//console.log('Success deleting keyResult from objective');
@@ -412,7 +441,8 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 			quarter.userObjectives[index].keyResults.push(keyResult);
 		}
 	});
-	return meCopy
+	
+	return meCopy;
 }
 
 export function changeArchiveInMyObjective (me, objectiveId, flag) {
@@ -432,4 +462,22 @@ export function changeArchiveInMyObjective (me, objectiveId, flag) {
 	});
 
 	return meCopy;
+}
+
+function getIndexAndYearFromQuarter({ index, year }) {
+	return { index, year };
+}
+
+function addNewQuarter(oldQuarters, newQuarter) {
+	let quarters = [].concat(oldQuarters);
+
+	let quarterIndex = quarters.find((quarter) => {
+		return (quarter.year === newQuarter.year) && (quarter.index === quarter.index);
+	});
+
+	if(quarterIndex === -1) {
+		quarters.push(newQuarter);
+	}
+
+	return quarters;
 }

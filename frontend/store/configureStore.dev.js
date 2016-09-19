@@ -1,4 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import { browserHistory } from 'react-router';
+import { routerMiddleware } from 'react-router-redux';
 import { persistState } from 'redux-devtools';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/commonReducer';
@@ -6,6 +8,7 @@ import DevTools from '../shared/devtools/DevTools';
 
 const enhancer = compose(
 	applyMiddleware(thunk),
+	applyMiddleware(routerMiddleware(browserHistory)),
 	DevTools.instrument(),
 	persistState(
 		window.location.href.match(

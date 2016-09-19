@@ -10,12 +10,10 @@ import myState from './myStateReducer.js';
 import keyResults from './keyResultReducer';
 import objectives from './objectiveReducer';
 import categories from './categoriesReducer';
-import userDashboard from './userDashboard';
-import acceptObj from './acceptObjective';
+import userDashboard from './userDashboardReducer';
+import acceptObj from './acceptObjectiveReducer';
 import stats from './statsReducer';
 import app from './appReducer';
-
-
 
 import { routerReducer } from 'react-router-redux';
 

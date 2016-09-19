@@ -4,9 +4,10 @@ import AutocompleteInput from '../../autocomplete-input/autocomplete-input.jsx';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from "../../../actions/keyResultActions";
+import { keyResult } from '../../../../backend/config/constants';
 
 const notifications = require("../../../actions/notifications.js");
+//import * as actions from "../../../actions/keyResultActions";
 
 class KeyResult extends React.Component {
 	constructor(props) {
@@ -23,19 +24,10 @@ class KeyResult extends React.Component {
 
 	addNewItem(title) {
 		if (title !== '') {
-			const body = {
-				title: title,
-				keyResultId: this.props.keyResultsReducer.selectedItem._id || '',
-				isItHomePage: this.props.isItHomePage || false,
-			};
+			let selectedItemId = this.props.keyResultsReducer.selectedItem._id || '';
+			let difficulty = keyResult.INTERMEDIATE;
 
-			let userObjectiveId = this.props.objectiveId;
-
-			if (this.props.mentorId != undefined)
-				this.props.addNewKeyResults(userObjectiveId, body, 
-					notifications.notificationApprenticeAddedKeyResult, this.props.mentorId);
-			else
-				this.props.addNewKeyResults(userObjectiveId, body);
+			this.props.saveEditKeyResult(null, title, difficulty, selectedItemId);
 
 			this.props.resetAutocompleteState();
 		}
@@ -43,20 +35,20 @@ class KeyResult extends React.Component {
 
 	resetAutocompleteState() {
 		this.props.resetAutocompleteState();
-	}
+	};
 
 	getAutocompleteData(title) {
 		let objectiveId = this.props.objectiveId;
 		this.props.getAutocompleteKeyResults(objectiveId, title);
-	}
+	};
 
 	setAutocompleteSelectedItem(item) {
 		this.props.setAutocompleteKeyResultsSelectedItem(item);
-	}
+	};
 
 	isValid(value) {
 		return true;
-	}
+	};
 
 	render() {
 		return (
@@ -79,16 +71,12 @@ class KeyResult extends React.Component {
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
 function mapStateToProps(state) {
 	return {
 		keyResultsReducer: state.keyResults
 	};
 }
 
-const KeyResultConnected = connect(mapStateToProps, mapDispatchToProps)(KeyResult);
+const KeyResultConnected = connect(mapStateToProps)(KeyResult);
 
 export default KeyResultConnected;

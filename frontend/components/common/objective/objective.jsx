@@ -23,15 +23,7 @@ class ObjectiveItem extends Component {
 		this.handleSave = this.handleSave.bind(this);
 	}
 
-	handleDelObj(e) {
-		let handler = function() {
-			if (this.props.mentorId != undefined)
-				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, notifications.notificationApprenticeDeletedObjective,
-				this.props.mentorId);
-			else
-				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id);
-		}.bind(this);
-
+	handleDelObj() {
 		sweetalert({
 			title: "Do you really want to delete this objective?",
 			type: "warning",
@@ -39,7 +31,14 @@ class ObjectiveItem extends Component {
 			confirmButtonColor: "#4caf50",
 			confirmButtonText: "OK",
 			closeOnConfirm: true
-		}, function(){handler();});
+		}, () => {
+			if (this.props.mentorId != undefined) {
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, true, notifications.notificationApprenticeDeletedObjective,
+						this.props.mentorId);
+			}	else {
+				this.props.softDeleteMyObjectiveByIdApi(this.props.item._id, true);
+			}
+		});
 	}
 
 	handleEdit() {
@@ -108,7 +107,7 @@ class ObjectiveItem extends Component {
 		let isItHomePage = this.props.isItHomePage;
 
 		if(isAdmin) {
-			/*if(!isArchived)
+			if(!this.props.isArchivedObjective)
 			archiveButton = (<button className="btn btn-blue-hover objective-archive"
 										title="archive"
 										onClick={() => {changeArchive(true, objective._id)}}>
@@ -119,7 +118,7 @@ class ObjectiveItem extends Component {
 										title="unarchive"
 										onClick={() => {changeArchive(false, objective._id)}}>
 										<i className="fi flaticon-bookmark-1"></i>
-										</button>) */
+										</button>) 
 		}
 
 		if(!isArchived){
@@ -163,10 +162,9 @@ class ObjectiveItem extends Component {
 			<div>
 			<div className='home-objective'>
 				<Progress data={ objective.keyResults } />
-				{ approved }
 				<div
 						ref="objectiveTitle"
-						className='name'>{ objective.title ? objective.title : objective.templateId.title }
+						className='name'>{ approved } { objective.title ? objective.title : objective.templateId.title }
 				</div>
 				<input
 						ref="objectiveTitleEdit"
@@ -198,9 +196,14 @@ class ObjectiveItem extends Component {
 						data={ objective.keyResults }
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
+						selectedYear= { this.props.selectedYear }
+						selectedTab={ this.props.selectedTab }
 						softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage = { isItHomePage }
 						editKeyResult = { this.props.editKeyResult }
+						addNewKeyResults = { this.props.addNewKeyResults }
+						getAutocompleteKeyResults = { this.props.getAutocompleteKeyResults }
+						setAutocompleteKeyResultsSelectedItem = { this.props.setAutocompleteKeyResultsSelectedItem }
 				/>
 			</div>
 			</div>

@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Rating from '../rating/rating.jsx';
 import { debounce, getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/HelpService';
-const session = require('../../../../backend/config/session');
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
+
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import sweetalert from 'sweetalert';
 import '../styles/sweetalert.css';
-
+const CONST = require('../../../../backend/config/constants.js');
 const notifications = require("../../../actions/notifications.js");
 
 class KeyResult extends Component {
@@ -63,7 +66,7 @@ class KeyResult extends Component {
 				confirmButtonText: 'Yes, save',
 				closeOnConfirm: false
 			}, () => {
-				this.props.saveEditedKeyResult(id, title, difficulty);
+				this.props.saveEditKeyResult(id, title, difficulty);
 			});
 		}
 	}
@@ -91,15 +94,6 @@ class KeyResult extends Component {
 	}
 
 	handleDelKeyResult() {
-		let handler = function () {
-
-			if (this.props.mentorId != undefined)
-				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id,
-					notifications.otificationApprenticeDeletedKey, this.props.mentorId);
-			else
-				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id);
-
-		}.bind(this);
 
 		sweetalert({
 			title: "Do you really want to delete this key result?",
@@ -108,8 +102,12 @@ class KeyResult extends Component {
 			confirmButtonColor: "#4caf50",
 			confirmButtonText: "OK",
 			closeOnConfirm: true
-		}, function () {
-			handler();
+		}, () => {
+			if (this.props.mentorId != undefined)
+				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id, true,
+						notifications.otificationApprenticeDeletedKey, this.props.mentorId);
+			else
+				this.props.softDeleteObjectiveKeyResultByIdApi(this.props.objectiveId, this.props.item._id, true);
 		});
 	}
 
@@ -141,21 +139,22 @@ class KeyResult extends Component {
 		if (!isArchived) {
 			if (isEditing && item._id == id) {
 				// ---=== THEN BEGIN ===---
-				if (!item.templateId.isApproved) {
+				if (item.templateId.isApproved) {
+					//notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
+				} else {
 					editSave = (
-						<button onClick={ this.saveChanges }
-						        className='btn btn-green key-result-edit-button' aria-hidden="true" title='Save'>
-							<i className='fi-1 flaticon-1-check'></i>
-						</button>
+							<button onClick={ this.saveChanges }
+							        className='btn btn-green key-result-edit-button' aria-hidden="true" title='Save'>
+								<i className='fi-1 flaticon-1-check'></i>
+							</button>
 					);
 
 					cancelElement = (
-						<button onClick={ this.cancelEdit }
-						        className="btn btn-red key-result-cancel-button" aria-hidden="true" title='Cancel'>
-							<i className="fi flaticon-multiply"></i>
-						</button>
+							<button onClick={ this.cancelEdit }
+							        className="btn btn-red key-result-cancel-button" aria-hidden="true" title='Cancel'>
+								<i className="fi flaticon-multiply"></i>
+							</button>
 					);
-					//notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
 				}
 
 				titleElement = (
@@ -179,17 +178,17 @@ class KeyResult extends Component {
 
 				scoreElement = ( <span className='score'>{ score }</span> );
 
-				if (!item.templateId.isApproved) {
-					editSave = (
-						<button onClick={ this.editKeyResult }
-						        className='btn btn-blue-hover key-result-edit-button'
-						        aria-hidden="true"
-						        title='Edit'>
-							<i className='fi flaticon-edit'></i>
-						</button>
-					);
-
+				if (item.templateId.isApproved) {
 					notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
+				} else {
+					editSave = (
+							<button onClick={ this.editKeyResult }
+							        className='btn btn-blue-hover key-result-edit-button'
+							        aria-hidden="true"
+							        title='Edit'>
+								<i className='fi flaticon-edit'></i>
+							</button>
+					);
 				}
 
 				titleElement = (
@@ -206,11 +205,12 @@ class KeyResult extends Component {
 						<i className="fi flaticon-garbage-2"></i>
 					</button>
 				);
-
-				rangeElement = (
-					<input type="range" min="0" max="1" step="0.1" className="range keyScore"
-					       value={ score } onMouseUp={ this.changeScore } onChange={ this.onChange }/>
-				);
+				if (CONST.currentQuarter == this.props.selectedTab && CONST.currentYear == this.props.selectedYear) {
+					rangeElement = (
+						<input type="range" min="0" max="1" step="0.1" className="range keyScore"
+						       value={ score } onMouseUp={ this.changeScore } onChange={ this.onChange }/>
+					);
+				}
 
 				ratingElement = (
 					<Rating

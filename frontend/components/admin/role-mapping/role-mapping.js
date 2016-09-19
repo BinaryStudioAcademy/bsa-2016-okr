@@ -12,6 +12,11 @@ import * as actions from "../../../actions/mappingActions";
 
 import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../../../backend/config/constants";
 
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
+
+
 class RoleMapping extends React.Component {
 
    render() {
@@ -44,7 +49,7 @@ class RoleMapping extends React.Component {
                        <thead>
                          <tr>
                             <th className="col-1">Avatar</th>
-                            <th className="cursor-pointer" onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort"></i>Name</th>
+                            <th className="cursor-pointer" onClick={this.setSortingByName.bind(this)} tabIndex='0'><i id="name-field" className="fa fa-sort-asc"></i>Name</th>
                             <th>E-mail</th>
                             <th className="cursor-pointer" onClick={this.setSortingByGlobalRole.bind(this)} tabIndex='0'><i id="global-role-field" className="fa fa-sort"></i>Global role</th>
                             <th>Local role</th>
@@ -52,7 +57,7 @@ class RoleMapping extends React.Component {
                        </thead>
                        <tbody>
                         {visibleUsers.map(function(user) {
-                            return  <UserRoleMappingItem key={user._id} user={user}/>;
+                            return  <UserRoleMappingItem currentUser={session} key={user._id} user={user}/>;
                          })}
                       </tbody>
 
@@ -111,9 +116,10 @@ class RoleMapping extends React.Component {
         }
       } 
 
-      let nameField = document.querySelector(".table-head #name-field");
+      let nameField = document.querySelector(".table #name-field");
 
       if (nameField != null) {
+
         nameField.classList.remove("fa-sort-asc");
         nameField.classList.remove("fa-sort-desc");
         nameField.classList.add("fa-sort");
@@ -148,7 +154,7 @@ class RoleMapping extends React.Component {
         }
       } 
 
-      let globalRoleField = document.querySelector(".table-head #global-role-field");
+      let globalRoleField = document.querySelector(".table #global-role-field");
 
       if (globalRoleField != null) {
         globalRoleField.classList.remove("fa-sort-asc");

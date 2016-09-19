@@ -177,7 +177,7 @@ KeyResultsService.prototype.autocomplete = function(title, objectiveId, callback
 		(keyResultsArr, userObjective, callback) => {
 			keyResultsArr = keyResultsArr.filter((keyResult) => {
 				return !(userObjective.keyResults.some((objectiveKeyResult) => {
-					return (objectiveKeyResult.templateId.equals(keyResult._id))
+					return ((objectiveKeyResult.templateId.equals(keyResult._id)) && (objectiveKeyResult.isDeleted === false))
 				}))
 			}).slice(0, 10);
 

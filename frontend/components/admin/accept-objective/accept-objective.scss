@@ -219,10 +219,13 @@ accept-objective--search-bar button {
     .objective-text-info {
       min-height: 20px;
     }
-  } 
-}
-@media all and (max-width: 800px) {
+  }
   #accept-objective-wrapper {
     padding: 20px;
-  } 
+  }  
+}
+@media all and (max-width: 500px) {
+  .popup-toogle:hover > a > div.hint {
+    display: none;
+  }
 }

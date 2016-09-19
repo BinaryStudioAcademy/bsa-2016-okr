@@ -2,23 +2,98 @@ import React, { Component } from 'react';
 import "./quarters.scss";
 import { currentYear, currentQuarter } from '../../../../backend/config/constants';
 
-const session = require('../../../../backend/config/session');
+import cookie from 'react-cookie';
+
+const session = cookie.load('user-id');
 
 class Quarterbar extends Component {
-   constructor(props) {
-      super(props);
+	constructor(props) {
+		super(props);
 
-      this.handleQuarterClick = this.handleQuarterClick.bind(this);
-      this.handleYearChange = this.handleYearChange.bind(this);
-      this.showQuarters = this.showQuarters.bind(this);
-      this.handleCallContextMenu = this.handleCallContextMenu.bind(this);
-      this.onContextItemClick = this.onContextItemClick.bind(this);
-      this.onContextWrapper = this.onContextWrapper.bind(this);
-   }
+		this.handleQuarterClick = this.handleQuarterClick.bind(this);
+		this.handleYearChange = this.handleYearChange.bind(this);
+		this.showQuarters = this.showQuarters.bind(this);
+		this.handleCallContextMenu = this.handleCallContextMenu.bind(this);
+		this.onContextItemClick = this.onContextItemClick.bind(this);
+		this.onContextWrapper = this.onContextWrapper.bind(this);
+		this.getQuarters = this.getQuarters.bind(this);
+		this.getYears = this.getYears.bind(this);
+	}
+
+	handleYearChange(event) {
+		// this.props.changeTab(currentQuarter);
+		this.props.changeYear(event.target.value);
+	}
+
+	getQuarters() {
+		// First element empty to have a loop from 1
+		let quartersPrefixes = ["", "1-st", "2-nd", "3-rd", "4-th"];
+		let quartersEls = [];
+		let {
+			selectedTab, 
+			selectedYear,
+			me: isMe,
+			mentorId,
+			quarters,
+		} = this.props;
+
+		quarters = quarters.filter((quarter) => {
+			return quarter.year === selectedYear;
+		});
+
+
+		for(let i = 1; i <= 4; i++) {
+			let el;
+
+			let quarterIndex = quarters.findIndex((quarter) => {
+				return quarter.index === i;
+			});
+
+			if(quarterIndex === -1) {
+				if(((selectedYear === currentYear) && (i < currentQuarter))
+				|| (selectedYear < currentYear)) {
+					el = (
+						<li className="disabled" key={ i } tabIndex="0">
+							{ quartersPrefixes[i] } quarter
+						</li>
+					);
+				} else {
+					el = (
+						<li className="not-exist" data-id={ i } key={ i } tabIndex="0">
+							Open { quartersPrefixes[i] } quarter
+						</li>
+					);
+				}
+			} else {
+				el = (
+					<li
+						tabIndex="0"
+						key={ i }
+						data-id={ quarters[quarterIndex].index }
+						className={ quarters[quarterIndex].index == selectedTab ? 'active' : '' }
+					>
+						{ quartersPrefixes[i] } quarter
+					</li>
+				);
+			}
+
+			quartersEls.push(el);
+		}
+
+		return quartersEls;
+	}
+
+	getYears() {
+		let years = [currentYear, currentYear + 1];
+
+		return years.map(year => {
+			return <option key={year} value={ year }>{ year }</option>
+		});
+	}
 
    handleQuarterClick(event) {
       let target = event.target;
-
+      let userId;
       if (target.matches('li:not(.not-exist)') && target.matches('li:not(.disabled)')) {
 
          this.props.changeTab(parseInt(event.target.dataset.id));
@@ -28,14 +103,16 @@ class Quarterbar extends Component {
          quarter.blur();
 
       } else if (event.target.matches('li.not-exist')) {
-
+         if(this.props.mentorId == session) {
+            userId = this.props.routeId;
+         } else {
+            userId = session;
+         }
          //adding new quarter to database, API call
          this.props.addNewQuarter({
             year: this.props.selectedYear,
             index: parseInt(target.dataset.id),
-            createdAt: Date.now(),
-            updatedAt: Date.now(),
-            userObjectives: []
+            userId: userId
          });
       }
    }
@@ -58,12 +135,11 @@ class Quarterbar extends Component {
       on_context_wrapper.call(this, event);
    }
 
-
    render() {
       return (
          <div id="quarter-bar">
             <select id="business-year" onChange={this.handleYearChange}>
-               { getYears.call(this) }
+               { this.getYears() }
             </select>
             <div className="quarters-wrapper">
                <button id="show-quarters" className="btn" onClick={this.showQuarters}>
@@ -71,7 +147,7 @@ class Quarterbar extends Component {
                   <i className="fa fa-chevron-down"></i>
                </button>
                <ul id="quarters" onClick={this.handleQuarterClick} onContextMenu={this.handleCallContextMenu}>
-                  { getQuarters.call(this) }
+                  { this.getQuarters() }
                </ul>
             </div>
             <div id="context-wrapper" onClick={this.onContextWrapper}>
@@ -87,85 +163,41 @@ class Quarterbar extends Component {
 
 export default Quarterbar;
 
-//basic functionality
-function getQuarters() {
-   var quarters_prefixes = ["1-st", "2-nd", "3-rd", "4-th"],
-      current_tab = this.props.selectedTab,
-      quarters = this.props.quarters,
-      isMe = this.props.me,
-      mentorId = this.props.mentorId,
-      quarters_to_show = [];
-      console.log(quarters)
-   for (let i = 0; i < 4; i++) {
-      if (quarters[i] != undefined) {
-         quarters_to_show.push(<li
-            tabIndex="0"
-            key={i}
-            data-isarchived={quarters[i].isArchived} 
-            data-id={quarters[i].index}
-            className={quarters[i].index == current_tab ? 'active' : ''}>
-            {quarters_prefixes[i]} quarter</li>)
-      } else {
-         if (isMe != undefined && isMe == true || (mentorId == session._id)) {
-            quarters_to_show.push(
-               <li className="not-exist" data-id={i + 1} key={i + 1} tabIndex="0">Open {quarters_prefixes[i]}
-                  quarter</li>
-            )
-         } else {
-            quarters_to_show.push(
-               <li className="disabled" key={i + 1} tabIndex="0">{quarters_prefixes[i]} quarter</li>
-            )
-         }
-      }
-   }
-
-   return quarters_to_show;
-
-}
-
-function getYears() {
-   let years = [currentYear, currentYear + 1];
-
-   return years.map(year => {
-      return <option key={year} value={ year }>{ year }</option>
-   });
-}
-
 function tab_click_feedback(event) {
-   var   quarters = document.querySelectorAll('#quarters li'),
-         quartersWarapper = document.querySelector('.quarters-wrapper'),
-         i = document.querySelector('#show-quarters i'),
-         target = event.target;
+	var   quarters = document.querySelectorAll('#quarters li'),
+	quartersWarapper = document.querySelector('.quarters-wrapper'),
+	i = document.querySelector('#show-quarters i'),
+	target = event.target;
 
-   if (!target.classList.contains('active')) {
-      quarters.forEach((el) => {
-         el.classList.remove('active');
-      });
-      target.classList.add('active');
-      if(quartersWarapper.classList.contains('visible')){
-         quartersWarapper.classList.remove('visible');
-         i.classList.remove('fa-chevron-up');
-         i.classList.add('fa-chevron-down');
-      }
-   }
+	if (!target.classList.contains('active')) {
+		quarters.forEach((el) => {
+			el.classList.remove('active');
+		});
+		target.classList.add('active');
+		if(quartersWarapper.classList.contains('visible')){
+			quartersWarapper.classList.remove('visible');
+			i.classList.remove('fa-chevron-up');
+			i.classList.add('fa-chevron-down');
+		}
+	}
 }
 
 function choose_quarter_for_tablet(event) {
-   let   target = event.target,
-         i = target.children[1];
-   if (!event.target.parentElement.classList.contains('visible')) {
-      event.target.parentElement.classList.add('visible');
-      i.classList.remove('fa-chevron-down');
-      i.classList.add('fa-chevron-up');
-   } else {
-      event.target.parentElement.classList.remove('visible');
-      i.classList.remove('fa-chevron-up');
-      i.classList.add('fa-chevron-down');
-   }
+	let   target = event.target,
+	i = target.children[1];
+	if (!event.target.parentElement.classList.contains('visible')) {
+		event.target.parentElement.classList.add('visible');
+		i.classList.remove('fa-chevron-down');
+		i.classList.add('fa-chevron-up');
+	} else {
+		event.target.parentElement.classList.remove('visible');
+		i.classList.remove('fa-chevron-up');
+		i.classList.add('fa-chevron-down');
+	}
 }
 
 function call_context_menu(event) {
-   if(this.props.isAdmin){
+   if(this.props.isAdmin) {
       let   target = event.target,
             context = document.getElementById('context-wrapper'),
             contextMenu = document.getElementById('context');
@@ -188,6 +220,7 @@ function call_context_menu(event) {
       }
    }
 }
+
 function on_context_item(event) {
    let   target = document.querySelector('.oncontext'),
          context = document.getElementById('context-wrapper');
@@ -199,10 +232,11 @@ function on_context_item(event) {
       }
    }
 }
+
 function on_context_wrapper(event) {
-   let context = document.getElementById('context-wrapper');
-   if(event.target.matches('#context-wrapper')){
-      context.classList.remove('visible');
-      event.target.classList.remove('oncontext');
-   }
+	let context = document.getElementById('context-wrapper');
+	if(event.target.matches('#context-wrapper')){
+		context.classList.remove('visible');
+		event.target.classList.remove('oncontext');
+	}
 }

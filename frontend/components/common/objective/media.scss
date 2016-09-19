@@ -26,7 +26,7 @@
 	#objectives {
 		.home-objective {
 			.name {
-	    	width: 50%;
+	    	width: 55%;
 	    }
 	    .name-input {
 		    width: 50%;
@@ -37,7 +37,7 @@
 		}
 	}
 	.key-results .key-result-details-ul li.key-result .key-result-title {
-    width: 92%;
+    width: 97%;
     margin-bottom: 12px;
 	}
 	.star-rating {
@@ -55,25 +55,59 @@
 	}
 	#objectives {
 		.home-objective {
+			padding: 10px 10px 38px;
 			.name {
-	    	width: 40%;
+	    	width: 50%;
 	    }
 	    .name-input {
 		    width: 40%;
 			}
 			.description-textarea {
      		width: 65%;
+     		margin-bottom: 20px;
   		}
 		}
 	}
-	.key-results .key-result-details-ul li.key-result .key-result-title {
-    width: 88%;
-    margin-bottom: 12px;
+	.delete-button-objective,
+	.objective-edit,
+	.save,
+	.cancel-button-objective {
+		margin-top: -12px;
+	}
+	.key-results{
+		margin-left: 11px;
+	}
+	.key-results .key-result-details-ul li.key-result {
+    padding: 8px;
+    .key-result-cancel-button {
+    	margin-top:0;
+    }
+    .key-result-edit-button {
+	    margin-top: 0;
+	  }
+    .keyResult-title {
+	    width: 65%;
+	    padding: 4px 8px;
+	    margin-top: -4px;
+		}
+		.key-result-title {
+	    width: 97%;
+	    margin-bottom: 12px;
+		}
 	}
 	.star-rating {
     width: 8em;
     margin-top: 0.65em;
     clear: both;
     float: right;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.star-rating {
+	    width: 8em;
+	    margin-top: 0.65em;
+	    clear: both;
+	    float: right;
 	}
 }
