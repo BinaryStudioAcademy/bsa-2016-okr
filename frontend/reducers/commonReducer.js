@@ -1,4 +1,3 @@
-
 import { combineReducers } from 'redux';
 import history from './historyReducer';
 import recycleBin from './recycleBinReducer.js';

@@ -22,7 +22,7 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			})
 		},
 		(objectives, callback) => {
-			var historyList =[];
+			var historyList = [];
 			objectives.forEach((obj) => {
 				historyList.push(obj._id);
 			})
@@ -33,23 +33,26 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			var i = 0;
 			(function forEachInList () {
 				HistoryRepository.getUserObjectiveHistoryPopulate(historyList[i], (err, result) => {
-						if(err)
+						if(err) {
 							return callback(err, null);
-						if( result.length > 0) {
-							if(Array.isArray(result))
-								result.forEach((item)=> { list.push(item)})
-							else list.push(result)
-						};
+						}
+						
+						if(result.length > 0) {
+							if(Array.isArray(result)) {
+								result.forEach((item)=> { list.push(item) });
+							} else {
+								list.push(result);
+							}
+						}
 
 						++i;
 
-						if(i<= historyList.length && historyList[i] != null)
+						if(i<= historyList.length && historyList[i] != null) {
 							forEachInList()
-						else
-						{
+						}	else {
 							return callback(null, list);
 						}
-				})
+				});
 			})();
 		}, (historyList, callback) => {
 			if(historyList.length > 0) {

@@ -1,3 +1,5 @@
+import { isEmpty } from '../../backend/utils/ValidateService';
+
 import {
 	SET_TAB,
 	CHANGE_SHOW_TABS,
@@ -43,16 +45,19 @@ export default function userDashboardReducer(state = initialState, action) {
 		}
 
 		case RECEIVED_STATS: {
+			const { statArr, userStats, bottomStats } = action.data;
 
 			return Object.assign({}, state, {
-				topUsersList: action.data.statArr,
-				userStats: action.data.userStats,
-				bottomStats: action.data.bottomStats
-			})
+				topUsersList: statArr,
+				userStats: userStats,
+				bottomStats: bottomStats
+			});
 		}
 
 		case RECEIVED_MY_HISTORY: {
-			const { data: historyList = [] } = action;
+			const { data } = action;
+
+			let historyList = !isEmpty(data) ? data : [];
 
 			return Object.assign({}, state, { historyList });
 		}

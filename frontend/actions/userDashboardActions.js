@@ -102,21 +102,21 @@ export function getTotalScore() {
 	}
 }
 
-export function receivedTotalScore(data) {
+export function receivedTotalScore(data = {}) {
 	return {
 		type: RECEIVED_TOTAL_SCORE,
 		data
 	};
 }
 
-export function receivedStats(data) {
+export function receivedStats(data = {}) {
 	return {
 		type: RECEIVED_STATS,
 		data
 	}
 }
 
-export function receivedMyHistory(data) {
+export function receivedMyHistory(data = []) {
 	return {
 		type: RECEIVED_MY_HISTORY,
 		data
