@@ -1,5 +1,8 @@
-var ValidateService = require('../utils/ValidateService');
-var Cookies = require('cookies');
+const ValidateService = require('../utils/ValidateService');
+const HelpService = require('../utils/HelpService');
+const stringToBoolean = HelpService.stringToBoolean;
+
+const Cookies = require('cookies');
 
 module.exports = function (req, res, next) {
 	res.callback = (err, data) => {
@@ -47,8 +50,17 @@ module.exports = function (req, res, next) {
 		res.clearCookie('user-id');
 		res.clearCookie('x-access-token');
 
-		// return res.redirect('http://team.binary-studio.com/auth');
-		return res.redirect('http://localhost:2020/');
+		var localRedirect = false;
+
+		if(process.env.LOCAL_PROD != undefined) {
+			localRedirect = stringToBoolean(process.env.LOCAL_PROD);
+		}
+
+		if(localRedirect) {
+			return res.redirect('http://localhost:2020/');
+		} else {
+			return res.redirect('http://team.binary-studio.com/auth');
+		}
 	}
 
 	next();
