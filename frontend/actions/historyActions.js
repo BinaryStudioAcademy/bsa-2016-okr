@@ -137,7 +137,7 @@ export function getFilteredItems () {
 			}
 		})
 		.then( (response) => dispatch(receivedFilteredItems(response.data)))
-		.catch( (response) => dispatch(historyItemsError(response.data)));
+		//.catch( (response) => dispatch(historyItemsError(response.data)));
 	};
 }
 
@@ -157,7 +157,7 @@ export function getHistoryItems(filter, sprt){
 
 		return axios.get('/api/history/')
 		.then( (response) => dispatch(receivedHistoryItems(response.data)))
-		.catch( (response) => dispatch(historyItemsError(response.data)));
+		//.catch( (response) => dispatch(historyItemsError(response.data)));
 	};
 }
 

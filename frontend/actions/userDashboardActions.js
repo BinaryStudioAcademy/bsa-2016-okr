@@ -81,10 +81,10 @@ export function getStats(type) {
 			dispatch(receivedStats(response.data))
 			dispatch({ type: REMOVE_REQUEST });
 		})
-		// .catch((response) => {
-		// 	dispatch(myHistoryError(response.data))
-		// 	dispatch({ type: REMOVE_REQUEST });
-		// });
+		.catch((response) => {
+			dispatch(myHistoryError(response.data))
+			dispatch({ type: REMOVE_REQUEST });
+		});
 	}
 }
 
@@ -97,10 +97,10 @@ export function getTotalScore() {
 			dispatch(receivedTotalScore(response.data)); 
 			dispatch({ type: REMOVE_REQUEST });
 		})
-		// .catch(response => {
-		// 	dispatch(receivedError(response.data));
-		// 	dispatch({ type: REMOVE_REQUEST });
-		// });
+		.catch(response => {
+			dispatch(receivedError(response.data));
+			dispatch({ type: REMOVE_REQUEST });
+		});
 	}
 }
 

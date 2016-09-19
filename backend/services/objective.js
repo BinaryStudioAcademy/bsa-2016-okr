@@ -149,7 +149,7 @@ ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, 
 				return callback(null, objective);
 			});
 		}, (objective, callback) => {
-			HistoryRepository.addObjectiveEvent(session._id, objectiveId, historyType, (err, historyEvent) => {
+			HistoryRepository.addObjectiveEvent(session, objectiveId, historyType, (err, historyEvent) => {
 				if(err) {
 					return  callback(err, null);
 				}
