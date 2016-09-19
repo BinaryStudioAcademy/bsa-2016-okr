@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
+import { getTotalScore } from './userDashboardActions';
 
 export const SEARCH_USER = 'SEARCH_USER';
 export const GET_USERS_LIST = 'GET_USERS_LIST';
@@ -18,6 +19,9 @@ export function getUsersList() {
 		.then(response => {
 			dispatch(receivedUsersList(response.data));
 			dispatch({ type: REMOVE_REQUEST });
+		})
+		.then(() => {
+			dispatch(getTotalScore());
 		})
 		.catch(response => {
 			dispatch(userslistError(response.data));

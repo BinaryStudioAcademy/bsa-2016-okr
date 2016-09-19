@@ -76,8 +76,6 @@ export default function userDashboardReducer(state = initialState, action) {
 		case RECEIVED_TOTAL_SCORE: {
 			const { data } = action;
 
-			// console.log('¯\\_(ツ)_/¯: data', data);
-
 			return Object.assign({}, state, {
 				totalScore: data
 			});

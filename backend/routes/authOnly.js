@@ -97,8 +97,6 @@ module.exports = function(req, res, next) {
 			console.log('¯\\_(ツ)_/¯: Not authenticated...');
 			console.log('¯\\_(ツ)_/¯: Redirect to auth...');
 
-			res.clearCookie('user-id');
-
 			return res.redirectToAuthServer();
 		}
 	}
