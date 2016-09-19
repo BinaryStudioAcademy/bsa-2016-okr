@@ -48,14 +48,13 @@ export default function userDashboardReducer(state = initialState, action) {
 		case RECEIVED_STATS: {
 			let { statArr, userStats, bottomStats } = action.data;
 
-			let topUserList = !isEmpty(statArr) ? statArr : initialState.topUsersList;
+			// let topUserList = !isEmpty(statArr) ? statArr : initialState.topUsersList;
 			
-			userStats = !isEmpty(userStats) ? userStats: initialState.userStats;
-			bottomStats = !isEmpty(bottomStats) ? bottomStats: initialState.bottomStats;
-
+			// userStats = !isEmpty(userStats) ? userStats: initialState.userStats;
+			// bottomStats = !isEmpty(bottomStats) ? bottomStats: initialState.bottomStats;
 
 			return Object.assign({}, state, {
-				topUsersList,
+				topUsersList: statArr,
 				userStats,
 				bottomStats
 			});
