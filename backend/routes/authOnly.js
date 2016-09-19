@@ -14,45 +14,48 @@ module.exports = function(req, res, next) {
 
 	var cookies = new Cookies(req, res);
 	var token = cookies.get('x-access-token');
-	
-	if(isDeveloping && isEmpty(token)) {
-		cookies.set('x-access-token', 'developing...');
-		token = cookies.get('x-access-token');
-	}
 
-	if (token) {
-		if(isDeveloping) {
-			let _id = defaultSession._id;
-			
-			async.waterfall([
-				(callback) => {
-					UserService.getByIdPopulate(_id, (err, user) => {
-						if(err) {
-							return res.unauthorized('Wrong auth data');
-						}
+	if(isDeveloping) {
+		let _id = defaultSession._id;
 
-						req.session = {};
-						req.session._id = user._id;
-						req.session.mentor = user.mentor;
-						req.session.userInfo = user.userInfo
-						req.session.localRole = user.localRole;
+		if(!isEmpty(token)) {
+			res.clearCookie('x-access-token');
+			res.clearCookie('user-id');
+		}
 
-						if (!cookies.get('user-id')) {
-							cookies.set('user-id', req.session._id, { httpOnly: false });	
-						}
-						
-						return callback(null);
-					});
-				},
-			], (err, result) => {
-				return next();
-			});
-		} else {
+		async.waterfall([
+			(callback) => {
+				UserService.getByIdPopulate(_id, (err, user) => {
+					if(err) {
+						return res.unauthorized('Wrong auth data');
+					}
+
+					req.session = {};
+					req.session._id = user._id;
+					req.session.mentor = user.mentor;
+					req.session.userInfo = user.userInfo
+					req.session.localRole = user.localRole;
+
+					if (!cookies.get('user-id')) {
+						cookies.set('user-id', req.session._id, { httpOnly: false });	
+					}
+					
+					return callback(null);
+				});
+			},
+		], (err, result) => {
+			return next();
+		});
+	} else {
+		// Production
+		if (!isEmpty(token)) {
 			async.waterfall([
 				(callback) => {
 					jsonwebtoken.verify(token, 'superpupersecret', function(err, decoded) {
 						if (err) {
-							console.log("FAIL");
+							console.log("Wrong x-access-token error");
+							res.clearCookie('x-access-token');
+							res.clearCookie('user-id');
 							return callback(err);
 						} else {
 							req.decoded = decoded;
@@ -61,7 +64,7 @@ module.exports = function(req, res, next) {
 					});	
 				}, (decoded, callback) => {
 					decoded.globalRole = decoded.globalRole || CONST.user.globalRole.HR;
-					
+
 					UserService.getByGlobalIdPopulate(decoded, (err, user) => {		
 						if(err) {
 							return callback(err, null);
@@ -74,25 +77,30 @@ module.exports = function(req, res, next) {
 						req.session.localRole = user.localRole;
 
 						if (!cookies.get('user-id')) {
-							cookies.set('user-id', req.session._id, {httpOnly: false});	
+							cookies.set('user-id', req.session._id, { httpOnly: false });	
 						}
 
 						return callback(null);
 					});
 				}
 			], (err, result) => {
+				if(err) {
+					return res.redirectToAuthServer();
+				}
+
+				console.log('¯\\_(ツ)_/¯: Token Valid...');
+				console.log('¯\\_(ツ)_/¯: Сalling next route...');
+
 				return next();
 			});
+		} else {
+			console.log('¯\\_(ツ)_/¯: Not authenticated...');
+			console.log('¯\\_(ツ)_/¯: Redirect to auth...');
+
+			res.clearCookie('user-id');
+
+			return res.redirectToAuthServer();
 		}
-	} else {
-		//var current_url = req.protocol + '://' + 'team.binary-studio.com'; 
-		var current_url = req.protocol + '://' + req.get('host') + req.url;
-
-		var cookies = new Cookies(req, res);
-		cookies.set('referer', current_url);
-
-		return res.redirect('http://team.binary-studio.com/auth');
-		//return res.redirect('http://localhost:2020/');
 	}
 };
 

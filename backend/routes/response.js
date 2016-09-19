@@ -1,4 +1,5 @@
 var ValidateService = require('../utils/ValidateService');
+var Cookies = require('cookies');
 
 module.exports = function (req, res, next) {
 	res.callback = (err, data) => {
@@ -34,6 +35,17 @@ module.exports = function (req, res, next) {
 		err.status = 401;
 
 		return res.callback(err);
+	}
+
+	res.redirectToAuthServer = () => {
+		//var current_url = req.protocol + '://' + 'team.binary-studio.com'; 
+		var current_url = req.protocol + '://' + req.get('host') + req.url;
+
+		var cookies = new Cookies(req, res);
+		cookies.set('referer', current_url);
+
+		// return res.redirect('http://team.binary-studio.com/auth');
+		return res.redirect('http://localhost:2020/');
 	}
 
 	next();

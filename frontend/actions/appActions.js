@@ -21,7 +21,9 @@ export function setRedirectUrl(url) {
 export function redirectAfterAuth() {
 	return (dispatch, getStore) => {
 		let redirectUrl = getStore().app.redirectUrl;
-		
-		dispatch(push(redirectUrl));
+
+		if(redirectUrl !== '/') {
+			dispatch(push(redirectUrl));
+		}
 	}
 }
