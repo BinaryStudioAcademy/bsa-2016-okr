@@ -147,10 +147,8 @@ export function setChangeYear(year) {
 		dispatch({
 			type: CHANGE_YEAR,
 			selectedYear: year
-		})
-		.then(() => {
-			dispatch(getStats());
 		});
+		dispatch(getStats());
 	}
 }
 

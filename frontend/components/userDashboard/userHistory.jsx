@@ -157,7 +157,8 @@ class UserHistory extends Component {
 					{ this.getHistoryType(item) }
 				</div>
 			)
-		})
+		});
+		
 		return (
 			<div className="userHistory">
 				<div className="history-body">

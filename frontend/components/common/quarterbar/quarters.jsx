@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import "./quarters.scss";
 import { currentYear, currentQuarter } from '../../../../backend/config/constants';
+
+import "./quarters.scss";
 
 import cookie from 'react-cookie';
 
@@ -20,11 +21,6 @@ class Quarterbar extends Component {
 		this.getYears = this.getYears.bind(this);
 	}
 
-	handleYearChange(event) {
-		// this.props.changeTab(currentQuarter);
-		this.props.changeYear(event.target.value);
-	}
-
 	getQuarters() {
 		// First element empty to have a loop from 1
 		let quartersPrefixes = ["", "1-st", "2-nd", "3-rd", "4-th"];
@@ -37,10 +33,9 @@ class Quarterbar extends Component {
 			quarters,
 		} = this.props;
 
-		quarters = quarters.filter((quarter) => {
+		let quartersForYear = quarters.filter((quarter) => {
 			return quarter.year === selectedYear;
 		});
-
 
 		for(let i = 1; i <= 4; i++) {
 			let el;
@@ -84,10 +79,8 @@ class Quarterbar extends Component {
 	}
 
 	getYears() {
-		let years = [currentYear, currentYear + 1];
-
-		return years.map(year => {
-			return <option key={year} value={ year }>{ year }</option>
+		return this.props.years.map(year => {
+			return (<option key={ year } value={ year }>{ year }</option>);
 		});
 	}
 
@@ -114,12 +107,13 @@ class Quarterbar extends Component {
             index: parseInt(target.dataset.id),
             userId: userId
          });
+
+         // console.log('¯\\_(ツ)_/¯: event', Object.assign({}, event));
       }
    }
 
    handleYearChange(event) {
-      this.props.changeTab(currentQuarter);
-      this.props.changeYear(event.target.value);
+      this.props.changeYear(parseInt(event.target.value), 10);
    }
 
    showQuarters(event) {
@@ -136,10 +130,16 @@ class Quarterbar extends Component {
    }
 
    render() {
+   		const { selectedYear } = this.props;
+	   	const yearsList = this.getYears();
+	   	const quartersList = this.getQuarters();
+
+	   	console.log('¯\\_(ツ)_/¯: selectedYear', selectedYear);
+
       return (
          <div id="quarter-bar">
-            <select id="business-year" onChange={this.handleYearChange}>
-               { this.getYears() }
+            <select id="business-year" value={ selectedYear }  onChange={ this.handleYearChange }>
+               { yearsList }
             </select>
             <div className="quarters-wrapper">
                <button id="show-quarters" className="btn" onClick={this.showQuarters}>
@@ -147,7 +147,7 @@ class Quarterbar extends Component {
                   <i className="fa fa-chevron-down"></i>
                </button>
                <ul id="quarters" onClick={this.handleQuarterClick} onContextMenu={this.handleCallContextMenu}>
-                  { this.getQuarters() }
+                  { quartersList }
                </ul>
             </div>
             <div id="context-wrapper" onClick={this.onContextWrapper}>
@@ -164,7 +164,7 @@ class Quarterbar extends Component {
 export default Quarterbar;
 
 function tab_click_feedback(event) {
-	var   quarters = document.querySelectorAll('#quarters li'),
+	var quarters = document.querySelectorAll('#quarters li'),
 	quartersWarapper = document.querySelector('.quarters-wrapper'),
 	i = document.querySelector('#show-quarters i'),
 	target = event.target;

@@ -20,24 +20,21 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 
 	async.waterfall([
 		(callback) => {
-			QuarterRepository.getYear(year, (err, result) => {
+			QuarterRepository.getYear(year, (err, quarterList) => {
 				if(err) {
 					return callback(err, null)
 				}
 
-				return callback(null, new Object(result));
+				return callback(null, new Object(quarterList));
 			});
 		}, (quarterList, callback) => {
-			async.each(quarterList,
-			 (quarter, callback) => {
-			 	statsObj[quarter.userId._id] = statsObj[quarter.userId._id] || {};// creating object with quarters for each user
-			 	statsObj[quarter.userId._id][quarter.index] = quarter;
-			 	callback();
-			}, (err) => {
-				if(err)
-					return callback(err);
-				return callback(null);
-			})
+			quarterList.forEach((quarter) => {
+				let userId = quarter.userId._id;
+			 	statsObj[userId] = statsObj[userId] || {};// creating object with quarters for each user
+			 	statsObj[userId][quarter.index] = quarter;
+			});
+
+			return callback(null);
 		}, (callback) => {
 			
 			for(user in statsObj) { //for each user

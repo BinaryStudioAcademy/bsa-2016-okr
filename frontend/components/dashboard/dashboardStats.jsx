@@ -86,7 +86,7 @@ class DashboardStats extends Component {
 				<div className="countInfo" id="parent">
 					<p><span>{`Your progress in ${selectedYear} year`}</span></p>
 					<div className="progressBar">
-						<ProgressBar  strokeWidth="10" radius="80" percentage={ score }/>
+						<ProgressBar strokeWidth="10" radius="80" percentage={ score }/>
 					</div>
 				</div>
 			);

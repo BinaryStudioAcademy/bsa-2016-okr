@@ -1,4 +1,6 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
+import CONST from '../../backend/config/constants';
+
 import { currentYear, currentQuarter } from '../../backend/config/constants';
 import {
 	RECEIVED_MY_OBJECTIVES_ERROR,
@@ -33,7 +35,8 @@ const initialState = {
 	selectedTab: null,
 	selectedYear: null,
 	me: {
-		"localRole": ""
+		localRole: "",
+		quarters: [],
 	},
 	editKeyResultId: '',
 	editKeyResultIsEditing: false,
@@ -63,16 +66,21 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case RECEIVED_MY_OBJECTIVES: {
-			const { data } = action;
+			let { data } = action;
 			let index;
 			let year;
 
-			if(!state.selectedTab || !state.selectedYear) {
-				let quarters = data.quarters.map((quarter) => {
-					return getIndexAndYearFromQuarter(quarter);
-				});
+			data = !isEmpty(data) ? data : {};
 
-				({ index, year } = quarters[quarters.length - 1]);
+			if(!isEmpty(data.quarters) && (!state.selectedTab || !state.selectedYear)) {
+				data.quarters = data.quarters.map((quarter) => {
+					quarter.year = parseInt(quarter.year, 10);
+					quarter.index = parseInt(quarter.index, 10);
+
+					return quarter;
+				});
+				
+				({ index, year } = getInitialQuarter(data.quarters));
 			}
 
 			let selectedTab = index || state.selectedTab;
@@ -97,15 +105,18 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			const { selectedTab } = action;
 
 			return Object.assign({}, state, {
-				selectedTab: selectedTab
+				selectedTab: parseInt(selectedTab, 10)
 			});
 		}
 
 		case CHANGE_YEAR: {
 			const { selectedYear } = action;
 
+			const selectedTab = getTabForYear(state.me.quarters, selectedYear);
+
 			return Object.assign({}, state, {
-				selectedYear: selectedYear
+				selectedYear: parseInt(selectedYear, 10),
+				selectedTab,
 			});
 		}
 
@@ -114,8 +125,8 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			const { quarters: oldQuarters } = state.me;
 
 			return Object.assign({}, state, {
-				selectedYear: newQuarter.year,
-				selectedTab: newQuarter.index,
+				selectedYear: parseInt(newQuarter.year, 10),
+				selectedTab: parseInt(newQuarter.index, 10),
 				me: {
 					quarters: addNewQuarter(oldQuarters, newQuarter)
 				}
@@ -133,7 +144,6 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return Object.assign({}, state, {
 				me: deleteObjectiveFromMe(state.me, id, flag)
 			});
-
 		}
 
 
@@ -471,8 +481,8 @@ function getIndexAndYearFromQuarter({ index, year }) {
 function addNewQuarter(oldQuarters, newQuarter) {
 	let quarters = [].concat(oldQuarters);
 
-	let quarterIndex = quarters.find((quarter) => {
-		return (quarter.year === newQuarter.year) && (quarter.index === quarter.index);
+	let quarterIndex = quarters.findIndex((quarter) => {
+		return (quarter.year === newQuarter.year) && (quarter.index === newQuarter.index);
 	});
 
 	if(quarterIndex === -1) {
@@ -480,4 +490,47 @@ function addNewQuarter(oldQuarters, newQuarter) {
 	}
 
 	return quarters;
+}
+
+function getInitialQuarter(quarters) {
+	let initialQuarter;
+
+	let currentQuarterIndex = quarters.findIndex((quarter) => {
+		return (quarter.index === CONST.currentQuarter) 
+		&& (quarter.year === CONST.currentYear);
+	});
+
+	if(currentQuarterIndex === -1) {
+		initialQuarter = quarters[quarters.length - 1];
+	} else {
+		initialQuarter = quarters[currentQuarterIndex];
+	}
+
+	return initialQuarter;
+}
+
+function getTabForYear(quarters, year) {
+	let tab = null;
+	let i;
+	let yearQuarters = quarters.filter((quarter) => {
+		return quarter.year === year;
+	});
+
+	if(isEmpty(yearQuarters)) {
+		return tab;
+	}
+
+	if(year === currentYear) {
+		let currentQuarterIndex = yearQuarters.findIndex((quarter) => {
+			return quarter.index === currentQuarter;
+		});
+
+		i = (currentQuarterIndex === -1) ? 0 : currentQuarterIndex;
+		tab = yearQuarters[i].index;
+	} else {
+		i = 0;
+		tab = yearQuarters[i].index;
+	}
+
+	return tab;
 }

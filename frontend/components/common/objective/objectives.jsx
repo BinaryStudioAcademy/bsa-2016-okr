@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import Quarterbar from '../quarterbar/quarters.jsx';
-import ObjectiveItem from './objective.jsx';
-import ObjectivesList from './objective-list.jsx';
+import cookie from 'react-cookie';
 import sweetalert from 'sweetalert';
-import '../styles/sweetalert.css';
 
+import { getUniqueValuesFromArray } from '../../../../backend/utils/HelpService';
 import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
+const CONST = require('../../../../backend/config/constants.js');
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,11 +15,14 @@ import * as objectiveActions from "../../../actions/objectiveActions";
 import * as otherPersonActions from "../../../actions/otherPersonActions";
 import * as userDashboardActions from "../../../actions/userDashboardActions";
 
+import Quarterbar from '../quarterbar/quarters.jsx';
+import ObjectiveItem from './objective.jsx';
+import ObjectivesList from './objective-list.jsx';
+
+import '../styles/sweetalert.css';
 import './objectives.scss';
 
-const CONST = require('../../../../backend/config/constants.js');
 
-import cookie from 'react-cookie';
 
 const session = cookie.load('user-id');
 
@@ -39,6 +41,7 @@ class Objectives extends Component {
 		this.handleArchive = this.handleArchive.bind(this);
 		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
 		this.getDuplicateObjectiveByTitle = this.getDuplicateObjectiveByTitle.bind(this);
+		this.getYears = this.getYears.bind(this);
 	}
 
 	componentWillMount() {
@@ -64,14 +67,14 @@ class Objectives extends Component {
 	}
 
 	changeYear(year) {
-
 		const { user } = this.props.user;
 		const userId = this.props.userId || session;
 		this.props.myStateActions.setChangeYear(year);
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
-			this.props.userDashboardActions.getStats("otherPersonPage")
-		else
+		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
+			this.props.userDashboardActions.getStats(OTHER_PERSON_PAGE);
+		}	else {
 			this.props.userDashboardActions.getStats();
+		}
 	}
 
 	handleAddingNewQuarter(newQuarter) {
@@ -84,7 +87,6 @@ class Objectives extends Component {
 			closeOnConfirm: true
 		}, () => {
 			this.props.myStateActions.createQuarter(newQuarter);
-			// this.changeTab(newQuarter.index);
 		});
 	}
 
@@ -106,9 +108,7 @@ class Objectives extends Component {
 				}
 			})
 			this.props.otherPersonActions.archiveUserQuarter(quarterId, flag);
-		}			
-		else	
-		{
+		}	else {
 			this.props.myState.me.quarters.forEach( (quarter) => {
 				if (quarter.index == index && quarter.year == this.props.myState.selectedYear)
 				{
@@ -225,6 +225,21 @@ class Objectives extends Component {
 		};
 	}
 
+	getYears(quarters) {
+		quarters = !isEmpty(quarters) ? quarters : [];
+		
+		let years = quarters.map((quarter) => {
+			return quarter.year;
+		});
+
+		years.push(CONST.currentYear);
+		years.push(CONST.currentYear + 1);
+		years = getUniqueValuesFromArray(years);
+		years.sort((a, b) => { return b - a });
+
+		return years;
+	}
+
 	render() {
 		const userId = this.props.userId;
 		const displayedCategories = this.props.categories.list.filter((category) => {
@@ -235,6 +250,7 @@ class Objectives extends Component {
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
+		let years = [];
 
 		// Edit key result on HomePage or UserPage
 		let editKeyResult = {};
@@ -242,7 +258,7 @@ class Objectives extends Component {
 		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
 		let isItHomePage;
 		let archived;
-		let isAdmin = this.props.myState.me.localRole === "admin" ? true : false;
+		let isAdmin = this.props.myState.me.localRole === 'admin' ? true : false;
 
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
 			/*console.log('user');*/
@@ -250,6 +266,7 @@ class Objectives extends Component {
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
+			years = this.getYears(user.quarters);
 
 			// Edit key result on UserPage
 			editKeyResult = {
@@ -265,6 +282,10 @@ class Objectives extends Component {
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
+			years = this.getYears(me.quarters);
+
+			// console.log('¯\\_(ツ)_/¯: selectedTab', selectedTab);
+			// console.log('¯\\_(ツ)_/¯: selectedYear', selectedYear);
 
 			// Edit key result on HomePage
 			editKeyResult = {
@@ -293,6 +314,7 @@ class Objectives extends Component {
 						selectedTab={ selectedTab }
 						addNewQuarter={ this.handleAddingNewQuarter }
 						archiveQuarter={this.handleArchivingQuarter }
+						years={ years }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
 						me={ isItHomePage }
