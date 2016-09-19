@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Rating from '../rating/rating.jsx';
 import { debounce, getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/HelpService';
-import cookie from 'react-cookie';
-
-const session = cookie.load('user-id');
 
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import sweetalert from 'sweetalert';

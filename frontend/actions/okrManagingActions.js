@@ -41,10 +41,6 @@ export const SET_DEFAULT_KEY_RESULT = 'SET_DEFAULT_KEY_RESULT';
 export const RECEIVED_DEFAULT_KEY_RESULT = 'RECEIVED_DEFAULT_KEY_RESULT';
 export const RECEIVED_DEFAULT_KEY_RESULT_ERROR = 'RECEIVED_DEFAULT_KEY_RESULT_ERROR';
 
-import cookie from 'react-cookie';
-
-const session = cookie.load('user-id');
-
 export function getObjectivesList(){
 	
 	return(dispatch, getStore) => {

@@ -22,8 +22,6 @@ import ObjectivesList from './objective-list.jsx';
 import '../styles/sweetalert.css';
 import './objectives.scss';
 
-
-
 const session = cookie.load('user-id');
 
 const notifications = require("../../../actions/notifications.js");

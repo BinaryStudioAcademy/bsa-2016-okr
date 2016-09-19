@@ -36,8 +36,8 @@ router.get('/users', (req, res, next) => {
 		return res.badRequest('Limit param should be a number');
 	}
 
-	if(!isCorrectId(userId) || userId == undefined) {
-		res.badRequest('Wrong user ID');
+	if(!isCorrectId(userId)) {
+		return res.badRequest('Wrong user ID');
 	}
 
 	if(limit > 1000) {

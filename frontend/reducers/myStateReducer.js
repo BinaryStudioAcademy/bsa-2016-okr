@@ -124,12 +124,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			const { quarter: newQuarter } = action;
 			const { quarters: oldQuarters } = state.me;
 
+			const newMe = Object.assign({}, state.me, {
+				quarters: addNewQuarter(oldQuarters, newQuarter)
+			});
+
 			return Object.assign({}, state, {
 				selectedYear: parseInt(newQuarter.year, 10),
 				selectedTab: parseInt(newQuarter.index, 10),
-				me: {
-					quarters: addNewQuarter(oldQuarters, newQuarter)
-				}
+				me: newMe
 			});
 		}
 

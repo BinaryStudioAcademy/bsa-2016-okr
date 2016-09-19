@@ -14,7 +14,7 @@ const isEmpty = validateService.isEmpty;
 
 var StatsService = function() {};
 
-StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId,year, callback) {
+StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId, year, callback) {
 	var statsObj = {};
 	var selectedUser = null;
 
@@ -94,7 +94,6 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 				console.log("CURRENT USER ID !!!", currentUserId);
 
 				if(user == currentUserId) {
-					console.log('selected');
 					selectedUser = Object.assign({}, statsObj[user]);
 				}
 			}

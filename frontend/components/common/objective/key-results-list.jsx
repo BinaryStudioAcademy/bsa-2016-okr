@@ -6,11 +6,6 @@ import './key-results.scss';
 import sweetalert from 'sweetalert';
 import '../styles/sweetalert.css';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
-import cookie from 'react-cookie';
-
-const session = cookie.load('user-id');
-
-
 
 class KeyResults extends Component {
 	constructor(props) {

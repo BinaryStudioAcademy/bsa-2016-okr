@@ -124,6 +124,7 @@ module.exports = function add(session, userId, categoryId, quarterId, objectiveI
 				creator: session._id,
 				isDeleted: false,
 				keyResults: keyResults,
+				quarterId: quarterId,
 			};
 
 			UserObjectiveRepository.add(userObjectiveData, (err, userObjective) => {
@@ -137,7 +138,7 @@ module.exports = function add(session, userId, categoryId, quarterId, objectiveI
 				return callback(null, userObjective);
 			});
 		}, (userObjective, callback) => {
-			var data = {$push: {userObjectives: userObjective._id}}
+			var data = { $push: { userObjectives: userObjective._id } };
 			
 			QuarterRepository.update(quarterId, data, (err, quarter) => {
 				if(err) {
