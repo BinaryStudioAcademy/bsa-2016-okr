@@ -28,9 +28,8 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			})
 
 			return callback(null, historyList);
-		},
-		(historyList, callback) => {
-			var list= [];
+		}, (historyList, callback) => {
+			var list = [];
 			var i = 0;
 			(function forEachInList () {
 				HistoryRepository.getUserObjectiveHistoryPopulate(historyList[i], (err, result) => {
@@ -52,14 +51,12 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 						}
 				})
 			})();
-		},
-		(historyList, callback) => {
-			if(historyList.length > 0)
+		}, (historyList, callback) => {
+			if(historyList.length > 0) {
 				this.sortBy(historyList, 'date', true, (historyList) => {					
 					return callback(null, historyList)
-				})
-			else {
-				historyList = ['empty'];
+				});
+			}	else {
 				return callback(null, historyList)
 			}
 		}

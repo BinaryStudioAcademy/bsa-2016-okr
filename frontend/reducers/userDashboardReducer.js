@@ -52,9 +52,8 @@ export default function userDashboardReducer(state = initialState, action) {
 		}
 
 		case RECEIVED_MY_HISTORY: {
-			let historyList = action.data;
-			if (historyList[0] === 'empty')
-				historyList= [];
+			const { data: historyList = [] } = action;
+
 			return Object.assign({}, state, { historyList });
 		}
 

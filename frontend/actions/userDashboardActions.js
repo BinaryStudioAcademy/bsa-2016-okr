@@ -41,7 +41,7 @@ export function getMyHistory(type) {
 
 		return axios.get(`/api/history/user/${ _id }`)
 		.then((response) => {
-			dispatch((response.data));
+			dispatch(receivedMyHistory(response.data));
 			dispatch({ type: REMOVE_REQUEST });
 		})
 		.catch((response) => {
