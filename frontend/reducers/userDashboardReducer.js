@@ -55,7 +55,7 @@ export default function userDashboardReducer(state = initialState, action) {
 			bottomStats = !isEmpty(bottomStats) ? bottomStats: initialState.bottomStats;
 
 			return Object.assign({}, state, {
-				topUsersList,
+				topUsersList: statArr,
 				userStats,
 				bottomStats
 			});

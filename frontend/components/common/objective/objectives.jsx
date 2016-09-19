@@ -69,7 +69,7 @@ class Objectives extends Component {
 		const userId = this.props.userId || session;
 		this.props.myStateActions.setChangeYear(year);
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
-			this.props.userDashboardActions.getStats(OTHER_PERSON_PAGE);
+			this.props.userDashboardActions.getStats(userDashboardActions.OTHER_PERSON_PAGE);
 		}	else {
 			this.props.userDashboardActions.getStats();
 		}

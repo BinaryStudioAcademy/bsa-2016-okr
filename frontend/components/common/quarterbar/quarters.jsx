@@ -134,8 +134,6 @@ class Quarterbar extends Component {
 	   	const yearsList = this.getYears();
 	   	const quartersList = this.getQuarters();
 
-	   	console.log('¯\\_(ツ)_/¯: selectedYear', selectedYear);
-
       return (
          <div id="quarter-bar">
             <select id="business-year" value={ selectedYear }  onChange={ this.handleYearChange }>
