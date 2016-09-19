@@ -15,6 +15,8 @@ class DashboardStats extends Component {
 		this.renderRow = this.renderRow.bind(this);
 		this.getProgressBar = this.getProgressBar.bind(this);
 	}
+	
+
 
 	handleUserClick(classname) {
 		for (let i = 1; i < 5; i++) {
@@ -29,6 +31,7 @@ class DashboardStats extends Component {
 	}
 
 	renderRow(row, i) {
+		console.log('renderind!')
 		if(row.userInfo || row.name) {
 			if(row.name) {
 				return(
@@ -38,19 +41,11 @@ class DashboardStats extends Component {
 					</tr>)
 			}	else {
 				return (
-					<tr key={i} className={`quarter-score ${i} hidden `}>
-						<td> { `${ row.name }` }</td>
-						<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
-					</tr>
-					);
+					<tr key={i} onClick={() => { this.handleUserClick(i) }}>
+						<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
+						<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
+					</tr>)
 			}
-		}	else {
-			return (
-				<tr key={i} onClick={() => { this.handleUserClick(i) }}>
-					<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
-					<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
-				</tr>
-			);
 		}
 	}
 
@@ -158,6 +153,9 @@ class DashboardStats extends Component {
 				</tbody>
 			);
 		}
+
+		console.log(scores)
+		console.log('^^^^^^^^^^^^')
 
 		return (
 			<div className="main">

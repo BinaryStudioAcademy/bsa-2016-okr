@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
+import { currentYear } from '../../backend/config/constants';
+
 export const SET_TAB = 'DASH:SET_TAB';
 export const CHANGE_SHOW_TABS ='DASH:CHANGE_SHOW_TABS';
 export const GET_MY_HISTORY = 'DASH:GET_MY_HISTORY';
@@ -63,11 +65,11 @@ export function getStats(type) {
 		switch(type) {
 			case OTHER_PERSON_PAGE:
 				({ _id } = store.userPage.user);
-				({ selectedYear: year } = store.userPage);
+				(year = store.userPage.selectedYear || currentYear);
 				break;
 			default:
 				({ _id } = store.myState.me);
-				({ selectedYear: year } = store.myState);
+				(year = store.myState.selectedYear || currentYear);
 				break;
 		}
 
@@ -79,10 +81,10 @@ export function getStats(type) {
 			dispatch(receivedStats(response.data))
 			dispatch({ type: REMOVE_REQUEST });
 		})
-		.catch((response) => {
-			dispatch(myHistoryError(response.data))
-			dispatch({ type: REMOVE_REQUEST });
-		});
+		// .catch((response) => {
+		// 	dispatch(myHistoryError(response.data))
+		// 	dispatch({ type: REMOVE_REQUEST });
+		// });
 	}
 }
 
@@ -95,10 +97,10 @@ export function getTotalScore() {
 			dispatch(receivedTotalScore(response.data)); 
 			dispatch({ type: REMOVE_REQUEST });
 		})
-		.catch(response => {
-			dispatch(receivedError(response.data));
-			dispatch({ type: REMOVE_REQUEST });
-		});
+		// .catch(response => {
+		// 	dispatch(receivedError(response.data));
+		// 	dispatch({ type: REMOVE_REQUEST });
+		// });
 	}
 }
 

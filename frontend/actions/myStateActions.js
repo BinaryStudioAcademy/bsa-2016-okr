@@ -77,7 +77,7 @@ export function getMe() {
 		})
 		.then(() => {
 			dispatch(getStats());
-			dispatch(getMyHistory());
+			//dispatch(getMyHistory());
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response));
