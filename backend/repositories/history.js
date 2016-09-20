@@ -194,6 +194,26 @@ HistoryRepository.prototype.setScoreToKeyResult = function (author, key, type, c
 	newEvent.save(callback);
 };
 
+HistoryRepository.prototype.getHistoryByUserIdPopulate = function (id, callback) {
+	var model = this.model;
+
+	model
+		.find({user: id})
+		.populate({
+			path: 'author',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.populate({
+			path: 'user',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+}
+
 HistoryRepository.prototype.setTitleToKeyResult = function (author, key, type, callback) {
 	var model = this.model;
 	var newEvent = new model({

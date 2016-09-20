@@ -55,6 +55,16 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 				});
 			})();
 		}, (historyList, callback) => {
+			HistoryRepository.getHistoryByUserIdPopulate(id, (err, result) => {
+				if(err)
+					return callback(err, null)
+				result.forEach((item) => {
+					historyList.push(item);
+				})
+				return callback(err, historyList);
+				
+			})
+		},(historyList, callback) => {
 			if(historyList.length > 0) {
 				this.sortBy(historyList, 'date', true, (historyList) => {					
 					return callback(null, historyList)

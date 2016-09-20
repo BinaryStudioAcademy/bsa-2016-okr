@@ -16,12 +16,14 @@ const add = require('./add');
 const addKeyResult = require('./addKeyResult');
 const updateHelper = require('./updateHelper');
 const changeArchiveStatus = require('./archive.js');
+const updateWithoutValidation = require('./updateWithoutValidation.js');
 
 var UserObjectiveService = function() {};
 
 UserObjectiveService.prototype.add = add;
 UserObjectiveService.prototype.addKeyResult = addKeyResult;
 UserObjectiveService.prototype.changeArchiveStatus = changeArchiveStatus;
+UserObjectiveService.prototype.updateWithoutValidation = updateWithoutValidation;
 
 UserObjectiveService.prototype.update = function(session, userObjectiveId, data, callback){
 	async.waterfall([

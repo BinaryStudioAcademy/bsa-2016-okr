@@ -107,8 +107,29 @@ class UserHistory extends Component {
 					</p>
 					<p className="action-description">archived { this.getHistoryObjectName(item) }</p>
 				</div>
-			);
+			)
+		} else if (item.type.indexOf('TOOK_APPRENTICE') != -1){
+			return (
+				<div className="action-text">
+					<p className="author">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
+					</p>
+					<p className="action-description">is now mentoring you</p>
+				</div>
+			)
+		} else if (item.type.indexOf('REMOVED_APPRENTICE') != -1){
+			return (
+				<div className="action-text">
+					<p className="author">
+						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
+						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
+					</p>
+					<p className="action-description">isn't your mentor now</p>
+				</div>
+			)
 		}
+		
 	}
 
 	getHistoryObjectName(historyItem) {
@@ -141,6 +162,10 @@ class UserHistory extends Component {
 			return "fi flaticon-bookmark-1 typeIcon green"
 		else if (item.type.indexOf('ARCHIVED') != -1)
 			return "fi flaticon-archive-2 typeIcon orange"
+		else if (item.type.indexOf('TOOK_APPRENTICE') != -1)
+			return "fi flaticon-view typeIcon green"
+		else if (item.type.indexOf('REMOVED_APPRENTICE') != -1)
+			return "fi flaticon-hide typeIcon orange"
 	}
 
 	render() {

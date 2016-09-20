@@ -220,7 +220,8 @@ router.put('/updateWithoutValidation/:id',  (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return repository.update(id, body, res.callback);
+	return service.updateWithoutValidation(req.session._id, id, body, res.callback)
+	//return repository.update(id, body, res.callback);
 });
 
 
