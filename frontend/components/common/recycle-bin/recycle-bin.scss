@@ -376,7 +376,7 @@ and (max-width: 1100px) {
 	     padding: 10px 5px;
 	}
 	#rec-bin-wrapper .filter-table td {
-    padding: 10px 5px;
+    padding: 10px;
 	}
 	#rec-bin-wrapper {
 		.filter-table td button {
@@ -444,6 +444,7 @@ and (max-width: 800px) {
 	        padding-bottom: .5em;
 	      }
 	      &:before {
+	        color: #607D8B;
 	        content: attr(data-th)": "; 
 	        font-weight: bold;
 	        font-size: 14px;
@@ -461,12 +462,25 @@ and (max-width: 800px) {
 }
 @media all 
 and (max-width: 750px) {
+
 	.filter-box > div {
-    margin: 3px 10px;
-  }
+	    margin: 3px 10px;
+	 }
+
+
+    .recucle-bin-filter-bar-container .date-field {
+	    display: none;
+    }
+	
+
+	.recucle-bin-filter-bar-container .recycle-bin-filter-table td:nth-child(2) {
+		display: none;
+	} 
+
+
   .recucle-bin-filter-bar-container .filter-box label {
     line-height: 18px;
-	}
+   }
 	.recucle-bin-filter-bar-container .filter-box {
     width: 200px;
     padding-left: 0px;
