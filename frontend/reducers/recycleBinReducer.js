@@ -209,9 +209,10 @@ export default function recBynReducer(state = initialState, action) {
 				objectiveType: true,
 				keyType: true,
 				sortByDate: SORTED_ASC,
-				categoryType: NOT_SORTED,
+				sortByTitle: NOT_SORTED,
+				categoryType: true,
 				categoryOrTypeFilter: "",
-				userName: "",								
+				userName: ""								
 			});
 		}
 
