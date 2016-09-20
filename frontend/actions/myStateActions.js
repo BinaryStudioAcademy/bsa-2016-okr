@@ -243,14 +243,14 @@ export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
 			dispatch(getStats());
 			dispatch(getMyHistory());
 		})
-		.then(() => {
+/*		.then(() => {
 			let localRole = getStore().myState.me.localRole;
 			
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
 			}
-		})
+		})*/
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -277,14 +277,14 @@ export function addNewObjective(body, callback, userId) {
 			dispatch(getStats());
 			dispatch(getMyHistory());
 		})
-		.then(() => {
+		/*.then(() => {
 			let localRole = getStore().myState.me.localRole;
 					
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
 			}
-		})
+		})*/
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -353,14 +353,14 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, fl
 					dispatch(getStats());
 					dispatch(getMyHistory());
 				})
-				.then(() => {
+				/*.then(() => {
 					let localRole = getStore().myState.me.localRole;
 					
 					if(localRole === CONST.user.localRole.ADMIN) {
 						dispatch(getNotAprovedObjectivesRequest());
 						dispatch(getNotAprovedKeysRequest());
 					}
-				})
+				})*/
 				.catch(response => {
 					dispatch(receivedMyObjectivesError(response.data));
 					dispatch({ type: REMOVE_REQUEST	});
