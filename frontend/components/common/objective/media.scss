@@ -50,6 +50,7 @@
 **  Mobile
 */
 @include mobile {
+
 	.range{
 		width: 75px;
 	}
@@ -103,7 +104,8 @@
 	}
 }
 
-@media screen and (max-width: 460px) {
+
+@media screen and (max-width: 530px) {
 	.star-rating {
 	    width: 8em;
 	    margin-top: 0.65em;

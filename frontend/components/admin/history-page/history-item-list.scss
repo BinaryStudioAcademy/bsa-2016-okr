@@ -161,6 +161,7 @@ and (max-width: 720px) {
           padding-bottom: .5em;
         }
         &:before {
+          color: #607D8B;
           content: attr(data-th)": "; 
           font-weight: bold;
           font-size: 14px;
