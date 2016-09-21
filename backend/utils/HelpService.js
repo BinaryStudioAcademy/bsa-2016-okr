@@ -62,14 +62,3 @@ function getUniqueValuesFromArrayOfObjects(arr, uniqueProp) {
 
 	return res;
 }
-
-
-function isMentorActionAllowed(user, session) {
-	const CONST = require('../config/constants.js')
-	return (
-		(user._id === session._id)
-		|| (user.mentor === session._id)
-		|| (session.localRole === CONST.user.localRole.ADMIN)
-	);
-}
-
