@@ -36,10 +36,10 @@ module.exports = {
 			DEFAULT: 'default',
 		},
 		globalRole: {
-			ADMIN: 'ADMIN', 
+			ADMIN: 'ADMIN',
 			DEVELOPER: 'DEVELOPER',
-			HR: 'HR', 
-			CEO: 'CEO', 
+			HR: 'HR',
+			CEO: 'CEO',
 			TECH_LEAD: 'Tech Lead',
 		}
 	},
@@ -68,8 +68,8 @@ module.exports = {
 			CHANGE_APPROVE: 'CHANGE_APPROVE',
 			TOOK_APPRENTICE: 'TOOK_APPRENTICE',
 			REMOVED_APPRENTICE: 'REMOVED_APPRENTICE',
-			ARCHIVED: "ARCHIVED",
-			UNARCHIVED: "UNARCHIVED"
+			ARCHIVED: 'ARCHIVED',
+			UNARCHIVED: 'UNARCHIVED'
 		},
 		target: {
 			OBJECTIVE: 'OBJECTIVE',
@@ -81,9 +81,16 @@ module.exports = {
 			USER_KEY_RESULT: 'USER_KEY_RESULT',
 		},
 	},
+	links: {
+		LOCAL_AUTH: 'http://localhost:2020/',
+		PROD_AUTH: 'http://team.binary-studio.com/auth',
+	},
+	error: {
+		TOKEN: 'TOKEN',
+	},
 	currentYear: currentYear,
 	currentQuarter: currentQuarter,
 	NOT_SORTED: 0,
 	SORTED_ASC: 1,
-	SORTED_DESC: 2
+	SORTED_DESC: 2,
 };

@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Repository = require('../units/Repository');
-var History = require('../schemas/history');
-var CONST = require('../config/constants');
+const mongoose = require('mongoose');
+const Repository = require('../units/Repository');
+const History = require('../schemas/history');
+const CONST = require('../config/constants');
 
 var HistoryRepository = function() {
 	Repository.prototype.constructor.call(this);
@@ -39,7 +39,7 @@ HistoryRepository.prototype.getHistory = function (callback) {
 			}
 		})
 		.exec(callback);
-}
+};
 
 HistoryRepository.prototype.getHistoryById = function (id, callback) {
 	var model = this.model;
@@ -64,7 +64,7 @@ HistoryRepository.prototype.getHistoryById = function (id, callback) {
 			}
 		})
 		.exec(callback);
-}
+};
 
 HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 	var model = this.model;

@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 import { DateField } from 'react-date-picker'
-import 'react-date-picker/index.css'
+import 'react-date-picker/index.css';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -29,16 +29,16 @@ class HistoryFilter extends Component {
 		this.props.getFilteredItems();
 	}
 
-	onReset(){
+	onReset() {
 		var sel = document.getElementsByClassName("select")[0];
 		sel.selectedIndex = 0;
 
 		var nameInput = document.getElementsByClassName("history-filter-bar-input")[0];
-		nameInput.value="";
+		nameInput.value = '';
 
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
-		
+
 		this.props.resetFilters();
 		this.props.getFilteredItems();
 		this.refs.dateFrom.onFieldChange('');

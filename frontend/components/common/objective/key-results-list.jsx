@@ -115,7 +115,7 @@ class KeyResults extends Component {
 	}
 
 	resetAutocompleteState() {
-		console.log('Hiding key result input...');
+		// console.log('Hiding key result input...');
 		let keyResultAddBtn = this.refs.newKeyResultButton;
 		let keyResultAddElement = this.refs.newKeyResultButton.nextElementSibling;
 

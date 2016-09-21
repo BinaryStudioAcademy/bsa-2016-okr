@@ -11,7 +11,6 @@ var Cookies = require('cookies');
 const UserService = require('../services/user');
 
 module.exports = function(req, res, next) {
-
 	var cookies = new Cookies(req, res);
 	var token = cookies.get('x-access-token');
 
@@ -37,9 +36,9 @@ module.exports = function(req, res, next) {
 					req.session.localRole = user.localRole;
 
 					if (!cookies.get('user-id')) {
-						cookies.set('user-id', req.session._id, { httpOnly: false });	
+						cookies.set('user-id', req.session._id, { httpOnly: false });
 					}
-					
+
 					return callback(null);
 				});
 			},
@@ -53,19 +52,17 @@ module.exports = function(req, res, next) {
 				(callback) => {
 					jsonwebtoken.verify(token, 'superpupersecret', function(err, decoded) {
 						if (err) {
-							console.log("Wrong x-access-token error");
-							res.clearCookie('x-access-token');
-							res.clearCookie('user-id');
+							err.type = CONST.error.TOKEN;
 							return callback(err);
-						} else {
-							req.decoded = decoded;
-							callback(null, decoded);
 						}
-					});	
+
+						req.decoded = decoded;
+						return callback(null, decoded);
+					});
 				}, (decoded, callback) => {
 					decoded.globalRole = decoded.globalRole || CONST.user.globalRole.HR;
 
-					UserService.getByGlobalIdPopulate(decoded, (err, user) => {		
+					UserService.getByGlobalIdPopulate(decoded, (err, user) => {
 						if(err) {
 							return callback(err, null);
 						}
@@ -77,54 +74,21 @@ module.exports = function(req, res, next) {
 						req.session.localRole = user.localRole;
 
 						if (!cookies.get('user-id')) {
-							cookies.set('user-id', req.session._id, { httpOnly: false });	
+							cookies.set('user-id', req.session._id, { httpOnly: false });
 						}
 
 						return callback(null);
 					});
 				}
 			], (err, result) => {
-				if(err) {
+				if(err && err.type === CONST.error.TOKEN) {
 					return res.redirectToAuthServer();
 				}
-
-				console.log('¯\\_(ツ)_/¯: Token Valid...');
-				console.log('¯\\_(ツ)_/¯: Сalling next route...');
 
 				return next();
 			});
 		} else {
-			console.log('¯\\_(ツ)_/¯: Not authenticated...');
-			console.log('¯\\_(ツ)_/¯: Redirect to auth...');
-
 			return res.redirectToAuthServer();
 		}
 	}
 };
-
-
-/*
-
-	_id = ValidateService.isCorrectId(_id) ? _id : defaultSession._id;
-
-	async.waterfall([
-		(callback) => {
-			UserService.getByIdPopulate(_id, (err, user) => {
-				if(err) {
-					return res.unauthorized('Wrong auth data');
-				}
-
-				req.session = {};
-				req.session._id = user._id;
-				req.session.mentor = user.mentor;
-				req.session.userInfo = user.userInfo
-				req.session.localRole = user.localRole;
-				
-				return callback(null);
-			});
-		},
-	], (err, result) => {
-		return next();
-	});
-}
-*/

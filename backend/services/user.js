@@ -15,7 +15,7 @@ UserService.prototype.createUser = function(data, callback) {
 
 	async.waterfall([
 		(callback) => {
-			
+
 			var body  = {};
 			body.firstName = "FirstN";
 			body.lastName = "LastN";
@@ -47,7 +47,7 @@ UserService.prototype.createUser = function(data, callback) {
 			var body = {
 				userId: user._id,
 			};
-			
+
 			QuarterRepository.add(body, (err, quarter) => {
 
 				return callback(null, user);
@@ -103,9 +103,7 @@ UserService.prototype.getByIdPopulate = function(userId, callback) {
 UserService.prototype.getByGlobalIdPopulate = function(data, callback) {
 	async.waterfall([
 		(callback) => {
-			
 			UserRepository.getByGlobalIdPopulate(data.id, (err, user) => {
-				
 				if(err) {
 	  				return callback(err, null);
 				}
@@ -113,18 +111,14 @@ UserService.prototype.getByGlobalIdPopulate = function(data, callback) {
 				return callback(null, user);
 			});
 		}, (user, callback) => {
-			
 			if (!user) {
 				this.createUser(data, callback);
-			}
-			else {
+			}	else {
 				return callback(null, user);
 			}
-
 		}, (user, callback) => {
 			if(user.localRole === CONST.user.localRole.DEFAULT) {
 				RoleRepository.findGlobal(user.userInfo.globalRole, (err, role) => {
-					
 					if(err) {
 						return callback(err, null);
 					}
@@ -191,7 +185,7 @@ UserService.prototype.getByIdWithQuarters = function(id, callback) {
 					return quarter;
 				});
 
-				user.quarters = quarters;		
+				user.quarters = quarters;
 
 				return callback(null, user);
 			});
@@ -296,8 +290,8 @@ UserService.prototype.removeApprentice = function(userId, apprenticeId, userLoca
   				return callback(null, historyEvent);
   			});
       }
-    ], (err, result) => { 
-    	return callback(err, result); 
+    ], (err, result) => {
+    	return callback(err, result);
     });
 };
 
