@@ -1,5 +1,3 @@
-const CONST = require('../config/constants.js')
-
 module.exports = {
 	stringToBoolean: stringToBoolean,
 	debounce: debounce,
