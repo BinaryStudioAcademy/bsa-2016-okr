@@ -191,7 +191,12 @@ aside#navbar #users-link {
     }
   }
 }
-
+@include laptop {
+  aside#navbar {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
 @media screen
 and (max-width: 500px) {
   aside#navbar {

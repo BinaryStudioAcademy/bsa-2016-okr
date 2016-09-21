@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const CLEAR_STATE = 'CLEAR_STATE';
 export const SEARCH_OBJECTS = 'SEARCH_OBJECTS';
@@ -154,9 +155,14 @@ export function getHistoryItems(filter, sprt){
 		dispatch({
 			type: 'GET_HISTORY_ITEMS',
 		});
+		dispatch({ type: ADD_REQUEST });
 
 		return axios.get('/api/history/')
-		.then( (response) => dispatch(receivedHistoryItems(response.data)))
+		.then( (response) => {
+			dispatch(receivedHistoryItems(response.data))
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+
 		//.catch( (response) => dispatch(historyItemsError(response.data)));
 	};
 }

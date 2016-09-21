@@ -23,6 +23,13 @@ const NavMenu = (props) => {
 				</Link>
 			</li>
 			<li>
+				<Link to="/history" className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-time" aria-hidden="true"></i>
+					History
+					<i className="tooltip" data-direction="right">History</i>
+				</Link>
+			</li>
+			<li>
 				<Link to="/obj-accept" className="on-tooltip" activeClassName="active">
 					<i className="fi flaticon-checked-1" aria-hidden="true">
 						<div className="badge"><div className={"badge-counter " + notificationClass}>{ count }</div></div>
@@ -69,10 +76,10 @@ const NavMenu = (props) => {
 				</Link>
 			</li>
 			<li>
-				<Link to="/history" className="on-tooltip" activeClassName="active">
-					<i className="fi flaticon-time" aria-hidden="true"></i>
-					History
-					<i className="tooltip" data-direction="right">History</i>
+				<Link to="users-actions" className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-calendar-6" aria-hidden="true"></i>
+					Recent Actions
+					<i className="tooltip" data-direction="right">Recent Actions</i>
 				</Link>
 			</li>
 			<li>
