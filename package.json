@@ -16,7 +16,8 @@
   ],
   "authors": [
     "Mykyta Ivanchenko <mivansevdon@gmail.com>",
-    "Ihor Oziian <oziian.ihor@gmail.com>"
+    "Ihor Oziian <oziian.ihor@gmail.com>",
+    "Eugene Dubrovskiy <jknoxville712@gmail.com>"
   ],
   "scripts": {
     "test": "better-npm-run test",
