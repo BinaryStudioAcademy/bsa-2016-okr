@@ -82,7 +82,7 @@ and (min-width: 768px) {
 }
 @media all 
 and (max-width: 768px)
-and (min-width: 583px) {
+and (min-width: 501px) {
   #new-objective{
     margin-right: 0px;
     left: 50px;
@@ -102,38 +102,10 @@ and (min-width: 583px) {
   }
 }
 
-@media all 
-and (max-width: 583px)
-and (min-width: 500px) {
-
-  #new-obj-creds {
-    .new-key-result-title {
-      width: 90%
-    }
-    .new-key-result-difficulty {
-      display: inline-block;
-      right: 9%;
-      width: 110px;
-    }
-  }
-  #new-objective{
-    margin-right: 0px;
-    left: 0;
-    top: 170px;
-    padding-top: 15px;
-
-    form{
-      width: 90%;
-    }
-    #close-new-obj-window{
-      right: 20px;
-    }
-  }
-}
 
 @media all 
 and (max-width: 500px)
-and (min-width: 350px) {
+and (min-width: 300px) {
   #new-objective{
     margin-right: 0px;
     left: 0;

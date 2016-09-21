@@ -58,14 +58,16 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 							let objectiveScore = 0; // score of obj
 							let keyResCount = 0;// count of keyRes in obj
 							objective.keyResults.forEach( (keyResult) => {
-								 objectiveScore += keyResult.score;
-								 keyResCount++;
-							})
+								if (!keyResult.isDeleted) {
+									 objectiveScore += keyResult.score;
+									 keyResCount++;
+								 }
+							});
 							if(keyResCount != 0)
 								quarterScore += objectiveScore / keyResCount; // sum up keyRes scores
 							userObjectivesCount ++;
 						}
-					})
+					});
 
 					if(userObjectivesCount != 0) { // if there was no objectives
 						quarterScore = quarterScore / userObjectivesCount;

@@ -76,6 +76,13 @@ const NavMenu = (props) => {
 				</Link>
 			</li>
 			<li>
+				<Link to="users-actions" className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-calendar-6" aria-hidden="true"></i>
+					Recent Actions
+					<i className="tooltip" data-direction="right">Recent Actions</i>
+				</Link>
+			</li>
+			<li>
 				<Link to={`${ ROOT_URL }/charts`} className="on-tooltip" activeClassName="active">
 					<i className="fi-1 flaticon-1-arrow-chart" aria-hidden="true"></i>
 					Statistics

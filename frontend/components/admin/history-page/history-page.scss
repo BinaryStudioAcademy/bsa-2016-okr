@@ -28,10 +28,17 @@
     margin-bottom: 10px;
     span{
       pointer-events: none;
+      margin-right: 8px;
     }
   }
   .btn-blue{
     margin-bottom: 17px;
+    .upIcon{
+      display: inline-block;
+      position: absolute;
+      margin: 5px -2px;
+      font-size: 8px;
+    }
   }
   button{
     .btn-blue:focus{

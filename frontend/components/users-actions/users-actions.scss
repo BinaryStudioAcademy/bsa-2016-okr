@@ -1,0 +1,135 @@
+@import "../common/variables";
+@import '../common/styles/commonStyles';
+
+.users-actions-title {
+	p{
+		box-sizing: border-box;
+		color: #aaaaaa;
+		font-size: 20px;
+		text-align: center;
+		position: relative;
+		padding: 0;
+		margin: 15px 0;
+		
+		span{
+			display: inline-block;
+			padding: 10px;
+			position: relative;
+			background: #f3f6f7;
+			z-index: 10;
+		}
+	}
+	p:after{
+		content: '';
+		display: block;
+		position: absolute;
+		top: 22px;
+		left: 0;
+		height: 0;
+		width: 100%;
+		border-top: 1px solid #aaaaaa;
+		z-index: 0;
+	}
+}
+
+.userActions{
+	padding: 10px 10px;
+  margin: 0 auto;
+  max-width: 500px;
+  min-width: 200px;
+  overflow-y:overlay;
+  
+  .aside{
+    position: absolute;
+    left: -43px;
+    top: 14px;
+    float: left;
+  }
+  
+  .typeIcon{ 
+    background-color: #f3f6f7;
+    font-size: 25px;
+    float: right;
+  }
+
+  .action-body{
+    overflow-y:overlay;
+  }
+
+	.actionEvent{
+    position:relative;
+		padding: 10px 13px 10px 0px;
+	}
+
+  .actionEvent::after{
+    content:" ";
+    width: 300px;
+    border-top:1px solid #DBDBDB;
+  }
+
+  .action-list-container{
+    border-left: 1px solid #DBDBDB;
+    margin-left: 45px;
+  }
+
+	.eventDate{
+		text-align: left;
+		color: #A4A3A3;
+    font-size: 12px;
+    float: left;
+    width: 20px;
+    margin-right:10px;
+    .eventDate-month{ float: left; clear:both;}
+    .eventDate-day{clear:both; width:13px;margin:auto;}
+	}
+
+  .history-target{
+    font-style: italic;
+    font-size: 13px;
+  }
+
+  .author { font-weight: bold; line-height: 25px; }
+  .action-description {  display:inline-block; font-size:14px;}
+  .action-text { margin-left: 20px;}
+
+  .user-avatar{
+    width: 25px;
+    height: 25px;
+    float: left;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+	h1 {
+		color:#AAAAAA;
+		padding:0;
+    	position: relative;
+    	overflow: hidden;
+    	font-size: 18px;
+    	font-weight: normal;
+    	text-align: center;
+ 	}
+  	h1 > span {
+    	display: inline-block;
+    	margin: 0 .4em;
+	}
+  	h1 > span:before,
+  	h1 > span:after {
+    	content: '';
+    	position: absolute;
+   		width: 100%;
+    	border-top: 2px solid #AAAAAA;
+    	margin-top: .6em;
+  	}
+  	h1 > span:before {
+    	margin-left: -102%;
+  	}
+  	h1 > span:after {
+    	margin-left: 2%;
+  	}
+
+    .green{ color: green; }
+    .orange{ color: orange; }
+    .red{ color: red; }
+    .grey{color: #DBDBDB; }
+}

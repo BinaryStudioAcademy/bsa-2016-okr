@@ -16,6 +16,7 @@ import UserRecycleBin from './components/user-recycle-bin/user-recycle-bin.jsx';
 import AdminRecycleBin from './components/admin/admin-recycle-bin/admin-recycle-bin.jsx';
 import ListOfUsers from './components/list-of-users/list-of-users.jsx';
 import StatsPage from './components/dashboard/StatsPage.jsx';
+import UsersActions from './components/users-actions/users-actions.js';
 import NotFound from './components/common/notFound.jsx';
 
 import configureStore from './store/configureStore';
@@ -46,6 +47,7 @@ render(
 				<Route path="obj-accept" component={ObjAccept} onEnter={ adminOnly } />
 				<Route path="okr-managing" component={OKRmanaging} onEnter={ adminOnly } />
 				<Route path="admin-recycle-bin" component={AdminRecycleBin} onEnter={ adminOnly } />
+				<Route path="users-actions" component={ UsersActions } />
 				<Route path="objective" component={ObjectiveView} />
 				<Route path="*" component={NotFound}>
 					<IndexRedirect from="*" to="/" />
