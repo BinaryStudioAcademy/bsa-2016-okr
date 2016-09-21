@@ -28,14 +28,19 @@ case 2:
 	break;
 }
 
+var isDeveloping = process.env.NODE_ENV !== 'production';
+
 var LOCAL_PROD = false;
 if(process.env.LOCAL_PROD != undefined) {
 	LOCAL_PROD = HelpService.stringToBoolean(process.env.LOCAL_PROD);
 }
 
+var ROOT_URL = (isDeveloping || LOCAL_PROD) ? '' : '/okr';
+
 module.exports = {
-	isDeveloping: process.env.NODE_ENV !== 'production',
+	isDeveloping: isDeveloping,
 	LOCAL_PROD: LOCAL_PROD,
+	ROOT_URL: ROOT_URL,
 	user: {
 		localRole: {
 			USER: 'user',

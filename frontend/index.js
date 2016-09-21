@@ -30,13 +30,12 @@ import reducer from './reducers/commonReducer';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
-const { isDeveloping, LOCAL_PROD } = CONST;
-const ROOT_URL = (isDeveloping || LOCAL_PROD) ? '/' : '/okr/';
+const { ROOT_URL } = CONST;
 
 render(
 	(<Provider store={store}>
 		<Router history={history}>
-			<Route path={ ROOT_URL } component={App}>
+			<Route path={ `${ROOT_URL}/` } component={App}>
 				<IndexRoute component={HomePage} />
 				<Route path="users" component={ListOfUsers} />
 				<Route path="user/:id" component={UserPage} />
