@@ -1,8 +1,8 @@
 const async = require('async');
 const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
+const isMentorActionAllowed = ValidateService.isMentorActionAllowed;
 const HelpService = require('../../utils/HelpService');
-const isMentorActionAllowed = HelpService.isMentorActionAllowed;
 const CONST = require('../../config/constants.js');
 
 const UserObjectiveRepository = require('../../repositories/userObjective');
@@ -96,7 +96,7 @@ module.exports = function addKeyResultToUserObjective(
 				// console.log('-----------------------------------');
 				// console.log('KeyResult not found in DB. Creating new template...');
 				// console.log('-----------------------------------');
-				
+
 				var keyResultData = {
 					title: keyResultTitle,
 					creator: userId,
@@ -214,5 +214,5 @@ module.exports = function addKeyResultToUserObjective(
 		}
 		], (err, result) => {
 			return callback(err, result);
-		})	
+		})
 };

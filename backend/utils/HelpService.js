@@ -3,7 +3,6 @@ module.exports = {
 	debounce: debounce,
 	getUniqueValuesFromArray: getUniqueValuesFromArray,
 	getUniqueValuesFromArrayOfObjects: getUniqueValuesFromArrayOfObjects,
-	isMentorActionAllowed: isMentorActionAllowed,
 };
 
 function debounce(func, wait, immediate) {
@@ -60,12 +59,4 @@ function getUniqueValuesFromArrayOfObjects(arr, uniqueProp) {
 	});
 
 	return res;
-}
-
-function isMentorActionAllowed(user, session) {
-	return (
-		(user._id === session._id)
-		|| (user.mentor === session._id)
-		|| (session.localRole === CONST.user.localRole.ADMIN)
-	);
 }
