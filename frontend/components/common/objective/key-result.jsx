@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Rating from '../rating/rating.jsx';
-import { debounce, getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/HelpService';
+import { debounce } from '../../../../backend/utils/HelpService';
+import { getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/KeyResultHelpService';
 
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import sweetalert from 'sweetalert';

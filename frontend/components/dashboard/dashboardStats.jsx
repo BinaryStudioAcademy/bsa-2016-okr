@@ -15,9 +15,7 @@ class DashboardStats extends Component {
 		this.renderRow = this.renderRow.bind(this);
 		this.getProgressBar = this.getProgressBar.bind(this);
 	}
-
-
-
+	
 	handleUserClick(classname) {
 		for (let i = 1; i < 5; i++) {
 			let quarter = document.getElementsByClassName(parseInt(classname) + i)

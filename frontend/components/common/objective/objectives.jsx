@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import cookie from 'react-cookie';
 import sweetalert from 'sweetalert';
 
-import { getUniqueValuesFromArray } from '../../../../backend/utils/HelpService';
+import {
+	getUniqueValuesFromArray,
+	isMentorActionAllowed
+} from '../../../../backend/utils/HelpService';
+
 import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
 const CONST = require('../../../../backend/config/constants.js');
 
@@ -96,7 +100,7 @@ class Objectives extends Component {
 		var quarterId;
 		var flag;
 		const { user } = this.props.user;
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) 
+		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
 			{
 			this.props.user.user.quarters.forEach( (quarter) => {
 				if (quarter.index == index && quarter.year == this.props.user.selectedYear)
@@ -225,7 +229,7 @@ class Objectives extends Component {
 
 	getYears(quarters) {
 		quarters = !isEmpty(quarters) ? quarters : [];
-		
+
 		let years = quarters.map((quarter) => {
 			return quarter.year;
 		});
@@ -303,20 +307,22 @@ class Objectives extends Component {
 			archived = true;
 		}
 
+		const editMode = isMentorActionAllowed(userInfo, me);
+
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
 						changeTab={ this.changeTab }
 						changeYear={ this.changeYear }
-						selectedYear= { selectedYear }
+						selectedYear={ selectedYear }
 						selectedTab={ selectedTab }
 						addNewQuarter={ this.handleAddingNewQuarter }
-						archiveQuarter={this.handleArchivingQuarter }
+						archiveQuarter={ this.handleArchivingQuarter }
 						years={ years }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
-						me={ isItHomePage }
-						mentorId = { userInfo.mentorId } />
+						editMode={ editMode }
+						userId={ userInfo._id } />
 				<div id='objectives'>
 					<ObjectivesList
 						mentorId={userInfo.mentorId}
@@ -351,21 +357,22 @@ Objectives.defaultProps = { today: new Date() };
 function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let quarters = [];
 	let objectives = [];
-	let id = userObject._id;
-	let mentor;
+	let { _id, localRole } = userObject;
+	let mentorId;
 
-	if(userObject.mentor != undefined || userObject.mentor != null)
-		mentor = userObject.mentor._id;
-	//console.log('userObject', userObject)
+	if(userObject.mentor != undefined || userObject.mentor != null) {
+		mentorId = userObject.mentor._id;
+	}
+
 	if (userObject.quarters != undefined) {
-		var current_quarter = userObject.quarters.find((quarter) => {
+		let currentQuarter = userObject.quarters.find((quarter) => {
 			return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 		});
 
-		if(current_quarter != undefined) {
-			objectives = current_quarter.userObjectives;
+		if(currentQuarter != undefined) {
+			objectives = currentQuarter.userObjectives;
 		} else {
-			objectives = []
+			objectives = [];
 		}
 
 		quarters = userObject.quarters.filter(quarter => {
@@ -374,10 +381,12 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	}
 
 	return {
-		quarters: quarters,
-	  objectives: objectives,
-	  id: id,
-	  mentorId: mentor
+		quarters,
+	  objectives,
+		_id,
+	  mentorId,
+		mentor: mentorId,
+		localRole,
 	};
 }
 

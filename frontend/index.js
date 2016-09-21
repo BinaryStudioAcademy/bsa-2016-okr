@@ -30,19 +30,20 @@ import reducer from './reducers/commonReducer';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
-const ROOT_URL = '/';
+const { isDeveloping, LOCAL_PROD } = CONST;
+const ROOT_URL = (isDeveloping || LOCAL_PROD) ? '/' : '/okr/';
 
 render(
 	(<Provider store={store}>
 		<Router history={history}>
-			<Route path="/" component={App}>
+			<Route path={ ROOT_URL } component={App}>
 				<IndexRoute component={HomePage} />
 				<Route path="users" component={ListOfUsers} />
 				<Route path="user/:id" component={UserPage} />
 				<Route path="recycle-bin" component={UserRecycleBin} />
-				<Route path="charts" component={StatsPage} onEnter={ adminOnly } />
+				<Route path="charts" component={StatsPage} />
+				<Route path="history" component={History} />
 				<Route path="roles" component={RolesPage} onEnter={ adminOnly } />
-				<Route path="history" component={History} onEnter={ adminOnly } />
 				<Route path="obj-accept" component={ObjAccept} onEnter={ adminOnly } />
 				<Route path="okr-managing" component={OKRmanaging} onEnter={ adminOnly } />
 				<Route path="admin-recycle-bin" component={AdminRecycleBin} onEnter={ adminOnly } />

@@ -1,14 +1,15 @@
 import axios from 'axios';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-import { 
+import {
 	getNotAprovedObjectivesRequest,
-	getNotAprovedKeysRequest, 
+	getNotAprovedKeysRequest,
 } from './acceptObjectiveActions.js'
 
-import { 
-	getStats, 
-	getMyHistory, 
-	OTHER_PERSON_PAGE 
+import {
+	getStats,
+	getMyHistory,
+	OTHER_PERSON_PAGE
 } from './userDashboardActions';
 
 export const GET_USER = 'GET_USER';
@@ -34,7 +35,7 @@ export function arhiveUserQuarter(id, flag) {
 		dispatch({ type: ARCHIVE_USER_QUARTER});
 		dispatch({ type: ADD_REQUEST });
 		let url = `/api/quarters/${ id }/archive/${ flag }`;
-		
+
 		return axios.put(url)
 		.then( response => {
 			dispatch({ type: REMOVE_REQUEST	});
@@ -96,13 +97,13 @@ export function addNewObjective(body) {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
 		})
-		.then(() => {	
+		.then(() => {
 			dispatch(getStats(OTHER_PERSON_PAGE));
 			dispatch(getMyHistory(OTHER_PERSON_PAGE));
 		})
 		.then(() => {
 			let localRole = getStore().myState.me.localRole;
-			
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
@@ -214,7 +215,7 @@ export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
 			dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE });
 			dispatch({ type: REMOVE_REQUEST });
 		})
-		.then(() => {	
+		.then(() => {
 			dispatch(getMyHistory(OTHER_PERSON_PAGE));
 		})
 		.catch(response => {

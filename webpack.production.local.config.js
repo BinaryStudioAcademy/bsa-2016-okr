@@ -34,7 +34,8 @@ module.exports = {
       modules: false
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.LOCAL_PROD': JSON.stringify(process.env.LOCAL_PROD),
     })
   ],
   module: {
@@ -56,7 +57,7 @@ module.exports = {
       test: /\.scss$/,
       loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
       // loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss!sass')
-    }, { 
+    }, {
       test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
       loader: 'file?name=fonts/[name].[ext]'
     }]

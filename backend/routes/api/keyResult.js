@@ -6,7 +6,8 @@ const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
 const isCorrectId = ValidateService.isCorrectId;
 const HelpService = require('../../utils/HelpService');
-const getValidDifficulty = HelpService.getValidDifficulty;
+const KeyResultHelpService = require('../../utils/KeyResultHelpService');
+const getValidDifficulty = KeyResultHelpService.getValidDifficulty;
 
 router.post('/', adminOnly, (req, res, next) => {
 	var objectiveId = req.body.objectiveId || '';
@@ -16,7 +17,7 @@ router.post('/', adminOnly, (req, res, next) => {
 
 	title = title.trim();
 	difficulty = getValidDifficulty(difficulty.trim());
-	
+
 	if(!isCorrectId(objectiveId)
 	|| isEmpty(title)) {
 		return res.badRequest();

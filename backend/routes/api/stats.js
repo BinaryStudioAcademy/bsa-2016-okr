@@ -7,7 +7,7 @@ const service = require('../../services/stats');
 // router.get('/users', (req, res, next) => {
 // 	var sort = req.query.sort === "desc" ? 1 : -1;
 // 	var limit = req.query.limit || 5;
-	
+
 // 	var limit = Number.parseInt(limit);
 
 // 	if(Number.isNaN(limit)) {
@@ -48,7 +48,8 @@ router.get('/users', (req, res, next) => {
 		limit = 5;
 	}
 
-	service.getAllUsersStatsWithQuarters(sort, limit, userId, year, res.callback);
+	// service.getAllUsersStatsWithQuarters(sort, limit, userId, year, res.callback);
+	return res.callback();
 });
 
 router.get('/users/:id', (req, res, next) => {

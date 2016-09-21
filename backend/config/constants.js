@@ -1,3 +1,5 @@
+const HelpService = require('../utils/HelpService');
+
 var date = new Date();
 var currentYear = date.getFullYear();
 var currentMonth = date.getMonth() + 1;
@@ -26,8 +28,14 @@ case 2:
 	break;
 }
 
+var LOCAL_PROD = false;
+if(process.env.LOCAL_PROD != undefined) {
+	LOCAL_PROD = HelpService.stringToBoolean(process.env.LOCAL_PROD);
+}
+
 module.exports = {
 	isDeveloping: process.env.NODE_ENV !== 'production',
+	LOCAL_PROD: LOCAL_PROD,
 	user: {
 		localRole: {
 			USER: 'user',

@@ -50,13 +50,7 @@ module.exports = function (req, res, next) {
 		res.clearCookie('user-id');
 		res.clearCookie('x-access-token');
 
-		var localRedirect = false;
-
-		if(process.env.LOCAL_PROD != undefined) {
-			localRedirect = stringToBoolean(process.env.LOCAL_PROD);
-		}
-
-		if(localRedirect) {
+		if(CONST.LOCAL_PROD) {
 			return res.redirect(CONST.links.LOCAL_AUTH);
 		} else {
 			return res.redirect(CONST.links.PROD_AUTH);

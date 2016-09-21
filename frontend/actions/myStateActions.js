@@ -7,7 +7,11 @@ import {
 	getNotAprovedObjectivesRequest,
 	getNotAprovedKeysRequest,
 } from './acceptObjectiveActions';
-import { getStats, getMyHistory } from './userDashboardActions';
+
+import {
+	getStats,
+	getMyHistory
+} from './userDashboardActions';
 
 export const GET_MY_OBJECTIVES = 'GET_MY_OBJECTIVES';
 export const RECEIVED_MY_OBJECTIVES_ERROR = 'RECEIVED_MY_OBJECTIVES_ERROR';
@@ -62,7 +66,7 @@ export function archiveMyQuarter(id, flag) {
 export function reset() {
 	 return {
 	 	type: RESET
-	 }  
+	 }
 }
 
 export function getMe() {
@@ -101,7 +105,7 @@ export function getMeBasic() {
 		})
 		.then(() => {
 			let localRole = getStore().myState.me.localRole;
-			
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
@@ -232,7 +236,7 @@ export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
 			dispatch(softDeleteMyObjectiveById(id, flag));
 			dispatch({ type: REMOVE_REQUEST	});
 
-			
+
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));
@@ -245,7 +249,7 @@ export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
 		})
 /*		.then(() => {
 			let localRole = getStore().myState.me.localRole;
-			
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
@@ -279,7 +283,7 @@ export function addNewObjective(body, callback, userId) {
 		})
 		/*.then(() => {
 			let localRole = getStore().myState.me.localRole;
-					
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
@@ -355,7 +359,7 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, fl
 				})
 				/*.then(() => {
 					let localRole = getStore().myState.me.localRole;
-					
+
 					if(localRole === CONST.user.localRole.ADMIN) {
 						dispatch(getNotAprovedObjectivesRequest());
 						dispatch(getNotAprovedKeysRequest());

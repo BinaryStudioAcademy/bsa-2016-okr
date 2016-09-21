@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ObjectiveInput from './objectiveInput.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import './objective.scss';
 
-class ObjectiveList extends React.Component{
+class ObjectiveList extends Component {
 
  	constructor(props) {
  		super(props);
@@ -103,8 +103,7 @@ class ObjectiveList extends React.Component{
 		return (
 			<div id="project-category" className="category">{ this.getCategoryItems() }</div>
 		);
-
 	}
 }
 
-export default ObjectiveList
+export default ObjectiveList;
