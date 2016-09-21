@@ -39,6 +39,13 @@ const NavMenu = (props) => {
 				</Link>
 			</li>
 			<li>
+				<Link to={`${ ROOT_URL }/history`} className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-time" aria-hidden="true"></i>
+					History
+					<i className="tooltip" data-direction="right">History</i>
+				</Link>
+			</li>
+			<li>
 				<Link to={`${ ROOT_URL }/admin-recycle-bin`} className="on-tooltip" activeClassName="active">
 					<i className="fi flaticon-garbage-1" aria-hidden="true">
 						<div className="badge">
@@ -69,14 +76,7 @@ const NavMenu = (props) => {
 				</Link>
 			</li>
 			<li>
-				<Link to={`${ ROOT_URL }/history`} className="on-tooltip" activeClassName="active">
-					<i className="fi flaticon-time" aria-hidden="true"></i>
-					History
-					<i className="tooltip" data-direction="right">History</i>
-				</Link>
-			</li>
-			<li>
-				<Link to="users-actions" className="on-tooltip" activeClassName="active">
+				<Link to={`${ ROOT_URL }/users-actions`} className="on-tooltip" activeClassName="active">
 					<i className="fi flaticon-calendar-6" aria-hidden="true"></i>
 					Recent Actions
 					<i className="tooltip" data-direction="right">Recent Actions</i>
