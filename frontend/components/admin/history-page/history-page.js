@@ -27,6 +27,7 @@ class HistoryPage extends React.Component {
       let filter = document.querySelector("button.btn.btn-blue");
       filter.blur();
       handler_filter_click.call(this, event);
+      this.handleFilterButton();
    }
 
    filterButtonState(show) {
@@ -66,7 +67,8 @@ class HistoryPage extends React.Component {
        //       </div>
        //    );
        // }
-   
+      let showFilters = this.props.history.showHistoryFilters;
+      console.log(showFilters)
       return (
          <div>
             <CentralWindow fullScreen={ true }>
@@ -79,6 +81,7 @@ class HistoryPage extends React.Component {
                         <button className="btn btn-blue" onClick={this.handleFilterShow}>
                            <i className="fi flaticon-funnel"/>
                            &nbsp;Filter
+                           <i className={ `fi-1 flaticon-1-arrow-${ showFilters ? 'up' : 'down' } upIcon` }/>
                         </button>
                         <div className="history-filter-container">
                            <div className="history-filter-bar-container">
