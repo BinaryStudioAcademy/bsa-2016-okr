@@ -14,7 +14,9 @@
     "bsa16",
     "okr"
   ],
-  "author": "BSA-2016",
+  "authors": [
+    "Mykyta Ivanchenko <mivansevdon@gmail.com>"
+  ],
   "scripts": {
     "test": "better-npm-run test",
     "test:watch": "better-npm-run test:watch",
