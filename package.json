@@ -15,7 +15,8 @@
     "okr"
   ],
   "authors": [
-    "Mykyta Ivanchenko <mivansevdon@gmail.com>"
+    "Mykyta Ivanchenko <mivansevdon@gmail.com>",
+    "Ihor Oziian <oziian.ihor@gmail.com>"
   ],
   "scripts": {
     "test": "better-npm-run test",
