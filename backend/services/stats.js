@@ -120,19 +120,25 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 
 			var statArr = statsArr.slice(0, limit)
 			var userStats = null;
-			
-			var inTop = statArr.some((elem) => {
-				return selectedUser.userInfo._id === elem.userInfo._id;
-			});
-
-			if (inTop) {
-				userStats = {
-					totalScore: selectedUser.totalScore,
-					inTop: true,
-				};
-			}	else {
-				userStats = selectedUser;
+			if(selectedUser){
+				var inTop = statArr.some((elem) => {
+					return selectedUser.userInfo._id === elem.userInfo._id;
+				});
+	
+				if (inTop) {
+					userStats = {
+						totalScore: selectedUser.totalScore,
+						inTop: true,
+					};
+				}	else {
+					userStats = selectedUser;
+				}
 			}
+			else 
+				userStats = {
+					inTop: false,
+					totalScore: 0
+				}
 			
 			var bottomStats = statsArr[statsArr.length - 1];
 			var respObj = {

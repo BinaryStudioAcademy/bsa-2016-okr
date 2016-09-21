@@ -1,3 +1,5 @@
+const CONST = require('../config/constants.js')
+
 module.exports = {
 	stringToBoolean: stringToBoolean,
 	debounce: debounce,
@@ -63,6 +65,7 @@ function getUniqueValuesFromArrayOfObjects(arr, uniqueProp) {
 }
 
 function isMentorActionAllowed(user, session) {
+	const CONST = require('../config/constants.js')
 	return (
 		(user._id === session._id)
 		|| (user.mentor === session._id)

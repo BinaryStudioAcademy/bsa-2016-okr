@@ -306,7 +306,6 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
-
 		const editMode = isMentorActionAllowed(userInfo, me);
 
 		return (
