@@ -5,7 +5,6 @@ module.exports = {
 	debounce: debounce,
 	getUniqueValuesFromArray: getUniqueValuesFromArray,
 	getUniqueValuesFromArrayOfObjects: getUniqueValuesFromArrayOfObjects,
-	isMentorActionAllowed: isMentorActionAllowed,
 };
 
 function debounce(func, wait, immediate) {
@@ -63,6 +62,7 @@ function getUniqueValuesFromArrayOfObjects(arr, uniqueProp) {
 
 	return res;
 }
+<<<<<<< HEAD
 
 function isMentorActionAllowed(user, session) {
 	const CONST = require('../config/constants.js')
@@ -72,3 +72,5 @@ function isMentorActionAllowed(user, session) {
 		|| (session.localRole === CONST.user.localRole.ADMIN)
 	);
 }
+=======
+>>>>>>> f46f9e7f4b9e51baaacd8e2d5ef8caec6f2ad8eb

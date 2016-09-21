@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import cookie from 'react-cookie';
 import sweetalert from 'sweetalert';
 
-import {
-	getUniqueValuesFromArray,
-	isMentorActionAllowed
-} from '../../../../backend/utils/HelpService';
+import { getUniqueValuesFromArray } from '../../../../backend/utils/HelpService';
+
+import { isMentorActionAllowed } from '../../../../backend/utils/ValidateService';
 
 import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
 const CONST = require('../../../../backend/config/constants.js');
