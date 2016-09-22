@@ -30,19 +30,27 @@ class UsersActions extends Component {
 						</div>
 					</CentralWindow>
         </div>
-      )}
-		return(
-			<div>
-				<CentralWindow fullScreen={ true }>
-					<div className='users-actions-title'>
-							<p><span>Users Actions</span></p>
-					</div>
-					<div>
-						<UsersActionsItem items={ visibleItems } />
-					</div>
-				</CentralWindow>
-			</div>
-		)
+      )
+    } else {
+    	let items = visibleItems.filter(item => {
+    		return ((item.type.indexOf('OBJECTIVE') != -1 || 
+								item.type.indexOf('KEY_RESULT') != -1 ) && 
+								item.type.indexOf('UPDATE') == -1 && 
+								item.type.indexOf('CHANGE') == -1) 
+    	});
+			return(
+				<div>
+					<CentralWindow fullScreen={ true }>
+						<div className='users-actions-title'>
+								<p><span>Users Actions</span></p>
+						</div>
+						<div>
+							<UsersActionsItem items={ items } />
+						</div>
+					</CentralWindow>
+				</div>
+			)
+		}
 	}
 }
 

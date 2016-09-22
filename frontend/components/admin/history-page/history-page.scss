@@ -28,16 +28,14 @@
     margin-bottom: 10px;
     span{
       pointer-events: none;
-      margin-right: 8px;
+      margin-right: 4px;
     }
   }
   .btn-blue{
     margin-bottom: 17px;
+    padding: 10px 20px;
     .upIcon{
-      display: inline-block;
-      position: absolute;
-      margin: 5px -2px;
-      font-size: 8px;
+      font-size: 10px;
     }
   }
   button{

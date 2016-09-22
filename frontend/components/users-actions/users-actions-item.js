@@ -22,7 +22,7 @@ class UserHistory extends Component {
 					<p className="action-description">added { this.getActionObjectName(item) }</p>
 				</div>
 			);
-		} else if (item.type.indexOf('UPDATE') != -1) {
+	/*	} else if (item.type.indexOf('UPDATE') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
@@ -31,7 +31,7 @@ class UserHistory extends Component {
 					</p>
 					<p className="action-description">updated { this.getActionObjectName(item) }</p>
 				</div>
-			);
+			);*/
 		} else if ((item.type.indexOf('CHANGE') != -1) && (item.type.indexOf('SCORE') != -1)) {
 			return (
 				<div className="action-text">
@@ -44,7 +44,7 @@ class UserHistory extends Component {
 					</p>
 				</div>
 			);
-		} else if (item.type.indexOf('TITLE') != -1) {
+		/*} else if (item.type.indexOf('TITLE') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
@@ -65,7 +65,7 @@ class UserHistory extends Component {
 						changed difficulty { this.getActionObjectName(item) } to { item.userKeyResultDifficulty }
 					</p>
 				</div>
-			);
+			);*/
 		} else if(item.type.indexOf('DELETE') != -1) {
 			return (
 				<div className="action-text">
@@ -106,7 +106,7 @@ class UserHistory extends Component {
 					<p className="action-description">archived { this.getActionObjectName(item) }</p>
 				</div>
 			);
-		} else if (item.type.indexOf('TOOK_APPRENTICE') != -1) {
+		/*} else if (item.type.indexOf('TOOK_APPRENTICE') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
@@ -125,7 +125,7 @@ class UserHistory extends Component {
 					</p>
 					<p className="action-description">finished mentoring { this.getActionObjectName(item) }</p>
 				</div>
-			);
+			); */ 
 		}
 	}
 
@@ -148,10 +148,10 @@ class UserHistory extends Component {
 			} else {
 				return (<span>key result <span className="history-target">"{historyItem.keyResult.title}"</span></span>);
 			}
-		} else if(historyItem.type.indexOf('APPRENTICE') !== -1){
+		/*} else if(historyItem.type.indexOf('APPRENTICE') !== -1){
       return (<span><span className="history-target">{historyItem.user.userInfo.firstName} {historyItem.user.userInfo.lastName}</span></span>);
     } else if(historyItem.type.indexOf('CATEGORY') !== -1){
-    	return (<span>category <span className="history-target">"{historyItem.category.title}"</span></span>);
+    	return (<span>category <span className="history-target">"{historyItem.category.title}"</span></span>);*/
   	} else {
     	return (<span>historyItem == undefined</span>)
     }
@@ -160,8 +160,8 @@ class UserHistory extends Component {
 	getIconType(item) {
 		if(item.type.indexOf('ADD') != -1)
 			return "fi flaticon-plus typeIcon green"
-		else if (item.type.indexOf('UPDATE') != -1 || item.type.indexOf('CHANGE') != -1)
-			return "fi flaticon-success typeIcon orange"
+		/*else if (item.type.indexOf('UPDATE') != -1 || item.type.indexOf('CHANGE') != -1)
+			return "fi flaticon-success typeIcon orange"*/
 		else if (item.type.indexOf('DELETE') != -1)
 			return "fi flaticon-error typeIcon red"
 		else if (item.type.indexOf('RESTORE') != -1)
@@ -170,10 +170,10 @@ class UserHistory extends Component {
 			return "fi flaticon-bookmark-1 typeIcon green"
 		else if (item.type.indexOf('ARCHIVED') != -1)
 			return "fi flaticon-archive-2 typeIcon orange"
-		else if (item.type.indexOf('TOOK') != -1)
+		/*else if (item.type.indexOf('TOOK') != -1)
 			return "fi flaticon-user-3 typeIcon green"
 		else if (item.type.indexOf('REMOVE') != -1)
-			return "fi flaticon-user-3 typeIcon red"
+			return "fi flaticon-user-3 typeIcon red"*/
 	}
 
 	render() {
@@ -190,6 +190,7 @@ class UserHistory extends Component {
 					{ this.getActionType(item) }
 				</div>
 			)
+		
 		});
 		
 		return (

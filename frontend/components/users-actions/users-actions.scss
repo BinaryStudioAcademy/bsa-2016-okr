@@ -34,8 +34,8 @@
 
 .userActions{
 	padding: 10px 10px;
-  margin: 0 auto;
-  max-width: 500px;
+  margin: 0 40px;
+  max-width: 700px;
   min-width: 200px;
   overflow-y:overlay;
   
@@ -71,6 +71,12 @@
     border-left: 1px solid #DBDBDB;
     margin-left: 45px;
   }
+  /* .action-list-container:nth-child(odd){
+    .action-text{
+      margin-left: -100px;
+      padding: 10px 13px 10px 0px;  
+    }
+  } */
 
 	.eventDate{
 		text-align: left;
@@ -88,7 +94,7 @@
     font-size: 13px;
   }
 
-  .author { font-weight: bold; line-height: 25px; }
+  .author { font-weight: bold; line-height: 25px; display: inline-block; font-size: 15px;}
   .action-description {  display:inline-block; font-size:14px;}
   .action-text { margin-left: 20px;}
 
@@ -132,4 +138,10 @@
     .orange{ color: orange; }
     .red{ color: red; }
     .grey{color: #DBDBDB; }
+}
+
+@media all and (max-width: 700px){
+  .userActions {
+   .author { display: block; }
+  }
 }
