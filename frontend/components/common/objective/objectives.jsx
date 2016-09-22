@@ -250,12 +250,15 @@ class Objectives extends Component {
 		let selectedTab = '';
 		let userInfo = {};
 		let years = [];
+		let displayedCategories = [];
 
-		const displayedCategories = categories.list.filter((category) => {
-			return !category.isDeleted;
-		}).sort((a, b) => {
-			return a.title.localeCompare(b.title)
-		});
+		if (!isEmpty(categories.list)) {
+			displayedCategories = categories.list.filter((category) => {
+				return !category.isDeleted;
+			}).sort((a, b) => {
+				return a.title.localeCompare(b.title)
+			});
+		}
 
 		// Edit key result on HomePage or UserPage
 		let editKeyResult = {};
