@@ -3,6 +3,7 @@ module.exports = {
 	debounce: debounce,
 	getUniqueValuesFromArray: getUniqueValuesFromArray,
 	getUniqueValuesFromArrayOfObjects: getUniqueValuesFromArrayOfObjects,
+	isStringsEqual: isStringsEqual,
 };
 
 function debounce(func, wait, immediate) {
@@ -59,4 +60,12 @@ function getUniqueValuesFromArrayOfObjects(arr, uniqueProp) {
 	});
 
 	return res;
+}
+
+function isStringsEqual(a, b) {
+	return (
+		(typeof a === typeof '')
+		&& (typeof b === typeof '')
+		&& (a === b)
+	);
 }

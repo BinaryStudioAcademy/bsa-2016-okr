@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import cookie from 'react-cookie';
 import sweetalert from 'sweetalert';
 
-import { getUniqueValuesFromArray } from '../../../../backend/utils/HelpService';
-
-import { isMentorActionAllowed } from '../../../../backend/utils/ValidateService';
-
-import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
+import { isEmpty, isCorrectId, isMentorActionAllowed } from '../../../../backend/utils/ValidateService';
+import { isStringsEqual } from '../../../../backend/utils/HelpService';
+import { getYears } from '../../../../backend/utils/UIHelpService';
 import CONST from '../../../../backend/config/constants.js';
 
 import { bindActionCreators } from 'redux';
@@ -42,7 +40,6 @@ class Objectives extends Component {
 		this.handleArchive = this.handleArchive.bind(this);
 		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
 		this.getDuplicateObjectiveByTitle = this.getDuplicateObjectiveByTitle.bind(this);
-		this.getYears = this.getYears.bind(this);
 	}
 
 	componentWillMount() {
@@ -53,14 +50,14 @@ class Objectives extends Component {
 		this.props.myStateActions.setChangeTab(num);
 	}
 
-	handleArchive (changeTo, objectiveId) {
+	handleArchive(changeTo, objectiveId) {
 		let arch = changeTo ? 'archive' : 'unarchive';
 		sweetalert({
 			title: `Do you really want to ${arch} this objective?`,
-			type: "warning",
+			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonColor: '#4caf50',
+			confirmButtonText: 'OK',
 			closeOnConfirm: true
 		}, () => {
 			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
@@ -70,24 +67,35 @@ class Objectives extends Component {
 	changeYear(year) {
 		const { user } = this.props.user;
 		const userId = this.props.userId || session;
-		this.props.myStateActions.setChangeYear(year);
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
-			this.props.userDashboardActions.getStats(CONST.page.OTHER_PERSON_PAGE);
-		}	else {
+		const isItHomePage = !isStringsEqual(user._id, userId);
+
+		if (isItHomePage) {
+			this.props.myStateActions.setChangeYear(year);
 			this.props.userDashboardActions.getStats();
+		}	else {
+			this.props.otherPersonActions.setChangeYear(year);
+			this.props.userDashboardActions.getStats(CONST.page.OTHER_PERSON_PAGE);
 		}
 	}
 
 	handleAddingNewQuarter(newQuarter) {
 		sweetalert({
-			title: "Create new quarter?",
-			type: "warning",
+			title: 'Create new quarter?',
+			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "Yes, create",
+			confirmButtonColor: '#4caf50',
+			confirmButtonText: 'Yes, create',
 			closeOnConfirm: true
 		}, () => {
-			this.props.myStateActions.createQuarter(newQuarter);
+			const { userId } = this.props;
+			const { user } = this.props.user;
+			let isItHomePage = !isStringsEqual(user._id, userId);
+
+			if(isItHomePage) {
+				this.props.myStateActions.createQuarter(newQuarter);
+			} else {
+				this.props.otherPersonActions.createQuarter(newQuarter);
+			}
 		});
 	}
 
@@ -96,30 +104,32 @@ class Objectives extends Component {
 	}
 
 	handleArchivingQuarter(index) {
-		var quarterId;
-		var flag;
+		let quarterId;
+		let flag;
 		const { user } = this.props.user;
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
-			{
-			this.props.user.user.quarters.forEach( (quarter) => {
-				if (quarter.index == index && quarter.year == this.props.user.selectedYear)
-				{
-					quarterId = quarter._id;
-					flag = !quarter.isArchived;
-				}
-			})
-			this.props.otherPersonActions.archiveUserQuarter(quarterId, flag);
-		}	else {
+		const { userId } = this.props;
+		const isItHomePage = !isStringsEqual(user._id, userId);
+		if (isItHomePage) {
 			this.props.myState.me.quarters.forEach( (quarter) => {
 				if (quarter.index == index && quarter.year == this.props.myState.selectedYear)
 				{
 					quarterId = quarter._id;
 					flag = !quarter.isArchived;
 				}
-			})
+			});
+
 			this.props.myStateActions.archiveMyQuarter(quarterId, flag);
+		}	else {
+			this.props.user.user.quarters.forEach( (quarter) => {
+				if (quarter.index == index && quarter.year == this.props.user.selectedYear)
+				{
+					quarterId = quarter._id;
+					flag = !quarter.isArchived;
+				}
+			});
+
+			this.props.otherPersonActions.archiveUserQuarter(quarterId, flag);
 		}
-		//console.log(this.props.myState);
 	}
 
 	changeKeyResultScore(objectiveId, mentorId) {
@@ -184,6 +194,7 @@ class Objectives extends Component {
 					quarterId: quarter._id,
 					userId: userId,
 				};
+
 				if (this.props.userId == undefined) {
 					if (this.props.mentorId != undefined)
 						this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
@@ -226,31 +237,16 @@ class Objectives extends Component {
 		};
 	}
 
-	getYears(quarters) {
-		quarters = !isEmpty(quarters) ? quarters : [];
-
-		let years = quarters.map((quarter) => {
-			return quarter.year;
-		});
-
-		years.push(CONST.currentYear);
-		years.push(CONST.currentYear + 1);
-		years = getUniqueValuesFromArray(years);
-		years.sort((a, b) => { return b - a });
-
-		return years;
-	}
-
 	render() {
-		const { categories } = this.props
-		const userId = this.props.userId;
-		const { me } = this.props.myState;
+		const { categories, userId } = this.props;
 		const { user } = this.props.user;
+		const { me } = this.props.myState;
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
 		let years = [];
 		let displayedCategories = [];
+		let archived;
 
 		if (!isEmpty(categories.list)) {
 			displayedCategories = categories.list.filter((category) => {
@@ -264,33 +260,15 @@ class Objectives extends Component {
 		let editKeyResult = {};
 
 		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
-		let isItHomePage;
-		let archived;
-		let isAdmin = this.props.myState.me.localRole === 'admin' ? true : false;
+		let isItHomePage = !isStringsEqual(user._id, userId);
+		let isAdmin = this.props.myState.me.localRole === CONST.user.localRole.ADMIN ? true : false;
 
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
-			/*console.log('user');*/
-			isItHomePage = false;
-			selectedYear = this.props.user.selectedYear;
-			selectedTab = this.props.user.selectedTab;
-			userInfo = getObjectivesData(user, selectedYear, selectedTab);
-			years = this.getYears(user.quarters);
-
-			// Edit key result on UserPage
-			editKeyResult = {
-				id: this.props.user.editKeyResultId,
-				isEditing: this.props.user.editKeyResultIsEditing,
-				enableEdit: this.props.otherPersonActions.editKeyResultEnableEditOnUserPage,
-				disableEdit: this.props.otherPersonActions.editKeyResultDisabledEditOnUserPage,
-				editTitleAndDifficulty: this.props.otherPersonActions.editKeyResultEditTitleAndDifficulty,
-			};
-		} else {
+		if (isItHomePage) {
 			/*console.log('me');*/
-			isItHomePage = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
-			years = this.getYears(me.quarters);
+			years = getYears(me.quarters);
 
 			// console.log('¯\\_(ツ)_/¯: selectedTab', selectedTab);
 			// console.log('¯\\_(ツ)_/¯: selectedYear', selectedYear);
@@ -303,6 +281,20 @@ class Objectives extends Component {
 				disableEdit: this.props.myStateActions.editKeyResultDisabledEditOnHomePage,
 				editTitleAndDifficulty: this.props.myStateActions.editKeyResultEditTitleAndDifficulty,
 			};
+		} else {
+			selectedYear = this.props.user.selectedYear;
+			selectedTab = this.props.user.selectedTab;
+			userInfo = getObjectivesData(user, selectedYear, selectedTab);
+			years = getYears(user.quarters);
+
+			// Edit key result on UserPage
+			editKeyResult = {
+				id: this.props.user.editKeyResultId,
+				isEditing: this.props.user.editKeyResultIsEditing,
+				enableEdit: this.props.otherPersonActions.editKeyResultEnableEditOnUserPage,
+				disableEdit: this.props.otherPersonActions.editKeyResultDisabledEditOnUserPage,
+				editTitleAndDifficulty: this.props.otherPersonActions.editKeyResultEditTitleAndDifficulty,
+			};
 		}
 
 		if (( CONST.currentYear < selectedYear ||
@@ -312,6 +304,7 @@ class Objectives extends Component {
 		} else {
 			archived = true;
 		}
+
 		const editMode = isMentorActionAllowed(userInfo, me);
 
 		return (
@@ -353,7 +346,7 @@ class Objectives extends Component {
 					/>
 				</div>
 			</div>
-		)
+		);
 	}
 }
 

@@ -1,4 +1,7 @@
-import { GET_USER,
+import { getTabForYear, addNewQuarter } from '../../backend/utils/UIHelpService';
+
+import {
+	GET_USER,
 	RECEIVED_USER,
 	CHANGE_TAB,
 	CHANGE_YEAR,
@@ -7,17 +10,24 @@ import { GET_USER,
 	ADDED_NEW_OBJECTIVE_OTHER_USER,
 	EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE,
 	EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE,
+	ADD_NEW_QUARTER,
 	ARCHIVE_USER_QUARTER,
 	RECEIVED_USER_ERROR,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE,
-	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE } from '../actions/otherPersonActions.js'
-import { CHANGED_KEYRESULT_SCORE,
+	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE,
+	RECEIVED_ERROR
+} from '../actions/otherPersonActions.js'
+
+import {
+	CHANGED_KEYRESULT_SCORE,
 	CHANGED_KEYRESULT_SCORE_ERROR,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
 	UPDATE_USER_OBJECTIVE,
 	RESET,
-	CHANGE_ARCHIVE_STATUS_LOCAL } from '../actions/myStateActions.js'
+	CHANGE_ARCHIVE_STATUS_LOCAL
+} from '../actions/myStateActions.js'
+
 import { ADD_NEW_KEY_RESULT_TO_OBJECTIVE_OTHER_PERSON } from '../actions/keyResultActions';
 
 import { currentYear, currentQuarter } from '../../backend/config/constants'
@@ -63,7 +73,7 @@ export default function otherPersonReducer(state = initialState, action) {
 			return Object.assign({}, initialState, {
 				error:true,
 				waiting: false
-			})
+			});
 		}
 
 		case RESET: {
@@ -75,8 +85,7 @@ export default function otherPersonReducer(state = initialState, action) {
 			})
 		}
 
-		case CHANGE_TAB:
-		{
+		case CHANGE_TAB: {
 			const { selectedTab } = action;
 
 			return Object.assign({}, state, {
@@ -84,17 +93,18 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
-		case CHANGE_YEAR:
-		{
+		case CHANGE_YEAR: {
 			const { selectedYear } = action;
 
+			const selectedTab = getTabForYear(state.user.quarters, selectedYear);
+
 			return Object.assign({}, state, {
-				selectedYear
+				selectedYear: parseInt(selectedYear, 10),
+				selectedTab,
 			});
 		}
 
-		case TOOK_APPRENTICE:
-		{
+		case TOOK_APPRENTICE:	{
 			const { response, me } = action;
 			let userCopy = Object.assign({}, state.user);
 			userCopy.mentor = {
@@ -213,8 +223,7 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
-		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE:
-		{
+		case EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE: {
 			let { data } = action;
 
 			console.log(EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE);
@@ -223,26 +232,44 @@ export default function otherPersonReducer(state = initialState, action) {
 			return state;
 		}
 
-		case EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE:
-		{
+		case EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE: {
 			const { editKeyResultId } = action;
 
 			return Object.assign({}, state, {
 				editKeyResultId,
 				editKeyResultIsEditing: true,
-			})
+			});
 		}
 
-		case EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE:
-		{
+		case EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE: {
 			return Object.assign({}, state, {
 				editKeyResultIsEditing: false
-			})
+			});
+		}
+
+		case ADD_NEW_QUARTER: {
+			const { data: newQuarter } = action;
+			const { quarters: oldQuarters } = state.user;
+
+			const newUserData = Object.assign({}, state.user, {
+				quarters: addNewQuarter(oldQuarters, newQuarter)
+			});
+
+			return Object.assign({}, state, {
+				selectedYear: parseInt(newQuarter.year, 10),
+				selectedTab: parseInt(newQuarter.index, 10),
+				user: newUserData
+			});
+		}
+
+		case RECEIVED_ERROR: {
+			const { error } = action;
+			// console.log('OPP Error: ', error);
+			return state;
 		}
 
 		default:
 			return state;
-
 	}
 }
 
@@ -307,6 +334,7 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, flag, newK
 		objectiveIndex = quarter.userObjectives.findIndex((userObjective)=> {
 			return userObjective._id === objectiveId;
 		});
+
 		if (objectiveIndex !== -1) {
 			return true;
 		}
@@ -320,6 +348,7 @@ function deleteKeyResultFromObjective(user, objectiveId, keyResultId, flag, newK
 		keyResultIndex = userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.findIndex((keyResult) => {
 			return keyResult._id === keyResultId;
 		});
+
 		if (keyResultIndex !== -1) {
 			//userCopy.quarters[quarterIndex].userObjectives[objectiveIndex].keyResults.splice(keyResultIndex, 1);
 			if (flag) {
@@ -345,6 +374,7 @@ function deleteObjectiveFromMe(user, id, flag) {
 			}
 		}
 	});
+
 	return userCopy;
 }
 

@@ -12,23 +12,24 @@ import {
 	getMyHistory
 } from './userDashboardActions';
 
-export const GET_USER = 'GET_USER';
-export const RECEIVED_USER = 'RECEIVED_USER';
-export const RECEIVED_ERROR = 'RECEIVED_ERROR';
-export const RECEIVED_USER_ERROR = 'RECEIVED_USER_ERROR';
-export const CHANGE_TAB = 'CHANGE_TAB';
-export const CHANGE_YEAR = 'CHANGE_YEAR';
-export const TAKE_APPRENTICE = 'TAKE_APPRENTICE';
-export const TOOK_APPRENTICE = 'TOOK_APPRENTICE';
-export const REMOVE_APPRENTICE = 'REMOVE_APPRENTICE';
-export const REMOVED_APPRENTICE = 'REMOVED_APPRENTICE';
-export const ADDED_NEW_OBJECTIVE_OTHER_USER = 'ADDED_NEW_OBJECTIVE_OTHER_USER';
-export const ADD_NEW_OBJECTIVE_OTHER_USER = 'ADD_NEW_OBJECTIVE_OTHER_USER';
-export const EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE = 'EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE';
-export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE = 'EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE';
-export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE';
-export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE = 'EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE';
-export const ARCHIVE_USER_QUARTER = 'ARCHIVE_USER_QUARTER';
+export const GET_USER = 'OPP:GET_USER';
+export const RECEIVED_USER = 'OPP:RECEIVED_USER';
+export const RECEIVED_ERROR = 'OPP:RECEIVED_ERROR';
+export const RECEIVED_USER_ERROR = 'OPP:RECEIVED_USER_ERROR';
+export const CHANGE_TAB = 'OPP:CHANGE_TAB';
+export const CHANGE_YEAR = 'OPP:CHANGE_YEAR';
+export const TAKE_APPRENTICE = 'OPP:TAKE_APPRENTICE';
+export const TOOK_APPRENTICE = 'OPP:TOOK_APPRENTICE';
+export const REMOVE_APPRENTICE = 'OPP:REMOVE_APPRENTICE';
+export const REMOVED_APPRENTICE = 'OPP:REMOVED_APPRENTICE';
+export const ADDED_NEW_OBJECTIVE_OTHER_USER = 'OPP:ADDED_NEW_OBJECTIVE_OTHER_USER';
+export const ADD_NEW_OBJECTIVE_OTHER_USER = 'OPP:ADD_NEW_OBJECTIVE_OTHER_USER';
+export const EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE = 'OPP:EDIT_KEY_RESULT_ENABLE_EDIT_ON_USER_PAGE';
+export const EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE = 'OPP:EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE = 'OPP:EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE';
+export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE = 'OPP:EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE';
+export const ADD_NEW_QUARTER = 'OPP:ADD_NEW_QUARTER';
+export const ARCHIVE_USER_QUARTER = 'OPP:ARCHIVE_USER_QUARTER';
 
 export function arhiveUserQuarter(id, flag) {
 	return (dispatch, getStore) => {
@@ -130,15 +131,7 @@ export function changeTab(num) {
 	};
 }
 
-export function changeYear(year) {
-	return {
-		type: CHANGE_YEAR,
-		selectedYear: year
-	};
-}
-
 export function takeApprentice(id, me) {
-
 	return (dispatch, getStore) => {
 		dispatch({ type: TAKE_APPRENTICE });
 		dispatch({ type: ADD_REQUEST });
@@ -242,4 +235,45 @@ export function keyResultTitleAndDifficultyError(data) {
 		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE,
 		data,
 	};
+}
+
+export function createQuarter(body) {
+	return (dispatch, getStore) => {
+		axios.post(`${ ROOT_URL }/api/quarters/`, body)
+		.then((response) => {
+			dispatch(createQuarterSuccess(response.data));
+		})
+		.then(() => {
+			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+		})
+		.catch((error) => {
+			// TODO: Error dispatching every time
+			// Need review why is that happens
+			dispatch(receivedError(error));
+		});
+	};
+}
+
+export function createQuarterSuccess(data) {
+	return {
+		type: ADD_NEW_QUARTER,
+		data,
+	};
+}
+
+export function receivedError(data) {
+	return {
+		type: RECEIVED_ERROR,
+		data,
+	};
+}
+
+export function setChangeYear(year) {
+	return (dispatch, getStore) => {
+		dispatch({
+			type: CHANGE_YEAR,
+			selectedYear: year
+		});
+		dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+	}
 }

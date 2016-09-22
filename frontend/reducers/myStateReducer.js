@@ -1,4 +1,5 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
+import { getTabForYear, addNewQuarter } from '../../backend/utils/UIHelpService';
 import CONST from '../../backend/config/constants';
 
 import { currentYear, currentQuarter } from '../../backend/config/constants';
@@ -79,7 +80,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 
 					return quarter;
 				});
-				
+
 				({ index, year } = getInitialQuarter(data.quarters));
 			}
 
@@ -236,7 +237,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case CHANGED_KEYRESULT_SCORE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, score } = data;
-	
+
 			return Object.assign({}, state, {
 				me: setScoreToKeyResult(state.me, objectiveId, keyResultId, score),
 			});
@@ -453,7 +454,7 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 			quarter.userObjectives[index].keyResults.push(keyResult);
 		}
 	});
-	
+
 	return meCopy;
 }
 
@@ -480,25 +481,11 @@ function getIndexAndYearFromQuarter({ index, year }) {
 	return { index, year };
 }
 
-function addNewQuarter(oldQuarters, newQuarter) {
-	let quarters = [].concat(oldQuarters);
-
-	let quarterIndex = quarters.findIndex((quarter) => {
-		return (quarter.year === newQuarter.year) && (quarter.index === newQuarter.index);
-	});
-
-	if(quarterIndex === -1) {
-		quarters.push(newQuarter);
-	}
-
-	return quarters;
-}
-
 function getInitialQuarter(quarters) {
 	let initialQuarter;
 
 	let currentQuarterIndex = quarters.findIndex((quarter) => {
-		return (quarter.index === CONST.currentQuarter) 
+		return (quarter.index === CONST.currentQuarter)
 		&& (quarter.year === CONST.currentYear);
 	});
 
@@ -509,30 +496,4 @@ function getInitialQuarter(quarters) {
 	}
 
 	return initialQuarter;
-}
-
-function getTabForYear(quarters, year) {
-	let tab = null;
-	let i;
-	let yearQuarters = quarters.filter((quarter) => {
-		return quarter.year === year;
-	});
-
-	if(isEmpty(yearQuarters)) {
-		return tab;
-	}
-
-	if(year === currentYear) {
-		let currentQuarterIndex = yearQuarters.findIndex((quarter) => {
-			return quarter.index === currentQuarter;
-		});
-
-		i = (currentQuarterIndex === -1) ? 0 : currentQuarterIndex;
-		tab = yearQuarters[i].index;
-	} else {
-		i = 0;
-		tab = yearQuarters[i].index;
-	}
-
-	return tab;
 }
