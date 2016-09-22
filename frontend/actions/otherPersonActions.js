@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ROOT_URL } from '../../backend/config/constants';
+import CONST, { ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 import {
@@ -9,8 +9,7 @@ import {
 
 import {
 	getStats,
-	getMyHistory,
-	OTHER_PERSON_PAGE
+	getMyHistory
 } from './userDashboardActions';
 
 export const GET_USER = 'GET_USER';
@@ -42,7 +41,7 @@ export function arhiveUserQuarter(id, flag) {
 			dispatch(getUser());
 		})
 		.then(() => {
-			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
 		})
 		.catch( response => {
 			dispatch(receivedError(response.data));
@@ -63,8 +62,8 @@ export function getUser(id) {
 			dispatch({ type: REMOVE_REQUEST });
 		})
 		.then(() => {
-			dispatch(getStats(OTHER_PERSON_PAGE));
-			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+			dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
 		})
 		.catch(response => {
 			dispatch(receivedUserError(response));
@@ -98,8 +97,8 @@ export function addNewObjective(body) {
 			dispatch({ type: REMOVE_REQUEST	});
 		})
 		.then(() => {
-			dispatch(getStats(OTHER_PERSON_PAGE));
-			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+			dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
 		})
 		.then(() => {
 			let localRole = getStore().myState.me.localRole;
@@ -149,6 +148,9 @@ export function takeApprentice(id, me) {
 			dispatch(tookApprentice(response.data, me));
 			dispatch({ type: REMOVE_REQUEST });
 		})
+		.then(() => {
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+		})
 		.catch(response => {
 			dispatch(receivedError(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -174,6 +176,9 @@ export function removeApprentice(id) {
 		.then(response => {
 			dispatch(removedApprentice(response.data));
 			dispatch({ type: REMOVE_REQUEST });
+		})
+		.then(() => {
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
 		})
 		.catch(response => {
 			dispatch(receivedError(response.data));
@@ -216,7 +221,7 @@ export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
 			dispatch({ type: REMOVE_REQUEST });
 		})
 		.then(() => {
-			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
 		})
 		.catch(response => {
 			dispatch(keyResultTitleAndDifficultyError(response.data));

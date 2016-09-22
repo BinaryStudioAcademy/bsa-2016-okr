@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { currentYear, ROOT_URL } from '../../backend/config/constants';
+import CONST, { currentYear, ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
@@ -14,8 +14,6 @@ export const GET_STATS = 'DASH:GET_STATS';
 export const RECEIVED_STATS = 'DASH:RECEIVED_STATS';
 export const RECEIVED_TOTAL_SCORE = 'DASH:RECEIVED_TOTAL_SCORE';
 export const ERROR = 'DASH:ERROR';
-
-export const OTHER_PERSON_PAGE = 'otherPersonPage';
 
 export function clearUserDashboardState() {
 	const action = {
@@ -33,7 +31,7 @@ export function getMyHistory(type) {
 		let _id;
 
 		switch(type) {
-			case OTHER_PERSON_PAGE:
+			case CONST.page.OTHER_PERSON_PAGE:
 				({ _id } = store.userPage.user);
 				break;
 			default:
@@ -63,7 +61,7 @@ export function getStats(type) {
 		dispatch({ type: ADD_REQUEST });
 
 		switch(type) {
-			case OTHER_PERSON_PAGE:
+			case CONST.page.OTHER_PERSON_PAGE:
 				({ _id } = store.userPage.user);
 				(year = store.userPage.selectedYear || currentYear);
 				break;

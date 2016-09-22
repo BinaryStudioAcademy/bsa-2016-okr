@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from "../../actions/userDashboardActions";
 
+import CONST from '../../../backend/config/constants';
+
 import ProgressBar from './progressBar.jsx';
 import './progressBar.scss';
 
@@ -15,7 +17,7 @@ class DashboardStats extends Component {
 		this.renderRow = this.renderRow.bind(this);
 		this.getProgressBar = this.getProgressBar.bind(this);
 	}
-	
+
 	handleUserClick(classname) {
 		for (let i = 1; i < 5; i++) {
 			let quarter = document.getElementsByClassName(parseInt(classname) + i)
@@ -69,7 +71,7 @@ class DashboardStats extends Component {
 			let selectedYear;
 			score = Math.round(this.props.userDashboard.userStats.totalScore * 100);
 
-			if(where === actions.OTHER_PERSON_PAGE) {
+			if(where === CONST.page.OTHER_PERSON_PAGE) {
 				({ selectedYear } = this.props.userPage);
 			} else {
 				({ selectedYear } = this.props.myState);

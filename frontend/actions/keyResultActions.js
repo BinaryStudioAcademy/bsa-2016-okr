@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ROOT_URL } from '../../backend/config/constants';
+import CONST, { ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 import {
@@ -7,7 +7,7 @@ import {
 	getNotAprovedKeysRequest,
 } from './acceptObjectiveActions.js'
 
-import { getStats, getMyHistory, OTHER_PERSON_PAGE } from './userDashboardActions';
+import { getStats, getMyHistory } from './userDashboardActions';
 
 // Get key results for show autocomplete list
 export const GET_AUTOCOMPLETE_KEY_RESULTS = 'GET_AUTOCOMPLETE_KEY_RESULTS';
@@ -46,7 +46,7 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 			*/
 		})
 		.then(() => {
-			let type = body.isItHomePage ? '' : OTHER_PERSON_PAGE;
+			let type = body.isItHomePage ? '' : CONST.page.OTHER_PERSON_PAGE;
 
 			dispatch(getStats(type));
 			dispatch(getMyHistory(type));

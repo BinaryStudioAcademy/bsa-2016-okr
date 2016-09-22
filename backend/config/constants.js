@@ -98,6 +98,10 @@ module.exports = {
 		LOCAL_AUTH: 'http://localhost:2020/',
 		PROD_AUTH: 'http://team.binary-studio.com/auth',
 	},
+	page: {
+		OTHER_PERSON_PAGE: 'OTHER_PERSON_PAGE',
+		HOME_PAGE: 'HOME_PAGE',
+	},
 	error: {
 		TOKEN: 'TOKEN',
 	},

@@ -1,28 +1,33 @@
-import React from 'react';
-import './userDashboard.scss';
-
-import Dashboard from '../dashboard/dashboard.jsx'
-import UserHistory from './userHistory.jsx';
-import Tabs from './tabs.jsx';
-
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as actions from "../../actions/userDashboardActions";
 
-class UserDashboard extends React.Component{
-	constructor(props){
+import CONST from '../../../backend/config/constants';
+
+import Dashboard from '../dashboard/dashboard.jsx'
+import UserHistory from './userHistory.jsx';
+import Tabs from './tabs.jsx';
+
+import './userDashboard.scss';
+
+class UserDashboard extends Component {
+	constructor(props) {
 		super(props);
 
 		this.isVisibleContent = this.isVisibleContent.bind(this);
 	}
 
 	componentWillMount() {
-		this.props.getMyHistory(this.props.where);
-		if(this.props.where != 'homePage')
-			this.props.getStats(this.props.where);
+		const { where, getMyHistory, getStats } = this.props;
+		getMyHistory(where);
+
+		if(where != CONST.page.HOME_PAGE) {
+			getStats(where);
+		}
 	}
-	
+
 	componentDidUpdate() {
 		//this.props.getMyHistory();
 	}
@@ -33,15 +38,15 @@ class UserDashboard extends React.Component{
 
 	isVisibleContent(index) {
 		let { tabIndex } = this.props.userDashboard;
-		
+
 		return (tabIndex === index) ? 'showContent' : 'hideContent'
 	}
 
 	render() {
 		let _id;
 		let { historyList, score } = this.props.userDashboard;
-		
-		if(this.props.where === actions.OTHER_PERSON_PAGE) {
+
+		if(this.props.where === CONST.page.OTHER_PERSON_PAGE) {
 			({ _id } = this.props.userPage.user);
 		}	else {
 			({ _id } = this.props.myState.me);
@@ -54,9 +59,9 @@ class UserDashboard extends React.Component{
 					<UserHistory historyList={ historyList } />
 				</div>
 				<div className={ this.isVisibleContent(2) } >
-					<Dashboard 
-						userId={ _id } 
-						where={ this.props.where } 
+					<Dashboard
+						userId={ _id }
+						where={ this.props.where }
 					/>
 				</div>
 			</div>

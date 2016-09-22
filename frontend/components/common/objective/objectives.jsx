@@ -7,7 +7,7 @@ import { getUniqueValuesFromArray } from '../../../../backend/utils/HelpService'
 import { isMentorActionAllowed } from '../../../../backend/utils/ValidateService';
 
 import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
-const CONST = require('../../../../backend/config/constants.js');
+import CONST from '../../../../backend/config/constants.js';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -72,7 +72,7 @@ class Objectives extends Component {
 		const userId = this.props.userId || session;
 		this.props.myStateActions.setChangeYear(year);
 		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
-			this.props.userDashboardActions.getStats(userDashboardActions.OTHER_PERSON_PAGE);
+			this.props.userDashboardActions.getStats(CONST.page.OTHER_PERSON_PAGE);
 		}	else {
 			this.props.userDashboardActions.getStats();
 		}
