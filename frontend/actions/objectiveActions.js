@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 // Get objective for show autocomplete list
@@ -16,7 +18,7 @@ export function getAutocompleteObjectives(categoryId, year, quarter, title) {
 		dispatch({ type: GET_AUTOCOMPLETE_OBJECTIVES });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get(`/api/objective/category/${ categoryId }/year/${ year }/quarter/${ quarter }/${ encodeURIComponent(title) }`)
+		return axios.get(`${ ROOT_URL }/api/objective/category/${ categoryId }/year/${ year }/quarter/${ quarter }/${ encodeURIComponent(title) }`)
 		.then(response => {
 			dispatch(receivedAutocompleteObjectives(response.data))
 			dispatch({ type: REMOVE_REQUEST	});

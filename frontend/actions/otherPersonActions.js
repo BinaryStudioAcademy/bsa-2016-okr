@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 import {
@@ -34,9 +35,8 @@ export function arhiveUserQuarter(id, flag) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ARCHIVE_USER_QUARTER});
 		dispatch({ type: ADD_REQUEST });
-		let url = `/api/quarters/${ id }/archive/${ flag }`;
 
-		return axios.put(url)
+		return axios.put(`${ ROOT_URL }/api/quarters/${ id }/archive/${ flag }`)
 		.then( response => {
 			dispatch({ type: REMOVE_REQUEST	});
 			dispatch(getUser());
@@ -57,7 +57,7 @@ export function getUser(id) {
 		dispatch({ type: GET_USER });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/user/' + id)
+		return axios.get(`${ ROOT_URL }/api/user/${ id }`)
 		.then(response => {
 			dispatch(receivedUser(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -92,7 +92,7 @@ export function addNewObjective(body) {
 		dispatch({ type: ADD_NEW_OBJECTIVE_OTHER_USER });
 		dispatch({ type: ADD_REQUEST	});
 
-		return axios.post(('/api/userObjective/'), body)
+		return axios.post(`${ ROOT_URL }/api/userObjective/`, body)
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -144,7 +144,7 @@ export function takeApprentice(id, me) {
 		dispatch({ type: TAKE_APPRENTICE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post('/api/user/takeApprentice/' + id)
+		return axios.post(`${ ROOT_URL }/api/user/takeApprentice/${ id }`)
 		.then(response => {
 			dispatch(tookApprentice(response.data, me));
 			dispatch({ type: REMOVE_REQUEST });
@@ -170,7 +170,7 @@ export function removeApprentice(id) {
 		dispatch({ type: REMOVE_APPRENTICE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post('/api/user/removeApprentice/' + id)
+		return axios.post(`${ ROOT_URL }/api/user/removeApprentice/${ id }`)
 		.then(response => {
 			dispatch(removedApprentice(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -209,7 +209,7 @@ export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
 	return(dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
+		return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
 		.then(response => {
 			dispatch(keyResultTitleAndDifficultyChanged(response.data));
 			dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_USER_PAGE });

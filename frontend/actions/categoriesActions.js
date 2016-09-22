@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
@@ -25,7 +26,7 @@ export function getAllCategories() {
 		dispatch({ type: GET_ALL_CATEGORIES	});
 		dispatch({ type: ADD_REQUEST });
 
-		axios.get('/api/category/')
+		axios.get(`${ ROOT_URL }/api/category/`)
 		.then( response =>	{
 			dispatch(receivedAllCategories(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -65,7 +66,7 @@ export function deleteCategory(id, flag) {
 			type: DELETE_CATEGORY
 		});
 
-		return axios.delete(`/api/category/${ id }/${ flag }`)
+		return axios.delete(`${ ROOT_URL }/api/category/${ id }/${ flag }`)
 			.then(response => dispatch(receivedDeleteCategory(id, flag)))
 			.catch(response => dispatch(deleteCategoryError(response.data)));
 	};
@@ -109,7 +110,7 @@ export function editCategory(id, reqBody ) {
 
 		dispatch({ type: EDIT_CATEGORY });
 
-		return axios.put(`/api/category/${ id }/`, reqBody)
+		return axios.put(`${ ROOT_URL }/api/category/${ id }/`, reqBody)
 			.then(response => dispatch(receivedEditCategory(response.data, reqBody)))
 			.catch(response => dispatch(editCategoryError(response.data)));
 	};
@@ -139,7 +140,7 @@ export function addCategory(reqBody) {
 			type: ADD_CATEGORY
 	});
 
-	return axios.post('/api/category/', reqBody)
+	return axios.post(`${ ROOT_URL }/api/category/`, reqBody)
 			.then(response => dispatch(receivedNewCategory(response.data)))
 			.catch(response => dispatch(receivedNewCategoryError(response.data)));
 	};

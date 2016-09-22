@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const MAPPING_UPDATE_USERS_LOCAL_ROLE = 'MAPPING_UPDATE_USERS_LOCAL_ROLE';
@@ -19,7 +21,7 @@ export const MAPPING_SET_GLOBAL_ROLE_FILTER = 'MAPPING_SET_GLOBAL_ROLE_FILTER';
 export const MAPPING_CLEAR= 'MAPPING_CLEAR';
 
 export function setGlobalRoleFilter(value) {
-	
+
 	const action = {
 		type: MAPPING_SET_GLOBAL_ROLE_FILTER,
 		value: value
@@ -28,7 +30,7 @@ export function setGlobalRoleFilter(value) {
 }
 
 export function clear() {
-	
+
 	const action = {
 		type: MAPPING_CLEAR
 	};
@@ -36,7 +38,7 @@ export function clear() {
 }
 
 export function setSortingByGlobalRole(value) {
-	
+
 	const action = {
 		type: MAPPING_SORTING_BY_G_ROLE,
 		value: value
@@ -45,7 +47,7 @@ export function setSortingByGlobalRole(value) {
 }
 
 export function setSortingByName(value) {
-	
+
 	const action = {
 		type: MAPPING_SORTING_BY_NAME,
 		value: value
@@ -69,7 +71,7 @@ export function updateUserRole(id, body) {
 		dispatch({ type: MAPPING_UPDATE_USER_ROLE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/user/' + id), body)
+		return axios.put(`${ ROOT_URL }/api/user/${ id }`, body)
 		.then(function(response) {
 			dispatch(updateUserLocRole(id, JSON.parse(response.config.data).localRole));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -82,12 +84,12 @@ export function updateUserRole(id, body) {
 }
 
 export function getUsers() {
-	
+
 	return(dispatch, getStore) => {
 		dispatch({ type: MAPPING_GET_USERS });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/user/')
+		return axios.get(`${ ROOT_URL }/api/user/`)
 		.then(response => {
 			dispatch(receivedUsers(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -132,7 +134,7 @@ export function updateGlobalRole(id, body) {
 		dispatch({ type: MAPPING_UPDATE_GLOBAL_ROLE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(("/api/role/" + id), body)
+		return axios.put(`${ ROOT_URL }/api/role/${ id }`, body)
 		.then(response => {
 			dispatch(updateRolesLocRole(id, JSON.parse(response.config.data).localRole));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -151,7 +153,7 @@ export function getGlobalRoles() {
 		dispatch({ type: MAPPING_GET_GLOBAL_ROLES });
 		dispatch({ type: ADD_REQUEST	});
 
-		return axios.get('/api/role/')
+		return axios.get(`${ ROOT_URL }/api/role/`)
 		.then(response => {
 			dispatch(receivedGlobalRoles(response.data));
 			dispatch({ type: REMOVE_REQUEST	});

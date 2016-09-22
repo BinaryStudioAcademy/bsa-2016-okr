@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 
 import * as actions from "../../../actions/historyActions";
 
-import axios from 'axios';
-
 import './history-item-list.scss';
 import '../../common/styles/table.scss';
 
@@ -80,21 +78,21 @@ class HistoryItemList extends React.Component {
          let keyResult;
         if (historyItem.userObjective){
           let keyResults = historyItem.userObjective.keyResults;
-         
+
           keyResults.forEach((key) => {
             if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
             keyResult = key;
-         
+
           })
           return `key result \'${keyResult.templateId.title} \'`;
-     
+
         }
         else {
           keyResult = historyItem.keyResult;
           return `key result \'${keyResult.title} \'`;
         }
 
-    }  
+    }
       else if(historyItem.type.indexOf('CATEGORY') !== -1){
         return `category \'${historyItem.category.title}\'`;
        }
@@ -123,7 +121,7 @@ class HistoryItemList extends React.Component {
 
     render() {
       // if (this.props.historyItems.length === 0) {
-      //   return (<div className="history-page">   
+      //   return (<div className="history-page">
       //             <table className="table" id="historyTable">
       //               <thead>
       //                 <tr>
@@ -133,9 +131,9 @@ class HistoryItemList extends React.Component {
       //                   <th ><span className="table-th" onClick={() => this.onSort("date")}><i id="date" className="fa fa-sort"></i>Date</span></th>
       //                 </tr>
       //               </thead>
-      //             </table>  
+      //             </table>
       //             <h1 className="placeholder">History is empty!</h1>
-      //           </div>) 
+      //           </div>)
       // }
       // else
         return(

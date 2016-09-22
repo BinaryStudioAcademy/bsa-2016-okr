@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const CLEAR_STATE = 'CLEAR_STATE';
@@ -61,7 +63,7 @@ export function setNameFilter (nameFilter) {
 	const action = {
 		type: SET_NAME_FILTER,
 		nameFilter
-	} 
+	}
 	return action;
 }
 
@@ -69,18 +71,18 @@ export function setTypeFilter (typeFilter) {
 	const action = {
 		type: SET_TYPE_FILTER,
 		typeFilter
-	} 
+	}
 	return action;
 }
 
 // export function getSortedItems(sort) {
 // 	return(dispatch, getStore) => {
-	
+
 // 		dispatch({
 // 	 		type: GET_SORTED_ITEMS,
 // 		});
 
-// 	 	return axios.put('/api/history/', {
+// 	 	return axios.put(`${ ROOT_URL }/api/history/`, {
 // 	 		sort
 // 	 	})
 // 			.then( (response) => dispatch(receivedFilteredItems(response.data)))
@@ -92,7 +94,7 @@ export function setTypeFilter (typeFilter) {
 // 	 return {
 // 		type: 'RECEIVED_SORTED_ITEMS',
 // 		historyItems
-// 	} 
+// 	}
 // }
 
 export function setSort (sortField) {
@@ -121,12 +123,7 @@ export function resetFilters () {
 export function getFilteredItems () {
 	return(dispatch, getStore) => {
 		let store = getStore().history;
-
-		dispatch({
-			type: 'GET_FILTERED_ITEMS',
-		});
-
-		return axios.put('/api/history/', { 
+		const body = {
 			sort: store.sort,
 			filters: {
 				type: store.typeFilter,
@@ -136,7 +133,11 @@ export function getFilteredItems () {
 					to: store.setHistoryFilterDateTo
 				}
 			}
-		})
+		};
+
+		dispatch({ type: GET_FILTERED_ITEMS });
+
+		return axios.put(`${ ROOT_URL }/api/history/`, body)
 		.then( (response) => dispatch(receivedFilteredItems(response.data)))
 		//.catch( (response) => dispatch(historyItemsError(response.data)));
 	};
@@ -146,7 +147,7 @@ export function receivedFilteredItems (historyItems) {
 	return {
 		type: 'RECEIVED_FILTERED_ITEMS',
 		historyItems
-	} 
+	}
 }
 
 export function getHistoryItems(filter, sprt){
@@ -157,7 +158,7 @@ export function getHistoryItems(filter, sprt){
 		});
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/history/')
+		return axios.get(`${ ROOT_URL }/api/history/`)
 		.then( (response) => {
 			dispatch(receivedHistoryItems(response.data))
 			dispatch({ type: REMOVE_REQUEST	});

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const GET_NOT_APPROVED_OBJECTIVES_REQUEST = 'GET_NOT_APPROVED_OBJECTIVES_REQUEST';
@@ -46,7 +48,7 @@ export function updateKeyTemplateRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_KEY_TEMPLATE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/keyResult/updateWithoutValidation/' + id), body)
+		return axios.put(`${ ROOT_URL }/api/keyResult/updateWithoutValidation/${ id }`, body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -71,7 +73,7 @@ export function updateObjectiveTemplateRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_OBJECTIVE_TEMPLATE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/objective/updateWithoutValidation/' + id), body)
+		return axios.put((`${ ROOT_URL }/api/objective/updateWithoutValidation/${ id }`), body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -96,7 +98,7 @@ export function getDeletedCategoriesRequest() {
 		dispatch({ type: GET_DELETED_CATEGORIES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/category/deleted')
+		return axios.get(`${ ROOT_URL }/api/category/deleted`)
 		.then(response => {
 			dispatch(receivedDeletedCategories(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -114,7 +116,7 @@ export function getNotAprovedKeysRequest() {
 		dispatch({ type: GET_NOT_APPROVED_KEYS_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/keyResult/notApproved')
+		return axios.get(`${ ROOT_URL }/api/keyResult/notApproved`)
 		.then(response => {
 			dispatch(receivedNotApprovedKeys(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -146,7 +148,7 @@ export function getNotAprovedObjectivesRequest() {
 		dispatch({ type: GET_NOT_APPROVED_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/objective/notApproved')
+		return axios.get(`${ ROOT_URL }/api/objective/notApproved`)
 		.then(response => {
 			dispatch(receivedNotApprovedObjectives(response.data));
 			dispatch({ type: REMOVE_REQUEST });

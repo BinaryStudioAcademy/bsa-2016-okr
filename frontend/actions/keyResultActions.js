@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
-import { 
+import {
 	getNotAprovedObjectivesRequest,
-	getNotAprovedKeysRequest, 
+	getNotAprovedKeysRequest,
 } from './acceptObjectiveActions.js'
 
 import { getStats, getMyHistory, OTHER_PERSON_PAGE } from './userDashboardActions';
@@ -28,7 +30,7 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 		dispatch({ type: ADD_NEW_KEY_RESULT });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post((`/api/userobjective/${ userObjectiveId }/keyresult/`), body)
+		return axios.post(`${ ROOT_URL }/api/userobjective/${ userObjectiveId }/keyresult/`, body)
 		.then(response => {
 
 			if (!body.isItHomePage) {
@@ -45,13 +47,13 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 		})
 		.then(() => {
 			let type = body.isItHomePage ? '' : OTHER_PERSON_PAGE;
-			
+
 			dispatch(getStats(type));
 			dispatch(getMyHistory(type));
 		})
 		.then(() => {
 			let localRole = getStore().myState.me.localRole;
-			
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
@@ -85,7 +87,7 @@ export function getAutocompleteKeyResults(objectId, title) {
 		dispatch({ type: GET_AUTOCOMPLETE_KEY_RESULTS });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/keyresult/objective/' + objectId + '/' + encodeURIComponent(title))
+		return axios.get(`${ ROOT_URL }/api/keyresult/objective/${ objectId }/${ encodeURIComponent(title) }`)
 		.then(response => {
 			dispatch(receivedKeyResults(response.data));
 			dispatch({ type: REMOVE_REQUEST	});

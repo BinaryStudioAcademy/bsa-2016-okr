@@ -1,8 +1,8 @@
 import axios from 'axios';
+import { currentYear, ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
-import { currentYear } from '../../backend/config/constants';
 
 export const SET_TAB = 'DASH:SET_TAB';
 export const CHANGE_SHOW_TABS ='DASH:CHANGE_SHOW_TABS';
@@ -41,7 +41,7 @@ export function getMyHistory(type) {
 				break;
 		}
 
-		return axios.get(`/api/history/user/${ _id }`)
+		return axios.get(`${ ROOT_URL }/api/history/user/${ _id }`)
 		.then((response) => {
 			dispatch(receivedMyHistory(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -76,7 +76,7 @@ export function getStats(type) {
 		// console.log('¯\\_(ツ)_/¯: user: ', _id);
 		// console.log('¯\\_(ツ)_/¯: year: ', year);
 
-		return axios.get(`/api/stats/users?limit=5&&id=${ _id }&&year=${ year }`)
+		return axios.get(`${ ROOT_URL }/api/stats/users?limit=5&&id=${ _id }&&year=${ year }`)
 		.then((response) => {
 			dispatch(receivedStats(response.data))
 			dispatch({ type: REMOVE_REQUEST });
@@ -92,9 +92,9 @@ export function getTotalScore() {
 	return(dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/stats/progress')
-		.then(response => { 
-			dispatch(receivedTotalScore(response.data)); 
+		return axios.get(`${ ROOT_URL }/api/stats/progress`)
+		.then(response => {
+			dispatch(receivedTotalScore(response.data));
 			dispatch({ type: REMOVE_REQUEST });
 		})
 		.catch(response => {
@@ -142,7 +142,7 @@ export function receivedError(data) {
 export function changeShowTopTabs() {
 	return (dispatch, getStore) => {
 		let store = getStore().userDashboard;
-		
+
 		dispatch({
 			type: CHANGE_SHOW_TABS,
 			showTopTabs: !store.showTopTabs
