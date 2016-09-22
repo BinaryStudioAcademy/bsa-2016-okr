@@ -114,9 +114,13 @@ class OKRmanaging extends Component {
 	render() {
 		const { edit: editCategory, activeCategory, list: categories } = this.props.categories;
 		const { objectives } = this.props.okrManaging;
-		const displayedCategories = categories.filter((category) => {
-			return !category.isDeleted;
-		});
+		let displayedCategories = [];
+
+		if (!isEmpty(categories)) {
+			displayedCategories = categories.filter((category) => {
+				return !category.isDeleted;
+			});
+		}
 
 		return (
 			<div>
