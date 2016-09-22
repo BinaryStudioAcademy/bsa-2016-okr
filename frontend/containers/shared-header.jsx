@@ -13,7 +13,7 @@ class SharedHeader extends Component {
 	render() {
 		const fullName = `${ this.props.firstName } ${ this.props.lastName }` || '';
 		const globalRole = this.props.globalRole || '';
-		let HeaderEl;
+		let HeaderEl = (<div></div>);
 
 		if(isDeveloping || LOCAL_PROD) {
 			HeaderEl = (
