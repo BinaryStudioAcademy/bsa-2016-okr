@@ -75,9 +75,13 @@ function isValidQuarter(index) {
 }
 
 function isMentorActionAllowed(user, session) {
+	let mentorId = '' + user.mentor;
+	let userId = '' + user._id;
+	let sessionId = '' + session._id;
+
 	return (
-		(user._id === session._id)
-		|| (user.mentor === session._id)
+		(userId === sessionId)
+		|| (mentorId === sessionId)
 		|| (session.localRole === CONST.user.localRole.ADMIN)
 	);
 }

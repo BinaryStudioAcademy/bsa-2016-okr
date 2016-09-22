@@ -1,6 +1,7 @@
 const async = require('async');
 const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
+const isMentorActionAllowed = ValidateService.isMentorActionAllowed;
 const CONST = require('../../config/constants');
 
 const ObjectiveService = require('../objective');
@@ -276,8 +277,27 @@ UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, f
 		})
 };
 
-UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveId, keyResultId, score, callback) {
+UserObjectiveService.prototype.setScoreToKeyResult = function(session, userId, objectiveId, keyResultId, score, callback) {
 	async.waterfall([
+		(callback) => {
+			UserRepository.getById(userId, (err, user) => {
+				if(err) {
+					return callback(err, null);
+				}
+
+				if(isEmpty(user)) {
+					err = new Error('User not found');
+					return callback(err, null);
+				}
+
+				if(!isMentorActionAllowed(user, session)) {
+					err = new Error('You are not allowed to do this');
+					return callback(err, null);
+				}
+
+				return callback(null);
+			});
+		},
 		(callback) => {
 			UserObjectiveRepository.getById(objectiveId, (err, userObjective) => {
 				if(err) {
@@ -291,10 +311,6 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 
 				// TODO: Should be check for userObjective.isArchived
 				// Removed temporary
-				if(!userObjective.userId.equals(userId)) {
-					var err = new Error('You are not allowed to do this');
-					return callback(err, null);
-				}
 
 				return callback(null, userObjective);
 			});
@@ -313,6 +329,12 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(userId, objectiveI
 
 			userObjective.save((err, userObjective) => {
 				if(err) {
+					if (err.name == 'ValidationError') {
+						for (field in err.errors) {
+							console.log(err.errors[field].message);
+						}
+					}
+
 					return callback(err, null);
 				}
 

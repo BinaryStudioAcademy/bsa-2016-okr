@@ -46,8 +46,20 @@ class Objectives extends Component {
 		this.props.myStateActions.getMe();
 	}
 
+	componentWillUnmount() {
+		this.props.myStateActions.reset();
+	}
+
 	changeTab(num) {
-		this.props.myStateActions.setChangeTab(num);
+		const { user } = this.props.user;
+		const userId = this.props.userId || session;
+		const isItHomePage = !isStringsEqual(user._id, userId);
+
+		if (isItHomePage) {
+			this.props.myStateActions.setChangeTab(num);
+		} else {
+			this.props.otherPersonActions.setChangeTab(num);
+		}
 	}
 
 	handleArchive(changeTo, objectiveId) {
@@ -89,7 +101,7 @@ class Objectives extends Component {
 		}, () => {
 			const { userId } = this.props;
 			const { user } = this.props.user;
-			let isItHomePage = !isStringsEqual(user._id, userId);
+			const isItHomePage = !isStringsEqual(user._id, userId);
 
 			if(isItHomePage) {
 				this.props.myStateActions.createQuarter(newQuarter);
@@ -97,10 +109,6 @@ class Objectives extends Component {
 				this.props.otherPersonActions.createQuarter(newQuarter);
 			}
 		});
-	}
-
-	componentWillUnmount() {
-		this.props.myStateActions.reset();
 	}
 
 	handleArchivingQuarter(index) {
@@ -144,12 +152,15 @@ class Objectives extends Component {
 
 				let body = {
 					keyResultId: keyResultId,
-					score: score
+					score: score,
+					userId: this.props.userId || session
 				};
-				if (mentorId != undefined)
+
+				if (mentorId != undefined) {
 					apiCall(objectiveId, body, notifications.notificationApprenticeUpdateKey, mentorId);
-				else
+				} else {
 					apiCall(objectiveId, body);
+				}
 			};
 		};
 	}
@@ -260,7 +271,7 @@ class Objectives extends Component {
 		let editKeyResult = {};
 
 		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
-		let isItHomePage = !isStringsEqual(user._id, userId);
+		const isItHomePage = !isStringsEqual(user._id, userId);
 		let isAdmin = this.props.myState.me.localRole === CONST.user.localRole.ADMIN ? true : false;
 
 		if (isItHomePage) {
@@ -284,6 +295,7 @@ class Objectives extends Component {
 		} else {
 			selectedYear = this.props.user.selectedYear;
 			selectedTab = this.props.user.selectedTab;
+
 			userInfo = getObjectivesData(user, selectedYear, selectedTab);
 			years = getYears(user.quarters);
 

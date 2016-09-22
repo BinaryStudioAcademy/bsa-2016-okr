@@ -124,7 +124,7 @@ export function addedNewObjective(data, body) {
 	};
 }
 
-export function changeTab(num) {
+export function setChangeTab(num) {
 	return {
 		type: CHANGE_TAB,
 		selectedTab: num
