@@ -242,16 +242,20 @@ class Objectives extends Component {
 	}
 
 	render() {
+		const { categories } = this.props
 		const userId = this.props.userId;
-		const displayedCategories = this.props.categories.list.filter((category) => {
-			return !category.isDeleted;
-		});
 		const { me } = this.props.myState;
 		const { user } = this.props.user;
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
 		let years = [];
+
+		const displayedCategories = categories.list.filter((category) => {
+			return !category.isDeleted;
+		}).sort((a, b) => {
+			return a.title.localeCompare(b.title)
+		});
 
 		// Edit key result on HomePage or UserPage
 		let editKeyResult = {};
