@@ -327,6 +327,7 @@ class Objectives extends Component {
 		}
 
 		const editMode = isMentorActionAllowed(userInfo, me);
+		const isEmptyQuarters = isEmpty(userInfo.quarters);
 
 		return (
 			<div id="home-page-wrapper">
@@ -342,7 +343,7 @@ class Objectives extends Component {
 						isAdmin={ isAdmin }
 						editMode={ editMode }
 						userId={ userInfo._id } />
-				<div id='objectives'>
+				<div id='objectives' className={ isEmptyQuarters ? 'hidden' : ''} >
 					<ObjectivesList
 						mentorId={userInfo.mentorId}
 						categories={ displayedCategories }
