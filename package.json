@@ -31,6 +31,7 @@
     "dev:prod": "better-npm-run dev:prod",
     "dev:prod:watch": "better-npm-run dev:prod:watch",
     "seed": "node ./backend/seed/seed.js",
+    "seeddrop": "node ./backend/seed/seedDrop.js",
     "archive": "node ./backend/archive/archive.js",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "build:local": "rimraf dist && cross-env NODE_ENV=production LOCAL_PROD=true webpack --config ./webpack.production.local.config.js --progress --profile --colors",

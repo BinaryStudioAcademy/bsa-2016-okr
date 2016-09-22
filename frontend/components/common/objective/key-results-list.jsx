@@ -173,6 +173,9 @@ class KeyResults extends Component {
 				.filter((item) => {
 					return (!item.isDeleted)
 				})
+				.sort((a, b) => {
+					return ( a.templateId.title.localeCompare(b.templateId.title) )
+				})
 				.map((item, index) => {
 				return <KeyResultItem index={index} key={index} item={item}
 				                      mentorId={this.props.mentorId}

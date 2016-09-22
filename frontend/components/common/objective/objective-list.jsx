@@ -50,6 +50,9 @@ class ObjectiveList extends Component {
 					.filter((objective) => {
 						return ((objective.templateId.category == category._id) && (!objective.isDeleted))
 					})
+					.sort((a, b) => {
+						return ( a.templateId.title.localeCompare(b.templateId.title) )
+					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
 																	isArchived = { isArchived }
