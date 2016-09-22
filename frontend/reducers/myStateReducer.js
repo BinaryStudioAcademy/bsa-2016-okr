@@ -1,5 +1,5 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
-import { getTabForYear, addNewQuarter } from '../../backend/utils/UIHelpService';
+import { getTabForYear, addNewQuarter, setScoreToKeyResult } from '../../backend/utils/UIHelpService';
 import CONST from '../../backend/config/constants';
 
 import { currentYear, currentQuarter } from '../../backend/config/constants';
@@ -347,44 +347,6 @@ function deleteKeyResultFromObjective(me, objectiveId, keyResultId, flag, newKey
 		}
 	}
 	//console.log('Success deleting keyResult from objective');
-	return meCopy;
-}
-
-function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
-	const meCopy = Object.assign({}, me);
-
-	let quarterIndex = -1;
-	let	userObjectiveIndex = -1;
-	let	keyResultIndex = -1;
-
-	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
-		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
-			return userObjective._id === objectiveId
-		});
-
-		if(userObjectiveFoundedIndex !== -1) {
-			userObjectiveIndex = userObjectiveFoundedIndex;
-			return true;
-		}
-
-		return false;
-	});
-
-	if(quarterFoundedIndex !== -1) {
-		quarterIndex = quarterFoundedIndex;
-
-		if (userObjectiveIndex !== -1) {
-			let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
-				return keyResult._id === keyResultId;
-			});
-
-			if (keyResultFoundedIndex !== -1) {
-				keyResultIndex = keyResultFoundedIndex;
-				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
-			}
-		}
-	}
-
 	return meCopy;
 }
 

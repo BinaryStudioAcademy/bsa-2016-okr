@@ -1,4 +1,4 @@
-import { getTabForYear, addNewQuarter } from '../../backend/utils/UIHelpService';
+import { getTabForYear, addNewQuarter, setScoreToKeyResult } from '../../backend/utils/UIHelpService';
 
 import {
 	GET_USER,
@@ -15,12 +15,11 @@ import {
 	RECEIVED_USER_ERROR,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE,
 	EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE,
-	RECEIVED_ERROR
+	CHANGED_KEYRESULT_SCORE,
+	RECEIVED_ERROR,
 } from '../actions/otherPersonActions.js'
 
 import {
-	CHANGED_KEYRESULT_SCORE,
-	CHANGED_KEYRESULT_SCORE_ERROR,
 	SOFT_DELETE_OBJECTIVE_KEY_RESULT_BY_ID_SUCCESS,
 	SOFT_DELETE_MY_OBJECTIVE_BY_ID,
 	UPDATE_USER_OBJECTIVE,
@@ -262,54 +261,24 @@ export default function otherPersonReducer(state = initialState, action) {
 			});
 		}
 
+		case CHANGED_KEYRESULT_SCORE: {
+			let { data } = action;
+			let { objectiveId, keyResultId, score } = data;
+
+			return Object.assign({}, state, {
+				user: setScoreToKeyResult(state.user, objectiveId, keyResultId, score),
+			});
+		}
+
 		case RECEIVED_ERROR: {
 			const { error } = action;
-			// console.log('OPP Error: ', error);
+			console.log('OPP Error: ', error);
 			return state;
 		}
 
 		default:
 			return state;
 	}
-}
-
-function setScoreToKeyResult(user, objectiveId, keyResultId, score) {
-
-	const userCopy = Object.assign({}, user);
-
-	let quarterIndex = -1;
-	let userObjectiveIndex = -1;
-	let keyResultIndex = -1;
-
-	let quarterFoundedIndex = userCopy.quarters.findIndex((quarter) => {
-		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
-			return userObjective._id === objectiveId
-		});
-
-		if (userObjectiveFoundedIndex !== -1) {
-			userObjectiveIndex = userObjectiveFoundedIndex;
-			return true;
-		}
-
-		return false;
-	});
-
-	if (quarterFoundedIndex !== -1) {
-		quarterIndex = quarterFoundedIndex;
-
-		if (userObjectiveIndex !== -1) {
-			let keyResultFoundedIndex = userCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
-				return keyResult._id === keyResultId;
-			});
-			console.log('index', userObjectiveIndex);
-			if (keyResultFoundedIndex !== -1) {
-				keyResultIndex = keyResultFoundedIndex;
-				userCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
-			}
-		}
-	}
-
-	return userCopy;
 }
 
 function addNewObjectiveToUser(user, quarterId, objective) {

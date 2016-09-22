@@ -30,6 +30,7 @@ export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ON_USER_PAGE = 'OPP:EDIT_KEY_R
 export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE = 'OPP:EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_USER_PAGE';
 export const ADD_NEW_QUARTER = 'OPP:ADD_NEW_QUARTER';
 export const ARCHIVE_USER_QUARTER = 'OPP:ARCHIVE_USER_QUARTER';
+export const CHANGED_KEYRESULT_SCORE = 'OPP:CHANGED_KEYRESULT_SCORE';
 
 export function arhiveUserQuarter(id, flag) {
 	return (dispatch, getStore) => {
@@ -244,11 +245,9 @@ export function createQuarter(body) {
 			dispatch(createQuarterSuccess(response.data));
 		})
 		.then(() => {
-			dispatch(getMyHistory(OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
 		})
 		.catch((error) => {
-			// TODO: Error dispatching every time
-			// Need review why is that happens
 			dispatch(receivedError(error));
 		});
 	};
@@ -261,13 +260,6 @@ export function createQuarterSuccess(data) {
 	};
 }
 
-export function receivedError(data) {
-	return {
-		type: RECEIVED_ERROR,
-		data,
-	};
-}
-
 export function setChangeYear(year) {
 	return (dispatch, getStore) => {
 		dispatch({
@@ -276,4 +268,44 @@ export function setChangeYear(year) {
 		});
 		dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
 	}
+}
+
+export function changeKeyResultScore(objectiveId, body, callback, userId) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/keyresult/score/`, body)
+		.then(response => {
+			dispatch(keyResultScoreChanged(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+
+			/*
+			if (callback != null) {
+				dispatch(callback(userId));
+			}
+			*/
+		})
+		.then(() => {
+			dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+		})
+		.catch(response => {
+			dispatch(receivedError(response.data));
+			dispatch({ type: REMOVE_REQUEST	});
+		});
+	};
+}
+
+export function keyResultScoreChanged(data) {
+	return {
+		type: CHANGED_KEYRESULT_SCORE,
+		data,
+	};
+}
+
+export function receivedError(data) {
+	return {
+		type: RECEIVED_ERROR,
+		data,
+	};
 }

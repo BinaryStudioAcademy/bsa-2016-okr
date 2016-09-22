@@ -141,19 +141,28 @@ class Objectives extends Component {
 	}
 
 	changeKeyResultScore(objectiveId, mentorId) {
-		let apiCall = this.props.myStateActions.changeKeyResultScore;
+		const { userId } = this.props;
+		const { user } = this.props.user;
+		const isItHomePage = !isStringsEqual(user._id, userId);
+		let apiCall;
+
+		if(isItHomePage) {
+			apiCall = this.props.myStateActions.changeKeyResultScore;
+		} else {
+			apiCall = this.props.otherPersonActions.changeKeyResultScore;
+		}
 
 		return (keyResultId) => {
 			return (score) => {
 				if (!isCorrectId(objectiveId)
-					|| !isCorrectId(keyResultId)) {
+				|| !isCorrectId(keyResultId)) {
 					return;
 				}
 
 				let body = {
 					keyResultId: keyResultId,
 					score: score,
-					userId: this.props.userId || session
+					userId: userId || session
 				};
 
 				if (mentorId != undefined) {
