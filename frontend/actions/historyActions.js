@@ -19,6 +19,7 @@ export const RECEIVED_FILTERED_ITEMS = 'RECEIVED_FILTERED_ITEMS';
 export const GET_HISTORY_ITEMS = 'GET_HISTORY_ITEMS';
 export const RECEIVED_HISTORY_ITEMS = 'RECEIVED_HISTORY_ITEMS';
 export const HISTORY_ITEMS_ERROR = 'HISTORY_ITEMS_ERROR';
+export const SET_HISTORY_LIMIT = 'SET_HISTORY_LIMIT';
 
 export function clearState() {
 	const action = {
@@ -97,6 +98,15 @@ export function setTypeFilter (typeFilter) {
 // 	}
 // }
 
+export function setHistoryLimit(limit) {
+	const action = {
+		type: SET_HISTORY_LIMIT,
+		limit: limit
+	}
+
+	return action;
+}
+
 export function setSort (sortField) {
 
 	// return action;
@@ -124,6 +134,7 @@ export function getFilteredItems () {
 	return(dispatch, getStore) => {
 		let store = getStore().history;
 		const body = {
+			limit: store.limit,
 			sort: store.sort,
 			filters: {
 				type: store.typeFilter,
@@ -152,13 +163,14 @@ export function receivedFilteredItems (historyItems) {
 
 export function getHistoryItems(filter, sprt){
 	return(dispatch, getStore) => {
+		let store = getStore().history;
 
 		dispatch({
 			type: 'GET_HISTORY_ITEMS',
 		});
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get(`${ ROOT_URL }/api/history/`)
+		return axios.get(`${ ROOT_URL }/api/history/limit/${ store.limit }`)
 		.then( (response) => {
 			dispatch(receivedHistoryItems(response.data))
 			dispatch({ type: REMOVE_REQUEST	});

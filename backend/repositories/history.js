@@ -10,7 +10,7 @@ var HistoryRepository = function() {
 
 HistoryRepository.prototype = new Repository();
 
-HistoryRepository.prototype.getHistory = function (callback) {
+HistoryRepository.prototype.getHistory = function (limit, callback) {
 	var model = this.model;
 	model
 		.find()
@@ -38,6 +38,7 @@ HistoryRepository.prototype.getHistory = function (callback) {
 				path: 'userInfo'
 			}
 		})
+		.limit(limit)
 		.exec(callback);
 };
 

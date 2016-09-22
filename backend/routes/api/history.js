@@ -5,16 +5,18 @@ const adminOnly = require('../adminOnly');
 const service = require('../../services/history');
 var async = require('async');
 
-router.get('/', (req, res, next) => {
-	service.getHistory(res.callback);
+router.get('/limit/:limit', (req, res, next) => {
+	var limit = parseInt(req.params.limit) || 100;
+	service.getHistory(limit, res.callback);
 });
 
 router.put('/', (req, res, next) => {
 	var filters = req.body.filters || null;
 	var sort = req.body.sort || null;
 	var eventList = [];
+	var limit = parseInt(req.body.limit) || 100;
 
-	service.getSortedAndFiltered(filters, sort, res.callback);
+	service.getSortedAndFiltered(filters, sort, limit, res.callback);
 })
 
 router.post('/', (req, res, next) => {
@@ -28,7 +30,7 @@ router.get('/user/:id', (req, res, next) => {
 		return res.badRequest();
 	};
 	service.getUserHistory(id, res.callback)
-	
+
 });
 
 router.get('/:id', (req, res, next) => {
