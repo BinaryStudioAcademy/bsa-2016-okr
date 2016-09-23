@@ -55,17 +55,11 @@ ObjectiveService.prototype.getAll = function(callback) {
 	);
 };
 
-// 1) Create new objective with empty keyResults array
-// 2) Create all keyResults with corresponding objectiveId
-// 3) Push keyResult ids to objective.keyResults
-// 4) Save objective and keyResults in DB
-// 5) Profit =)
 ObjectiveService.prototype.add = function(authorId, objective, keyResults, callback) {
 	objective = new Objective(objective);
 	keyResults = keyResults.map((keyResult) => {
 		keyResult.objectiveId = objective._id;
 		keyResult = new KeyResult(keyResult);
-		/*objective.defaultKeyResults.push(keyResult._id);*/
 		return keyResult;
 	});
 
@@ -101,7 +95,7 @@ ObjectiveService.prototype.add = function(authorId, objective, keyResults, callb
 
 ObjectiveService.prototype.setDefaultKeyResult = function(session, objectiveId, keyResultId, flag, callback) {
 	var historyType = CONST.history.type.UPDATE;
-	
+
 	async.waterfall([
 		(callback) => {
 			ObjectiveRepository.getById(objectiveId, (err, objective) => {
@@ -190,7 +184,7 @@ ObjectiveService.prototype.softDelete = function(userId, objectiveId, objective,
 				if(err) {
 					return callback(err, null);
 				};
-				
+
 				return callback(null, objective);
 			});
 		},
@@ -231,7 +225,7 @@ ObjectiveService.prototype.update = function (userId, objectiveId, data, callbac
 			var sameDescription = isEmptyDescription || (!isEmptyDescription && (objective.description === data.description));
 			var sameCategory = isEmptyCategory || (!isEmptyCategory && (objective.category.equals(data.category)));
 
-			if(sameTitle && sameDescription && sameCategory) {				
+			if(sameTitle && sameDescription && sameCategory) {
 				var updated = false;
 				return callback(null, objective, updated);
 			} else {
@@ -252,7 +246,7 @@ ObjectiveService.prototype.update = function (userId, objectiveId, data, callbac
 					if (err) {
 						return callback(err, null);
 					}
-					
+
 					var updated = true;
 
 					return callback(null, objective, updated);
@@ -298,10 +292,10 @@ ObjectiveService.prototype.delete = function (userId, objectiveId, callback){
 	})
 };
 
-ObjectiveService.prototype.autocomplete = function(userId, categoryId, year, quarter, title, callback) {
+ObjectiveService.prototype.autocomplete = function(categoryId, quarterId, title, callback) {
 	async.waterfall([
 		(callback) => {
-			QuarterRepository.getByUserIdObjectiveIds(userId, year, quarter, (err, quarter) => {
+			QuarterRepository.getById(quarterId, (err, quarter) => {
 				if(err) {
 					return callback(err, null);
 				}
@@ -309,7 +303,7 @@ ObjectiveService.prototype.autocomplete = function(userId, categoryId, year, qua
 				var objectiveIds = [];
 
 				if (!isEmpty(quarter)) {
-					objectiveIds = quarter.userObjectives; 
+					objectiveIds = quarter.userObjectives;
 				}
 
 				return callback(null, objectiveIds);
@@ -344,52 +338,5 @@ ObjectiveService.prototype.autocomplete = function(userId, categoryId, year, qua
 		return callback(err, result);
 	});
 };
-
-
-// ObjectiveService.prototype.addToUser = function(objective, keys, assignedTo, callback) {
-
-// 	async.waterfall([
-// 		(callback) => {
-// 			return ObjectiveService.prototype.add(objective, keys, callback);
-// 		}, (objectiveTemplate, callback) => {
-// 			UserRepository.getById(assignedTo, (err, user) => {
-// 				return callback(err, user, objectiveTemplate);
-// 			});
-// 		}, (user, objectiveTemplate, callback) => {
-// 			var objective = {
-// 			  'objectiveId': objectiveTemplate._id,
-// 			  'feedback': '',
-// 			  'isArchived': false,
-// 			  'isDeleted': false,
-// 			  'keys': []
-// 			}
-
-// 			objectiveTemplate.keys.forEach((key) => {
-// 				return objective.keys.push({
-// 					'keyId': key._id,
-// 					'score': 0
-// 				});
-// 			});
-
-// 			user = user.toObject();
-// 			user.objectives.push(objective);
-
-// 			UserRepository.update(user._id, user, (err) => {
-// 				return callback(err, user, objective.objectiveId);
-// 			});
-// 		}, (user, objectiveId, callback) => {
-// 			UserRepository.getById(user._id, (err, user) => {
-// 				user = user.toObject();
-// 				var objective = user.objectives.find((objective) => {
-// 					return objective.objectiveId._id.equals(objectiveId);
-// 				});
-
-// 				return callback(err, objective);
-// 			});
-// 		}
-// 	], (err, result) => {
-// 		return callback(err, result);
-// 	});
-// };
 
 module.exports = new ObjectiveService();

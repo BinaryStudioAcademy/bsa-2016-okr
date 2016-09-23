@@ -61,12 +61,12 @@ class ObjectiveItem extends Component {
 		let changedTitle = this.refs.objectiveTitleEdit.value;
 		let isItHomePage = this.props.isItHomePage;
 
-		if (this.props.mentorId != undefined)
+		if (this.props.mentorId != undefined) {
 			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription, changedTitle,
 			notifications.notificationApprenticeUpdateObjective, this.props.mentorId);
-		else
+		} else {
 			this.props.updateUserObjectiveApi(this.props.item._id, changedDescription, changedTitle);
-		//updateUserObjectiveApi
+		}
 
 		this.refs.descriptionEdit.classList.add('hidden');
 		this.refs.description.refs.description.classList.remove('hidden');
@@ -118,7 +118,7 @@ class ObjectiveItem extends Component {
 										title="unarchive"
 										onClick={() => {changeArchive(false, objective._id)}}>
 										<i className="fi flaticon-bookmark-1"></i>
-										</button>) 
+										</button>)
 		}
 
 		if(!isArchived){

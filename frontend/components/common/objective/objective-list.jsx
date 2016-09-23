@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ObjectiveInput from './objectiveInput.jsx';
+import ObjectiveItem from './objective.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import './objective.scss';
 
@@ -27,17 +28,20 @@ class ObjectiveList extends Component {
  	}
 
  	getCategoryItems() {
- 		const categories = this.props.categories || [];
-		const objectives = this.props.objectives || [];
-		const ObjectiveItem = this.props.ObjectiveItem;
-    const updateUserObjectiveApi = this.props.updateUserObjectiveApi;
-		const softDeleteMyObjectiveByIdApi = this.props.softDeleteMyObjectiveByIdApi;
-		const changeKeyResultScore = this.props.changeKeyResultScore;
-		const isArchived = this.props.archived;
-		const isAdmin = this.props.isAdmin;
-		const changeArchive = this.props.changeArchive;
-		const mentorId = this.props.mentorId;
-	  let isItHomePage = this.props.isItHomePage;
+    const {
+      objectives = [],
+      categories = [],
+      isArchived,
+      category,
+      isAdmin,
+      changeArchive,
+      mentorId,
+      quarter = {},
+      updateUserObjectiveApi,
+      softDeleteMyObjectiveByIdApi,
+      changeKeyResultScore,
+      isItHomePage
+    } = this.props;
 
 		var categoryItems = [];
 
@@ -77,7 +81,7 @@ class ObjectiveList extends Component {
 				if(!isArchived) {
 					input = <ObjectiveInput
 						createObjective={ this.props.createObjective(category._id, objectives) }
-						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id) }
+						getObjectiveAutocompleteData={ this.props.getObjectiveAutocompleteData(category._id, quarter._id) }
 						key={ index }
 						isItHomePage = { isItHomePage }
 					/>

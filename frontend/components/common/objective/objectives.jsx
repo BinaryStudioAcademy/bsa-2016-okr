@@ -17,7 +17,6 @@ import * as otherPersonActions from "../../../actions/otherPersonActions";
 import * as userDashboardActions from "../../../actions/userDashboardActions";
 
 import Quarterbar from '../quarterbar/quarters.jsx';
-import ObjectiveItem from './objective.jsx';
 import ObjectivesList from './objective-list.jsx';
 
 import '../styles/sweetalert.css';
@@ -234,8 +233,6 @@ class Objectives extends Component {
 						confirmButtonText: 'Yes, restore'
 					}, () => {
 						this.props.myStateActions.softDeleteMyObjectiveByIdApi(duplicateItem._id, false);
-						//this.props.softDeleteObjectiveKeyResultByIdApi(userObjectiveId,
-						//		duplicateItem._id, false);
 					});
 				} else {
 					sweetalert({
@@ -248,12 +245,9 @@ class Objectives extends Component {
 		};
 	}
 
-	getObjectiveAutocompleteData(categoryId) {
-		let selectedYear = this.props.myState.selectedYear;
-		let selectedTab = this.props.myState.selectedTab;
-
+	getObjectiveAutocompleteData(categoryId, quarterId) {
 		return (title) => {
-			this.props.objectiveActions.getAutocompleteObjectives(categoryId, selectedYear, selectedTab, title);
+			this.props.objectiveActions.getAutocompleteObjectives(categoryId, quarterId, title);
 		};
 	}
 
@@ -289,9 +283,6 @@ class Objectives extends Component {
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
 			years = getYears(me.quarters);
-
-			// console.log('¯\\_(ツ)_/¯: selectedTab', selectedTab);
-			// console.log('¯\\_(ツ)_/¯: selectedYear', selectedYear);
 
 			// Edit key result on HomePage
 			editKeyResult = {
@@ -348,11 +339,11 @@ class Objectives extends Component {
 						mentorId={userInfo.mentorId}
 						categories={ displayedCategories }
 						isAdmin={ isAdmin }
-						archived = { archived }
+						isArchived = { archived }
+						quarter={ userInfo.currentQuarter }
 						objectives={ userInfo.objectives }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
-						ObjectiveItem={ ObjectiveItem }
 						changeArchive={ this.handleArchive }
 						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
 						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
@@ -379,13 +370,14 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let objectives = [];
 	let { _id, localRole } = userObject;
 	let mentorId;
+	let currentQuarter;
 
 	if(userObject.mentor != undefined || userObject.mentor != null) {
 		mentorId = userObject.mentor._id;
 	}
 
 	if (userObject.quarters != undefined) {
-		let currentQuarter = userObject.quarters.find((quarter) => {
+		currentQuarter = userObject.quarters.find((quarter) => {
 			return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 		});
 
@@ -393,6 +385,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 			objectives = currentQuarter.userObjectives;
 		} else {
 			objectives = [];
+			currentQuarter = {};
 		}
 
 		quarters = userObject.quarters.filter(quarter => {
@@ -402,6 +395,7 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 
 	return {
 		quarters,
+		currentQuarter,
 	  objectives,
 		_id,
 	  mentorId,
