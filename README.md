@@ -10,18 +10,18 @@ Requires global packages
 
 To start the project for development run
 
-``` npm start ```
+``` npm runt start ```
 
-To start the project in production mode run:
+To start the project in production mode you need running auth server on port 2020 and run:
 
-* ``` npm run build ```
-* ``` npm run prod ```
-
-P.S. Can be used for ONLY BACKEND development ( to avoid looooong webpack hot reload )
+* ``` npm run build:local  ```
+* ``` npm run dev:prod ```
 
 To run automated tests run:
 
 ``` npm run test ```
+
+P.S. Tests wasn't maintained since start of September
 
 If there are any errors with sass/scss:
 
@@ -31,4 +31,4 @@ Then run ``` npm start ``` again
 
 To start the project on production run
 
-``` npm install && npm run build && node server ```
+``` npm install && npm run build && npm run prod ```
