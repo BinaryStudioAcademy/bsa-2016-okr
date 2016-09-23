@@ -15,7 +15,12 @@ class SharedHeader extends Component {
 		const globalRole = this.props.globalRole || '';
 		let HeaderEl = (<div></div>);
 
+		console.log('---===¯\\_(ツ)_/¯===---isDeveloping', isDeveloping);
+		console.log('---===¯\\_(ツ)_/¯===---LOCAL_PROD', LOCAL_PROD);
+
 		if(isDeveloping || LOCAL_PROD) {
+			console.log('---===¯\\_(ツ)_/¯===---HeaderEl LOCAL-HEADER');
+
 			HeaderEl = (
 				<div className='hdr-header'>
 					<img className='hdr-logo' id='BSheaderLogo' src="http://academy.binary-studio.com/resources/logo.png"/>
@@ -75,6 +80,8 @@ class SharedHeader extends Component {
 				</div>
 			);
 		} else {
+			console.log('---===¯\\_(ツ)_/¯===---HeaderEl PROD-HEADER');
+
 			HeaderEl = getHeader();
 		}
 
@@ -108,17 +115,26 @@ export default SharedHeaderConnected;
 
 var getHeader = function() {
 	var request = new XMLHttpRequest();
+	console.log('---===¯\\_(ツ)_/¯===---1');
 	request.open('GET', 'http://team.binary-studio.com/app/header', true);
+	console.log('---===¯\\_(ツ)_/¯===---2');
 	request.send();
+	console.log('---===¯\\_(ツ)_/¯===---3');
 	request.onreadystatechange = function () {
+		console.log('---===¯\\_(ツ)_/¯===---4');
+		console.log('---===¯\\_(ツ)_/¯===---request.readyState',request.readyState);
+		console.log('---===¯\\_(ツ)_/¯===---request.status',request.status);
 		if (request.readyState != 4) return;
 		if (request.status != 200) {
 			alert(request.status + ': ' + request.statusText);
 		} else {
 			var headerHtml = request.responseText;
+			console.log('---===¯\\_(ツ)_/¯===---headerHtml',headerHtml);
 			var headerContainer = document.getElementById('header');
 			headerContainer.innerHTML = headerHtml;
+			console.log('---===¯\\_(ツ)_/¯===---5', 5);
 			headerFunction();
+			console.log('---===¯\\_(ツ)_/¯===---6', 6);
 		}
 	};
 };
