@@ -10,7 +10,7 @@ module.exports = function(app) {
 		app.use('/', response, authOnly);
 		app.use('/api', api);
 	} else {
-		app.use('/okr/', response, authOnly);
-		app.use('/okr/api', api);
+		app.use('/', response, authOnly);
+		app.use('/api', api);
 	}
 };
