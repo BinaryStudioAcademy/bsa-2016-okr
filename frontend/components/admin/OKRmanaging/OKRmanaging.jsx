@@ -59,14 +59,14 @@ class OKRmanaging extends Component {
 		document.getElementsByClassName('new-key-result-difficulty')[0].value = CONST.keyResult.EASY;
 	}
 
-	getDuplicateObjective(id, title, category) {
+	getDuplicateObjective(id, title, description, category) {
     const { objectives } = this.props.okrManaging;
-
     let objectiveIndex = objectives.findIndex((objective) => {
       return (
-        (objective.title === title)
-        && (objective.category === category)
-        && (objective._id !== id)
+				(objective.title === title)
+				&& (objective.description === description)
+				&& (objective.category === category)
+				&& (objective._id !== id)
       );
     });
 
@@ -74,7 +74,7 @@ class OKRmanaging extends Component {
   }
 
 	saveEditObjective(id, data, focusWrongInputFn) {
-		let duplicateItem = this.getDuplicateObjective(null, data.title, data.category);
+		let duplicateItem = this.getDuplicateObjective(null, data.title, data.description, data.category);
 
 		if(isEmpty(duplicateItem)) {
 			if(isEmpty(id)) {
@@ -103,7 +103,7 @@ class OKRmanaging extends Component {
 		} else {
 			sweetalert({
 				title: 'Error!',
-				text: 'Objective with such title for that category already exists',
+				text: 'Objective with such title/description for that category already exists',
 				type: 'error',
 			}, () => {
 				setTimeout(focusWrongInputFn, 0);
