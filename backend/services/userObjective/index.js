@@ -57,9 +57,9 @@ UserObjectiveService.prototype.update = function(session, userObjectiveId, data,
 					return callback(err, null);}
 
 			if (session.localRole == CONST.user.localRole.ADMIN
-					|| session._id.equals(userObjective.userId.toString)
+					|| session._id.equals(userObjective.userId.toString())
 					|| (session.localRole == CONST.user.localRole.MENTOR
-						  && user.mentor._id.equals(session._id.toString) )) {
+						  && user.mentor._id.equals(session._id.toString()) )) {
 						ObjectiveRepository.getById(userObjective.templateId, (err, templateObjective) => {
 
 							if(templateObjective.isApproved == false){
