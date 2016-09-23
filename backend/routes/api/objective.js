@@ -9,7 +9,8 @@ const isValidQuarter = ValidateService.isValidQuarter;
 const isCorrectId = ValidateService.isCorrectId;
 const isString = ValidateService.isString;
 const HelpService = require('../../utils/HelpService');
-const getValidDifficulty = HelpService.getValidDifficulty;
+const KeyResultHelpService = require('../../utils/KeyResultHelpService');
+const getValidDifficulty = KeyResultHelpService.getValidDifficulty;
 
 router.get('/', (req, res, next) => {
 	return service.getAll(res.callback);
@@ -160,7 +161,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 		return res.badRequest('Wrong objective id');
 	}
 
-	var isWrongBody = ( 
+	var isWrongBody = (
 		(isEmpty(title) || !isString(title))
 		&& (description == null || !isString(description))
 		&& (
@@ -175,7 +176,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 	}
 
 	var data = {};
-	
+
 	if(!isEmpty(title) && isString(title)) {
 		data.title = title;
 	}

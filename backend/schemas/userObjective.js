@@ -18,6 +18,11 @@ var userObjective = new Schema({
 		ref: 'User',
 		required: true
 	},
+	quarterId: {
+		type: Schema.Types.ObjectId,
+		ref: 'Quarter',
+		required: true
+	},
 	deletedBy: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
@@ -73,6 +78,6 @@ var userObjective = new Schema({
 	timestamps: true
 });
 
-userObjective.index({ userId: 1,  templateId: 1 }, { unique: true });
+userObjective.index({ quarterId: 1, userId: 1,  templateId: 1 }, { unique: true });
 
 module.exports = mongoose.model('UserObjective', userObjective);

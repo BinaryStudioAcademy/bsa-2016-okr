@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const SEARCH_OBJECTS = 'SEARCH_OBJECTS';
@@ -45,7 +47,7 @@ export function updateCategoryRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_CATEGORY_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/category/updateWithoutValidation/' + id), body)
+		return axios.put(`${ ROOT_URL }/api/category/updateWithoutValidation/${ id }`, body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -70,7 +72,7 @@ export function getDeletedCategoriesRequest() {
 		dispatch({ type: GET_DELETED_CATEGORIES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/category/deleted')
+		return axios.get(`${ ROOT_URL }/api/category/deleted`)
 		.then(response => {
 			dispatch(receivedDeletedCategories(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -104,7 +106,7 @@ export function updateTemplateKeyResultRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_TEMPLATE_KEY_RESULT_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/keyResult/updateWithoutValidation/' + id), body)
+		return axios.put(`${ ROOT_URL }/api/keyResult/updateWithoutValidation/${ id }`, body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -130,7 +132,7 @@ export function updateTemplateObjectivesRequest(id, body, idItem) {
 		dispatch({ type:  UPDATE_TEMPLATE_OBJECTIVE_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/objective/updateWithoutValidation/' + id), body)
+		return axios.put(`${ ROOT_URL }/api/objective/updateWithoutValidation/${ id }`, body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -155,7 +157,7 @@ export function getObjectiveTemplatesRequest() {
 		dispatch({ type: GET_OBJECTIVE_TEMPLATES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/objective/deleted')
+		return axios.get(`${ ROOT_URL }/api/objective/deleted`)
 		.then(response => {
 			dispatch(receivedObjectiveTemplates(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -188,7 +190,7 @@ export function getKeyResultsTemplatesRequest() {
 		dispatch({ type: GET_KEY_RESULTS_TEMPLATES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/keyResult/deleted/')
+		return axios.get(`${ ROOT_URL }/api/keyResult/deleted/`)
 		.then(response => {
 			dispatch(receivedKeyResultsTemplates(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -268,7 +270,7 @@ export function updateUserObjectivesRequest(id, body, idItem) {
 		dispatch({ type: UPDATE_USER_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(('/api/userObjective/updateWithoutValidation/' + id), body)
+		return axios.put(`${ ROOT_URL }/api/userObjective/updateWithoutValidation/${ id }`, body)
 		.then(response => {
 			dispatch(deleteItemFromState(idItem));
 			dispatch({ type: REMOVE_REQUEST });
@@ -293,7 +295,7 @@ export function getUserObjectivesRequest() {
 		dispatch({ type: GET_USER_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/userObjective/me/')
+		return axios.get(`${ ROOT_URL }/api/userObjective/me/`)
 		.then(response => {
 			dispatch(receivedUserObjectives(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -328,7 +330,7 @@ export function getUserDeletedObjectivesRequest() {
 		dispatch({ type: GET_USER_DELETED_OBJECTIVES_REQUEST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/userObjective/me/deleted')
+		return axios.get(`${ ROOT_URL }/api/userObjective/me/deleted`)
 		.then(response => {
 			dispatch(receivedUserDeletedObjectives(response.data));
 			dispatch({ type: REMOVE_REQUEST });

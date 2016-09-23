@@ -1,5 +1,7 @@
 import React from 'react';
 
+import CONST from '../../../backend/config/constants';
+
 import UserObjectives from './../common/objective/objectives.jsx';
 import CentralWindow from '../../containers/central-window.jsx';
 import StatPanel from "../../containers/statistic-panel.jsx";
@@ -14,7 +16,7 @@ const Home = (props) => {
 				<UserObjectives />
 			</CentralWindow>
 			<StatPanel>
-				<UserDashboard where="homePage"/>
+				<UserDashboard where={ CONST.page.HOME_PAGE } />
 			</StatPanel>
 		</div>
 	);

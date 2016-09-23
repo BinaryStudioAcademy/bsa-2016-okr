@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ObjectiveInput from './objectiveInput.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import './objective.scss';
 
-class ObjectiveList extends React.Component{
+class ObjectiveList extends Component {
 
  	constructor(props) {
  		super(props);
@@ -49,6 +49,9 @@ class ObjectiveList extends React.Component{
 				var objectiveItems = objectives
 					.filter((objective) => {
 						return ((objective.templateId.category == category._id) && (!objective.isDeleted))
+					})
+					.sort((a, b) => {
+						return ( a.templateId.title.localeCompare(b.templateId.title) )
 					})
 					.map((item, index) => {
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
@@ -103,8 +106,7 @@ class ObjectiveList extends React.Component{
 		return (
 			<div id="project-category" className="category">{ this.getCategoryItems() }</div>
 		);
-
 	}
 }
 
-export default ObjectiveList
+export default ObjectiveList;

@@ -15,9 +15,12 @@ import {
 	GET_HISTORY_ITEMS,
 	RECEIVED_HISTORY_ITEMS,
 	HISTORY_ITEMS_ERROR,
+	SET_HISTORY_LIMIT,
 } from '../actions/historyActions';
 
 const initialState = {
+	limit: 100,
+	lastHistoryRequest: GET_HISTORY_ITEMS,
 	historyItems: [],
 	searchValue: '',
 	showHistoryFilters: false,
@@ -76,7 +79,8 @@ export default function historyReducer(state = initialState, action) {
 
 			const historyItems = action.historyItems;
 			return Object.assign({}, state, {
-				historyItems
+				historyItems,
+				lastHistoryRequest: GET_FILTERED_ITEMS
 			})
 		}
 
@@ -85,8 +89,16 @@ export default function historyReducer(state = initialState, action) {
 			const historyItems = action.historyItems;
 
 			return Object.assign({}, state, {
-				historyItems ,
-				visibleItems:  historyItems
+				historyItems,
+				visibleItems: historyItems,
+				lastHistoryRequest: GET_HISTORY_ITEMS
+			})
+		}
+
+		case SET_HISTORY_LIMIT: {
+			const {limit} = action;
+			return Object.assign({}, state, {
+				limit
 			})
 		}
 

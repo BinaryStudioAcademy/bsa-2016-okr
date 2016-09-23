@@ -209,9 +209,10 @@ export default function recBynReducer(state = initialState, action) {
 				objectiveType: true,
 				keyType: true,
 				sortByDate: SORTED_ASC,
-				categoryType: NOT_SORTED,
+				sortByTitle: NOT_SORTED,
+				categoryType: true,
 				categoryOrTypeFilter: "",
-				userName: "",								
+				userName: ""								
 			});
 		}
 
@@ -581,6 +582,7 @@ export default function recBynReducer(state = initialState, action) {
 function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objectiveType, keyType, sortByDate, sortByTitle, categoryType, userName) {
 
 	let initVisibleItems = filterDate(items, dateFrom, dateTo);
+
 	let itemsAfterInputFilter = [];
 
 	if (categoryOrTypeFilter === "") {
@@ -675,7 +677,7 @@ function filterDate(items, dateFrom, dateTo) {
 	else if(dateFrom === "" && dateTo != "") {
 		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
-			if (dateTo >= items[i].deletedDate) {
+			if (new Date(dateTo) >= new Date(items[i].deletedDate)) {
 				visibleItems.push(items[i]);
 			}
 		}
@@ -683,7 +685,7 @@ function filterDate(items, dateFrom, dateTo) {
 	else if(dateFrom != "" && dateTo === ""){
 		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
-			if (dateFrom <= items[i].deletedDate) {
+			if (new Date(dateFrom) <= new Date(items[i].deletedDate)) {
 				visibleItems.push(items[i]);
 			}
 		}
@@ -691,7 +693,7 @@ function filterDate(items, dateFrom, dateTo) {
 	else {
 		items =  JSON.parse(JSON.stringify(items));
 		for (let i = 0; i < items.length; i++) {
-			if (dateFrom <= items[i].deletedDate && dateTo >= items[i].deletedDate) {
+			if (new Date(dateFrom) <= new Date(items[i].deletedDate) && new Date(dateTo) >= new Date(items[i].deletedDate)) {
 				visibleItems.push(items[i]);
 			}
 		}

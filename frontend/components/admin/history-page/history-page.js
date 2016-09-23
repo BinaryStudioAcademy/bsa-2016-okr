@@ -21,12 +21,15 @@ class HistoryPage extends React.Component {
       this.filterButtonState = this.filterButtonState.bind(this);
       this.handleFilterButton = this.handleFilterButton.bind(this);
       this.handleFilterShow = this.handleFilterShow.bind(this);
+      this.incrementHistoryLimit = this.incrementHistoryLimit.bind(this);
+      this.scroller = this.scroller.bind(this);
    }
 
    handleFilterShow(event){
       let filter = document.querySelector("button.btn.btn-blue");
       filter.blur();
       handler_filter_click.call(this, event);
+      this.handleFilterButton();
    }
 
    filterButtonState(show) {
@@ -42,10 +45,28 @@ class HistoryPage extends React.Component {
       this.props.showFilters(!show);
    }
 
+   scroller(e) {
+     if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
+       if (this.props.history.limit <= this.props.history.historyItems.length) {
+         this.incrementHistoryLimit();
+       }
+     }
+   }
+
+   componentDidMount() {
+     var scrollContainer = document.getElementById("central-window");
+     scrollContainer.addEventListener('scroll', this.scroller);
+   }
+
+   componentWillUnmount() {
+     var scrollContainer = document.getElementById("central-window");
+     scrollContainer.removeEventListener('scroll', this.scroller);
+   }
+
    render() {
 
        // if (this.props.history.historyItems.length === 0) {
-         
+
        //    return (
 
        //       <div>
@@ -66,7 +87,7 @@ class HistoryPage extends React.Component {
        //       </div>
        //    );
        // }
-   
+      let showFilters = this.props.history.showHistoryFilters;
       return (
          <div>
             <CentralWindow fullScreen={ true }>
@@ -79,6 +100,7 @@ class HistoryPage extends React.Component {
                         <button className="btn btn-blue" onClick={this.handleFilterShow}>
                            <i className="fi flaticon-funnel"/>
                            &nbsp;Filter
+                           <i className={ `fi-1 flaticon-1-arrow-${ showFilters ? 'up' : 'down' } upIcon` }/>
                         </button>
                         <div className="history-filter-container">
                            <div className="history-filter-bar-container">
@@ -93,6 +115,17 @@ class HistoryPage extends React.Component {
             </CentralWindow>
          </div>
       )
+   }
+
+   incrementHistoryLimit() {
+     var currentLimit = this.props.history.limit
+     this.props.setHistoryLimit(currentLimit + 100);
+     //determine last history api call and repeat it with updated limit
+     if (this.props.history.lastHistoryRequest == 'GET_FILTERED_ITEMS') {
+       this.props.getFilteredItems();
+     } else if (this.props.history.lastHistoryRequest == 'GET_HISTORY_ITEMS') {
+       this.props.getHistoryItems();
+     }
    }
 
     componentWillMount() {

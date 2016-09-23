@@ -20,7 +20,7 @@ class CategoryItem extends Component {
 
 	componentDidUpdate() {
 		const { edit, activeCategory, index } = this.props;
-		
+
 		if (edit && activeCategory == index) {
 			this.selectEditTitle();
 		}
@@ -42,7 +42,7 @@ class CategoryItem extends Component {
 
 	delete() {
 		this.props.hideAddInput();
-		
+
 		if(this.props.isEmptyCategory) {
 			sweetalert({
 				title: `Delete category '${this.props.category.title}' ?`,
@@ -51,13 +51,13 @@ class CategoryItem extends Component {
 				showCancelButton: true,
 				confirmButtonColor: '#f44336',
 				confirmButtonText: 'Yes, delete',
-			}, (isConfirm) => {
+			}, () => {
 				this.props.deleteCategory(this.props.category._id, true);
 			});
 		} else {
 			sweetalert({
-				title: 'Cannot delete category', 
-				text: 'This category isn\'t empty.', 
+				title: 'Cannot delete category',
+				text: 'This category isn\'t empty.',
 				type: 'error'
 			});
 		}
@@ -77,7 +77,7 @@ class CategoryItem extends Component {
   			title: 'Error!',
   			text: 'Category title cannot be empty',
   			type: 'error',
-  		}, () => {	
+  		}, () => {
   			setTimeout(this.focusEditTitle, 0);
   		});
 		} else if(title === this.props.category.title) {
@@ -92,28 +92,28 @@ class CategoryItem extends Component {
 				confirmButtonText: 'Yes, save',
 				closeOnConfirm: false,
 			}, () => {
-		    this.props.saveEditCategory(id, title); 
+		    this.props.saveEditCategory(id, title);
 		 	});
 		}
 	}
 
 	render() {
     const { edit, activeCategory, index, category } = this.props;
-		
+
 		let titleEl;
     let editSaveBtn;
     let cancelDeleteBtn;
-    
+
     if( edit && activeCategory == index ) {
     	titleEl = ( <input type='text' ref="categoryInput"
-    										 className='category-edit-title' 
-    										 defaultValue={ category.title } 
+    										 className='category-edit-title'
+    										 defaultValue={ category.title }
     						/> );
 	    editSaveBtn 		= ( <button  onClick={ this.saveChanges }
 									 				 className="btn btn-green save"
 													 aria-hidden="true"
 													 title="Save">
-									 				 <i className='fi-1 flaticon-1-check'></i> 
+									 				 <i className='fi-1 flaticon-1-check'></i>
 									</button> );
 	    cancelDeleteBtn  = ( <button onClick={ this.cancelEdit }
 													className="btn btn-red cancel"

@@ -336,9 +336,40 @@
 #role-mapping-wrapper aside span {
     background: #F9FAFB;
 }
+/*
+@media all and (max-width: 1100px) {
+    #role-mapping-wrapper {
+
+        #central-window {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin-right: 350px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        aside#inter-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            border-left: 1px solid #DBDBDB;
+            width: 350px;
+            background-color: #F9FAFB;
+            overflow-y: overlay;
+            overflow-x: hidden;
+            margin: 0;
+        }
+    }
+}
+*/
 
 
-@media all and (max-width: 900px) {
+
+@media all and (max-width: 1100px) {
 
     #role-mapping-wrapper {
 
@@ -417,9 +448,9 @@
 
 /* tables responsive start */
 
-$breakpoint-alpha: 540px;
+$breakpoint-alpha: 580px;
 
-@media all and (max-width: 540px) {
+@media all and (max-width: 580px) {
 
     #role-mapping-wrapper .col-1 {
         width: auto;

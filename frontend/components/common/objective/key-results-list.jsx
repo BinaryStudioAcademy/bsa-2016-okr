@@ -6,11 +6,6 @@ import './key-results.scss';
 import sweetalert from 'sweetalert';
 import '../styles/sweetalert.css';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
-import cookie from 'react-cookie';
-
-const session = cookie.load('user-id');
-
-
 
 class KeyResults extends Component {
 	constructor(props) {
@@ -120,7 +115,7 @@ class KeyResults extends Component {
 	}
 
 	resetAutocompleteState() {
-		console.log('Hiding key result input...');
+		// console.log('Hiding key result input...');
 		let keyResultAddBtn = this.refs.newKeyResultButton;
 		let keyResultAddElement = this.refs.newKeyResultButton.nextElementSibling;
 
@@ -177,6 +172,9 @@ class KeyResults extends Component {
 			items = this.props.data
 				.filter((item) => {
 					return (!item.isDeleted)
+				})
+				.sort((a, b) => {
+					return ( a.templateId.title.localeCompare(b.templateId.title) )
 				})
 				.map((item, index) => {
 				return <KeyResultItem index={index} key={index} item={item}

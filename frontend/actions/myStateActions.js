@@ -1,13 +1,16 @@
 import axios from 'axios';
-
-import CONST from '../../backend/config/constants';
+import CONST, { ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST, redirectAfterAuth } from './appActions';
 import {
 	getNotAprovedObjectivesRequest,
 	getNotAprovedKeysRequest,
 } from './acceptObjectiveActions';
-import { getStats, getMyHistory } from './userDashboardActions';
+
+import {
+	getStats,
+	getMyHistory
+} from './userDashboardActions';
 
 export const GET_MY_OBJECTIVES = 'GET_MY_OBJECTIVES';
 export const RECEIVED_MY_OBJECTIVES_ERROR = 'RECEIVED_MY_OBJECTIVES_ERROR';
@@ -43,8 +46,8 @@ export function archiveMyQuarter(id, flag) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ARCHIVE_MY_QUARTER});
 		dispatch({ type: ADD_REQUEST });
-		let url = `/api/quarters/${ id }/archive/${ flag }`;
-		return axios.put()
+
+		return axios.put(`${ ROOT_URL }/api/quarters/${ id }/archive/${ flag }`)
 		.then( response => {
 			dispatch({ type: REMOVE_REQUEST	});
 			dispatch(getMe());
@@ -62,7 +65,7 @@ export function archiveMyQuarter(id, flag) {
 export function reset() {
 	 return {
 	 	type: RESET
-	 }  
+	 }
 }
 
 export function getMe() {
@@ -70,14 +73,14 @@ export function getMe() {
 		dispatch({ type: GET_MY_OBJECTIVES });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/user/me/')
+		return axios.get(`${ ROOT_URL }/api/user/me/`)
 		.then(response => {
 			dispatch(receivedMyObjectives(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
 		})
 		.then(() => {
 			dispatch(getStats());
-			dispatch(getMyHistory());
+			//dispatch(getMyHistory());
 		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response));
@@ -91,7 +94,7 @@ export function getMeBasic() {
 		dispatch({ type: GET_ME_BASIC });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/user/mebasic/')
+		return axios.get(`${ ROOT_URL }/api/user/mebasic/`)
 		.then(response => {
 			dispatch(receivedMeBasic(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -101,7 +104,7 @@ export function getMeBasic() {
 		})
 		.then(() => {
 			let localRole = getStore().myState.me.localRole;
-			
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
@@ -147,16 +150,14 @@ export function setChangeYear(year) {
 		dispatch({
 			type: CHANGE_YEAR,
 			selectedYear: year
-		})
-		.then(() => {
-			dispatch(getStats());
 		});
+		dispatch(getStats());
 	}
 }
 
 export function createQuarter(quarter) {
 	return (dispatch, getStore) => {
-		axios.post('/api/quarters/', quarter)
+		axios.post(`${ ROOT_URL }/api/quarters/`, quarter)
 		.then((response) => {
 			dispatch(newQuarterAdded(response.data));
 		})
@@ -196,7 +197,12 @@ export function updateUserObjectiveApi(id, description, title, callback, userId)
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 
-		return axios.put(('/api/userObjective/' + id), {"description": description, "title": title})
+		const body = {
+			"description": description,
+			"title": title
+		};
+
+		return axios.put(`${ ROOT_URL }/api/userObjective/${ id }`, body)
 		.then(response => {
 			dispatch(updateUserObjective(id, description, title));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -229,12 +235,12 @@ export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
 		dispatch({ type: ADD_REQUEST	});
 		dispatch({ type: SOFT_DELETE_MY_OBJECTIVE_BY_ID_API });
 
-		return axios.delete('/api/userObjective/' + id + '/' + flag)
+		return axios.delete(`${ ROOT_URL }/api/userObjective/${ id }/${ flag }`)
 		.then(response => {
 			dispatch(softDeleteMyObjectiveById(id, flag));
 			dispatch({ type: REMOVE_REQUEST	});
 
-			
+
 			/*
 			if (callback != null) {
 				dispatch(callback(userId));
@@ -245,14 +251,14 @@ export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
 			dispatch(getStats());
 			dispatch(getMyHistory());
 		})
-		.then(() => {
+/*		.then(() => {
 			let localRole = getStore().myState.me.localRole;
-			
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
 			}
-		})
+		})*/
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -265,7 +271,7 @@ export function addNewObjective(body, callback, userId) {
 		dispatch({ type: ADD_NEW_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST	});
 
-		return axios.post(('/api/userObjective/'), body)
+		return axios.post(`${ ROOT_URL }/api/userObjective/`, body)
 		.then(response => {
 			dispatch(addedNewObjective(response.data, body));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -279,14 +285,14 @@ export function addNewObjective(body, callback, userId) {
 			dispatch(getStats());
 			dispatch(getMyHistory());
 		})
-		.then(() => {
+		/*.then(() => {
 			let localRole = getStore().myState.me.localRole;
-					
+
 			if(localRole === CONST.user.localRole.ADMIN) {
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
 			}
-		})
+		})*/
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -306,7 +312,7 @@ export function changeKeyResultScore(objectiveId, body, callback, userId) {
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/score/`, body)
+		return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/keyresult/score/`, body)
 		.then(response => {
 			dispatch(keyResultScoreChanged(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
@@ -346,7 +352,7 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, fl
 	return (dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST	});
 
-		return axios.delete('/api/userObjective/' + objectiveId +'/keyResult/'+ keyResultId +'/'+flag)
+		return axios.delete(`${ ROOT_URL }/api/userObjective/${ objectiveId }/keyResult/${ keyResultId }/${ flag }`)
 				.then(response => {
 					dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, flag, response.data));
 					dispatch({ type: REMOVE_REQUEST	});
@@ -355,14 +361,14 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, fl
 					dispatch(getStats());
 					dispatch(getMyHistory());
 				})
-				.then(() => {
+				/*.then(() => {
 					let localRole = getStore().myState.me.localRole;
-					
+
 					if(localRole === CONST.user.localRole.ADMIN) {
 						dispatch(getNotAprovedObjectivesRequest());
 						dispatch(getNotAprovedKeysRequest());
 					}
-				})
+				})*/
 				.catch(response => {
 					dispatch(receivedMyObjectivesError(response.data));
 					dispatch({ type: REMOVE_REQUEST	});
@@ -377,7 +383,7 @@ export function changeArchiveStatus(changeTo, objectiveId) {
 		})
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(`/api/userobjective/${objectiveId}/archive/${changeTo}`)
+		return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/archive/${ changeTo }`)
 		.then( response => {
 			dispatch( { type: REMOVE_REQUEST} );
 			dispatch( changeArchiveStatusLocal(changeTo, objectiveId));
@@ -430,7 +436,7 @@ export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
 	return(dispatch, getStore) => {
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(`/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
+		return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
 				.then(response => {
 					dispatch(keyResultTitleAndDifficultyChanged(response.data));
 					dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE });

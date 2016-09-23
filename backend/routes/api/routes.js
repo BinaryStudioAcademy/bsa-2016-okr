@@ -21,6 +21,9 @@ module.exports = function (app) {
 	router.use('/userObjective', userObjective);
 	router.use('/stats', stats);
 	router.use('/quarters', quarter);
+	router.use('/me', function(req, res) {
+		return res.send(req.decoded);
+	});
 	router.use('/*', (req, res) => {
 		return res.badRequest();
 	});

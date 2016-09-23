@@ -1,4 +1,7 @@
 import { isEmpty } from '../../backend/utils/ValidateService';
+import { getTabForYear, addNewQuarter, setScoreToKeyResult } from '../../backend/utils/UIHelpService';
+import CONST from '../../backend/config/constants';
+
 import { currentYear, currentQuarter } from '../../backend/config/constants';
 import {
 	RECEIVED_MY_OBJECTIVES_ERROR,
@@ -33,7 +36,8 @@ const initialState = {
 	selectedTab: null,
 	selectedYear: null,
 	me: {
-		"localRole": ""
+		localRole: "",
+		quarters: [],
 	},
 	editKeyResultId: '',
 	editKeyResultIsEditing: false,
@@ -63,16 +67,21 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		}
 
 		case RECEIVED_MY_OBJECTIVES: {
-			const { data } = action;
+			let { data } = action;
 			let index;
 			let year;
 
-			if(!state.selectedTab || !state.selectedYear) {
-				let quarters = data.quarters.map((quarter) => {
-					return getIndexAndYearFromQuarter(quarter);
+			data = !isEmpty(data) ? data : {};
+
+			if(!isEmpty(data.quarters) && (!state.selectedTab || !state.selectedYear)) {
+				data.quarters = data.quarters.map((quarter) => {
+					quarter.year = parseInt(quarter.year, 10);
+					quarter.index = parseInt(quarter.index, 10);
+
+					return quarter;
 				});
 
-				({ index, year } = quarters[quarters.length - 1]);
+				({ index, year } = getInitialQuarter(data.quarters));
 			}
 
 			let selectedTab = index || state.selectedTab;
@@ -97,15 +106,18 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			const { selectedTab } = action;
 
 			return Object.assign({}, state, {
-				selectedTab: selectedTab
+				selectedTab: parseInt(selectedTab, 10)
 			});
 		}
 
 		case CHANGE_YEAR: {
 			const { selectedYear } = action;
 
+			const selectedTab = getTabForYear(state.me.quarters, selectedYear);
+
 			return Object.assign({}, state, {
-				selectedYear: selectedYear
+				selectedYear: parseInt(selectedYear, 10),
+				selectedTab,
 			});
 		}
 
@@ -113,12 +125,14 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			const { quarter: newQuarter } = action;
 			const { quarters: oldQuarters } = state.me;
 
+			const newMe = Object.assign({}, state.me, {
+				quarters: addNewQuarter(oldQuarters, newQuarter)
+			});
+
 			return Object.assign({}, state, {
-				selectedYear: newQuarter.year,
-				selectedTab: newQuarter.index,
-				me: {
-					quarters: addNewQuarter(oldQuarters, newQuarter)
-				}
+				selectedYear: parseInt(newQuarter.year, 10),
+				selectedTab: parseInt(newQuarter.index, 10),
+				me: newMe
 			});
 		}
 
@@ -133,7 +147,6 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 			return Object.assign({}, state, {
 				me: deleteObjectiveFromMe(state.me, id, flag)
 			});
-
 		}
 
 
@@ -224,7 +237,7 @@ export default function myObjectivesReducer(state = initialState, action = {}) {
 		case CHANGED_KEYRESULT_SCORE: {
 			let { data } = action;
 			let { objectiveId, keyResultId, score } = data;
-	
+
 			return Object.assign({}, state, {
 				me: setScoreToKeyResult(state.me, objectiveId, keyResultId, score),
 			});
@@ -337,44 +350,6 @@ function deleteKeyResultFromObjective(me, objectiveId, keyResultId, flag, newKey
 	return meCopy;
 }
 
-function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
-	const meCopy = Object.assign({}, me);
-
-	let quarterIndex = -1;
-	let	userObjectiveIndex = -1;
-	let	keyResultIndex = -1;
-
-	let quarterFoundedIndex = meCopy.quarters.findIndex((quarter) => {
-		let userObjectiveFoundedIndex = quarter.userObjectives.findIndex((userObjective) => {
-			return userObjective._id === objectiveId
-		});
-
-		if(userObjectiveFoundedIndex !== -1) {
-			userObjectiveIndex = userObjectiveFoundedIndex;
-			return true;
-		}
-
-		return false;
-	});
-
-	if(quarterFoundedIndex !== -1) {
-		quarterIndex = quarterFoundedIndex;
-
-		if (userObjectiveIndex !== -1) {
-			let keyResultFoundedIndex = meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults.findIndex((keyResult) => {
-				return keyResult._id === keyResultId;
-			});
-
-			if (keyResultFoundedIndex !== -1) {
-				keyResultIndex = keyResultFoundedIndex;
-				meCopy.quarters[quarterIndex].userObjectives[userObjectiveIndex].keyResults[keyResultIndex].score = score;
-			}
-		}
-	}
-
-	return meCopy;
-}
-
 function setTitleAndDifficultyToKeyResult(me, objectiveId, keyResultId, title, difficulty) {
 	const meCopy = Object.assign({}, me);
 
@@ -441,7 +416,7 @@ function addNewKeyResultToMe(me, objectiveId, keyResult) {
 			quarter.userObjectives[index].keyResults.push(keyResult);
 		}
 	});
-	
+
 	return meCopy;
 }
 
@@ -468,16 +443,19 @@ function getIndexAndYearFromQuarter({ index, year }) {
 	return { index, year };
 }
 
-function addNewQuarter(oldQuarters, newQuarter) {
-	let quarters = [].concat(oldQuarters);
+function getInitialQuarter(quarters) {
+	let initialQuarter;
 
-	let quarterIndex = quarters.find((quarter) => {
-		return (quarter.year === newQuarter.year) && (quarter.index === quarter.index);
+	let currentQuarterIndex = quarters.findIndex((quarter) => {
+		return (quarter.index === CONST.currentQuarter)
+		&& (quarter.year === CONST.currentYear);
 	});
 
-	if(quarterIndex === -1) {
-		quarters.push(newQuarter);
+	if(currentQuarterIndex === -1) {
+		initialQuarter = quarters[quarters.length - 1];
+	} else {
+		initialQuarter = quarters[currentQuarterIndex];
 	}
 
-	return quarters;
+	return initialQuarter;
 }

@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from "../../actions/userDashboardActions";
 
+import CONST from '../../../backend/config/constants';
+
 import ProgressBar from './progressBar.jsx';
 import './progressBar.scss';
 
@@ -19,7 +21,7 @@ class DashboardStats extends Component {
 	handleUserClick(classname) {
 		for (let i = 1; i < 5; i++) {
 			let quarter = document.getElementsByClassName(parseInt(classname) + i)
-			
+
 			if(quarter[0].className.indexOf('hidden') != -1) {
 				quarter[0].className =  quarter[0].className.substring(0, quarter[0].className.indexOf('hidden'));
 			}	else {
@@ -29,6 +31,7 @@ class DashboardStats extends Component {
 	}
 
 	renderRow(row, i) {
+		// console.log('renderind!')
 		if(row.userInfo || row.name) {
 			if(row.name) {
 				return(
@@ -38,36 +41,28 @@ class DashboardStats extends Component {
 					</tr>)
 			}	else {
 				return (
-					<tr key={i} className={`quarter-score ${i} hidden `}>
-						<td> { `${ row.name }` }</td>
-						<td className="score">{ Math.round(row.totalScore * 100) + '%' }</td>
-					</tr>
-					);
+					<tr key={i} onClick={() => { this.handleUserClick(i) }}>
+						<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
+						<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
+					</tr>)
 			}
-		}	else {
-			return (
-				<tr key={i} onClick={() => { this.handleUserClick(i) }}>
-					<td  className="pointer"> { `${ row.userInfo.firstName } ${ row.userInfo.lastName }` } </td>
-					<td className="score"> { Math.round(row.totalScore * 100) + '%' } </td>
-				</tr>
-			);
 		}
 	}
 
 	getProgressBar() {
 		let score;
 		let { where } = this.props;
-		
+
 		if(where == undefined) {
 			score = Math.round(this.props.userDashboard.totalScore.progress * 100);
-			
+
 			return (
 				<div className="countInfo" id="parent">
 					<p><span>Average progress by all users</span></p>
 					<div className="progressBar">
-						<ProgressBar 
-							strokeWidth="10" 
-							radius="80" 
+						<ProgressBar
+							strokeWidth="10"
+							radius="80"
 							percentage={ score }/>
 					</div>
 				</div>
@@ -76,7 +71,7 @@ class DashboardStats extends Component {
 			let selectedYear;
 			score = Math.round(this.props.userDashboard.userStats.totalScore * 100);
 
-			if(where === actions.OTHER_PERSON_PAGE) {
+			if(where === CONST.page.OTHER_PERSON_PAGE) {
 				({ selectedYear } = this.props.userPage);
 			} else {
 				({ selectedYear } = this.props.myState);
@@ -86,7 +81,7 @@ class DashboardStats extends Component {
 				<div className="countInfo" id="parent">
 					<p><span>{`Your progress in ${selectedYear} year`}</span></p>
 					<div className="progressBar">
-						<ProgressBar  strokeWidth="10" radius="80" percentage={ score }/>
+						<ProgressBar strokeWidth="10" radius="80" percentage={ score }/>
 					</div>
 				</div>
 			);
@@ -97,31 +92,31 @@ class DashboardStats extends Component {
 		let scores = [];
 		let obj;
 		let tbody;
-		
+
 		this.props.userDashboard.topUsersList.forEach((item, index) => {
 			let name;
 
 			if(item.userInfo) {
 				scores.push(item);
-				
+
 				name = '1-st quarter';
 				obj = {name, totalScore:item[1]};
 				scores.push(obj);
-	
+
 				name = '2-nd quarter';
 				obj = {name, totalScore:item[2]};
 				scores.push(obj);
-	
+
 				name = '3-rd quarter';
 				obj = {name, totalScore:item[3]};
 				scores.push(obj);
-	
+
 				name = '4-th quarter';
 				obj = {name, totalScore:item[4]};
 				scores.push(obj);
 			}
 		});
-		
+
 		if(!this.props.userDashboard.userStats.inTop && this.props.userDashboard.userStats.userInfo) {
 			tbody = (
 				<tbody>
@@ -158,6 +153,9 @@ class DashboardStats extends Component {
 				</tbody>
 			);
 		}
+
+		// console.log(scores)
+		// console.log('^^^^^^^^^^^^')
 
 		return (
 			<div className="main">

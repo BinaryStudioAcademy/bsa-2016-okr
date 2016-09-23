@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Rating from '../rating/rating.jsx';
-import { debounce, getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/HelpService';
-import cookie from 'react-cookie';
-
-const session = cookie.load('user-id');
+import { debounce } from '../../../../backend/utils/HelpService';
+import { getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/KeyResultHelpService';
 
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import sweetalert from 'sweetalert';
@@ -129,7 +127,7 @@ class KeyResult extends Component {
 		let score;
 		let editSave;
 		let cancelElement;
-		let notApproved;
+		let approved;
 		let titleElement;
 		let rangeElement;
 		let deleteElement;
@@ -179,7 +177,7 @@ class KeyResult extends Component {
 				scoreElement = ( <span className='score'>{ score }</span> );
 
 				if (item.templateId.isApproved) {
-					notApproved = (<span className='fi flaticon-push-pin notApproved' title='not approved'></span>);
+					approved = (<span className='fi flaticon-push-pin notApproved' title='approved'></span>);
 				} else {
 					editSave = (
 							<button onClick={ this.editKeyResult }
@@ -192,7 +190,7 @@ class KeyResult extends Component {
 				}
 
 				titleElement = (
-					<div className='key-result-title'>{ item.templateId.title }</div>
+					<div className='key-result-title'>{ approved }{ item.templateId.title }</div>
 				);
 
 				deleteElement = (
@@ -229,7 +227,7 @@ class KeyResult extends Component {
 			);
 
 			titleElement = (
-				<div className='key-result-title'>{ item.templateId.title }</div>
+				<div className='key-result-title'>{ approved } { item.templateId.title }</div>
 			);
 
 			ratingElement = (
@@ -242,7 +240,6 @@ class KeyResult extends Component {
 
 		return (
 			<li className="key-result clearfix" tabIndex="0">
-				{ notApproved }
 				{ titleElement }
 				{ deleteElement }
 				{ cancelElement }

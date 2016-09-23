@@ -1,8 +1,7 @@
 const async = require('async');
 const ValidateService = require('../../utils/ValidateService');
 const isEmpty = ValidateService.isEmpty;
-const HelpService = require('../../utils/HelpService');
-const isMentorActionAllowed = HelpService.isMentorActionAllowed;
+const isMentorActionAllowed = ValidateService.isMentorActionAllowed;
 const CONST = require('../../config/constants');
 
 const ObjectiveRepository = require('../../repositories/objective');
@@ -47,7 +46,7 @@ module.exports = function add(session, userId, categoryId, quarterId, objectiveI
 					return callback(null, objective);
 				});
 			} else {
-				return callback(null, {});	
+				return callback(null, {});
 			}
 		}, (objective, callback) => {
 			if(isEmpty(objective)) {
@@ -103,7 +102,7 @@ module.exports = function add(session, userId, categoryId, quarterId, objectiveI
 					if(err) {
 						return callback(err, null);
 					}
-					
+
 					// console.log('-----------------------------------');
 					// console.log('Increased used counter to ', objective.used);
 					// console.log('-----------------------------------');
@@ -117,28 +116,29 @@ module.exports = function add(session, userId, categoryId, quarterId, objectiveI
 					creator: session._id
 				};
 			});
-			
+
 			var userObjectiveData = {
 				templateId: objective._id,
 				userId: userId,
 				creator: session._id,
 				isDeleted: false,
 				keyResults: keyResults,
+				quarterId: quarterId,
 			};
 
 			UserObjectiveRepository.add(userObjectiveData, (err, userObjective) => {
 				if(err) {
 					return callback(err, null);
 				};
-				
+
 				// console.log('-----------------------------------');
 				// console.log('Created UserObjective');
 				// console.log('-----------------------------------');
 				return callback(null, userObjective);
 			});
 		}, (userObjective, callback) => {
-			var data = {$push: {userObjectives: userObjective._id}}
-			
+			var data = { $push: { userObjectives: userObjective._id } };
+
 			QuarterRepository.update(quarterId, data, (err, quarter) => {
 				if(err) {
 					return callback(err, null);
@@ -154,7 +154,7 @@ module.exports = function add(session, userId, categoryId, quarterId, objectiveI
 				if(err) {
 					return callback(err, null);
 				};
-				
+
 				// console.log('-----------------------------------');
 				// console.log('History event saved');
 				// console.log('-----------------------------------');

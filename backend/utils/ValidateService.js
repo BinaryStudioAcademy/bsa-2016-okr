@@ -11,6 +11,7 @@ module.exports = {
 	isStringBoolean: isStringBoolean,
 	isValidYear: isValidYear,
 	isValidQuarter: isValidQuarter,
+	isMentorActionAllowed: isMentorActionAllowed,
 };
 
 function isCorrectId(id) {
@@ -61,7 +62,7 @@ function isStringBoolean(value) {
 	    default:
 	        var result = false;
 	}
-	
+
 	return result
 }
 
@@ -71,4 +72,16 @@ function isValidYear(year) {
 
 function isValidQuarter(index) {
 	return (index >= 1) && (index <= 4);
+}
+
+function isMentorActionAllowed(user, session) {
+	let mentorId = '' + user.mentor;
+	let userId = '' + user._id;
+	let sessionId = '' + session._id;
+
+	return (
+		(userId === sessionId)
+		|| (mentorId === sessionId)
+		|| (session.localRole === CONST.user.localRole.ADMIN)
+	);
 }

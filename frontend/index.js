@@ -16,6 +16,7 @@ import UserRecycleBin from './components/user-recycle-bin/user-recycle-bin.jsx';
 import AdminRecycleBin from './components/admin/admin-recycle-bin/admin-recycle-bin.jsx';
 import ListOfUsers from './components/list-of-users/list-of-users.jsx';
 import StatsPage from './components/dashboard/StatsPage.jsx';
+import UsersActions from './components/users-actions/users-actions.js';
 import NotFound from './components/common/notFound.jsx';
 
 import configureStore from './store/configureStore';
@@ -30,30 +31,33 @@ import reducer from './reducers/commonReducer';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
-const ROOT_URL = '/';
+const { ROOT_URL } = CONST;
 
-render(
-	(<Provider store={store}>
-		<Router history={history}>
-			<Route path="/" component={App}>
-				<IndexRoute component={HomePage} />
-				<Route path="users" component={ListOfUsers} />
-				<Route path="user/:id" component={UserPage} />
-				<Route path="recycle-bin" component={UserRecycleBin} />
-				<Route path="charts" component={StatsPage} onEnter={ adminOnly } />
-				<Route path="roles" component={RolesPage} onEnter={ adminOnly } />
-				<Route path="history" component={History} onEnter={ adminOnly } />
-				<Route path="obj-accept" component={ObjAccept} onEnter={ adminOnly } />
-				<Route path="okr-managing" component={OKRmanaging} onEnter={ adminOnly } />
-				<Route path="admin-recycle-bin" component={AdminRecycleBin} onEnter={ adminOnly } />
-				<Route path="objective" component={ObjectiveView} />
-				<Route path="*" component={NotFound}>
-					<IndexRedirect from="*" to="/" />
-				</Route>
+document.addEventListener('DOMContentLoaded', () => {
+	render(
+		(<Provider store={store}>
+			<Router history={history}>
+			<Route path={ `${ROOT_URL}/` } component={App}>
+			<IndexRoute component={HomePage} />
+			<Route path="users" component={ListOfUsers} />
+			<Route path="user/:id" component={UserPage} />
+			<Route path="recycle-bin" component={UserRecycleBin} />
+			<Route path="charts" component={StatsPage} />
+			<Route path="history" component={History} />
+			<Route path="roles" component={RolesPage} onEnter={ adminOnly } />
+			<Route path="obj-accept" component={ObjAccept} onEnter={ adminOnly } />
+			<Route path="okr-managing" component={OKRmanaging} onEnter={ adminOnly } />
+			<Route path="admin-recycle-bin" component={AdminRecycleBin} onEnter={ adminOnly } />
+			<Route path="users-actions" component={ UsersActions } />
+			<Route path="objective" component={ObjectiveView} />
+			<Route path="*" component={NotFound}>
+			<IndexRedirect from="*" to="/" />
 			</Route>
-		</Router>
-	</Provider>)
-	, document.getElementById('root'));
+			</Route>
+			</Router>
+			</Provider>)
+			, document.getElementById('root'));
+});
 
 function adminOnly(nextState, transition, callback) {
 	let reducer = store.getState();

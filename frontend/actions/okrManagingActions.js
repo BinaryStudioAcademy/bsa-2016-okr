@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const GET_OBJECTIVES_LIST = 'GET_OBJECTIVES_LIST'
@@ -41,17 +43,13 @@ export const SET_DEFAULT_KEY_RESULT = 'SET_DEFAULT_KEY_RESULT';
 export const RECEIVED_DEFAULT_KEY_RESULT = 'RECEIVED_DEFAULT_KEY_RESULT';
 export const RECEIVED_DEFAULT_KEY_RESULT_ERROR = 'RECEIVED_DEFAULT_KEY_RESULT_ERROR';
 
-import cookie from 'react-cookie';
-
-const session = cookie.load('user-id');
-
 export function getObjectivesList(){
-	
+
 	return(dispatch, getStore) => {
 		dispatch({ type: GET_OBJECTIVES_LIST });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('/api/objective/')
+		return axios.get(`${ ROOT_URL }/api/objective/`)
 			.then(response => {
 				dispatch(receivedObjectivesList(response.data));
 				dispatch({ type: REMOVE_REQUEST });
@@ -84,7 +82,7 @@ export function deleteObjective(id, flag) {
 		dispatch({ type: DELETE_OBJECTIVE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.delete(`/api/objective/${ id }/${ flag }`)
+		return axios.delete(`${ ROOT_URL }/api/objective/${ id }/${ flag }`)
 			.then(response => {
 				dispatch(softDeleteObjective(id, flag));
 				dispatch({ type: REMOVE_REQUEST });
@@ -119,7 +117,7 @@ export function deleteKeyResult(keyResultId, objectiveId, flag) {
 		dispatch({ type: DELETE_KEY_RESULT_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.delete(`/api/keyResult/${ keyResultId }/${ flag }`)
+		return axios.delete(`${ ROOT_URL }/api/keyResult/${ keyResultId }/${ flag }`)
 			.then(response => {
 				dispatch(softDeleteKeyResult(keyResultId, objectiveId, flag));
 				dispatch({ type: REMOVE_REQUEST });
@@ -141,7 +139,7 @@ export function deleteKeyResultError(data) {
 export function softDeleteKeyResult(keyResultId, objectiveId, flag) {
 	return {
 		type: SOFT_DELETE_KEY_RESULT,
-		keyResultId, 
+		keyResultId,
 		objectiveId,
 		flag
 	};
@@ -179,7 +177,7 @@ export function editObjectiveTemplate (id, reqBody) {
 		dispatch({ type: EDIT_OBJECTIVE_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(`/api/objective/${ id }`, reqBody)
+		return axios.put(`${ ROOT_URL }/api/objective/${ id }`, reqBody)
 			.then(response => {
 				dispatch(receivedEditObjectiveTemplate(response.data));
 				dispatch({ type: REMOVE_REQUEST });
@@ -214,7 +212,7 @@ export function editKeyResult (id, reqBody) {
 		dispatch({ type: EDIT_KEY_RESULT });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put('/api/keyResult/'+id, reqBody)
+		return axios.put(`${ ROOT_URL }/api/keyResult/${ id }`, reqBody)
 			.then(response => {
 				dispatch(receivedEditKeyResult(id, reqBody));
 				dispatch({ type: REMOVE_REQUEST });
@@ -259,7 +257,7 @@ export function createNewTemplate(reqBody) {
 		dispatch({ type: CREATE_NEW_TEMPLATE });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post('/api/objective/', reqBody)
+		return axios.post(`${ ROOT_URL }/api/objective/`, reqBody)
 		.then(response => {
 			dispatch(receivedNewTemplate(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -292,7 +290,7 @@ export function addKeyResult(body) {
 		dispatch({ type: ADD_KEY_RESULT });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.post(('/api/keyResult/'), body)
+		return axios.post(`${ ROOT_URL }/api/keyResult/`, body)
 				.then(response => {
 					dispatch(addKeyResultToObjective(response.data , body));
 					dispatch({ type: REMOVE_REQUEST	});
@@ -344,7 +342,7 @@ export function setDefaultKeyResult(objectiveId, keyResultId, flag) {
 		dispatch({ type: SET_DEFAULT_KEY_RESULT });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.put(`/api/objective/${ objectiveId }/keyresult/${ keyResultId }/default/${ flag }` )
+		return axios.put(`${ ROOT_URL }/api/objective/${ objectiveId }/keyresult/${ keyResultId }/default/${ flag }` )
 				.then(response => {
 					dispatch(receivedDefaultKeyResult(response.data));
 					dispatch({ type: REMOVE_REQUEST	});

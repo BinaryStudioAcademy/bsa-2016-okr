@@ -14,7 +14,11 @@
     "bsa16",
     "okr"
   ],
-  "author": "BSA-2016",
+  "authors": [
+    "Mykyta Ivanchenko <mivansevdon@gmail.com>",
+    "Ihor Oziian <oziian.ihor@gmail.com>",
+    "Eugene Dubrovskiy <jknoxville712@gmail.com>"
+  ],
   "scripts": {
     "test": "better-npm-run test",
     "test:watch": "better-npm-run test:watch",
@@ -24,9 +28,13 @@
     "prod:watch": "better-npm-run prod:watch",
     "dev": "better-npm-run dev",
     "dev:watch": "better-npm-run dev:watch",
+    "dev:prod": "better-npm-run dev:prod",
+    "dev:prod:watch": "better-npm-run dev:prod:watch",
     "seed": "node ./backend/seed/seed.js",
+    "seeddrop": "node ./backend/seed/seedDrop.js",
     "archive": "node ./backend/archive/archive.js",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "build:local": "rimraf dist && cross-env NODE_ENV=production LOCAL_PROD=true webpack --config ./webpack.production.local.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs ."
   },
@@ -64,6 +72,22 @@
       "env": {
         "NODE_ENV": "development",
         "WEBPACK": "false",
+        "PORT": "4444"
+      }
+    },
+    "dev:prod": {
+      "command": "node server",
+      "env": {
+        "NODE_ENV": "production",
+        "LOCAL_PROD": "true",
+        "PORT": "4444"
+      }
+    },
+    "dev:prod:watch": {
+      "command": "nodemon server",
+      "env": {
+        "NODE_ENV": "production",
+        "LOCAL_PROD": "true",
         "PORT": "4444"
       }
     },

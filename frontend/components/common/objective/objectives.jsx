@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Quarterbar from '../quarterbar/quarters.jsx';
-import ObjectiveItem from './objective.jsx';
-import ObjectivesList from './objective-list.jsx';
+import cookie from 'react-cookie';
 import sweetalert from 'sweetalert';
-import '../styles/sweetalert.css';
 
-import { isEmpty, isCorrectId } from '../../../../backend/utils/ValidateService';
+import { isEmpty, isCorrectId, isMentorActionAllowed } from '../../../../backend/utils/ValidateService';
+import { isStringsEqual } from '../../../../backend/utils/HelpService';
+import { getYears } from '../../../../backend/utils/UIHelpService';
+import CONST from '../../../../backend/config/constants.js';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,11 +16,12 @@ import * as objectiveActions from "../../../actions/objectiveActions";
 import * as otherPersonActions from "../../../actions/otherPersonActions";
 import * as userDashboardActions from "../../../actions/userDashboardActions";
 
+import Quarterbar from '../quarterbar/quarters.jsx';
+import ObjectiveItem from './objective.jsx';
+import ObjectivesList from './objective-list.jsx';
+
+import '../styles/sweetalert.css';
 import './objectives.scss';
-
-const CONST = require('../../../../backend/config/constants.js');
-
-import cookie from 'react-cookie';
 
 const session = cookie.load('user-id');
 
@@ -45,18 +46,30 @@ class Objectives extends Component {
 		this.props.myStateActions.getMe();
 	}
 
-	changeTab(num) {
-		this.props.myStateActions.setChangeTab(num);
+	componentWillUnmount() {
+		this.props.myStateActions.reset();
 	}
 
-	handleArchive (changeTo, objectiveId) {
+	changeTab(num) {
+		const { user } = this.props.user;
+		const userId = this.props.userId || session;
+		const isItHomePage = !isStringsEqual(user._id, userId);
+
+		if (isItHomePage) {
+			this.props.myStateActions.setChangeTab(num);
+		} else {
+			this.props.otherPersonActions.setChangeTab(num);
+		}
+	}
+
+	handleArchive(changeTo, objectiveId) {
 		let arch = changeTo ? 'archive' : 'unarchive';
 		sweetalert({
 			title: `Do you really want to ${arch} this objective?`,
-			type: "warning",
+			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "OK",
+			confirmButtonColor: '#4caf50',
+			confirmButtonText: 'OK',
 			closeOnConfirm: true
 		}, () => {
 			this.props.myStateActions.changeArchiveStatus(changeTo, objectiveId);
@@ -64,81 +77,99 @@ class Objectives extends Component {
 	}
 
 	changeYear(year) {
-
 		const { user } = this.props.user;
 		const userId = this.props.userId || session;
-		this.props.myStateActions.setChangeYear(year);
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId))
-			this.props.userDashboardActions.getStats("otherPersonPage")
-		else
+		const isItHomePage = !isStringsEqual(user._id, userId);
+
+		if (isItHomePage) {
+			this.props.myStateActions.setChangeYear(year);
 			this.props.userDashboardActions.getStats();
+		}	else {
+			this.props.otherPersonActions.setChangeYear(year);
+			this.props.userDashboardActions.getStats(CONST.page.OTHER_PERSON_PAGE);
+		}
 	}
 
 	handleAddingNewQuarter(newQuarter) {
 		sweetalert({
-			title: "Create new quarter?",
-			type: "warning",
+			title: 'Create new quarter?',
+			type: 'warning',
 			showCancelButton: true,
-			confirmButtonColor: "#4caf50",
-			confirmButtonText: "Yes, create",
+			confirmButtonColor: '#4caf50',
+			confirmButtonText: 'Yes, create',
 			closeOnConfirm: true
 		}, () => {
-			this.props.myStateActions.createQuarter(newQuarter);
-			// this.changeTab(newQuarter.index);
+			const { userId } = this.props;
+			const { user } = this.props.user;
+			const isItHomePage = !isStringsEqual(user._id, userId);
+
+			if(isItHomePage) {
+				this.props.myStateActions.createQuarter(newQuarter);
+			} else {
+				this.props.otherPersonActions.createQuarter(newQuarter);
+			}
 		});
 	}
 
-	componentWillUnmount() {
-		this.props.myStateActions.reset();
-	}
-
 	handleArchivingQuarter(index) {
-		var quarterId;
-		var flag;
+		let quarterId;
+		let flag;
 		const { user } = this.props.user;
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) 
-			{
-			this.props.user.user.quarters.forEach( (quarter) => {
-				if (quarter.index == index && quarter.year == this.props.user.selectedYear)
-				{
-					quarterId = quarter._id;
-					flag = !quarter.isArchived;
-				}
-			})
-			this.props.otherPersonActions.archiveUserQuarter(quarterId, flag);
-		}			
-		else	
-		{
+		const { userId } = this.props;
+		const isItHomePage = !isStringsEqual(user._id, userId);
+		if (isItHomePage) {
 			this.props.myState.me.quarters.forEach( (quarter) => {
 				if (quarter.index == index && quarter.year == this.props.myState.selectedYear)
 				{
 					quarterId = quarter._id;
 					flag = !quarter.isArchived;
 				}
-			})
+			});
+
 			this.props.myStateActions.archiveMyQuarter(quarterId, flag);
+		}	else {
+			this.props.user.user.quarters.forEach( (quarter) => {
+				if (quarter.index == index && quarter.year == this.props.user.selectedYear)
+				{
+					quarterId = quarter._id;
+					flag = !quarter.isArchived;
+				}
+			});
+
+			this.props.otherPersonActions.archiveUserQuarter(quarterId, flag);
 		}
-		//console.log(this.props.myState);
 	}
 
 	changeKeyResultScore(objectiveId, mentorId) {
-		let apiCall = this.props.myStateActions.changeKeyResultScore;
+		const { userId } = this.props;
+		const { user } = this.props.user;
+		const isItHomePage = !isStringsEqual(user._id, userId);
+		let apiCall;
+
+		if(isItHomePage) {
+			apiCall = this.props.myStateActions.changeKeyResultScore;
+		} else {
+			apiCall = this.props.otherPersonActions.changeKeyResultScore;
+		}
 
 		return (keyResultId) => {
 			return (score) => {
 				if (!isCorrectId(objectiveId)
-					|| !isCorrectId(keyResultId)) {
+				|| !isCorrectId(keyResultId)) {
 					return;
 				}
 
 				let body = {
 					keyResultId: keyResultId,
-					score: score
+					score: score,
+					userId: userId || session
 				};
-				if (mentorId != undefined)
+
+				if (mentorId != undefined) {
 					apiCall(objectiveId, body, notifications.notificationApprenticeUpdateKey, mentorId);
-				else
+				} else {
 					apiCall(objectiveId, body);
+				}
 			};
 		};
 	}
@@ -183,6 +214,7 @@ class Objectives extends Component {
 					quarterId: quarter._id,
 					userId: userId,
 				};
+
 				if (this.props.userId == undefined) {
 					if (this.props.mentorId != undefined)
 						this.props.myStateActions.addNewObjective(body, notifications.notificationApprenticeAddedObjective, this.props.mentorId);
@@ -226,45 +258,40 @@ class Objectives extends Component {
 	}
 
 	render() {
-		const userId = this.props.userId;
-		const displayedCategories = this.props.categories.list.filter((category) => {
-			return !category.isDeleted;
-		});
-		const { me } = this.props.myState;
+		const { categories, userId } = this.props;
 		const { user } = this.props.user;
+		const { me } = this.props.myState;
 		let selectedYear = '';
 		let selectedTab = '';
 		let userInfo = {};
+		let years = [];
+		let displayedCategories = [];
+		let archived;
+
+		if (!isEmpty(categories.list)) {
+			displayedCategories = categories.list.filter((category) => {
+				return !category.isDeleted;
+			}).sort((a, b) => {
+				return a.title.localeCompare(b.title)
+			});
+		}
 
 		// Edit key result on HomePage or UserPage
 		let editKeyResult = {};
 
 		// If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
-		let isItHomePage;
-		let archived;
-		let isAdmin = this.props.myState.me.localRole === "admin" ? true : false;
+		const isItHomePage = !isStringsEqual(user._id, userId);
+		let isAdmin = this.props.myState.me.localRole === CONST.user.localRole.ADMIN ? true : false;
 
-		if ((user._id != undefined) && (userId != undefined) && (user._id == userId)) {
-			/*console.log('user');*/
-			isItHomePage = false;
-			selectedYear = this.props.user.selectedYear;
-			selectedTab = this.props.user.selectedTab;
-			userInfo = getObjectivesData(user, selectedYear, selectedTab);
-
-			// Edit key result on UserPage
-			editKeyResult = {
-				id: this.props.user.editKeyResultId,
-				isEditing: this.props.user.editKeyResultIsEditing,
-				enableEdit: this.props.otherPersonActions.editKeyResultEnableEditOnUserPage,
-				disableEdit: this.props.otherPersonActions.editKeyResultDisabledEditOnUserPage,
-				editTitleAndDifficulty: this.props.otherPersonActions.editKeyResultEditTitleAndDifficulty,
-			};
-		} else {
+		if (isItHomePage) {
 			/*console.log('me');*/
-			isItHomePage = true;
 			selectedYear = this.props.myState.selectedYear;
 			selectedTab = this.props.myState.selectedTab;
 			userInfo = getObjectivesData(me, selectedYear, selectedTab);
+			years = getYears(me.quarters);
+
+			// console.log('¯\\_(ツ)_/¯: selectedTab', selectedTab);
+			// console.log('¯\\_(ツ)_/¯: selectedYear', selectedYear);
 
 			// Edit key result on HomePage
 			editKeyResult = {
@@ -273,6 +300,21 @@ class Objectives extends Component {
 				enableEdit: this.props.myStateActions.editKeyResultEnableEditOnHomePage,
 				disableEdit: this.props.myStateActions.editKeyResultDisabledEditOnHomePage,
 				editTitleAndDifficulty: this.props.myStateActions.editKeyResultEditTitleAndDifficulty,
+			};
+		} else {
+			selectedYear = this.props.user.selectedYear;
+			selectedTab = this.props.user.selectedTab;
+
+			userInfo = getObjectivesData(user, selectedYear, selectedTab);
+			years = getYears(user.quarters);
+
+			// Edit key result on UserPage
+			editKeyResult = {
+				id: this.props.user.editKeyResultId,
+				isEditing: this.props.user.editKeyResultIsEditing,
+				enableEdit: this.props.otherPersonActions.editKeyResultEnableEditOnUserPage,
+				disableEdit: this.props.otherPersonActions.editKeyResultDisabledEditOnUserPage,
+				editTitleAndDifficulty: this.props.otherPersonActions.editKeyResultEditTitleAndDifficulty,
 			};
 		}
 
@@ -284,20 +326,24 @@ class Objectives extends Component {
 			archived = true;
 		}
 
+		const editMode = isMentorActionAllowed(userInfo, me);
+		const isEmptyQuarters = isEmpty(userInfo.quarters);
+
 		return (
 			<div id="home-page-wrapper">
 				<Quarterbar
 						changeTab={ this.changeTab }
 						changeYear={ this.changeYear }
-						selectedYear= { selectedYear }
+						selectedYear={ selectedYear }
 						selectedTab={ selectedTab }
 						addNewQuarter={ this.handleAddingNewQuarter }
-						archiveQuarter={this.handleArchivingQuarter }
+						archiveQuarter={ this.handleArchivingQuarter }
+						years={ years }
 						quarters={ userInfo.quarters }
 						isAdmin={ isAdmin }
-						me={ isItHomePage }
-						mentorId = { userInfo.mentorId } />
-				<div id='objectives'>
+						editMode={ editMode }
+						userId={ userInfo._id } />
+				<div id='objectives' className={ isEmptyQuarters ? 'hidden' : ''} >
 					<ObjectivesList
 						mentorId={userInfo.mentorId}
 						categories={ displayedCategories }
@@ -322,7 +368,7 @@ class Objectives extends Component {
 					/>
 				</div>
 			</div>
-		)
+		);
 	}
 }
 
@@ -331,21 +377,22 @@ Objectives.defaultProps = { today: new Date() };
 function getObjectivesData(userObject, selectedYear, selectedTab) {
 	let quarters = [];
 	let objectives = [];
-	let id = userObject._id;
-	let mentor;
+	let { _id, localRole } = userObject;
+	let mentorId;
 
-	if(userObject.mentor != undefined || userObject.mentor != null)
-		mentor = userObject.mentor._id;
-	//console.log('userObject', userObject)
+	if(userObject.mentor != undefined || userObject.mentor != null) {
+		mentorId = userObject.mentor._id;
+	}
+
 	if (userObject.quarters != undefined) {
-		var current_quarter = userObject.quarters.find((quarter) => {
+		let currentQuarter = userObject.quarters.find((quarter) => {
 			return (quarter.year == selectedYear) && (quarter.index == selectedTab)
 		});
 
-		if(current_quarter != undefined) {
-			objectives = current_quarter.userObjectives;
+		if(currentQuarter != undefined) {
+			objectives = currentQuarter.userObjectives;
 		} else {
-			objectives = []
+			objectives = [];
 		}
 
 		quarters = userObject.quarters.filter(quarter => {
@@ -354,10 +401,12 @@ function getObjectivesData(userObject, selectedYear, selectedTab) {
 	}
 
 	return {
-		quarters: quarters,
-	  objectives: objectives,
-	  id: id,
-	  mentorId: mentor
+		quarters,
+	  objectives,
+		_id,
+	  mentorId,
+		mentor: mentorId,
+		localRole,
 	};
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDifficultyNumber, getNumberDifficulty } from '../../../../backend/utils/HelpService';
+import { getNumberDifficulty } from '../../../../backend/utils/KeyResultHelpService';
 import './rating.scss';
 
 class Rating extends Component {
@@ -27,11 +27,11 @@ class Rating extends Component {
 			}
 
 			stars.push(
-					<label
-						key={i}
-						className={klass}
-						onMouseOver={this.onMouseOver(i)}
-				    title = { `${getNumberDifficulty(this.props.rating)}` }
+				<label
+					key={i}
+					className={klass}
+					onMouseOver={this.onMouseOver(i)}
+				  title = { `${getNumberDifficulty(this.props.rating)}` }
 				>
 					●
 				</label>

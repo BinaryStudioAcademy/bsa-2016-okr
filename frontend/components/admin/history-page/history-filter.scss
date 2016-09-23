@@ -81,7 +81,7 @@ and (max-width: 1020px) {
         font-size: 15px;
 
         select, button{
-        	width: 181px;
+        	width: 190px;
         }
         .btn-filter {
 				  margin-left: 0px;
@@ -99,4 +99,17 @@ and (max-width: 1020px) {
 	    margin-left: 0px;
 		}
 	}
+}
+
+@media all 
+and (max-width: 750px) {
+
+    .history-filter-table .date-field {
+	    display: none;
+    }
+	
+
+	.history-filter-table td:nth-child(3) {
+		display: none;
+	} 
 }

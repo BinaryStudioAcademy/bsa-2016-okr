@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import CONST from '../../../backend/config/constants';
+import CONST, { ROOT_URL } from '../../../backend/config/constants';
 
 import './nav-menu.scss';
 
@@ -8,37 +8,22 @@ const NavMenu = (props) => {
 	const isAdmin = (props.localRole === CONST.user.localRole.ADMIN);
 	const count = props.acceptObjective.countObject;
 	let notificationClass = "";
-	
+
 	if (count > 0) {
 		notificationClass = "notification"
 	}
-	
+
 	const AdminLinksEl = (
 		<ul className="nav-divider-before">
-
 			<li>
-				<Link to="/charts" className="on-tooltip" activeClassName="active">
-					<i className="fi-1 flaticon-1-arrow-chart" aria-hidden="true"></i>
-					Statistics
-					<i className="tooltip" data-direction="right">Statistics</i>
-				</Link>
-			</li>
-			<li>
-				<Link to="/roles" className="on-tooltip" activeClassName="active">
+				<Link to={`${ ROOT_URL }/roles`} className="on-tooltip" activeClassName="active">
 					<i className="fi-1 flaticon-1-business-1" aria-hidden="true"></i>
 					Role mapping
 					<i className="tooltip" data-direction="right">Role mapping</i>
 				</Link>
 			</li>
 			<li>
-				<Link to="/history" className="on-tooltip" activeClassName="active">
-					<i className="fi flaticon-time" aria-hidden="true"></i>
-					History
-					<i className="tooltip" data-direction="right">History</i>
-				</Link>
-			</li>
-			<li>
-				<Link to="/obj-accept" className="on-tooltip" activeClassName="active">
+				<Link to={`${ ROOT_URL }/obj-accept`} className="on-tooltip" activeClassName="active">
 					<i className="fi flaticon-checked-1" aria-hidden="true">
 						<div className="badge"><div className={"badge-counter " + notificationClass}>{ count }</div></div>
 					</i>
@@ -47,17 +32,24 @@ const NavMenu = (props) => {
 				</Link>
 			</li>
 			<li>
-				<Link to="/okr-managing" className="on-tooltip" activeClassName="active">
+				<Link to={`${ ROOT_URL }/okr-managing`} className="on-tooltip" activeClassName="active">
 					<i className="fi flaticon-app" aria-hidden="true"></i>
 					OKR managing
 					<i className="tooltip" data-direction="right">OKR Managing</i>
 				</Link>
 			</li>
 			<li>
-				<Link to="/admin-recycle-bin" className="on-tooltip" activeClassName="active">
+				<Link to={`${ ROOT_URL }/history`} className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-time" aria-hidden="true"></i>
+					History
+					<i className="tooltip" data-direction="right">History</i>
+				</Link>
+			</li>
+			<li>
+				<Link to={`${ ROOT_URL }/admin-recycle-bin`} className="on-tooltip" activeClassName="active">
 					<i className="fi flaticon-garbage-1" aria-hidden="true">
 						<div className="badge">
-							<i className="fi flaticon-worldwide" aria-hidden="true"></i>	
+							<i className="fi flaticon-worldwide" aria-hidden="true"></i>
 						</div>
 					</i>
 					Admin Recycle Bin
@@ -66,7 +58,47 @@ const NavMenu = (props) => {
 			</li>
 		</ul>
 	);
-	
+
+	const CommonLinksEl = (
+		<ul>
+			<li>
+				<Link to={`${ ROOT_URL }/`} className="on-tooltip" onlyActiveOnIndex activeClassName="active">
+					<i className="fi flaticon-home-1" aria-hidden="true"></i>
+					Home
+					<i className="tooltip" data-direction="right">Home</i>
+				</Link>
+			</li>
+			<li>
+				<Link to={`${ ROOT_URL }/users`} className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-users" aria-hidden="true"></i>
+					Users
+					<i className="tooltip" data-direction="right">Users</i>
+				</Link>
+			</li>
+			<li>
+				<Link to={`${ ROOT_URL }/users-actions`} className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-calendar-6" aria-hidden="true"></i>
+					Recent Actions
+					<i className="tooltip" data-direction="right">Recent Actions</i>
+				</Link>
+			</li>
+			<li>
+				<Link to={`${ ROOT_URL }/charts`} className="on-tooltip" activeClassName="active">
+					<i className="fi-1 flaticon-1-arrow-chart" aria-hidden="true"></i>
+					Statistics
+					<i className="tooltip" data-direction="right">Statistics</i>
+				</Link>
+			</li>
+			<li>
+				<Link to={`${ ROOT_URL }/recycle-bin`} className="on-tooltip" activeClassName="active">
+					<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
+					Recycle Bin
+					<i className="tooltip" data-direction="right">Recycle Bin</i>
+				</Link>
+			</li>
+		</ul>
+	);
+
 	return (
 		<div>
 		<button id="bars" onClick={ onBarsClick } >
@@ -74,29 +106,7 @@ const NavMenu = (props) => {
 		</button>
 		<aside id="navbar" className='hideMenu'>
 			<nav onClick={ closeNav }>
-				<ul>
-					<li>
-						<Link to="/" className="on-tooltip" onlyActiveOnIndex activeClassName="active">
-							<i className="fi flaticon-home-1" aria-hidden="true"></i>
-							Home
-							<i className="tooltip" data-direction="right">Home</i>
-						</Link>
-					</li>
-					<li>
-						<Link to="/users" className="on-tooltip" activeClassName="active">
-							<i className="fi flaticon-users" aria-hidden="true"></i>
-							Users
-							<i className="tooltip" data-direction="right">Users</i>
-						</Link>
-					</li>	
-					<li>
-						<Link to="/recycle-bin" className="on-tooltip" activeClassName="active">
-							<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
-							Recycle Bin
-							<i className="tooltip" data-direction="right">Recycle Bin</i>
-						</Link>
-					</li>
-				</ul>
+				{ CommonLinksEl }
 				{ isAdmin ? AdminLinksEl : '' }
 			</nav>
 		</aside>

@@ -100,7 +100,7 @@ class KeyResults extends Component {
 
 	saveEditKeyResult(id, title, difficulty) {
 		let duplicateItem = this.getDuplicateKeyResult(id, title);
-		
+
 		if(isEmpty(duplicateItem)) {
 			let reqBody = {
 				title: title,
@@ -113,7 +113,7 @@ class KeyResults extends Component {
 				reqBody.objectiveId = this.props.objective._id,
 				this.props.addKeyResult(reqBody);
 			}
-			
+
 			sweetalert.close();
 		} else if(duplicateItem.isDeleted) {
 			sweetalert({
@@ -147,13 +147,15 @@ class KeyResults extends Component {
 
 	render() {
 		const { data } = this.props;
-		
+
 		let displayedKeyResults = data.filter((keyResult) => {
 			return !keyResult.isDeleted;
+		}).sort((a, b) => {
+			return a.title.localeCompare(b.title);
 		}).map((item, index) => {
-			return <KeyResultItem index = { index } 
-														objective = { this.props.objective } 
-														key = { index } 
+			return <KeyResultItem index = { index }
+														objective = { this.props.objective }
+														key = { index }
 														item = { item }
 														hideAddKeyResultInput = { this.hideAddKeyResultInput }
 														saveChanges = { this.saveEditKeyResult }
@@ -166,7 +168,7 @@ class KeyResults extends Component {
 														ref={ `keyResultTemplate-${ item._id }` }
 							/>
 		});
-		
+
 		return (
 			<div className='key-results'>
 				<button className="btn btn-blue-hover change" onClick={ this.textHandleShow }>Key results
@@ -179,9 +181,9 @@ class KeyResults extends Component {
 						<a ref="newKeyResultButton" className='add-new-keyresult-btn display' onClick={ this.showAddKeyResultInput }>
 							+Add new key result
 						</a>
-						<KeyResultAdd 
+						<KeyResultAdd
 							ref={`keyResultAdd-${this.props.objective._id}`}
-							objectiveId={ this.props.objective._id } 
+							objectiveId={ this.props.objective._id }
 							hideAddKeyResultInput={ this.hideAddKeyResultInput }
 							saveEditKeyResult={ this.saveEditKeyResult }
 							focusAddInput={ this.focusAddInput }

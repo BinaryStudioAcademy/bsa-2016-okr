@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ROOT_URL } from '../../backend/config/constants';
+
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 
 export const GET_CATEGORIES_STATS = 'STATS:GET_CATEGORIES_STATS';
@@ -14,7 +16,7 @@ export function getCategoriesStats() {
 		dispatch({ type: GET_CATEGORIES_STATS });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('api/stats/categories')
+		return axios.get(`${ ROOT_URL }/api/stats/categories`)
 		.then(response => {
 			dispatch(receivedCategoriesStats(response.data));
 			dispatch({ type: REMOVE_REQUEST });
@@ -31,7 +33,7 @@ export function getKeyResultStats() {
 		dispatch({ type: GET_KEYRESULT_STATS });
 		dispatch({ type: ADD_REQUEST });
 
-		return axios.get('api/stats/keyresults')
+		return axios.get(`${ ROOT_URL }/api/stats/keyresults`)
 		.then(response => {
 			dispatch(receivedKeyResultStats(response.data));
 			dispatch({ type: REMOVE_REQUEST });

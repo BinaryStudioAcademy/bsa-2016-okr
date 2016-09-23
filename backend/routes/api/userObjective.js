@@ -107,10 +107,11 @@ router.post('/:id/keyresult/', (req, res, next) => {
 });
 
 router.put('/:id/keyresult/score', (req, res, next) => {
-	var userId = req.session._id;
 	var objectiveId = req.params.id || '';
+	var userId = req.body.userId;
 	var keyResultId = req.body.keyResultId || '';
 	var score = req.body.score || '';
+	var session = req.session;
 
 	score = Number.parseFloat(score);
 
@@ -126,7 +127,7 @@ router.put('/:id/keyresult/score', (req, res, next) => {
 		return res.badRequest('Score should be from 0.1 to 1.0');
 	}
 
-	service.setScoreToKeyResult(userId, objectiveId, keyResultId, score, res.callback);
+	service.setScoreToKeyResult(session, userId, objectiveId, keyResultId, score, res.callback);
 });
 
 router.put('/:id/keyresult/titleanddifficulty', (req, res, next) => {
@@ -220,7 +221,8 @@ router.put('/updateWithoutValidation/:id',  (req, res, next) => {
 		return res.badRequest();
 	};
 
-	return repository.update(id, body, res.callback);
+	return service.updateWithoutValidation(req.session._id, id, body, res.callback)
+	//return repository.update(id, body, res.callback);
 });
 
 

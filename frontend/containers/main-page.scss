@@ -27,12 +27,14 @@
   }
 }
 
+/*
 @include tablet {
   #main{
     top: 120px;
     left: 0;
   }
 }
+
 
 @media screen
 and (max-width: 583px)
@@ -41,6 +43,7 @@ and (min-width: 501px) {
     top: 170px;
   }
 }
+*/
 
 @media all and (max-width: 500px) {
   #main {

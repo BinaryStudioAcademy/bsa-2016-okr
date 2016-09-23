@@ -1,11 +1,15 @@
-var ValidateService = require('../utils/ValidateService');
-var Cookies = require('cookies');
+const ValidateService = require('../utils/ValidateService');
+const HelpService = require('../utils/HelpService');
+const stringToBoolean = HelpService.stringToBoolean;
+const CONST = require('../config/constants');
+
+const Cookies = require('cookies');
 
 module.exports = function (req, res, next) {
 	res.callback = (err, data) => {
 		if (err) {
 			return res.status(err.status || 500).send({
-				message: err.message 
+				message: err.message
 			});
 		}
 
@@ -35,21 +39,23 @@ module.exports = function (req, res, next) {
 		err.status = 401;
 
 		return res.callback(err);
-	}
+	};
 
 	res.redirectToAuthServer = () => {
-		//var current_url = req.protocol + '://' + 'team.binary-studio.com'; 
+		var cookies = new Cookies(req, res);
 		var currentUrl = req.protocol + '://' + req.get('host') + req.url;
 
-		var cookies = new Cookies(req, res);
 		cookies.set('referer', currentUrl);
 
 		res.clearCookie('user-id');
 		res.clearCookie('x-access-token');
 
-		// return res.redirect('http://team.binary-studio.com/auth');
-		return res.redirect('http://localhost:2020/');
-	}
+		if(CONST.LOCAL_PROD) {
+			return res.redirect(CONST.links.LOCAL_AUTH);
+		} else {
+			return res.redirect(CONST.links.PROD_AUTH);
+		}
+	};
 
-	next();
+	return next();
 };

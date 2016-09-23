@@ -15,7 +15,7 @@ import ObjectiveData from './ObjectiveData.jsx';
 class ObjectiveList extends Component {
   constructor(props) {
     super(props);
-    
+
     this.focusEditInput = this.focusEditInput.bind(this);
   }
 
@@ -30,21 +30,23 @@ class ObjectiveList extends Component {
   }
 
   render() {
-    const { 
+    const {
       categories,
-      objectivesList, 
-      saveEditObjective, 
-      cancelEdit, 
+      objectivesList,
+      saveEditObjective,
+      cancelEdit,
       activeObjective,
-      deleteObjective 
+      deleteObjective
     } = this.props;
 
     const { visibleObjectives } = objectivesList;
     let displayedObjectivesEl = visibleObjectives.filter((objective) => {
       return !objective.isDeleted;
+    }).sort((a, b) => {
+      return a.title.localeCompare(b.title);
     }).map((objective, index) => {
-      return <ObjectiveData objective={ objective } 
-                            index={ index } 
+      return <ObjectiveData objective={ objective }
+                            index={ index }
                             key={ objective._id }
                             categories={ categories }
                             editing={ objectivesList.editing }
@@ -61,7 +63,7 @@ class ObjectiveList extends Component {
     return (
       <div id='templates'>
         { displayedObjectivesEl }
-      </div>  
+      </div>
     )
   }
 }

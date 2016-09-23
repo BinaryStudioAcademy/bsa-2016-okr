@@ -22,7 +22,7 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			})
 		},
 		(objectives, callback) => {
-			var historyList =[];
+			var historyList = [];
 			objectives.forEach((obj) => {
 				historyList.push(obj._id);
 			})
@@ -33,27 +33,40 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 			var i = 0;
 			(function forEachInList () {
 				HistoryRepository.getUserObjectiveHistoryPopulate(historyList[i], (err, result) => {
-						if(err)
+						if(err) {
 							return callback(err, null);
-						if( result.length > 0) {
-							if(Array.isArray(result))
-								result.forEach((item)=> { list.push(item)})
-							else list.push(result)
-						};
+						}
+
+						if(result.length > 0) {
+							if(Array.isArray(result)) {
+								result.forEach((item)=> { list.push(item) });
+							} else {
+								list.push(result);
+							}
+						}
 
 						++i;
 
-						if(i<= historyList.length && historyList[i] != null)
+						if(i<= historyList.length && historyList[i] != null) {
 							forEachInList()
-						else
-						{
+						}	else {
 							return callback(null, list);
 						}
-				})
+				});
 			})();
 		}, (historyList, callback) => {
+			HistoryRepository.getHistoryByUserIdPopulate(id, (err, result) => {
+				if(err)
+					return callback(err, null)
+				result.forEach((item) => {
+					historyList.push(item);
+				})
+				return callback(err, historyList);
+
+			})
+		},(historyList, callback) => {
 			if(historyList.length > 0) {
-				this.sortBy(historyList, 'date', true, (historyList) => {					
+				this.sortBy(historyList, 'date', true, (historyList) => {
 					return callback(null, historyList)
 				});
 			}	else {
@@ -68,10 +81,10 @@ HistoryService.prototype.getUserHistory = function (id, callback) {
 HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callback) {
 	var sortedList = eventList.slice();
 	var sortWayNum;
-	
+
 	if (sortWay)
 		sortWayNum = -1
-	else 
+	else
 		sortWayNum = 1;
 
 	switch(sortField){
@@ -108,7 +121,7 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 
 	 		sortedList.sort(sorting);
 	 	break;
-	 	case 'target': 
+	 	case 'target':
 	 		function getHistoryObjectName(historyItem){
       			if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
        				return historyItem.userObjective.templateId.title;
@@ -123,7 +136,7 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
         				var keyResults = historyItem.userObjective.keyResults;
 	        			var keyResult;
 	        			keyResults.forEach((key) => {
-	        				if (key.templateId._id.toString() === historyItem.userKeyResult.toString() 
+	        				if (key.templateId._id.toString() === historyItem.userKeyResult.toString()
 	        					|| key._id.toString() === historyItem.userKeyResult.toString()){
 	          					keyResult = key;
 	          				}
@@ -133,7 +146,7 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	      			else return historyItem.keyResult.title;
       			}
     		}
- 			
+
 	 		sortedList.sort((a, b) => {
 	 			var targetA = getHistoryObjectName(a);
 	 			var targetB = getHistoryObjectName(b);
@@ -144,7 +157,7 @@ HistoryService.prototype.sortBy = function (eventList, sortField, sortWay, callb
 	 			else return sortWayNum * -1;
 	 		});
 	 	break;
-	 	default: break; 
+	 	default: break;
 	}
 
 	return callback(sortedList);
@@ -173,17 +186,17 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 							isFiltered = false;
 					}
 				};
-					
+
 			if ( key == "date" && isFiltered
-				&& !isNaN(Date.parse(filters[key].from)) 
-				&& !isNaN(Date.parse(filters[key].to))) 
-			{	
+				&& !isNaN(Date.parse(filters[key].from))
+				&& !isNaN(Date.parse(filters[key].to)))
+			{
 				if (!( Date.parse(item.createdAt) >= Date.parse(filters[key].from) )
 				 || !( Date.parse(item.createdAt) <= Date.parse(filters[key].to)) )
 				{
 					isFiltered = false;
-				}	
-			};		
+				}
+			};
 
 			if(key == "name" && filters[key] !== '' && filters[key] !== ' '){
 				var name = item.author.userInfo.firstName + ' ' + item.author.userInfo.lastName;
@@ -197,15 +210,15 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 	return callback(filteredList);
 };
 
-HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callback) {
+HistoryService.prototype.getSortedAndFiltered = function (filters, sort, limit, callback) {
 	async.waterfall([
 		(callback) => {
-			HistoryRepository.getHistory((err, result) => {
+			HistoryRepository.getHistory(limit, (err, result) => {
 				if(err) {
 					return callback(err, result);
 				}
 
-				return callback(null, result.slice());	
+				return callback(null, result.slice());
 			});
 		},
 		(result, callback) => {
@@ -219,7 +232,7 @@ HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callbac
 		(result, callback) => {
 			if(sort !== null && sort.sortField !== '')
 				this.sortBy(result, sort.sortField, sort.up, (res) => {
-					result = res.slice();				
+					result = res.slice();
 				})
 
 			return callback(null, result)
@@ -229,10 +242,10 @@ HistoryService.prototype.getSortedAndFiltered = function (filters, sort, callbac
 	})
 };
 
-HistoryService.prototype.getHistory = function (callback) {
+HistoryService.prototype.getHistory = function (limit, callback) {
 	async.waterfall([
 		(callback) =>{
-			HistoryRepository.getHistory((err, result) => {
+			HistoryRepository.getHistory(limit, (err, result) => {
 				if(err)
 					return callback(err, null);
 				return callback(null, result);

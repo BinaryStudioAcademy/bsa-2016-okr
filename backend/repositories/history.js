@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Repository = require('../units/Repository');
-var History = require('../schemas/history');
-var CONST = require('../config/constants');
+const mongoose = require('mongoose');
+const Repository = require('../units/Repository');
+const History = require('../schemas/history');
+const CONST = require('../config/constants');
 
 var HistoryRepository = function() {
 	Repository.prototype.constructor.call(this);
@@ -10,7 +10,7 @@ var HistoryRepository = function() {
 
 HistoryRepository.prototype = new Repository();
 
-HistoryRepository.prototype.getHistory = function (callback) {
+HistoryRepository.prototype.getHistory = function (limit, callback) {
 	var model = this.model;
 	model
 		.find()
@@ -38,8 +38,9 @@ HistoryRepository.prototype.getHistory = function (callback) {
 				path: 'userInfo'
 			}
 		})
+		.limit(limit)
 		.exec(callback);
-}
+};
 
 HistoryRepository.prototype.getHistoryById = function (id, callback) {
 	var model = this.model;
@@ -64,7 +65,7 @@ HistoryRepository.prototype.getHistoryById = function (id, callback) {
 			}
 		})
 		.exec(callback);
-}
+};
 
 HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 	var model = this.model;
@@ -193,6 +194,26 @@ HistoryRepository.prototype.setScoreToKeyResult = function (author, key, type, c
 
 	newEvent.save(callback);
 };
+
+HistoryRepository.prototype.getHistoryByUserIdPopulate = function (id, callback) {
+	var model = this.model;
+
+	model
+		.find({user: id})
+		.populate({
+			path: 'author',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.populate({
+			path: 'user',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+}
 
 HistoryRepository.prototype.setTitleToKeyResult = function (author, key, type, callback) {
 	var model = this.model;

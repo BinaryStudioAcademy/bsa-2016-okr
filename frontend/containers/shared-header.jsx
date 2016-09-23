@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { isDeveloping, LOCAL_PROD } from '../../backend/config/constants';
+
 import './shared-header.scss';
 
 class SharedHeader extends Component {
@@ -11,15 +13,15 @@ class SharedHeader extends Component {
 	render() {
 		const fullName = `${ this.props.firstName } ${ this.props.lastName }` || '';
 		const globalRole = this.props.globalRole || '';
-		/*getHeader();*/
-		return (
-			<header id='header'>
+		let HeaderEl = (<div></div>);
+
+		if(isDeveloping || LOCAL_PROD) {
+			HeaderEl = (
 				<div className='hdr-header'>
 					<img className='hdr-logo' id='BSheaderLogo' src="http://academy.binary-studio.com/resources/logo.png"/>
 					<div>
 						<div className='hdr-buttons'>
 							<input id='searchBar' placeholder="Search"/>
-							{/*<button id='searchBtn' className='searchBtn'>Filter</button>*/}
 							<a id='userLink' className='hdr-noTextDecoration'>
 								<div id='userProfile'>
 									<img  id='avatar' src="http://www.appresume.com/cv_templates/cv_2_1/conf/images/profile.jpg" alt="" />
@@ -27,10 +29,7 @@ class SharedHeader extends Component {
 									<span id='profileBarArrDwn'></span>
 								</div>
 							</a>
-				{/*			- a(href="http://team.binary-studio.com/auth/logout")
-							- 	div#logOutBtn
-							- 		img#logOutImg(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAB+0lEQVRoQ+2ajU3DMBCFkw26AWECugEdoUxA2KCdgDIBMAHpBnQDmICOEDZgg/Ce5KDIOPFVtiM7sqWoVeOf+3zPd47TslhIKRfCUWSQ2Dwp9kjXdRsYf4+rmgmixTjHsiw/JOOJQACxQ2fPkg4D1NkD5sXWrxUEEGt08mXrKPD9a8DQQ6NFAnJA68fAhtq6fwII7XACoUZvBz0c8b2xjex4v0Z7rse+nACy9Q1inR1HiAJy1lXwCZBNBuEMYHZ0aWWPSCWXpTU1U1laUh0Z6qkkzBB/o26nGbVUkFnhk1sT5pM0QNRerkGu+NEdhHtMjtskEqJah1cw+A4Gnw0wKxPksJ5krxU8j2gBZQejXy9dYjGCkOEd14PNC7F7pLevHZOayVuxemRoq0hqQUGg/e5SrY/Ut0otFRDyTUotJZBvlU/+hWdSpgJygq31VBQLCiJdH4aN6bCpt1OUuRNiDzEpJX2SYvWIVUopgIikFDNINRaVsIaS2TTySDb9bbwputEL+J3nzTWuNB6sdBD1qPuG33nuzJIsyAHGD8+bM8ift/NxkHR/YqiXTxqnJm/J0mqYvByUI2nK3MGrL15e9OihUGKI7zrWVxmS3e8yXoZyahfxerrXiPrDAHVb+dbNSH8t16LXPwzMZLjTMNY14tT7jI0zyIyTLRrqF74MkEI5G3CLAAAAAElFTkSuQmCC")
-				*/}			<button id='appsBtn' className='hdr-button'>
+							<button id='appsBtn' className='hdr-button'>
 								<img className='hdr-appsLogo' src="http://team.binary-studio.com/app/images/Thumbnails.png"/>
 							</button>
 							<button id='notificationBtn' className='hdr-button'>
@@ -55,7 +54,7 @@ class SharedHeader extends Component {
 								<span>Logout</span>
 							</button>
 						</div>
-					</div>	
+					</div>
 
 					<div id='appsBlock' className='hdr-invisible'>
 						<div id='appsList'></div>
@@ -74,6 +73,14 @@ class SharedHeader extends Component {
 						</a>
 					</div>
 				</div>
+			);
+		} else {
+			HeaderEl = getHeader();
+		}
+
+		return (
+			<header id='header'>
+				{ HeaderEl }
 			</header>
 			)
 	}
@@ -84,7 +91,7 @@ function mapStateToProps(state) {
 	let mentor = state.myState.me.mentor;
 	let userInfo = state.myState.me.userInfo || {};
 	let { firstName, lastName, globalRole, email } = userInfo;
- 
+
 	return {
 		firstName,
 		lastName,
@@ -100,18 +107,18 @@ const SharedHeaderConnected = connect(mapStateToProps)(SharedHeader);
 export default SharedHeaderConnected;
 
 var getHeader = function() {
-var request = new XMLHttpRequest();
-request.open('GET', 'http://team.binary-studio.com/app/header', true);
-    request.send();
-    request.onreadystatechange = function() {
-        if (request.readyState != 4) return;
-        if (request.status != 200) {
-            alert(request.status + ': ' + request.statusText);
-        } else {
-           var headerHtml = request.responseText;
-           var headerContainer = document.getElementById('header');
-           headerContainer.innerHTML =headerHtml;
-           headerFunction();
-        }
-    };
+	var request = new XMLHttpRequest();
+	request.open('GET', 'http://team.binary-studio.com/app/header', true);
+	request.send();
+	request.onreadystatechange = function () {
+		if (request.readyState != 4) return;
+		if (request.status != 200) {
+			alert(request.status + ': ' + request.statusText);
+		} else {
+			var headerHtml = request.responseText;
+			var headerContainer = document.getElementById('header');
+			headerContainer.innerHTML = headerHtml;
+			headerFunction();
+		}
+	};
 };

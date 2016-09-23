@@ -28,10 +28,15 @@
     margin-bottom: 10px;
     span{
       pointer-events: none;
+      margin-right: 4px;
     }
   }
   .btn-blue{
     margin-bottom: 17px;
+    padding: 10px 20px;
+    .upIcon{
+      font-size: 10px;
+    }
   }
   button{
     .btn-blue:focus{

@@ -1,3 +1,5 @@
+const HelpService = require('../utils/HelpService');
+
 var date = new Date();
 var currentYear = date.getFullYear();
 var currentMonth = date.getMonth() + 1;
@@ -26,8 +28,19 @@ case 2:
 	break;
 }
 
+var isDeveloping = process.env.NODE_ENV !== 'production';
+
+var LOCAL_PROD = false;
+if(process.env.LOCAL_PROD != undefined) {
+	LOCAL_PROD = HelpService.stringToBoolean(process.env.LOCAL_PROD);
+}
+
+var ROOT_URL = (isDeveloping || LOCAL_PROD) ? '' : '/okr';
+
 module.exports = {
-	isDeveloping: process.env.NODE_ENV !== 'production',
+	isDeveloping: isDeveloping,
+	LOCAL_PROD: LOCAL_PROD,
+	ROOT_URL: ROOT_URL,
 	user: {
 		localRole: {
 			USER: 'user',
@@ -36,10 +49,10 @@ module.exports = {
 			DEFAULT: 'default',
 		},
 		globalRole: {
-			ADMIN: 'ADMIN', 
+			ADMIN: 'ADMIN',
 			DEVELOPER: 'DEVELOPER',
-			HR: 'HR', 
-			CEO: 'CEO', 
+			HR: 'HR',
+			CEO: 'CEO',
 			TECH_LEAD: 'Tech Lead',
 		}
 	},
@@ -68,8 +81,8 @@ module.exports = {
 			CHANGE_APPROVE: 'CHANGE_APPROVE',
 			TOOK_APPRENTICE: 'TOOK_APPRENTICE',
 			REMOVED_APPRENTICE: 'REMOVED_APPRENTICE',
-			ARCHIVED: "ARCHIVED",
-			UNARCHIVED: "UNARCHIVED"
+			ARCHIVED: 'ARCHIVED',
+			UNARCHIVED: 'UNARCHIVED'
 		},
 		target: {
 			OBJECTIVE: 'OBJECTIVE',
@@ -81,9 +94,20 @@ module.exports = {
 			USER_KEY_RESULT: 'USER_KEY_RESULT',
 		},
 	},
+	links: {
+		LOCAL_AUTH: 'http://localhost:2020/',
+		PROD_AUTH: 'http://team.binary-studio.com/auth',
+	},
+	page: {
+		OTHER_PERSON_PAGE: 'OTHER_PERSON_PAGE',
+		HOME_PAGE: 'HOME_PAGE',
+	},
+	error: {
+		TOKEN: 'TOKEN',
+	},
 	currentYear: currentYear,
 	currentQuarter: currentQuarter,
 	NOT_SORTED: 0,
 	SORTED_ASC: 1,
-	SORTED_DESC: 2
+	SORTED_DESC: 2,
 };

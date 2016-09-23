@@ -3,6 +3,8 @@
 @import "./styles/tooltips";
 
 aside#navbar {
+  overflow-x: hidden;
+  overflow-y: auto;
   position: fixed;
   top: $header-height;
   left: 0;
@@ -172,6 +174,8 @@ aside#navbar #users-link {
 
 @include desktopL {
   aside#navbar {
+    overflow-x: hidden;
+    overflow-y: auto;
     width: $left-nav-width-opened;
     ul li{
       a{
@@ -188,68 +192,6 @@ aside#navbar #users-link {
       a .tooltip {
         display: none;
       }
-    }
-  }
-}
-
-@media screen
-and (max-width: 768px)
-and (min-width: 501px){
-  aside#navbar {
-    width: auto;
-    height: 50px;
-    bottom: auto;
-    right: 0;
-    &:after{
-      content: '';
-      display: block;
-      height: 0;
-      visibility: hidden;
-      clear: both;
-    }
-    ul{
-      float: left;
-      padding: 0;
-    }
-    ul.nav-divider-before:before{
-      display: none;
-    }
-    ul:after{
-      content: '';
-      display: block;
-      height: 0;
-      visibility: hidden;
-      clear: both;
-    }
-
-    ul li {
-      float: left;
-      margin-right: 5px;
-      margin-bottom: 0;
-      a{
-        padding-top: 25px;
-        padding-bottom: 25px;
-        padding-right: 0;
-      }
-      a span{
-        display: none;
-      }
-      a .tooltip {
-        display: none;
-      }
-    }
-  }
-}
-
-@media screen
-and (max-width: 583px)
-and (min-width: 501px) {
-  aside#navbar{
-    height: 100px;
-
-    ul li {
-      a .tooltip {
-        display: none; }
     }
   }
 }

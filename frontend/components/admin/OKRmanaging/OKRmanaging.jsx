@@ -42,8 +42,8 @@ class OKRmanaging extends Component {
 
 		if(!newObjWindow.classList.contains('opened')) {
 			newObjWindow.classList.add('opened');
-		} else { 
-			newObjWindow.classList.remove('opened'); 
+		} else {
+			newObjWindow.classList.remove('opened');
 		}
 	}
 
@@ -54,18 +54,18 @@ class OKRmanaging extends Component {
 		let keyResults = [''];
 
 		this.props.addKeyResultToTemplate(keyResults);
-		
+
 		document.getElementsByClassName('new-key-result-title')[0].value = '';
 		document.getElementsByClassName('new-key-result-difficulty')[0].value = CONST.keyResult.EASY;
 	}
 
 	getDuplicateObjective(id, title, category) {
     const { objectives } = this.props.okrManaging;
-    
+
     let objectiveIndex = objectives.findIndex((objective) => {
       return (
-        (objective.title === title) 
-        && (objective.category === category) 
+        (objective.title === title)
+        && (objective.category === category)
         && (objective._id !== id)
       );
     });
@@ -75,7 +75,7 @@ class OKRmanaging extends Component {
 
 	saveEditObjective(id, data, focusWrongInputFn) {
 		let duplicateItem = this.getDuplicateObjective(null, data.title, data.category);
-		
+
 		if(isEmpty(duplicateItem)) {
 			if(isEmpty(id)) {
 				this.props.createNewTemplate(data);
@@ -95,7 +95,7 @@ class OKRmanaging extends Component {
         confirmButtonText: 'Yes, restore'
       }, () => {
         this.props.deleteObjective(duplicateItem._id, false);
-        
+
         if(isEmpty(id)) {
 	        this.closeNewObjectiveWindow();
 	      }
@@ -114,14 +114,18 @@ class OKRmanaging extends Component {
 	render() {
 		const { edit: editCategory, activeCategory, list: categories } = this.props.categories;
 		const { objectives } = this.props.okrManaging;
-		const displayedCategories = categories.filter((category) => {
-			return !category.isDeleted;
-		});
-		
+		let displayedCategories = [];
+
+		if (!isEmpty(categories)) {
+			displayedCategories = categories.filter((category) => {
+				return !category.isDeleted;
+			});
+		}
+
 		return (
 			<div>
 				<CentralWindow>
-					<NewObjective 
+					<NewObjective
 						closeNewObjectiveWindow={ this.closeNewObjectiveWindow }
 						saveEditObjective={ this.saveEditObjective }
 						addKeyResultToTemplate={ this.props.addKeyResultToTemplate }
@@ -135,13 +139,13 @@ class OKRmanaging extends Component {
 							<div className="OKR-managing search">
 							<Searchbar searchObjective={ this.searchObjective } />
 						</div>
-						
-						<div id="OKR-managing-title"> 
+
+						<div id="OKR-managing-title">
 							<p><span>Template management</span></p>
 						</div>
-						</div>			
+						</div>
 						<div className="OKR-managing objective-list">
-							<ObjectiveList 
+							<ObjectiveList
 								saveEditObjective={ this.saveEditObjective }
 								categories={ displayedCategories }
 								deleteObjective={ this.props.deleteObjective }
@@ -152,9 +156,9 @@ class OKRmanaging extends Component {
 			<StatPanel>
 				<div className="OKR-managing category">
 						<CategoryList
-							objectives={ objectives } 
+							objectives={ objectives }
 							categories={ categories }
-							displayedCategories={ displayedCategories } 
+							displayedCategories={ displayedCategories }
 							edit={ editCategory }
 							activeCategory={ activeCategory } />
 				</div>

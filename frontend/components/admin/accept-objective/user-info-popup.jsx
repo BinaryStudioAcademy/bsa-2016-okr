@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { ROOT_URL } from '../../../../backend/config/constants';
+
 import './user-info-popup.scss';
 
 class UserInfoPopup extends Component {
@@ -19,7 +21,7 @@ class UserInfoPopup extends Component {
 		}
 		let usersInfo = this.props.user.userName + ' (' + this.props.user.userGlobalRole + ')';
 		return (
-			<Link to={`user/${this.props.user.userId}`}>
+			<Link to={`${ROOT_URL}/user/${this.props.user.userId}`}>
 				<div className="hint">
 					<div className='userItem'>
 						<img className="user-photo" src='https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg'/>

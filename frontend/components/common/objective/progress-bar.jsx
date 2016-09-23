@@ -7,7 +7,10 @@ const Progress = (props) => {
 	
 	if(keyResults.length !== 0) {
 		score = keyResults.reduce((prev, keyResult) => {
-			return prev += +keyResult.score;
+  		if (!keyResult.isDeleted) {
+				prev += +keyResult.score;
+			}
+			return prev
 		}, 0);
 
 		value = Math.round(100 * score / keyResults.length);

@@ -22,8 +22,6 @@ module.exports = function () {
 	// 	archive();
 	// });
 
-	console.log('doing')
-
 	var quarterModel = Quarter;
 	var userObjectiveModel = UserObjective;
 	var idList =[];
@@ -40,7 +38,7 @@ module.exports = function () {
 								idList.push(userobjective);
 						})
 				})
-				console.log('finded: ' + idList.length);
+				// console.log('finded: ' + idList.length);
 				return callback(null);
 			})
 	},
@@ -51,18 +49,18 @@ module.exports = function () {
 						return callback(err)
 				})
 			})
-			console.log('updated obj');
+			// console.log('updated obj');
 			return callback(null);
 	},
 	(callback) => {
-			quarterModel.update({ 
-								isArchived: false, 
+			quarterModel.update({
+								isArchived: false,
 								year:{$lte: CONST.currentYear} ,
 								index:{$lt: CONST.currentQuarter}
 							}, {'$set': {isArchived:true}}, options, (err) => {
 				if (err)
 					return callback(err);
-				console.log('updated quarter')
+				// console.log('updated quarter')
 				return callback(null)
 			})
 	}

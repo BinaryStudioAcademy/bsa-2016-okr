@@ -45,7 +45,7 @@ class CategoryList extends Component {
 
 		this.focusAddInput();
 	}
-	
+
 	focusAddInput() {
 		let inputEl = this.refs.newCategoryComponent.refs.newCategory;
 		ReactDOM.findDOMNode(inputEl).focus();
@@ -87,8 +87,11 @@ class CategoryList extends Component {
 				showCancelButton: true,
 				confirmButtonColor: '#4caf50',
 				confirmButtonText: 'Yes, restore'
-			}, () => {
-				this.props.categoriesActions.deleteCategory(duplicateItem._id, false);
+			}, (isConfirm) => {
+				if(isConfirm) {
+					this.props.categoriesActions.deleteCategory(duplicateItem._id, false);
+				}
+
 				this.props.categoriesActions.cancelEdit();
 			});
 		} else {
@@ -127,22 +130,24 @@ class CategoryList extends Component {
 	}
 
 render() {
-	const { edit, activeCategory } = this.props;
+	const { edit, activeCategory, displayedCategories, objectives } = this.props;
 	const { setActiveCategory, cancelEdit, deleteCategory } = this.props.categoriesActions;
-	
-	let displayedCategoriesEl = this.props.displayedCategories.map((category, index) => {
-		let objectiveIndex = this.props.objectives.findIndex((objective) => {
+
+	let displayedCategoriesEl = displayedCategories.sort((a, b) => {
+		return a.title.localeCompare(b.title);
+	}).map((category, index) => {
+		let objectiveIndex = objectives.findIndex((objective) => {
 			return objective.category === category._id && objective.isDeleted == false;
 		});
 
 		let isEmptyCategory = (objectiveIndex === -1) ? true : false;
-		
+
 		return (
 			<CategoryItem
-				index={ index } 
-				category={ category } 
+				index={ index }
+				category={ category }
 				key={ index }
-				isEmptyCategory={ isEmptyCategory } 
+				isEmptyCategory={ isEmptyCategory }
 				edit={ edit }
 				saveEditCategory={ this.saveEditCategory }
 				activeCategory={ activeCategory }
@@ -167,7 +172,7 @@ render() {
 			<div id="new-category">
 						<a ref="newCategoryButton" className='add-new-category-btn display' tabIndex='0' onClick={ this.showAddCategoryInput }>
 							+Add new category</a>
-						<NewCategory 
+						<NewCategory
 							ref={'newCategoryComponent'}
 							category={ this.props.category }
 							saveEditCategory={ this.saveEditCategory }
@@ -189,4 +194,3 @@ function mapDispatchToProps(dispatch) {
 
 const CategoryListConnected = connect(null, mapDispatchToProps)(CategoryList);
 export default CategoryListConnected
-

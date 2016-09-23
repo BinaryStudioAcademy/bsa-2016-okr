@@ -118,21 +118,19 @@ function randomObjective(users, categories, i) {
 	var deletedBy = null;
 
 	if (isDeleted) {
+		var isDone = false;
+		var userWhoDidDeletionIndex;
 
 		deletedDate = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
-		var isDone = false;
-
-		var userWhoDidDeletionIndex;
-
 		while(!isDone) {
-			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length-1});
-			if (users[userWhoDidDeletionIndex].localRole === "admin")
+			userWhoDidDeletionIndex = chance.integer({ min: 0, max: users.length - 1 });
+			if (users[userWhoDidDeletionIndex].localRole === CONST.user.localRole.ADMIN) {
 				isDone = true;
+			}
 		}
 
 		deletedBy = users[userWhoDidDeletionIndex]._id;
-
 	}
 
 	return new Objective({
@@ -416,12 +414,29 @@ function getQuarters(users, userObjectives) {
 					updatedAt: updatedAt
 				});
 
+				// Two way binding for userObjective and quarter
+				// userObjective should have field quarterId
+				// and quarter should have an array of objectives
+				setQuarterIdToObjectives(userObjectives, quarterObjectives, quarter);
+
 				res.push(quarter.toObject());
 			});
 		});
 	});
 
 	return res;
+}
+
+function setQuarterIdToObjectives(userObjectives, quarterObjectives, quarter) {
+	userObjectives.forEach((userObjective) => {
+		let belongsToThisQuarter = quarterObjectives.some((id) => {
+			return userObjective._id.equals(id);
+		});
+
+		if(belongsToThisQuarter) {
+			userObjective.quarterId = quarter._id;
+		}
+	});
 }
 
 function setArchivedToUserObjectives(userObjectives, quarters) {
@@ -458,7 +473,7 @@ function randomUserInfo(users) {
 
 function setInfoToUser(users, userinfos) {
 	users.forEach((user, i) => {
-		
+
 		if (userinfos[i].globalRole === CONST.user.globalRole.ADMIN) {
 			users[i].localRole = CONST.user.localRole.ADMIN;
 		}
@@ -470,19 +485,19 @@ function setInfoToUser(users, userinfos) {
 function getRoles() {
 	return [
 	{
-		globalRole: CONST.user.globalRole.ADMIN, 
+		globalRole: CONST.user.globalRole.ADMIN,
 		localRole: CONST.user.localRole.ADMIN
 	}, {
-		globalRole: CONST.user.globalRole.HR, 
+		globalRole: CONST.user.globalRole.HR,
 		localRole: CONST.user.localRole.USER,
 	}, {
-		globalRole: CONST.user.globalRole.DEVELOPER, 
+		globalRole: CONST.user.globalRole.DEVELOPER,
 		localRole: CONST.user.localRole.USER,
 	}, {
-		globalRole: CONST.user.globalRole.CEO, 
+		globalRole: CONST.user.globalRole.CEO,
 		localRole: CONST.user.localRole.ADMIN,
 	}, {
-		globalRole: CONST.user.globalRole.TECH_LEAD, 
+		globalRole: CONST.user.globalRole.TECH_LEAD,
 		localRole: CONST.user.localRole.ADMIN,
 	}
 	];

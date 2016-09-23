@@ -86,8 +86,6 @@ body {
 #rec-bin-wrapper {
 	box-sizing: border-box;
 	padding: 30px;
-	overflow-y: hidden;
-	overflow-x: hidden;
 	
 	& .no-hover { background: none; border:none;}
 	
@@ -231,8 +229,9 @@ body {
 		margin: 5px;
 	}
 
-	.filter-box label {
-		line-height: 60px;
+	.filter-box [type="checkbox"]:not(:checked) + label, 
+	.filter-box [type="checkbox"]:checked + label {
+		line-height: 59px;
 	}
 
 	.recycle-bin-filter-table {
@@ -298,6 +297,7 @@ body {
 	}
 }
 
+
 @media all and (max-width: 1460px) {
 
 	.recucle-bin-filter-bar-container {
@@ -308,10 +308,11 @@ body {
 			height: auto;
 			margin: 0 auto;
 			margin-top: 12px;
-			padding-left: 10px;
+			padding-left: 20px;
 		}
 
-		.filter-box label {
+	    .filter-box [type="checkbox"]:not(:checked) + label, 
+	    .filter-box [type="checkbox"]:checked + label  {
 			line-height: normal;
 		}
 
@@ -376,7 +377,7 @@ and (max-width: 1100px) {
 	     padding: 10px 5px;
 	}
 	#rec-bin-wrapper .filter-table td {
-    padding: 10px 5px;
+    padding: 10px;
 	}
 	#rec-bin-wrapper {
 		.filter-table td button {
@@ -444,6 +445,7 @@ and (max-width: 800px) {
 	        padding-bottom: .5em;
 	      }
 	      &:before {
+	        color: #607D8B;
 	        content: attr(data-th)": "; 
 	        font-weight: bold;
 	        font-size: 14px;
@@ -461,12 +463,25 @@ and (max-width: 800px) {
 }
 @media all 
 and (max-width: 750px) {
+
 	.filter-box > div {
-    margin: 3px 10px;
-  }
+	    margin: 3px 10px;
+	 }
+
+
+    .recucle-bin-filter-bar-container .date-field {
+	    display: none;
+    }
+	
+
+	.recucle-bin-filter-bar-container .recycle-bin-filter-table td:nth-child(2) {
+		display: none;
+	} 
+
+
   .recucle-bin-filter-bar-container .filter-box label {
     line-height: 18px;
-	}
+   }
 	.recucle-bin-filter-bar-container .filter-box {
     width: 200px;
     padding-left: 0px;

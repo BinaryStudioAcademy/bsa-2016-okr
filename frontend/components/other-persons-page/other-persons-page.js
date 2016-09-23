@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import cookie from 'react-cookie';
 
 import { isEmpty } from '../../../backend/utils/ValidateService';
+import CONST from '../../../backend/config/constants';
 
 import * as actions from "../../actions/otherPersonActions.js";
 
@@ -13,7 +15,6 @@ import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
 import UserDashboard from "../userDashboard/userDashboard.jsx";
 
-import cookie from 'react-cookie';
 const session = cookie.load('user-id');
 
 import './error.scss';
@@ -48,7 +49,7 @@ class OtherPersonsPage extends Component {
 
 	render() {
 		let otherPersonContent = (<div></div>);
-		
+
 		if (!this.props.user.waiting) {
 			var id = this.props.routeParams.id;
 			var personInfo;
@@ -71,7 +72,7 @@ class OtherPersonsPage extends Component {
 							<UserOjectives userId={ this.props.routeParams.id } />
 						</CentralWindow>
 						<StatPanel>
-							<UserDashboard where="otherPersonPage"/>
+							<UserDashboard where={ CONST.page.OTHER_PERSON_PAGE } />
 							{/*<Dashboard></Dashboard>*/}
 						</StatPanel>
 					</div>

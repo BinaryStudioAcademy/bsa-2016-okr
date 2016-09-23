@@ -14,30 +14,27 @@ const isEmpty = validateService.isEmpty;
 
 var StatsService = function() {};
 
-StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId,year, callback) {
+StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, currentUserId, year, callback) {
 	var statsObj = {};
 	var selectedUser = null;
 
 	async.waterfall([
 		(callback) => {
-			QuarterRepository.getYear(year, (err, result) => {
+			QuarterRepository.getYear(year, (err, quarterList) => {
 				if(err) {
 					return callback(err, null)
 				}
 
-				return callback(null, new Object(result));
+				return callback(null, new Object(quarterList));
 			});
 		}, (quarterList, callback) => {
-			async.each(quarterList,
-			 (quarter, callback) => {
-			 	statsObj[quarter.userId._id] = statsObj[quarter.userId._id] || {};// creating object with quarters for each user
-			 	statsObj[quarter.userId._id][quarter.index] = quarter;
-			 	callback();
-			}, (err) => {
-				if(err)
-					return callback(err);
-				return callback(null);
-			})
+			quarterList.forEach((quarter) => {
+				let userId = quarter.userId._id;
+			 	statsObj[userId] = statsObj[userId] || {};// creating object with quarters for each user
+			 	statsObj[userId][quarter.index] = quarter;
+			});
+
+			return callback(null);
 		}, (callback) => {
 			
 			for(user in statsObj) { //for each user
@@ -61,14 +58,16 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 							let objectiveScore = 0; // score of obj
 							let keyResCount = 0;// count of keyRes in obj
 							objective.keyResults.forEach( (keyResult) => {
-								 objectiveScore += keyResult.score;
-								 keyResCount++;
-							})
+								if (!keyResult.isDeleted) {
+									 objectiveScore += keyResult.score;
+									 keyResCount++;
+								 }
+							});
 							if(keyResCount != 0)
 								quarterScore += objectiveScore / keyResCount; // sum up keyRes scores
 							userObjectivesCount ++;
 						}
-					})
+					});
 
 					if(userObjectivesCount != 0) { // if there was no objectives
 						quarterScore = quarterScore / userObjectivesCount;
@@ -97,7 +96,6 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 				console.log("CURRENT USER ID !!!", currentUserId);
 
 				if(user == currentUserId) {
-					console.log('selected');
 					selectedUser = Object.assign({}, statsObj[user]);
 				}
 			}
@@ -122,19 +120,25 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 
 			var statArr = statsArr.slice(0, limit)
 			var userStats = null;
-			
-			var inTop = statArr.some((elem) => {
-				return selectedUser.userInfo._id === elem.userInfo._id;
-			});
-
-			if (inTop) {
-				userStats = {
-					totalScore: selectedUser.totalScore,
-					inTop: true,
-				};
-			}	else {
-				userStats = selectedUser;
+			if(selectedUser){
+				var inTop = statArr.some((elem) => {
+					return selectedUser.userInfo._id === elem.userInfo._id;
+				});
+	
+				if (inTop) {
+					userStats = {
+						totalScore: selectedUser.totalScore,
+						inTop: true,
+					};
+				}	else {
+					userStats = selectedUser;
+				}
 			}
+			else 
+				userStats = {
+					inTop: false,
+					totalScore: 0
+				}
 			
 			var bottomStats = statsArr[statsArr.length - 1];
 			var respObj = {

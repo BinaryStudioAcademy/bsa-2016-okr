@@ -25,7 +25,7 @@ class NewCategory extends Component {
   		});
 		} else {
 			let displayedTitle = title.length > 12 ? `${title.substr(0, 12)}...` : title;
-			
+
 			sweetalert({
 				title: `Create category '${displayedTitle}'?`,
 				type: 'warning',
