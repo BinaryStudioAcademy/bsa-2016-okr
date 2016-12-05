@@ -26,6 +26,8 @@ module.exports = function(req, res, next) {
 			(callback) => {
 				UserService.getByIdPopulate(_id, (err, user) => {
 					if(err) {
+						console.log('user id ' + _id);
+					    console.log(err);
 						return res.unauthorized('Wrong auth data');
 					}
 

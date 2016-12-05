@@ -384,7 +384,7 @@ function getQuarters(users, userObjectives) {
 			return userObjective.userId.equals(user._id);
 		});
 
-		objectiveIds = objectives.map((objective) => {
+		var objectiveIds = objectives.map((objective) => {
 			return objective._id
 		});
 
