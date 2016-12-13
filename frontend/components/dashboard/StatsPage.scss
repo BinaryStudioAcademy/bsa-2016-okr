@@ -1,6 +1,11 @@
 @import '../common/variables';
 
-.stats-title {   
+.stat-filter .btn-blue {
+  margin-bottom: 17px;
+  padding: 10px 20px;
+}
+
+.stats-title {
         p {
             color: #aaaaaa;
             font-size: 20px;

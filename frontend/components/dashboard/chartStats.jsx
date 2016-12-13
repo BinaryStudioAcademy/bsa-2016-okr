@@ -2,35 +2,6 @@ import React, { Component } from 'react';
 import { Chart } from 'react-google-charts';
 import { isEmpty } from '../../../backend/utils/ValidateService';
 
-// const ChartStats = (props) => {
-// 	const barOptions = {
-// 		title: props.title,
-// 		backgroundColor: 'transparent',
-// 		hAxis: { title: 'Score', format: 'percent', ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] },
-// 		colors: [props.color],
-// 	};
-
-// 	let ChartEl = (<div></div>);
-
-// 	if(!isEmpty(props.data)) {
-// 		ChartEl = (
-// 			<Chart chartType="BarChart" 
-// 				data={ props.data } 
-// 				options={ barOptions }
-// 				width={ '90%' } 
-// 				height={ '300px' } 
-// 				legend_toggle={ true } 
-// 			/>
-// 		);
-// 	}
-
-// 	return (
-// 		<div className="my">
-// 			{ ChartEl }
-// 		</div>
-// 	);
-// }
-
 class ChartStats extends Component {
 	constructor(props) {
 		super(props);

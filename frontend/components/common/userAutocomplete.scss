@@ -1,0 +1,20 @@
+.user-autocomplete .autocomplete-component {
+    .autocomplete {
+      width: 250px;
+    }
+    .autocomplete-result {
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+    .buttons {
+        .autocomplete-button:first-child {
+          display: none;
+        }
+    }
+    .undisplay {
+      display: none;
+    }
+    .display {
+      display: block;
+    }
+}

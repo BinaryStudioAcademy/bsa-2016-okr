@@ -295,6 +295,33 @@ UserService.prototype.removeApprentice = function(userId, apprenticeId, userLoca
     });
 };
 
+UserService.prototype.autocomplete = function(userName, callback) {
+
+	async.waterfall([
+
+		(callback) => {
+			UserRepository.getAllPopulate((err, users) => {
+				if (err) {
+					return callback(err);
+				}
+				return callback(null, users);
+			});
+		},
+
+		(users, callback) => {
+			var data = users.filter((user) => {
+				var name = new RegExp('^' + userName, 'i');
+				return user.userInfo.firstName.match(name) || user.userInfo.lastName.match(name) ;
+			});
+
+			return callback(null, data);
+		}
+
+	], (err, res) => {
+		return callback(err, res);
+	});
+};
+
 module.exports = new UserService();
 
 // UserService.prototype.add = function(authorId, user, callback){

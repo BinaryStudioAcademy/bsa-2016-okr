@@ -19,6 +19,7 @@ export const MAPPING_SORTING_BY_G_ROLE = 'MAPPING_SORTING_BY_G_ROLE';
 export const MAPPING_SORTING_BY_NAME = 'MAPPING_SORTING_BY_NAME';
 export const MAPPING_SET_GLOBAL_ROLE_FILTER = 'MAPPING_SET_GLOBAL_ROLE_FILTER';
 export const MAPPING_CLEAR= 'MAPPING_CLEAR';
+export const SET_AUTOCOMPLETE_USER_SELECTED_ITEM = 'SET_AUTOCOMPLETE_USER_SELECTED_ITEM';
 
 export function setGlobalRoleFilter(value) {
 
@@ -84,7 +85,6 @@ export function updateUserRole(id, body) {
 }
 
 export function getUsers() {
-
 	return(dispatch, getStore) => {
 		dispatch({ type: MAPPING_GET_USERS });
 		dispatch({ type: ADD_REQUEST });
@@ -101,7 +101,26 @@ export function getUsers() {
 	};
 }
 
+export function getAutocompleteUsers(name) {
+	return (dispatch, getStore) => {
+		dispatch({ type: MAPPING_GET_USERS });
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.get(`${ ROOT_URL }/api/user/autocomplete`, { params: { name: name } })
+			.then(response => {
+				dispatch(receivedUsers(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			})
+			.catch(response => {
+				dispatch(receivedUsersError(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			});
+	};
+}
+
 export function receivedUsers(data) {
+	data = data || [];
+
 	return(dispatch, getStore) => {
 		dispatch({
 			type: MAPPING_RECEIVED_USERS,
@@ -200,3 +219,5 @@ export function receivedGlobalRoles(roles) {
 		});
 	}
 }
+
+

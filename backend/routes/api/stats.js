@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const ValidateService = require('../../utils/ValidateService');
 const isCorrectId = ValidateService.isCorrectId;
-
+const isEmptyObject = ValidateService.isEmptyObject;
 const service = require('../../services/stats');
 
  //router.get('/users', (req, res, next) => {
@@ -67,11 +67,21 @@ router.get('/progress', (req, res, next) => {
 });
 
 router.get('/categories', (req, res, next) => {
-	service.getCategoriesStats(res.callback);
+	if (!req.query.filters || isEmptyObject(req.query.filters)) {
+		return service.getCategoriesStats(res.callback);
+	}
+
+	var filters = JSON.parse(req.query.filters);
+	return service.getCategoriesStats(res.callback, filters);
 });
 
 router.get('/keyresults', (req, res, next) => {
-	service.getKeyResultsStats(res.callback);
+	if (!req.query.filters || isEmptyObject(req.query.filters)) {
+		return service.getKeyResultsStats(res.callback);
+	}
+
+	var filters = JSON.parse(req.query.filters);
+	return service.getKeyResultsStats(res.callback, filters);
 });
 
 module.exports = router;

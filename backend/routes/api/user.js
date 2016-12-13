@@ -45,6 +45,16 @@ router.put('/:id', (req, res, next) => {
 
 });
 
+router.get('/autocomplete', (req, res, next) => {
+	var userName = req.query.name;
+
+	if (ValidateService.isEmpty(userName)) {
+		return res.badRequest();
+	};
+
+	return service.autocomplete(userName.trim().toLowerCase(), res.callback);
+});
+
 router.get('/me/', (req, res, next) => {
 	var id = req.session._id;
 
@@ -66,7 +76,6 @@ router.get('/:id', (req, res, next) => {
 
 	return service.getByIdWithQuarters(id, res.callback);
 });
-
 
 // router.post('/', (req, res, next) => {
 // 	service.add(req.session._id, req.body, res.callback);

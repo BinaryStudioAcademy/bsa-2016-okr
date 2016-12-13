@@ -42,7 +42,7 @@ class Quarterbar extends Component {
 			});
 
 			if(quarterIndex === -1) {
-				if(((selectedYear === currentYear) && (i < currentQuarter))
+				if (((selectedYear === currentYear) && (i < currentQuarter))
 				|| (selectedYear < currentYear)
 				|| !editMode) {
 					el = (

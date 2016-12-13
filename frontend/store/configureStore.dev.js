@@ -9,7 +9,7 @@ import DevTools from '../shared/devtools/DevTools';
 const enhancer = compose(
 	applyMiddleware(thunk),
 	applyMiddleware(routerMiddleware(browserHistory)),
-	DevTools.instrument(),
+	window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument(),
 	persistState(
 		window.location.href.match(
 			/[?&]debug_session=([^&#]+)\b/
