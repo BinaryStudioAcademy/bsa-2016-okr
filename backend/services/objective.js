@@ -339,4 +339,15 @@ ObjectiveService.prototype.autocomplete = function(categoryId, quarterId, title,
 	});
 };
 
+ObjectiveService.prototype.autocompleteBacklogObjectives = function (categoryId, title, callback) {
+
+	ObjectiveRepository.autocomplete(title, categoryId, [], (err, objectives) => {
+		if(err) {
+			return callback(err, null);
+		}
+
+		return callback(null, objectives);
+	});
+};
+
 module.exports = new ObjectiveService();

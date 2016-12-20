@@ -4,13 +4,6 @@ const CONST = require('../config/constants');
 const HelpService = require('./HelpService');
 const getUniqueValuesFromArray = HelpService.getUniqueValuesFromArray;
 
-module.exports = {
-  getTabForYear: getTabForYear,
-  getYears: getYears,
-  addNewQuarter: addNewQuarter,
-  setScoreToKeyResult: setScoreToKeyResult
-};
-
 function getTabForYear(quarters, year) {
 	let tab = null;
 	let i;
@@ -103,3 +96,61 @@ function setScoreToKeyResult(me, objectiveId, keyResultId, score) {
 
 	return meCopy;
 }
+
+function getObjectivesData(userObject, selectedYear, selectedTab) {
+	let quarters = [];
+	let objectives = [];
+	let { _id, localRole } = userObject;
+	let mentorId;
+	let currentQuarter;
+
+	if(userObject.mentor != undefined || userObject.mentor != null) {
+		mentorId = userObject.mentor._id;
+	}
+
+	if (userObject.quarters != undefined) {
+		currentQuarter = userObject.quarters.find((quarter) => {
+			return (quarter.year == selectedYear) && (quarter.index == selectedTab)
+		});
+
+		if(currentQuarter != undefined) {
+			objectives = currentQuarter.userObjectives.filter((objective) => {
+				return objective.isBacklog === false;
+			});
+		} else {
+			objectives = [];
+			currentQuarter = {};
+		}
+
+		quarters = userObject.quarters.filter(quarter => {
+			return quarter.year == selectedYear;
+		});
+	}
+
+	return {
+		quarters,
+		currentQuarter,
+		objectives,
+		_id,
+		mentorId,
+		mentor: mentorId,
+		localRole,
+	};
+}
+
+function getQuartersIndexesFromCurrent() {
+	let quarters = [];
+	for (let i = CONST.currentQuarter; i <= 4; i++) {
+		quarters.push(i);
+	}
+	return quarters;
+}
+
+module.exports = {
+	getTabForYear: getTabForYear,
+	getYears: getYears,
+	addNewQuarter: addNewQuarter,
+	setScoreToKeyResult: setScoreToKeyResult,
+	getObjectivesData: getObjectivesData,
+	getQuartersIndexesFromCurrent: getQuartersIndexesFromCurrent
+};

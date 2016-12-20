@@ -3,6 +3,7 @@ const UserInfoRepository = require('../repositories/userInfo');
 const RoleRepository = require('../repositories/role');
 const QuarterRepository = require('../repositories/quarter');
 const HistoryRepository = require('../repositories/history');
+const UserObjectiveRepository = require('../repositories/userObjective');
 const async = require('async');
 const ObjectId = require('mongoose').Types.ObjectId;
 const CONST = require('../config/constants');
@@ -189,7 +190,18 @@ UserService.prototype.getByIdWithQuarters = function(id, callback) {
 
 				return callback(null, user);
 			});
-		}
+		},
+		(user, callback) => {
+			UserObjectiveRepository.getByUserIdBacklogPopulate(user._id, (err, objectives) => {
+				if (err) {
+					return callback(err, null);
+				}
+
+				user.backlog = objectives;
+
+				return callback(null, user);
+			});
+		},
 	], (err, result) => {
 		return callback(err, result);
 	});

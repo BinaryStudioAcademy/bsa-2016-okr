@@ -13,6 +13,7 @@ import userDashboard from './userDashboardReducer';
 import acceptObj from './acceptObjectiveReducer';
 import stats from './statsReducer';
 import app from './appReducer';
+import userBacklog from './userBacklogReducer';
 
 import { routerReducer } from 'react-router-redux';
 
@@ -32,4 +33,5 @@ export default combineReducers({
   stats,
   routing: routerReducer,
   acceptObj,
+  userBacklog
 });

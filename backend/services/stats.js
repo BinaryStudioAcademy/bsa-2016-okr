@@ -91,8 +91,8 @@ StatsService.prototype.getAllUsersStatsWithQuarters = function (sort, limit, cur
 					statsObj[user].totalScore = 0;
 				}
 
-				console.log("USER !!!!!!!", user);
-				console.log("CURRENT USER ID !!!", currentUserId);
+				// console.log("USER !!!!!!!", user);
+				// console.log("CURRENT USER ID !!!", currentUserId);
 
 				if(user == currentUserId) {
 					selectedUser = Object.assign({}, statsObj[user]);

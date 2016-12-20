@@ -3,6 +3,7 @@ import ObjectiveInput from './objectiveInput.jsx';
 import ObjectiveItem from './objective.jsx';
 import { isEmpty } from '../../../../backend/utils/ValidateService';
 import './objective.scss';
+import CONST from '../../../../backend/config/constants';
 
 class ObjectiveList extends Component {
 
@@ -58,6 +59,8 @@ class ObjectiveList extends Component {
 						return ( a.templateId.title.localeCompare(b.templateId.title) )
 					})
 					.map((item, index) => {
+						// let isEstimate = item.keyResults.some(keyres => keyres.score > 0);
+						let showBacklogBtn = (this.props.quarter.index === CONST.currentQuarter);
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
 																	isArchived = { isArchived }
 																	isArchivedObjective = { item.isArchived }
@@ -66,7 +69,9 @@ class ObjectiveList extends Component {
 																	selectedYear= { this.props.selectedYear }
 																	selectedTab={ this.props.selectedTab }
 																	changeArchive = { changeArchive }
-										              updateUserObjectiveApi = { updateUserObjectiveApi }
+											  						showBacklogBtn={ showBacklogBtn }
+											  						moveObjectiveToBacklog={ this.props.moveObjectiveToBacklog }
+																	updateUserObjectiveApi = { updateUserObjectiveApi }
 																	softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }
 																	changeKeyResultScoreOne={ changeKeyResultScore }
 																	softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }

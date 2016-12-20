@@ -99,6 +99,33 @@
     padding: 7px 10px;
     z-index: 1;
   }
+
+  .add-quarter-btn {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    padding: 7px 10px;
+    z-index: 1;
+  }
+
+  .select-quarter {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    padding: 7px 10px;
+    z-index: 1;
+  }
+
+  .backlog-btn-container {
+    margin-bottom: 4px;
+    text-align: right;
+    .backlog-btn {
+      margin-bottom: 5px;
+      padding: 7px 10px;
+      z-index: 1;
+    }
+  }
+
   .cancel-button-objective {
     position: absolute;
     bottom: 17px;

@@ -130,7 +130,14 @@ class UserHistory extends Component {
 	}
 
 	getActionObjectName(historyItem) {
-	 	if(historyItem.type.indexOf('OBJECTIVE') !== -1) {
+		if(historyItem.type.indexOf('BACKLOG') !== -1) {
+			if(historyItem.userObjective) {
+				return (<span> backlog objective <span className="history-target">"{historyItem.userObjective.templateId.title}"
+					to okr list</span></span>);
+			} else {
+				return (<span> objective <span className="history-target">"{historyItem.objective.title}"</span></span>);
+			}
+		} else if(historyItem.type.indexOf('OBJECTIVE') !== -1) {
 	 		if(historyItem.userObjective) {
 				return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
 	 		} else {
@@ -152,9 +159,9 @@ class UserHistory extends Component {
       return (<span><span className="history-target">{historyItem.user.userInfo.firstName} {historyItem.user.userInfo.lastName}</span></span>);
     } else if(historyItem.type.indexOf('CATEGORY') !== -1){
     	return (<span>category <span className="history-target">"{historyItem.category.title}"</span></span>);*/
-  	} else {
-    	return (<span>historyItem == undefined</span>)
-    }
+  		} else {
+    		return (<span>historyItem == undefined</span>)
+    	}
 	}
 
 	getIconType(item) {

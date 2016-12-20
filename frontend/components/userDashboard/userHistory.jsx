@@ -134,7 +134,12 @@ class UserHistory extends Component {
 
 	getHistoryObjectName(historyItem) {
 		if(historyItem.userObjective == undefined) {return (<span>historyItem.userObjective == undefined</span>);};
-	 	if(historyItem.type.indexOf('OBJECTIVE') !== -1){
+
+		if(historyItem.type.indexOf('BACKLOG') !== -1){
+			return (<span> backlog objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
+		};
+
+		if(historyItem.type.indexOf('OBJECTIVE') !== -1){
 			return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
 	 	};
 

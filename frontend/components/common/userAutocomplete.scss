@@ -1,15 +1,15 @@
-.user-autocomplete .autocomplete-component {
-    .autocomplete {
-      width: 250px;
-    }
+.user-autocomplete {
+  width: 300px;
+  text-align: left;
+  .autocomplete-component {
     .autocomplete-result {
       max-height: 500px;
       overflow-y: scroll;
     }
     .buttons {
-        .autocomplete-button:first-child {
-          display: none;
-        }
+      .autocomplete-button:first-child {
+        display: none;
+      }
     }
     .undisplay {
       display: none;
