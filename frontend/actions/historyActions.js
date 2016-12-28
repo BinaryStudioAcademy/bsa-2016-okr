@@ -125,7 +125,7 @@ export function setSort (sortField) {
 export function resetFilters () {
 	const action = {
 		type: 'RESET_FILTERS'
-	}
+	};
 
 	return action;
 }

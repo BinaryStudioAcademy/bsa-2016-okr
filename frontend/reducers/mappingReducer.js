@@ -14,7 +14,7 @@ import {
 	MAPPING_SORTING_BY_G_ROLE,
 	MAPPING_SET_GLOBAL_ROLE_FILTER,
 	MAPPING_SORTING_BY_NAME,
-	MAPPING_CLEAR
+	MAPPING_CLEAR,
 } from '../actions/mappingActions';
 
 import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../backend/config/constants"; 

@@ -45,6 +45,16 @@ router.put('/:id', (req, res, next) => {
 
 });
 
+router.get('/autocomplete', (req, res, next) => {
+	var userName = req.query.name;
+
+	if (ValidateService.isEmpty(userName)) {
+		return res.badRequest();
+	};
+
+	return service.autocomplete(userName.trim().toLowerCase(), res.callback);
+});
+
 router.get('/me/', (req, res, next) => {
 	var id = req.session._id;
 
@@ -66,67 +76,5 @@ router.get('/:id', (req, res, next) => {
 
 	return service.getByIdWithQuarters(id, res.callback);
 });
-
-
-// router.post('/', (req, res, next) => {
-// 	service.add(req.session._id, req.body, res.callback);
-// });
-
-// router.put('/:id', (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
-
-// 	service.update(req.session._id, id, req.body, res.callback);
-// });
-
-// router.get('/me/:id', (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
-
-// 	if(req.session._id === id)
-// 		service.getMe(id, res.callback)
-// 	else res.forbidden();
-// });
-
-// router.put('/archive/:id', (req, res, next) => {
-// 	var id = req.params.id;
-// 	var objectiveId = req.body.objectiveId;
-
-// 	if(ValidateService.isCorrectId(id)
-// 		&& ValidateService.isCorrectId(objectiveId))
-// 	{
-// 		return res.badRequest();
-// 	};
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
-
-
-// 	if(!req.session._id === id && !req.session.isAdmin
-// 		&& !userMentorRepository.checkUserMentor(id, req.session._id))
-// 	{
-// 		return res.forbidden();
-// 	};
-
-// 	service.changeArchive(req.session._id, id, objectiveId, res.callback);
-
-// })
-
-// router.delete('/:id', adminOnly, (req, res, next) => {
-// 	var id = req.params.id;
-
-// 	if(!ValidateService.isCorrectId(id)) {
-// 		return res.badRequest();
-// 	};
-
-// 	service.delete(req.session._id, id, res.callback);
-// })
 
 module.exports = router;

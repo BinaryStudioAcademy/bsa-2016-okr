@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
+import  { GET_DELETED_CATEGORIES_REQUEST } from './recycleBinActions';
 
 export const GET_NOT_APPROVED_OBJECTIVES_REQUEST = 'GET_NOT_APPROVED_OBJECTIVES_REQUEST';
 export const RECEIVED_NOT_APPROVED_OBJECTIVES = 'RECEIVED_NOT_APPROVED_OBJECTIVES';

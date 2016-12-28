@@ -1,10 +1,9 @@
 const async = require('async');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
-
 const UserObjective = require('../schemas/userObjective');
 const User = require('../schemas/user');
-
+const CONST = require('../config/constants');
 const QuarterRepository = require('../repositories/quarter.js');
 const UserRepository = require ('../repositories/user.js')
 
@@ -288,114 +287,225 @@ StatsService.prototype.getProgressStats = function(callback) {
 	});
 };
 
-StatsService.prototype.getCategoriesStats = function(callback) {
-	UserObjective.aggregate([
-	{
-		$match: {
-			isDeleted: false
-		}
-	},
-	{
-		$project: {
-			userId: "$userId",
-			templateId: "$templateId",
-			avgScore: { $avg: "$keyResults.score" },
-		}
-	},
-	{
-		$lookup: {
-			from: "objectives",
-			localField: "templateId",
-			foreignField: "_id",
-			as: "template"
-		}
-	},
-	{
-		$unwind: "$template"
-	},
-	{
-		$project: {
-			userId: "$userId",
-			templateId: "$templateId",
-			avgScore: "$avgScore",
-			categoryId: "$template.category",
-		}
-	},
-	{
-		$lookup: {
-			from: "categories",
-			localField: "categoryId",
-			foreignField: "_id",
-			as: "category"
-		}
-	},
-	{
-		$unwind: "$category"
-	},
-	{
-		$group: {
-			_id: { _id: "$category._id", title: "$category.title" },
-			avgScore: { $avg: "$avgScore" },
-		}
-	},
-	{
-		$project: {
-			_id: "$_id._id",
-			title: "$_id.title",
-			score: "$avgScore"
-		}
+StatsService.prototype.createDbQueryParams = function (params) {
+	var query = {};
+	var userId = '';
+	var year = '';
+	var quarter = '';
+	var createdAt = {};
+
+	if (validateService.isCorrectId(params.userId)) {
+		query['user._id'] = new ObjectId(params.userId);
 	}
+
+	if (!isNaN(Date.parse(params.date.to)) && !isNaN(Date.parse(params.date.from))) {
+		query['objective.createdAt'] = { $gte: new Date(params.date.from), $lte: new Date(params.date.to) };
+	} else if (!isNaN(Date.parse(params.date.to))) {
+		query['objective.createdAt'] = { $lte: new Date(params.date.to) };
+	} else if (!isNaN(Date.parse(params.date.from))) {
+		query['objective.createdAt'] = { $gte: new Date(params.date.from) };
+	}
+
+	if (validateService.isValidYear(params.year)) {
+		query['quarter.year'] = parseInt(params.year);
+	}
+
+	if (validateService.isValidQuarter(parseInt(params.quarter))) {
+		query['quarter.index'] = parseInt(params.quarter);
+	}
+
+	return query;
+};
+
+StatsService.prototype.getCategoriesStats = function(callback, filters = {}) {
+	var queryMatchParams = validateService.isEmptyObject(filters) ? {} : this.createDbQueryParams(filters);
+
+	UserObjective.aggregate([
+		{
+			$match: { isDeleted: false }
+		},
+		{
+			$lookup: {
+				from: "objectives",
+				localField: "templateId",
+				foreignField: "_id",
+				as: "objective"
+			}
+		},
+		{
+			$unwind: "$objective"
+		},
+		{
+			$lookup: {
+				from: "categories",
+				localField: "objective.category",
+				foreignField: "_id",
+				as: "category"
+			}
+		},
+		{
+			$unwind: "$category"
+		},
+		{
+			$match: { 'category.isDeleted': false }
+		},
+		{
+			$lookup: {
+				from: "quarters",
+				localField: "quarterId",
+				foreignField: "_id",
+				as: "quarter"
+			}
+		},
+		{
+			$unwind: "$quarter"
+		},
+		{
+			$lookup: {
+				from: "users",
+				localField: "userId",
+				foreignField: "_id",
+				as: "user"
+			}
+		},
+		{
+			$unwind: "$user"
+		},
+		{
+			$project: {
+				user: "$user",
+				quarter: "$quarter",
+				category: "$category",
+				objective: "$objective",
+				keyResultsAvg: { $avg: "$keyResults.score" }
+			}
+		},
+		{
+			$match: queryMatchParams
+		},
+		{
+			$group: {
+				_id: { _id: "$category._id", title: "$category.title" },
+				title: { $first: "$category.title" },
+				score: { $avg: "$keyResultsAvg" },
+			}
+		}
+
 	], (err, data) => {
-		if(err) {
+		if (err) {
 			return callback(err, null);
+		}
+
+		if (isEmpty(data)) {
+			return callback(null, this.getCategoriesEmptyScore());
 		}
 
 		return callback(null, data);
 	});
 };
 
-StatsService.prototype.getKeyResultsStats = function(callback) {
+StatsService.prototype.getCategoriesEmptyScore = function () {
+	return Object.keys(CONST.objective.categories).map((key) => {
+		return { title: CONST.objective.categories[key], score: 0 };
+	});
+};
+
+StatsService.prototype.getKeyResultsEmptyScore = function () {
+	return Object.keys(CONST.keyResult).map((key) => {
+		return { title: CONST.keyResult[key], score: 0 };
+	});
+};
+
+StatsService.prototype.getKeyResultsStats = function(callback, filters = {}) {
+	var queryMatchParams = validateService.isEmptyObject(filters) ? {} : this.createDbQueryParams(filters);
+
 	UserObjective.aggregate([
-	{
-		$match: {
-			isDeleted: false
+		{
+			$match: { isDeleted: false }
+		},
+		{
+			$unwind: "$keyResults"
+		},
+		{
+			$match: { 'keyResults.isDeleted': false }
+		},
+		{
+			$project: {
+				score: "$keyResults.score",
+				quarterId: "$quarterId",
+				userId: "$userId",
+				objectiveId: "$templateId",
+				keyresultTemplateId: "$keyResults.templateId",
+			}
+		},
+
+		{
+			$lookup: {
+				from: "objectives",
+				localField: "objectiveId",
+				foreignField: "_id",
+				as: "objective"
+			}
+		},
+		{
+			$unwind: "$objective"
+		},
+		{
+			$lookup: {
+				from: "quarters",
+				localField: "quarterId",
+				foreignField: "_id",
+				as: "quarter"
+			}
+		},
+		{
+			$unwind: "$quarter"
+		},
+		{
+			$lookup: {
+				from: "users",
+				localField: "userId",
+				foreignField: "_id",
+				as: "user"
+			}
+		},
+		{
+			$unwind: "$user"
+		},
+
+		{
+			$lookup: {
+				from: "keyresults",
+				localField: "keyresultTemplateId",
+				foreignField: "_id",
+				as: "keyresultInfo"
+			}
+		},
+		{
+			$unwind: "$keyresultInfo"
+		},
+		{
+			$match: queryMatchParams
+		},
+		{
+			$group: {
+				_id: "$keyresultInfo.difficulty",
+				avgScore: { $avg: "$score" },
+			}
+		},
+		{
+			$project: {
+				title: "$_id",
+				score: "$avgScore"
+			}
 		}
-	},
-	{
-		$unwind: "$keyResults"
-	},
-	{
-		$project: {
-			score: "$keyResults.score",
-			templateId: "$keyResults.templateId"
-		}
-	},
-	{
-		$lookup: {
-			from: "keyresults",
-			localField: "templateId",
-			foreignField: "_id",
-			as: "template"
-		}
-	},
-	{
-		$unwind: "$template"
-	},
-	{
-		$group: {
-			_id: "$template.difficulty",
-			avgScore: { $avg: "$score" },
-		}
-	},
-	{
-		$project: {
-			title: "$_id",
-			score: "$avgScore"
-		}
-	}
 	], (err, data) => {
-		if(err) {
+		if (err) {
 			return callback(err, null);
+		}
+
+		if (isEmpty(data)) {
+			return callback(null, this.getKeyResultsEmptyScore());
 		}
 
 		return callback(null, data);
