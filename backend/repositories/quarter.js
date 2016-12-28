@@ -104,6 +104,60 @@ QuarterRepository.prototype.getCurrentQuarter = function(callback) {
 	.exec(callback);
 };
 
+QuarterRepository.prototype.getUserCurrentQuarter = function(userId, callback) {
+	var model = this.model;
+
+	model
+		.findOne({ 'index': CONST.currentQuarter, 'year': CONST.currentYear, userId: userId })
+		.populate({
+			path: 'userObjectives',
+			match: { isDeleted: false},
+			populate: {
+				path: 'templateId keyResults.templateId',
+				populate: {
+					path:	'category'
+				}
+			}
+		})
+		.populate({
+			path: 'userId',
+			populate: {
+				path: 'userInfo mentor',
+				populate: {
+					path: 'userInfo'
+				}
+			}
+		})
+		.exec(callback);
+};
+
+QuarterRepository.prototype.getUserCurrentYearQuarterByIndex = function(userId, quarterInd, callback) {
+	var model = this.model;
+
+	model
+		.findOne({ 'index': quarterInd, 'year': CONST.currentYear, userId: userId })
+		.populate({
+			path: 'userObjectives',
+			match: { isDeleted: false},
+			populate: {
+				path: 'templateId keyResults.templateId',
+				populate: {
+					path:	'category'
+				}
+			}
+		})
+		.populate({
+			path: 'userId',
+			populate: {
+				path: 'userInfo mentor',
+				populate: {
+					path: 'userInfo'
+				}
+			}
+		})
+		.exec(callback);
+};
+
 QuarterRepository.prototype.getYear = function(year, callback) {
 	var model = this.model;
 

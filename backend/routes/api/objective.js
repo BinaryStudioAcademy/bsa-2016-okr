@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
 	return service.getAll(res.callback);
 });
 
- router.get('/notApproved/', (req, res, next) => {
+ router.get('/notApproved/', adminOnly, (req, res, next) => {
  	return repository.getAllNotApproved(res.callback);
  });
 
@@ -86,6 +86,18 @@ router.get('/category/:categoryId/quarter/:quarterId/:title*?', (req, res, next)
 		return res.badRequest();
 	}
 	service.autocomplete(categoryId, quarterId, title, res.callback);
+});
+
+// Objective backlog autocomplete
+router.get('/backlog/category/:categoryId/:title*?', (req, res, next) => {
+	var title = req.params.title || '';
+	var categoryId = req.params.categoryId || '';
+
+	if(!isCorrectId(categoryId)) {
+		return res.badRequest();
+	}
+
+	service.autocompleteBacklogObjectives(categoryId, title, res.callback);
 });
 
 router.put('/updateWithoutValidation/:id', adminOnly,(req, res, next) => {

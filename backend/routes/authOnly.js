@@ -34,10 +34,10 @@ module.exports = function(req, res, next) {
 					req.session = {};
 					req.session._id = user._id;
 					req.session.mentor = user.mentor;
-					req.session.userInfo = user.userInfo
+					req.session.userInfo = user.userInfo;
 					req.session.localRole = user.localRole;
 
-					if (!cookies.get('user-id')) {
+					if (cookies.get('user-id') !== user._id) {
 						cookies.set('user-id', req.session._id, { httpOnly: false });
 					}
 
@@ -76,7 +76,9 @@ module.exports = function(req, res, next) {
 						req.session.userInfo = user.userInfo
 						req.session.localRole = user.localRole;
 
-						if (!cookies.get('user-id')) {
+						console.log('---===¯\\_(ツ)_/¯===---BackEnd1');
+
+						if (cookies.get('user-id') !== user._id) {
 							cookies.set('user-id', req.session._id, { httpOnly: false });
 							console.log('---===¯\\_(ツ)_/¯===---BackEnd1');
 						}

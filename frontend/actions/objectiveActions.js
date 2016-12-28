@@ -30,6 +30,23 @@ export function getAutocompleteObjectives(categoryId, quarterId, title) {
 	};
 }
 
+export function getAutocompleteObjectivesBacklog(categoryId, title) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST });
+
+		return axios.get(`${ ROOT_URL }/api/objective/backlog/category/${ categoryId }/${ encodeURIComponent(title) }`)
+			.then(response => {
+				dispatch(receivedAutocompleteObjectives(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			})
+			.catch(response => {
+				dispatch(receivedError(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			});
+	};
+}
+
+
 export function receivedAutocompleteObjectives(data) {
 	// If nothing received - replace to empty array
 	data = data || [];

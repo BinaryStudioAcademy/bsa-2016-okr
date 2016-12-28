@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Repository = require('../units/Repository');
 var UserObjective = require('../schemas/userObjective');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var UserObjectiveRepository = function(){
 	Repository.prototype.constructor.call(this);
@@ -31,6 +32,48 @@ UserObjectiveRepository.prototype.getByUserIdPopulate = function(userId, callbac
 
 	model
 		.find({ userId: userId })
+		.populate({
+			path: "templateId",
+			populate: {
+				path: 'category'
+			}
+		})
+		.populate('keyResults.templateId')
+		.populate({
+			path: "keyResults.deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
+UserObjectiveRepository.prototype.getByUserIdWithOutBacklogPopulate = function(userId, callback) {
+	var model = this.model;
+
+	model
+		.find({ userId: userId, isBacklog: false })
+		.populate({
+			path: "templateId",
+			populate: {
+				path: 'category'
+			}
+		})
+		.populate('keyResults.templateId')
+		.populate({
+			path: "keyResults.deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
+
+UserObjectiveRepository.prototype.getByUserIdBacklogPopulate = function(userId, callback) {
+	var model = this.model;
+	var opt = { userId: userId, isBacklog: true, isDeleted: false };
+	model
+		.find(opt)
 		.populate({
 			path: "templateId",
 			populate: {

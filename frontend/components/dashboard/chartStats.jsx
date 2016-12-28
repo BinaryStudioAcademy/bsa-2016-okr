@@ -29,11 +29,11 @@ class ChartStats extends Component {
 
 		if(!isEmpty(this.props.data)) {
 			ChartEl = (
-				<Chart chartType="BarChart" 
-					data={ this.props.data } 
+				<Chart chartType="BarChart"
+					data={ this.props.data }
 					options={ barOptions }
-					width={ '90%' } 
-					height={ '300px' } 
+					width={ '90%' }
+					height={ '300px' }
 					legend_toggle={ true }
 					chartEvents={ this.chartEvents }
 				/>

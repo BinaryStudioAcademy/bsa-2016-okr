@@ -1,0 +1,62 @@
+@import "../common/variables";
+@import '../common/styles/commonStyles';
+
+.category-tabs {
+  .tab:hover{
+    cursor: pointer;
+    background-color: lighten($color-blue-grey, 45%);
+    color: #607D8B;
+  }
+
+  .hideTab{
+    visibility: hidden;
+    overflow:hidden;
+  }
+
+  .showTab{
+    visibility:visible;
+    height: 100%;
+    overflow:hidden;
+  }
+
+  .tabLine{
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    > li {
+      &:first-child{
+        border-radius: 3px 0 0 3px;
+      }
+      &:last-child{
+        border-radius: 0 3px 3px 0;
+        border-left: none;
+      }
+      flex: 1 0 100px;
+      text-align: center;
+      padding: 6px 10px;
+      color: #607D8B;
+      background-color: #fff;
+      border: 1px solid #607D8B;
+      cursor: pointer;
+    }
+    li:focus{
+      outline: none;
+      background-color: lighten($color-blue-grey, 45%);
+      color: #607D8B;
+    }
+    .active {
+      background: #607D8B;
+      color: #fff;
+    }
+
+    .active:hover {
+      background: #607D8B;
+      color: #fff;
+    }
+  }
+
+  .tab-wrapper {
+    margin-bottom: 10px;
+  }
+}

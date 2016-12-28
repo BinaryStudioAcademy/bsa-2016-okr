@@ -7,9 +7,9 @@ import sweetalert from 'sweetalert';
 import '../styles/sweetalert.css';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import * as actions from "../../../actions/myStateActions.js";
+import { isEmpty, isValidQuarter } from '../../../../backend/utils/ValidateService';
+import { getQuartersIndexesFromCurrent } from '../../../../backend/utils/UIHelpService';
 
 const notifications = require("../../../actions/notifications.js");
 
@@ -21,6 +21,12 @@ class ObjectiveItem extends Component {
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleCancelEdit = this.handleCancelEdit.bind(this);
 		this.handleSave = this.handleSave.bind(this);
+		this.handleAddToQuarter = this.handleAddToQuarter.bind(this);
+		this.handleMoveToBacklog = this.handleMoveToBacklog.bind(this);
+        this.showQuarterSelect = this.showQuarterSelect.bind(this);
+        this.handleQuarterChange = this.handleQuarterChange.bind(this);
+
+        this.quarterIndexes = getQuartersIndexesFromCurrent();
 	}
 
 	handleDelObj() {
@@ -91,12 +97,62 @@ class ObjectiveItem extends Component {
 		this.refs.saveEdit.classList.add('hidden');
 	}
 
+	handleAddToQuarter(e) {
+	    this.showQuarterSelect(true);
+	}
+
+    showQuarterSelect(show) {
+        if (show) {
+            this.refs.quartersSelect.classList.remove('hidden');
+            this.refs.addToQuarter.classList.add('hidden');
+            return;
+        }
+
+        this.refs.quartersSelect.classList.add('hidden');
+        this.refs.addToQuarter.classList.remove('hidden');
+    }
+
+	handleMoveToBacklog(e) {
+		this.props.moveObjectiveToBacklog(this.props.item._id);
+	}
+
+    handleQuarterChange() {
+        sweetalert({
+            title: "Add this objective to selected quarter?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#4caf50",
+            confirmButtonText: "OK",
+            closeOnConfirm: true
+        }, (isConfirm) => {
+
+            if (!isConfirm) {
+                this.showQuarterSelect(false);
+                return;
+            }
+
+            let quarterInd = this.refs['quartersSelect'].value;
+
+            if (!isValidQuarter(quarterInd)) {
+                return;
+            }
+
+            if (this.props.mentorId != undefined) {
+                this.props.addToQuarter(this.props.item._id, quarterInd, notifications.notificationApprenticeDeletedObjective,
+                    this.props.mentorId);
+            } else {
+                this.props.addToQuarter(this.props.item._id, quarterInd);
+            }
+        });
+    }
+
 	render() {
 		let editButton;
 		let saveButton;
 		let deleteButton;
 		let cancelButton;
 		let archiveButton;
+		let backlogBtn;
 		let isArchived = this.props.isArchived;
 		let isAdmin = this.props.isAdmin;
 		let approved;
@@ -105,6 +161,8 @@ class ObjectiveItem extends Component {
 		let changeKeyResultScore = this.props.changeKeyResultScoreOne(objective._id);
 		let changeArchive = this.props.changeArchive;
 		let isItHomePage = this.props.isItHomePage;
+		let isBacklog = this.props.isBacklog;
+		let showBacklogBtn;
 
 		if(isAdmin) {
 			if(!this.props.isArchivedObjective)
@@ -154,14 +212,39 @@ class ObjectiveItem extends Component {
 			}
 
 			if (objective.templateId.isApproved) {
-        approved = <span className='fi flaticon-push-pin approved' title='approved'></span>
-      }
+        		approved = <span className='fi flaticon-push-pin approved' title='approved'></span>
+      		}
 		}
+
+		let quartersComponent =
+			<select onChange={ this.handleQuarterChange } className="select-quarter hidden" ref="quartersSelect">
+                <option value='-1'>Select quarter</option>
+				{ this.quarterIndexes.map((quarterIndex, i) => {
+					return <option value={ quarterIndex } key={ i }>quarter - { quarterIndex }</option>
+				}) }
+			</select>;
+
+		backlogBtn = (<button ref="backlogBtn"
+							  title="Move to backlog"
+							  className="btn btn-blue-hover backlog-btn"
+							  onClick={ this.handleMoveToBacklog }>
+			<i className="fi flaticon-archive"></i>
+		</button>);
 
 		return (
 			<div>
 			<div className='home-objective'>
-				<Progress data={ objective.keyResults } />
+				{ isBacklog ?
+					<div>
+						{ quartersComponent }
+						<button className="btn btn-blue-hover add-quarter-btn"
+								title="Add to current quarter"
+								ref="addToQuarter"
+								onClick={ this.handleAddToQuarter }>
+							<i className="fi flaticon-add-1"></i>
+						</button>
+					</div>
+					: <Progress data={ objective.keyResults } /> }
 				<div
 						ref="objectiveTitle"
 						className='name'>{ approved } { objective.title ? objective.title : objective.templateId.title }
@@ -187,6 +270,9 @@ class ObjectiveItem extends Component {
 				{ deleteButton }
 				{ cancelButton }
 {/*				{ archiveButton }*/}
+				<div className="backlog-btn-container">
+					{ this.props.showBacklogBtn && !isBacklog ? backlogBtn : '' }
+				</div>
 			</div>
 			<div className='otherUserKR'>
 				<KeyResults

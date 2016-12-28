@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router';
-import CONST, { ROOT_URL } from '../../../backend/config/constants';
+import { Link, IndexLink } from 'react-router';
+import CONST, { ROOT_URL, navMenu } from '../../../backend/config/constants';
 
 import './nav-menu.scss';
 
@@ -59,45 +59,34 @@ const NavMenu = (props) => {
 		</ul>
 	);
 
+	let userMenu = navMenu.user.slice(0);
+	let indexMenuItem = userMenu.shift();
+
 	const CommonLinksEl = (
 		<ul>
 			<li>
-				<Link to={`${ ROOT_URL }/`} className="on-tooltip" onlyActiveOnIndex activeClassName="active">
-					<i className="fi flaticon-home-1" aria-hidden="true"></i>
-					Home
-					<i className="tooltip" data-direction="right">Home</i>
-				</Link>
+				<IndexLink to={ indexMenuItem.link } className="on-tooltip" activeClassName="active" title={ indexMenuItem.text }>
+					<i className={ indexMenuItem.icon } aria-hidden="true"></i>
+					{ indexMenuItem.text }
+					<i className="tooltip" data-direction="right">{ indexMenuItem.text }</i>
+				</IndexLink>
 			</li>
-			<li>
-				<Link to={`${ ROOT_URL }/users`} className="on-tooltip" activeClassName="active">
-					<i className="fi flaticon-users" aria-hidden="true"></i>
-					Users
-					<i className="tooltip" data-direction="right">Users</i>
-				</Link>
-			</li>
-			<li>
-				<Link to={`${ ROOT_URL }/users-actions`} className="on-tooltip" activeClassName="active">
-					<i className="fi flaticon-calendar-6" aria-hidden="true"></i>
-					Recent Actions
-					<i className="tooltip" data-direction="right">Recent Actions</i>
-				</Link>
-			</li>
-			<li>
-				<Link to={`${ ROOT_URL }/charts`} className="on-tooltip" activeClassName="active">
-					<i className="fi-1 flaticon-1-arrow-chart" aria-hidden="true"></i>
-					Statistics
-					<i className="tooltip" data-direction="right">Statistics</i>
-				</Link>
-			</li>
-			<li>
-				<Link to={`${ ROOT_URL }/recycle-bin`} className="on-tooltip" activeClassName="active">
-					<i className="fi flaticon-garbage-1" aria-hidden="true"></i>
-					Recycle Bin
-					<i className="tooltip" data-direction="right">Recycle Bin</i>
-				</Link>
-			</li>
+			{
+				userMenu.map((menuItem, i) => {
+					return (
+						<li key={ i }>
+							<Link to={ menuItem.link } className="on-tooltip" activeClassName="active" title={ menuItem.text }>
+								<i className={ menuItem.icon } aria-hidden="true"></i>
+								{ menuItem.text }
+								<i className="tooltip" data-direction="right">{ menuItem.text }</i>
+							</Link>
+						</li>
+					);
+				})
+			}
 		</ul>
 	);
+
 
 	return (
 		<div>
