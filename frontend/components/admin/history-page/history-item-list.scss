@@ -36,8 +36,7 @@
 		right: 0;
 		left: 0;
 		table-layout: fixed;
-		overflow-y: overlay;
-		1
+		overflow-y: scroll;
 		& > tr {
 			
 			& > tr:last-child {

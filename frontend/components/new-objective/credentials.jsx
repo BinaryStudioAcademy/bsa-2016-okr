@@ -132,6 +132,10 @@ class NewObjCredentials extends Component {
 
 		if(this.props.keyResults.length != 0) {
 			keyResults = this.props.keyResults.map((keyResult, index) => {
+				if (keyResult === '') {
+					keyResult = {};
+				}
+
 				return <NewKeyResult keyResult={ keyResult } delete={ this.delete } key={ index } num={ index } />
 			});
 		} else {
@@ -151,7 +155,7 @@ class NewObjCredentials extends Component {
 				</div>
 				<div className="desc-group">
 					<label htmlFor="new-obj-desc">Description</label>
-					<textarea id="newObjectiveTemplateDescription" ref="newObjectiveDescription" name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
+					<textarea ref="newObjectiveDescription" name="new-obj-desc" id="new-obj-desc" placeholder="Description"></textarea>
 				</div>
 				<div>
 					<label htmlFor="new-key-result-title">Key result templates</label>
@@ -170,7 +174,7 @@ NewObjCredentials.propTypes = {
 	removeKeyResultFromTemplate: PropTypes.func.isRequired,
 	closeNewObjectiveWindow: PropTypes.func.isRequired,
 	categories: PropTypes.array.isRequired,
-	//keyResults: PropTypes.array.isRequired, this throws error in browser console, not sure if this even needed
+	keyResults: PropTypes.array.isRequired, // this throws error in browser console, not sure if this even needed
 };
 
 export default NewObjCredentials;

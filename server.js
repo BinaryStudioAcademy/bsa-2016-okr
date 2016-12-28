@@ -38,6 +38,8 @@ if(process.env.WEBPACK != undefined) {
   hotReload = stringToBoolean(process.env.WEBPACK);
 }
 
+console.log('hotReload ' + hotReload);
+
 const app = express();
 
 app.use(bodyParser.json());

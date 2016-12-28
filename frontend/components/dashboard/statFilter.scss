@@ -1,0 +1,144 @@
+@import "../common/_variables";
+
+.stat-filter-container {
+	margin-top: -4px;
+	margin-bottom: -4px;
+	display: none;
+	&.opened{
+		display: block;
+	}
+}
+
+.stat-filter-bar {
+	padding: 12px;
+	margin-bottom: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	color: #777777;
+	text-align: center;
+	.user-autocomplete {
+		width: 230px;
+		text-align: left;
+		display: inline-block;
+	}
+	#quarter-bar {
+		margin-bottom: 20px;
+	}
+	.filters-list {
+		margin: 0;
+		padding: 0;
+		> li {
+			display: inline-block;
+			list-style-type: none;
+			margin: 5px;
+		}
+	}
+	.error-bar {
+		color: red;
+	}
+	.stat-filter-table {
+		display: none;
+	}
+}
+
+.stat-filter-bar-input {
+	width: auto;
+}
+
+.date-from {
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	float: right;
+	width: 70px;
+}
+
+.date-to {
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-left-width: 0 !important;
+	float: right;
+	width: 70px;
+}
+
+.date-field {
+	float: left;
+	margin: 5px;
+}
+
+.stat-filter-table {
+	width: auto;
+	margin-left: auto;
+	margin-right: auto;
+
+	td {
+		vertical-align: middle !important;
+		padding: 2px;
+		.btn-filter{
+			padding: 7px 20px;
+			margin-left: 20px;
+			&:hover{
+				color: #fff;
+			}
+		}
+	}
+
+	.cell-right-align {
+		text-align: right;
+	}
+}
+
+.label {
+	display: block;
+	width: 100%;
+	font-family: $primary-font;
+	font-size: 20px;
+	color: #777777;
+	margin-bottom: 10px;
+}
+
+.show-container {
+	display: block;
+}
+
+.hide-container {
+	display: none;
+}
+
+@media all 
+and (max-width: 1020px) {
+	.stat-filter-table {   
+      td {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+
+        .btn-filter {
+				  margin-left: 0px;
+				}
+        &:first-child {
+          padding-top: .5em;
+        }
+
+        &:last-child {
+          padding-bottom: .5em;
+        }
+       
+			}
+		.date-field {
+	    margin-left: 0px;
+		}
+	}
+}
+
+@media all 
+and (max-width: 750px) {
+
+    .stat-filter-table .date-field {
+	    display: none;
+    }
+	
+
+	.stat-filter-table td:nth-child(3) {
+		display: none;
+	} 
+}

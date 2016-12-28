@@ -107,8 +107,8 @@ class HistoryItemList extends React.Component {
    		return(
    			<tr key={item._id}>
 				<td className="user" data-th="User"><img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="history-item-user-avatar"/>
-          <span className="author-name">{item.author.userInfo.firstName + " " +item.author.userInfo.lastName}</span>
-        </td>
+                    <span className="author-name">{item.author.userInfo.firstName + " " +item.author.userInfo.lastName}</span>
+                </td>
 				<td className="action" data-th="Action">{this.getHistoryType(item)}</td>
 				<td className="target" data-th="Object"><a className="black-text"href="#"> <i className="fi flaticon-file-1"></i></a><span className="grey-text">{this.getHistoryObjectName(item)}</span></td>
 				<td className="date" data-th="Date"><span className="grey-text">{moment(item.createdAt).format('D MMMM YYYY, H:mm')}</span></td>
@@ -116,26 +116,10 @@ class HistoryItemList extends React.Component {
   	}
 
   	renderItems(items, ref) {
-  		return ( <tr className="no-hover"ref={ref}>{items}</tr> )
+  		return ( <tbody ref={ref}>{items}</tbody> )
   	}
 
     render() {
-      // if (this.props.historyItems.length === 0) {
-      //   return (<div className="history-page">
-      //             <table className="table" id="historyTable">
-      //               <thead>
-      //                 <tr>
-      //                   <th ><span className="table-th" onClick={() => this.onSort("user")}><i id="user" className="fa fa-sort"></i>User</span></th>
-      //                   <th ><span className="table-th" onClick={() => this.onSort("action")}><i id="action" className="fa fa-sort"></i>Action</span></th>
-      //                   <th ><span className="table-th" onClick={() => this.onSort("target")}><i id="target" className="fa fa-sort"></i>Target</span></th>
-      //                   <th ><span className="table-th" onClick={() => this.onSort("date")}><i id="date" className="fa fa-sort"></i>Date</span></th>
-      //                 </tr>
-      //               </thead>
-      //             </table>
-      //             <h1 className="placeholder">History is empty!</h1>
-      //           </div>)
-      // }
-      // else
         return(
             <div className="history-item-list">
             	<table className="table" id="historyTable">
@@ -147,16 +131,14 @@ class HistoryItemList extends React.Component {
       							<th ><span className="table-th" onClick={() => this.onSort("date")}><i id="date" className="fa fa-sort"></i>Date</span></th>
       						</tr>
       					</thead>
-      					<tbody>
-      	               		<ReactList
-      							itemRenderer={::this.renderItem}
-      							itemsRenderer={::this.renderItems}
-      							length={this.props.historyItems.length}
-      							type='simple'
-      							pageSize={10}
-      						/>
-      						</tbody>
-				      </table>
+                        <ReactList
+                            itemRenderer={::this.renderItem}
+                            itemsRenderer={::this.renderItems}
+                            length={this.props.historyItems.length}
+                            type='simple'
+                            pageSize={10}
+                        />
+	                </table>
             </div>
         )
     }
@@ -169,7 +151,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 	return {
 		historyItems: state.history.historyItems,
-    sort: state.history.sort,
+        sort: state.history.sort,
         sortBy: state.history.sortBy,
 		keyResultItems: state.keyResults.keyResultItems
 	};
