@@ -7,6 +7,7 @@ import * as userBacklogActions from "../../actions/userBacklogActions";
 import * as objectiveActions from "../../actions/objectiveActions";
 import * as myStateActions from "../../actions/myStateActions";
 import * as keyResultActions from '../../actions/keyResultActions';
+import * as otherPersonActions from '../../actions/otherPersonActions';
 
 import { isEmpty, isCorrectId, isMentorActionAllowed } from '../../../backend/utils/ValidateService';
 import { isStringsEqual } from '../../../backend/utils/HelpService';
@@ -43,6 +44,7 @@ class UserBacklog extends Component {
         };
 
         this.selectedCategory = {};
+        this.userId = props.userId || session;
     }
 
     isDuplicateObjective(objective) {
@@ -59,7 +61,7 @@ class UserBacklog extends Component {
 
         let body = {
             title: title,
-            userId: this.props.myState.me._id,
+            userId: this.userId,
             objectiveId: objective._id,
             categoryId: this.selectedCategory._id,
         };
@@ -69,13 +71,16 @@ class UserBacklog extends Component {
 
     selectCategory(category) {
         this.selectedCategory = category;
-        this.props.userBacklogActions.getObjectivesByCategory(this.props.myState.me._id, category._id);
+        // let userId = this.props.routeParams.id || this.props.myState.me._id;
+        this.props.userBacklogActions.getObjectivesByCategory(this.userId, category._id);
     }
 
     componentWillMount() {
         this.props.userBacklogActions.setActiveTab(0);
         this.selectedCategory = this.props.categories.list[0];
-        this.props.userBacklogActions.getObjectivesByCategory(this.props.myState.me._id, this.selectedCategory._id);
+        // let userId = this.props.routeParams.id || this.props.myState.me._id;
+        console.log(this.userId);
+        this.props.userBacklogActions.getObjectivesByCategory(this.userId, this.selectedCategory._id);
     }
 
     updateUserObjectiveApi(id, description, title) {
@@ -87,9 +92,9 @@ class UserBacklog extends Component {
     }
 
     changeKeyResultScore(objectiveId) {
-        const userId = this.props.userId || session;
+        const userId = this.userId;        
         const { user } = this.props.userPage;
-        const isItHomePage = !isStringsEqual(user._id, userId);
+        const isItHomePage = !isStringsEqual(user._id, userId);     
 
         let apiCall;
 
@@ -109,7 +114,7 @@ class UserBacklog extends Component {
                 let body = {
                     keyResultId: keyResultId,
                     score: score,
-                    userId: userId || session
+                    userId: userId
                 };
 
                 if (mentorId != undefined) {
@@ -128,7 +133,7 @@ class UserBacklog extends Component {
     }
 
     addToQuarter(backlogObjectiveId, quarterInd, callback) {
-        this.props.userBacklogActions.addToQuarter(backlogObjectiveId, quarterInd);
+        this.props.userBacklogActions.addToQuarter(backlogObjectiveId, quarterInd, this.userId);
     }
 
     renderObjectives() {
@@ -137,7 +142,7 @@ class UserBacklog extends Component {
         // Edit key result on HomePage or UserPage
         let editKeyResult = {};
         // If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
-        const isItHomePage = true;
+        const isItHomePage = false;
         let isAdmin = this.props.myState.me.localRole === CONST.user.localRole.ADMIN;
         let selectedYear, selectedTab;
         selectedYear = CONST.currentYear;
@@ -186,7 +191,7 @@ class UserBacklog extends Component {
         let objectives = this.renderObjectives();
 
         return (
-            <div className="main-content">
+            <div className={ this.props.userId ? '' : 'main-content'}>
                 <CategoriesTabs selectCategory={ this.selectCategory }/>
                 <ObjectiveInput
                     createObjective={ this.createBacklogObjective }
@@ -207,6 +212,7 @@ function mapDispatchToProps(dispatch) {
         userBacklogActions: bindActionCreators(userBacklogActions, dispatch),
         myStateActions: bindActionCreators(myStateActions, dispatch),
         keyResultActions: bindActionCreators(keyResultActions, dispatch),
+        otherPersonActions: bindActionCreators(otherPersonActions, dispatch),
     };
 }
 

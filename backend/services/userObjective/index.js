@@ -624,4 +624,65 @@ UserObjectiveService.prototype.moveToBacklog = function (session, userObjectiveI
 	});
 };
 
+UserObjectiveService.prototype.getNotApprovedObjectives = function(callback) {
+	async.waterfall([
+		(callback) => {
+			UserObjectiveRepository.getWithoutBacklogPopulate((err, userObjectives) => {
+				if (err) {
+					return callback(err);
+				}
+
+				if (isEmpty(userObjectives)) {
+					err = new Error('Objectives doesn`t exists');
+					return callback(err);
+				}
+
+				var objectives = userObjectives.map((userObjective) => {
+					return userObjective.templateId;
+				});
+
+				objectives = HelpService.getUniqueValuesFromArrayOfObjects(objectives, '_id');
+
+				objectives = objectives.filter((item) => {
+					return item.isApproved == false && item.isDeleted == false;
+				});
+
+				return callback(null, objectives);
+			});
+		}
+	], (err, res) => {
+		return callback(err, res);
+	});
+}
+
+UserObjectiveService.prototype.getNotApprovedKeyResults = function(callback) {
+	async.waterfall([
+		(callback) => {
+			UserObjectiveRepository.getWithoutBacklogPopulate((err, userObjectives) => {
+				if (err) {
+					return callback(err);
+				}
+
+				if (isEmpty(userObjectives)) {
+					err = new Error('Objectives doesn`t exists');
+					return callback(err);
+				}					
+
+				var keyResults = [];
+				userObjectives.forEach((userObjective) => {
+					userObjective.keyResults.map((item) => {
+						return item.templateId.isApproved == false && item.templateId.isDeleted == false
+						 	? keyResults.push(item.templateId) : null;
+					});
+				});
+				
+				keyResults = HelpService.getUniqueValuesFromArrayOfObjects(keyResults, '_id');
+				return callback(null, keyResults);
+			});
+		}
+	], (err, res) => {
+		return callback(err, res);
+	});
+}
+
 module.exports = new UserObjectiveService();

@@ -6,3 +6,4 @@ coverage
 .idea
 npm-debug.log*
 backend/config/session.js
+.vscode

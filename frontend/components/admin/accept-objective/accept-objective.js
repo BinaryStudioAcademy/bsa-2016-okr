@@ -88,9 +88,9 @@ class AcceptObjective extends Component {
 	}
 
 	componentWillMount() {
-	   this.props.clearObjApproveITems();
-	   this.props.getNotAprovedObjectivesRequest();
-	   this.props.getNotAprovedKeysRequest();
+		// this.props.clearObjApproveITems();
+		// this.props.getNotAprovedObjectivesRequest();
+		// this.props.getNotAprovedKeysRequest();
 	}
 }
 

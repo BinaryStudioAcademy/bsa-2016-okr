@@ -14,6 +14,7 @@ import CentralWindow from "../../containers/central-window.jsx";
 import StatPanel from "../../containers/statistic-panel.jsx";
 import Dashboard from "../dashboard/dashboard.jsx";
 import UserDashboard from "../userDashboard/userDashboard.jsx";
+import UserBacklog from '../userBacklog/UserBacklog';
 
 const session = cookie.load('user-id');
 
@@ -22,6 +23,18 @@ import './error.scss';
 class OtherPersonsPage extends Component {
 	constructor(props) {
 		super(props);
+
+		this.showBacklog = this.showBacklog.bind(this);
+
+		this.state = {
+			showBacklog: false
+		};
+	}
+
+	showBacklog() {
+		this.setState({ 
+			showBacklog: !this.state.showBacklog
+		});
 	}
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -49,13 +62,13 @@ class OtherPersonsPage extends Component {
 
 	render() {
 		let otherPersonContent = (<div></div>);
-
+		
 		if (!this.props.user.waiting) {
 			var id = this.props.routeParams.id;
-			var personInfo;
+			var personInfo = null;
 
 			if (id != session) {
-				personInfo = (<PersonInfo userId={ this.props.routeParams.id } />);
+				personInfo = (<PersonInfo showBacklog={ this.showBacklog } userId={ this.props.routeParams.id } />);
 			}
 
 			if(this.props.user.error) {
@@ -64,12 +77,13 @@ class OtherPersonsPage extends Component {
 						<h3>{ this.props.user.error } Whoops, nothing found</h3>
 					</div>
 				);
-			}	else {
+			} else {
 				otherPersonContent = (
 					<div>
 						<CentralWindow>
 							{ personInfo }
-							<UserOjectives userId={ this.props.routeParams.id } />
+							{ this.state.showBacklog ? <UserBacklog userId={ this.props.routeParams.id } />
+								 : <UserOjectives userId={ this.props.routeParams.id } /> }					
 						</CentralWindow>
 						<StatPanel>
 							<UserDashboard where={ CONST.page.OTHER_PERSON_PAGE } />
