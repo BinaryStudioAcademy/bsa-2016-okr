@@ -330,7 +330,7 @@ class Objectives extends Component {
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( isItHomePage || session == userInfo.mentorId || userId == session )) {
+				( isItHomePage || session == userInfo.mentorId || userId == session || isAdmin)) {
 			archived = false;
 		} else {
 			archived = true;

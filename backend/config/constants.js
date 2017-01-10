@@ -5,28 +5,34 @@ var currentYear = date.getFullYear();
 var currentMonth = date.getMonth() + 1;
 var currentQuarter;
 
-switch(currentMonth) {
-case 3:
-case 4:
-case 5:
-	currentQuarter = 1;
-	break;
-case 5:
-case 7:
-case 8:
-	currentQuarter = 2;
-	break;
-case 9:
-case 10:
-case 11:
-	currentQuarter = 3;
-	break;
-case 12:
-case 1:
-case 2:
-	currentQuarter = 4;
-	break;
+switch (currentMonth) {
+	case 3:
+	case 4:
+	case 5:
+		currentQuarter = 1;
+		break;
+	case 5:
+	case 7:
+	case 8:
+		currentQuarter = 2;
+		break;
+	case 9:
+	case 10:
+	case 11:
+		currentQuarter = 3;
+		break;
+	case 12:
+	case 1:
+	case 2:
+		currentQuarter = 4;
+		break;
 }
+
+if (currentQuarter === 4 && (currentMonth === 1 || currentMonth === 2)) {
+	currentYear--;
+}
+
+// console.log('currentYear ' + currentYear);
 
 var isDeveloping = process.env.NODE_ENV !== 'production';
 
@@ -110,6 +116,7 @@ module.exports = {
 	},
 	currentYear: currentYear,
 	currentQuarter: currentQuarter,
+	currentMonth: currentMonth,
 	NOT_SORTED: 0,
 	SORTED_ASC: 1,
 	SORTED_DESC: 2,
