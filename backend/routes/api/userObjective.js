@@ -134,7 +134,7 @@ router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
 router.post('/:id/keyresult/', (req, res, next) => {
 	var userObjectiveId = req.params.id || '';
 	var session = req.session;
-	var userId = req.body.routeId || req.session._id;
+	var userId = req.body.userId || req.session._id;
 	var title = req.body.title || '';
 	var keyResultId = req.body.keyResultId || '';
 	var isApproved = false;
@@ -142,8 +142,8 @@ router.post('/:id/keyresult/', (req, res, next) => {
 	var keyResultTitle = title.trim();
 
 	if (!isCorrectId(userObjectiveId)
-	|| (isEmpty(title) && isEmpty(keyResultId))
-	|| (!isEmpty(keyResultId) && !isCorrectId(keyResultId))) {
+		|| (isEmpty(title) && isEmpty(keyResultId))
+		|| (!isEmpty(keyResultId) && !isCorrectId(keyResultId))) {
 		return res.badRequest();
 	}
 

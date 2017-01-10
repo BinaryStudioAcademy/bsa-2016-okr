@@ -5,6 +5,7 @@ import { ADD_REQUEST, REMOVE_REQUEST, redirectAfterAuth } from './appActions';
 import {
 	getNotAprovedObjectivesRequest,
 	getNotAprovedKeysRequest,
+	clearObjApproveITems
 } from './acceptObjectiveActions';
 
 import {
@@ -286,14 +287,15 @@ export function addNewObjective(body, callback, userId) {
 			dispatch(getStats());
 			dispatch(getMyHistory());
 		})
-		/*.then(() => {
+		.then(() => {
 			let localRole = getStore().myState.me.localRole;
 
 			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(clearObjApproveITems());
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
 			}
-		})*/
+		})
 		.catch(response => {
 			dispatch(receivedMyObjectivesError(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
