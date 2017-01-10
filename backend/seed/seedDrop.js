@@ -7,11 +7,10 @@ var dbConfig = require('../config/db');
 mongoose.connect(dbConfig.uri, dbConfig.opts);
 
 mongoose.connection.once('open', () => {
-	var items = seedCollections();
-	seed(items);
+	seed();
 });
 
-function seed(items) {
+function seed() {
 	async.forEach(mongoose.connection.collections, function (collection, done) {
 		collection.drop(function (err) {
 			if (err && err.message != 'ns not found') {

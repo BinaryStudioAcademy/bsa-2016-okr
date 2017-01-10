@@ -1,0 +1,42 @@
+@import '../common/variables';
+
+.backlog-error {
+  color: firebrick;
+  background: #fff;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.backlog-title {
+  p {
+    color: #aaaaaa;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 15px 0 20px;
+  }
+  p > span {
+    font-size: 20px;
+    display: inline-block;
+    padding: 0 10px;
+    position: relative;
+    background: lighten($color-blue-grey, 50%);
+    z-index: 10;
+  }
+  p:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 0;
+    height: 0;
+    width: 100%;
+    border-top: 1px solid #aaaaaa;
+    z-index: 0;
+  }
+}

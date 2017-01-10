@@ -25,6 +25,7 @@ export const ADD_NEW_BACKLOG_OBJECTIVE_KEY_RESULT = 'ADD_NEW_BACKLOG_OBJECTIVE_K
 export const SOFT_DELETE_BACKLOG_OBJECTIVE_KEY_RESULT = 'SOFT_DELETE_BACKLOG_OBJECTIVE_KEY_RESULT';
 export const EDIT_BACKLOG_KEY_RESULT_TITLE_AND_DIFFICULTY = 'EDIT_BACKLOG_KEY_RESULT_TITLE_AND_DIFFICULTY';
 export const ADDED_BACKLOG_OBJECTIVE_TO_QUARTER = 'ADDED_BACKLOG_OBJECTIVE_TO_QUARTER';
+export const ADD_TO_QUARTER_ERROR = 'ADD_TO_QUARTER_ERROR';
 
 export function setActiveTab(tabIndex) {
     return {
@@ -267,10 +268,17 @@ export function addToQuarter(objectiveId, quarterInd, userId, callback) {
                 dispatch(getStats());
                 dispatch(getMyHistory());
             })
-            .catch(response => {
-                dispatch(receivedError(response.data));
+            .catch(error => {
+                dispatch(addToQuarterError(error.response.data));
                 dispatch({ type: REMOVE_REQUEST });
             });
+    };
+}
+
+export function addToQuarterError(response) {
+    return {
+        type: ADD_TO_QUARTER_ERROR,
+        data: response
     };
 }
 

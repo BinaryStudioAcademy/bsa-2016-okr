@@ -18,7 +18,7 @@ import CategoriesTabs from './CategoryTabs';
 import ObjectiveInput from '../common/objective/objectiveInput.jsx';
 import ObjectiveItem from '../common/objective/objective.jsx';
 
-import '../common/styles/sweetalert.css';
+import './userBacklog.scss';
 
 const session = cookie.load('user-id');
 
@@ -77,7 +77,7 @@ class UserBacklog extends Component {
 
     componentWillMount() {
         this.props.userBacklogActions.setActiveTab(0);
-        this.selectedCategory = this.props.categories.list[0];
+        this.selectedCategory = this.props.categories.list[0] || {};
         this.props.userBacklogActions.getObjectivesByCategory(this.userId, this.selectedCategory._id);
     }
 
@@ -183,7 +183,6 @@ class UserBacklog extends Component {
                                   setAutocompleteKeyResultsSelectedItem = { this.props.keyResultActions.setAutocompleteKeyResultsSelectedItem }
             />
         });
-
     }
 
     getObjectiveAutoCompleteData(title) {
@@ -194,8 +193,15 @@ class UserBacklog extends Component {
     render() {
         let objectives = this.renderObjectives();
 
+        if (isEmpty(this.props.categories.list)) {
+            return <h1 className="placeholder">No categories</h1>;
+        }
+
         return (
             <div className={ this.props.userId ? '' : 'main-content'}>
+                <div className="backlog-title">
+                    <p><span>Backlog</span></p>
+                </div>
                 <CategoriesTabs selectCategory={ this.selectCategory }/>
                 <ObjectiveInput
                     createObjective={ this.createBacklogObjective }

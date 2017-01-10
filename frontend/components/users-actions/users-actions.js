@@ -1,7 +1,7 @@
 import React,  { Component } from 'react';
 import CentralWindow from '../../containers/central-window.jsx';
 import UsersActionsItem from './users-actions-item.js';
-
+import { isEmpty } from '../../../backend/utils/ValidateService';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import * as actions from '../../actions/historyActions';
@@ -19,33 +19,33 @@ class UsersActions extends Component {
 
 	render() {
 		const { visibleItems } = this.props.history;
-		if (visibleItems== undefined) {
-      return (
-        <div>
-          <CentralWindow fullScreen={ true }>
-				  	<div className='users-actions-title'>
+		if (isEmpty(visibleItems)) {
+			return (
+				<div>
+					<CentralWindow fullScreen={ true }>
+						<div className='users-actions-title'>
 							<p><span>Users Actions</span></p>
 						</div>
 						<div>
 						</div>
 					</CentralWindow>
-        </div>
-      )
-    } else {
-    	let items = visibleItems.filter(item => {
-    		return ((item.type.indexOf('OBJECTIVE') != -1 || 
-								item.type.indexOf('KEY_RESULT') != -1 ) && 
-								item.type.indexOf('UPDATE') == -1 && 
-								item.type.indexOf('CHANGE') == -1) 
-    	});
-			return(
+				</div>
+			)
+		} else {
+			let items = visibleItems.filter(item => {
+				return ((item.type.indexOf('OBJECTIVE') != -1 ||
+				item.type.indexOf('KEY_RESULT') != -1 ) &&
+				item.type.indexOf('UPDATE') == -1 &&
+				item.type.indexOf('CHANGE') == -1)
+			});
+			return (
 				<div>
 					<CentralWindow fullScreen={ true }>
 						<div className='users-actions-title'>
-								<p><span>Users Actions</span></p>
+							<p><span>Users Actions</span></p>
 						</div>
 						<div>
-							<UsersActionsItem items={ items } />
+							<UsersActionsItem items={ items }/>
 						</div>
 					</CentralWindow>
 				</div>

@@ -102,6 +102,8 @@ class ObjectiveItem extends Component {
 	}
 
     showQuarterSelect(show) {
+		this.refs.quartersSelect.value = -1;
+
         if (show) {
             this.refs.quartersSelect.classList.remove('hidden');
             this.refs.addToQuarter.classList.add('hidden');
@@ -127,8 +129,8 @@ class ObjectiveItem extends Component {
         }, (isConfirm) => {
 
             if (!isConfirm) {
-                this.showQuarterSelect(false);
-                return;
+				this.showQuarterSelect(false);
+				return;
             }
 
             let quarterInd = this.refs['quartersSelect'].value;
@@ -143,7 +145,9 @@ class ObjectiveItem extends Component {
             } else {
                 this.props.addToQuarter(this.props.item._id, quarterInd);
             }
-        });
+
+			this.showQuarterSelect(false);
+		});
     }
 
 	render() {
