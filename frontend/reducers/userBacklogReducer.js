@@ -11,7 +11,8 @@ import {
     RECEIVED_ERROR,
     ADDED_BACKLOG_OBJECTIVE_TO_QUARTER,
     EDIT_BACKLOG_KEY_RESULT_TITLE_AND_DIFFICULTY,
-    ADD_TO_QUARTER_ERROR
+    ADD_TO_QUARTER_ERROR,
+    CLEAR_BACKLOG_ERRORS
 } from '../actions/userBacklogActions';
 
 const initialState = {
@@ -115,6 +116,12 @@ export default function userBacklogReducer(state = initialState, action) {
 
             return Object.assign({}, state, {
                 backlogObjectives: setTitleAndDifficultyToKeyResult(state.backlogObjectives, objectiveId, keyResultId, title, difficulty),
+            });
+        }
+
+        case CLEAR_BACKLOG_ERRORS: {
+            return Object.assign({}, state, {
+                errorMessage: ''
             });
         }
 

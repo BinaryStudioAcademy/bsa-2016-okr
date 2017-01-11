@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ROOT_URL } from '../../backend/config/constants';
 
-import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
+import { ADD_REQUEST, REMOVE_REQUEST, ALERT_ERROR } from './appActions';
 import { EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE } from './myStateActions';
 import {
     getNotAprovedObjectivesRequest,
@@ -26,6 +26,7 @@ export const SOFT_DELETE_BACKLOG_OBJECTIVE_KEY_RESULT = 'SOFT_DELETE_BACKLOG_OBJ
 export const EDIT_BACKLOG_KEY_RESULT_TITLE_AND_DIFFICULTY = 'EDIT_BACKLOG_KEY_RESULT_TITLE_AND_DIFFICULTY';
 export const ADDED_BACKLOG_OBJECTIVE_TO_QUARTER = 'ADDED_BACKLOG_OBJECTIVE_TO_QUARTER';
 export const ADD_TO_QUARTER_ERROR = 'ADD_TO_QUARTER_ERROR';
+export const CLEAR_BACKLOG_ERRORS = 'CLEAR_BACKLOG_ERRORS';
 
 export function setActiveTab(tabIndex) {
     return {
@@ -272,6 +273,12 @@ export function addToQuarter(objectiveId, quarterInd, userId, callback) {
                 dispatch(addToQuarterError(error.response.data));
                 dispatch({ type: REMOVE_REQUEST });
             });
+    };
+}
+
+export function clearErrors() {
+    return {
+        type: CLEAR_BACKLOG_ERRORS
     };
 }
 

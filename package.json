@@ -112,6 +112,7 @@
     ]
   },
   "dependencies": {
+    "alertifyjs": "^1.8.0",
     "async": "^2.0.1",
     "axios": "^0.13.1",
     "babel-cli": "^6.4.0",
