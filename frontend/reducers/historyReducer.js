@@ -27,8 +27,8 @@ const initialState = {
 	nameFilter: '',
 	typeFilter: '',
 	sort:{
-		up: false,
-		sortField: ''
+        up: true,
+        sortField: 'date'
 	},
 	setHistoryFilterDateFrom:'',
 	setHistoryFilterDateTo:''
@@ -56,6 +56,10 @@ export default function historyReducer(state = initialState, action) {
 			return Object.assign({}, state, {
 				nameFilter: '',
 				typeFilter: '',
+				sort:{
+					up: true,
+					sortField: 'date'
+				},
 				setHistoryFilterDateFrom: '',
 				setHistoryFilterDateTo: ''
 			})
@@ -156,32 +160,42 @@ export default function historyReducer(state = initialState, action) {
 function filterDate(items, dateFrom, dateTo, historyItems) {
 	items = historyItems;
 	let visibleItems = [];
-	if(dateFrom == undefined && dateTo == undefined) {
+	let from = new Date(dateFrom);
+	let to = new Date(dateTo);
+
+	if (!dateFrom && !dateTo) {
 		visibleItems = historyItems;
 	}
-	else if(dateFrom == undefined && dateTo != undefined) {
-
+	else if (!dateFrom && dateTo) {
 		for (let i = 0; i < historyItems.length; i++) {
-			if (dateTo >= historyItems[i].createdAt) {
+			let itemDate = new Date(historyItems[i].createdAt);
+			itemDate.setHours(0, 0, 0, 0);
+
+			if (to >= itemDate) {
 				visibleItems.push(historyItems[i]);
 			}
 		}
 	}
-	else if(dateFrom != undefined && dateTo == undefined){
-
+	else if (dateFrom && !dateTo) {
 		for (let i = 0; i < historyItems.length; i++) {
-			if (dateFrom <= historyItems[i].createdAt) {
+			let itemDate = new Date(historyItems[i].createdAt);
+			itemDate.setHours(0, 0, 0, 0);
+
+			if (from <= itemDate) {
 				visibleItems.push(historyItems[i]);
 			}
 		}
 	}
 	else {
-
 		for (let i = 0; i < historyItems.length; i++) {
-			if (dateFrom <= historyItems[i].createdAt && dateTo >= historyItems[i].createdAt) {
+			let itemDate = new Date(historyItems[i].createdAt);
+			itemDate.setHours(0, 0, 0, 0);
+
+			if (from <= itemDate && to >= itemDate) {
 				visibleItems.push(historyItems[i]);
 			}
 		}
 	}
+
 	return visibleItems;
 }
