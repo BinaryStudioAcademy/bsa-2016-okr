@@ -32,8 +32,13 @@ class CategoryTabs extends React.Component{
         return index === this.props.userBacklog.categoryTabIndex ? 'active' : '';
     }
 
-    render() {
+    getCategories() {
         let cats = this.props.categories.list;
+        return cats.filter(category => category.isDeleted === false);
+    }
+
+    render() {
+        let cats = this.getCategories();
 
         return (
             <div className="">
