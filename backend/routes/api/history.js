@@ -10,6 +10,15 @@ router.get('/limit/:limit', (req, res, next) => {
 	service.getHistory(limit, res.callback);
 });
 
+router.get('/paginate', (req, res, next) => {
+	var start = parseInt(req.query.start);
+	var limit = parseInt(req.query.limit);
+	if (!ValidateService.isNumber(start) && !ValidateService.isNumber(limit)) {
+		return res.badRequest("Page must be integer");
+	}
+	service.paginate(start, limit, res.callback);
+});
+
 router.put('/', (req, res, next) => {
 	var filters = req.body.filters || null;
 	var sort = req.body.sort || null;

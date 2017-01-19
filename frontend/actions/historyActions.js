@@ -20,6 +20,8 @@ export const GET_HISTORY_ITEMS = 'GET_HISTORY_ITEMS';
 export const RECEIVED_HISTORY_ITEMS = 'RECEIVED_HISTORY_ITEMS';
 export const HISTORY_ITEMS_ERROR = 'HISTORY_ITEMS_ERROR';
 export const SET_HISTORY_LIMIT = 'SET_HISTORY_LIMIT';
+export const SET_PAGINATION_START = 'SET_PAGINATION_START';
+export const RECEIVED_PAGINATED_ITEMS = 'RECEIVED_PAGINATED_ITEMS';
 
 export function clearState() {
 	const action = {
@@ -180,6 +182,28 @@ export function getHistoryItems(filter, sprt){
 	};
 }
 
+export function getHistoryItemsPaginate(limit) {
+	return(dispatch, getStore) => {
+		let store = getStore().history;
+
+		dispatch({
+			type: 'GET_HISTORY_ITEMS',
+		});
+
+		dispatch({ type: ADD_REQUEST });
+
+		var params = { start: store.paginate.start, limit: limit ? limit: store.paginate.limit };
+
+		return axios.get(`${ ROOT_URL }/api/history/paginate`, { params: params })
+			.then( (response) => {
+				dispatch(receivedPaginatedItems(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			})
+			.catch( (response) => dispatch(historyItemsError(response.data)));
+	};
+}
+
+
 export function receivedHistoryItems(historyItems){
 	return {
 		type: 'RECEIVED_HISTORY_ITEMS',
@@ -187,7 +211,21 @@ export function receivedHistoryItems(historyItems){
 	}
 }
 
-export function historyItemsError(data){
+export function receivedPaginatedItems(data) {
+	return {
+		type: RECEIVED_PAGINATED_ITEMS,
+		data
+	}
+}
+
+export function setPaginationStart(start) {
+	return {
+		type: SET_PAGINATION_START,
+		start: start
+	}
+}
+
+export function historyItemsError(data) {
 	return {
 		type: 'HISTORY_ITEMS_ERROR',
 		data

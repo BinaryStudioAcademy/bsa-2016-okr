@@ -12,8 +12,10 @@ HistoryRepository.prototype = new Repository();
 
 HistoryRepository.prototype.getHistory = function (limit, callback) {
 	var model = this.model;
+
 	model
 		.find()
+		.sort({ createdAt: -1 })
 		.populate({
 			path: 'userObjective',
 			populate: [{
@@ -39,6 +41,37 @@ HistoryRepository.prototype.getHistory = function (limit, callback) {
 			}
 		})
 		.limit(limit)
+		.exec(callback);
+};
+
+HistoryRepository.prototype.getHistoryPaginate = function (skip, limit, callback) {
+	var typeRegex = new RegExp('^' + CONST.history.type.ADD_TO_BACKLOG + '.*');
+	var query = this.paginate(skip, limit, { createdAt: -1 }, { type: { $not: typeRegex } });
+	query
+		.populate({
+			path: 'userObjective',
+			populate: [{
+				path: 'templateId'
+			},
+				{
+					path: 'keyResults.templateId'
+				}]
+		})
+		.populate('keyResult')
+		.populate('objective')
+		.populate('category')
+		.populate({
+			path: 'author',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.populate({
+			path: 'user',
+			populate: {
+				path: 'userInfo'
+			}
+		})
 		.exec(callback);
 };
 
@@ -70,7 +103,7 @@ HistoryRepository.prototype.getHistoryById = function (id, callback) {
 HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 	var model = this.model;
 	model
-		.find({authorId: id})
+		.find({author: id})
 		.populate({
 			path: 'userObjective',
 			populate: [{
@@ -85,6 +118,12 @@ HistoryRepository.prototype.getByAuthorId = function (id, callback) {
 		.populate('category')
 		.populate({
 			path: 'author',
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.populate({
+			path: 'user',
 			populate: {
 				path: 'userInfo'
 			}
@@ -170,6 +209,18 @@ HistoryRepository.prototype.addUserObjective = function (author, userObjective, 
 	newEvent.save(callback);
 };
 
+HistoryRepository.prototype.addUserObjectiveToOtherUser = function (author, user, userObjective, type, callback) {
+	var model = this.model;
+	var newEvent = new model({
+		author,
+		type: type + ' ' + CONST.history.target.USER_OBJECTIVE,
+		userObjective,
+		user
+	});
+
+	newEvent.save(callback);
+};
+
 HistoryRepository.prototype.addUserKeyResult = function (author, key, objective, type, callback) {
 	var model = this.model;
 	var newEvent = new model({
@@ -177,6 +228,19 @@ HistoryRepository.prototype.addUserKeyResult = function (author, key, objective,
 		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
 		userObjective: objective,
 		userKeyResult: key._id
+	});
+
+	newEvent.save(callback);
+};
+
+HistoryRepository.prototype.addUserKeyResultToOtherUser = function (author, user, key, objective, type, callback) {
+	var model = this.model;
+	var newEvent = new model({
+		author,
+		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
+		userObjective: objective,
+		userKeyResult: key._id,
+		user
 	});
 
 	newEvent.save(callback);
@@ -195,11 +259,25 @@ HistoryRepository.prototype.setScoreToKeyResult = function (author, key, type, c
 	newEvent.save(callback);
 };
 
+HistoryRepository.prototype.setScoreToKeyResultToOtherUser = function (author, user, key, type, callback) {
+	var model = this.model;
+	var newEvent = new model({
+		author,
+		userObjective: key.objectiveId,
+		userKeyResult: key.keyResultId,
+		userKeyResultScore: key.score,
+		user,
+		type: type + ' ' + CONST.history.target.USER_KEY_RESULT,
+	});
+
+	newEvent.save(callback);
+};
+
 HistoryRepository.prototype.getHistoryByUserIdPopulate = function (id, callback) {
 	var model = this.model;
 
 	model
-		.find({user: id})
+		.find({ user: id })
 		.populate({
 			path: 'author',
 			populate: {
@@ -211,6 +289,15 @@ HistoryRepository.prototype.getHistoryByUserIdPopulate = function (id, callback)
 			populate: {
 				path: 'userInfo'
 			}
+		})
+		.populate({
+			path: 'userObjective',
+			populate: [{
+				path: 'templateId'
+			},
+				{
+					path: 'keyResults.templateId'
+				}]
 		})
 		.exec(callback);
 }

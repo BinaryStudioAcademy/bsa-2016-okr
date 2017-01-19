@@ -4,6 +4,7 @@ var UserService = require('./user.js')
 var UserObjectiveRepository = require('../repositories/userObjective');
 var moment = require('moment');
 const async = require('async');
+const ValidateService = require('../utils/ValidateService');
 
 var HistoryService = function(){
 
@@ -15,56 +16,27 @@ HistoryService.prototype.generateNotification = function(){
 HistoryService.prototype.getUserHistory = function (id, callback) {
 	async.waterfall([
 		(callback) => {
-			UserObjectiveRepository.getByUserIdPopulate(id, (err, objectives)=>{
-				if(err)
+			HistoryRepository.getByAuthorId(id, (err, res) => {
+				if (err) {
 					return callback(err, null);
-				return callback(null, objectives);
-			})
+				}
+
+				return callback(null, res);
+			});
 		},
-		(objectives, callback) => {
-			var historyList = [];
-			objectives.forEach((obj) => {
-				historyList.push(obj._id);
-			})
-
-			return callback(null, historyList);
-		}, (historyList, callback) => {
-			var list = [];
-			var i = 0;
-			(function forEachInList () {
-				HistoryRepository.getUserObjectiveHistoryPopulate(historyList[i], (err, result) => {
-						if(err) {
-							return callback(err, null);
-						}
-
-						if(result.length > 0) {
-							if(Array.isArray(result)) {
-								result.forEach((item)=> { list.push(item) });
-							} else {
-								list.push(result);
-							}
-						}
-
-						++i;
-
-						if(i<= historyList.length && historyList[i] != null) {
-							forEachInList()
-						}	else {
-							return callback(null, list);
-						}
-				});
-			})();
-		}, (historyList, callback) => {
+		(historyList, callback) => {
 			HistoryRepository.getHistoryByUserIdPopulate(id, (err, result) => {
 				if(err)
 					return callback(err, null)
+
 				result.forEach((item) => {
 					historyList.push(item);
-				})
-				return callback(err, historyList);
+				});
+
+				return callback(null, historyList);
 
 			})
-		},(historyList, callback) => {
+		}, (historyList, callback) => {
 			if(historyList.length > 0) {
 				this.sortBy(historyList, 'date', true, (historyList) => {
 					return callback(null, historyList)
@@ -263,4 +235,32 @@ HistoryService.prototype.getHistory = function (limit, callback) {
 		return callback(err, result);
 	})
 }
+
+HistoryService.prototype.paginate = function(start, limit, callback) {
+	async.waterfall([
+		(callback) => {
+			HistoryRepository.getHistoryPaginate(start, limit, (err, result) => {
+				if (err) {
+					return callback(err, null);
+				}
+
+				return callback(null, result);
+			})
+		},
+		(history, callback) => {
+			var data = { items: [] };
+
+			if (ValidateService.isEmpty(history)) {
+				return callback(null, data);
+			}
+
+			data.items = history;
+
+			return callback(null, data);
+		}
+	], (err, result) => {
+		return callback(err, result);
+	});
+};
+
 module.exports = new HistoryService();
