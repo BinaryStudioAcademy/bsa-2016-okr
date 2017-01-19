@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ROOT_URL } from '../../backend/config/constants';
+import CONST, { ROOT_URL } from '../../backend/config/constants';
 
 import { ADD_REQUEST, REMOVE_REQUEST, ALERT_ERROR } from './appActions';
 import { EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE } from './myStateActions';
@@ -35,7 +35,7 @@ export function setActiveTab(tabIndex) {
     };
 }
 
-export function addBacklogObjective(body) {
+export function addBacklogObjective(body, isHomePage) {
     return (dispatch, getStore) => {
         dispatch({ type: ADD_REQUEST	});
 
@@ -45,7 +45,10 @@ export function addBacklogObjective(body) {
                 dispatch({ type: REMOVE_REQUEST	});
             })
             .then(() => {
-                dispatch(getMyHistory());
+                if (!isHomePage) {
+                    dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+                    dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+                }
             })
             .catch(response => {
                 dispatch(receivedBacklogObjectivesError(response.data));
@@ -103,7 +106,7 @@ export function receivedUpdateBacklogObjective(id, description, title) {
     };
 }
 
-export function updateBacklogObjective(id, description, title) {
+export function updateBacklogObjective(id, description, title, isHomePage) {
     return (dispatch, getStore) => {
         dispatch({ type: ADD_REQUEST	});
 
@@ -118,7 +121,10 @@ export function updateBacklogObjective(id, description, title) {
                 dispatch({ type: REMOVE_REQUEST	});
             })
             .then(() => {
-                dispatch(getMyHistory());
+                if (!isHomePage) {
+                    dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+                    dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+                }
             })
             .catch(response => {
                 dispatch(receivedBacklogObjectivesError(response.data));
@@ -135,7 +141,7 @@ export function deleteBacklogObjective(id, flag) {
     };
 }
 
-export function softDeleteBacklogObjective(id, flag) {
+export function softDeleteBacklogObjective(id, flag, isHomePage) {
     return (dispatch, getStore) => {
         dispatch({ type: ADD_REQUEST	});
         dispatch({ type: SOFT_DELETE_MY_BACKLOG_OBJECTIVE });
@@ -146,7 +152,10 @@ export function softDeleteBacklogObjective(id, flag) {
                 dispatch({ type: REMOVE_REQUEST	});
             })
             .then(() => {
-                dispatch(getMyHistory());
+                if (!isHomePage) {
+                    dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+                    dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+                }
             })
             .catch(response => {
                 console.log(response, 'error');
@@ -160,13 +169,18 @@ export function addNewBacklogObjectiveKeyResults(userObjectiveId, body, callback
     return (dispatch, getStore) => {
         dispatch({ type: ADD_REQUEST });
 
+        body.isBacklog = true;
+
         return axios.post(`${ ROOT_URL }/api/userobjective/${ userObjectiveId }/keyresult/`, body)
             .then(response => {
                 dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
                 dispatch({ type: REMOVE_REQUEST	});
             })
             .then(() => {
-                dispatch(getMyHistory());
+                if (!body.isItHomePage) {
+                    dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+                    dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+                }
             })
             .catch(response => {
                 dispatch(receivedError(response.data));
@@ -194,7 +208,7 @@ export function receivedError(data) {
     }
 }
 
-export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, flag) {
+export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, flag, isHomePage) {
     return (dispatch, getStore) => {
         dispatch({ type: ADD_REQUEST	});
 
@@ -204,7 +218,10 @@ export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, fl
                 dispatch({ type: REMOVE_REQUEST	});
             })
             .then(() => {
-                dispatch(getMyHistory());
+                if (!isHomePage) {
+                    dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+                    dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+                }
             })
             .catch(response => {
                 dispatch(receivedError(response.data));
@@ -222,26 +239,29 @@ export function softDeleteBacklogObjectiveKeyResult(objectiveId, keyResultId, fl
         data,
     };
 }
-
-export function editKeyResultEditTitleAndDifficulty(objectiveId, reqBody) {
-    return(dispatch, getStore) => {
-        dispatch({ type: ADD_REQUEST });
-
-        return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
-            .then(response => {
-                dispatch(keyResultTitleAndDifficultyChanged(response.data));
-                dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE });
-                dispatch({ type: REMOVE_REQUEST });
-            })
-            .then(() => {
-                dispatch(getMyHistory());
-            })
-            .catch(response => {
-                dispatch(receivedError(response.data));
-                dispatch({ type: REMOVE_REQUEST });
-            });
-    };
-}
+//
+// export function editKeyResultEditTitleAndDifficulty(objectiveId, reqBody, isHomePage) {
+//     return(dispatch, getStore) => {
+//         dispatch({ type: ADD_REQUEST });
+//
+//         return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
+//             .then(response => {
+//                 dispatch(keyResultTitleAndDifficultyChanged(response.data));
+//                 dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE });
+//                 dispatch({ type: REMOVE_REQUEST });
+//             })
+//             .then(() => {
+//                 if (!isHomePage) {
+//                     dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+//                     dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+//                 }
+//             })
+//             .catch(response => {
+//                 dispatch(receivedError(response.data));
+//                 dispatch({ type: REMOVE_REQUEST });
+//             });
+//     };
+// }
 
 export function keyResultTitleAndDifficultyChanged(data) {
     return {
@@ -250,7 +270,7 @@ export function keyResultTitleAndDifficultyChanged(data) {
     };
 }
 
-export function addToQuarter(objectiveId, quarterInd, userId, callback) {
+export function addToQuarter(objectiveId, quarterInd, userId, isHomePage, callback) {
     return(dispatch, getStore) => {
         dispatch({ type: ADD_REQUEST });
 
@@ -266,8 +286,10 @@ export function addToQuarter(objectiveId, quarterInd, userId, callback) {
                 dispatch({ type: REMOVE_REQUEST });
             })
             .then(() => {
-                dispatch(getStats());
-                dispatch(getMyHistory());
+                if (!isHomePage) {
+                    dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+                    dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+                }
             })
             .catch(error => {
                 dispatch(addToQuarterError(error.response.data));

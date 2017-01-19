@@ -20,6 +20,7 @@ import CONST from '../../../backend/config/constants.js';
 import CategoriesTabs from './CategoryTabs';
 import ObjectiveInput from '../common/objective/objectiveInput.jsx';
 import ObjectiveItem from '../common/objective/objective.jsx';
+import CentralWindow from "../../containers/central-window.jsx";
 
 import './userBacklog.scss';
 
@@ -40,6 +41,7 @@ class UserBacklog extends Component {
         this.changeKeyResultScore = this.changeKeyResultScore.bind(this);
         this.updateUserObjectiveApi = this.updateUserObjectiveApi.bind(this);
         this.softDeleteMyObjectiveByIdApi = this.softDeleteMyObjectiveByIdApi.bind(this);
+        this.softDeleteObjectiveKeyResultByIdApi = this.softDeleteObjectiveKeyResultByIdApi.bind(this);
         this.addToQuarter = this.addToQuarter.bind(this);
 
         this.state = {
@@ -48,6 +50,7 @@ class UserBacklog extends Component {
 
         this.selectedCategory = {};
         this.userId = props.userId || session;
+        this.homePage = true;
     }
 
     isDuplicateObjective(objective) {
@@ -69,7 +72,7 @@ class UserBacklog extends Component {
             categoryId: this.selectedCategory._id,
         };
 
-        this.props.userBacklogActions.addBacklogObjective(body);
+        this.props.userBacklogActions.addBacklogObjective(body, this.homePage);
     }
 
     selectCategory(category) {
@@ -89,11 +92,15 @@ class UserBacklog extends Component {
     }
 
     updateUserObjectiveApi(id, description, title) {
-        this.props.userBacklogActions.updateBacklogObjective(id, description, title);
+        this.props.userBacklogActions.updateBacklogObjective(id, description, title, this.homePage);
     }
 
     softDeleteMyObjectiveByIdApi(id, flag) {
-        this.props.userBacklogActions.softDeleteBacklogObjective(id, flag);
+        this.props.userBacklogActions.softDeleteBacklogObjective(id, flag, this.homePage);
+    }
+
+    softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, flag) {
+        this.props.userBacklogActions.softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, flag, this.homePage);
     }
 
     changeKeyResultScore(objectiveId) {
@@ -138,7 +145,7 @@ class UserBacklog extends Component {
     }
 
     addToQuarter(backlogObjectiveId, quarterInd, callback) {
-        this.props.userBacklogActions.addToQuarter(backlogObjectiveId, quarterInd, this.userId);
+        this.props.userBacklogActions.addToQuarter(backlogObjectiveId, quarterInd, this.userId, this.homePage);
     }
 
     renderObjectives() {
@@ -148,41 +155,59 @@ class UserBacklog extends Component {
         let editKeyResult = {};
         // If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
         const userId = this.userId;
-        const { user } = this.props.userPage;
-        const isItHomePage = !isStringsEqual(user._id, userId);
+        const userPage = this.props.userPage.user;
+        const isItHomePage = !isStringsEqual(userPage._id, userId);
+
+        this.homePage = isItHomePage;
+
         let isAdmin = this.props.myState.me.localRole === CONST.user.localRole.ADMIN;
         let selectedYear, selectedTab;
-        selectedYear = CONST.currentYear;
-        selectedTab = CONST.currentQuarter;
 
-        editKeyResult = {
-            id: this.props.myState.editKeyResultId,
-            isEditing: this.props.myState.editKeyResultIsEditing,
-            enableEdit: this.props.myStateActions.editKeyResultEnableEditOnHomePage,
-            disableEdit: this.props.myStateActions.editKeyResultDisabledEditOnHomePage,
-            editTitleAndDifficulty: this.props.userBacklogActions.editKeyResultEditTitleAndDifficulty,
-        };
+        if (isItHomePage) {
+            selectedYear = CONST.currentYear;
+            selectedTab = CONST.currentQuarter;
+
+            editKeyResult = {
+                id: this.props.myState.editKeyResultId,
+                isEditing: this.props.myState.editKeyResultIsEditing,
+                enableEdit: this.props.myStateActions.editKeyResultEnableEditOnHomePage,
+                disableEdit: this.props.myStateActions.editKeyResultDisabledEditOnHomePage,
+                editTitleAndDifficulty: this.props.myStateActions.editKeyResultEditTitleAndDifficulty,
+            };
+        } else {
+            selectedYear = userPage.selectedYear;
+            selectedTab = userPage.selectedTab;
+            // Edit key result on UserPage
+            editKeyResult = {
+                id: userPage.editKeyResultId,
+                isEditing: userPage.editKeyResultIsEditing,
+                enableEdit: this.props.otherPersonActions.editKeyResultEnableEditOnUserPage,
+                disableEdit: this.props.otherPersonActions.editKeyResultDisabledEditOnUserPage,
+                editTitleAndDifficulty: this.props.otherPersonActions.editKeyResultEditTitleAndDifficulty,
+            };
+        }
 
         let userInfo = {};
 
         userInfo = isItHomePage ? getObjectivesData(this.props.myState.me, selectedYear, selectedTab) :
-            getObjectivesData(user, selectedYear, selectedTab);
+            getObjectivesData(userPage, selectedYear, selectedTab);
 
         archived = false;
 
         return objectives.map((item, index) => {
-            return <ObjectiveItem index={ index } key={ item._id } item={ item } isBacklog={ true } addToQuarter={ this.addToQuarter }
+            return <ObjectiveItem index={ index } key={ item._id } item={ item } isBacklog={ true }
+                                  addToQuarter={ this.addToQuarter }
                                   isArchived = { archived }
                                   isArchivedObjective = { item.isArchived }
                                   isAdmin = { isAdmin }
                                   mentorId = { userInfo.mentorId }
-                                  selectedYear= { this.props.selectedYear }
-                                  selectedTab={ this.props.selectedTab }
-                                  changeArchive = { this.changeArchive }
+                                  userId={ userInfo._id }
+                                  selectedYear= { selectedYear }
+                                  selectedTab={ selectedTab }
                                   updateUserObjectiveApi = { this.updateUserObjectiveApi }
                                   softDeleteMyObjectiveByIdApi={ this.softDeleteMyObjectiveByIdApi }
                                   changeKeyResultScoreOne={ this.changeKeyResultScore }
-                                  softDeleteObjectiveKeyResultByIdApi={ this.props.userBacklogActions.softDeleteObjectiveKeyResultByIdApi }
+                                  softDeleteObjectiveKeyResultByIdApi={ this.softDeleteObjectiveKeyResultByIdApi }
                                   isItHomePage = { isItHomePage }
                                   editKeyResult = { editKeyResult }
                                   addNewKeyResults = { this.props.userBacklogActions.addNewBacklogObjectiveKeyResults }
@@ -214,8 +239,27 @@ class UserBacklog extends Component {
             this.showAlertMessage();
         }
 
+        if (this.props.userId) {
+            return (
+                <div>
+                    <div className="backlog-title">
+                        <p><span>Backlog</span></p>
+                    </div>
+                    <CategoriesTabs selectCategory={ this.selectCategory }/>
+                    <ObjectiveInput
+                        createObjective={ this.createBacklogObjective }
+                        getObjectiveAutocompleteData={ this.getObjectiveAutoCompleteData }
+                        isItHomePage = { false }
+                    />
+                    <div id='objectives' className="" >
+                        { objectives }
+                    </div>
+                </div>
+            );
+        }
+
         return (
-            <div className={ this.props.userId ? '' : 'main-content'}>
+            <CentralWindow fullScreen={ true }>
                 <div className="backlog-title">
                     <p><span>Backlog</span></p>
                 </div>
@@ -228,7 +272,7 @@ class UserBacklog extends Component {
                 <div id='objectives' className="" >
                     { objectives }
                 </div>
-            </div>
+            </CentralWindow>
         )
     }
 }
