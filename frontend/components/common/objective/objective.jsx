@@ -166,7 +166,6 @@ class ObjectiveItem extends Component {
 		let changeArchive = this.props.changeArchive;
 		let isItHomePage = this.props.isItHomePage;
 		let isBacklog = this.props.isBacklog;
-		let showBacklogBtn;
 
 		if(isAdmin) {
 			if(!this.props.isArchivedObjective)
@@ -281,8 +280,10 @@ class ObjectiveItem extends Component {
 			<div className='otherUserKR'>
 				<KeyResults
 						isArchived = { isArchived }
+						canEditArchived={ this.props.canEditArchived }
 						myId = { this.props.myId }
 						mentorId = { this.props.mentorId }
+						userId={ this.props.userId }
 						data={ objective.keyResults }
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }

@@ -12,6 +12,13 @@ import {
 	getMyHistory
 } from './userDashboardActions';
 
+import {
+	updateUserObjective,
+	softDeleteMyObjectiveById,
+	softDeleteObjectiveKeyResultById,
+	receivedMyObjectivesError
+} from './myStateActions';
+
 export const GET_USER = 'OPP:GET_USER';
 export const RECEIVED_USER = 'OPP:RECEIVED_USER';
 export const RECEIVED_ERROR = 'OPP:RECEIVED_ERROR';
@@ -53,7 +60,6 @@ export function arhiveUserQuarter(id, flag) {
 }
 
 export function getUser(id) {
-
 	return (dispatch, getStore) => {
 		dispatch({ type: GET_USER });
 		dispatch({ type: ADD_REQUEST });
@@ -64,8 +70,8 @@ export function getUser(id) {
 			dispatch({ type: REMOVE_REQUEST });
 		})
 		.then(() => {
-			dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
-			dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+			// dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+			// dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
 		})
 		.catch(response => {
 			dispatch(receivedUserError(response));
@@ -106,6 +112,7 @@ export function addNewObjective(body) {
 			let localRole = getStore().myState.me.localRole;
 
 			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(clearObjApproveITems());
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
 			}
@@ -307,5 +314,90 @@ export function receivedError(data) {
 	return {
 		type: RECEIVED_ERROR,
 		data,
+	};
+}
+
+export function softDeleteMyObjectiveByIdApi(id, flag, callback, userId) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST	});
+
+		return axios.delete(`${ ROOT_URL }/api/userObjective/${ id }/${ flag }`)
+			.then(response => {
+				dispatch(softDeleteMyObjectiveById(id, flag));
+				dispatch({ type: REMOVE_REQUEST	});
+			})
+			.then(() => {
+				dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+				dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+			})
+			/*		.then(() => {
+			 let localRole = getStore().myState.me.localRole;
+
+			 if(localRole === CONST.user.localRole.ADMIN) {
+			 dispatch(getNotAprovedObjectivesRequest());
+			 dispatch(getNotAprovedKeysRequest());
+			 }
+			 })*/
+			.catch(response => {
+				dispatch(receivedError(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			});
+	};
+}
+
+export function softDeleteObjectiveKeyResultByIdApi(objectiveId, keyResultId, flag, callback, userId) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST	});
+
+		return axios.delete(`${ ROOT_URL }/api/userObjective/${ objectiveId }/keyResult/${ keyResultId }/${ flag }`)
+			.then(response => {
+				dispatch(softDeleteObjectiveKeyResultById(objectiveId, keyResultId, flag, response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			})
+			.then(() => {
+				dispatch(getStats(CONST.page.OTHER_PERSON_PAGE));
+				dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+			})
+			/*.then(() => {
+			 let localRole = getStore().myState.me.localRole;
+
+			 if(localRole === CONST.user.localRole.ADMIN) {
+			 dispatch(getNotAprovedObjectivesRequest());
+			 dispatch(getNotAprovedKeysRequest());
+			 }
+			 })*/
+			.catch(response => {
+				dispatch(receivedError(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			});
+	};
+}
+
+export function updateUserObjectiveApi(id, description, title, callback, userId) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST	});
+
+		const body = {
+			"description": description,
+			"title": title
+		};
+
+		return axios.put(`${ ROOT_URL }/api/userObjective/${ id }`, body)
+			.then(response => {
+				dispatch(updateUserObjective(id, description, title));
+				dispatch({ type: REMOVE_REQUEST	});
+				/*
+				 if (callback != null) {
+				 dispatch(callback(userId));
+				 }
+				 */
+			})
+			.then(() => {
+				dispatch(getMyHistory(CONST.page.OTHER_PERSON_PAGE));
+			})
+			.catch(response => {
+				dispatch(receivedError(response.data));
+				dispatch({ type: REMOVE_REQUEST	});
+			});
 	};
 }

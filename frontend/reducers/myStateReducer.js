@@ -33,8 +33,8 @@ import {
 } from '../actions/keyResultActions';
 
 const initialState = {
-	selectedTab: null,
-	selectedYear: null,
+	selectedTab: currentQuarter,
+	selectedYear: currentYear,
 	me: {
 		localRole: "",
 		quarters: [],
