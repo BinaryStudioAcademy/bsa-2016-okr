@@ -15,6 +15,7 @@ router.post('/', adminOnly, (req, res, next) => {
 	var userId = req.session._id;
 	var title = req.body.title || '';
 	var difficulty = req.body.difficulty || '';
+	var isBacklog = req.body.isBacklog || false;
 
 	title = title.trim();
 	difficulty = getValidDifficulty(difficulty.trim());
@@ -30,6 +31,7 @@ router.post('/', adminOnly, (req, res, next) => {
 		objectiveId: objectiveId,
 		title: title,
 		used: 0,
+		isBacklog: isBacklog
 	};
 
 	if(!isEmpty(difficulty)) {

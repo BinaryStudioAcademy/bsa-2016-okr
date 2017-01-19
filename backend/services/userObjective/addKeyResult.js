@@ -206,11 +206,25 @@ module.exports = function addKeyResultToUserObjective(
 			});
 		},
 		(keyResult, userObjective, responseData, callback) => {
-			HistoryRepository.addUserKeyResult(userId, keyResult, userObjective, CONST.history.type.ADD, (err) => {
-				if(err)
-					return callback(err,null);
-			});
-			return callback(null, responseData);
+			let type = userObjective.isBacklog ? CONST.history.type.ADD_TO_BACKLOG : CONST.history.type.ADD;
+
+			if (session._id == userId) {
+				HistoryRepository.addUserKeyResult(session._id, keyResult, userObjective, type, (err) => {
+					if (err) {
+						return callback(err, null);
+					}
+
+					return callback(null, responseData);
+				});
+			} else {
+				HistoryRepository.addUserKeyResultToOtherUser(session._id, userId, keyResult, userObjective, type, (err) => {
+					if (err) {
+						return callback(err, null);
+					}
+
+					return callback(null, responseData);
+				});
+			}
 		}
 		], (err, result) => {
 			return callback(err, result);

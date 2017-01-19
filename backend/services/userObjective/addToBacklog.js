@@ -151,13 +151,23 @@ module.exports = function(session, userId, categoryId, objectiveId, title, isApp
         },
 
         (userObjective, callback) => {
-            HistoryRepository.addUserObjective(session._id, userObjective._id, CONST.history.type.ADD_TO_BACKLOG, (err) => {
-                if (err) {
-                    return callback(err, null);
-                }
+            if (session._id == userId) {
+                HistoryRepository.addUserObjective(session._id, userObjective._id, CONST.history.type.ADD_TO_BACKLOG, (err) => {
+                    if (err) {
+                        return callback(err, null);
+                    }
 
-                return callback(null, userObjective);
-            });
+                    return callback(null, userObjective);
+                });
+            } else {
+                HistoryRepository.addUserObjectiveToOtherUser(session._id, userId, userObjective._id, CONST.history.type.ADD_TO_BACKLOG, (err) => {
+                    if (err) {
+                        return callback(err, null);
+                    }
+
+                    return callback(null, userObjective);
+                });
+            }
         },
 
         (userObjective, callback) => {

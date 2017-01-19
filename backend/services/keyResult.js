@@ -50,7 +50,9 @@ KeyResultsService.prototype.add = function(userId, data, callback) {
 				return callback(null, keyResult);
 			});
 		}, (keyResult, callback) => {
-			HistoryRepository.addKeyResultEvent(userId, keyResult._id, CONST.history.type.ADD, (err, historyEvent) => {
+			var historyType = keyResult.isBacklog ? CONST.history.type.ADD_TO_BACKLOG : CONST.history.type.ADD;
+
+			HistoryRepository.addKeyResultEvent(userId, keyResult._id, historyType, (err, historyEvent) => {
 				if(err) {
 					return callback(err, null);
 				}
