@@ -9,7 +9,7 @@
   background-color: lighten($color-blue-grey, 50%);
   bottom: 0;
   //noinspection CssInvalidPropertyValue
-  overflow-y: overlay;
+  overflow-y: auto;
 }
 
 .placeholder {
