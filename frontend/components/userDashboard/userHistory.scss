@@ -24,8 +24,13 @@
   }
 
 	.historyEvent{
-    position:relative;
+        position:relative;
 		padding: 10px 13px 10px 0px;
+        .user-link {
+          color: #673297;
+          font-weight: bold;
+          font-size: 16px;
+        }
 	}
 
   .historyEvent::after{
