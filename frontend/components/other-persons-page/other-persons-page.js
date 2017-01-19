@@ -82,7 +82,7 @@ class OtherPersonsPage extends Component {
 					<div>
 						<CentralWindow>
 							{ personInfo }
-							{ this.state.showBacklog ? <UserBacklog userId={ this.props.routeParams.id } />
+							{ this.state.showBacklog ? <UserBacklog userId={ this.props.routeParams.id } homePage={ false } />
 								 : <UserOjectives userId={ this.props.routeParams.id } /> }					
 						</CentralWindow>
 						<StatPanel>

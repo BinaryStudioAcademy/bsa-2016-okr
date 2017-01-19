@@ -73,8 +73,9 @@ class PersonsInfo extends Component {
 		let apprentice;
 		let backlogBtn;	
 		let removeApprenticeButton;
+		let isAdmin = this.props.me.localRole == 'admin';
 
-		if ((this.userHasMentor() && this.isPersonsMentor()) || this.props.me.localRole == 'admin') {
+		if ((this.userHasMentor() && this.isPersonsMentor()) || isAdmin) {
 			backlogBtn = <button ref="showBacklogBtn" onClick={ this.showBacklog } className="btn btn-blue-hover apprentice">Show backlog</button>
 		}
 
@@ -82,12 +83,12 @@ class PersonsInfo extends Component {
 			apprentice = (<button className="btn btn-blue-hover apprentice" title="apprentice" onClick={this.takeApprentice}>Take apprentice</button>);
 		} 
 
-		if (!apprentice && (this.isPersonsMentor() || this.props.me.localRole == 'admin')) {
-			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>Finish mentoring</button>);
+		if (!apprentice && (this.isPersonsMentor() || isAdmin)) {
+			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>{ !this.isPersonsMentor() ? 'Remove mentor' : 'Finish mentoring' }</button>);
 		}		
 
 		let mentorAvatar = null;
-		const {user} = this.props.user
+		const {user} = this.props.user;
 
 		var mentor = '';
 		let photo;
