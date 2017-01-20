@@ -58,7 +58,7 @@ class UserDashboard extends Component {
 			<div className="userDashboard">
 				<Tabs/>
 				<div className={ this.isVisibleContent(1) } >
-					<UserHistory historyList={ historyList } user={ user } />
+					<UserHistory historyList={ historyList } user={ user } homePage={ this.props.where === CONST.page.HOME_PAGE } />
 				</div>
 				<div className={ this.isVisibleContent(2) } >
 					<Dashboard

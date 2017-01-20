@@ -167,7 +167,7 @@ class UserHistory extends Component {
 		} else if(historyItem.type.indexOf('CATEGORY') !== -1){
     		return (<span>category <span className="history-target">"{historyItem.category.title}"</span></span>);
   		} else {
-    		return (<span>historyItem == undefined</span>)
+    		return (<span>{ userInfo }</span>)
     	}
 	}
 

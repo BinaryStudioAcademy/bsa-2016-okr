@@ -362,7 +362,7 @@ class Objectives extends Component {
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( isItHomePage || session == userInfo.mentorId || userId == session || isAdmin)) {
+				( isItHomePage || session == userInfo.mentorId || userId == session)) {
 			archived = false;
 		} else {
 			archived = true;
@@ -378,13 +378,18 @@ class Objectives extends Component {
 			showBacklogBtn = true;
 		}
 
-		let editArchiveStatusBtn = '';
+		let editArchiveStatusBtn = (<button ref="archivedQuarterBtn"
+										className={ `btn btn-blue-hover archive-quarter-btn ${ this.state.canEditArchived ? 'btn-blue' : '' }` }
+										onClick={ this.quarterArchivedStatus }>
+									{ this.state.canEditArchived ? 'Stop editing' : 'Start editing' }</button>);
+		let canEditArchived = false;
 
 		if (archived && userInfo.objectives.length) {
-			editArchiveStatusBtn = (<button ref="archivedQuarterBtn"
-											className={ `btn btn-blue-hover archive-quarter-btn ${ this.state.canEditArchived ? 'btn-blue' : '' }` }
-											onClick={ this.quarterArchivedStatus }>
-											{ this.state.canEditArchived ? 'Stop editing' : 'Start editing' }</button>);
+			canEditArchived = true;
+
+			if (!isItHomePage && session != userInfo.mentorId) {
+				canEditArchived = false;
+			}
 		}
 
 		return (
@@ -401,7 +406,7 @@ class Objectives extends Component {
 						isAdmin={ isAdmin }
 						editMode={ editMode }
 						userId={ userInfo._id } />
-				<div>{ editArchiveStatusBtn }</div>
+				<div>{ canEditArchived ? editArchiveStatusBtn : '' }</div>
 				<div id='objectives' className={ isEmptyQuarters ? 'hidden' : ''} >
 					<ObjectivesList
 						mentorId={userInfo.mentorId}

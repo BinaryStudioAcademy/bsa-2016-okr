@@ -65,7 +65,6 @@ class HistoryPage extends React.Component {
    }
 
    render() {
-
        // if (this.props.history.historyItems.length === 0) {
 
        //    return (
