@@ -4,7 +4,7 @@ import sweetalert from 'sweetalert';
 
 import { isEmpty, isCorrectId, isMentorActionAllowed } from '../../../../backend/utils/ValidateService';
 import { isStringsEqual } from '../../../../backend/utils/HelpService';
-import { getYears } from '../../../../backend/utils/UIHelpService';
+import { getYears, getObjectivesData } from '../../../../backend/utils/UIHelpService';
 import CONST from '../../../../backend/config/constants.js';
 
 import { bindActionCreators } from 'redux';
@@ -39,6 +39,7 @@ class Objectives extends Component {
 		this.handleArchive = this.handleArchive.bind(this);
 		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
 		this.getDuplicateObjectiveByTitle = this.getDuplicateObjectiveByTitle.bind(this);
+		this.moveObjectiveToBacklog = this.moveObjectiveToBacklog.bind(this);
 	}
 
 	componentWillMount() {
@@ -225,8 +226,8 @@ class Objectives extends Component {
 			} else {
 				if (duplicateItem.isDeleted) {
 					sweetalert({
-						title: 'Do you want to restore deleted key result?',
-						text: 'Key result with such title for that objective exists, but deleted by someone',
+						title: 'Do you want to restore deleted objective?',
+						text: 'Objective with such title exists, but deleted by someone',
 						type: 'warning',
 						showCancelButton: true,
 						confirmButtonColor: '#4caf50',
@@ -237,7 +238,7 @@ class Objectives extends Component {
 				} else {
 					sweetalert({
 						title: 'Error!',
-						text: 'Key result with such title for that objective already exists',
+						text: 'Objective with such title already exists',
 						type: 'error',
 					});
 				}
@@ -249,6 +250,24 @@ class Objectives extends Component {
 		return (title) => {
 			this.props.objectiveActions.getAutocompleteObjectives(categoryId, quarterId, title);
 		};
+	}
+
+	moveObjectiveToBacklog(id) {
+		sweetalert({
+			title: "Return this objective to backlog?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#4caf50",
+			confirmButtonText: "OK",
+			closeOnConfirm: true
+		}, () => {
+			const userId = this.props.userId || session;
+			if (this.props.mentorId != undefined) {
+				this.props.myStateActions.moveObjectiveToBacklog(id, userId, notifications.notificationApprenticeDeletedObjective);
+			}	else {
+				this.props.myStateActions.moveObjectiveToBacklog(id, userId);
+			}
+		});
 	}
 
 	render() {
@@ -342,6 +361,7 @@ class Objectives extends Component {
 						isArchived = { archived }
 						quarter={ userInfo.currentQuarter }
 						objectives={ userInfo.objectives }
+						moveObjectiveToBacklog={ this.moveObjectiveToBacklog }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
 						changeArchive={ this.handleArchive }
@@ -364,45 +384,6 @@ class Objectives extends Component {
 }
 
 Objectives.defaultProps = { today: new Date() };
-
-function getObjectivesData(userObject, selectedYear, selectedTab) {
-	let quarters = [];
-	let objectives = [];
-	let { _id, localRole } = userObject;
-	let mentorId;
-	let currentQuarter;
-
-	if(userObject.mentor != undefined || userObject.mentor != null) {
-		mentorId = userObject.mentor._id;
-	}
-
-	if (userObject.quarters != undefined) {
-		currentQuarter = userObject.quarters.find((quarter) => {
-			return (quarter.year == selectedYear) && (quarter.index == selectedTab)
-		});
-
-		if(currentQuarter != undefined) {
-			objectives = currentQuarter.userObjectives;
-		} else {
-			objectives = [];
-			currentQuarter = {};
-		}
-
-		quarters = userObject.quarters.filter(quarter => {
-			return quarter.year == selectedYear;
-		});
-	}
-
-	return {
-		quarters,
-		currentQuarter,
-	  objectives,
-		_id,
-	  mentorId,
-		mentor: mentorId,
-		localRole,
-	};
-}
 
 function mapDispatchToProps(dispatch) {
 	return {

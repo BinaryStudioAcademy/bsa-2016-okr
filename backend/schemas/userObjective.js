@@ -21,7 +21,7 @@ var userObjective = new Schema({
 	quarterId: {
 		type: Schema.Types.ObjectId,
 		ref: 'Quarter',
-		required: true
+		default: null
 	},
 	deletedBy: {
 		type: Schema.Types.ObjectId,
@@ -73,7 +73,11 @@ var userObjective = new Schema({
 			type: Boolean,
 			default: false,
 		}
-	}]
+	}],
+	isBacklog: {
+		type: Boolean,
+		default: false,
+	}
 }, {
 	timestamps: true
 });

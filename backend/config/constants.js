@@ -82,7 +82,9 @@ module.exports = {
 			TOOK_APPRENTICE: 'TOOK_APPRENTICE',
 			REMOVED_APPRENTICE: 'REMOVED_APPRENTICE',
 			ARCHIVED: 'ARCHIVED',
-			UNARCHIVED: 'UNARCHIVED'
+			UNARCHIVED: 'UNARCHIVED',
+			ADD_TO_BACKLOG: 'ADD_TO_BACKLOG',
+			RESTORE_TO_BACKLOG: 'RESTORE_TO_BACKLOG'
 		},
 		target: {
 			OBJECTIVE: 'OBJECTIVE',
@@ -92,6 +94,7 @@ module.exports = {
 			USER: 'USER',
 			USER_OBJECTIVE: 'USER_OBJECTIVE',
 			USER_KEY_RESULT: 'USER_KEY_RESULT',
+			USER_BACKLOG_OBJECTIVE: 'USER_BACKLOG_OBJECTIVE',
 		},
 	},
 	links: {
@@ -110,4 +113,36 @@ module.exports = {
 	NOT_SORTED: 0,
 	SORTED_ASC: 1,
 	SORTED_DESC: 2,
+	navMenu: {
+		user: [{
+			text: 'Home',
+			icon: 'fi flaticon-home-1',
+			link: `${ ROOT_URL }/`
+		},
+		{
+			text: 'Users',
+			icon: 'fi flaticon-users',
+			link: `${ ROOT_URL }/users`
+		},
+		{
+			text: 'Recent Actions',
+			icon: 'fi flaticon-calendar-6',
+			link: `${ ROOT_URL }/users-actions`
+		},
+		{
+			text: 'Statistics',
+			icon: 'fi-1 flaticon-1-arrow-chart',
+			link: `${ ROOT_URL }/charts`
+		},
+		{
+			text: 'Recycle bin',
+			icon: 'fi flaticon-garbage-1',
+			link: `${ ROOT_URL }/recycle-bin`
+		},
+		{
+			text: 'Backlog',
+			icon: 'fi flaticon-archive',
+			link: `${ ROOT_URL }/backlog`
+		}],
+	}
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, IndexLink } from 'react-router';
 import CONST, { ROOT_URL, navMenu } from '../../../backend/config/constants';
 
 import './nav-menu.scss';
@@ -59,10 +59,20 @@ const NavMenu = (props) => {
 		</ul>
 	);
 
+	let userMenu = navMenu.user.slice(0);
+	let indexMenuItem = userMenu.shift();
+
 	const CommonLinksEl = (
 		<ul>
+			<li>
+				<IndexLink to={ indexMenuItem.link } className="on-tooltip" activeClassName="active" title={ indexMenuItem.text }>
+					<i className={ indexMenuItem.icon } aria-hidden="true"></i>
+					{ indexMenuItem.text }
+					<i className="tooltip" data-direction="right">{ indexMenuItem.text }</i>
+				</IndexLink>
+			</li>
 			{
-				navMenu.user.map((menuItem, i) => {
+				userMenu.map((menuItem, i) => {
 					return (
 						<li key={ i }>
 							<Link to={ menuItem.link } className="on-tooltip" activeClassName="active" title={ menuItem.text }>

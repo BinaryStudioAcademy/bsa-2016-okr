@@ -114,6 +114,8 @@ function randomObjective(users, categories, i) {
 	var updatedAt = new Date(createdAt.getTime() + chance.integer({ min: 0, max: 20000000 }));
 
 	var isDeleted =  i % 10 === 0;
+	var isBacklog = i % 10 === 0;
+
 	var deletedDate = null;
 	var deletedBy = null;
 
@@ -141,8 +143,8 @@ function randomObjective(users, categories, i) {
 		used: 0,
 		creator: getRandomId(users),
 		isApproved: i % 5 !== 0,
-		isDeleted: i % 10 === 0,
 		isDeleted: isDeleted,
+		isBacklog: isBacklog,
 		deletedBy: deletedBy,
 		deletedDate: deletedDate,
 		createdAt: createdAt,
@@ -253,7 +255,7 @@ function randomUserObjective(objectives, users, keyResults, i) {
 
 	var userKeyCount = chance.integer({ min: 1, max: objectiveKeyResults.length });
 
-	userKeyResults = chance
+	var userKeyResults = chance
 	.pickset(objectiveKeyResults, userKeyCount)
 	.map((userKeyResult) => {
 		var userKeyResultIndex = keyResults.findIndex((keyResult) => {
@@ -307,7 +309,9 @@ function randomUserObjective(objectives, users, keyResults, i) {
 		deletedBy: deletedBy,
 		deletedDate: deletedDate,
 		isDeleted: i % 10 === 0,
-		keyResults: userKeyResults
+		keyResults: userKeyResults,
+		createdAt: createdAt,
+		updatedAt: updatedAt
 	});
 };
 

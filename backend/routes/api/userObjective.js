@@ -24,11 +24,46 @@ router.post('/', (req, res, next) => {
 		return res.badRequest();
 	}
 
-	if(req.session.localRole === CONST.user.localRole.ADMIN) {
-		isApproved = true;
-	}
+	// if(req.session.localRole === CONST.user.localRole.ADMIN) {
+	// 	isApproved = true;
+	// }
 
 	return service.add(session, userId, categoryId, quarterId, objectiveId, title, isApproved, res.callback)
+});
+
+router.put('/movetobacklog/:objectiveId', (req, res) => {
+	var objectiveId = req.params.objectiveId;
+	var userId = req.body.userId;
+	var session = req.session;
+	return service.moveToBacklog(session, objectiveId, userId, res.callback);
+});
+
+router.post('/me/backlog', (req, res, next) => {
+	var title = req.body.title || '';
+	var categoryId = req.body.categoryId || '';
+	// Not necessary field
+	var objectiveId = req.body.objectiveId || '';
+	var userId = req.body.userId;
+	var isApproved = false;
+	var session = req.session;
+
+	if (isEmpty(title) || !isCorrectId(categoryId)) {
+		return res.badRequest();
+	}
+
+	return service.addToBacklog(session, userId, categoryId, objectiveId, title, isApproved, res.callback)
+});
+
+router.put('/me/backlog/:objectiveId', (req, res, next) => {
+	var objectiveId = req.params.objectiveId || '';
+	var userId = req.body.userId || req.session._id;
+	var session = req.session;
+	var quarterInd = req.body.quarterInd;
+	if (!isCorrectId(objectiveId) || !isCorrectId(userId) || !ValidateService.isValidQuarter(quarterInd)) {
+		return res.badRequest();
+	}
+
+	return service.addToQuarter(session, userId, objectiveId, quarterInd, res.callback)
 });
 
 router.post('/clone', (req, res, next) => {
@@ -46,6 +81,19 @@ router.post('/clone', (req, res, next) => {
 
 router.get('/me/', (req, res, next) => {
 	return repository.getByUserIdPopulate(req.session._id, res.callback);
+});
+
+router.get('/:userId/backlog/:categoryId*', (req, res, next) => {
+	if (!isCorrectId(req.params.userId)) {
+		return res.badRequest('Wrong user id');
+	}
+
+	var params = {
+		categoryId: req.params.categoryId,
+		userId: req.params.userId
+	};
+
+	return service.getFromBacklog(params, res.callback);
 });
 
 router.get('/me/deleted', (req, res, next) => {
@@ -93,15 +141,15 @@ router.post('/:id/keyresult/', (req, res, next) => {
 
 	var keyResultTitle = title.trim();
 
-	if(!isCorrectId(userObjectiveId)
+	if (!isCorrectId(userObjectiveId)
 	|| (isEmpty(title) && isEmpty(keyResultId))
 	|| (!isEmpty(keyResultId) && !isCorrectId(keyResultId))) {
 		return res.badRequest();
 	}
 
-	if(req.session.localRole === CONST.user.localRole.ADMIN) {
-		isApproved = true;
-	}
+	// if (req.session.localRole === CONST.user.localRole.ADMIN) {
+	// 	isApproved = true;
+	// }
 
 	service.addKeyResult(session, userId, userObjectiveId, keyResultId, keyResultTitle, isApproved, res.callback);
 });

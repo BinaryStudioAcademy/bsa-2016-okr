@@ -1,5 +1,6 @@
 const async = require('async');
 const ValidateService = require('../../utils/ValidateService');
+const HelpService = require('../../utils/HelpService');
 const isEmpty = ValidateService.isEmpty;
 const isMentorActionAllowed = ValidateService.isMentorActionAllowed;
 const CONST = require('../../config/constants');
@@ -14,6 +15,7 @@ const HistoryRepository = require('../../repositories/history');
 const KeyResultRepository = require('../../repositories/keyResult');
 
 const add = require('./add');
+const addToBacklog = require('./addToBacklog');
 const addKeyResult = require('./addKeyResult');
 const updateHelper = require('./updateHelper');
 const changeArchiveStatus = require('./archive.js');
@@ -22,6 +24,7 @@ const updateWithoutValidation = require('./updateWithoutValidation.js');
 var UserObjectiveService = function() {};
 
 UserObjectiveService.prototype.add = add;
+UserObjectiveService.prototype.addToBacklog = addToBacklog;
 UserObjectiveService.prototype.addKeyResult = addKeyResult;
 UserObjectiveService.prototype.changeArchiveStatus = changeArchiveStatus;
 UserObjectiveService.prototype.updateWithoutValidation = updateWithoutValidation;
@@ -406,7 +409,7 @@ UserObjectiveService.prototype.setTitleAndDifficultyToKeyResult = function(userI
 		},
 		(userObjectiveId, keyResultId, keyResultTemplateId, prevTitle,	prevDifficulty, callback) => {
 			KeyResultRepository.getById(keyResultTemplateId, (err, KeyResult) => {
-				if(err) {
+				if (err) {
 					return callback(err, null);
 				}
 
@@ -456,6 +459,169 @@ UserObjectiveService.prototype.setTitleAndDifficultyToKeyResult = function(userI
 		], (err, result) => {
 			return callback(err, result);
 		});
+};
+
+UserObjectiveService.prototype.getFromBacklog = function(params, callback) {
+	UserObjectiveRepository.getByUserIdBacklogPopulate(params.userId, (err, objectives) => {
+		if (err) {
+			return callback(err, null);
+		}
+
+		var categoryId = params.categoryId;
+
+		if (!ValidateService.isCorrectId(categoryId)) {
+			return callback(null, objectives);
+		}
+
+		var data = objectives.filter((objective) => {
+			return objective.templateId.category._id.equals(categoryId);
+		});
+
+		return callback(null, data);
+	});
+};
+
+UserObjectiveService.prototype.addToQuarter = function(session, userId, backlogObjectiveId, quarterInd, callback) {
+	async.waterfall([
+		(callback) => {
+			UserObjectiveRepository.getByIdPopulate(backlogObjectiveId, (err, backlogObjective) => {
+				if (err) {
+					return callback(err);
+				}
+
+				if (isEmpty(backlogObjective)) {
+					err = new Error('User objective not found');
+					return callback(err, null);
+				}
+
+				return callback(null, backlogObjective);
+			});
+		},
+		(backlogObjective, callback) => {
+			QuarterRepository.getUserCurrentYearQuarterByIndex(userId, quarterInd, (err, quarter) => {
+				if (err) {
+					return callback(err, null);
+				}
+
+				if (isEmpty(quarter)) {
+					err = new Error('User quarter not found');
+					return callback(err, null);
+				}
+
+				var userObjectiveInd = quarter.userObjectives.findIndex((objective) => {
+					return objective.templateId._id.equals(backlogObjective.templateId._id);
+				});
+
+				if (userObjectiveInd !== -1) {
+					err = new Error('This objective id already exists in your list');
+					return callback(err, null);
+				}
+
+				quarter.userObjectives.push(backlogObjective._id);
+
+				quarter.save((err) => {
+					if (err) {
+						return callback(err);
+					}
+
+					return callback(null, quarter);
+				});
+			});
+		},
+
+		(quarter, callback) => {
+			UserObjectiveRepository.getByIdPopulate(backlogObjectiveId, (err, objective) => {
+				if (err) {
+					return callback(err);
+				}
+
+				if (isEmpty(objective)) {
+					err = new Error('User objective not found');
+					return callback(err, null);
+				}
+
+				objective.isBacklog = false;
+				objective.quarterId = quarter._id;
+
+				objective.save((err, objective) => {
+					if (err) {
+						return callback(err);
+					}
+
+					return callback(null, objective);
+				});
+			});
+		},
+		(userObjective, callback) => {
+			HistoryRepository.addUserObjective(session._id, userObjective._id, CONST.history.type.ADD_FROM_BACKLOG_TO_QUARTER, (err) => {
+				if (err) {
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective);
+			});
+		},
+	], (err, res) => {
+		return callback(err, res);
+	});
+
+};
+
+UserObjectiveService.prototype.moveToBacklog = function (session, userObjectiveId, userId, callback) {
+	async.waterfall([
+		(callback) => {
+			QuarterRepository.getUserCurrentQuarter(userId, (err, quarter) => {
+				if (err) {
+					return callback(err);
+				}
+
+				var ind = quarter.userObjectives.findIndex((id) => {
+					return id.equals(userObjectiveId);
+				});
+
+				if (ind === -1) {
+					err = new Error('Objective id dont exists in current quarter');
+					return callback(err);
+				}
+
+				var userObjectives = quarter.userObjectives;
+				userObjectives.splice(ind, 1);
+				quarter.userObjectives = userObjectives;
+
+				quarter.save(err => err ? callback(err) : callback(null, quarter));
+			});
+		},
+		(quarter, callback) => {
+			UserObjectiveRepository.update(userObjectiveId, { quarterId: null, isBacklog: true }, (err) => {
+				return err ? callback(err) : callback(null);
+			});
+		},
+		(callback) => {
+			UserObjectiveRepository.getByIdPopulate(userObjectiveId, (err, userObjective) => {
+				if (err) {
+					return callback(err);
+				}
+
+				if (isEmpty(userObjective)) {
+					err = new Error('Userobjective dont exists');
+					return callback(err);
+				}
+
+				return callback(null, userObjective);
+			});
+		},
+		(userObjective, callback) => {
+			HistoryRepository.addUserObjective(session._id, userObjective._id, CONST.history.type.RESTORE_TO_BACKLOG, (err) => {
+				if (err) {
+					return callback(err, null);
+				}
+
+				return callback(null, userObjective);
+			});
+		},
+	], (err, res) => {
+		return callback(err, res);
+	});
 };
 
 module.exports = new UserObjectiveService();

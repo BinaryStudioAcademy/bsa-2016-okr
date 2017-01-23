@@ -72,7 +72,7 @@ ObjectiveRepository.prototype.getByTitleAndCategoryId = function(title, category
 		.exec(callback);
 };
 
-ObjectiveRepository.prototype.autocomplete = function(title, categoryId, excludeIds, callback) {
+ObjectiveRepository.prototype.autocomplete = function(title, categoryId, excludeIds = [], callback) {
 	var model = this.model;
 	var options = {
 		isApproved: true,
@@ -108,7 +108,7 @@ ObjectiveRepository.prototype.getAllNotApproved = function(callback) {
 		.find({
 			isApproved: false,
 			isDeleted: false,
-			isDeclined: false
+			isDeclined: false,
 		})
 		.populate({
 			path: "creator",

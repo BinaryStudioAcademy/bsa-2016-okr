@@ -41,6 +41,7 @@ export const EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE = 'EDIT_KEY
 
 export const ARCHIVE_MY_QUARTER = 'ARCHIVE_MY_QUARTER';
 export const RESET = 'RESET';
+export const MOVE_OBJECTIVE_TO_BACKLOG = 'MOVE_OBJECTIVE_TO_BACKLOG';
 
 export function archiveMyQuarter(id, flag) {
 	return (dispatch, getStore) => {
@@ -438,7 +439,7 @@ export function editKeyResultEditTitleAndDifficulty (objectiveId, reqBody) {
 
 		return axios.put(`${ ROOT_URL }/api/userobjective/${ objectiveId }/keyresult/titleanddifficulty/`, reqBody)
 				.then(response => {
-					dispatch(keyResultTitleAndDifficultyChanged(response.data));
+					dispatch(softDeleteMyObjectiveById(objectiveId, true));
 					dispatch({ type: EDIT_KEY_RESULT_DISABLED_EDIT_ON_HOME_PAGE });
 					dispatch({ type: REMOVE_REQUEST });
 				})
@@ -464,4 +465,42 @@ export function keyResultTitleAndDifficultyError(data) {
 		type: EDIT_KEY_RESULT_TITLE_AND_DIFFICULTY_ERROR_ON_HOME_PAGE,
 		data,
 	};
+}
+
+export function moveObjectiveToBacklog(objectiveId, userId, callback) {
+	return (dispatch, getStore) => {
+		dispatch({ type: ADD_REQUEST });
+
+		let reqBody = {
+			userId: userId
+		};
+
+		return axios.put(`${ ROOT_URL }/api/userobjective/movetobacklog/${ objectiveId }`, reqBody)
+			.then(response => {
+				dispatch(moveToBacklog(objectiveId));
+				dispatch({ type: REMOVE_REQUEST });
+			})
+			.then(() => {
+				dispatch(getStats());
+				dispatch(getMyHistory());
+			})
+			.catch(response => {
+				dispatch(moveBacklogError(response.data));
+				dispatch({ type: REMOVE_REQUEST });
+			});
+	};
+}
+
+export function moveToBacklog(id) {
+	return {
+		type: SOFT_DELETE_MY_OBJECTIVE_BY_ID,
+		id: id,
+		flag: true,
+	};
+}
+
+export function moveBacklogError(data) {
+	return {
+
+	}
 }
