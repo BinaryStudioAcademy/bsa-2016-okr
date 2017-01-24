@@ -184,7 +184,8 @@ class KeyResults extends Component {
 				                      isArchived={ isArchived }
 				                      selectedYear= { this.props.selectedYear }
 															selectedTab={ this.props.selectedTab }
-				                      changeScore={ changeScore(item._id) }
+									  isBacklog={ this.props.isBacklog }
+									  changeScore={ changeScore(item._id) }
 				                      objectiveId={ this.props.objectiveId }
 				                      softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 				                      hideAddKeyResultInput = { this.hideAddKeyResultInput }

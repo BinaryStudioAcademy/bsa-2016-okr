@@ -285,6 +285,7 @@ class ObjectiveItem extends Component {
 						mentorId = { this.props.mentorId }
 						userId={ this.props.userId }
 						data={ objective.keyResults }
+						isBacklog={ isBacklog }
 						objectiveId={ objective._id }
 						changeScore={ changeKeyResultScore }
 						selectedYear= { this.props.selectedYear }
