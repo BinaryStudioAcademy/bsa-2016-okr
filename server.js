@@ -75,7 +75,7 @@ if (isDeveloping && hotReload) {
   });
 }
 
-const server = app.listen(PORT, IP, function onStart(err) {
+const server = app.listen(PORT, function onStart(err) {
   if (err) {
     console.log(err);
   }

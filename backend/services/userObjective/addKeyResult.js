@@ -197,7 +197,7 @@ module.exports = function addKeyResultToUserObjective(
 
 				var keyResultIdInObjective = userObjectiveItem.keyResults[index]._id;
 
-				responseData = {
+				var responseData = {
 					keyResultId: keyResultIdInObjective,
 					keyResult: keyResult,
 				};

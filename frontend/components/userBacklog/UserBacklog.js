@@ -78,8 +78,6 @@ class UserBacklog extends Component {
     componentWillMount() {
         this.props.userBacklogActions.setActiveTab(0);
         this.selectedCategory = this.props.categories.list[0];
-        // let userId = this.props.routeParams.id || this.props.myState.me._id;
-        console.log(this.userId);
         this.props.userBacklogActions.getObjectivesByCategory(this.userId, this.selectedCategory._id);
     }
 
@@ -142,7 +140,9 @@ class UserBacklog extends Component {
         // Edit key result on HomePage or UserPage
         let editKeyResult = {};
         // If you need to know is it user HomePage "/" or UserPage "/user/:id" - use this variable
-        const isItHomePage = false;
+        const userId = this.userId;
+        const { user } = this.props.userPage;
+        const isItHomePage = !isStringsEqual(user._id, userId);
         let isAdmin = this.props.myState.me.localRole === CONST.user.localRole.ADMIN;
         let selectedYear, selectedTab;
         selectedYear = CONST.currentYear;
@@ -156,7 +156,11 @@ class UserBacklog extends Component {
             editTitleAndDifficulty: this.props.userBacklogActions.editKeyResultEditTitleAndDifficulty,
         };
 
-        let userInfo = getObjectivesData(this.props.myState.me, selectedYear, selectedTab);
+        let userInfo = {};
+
+        userInfo = isItHomePage ? getObjectivesData(this.props.myState.me, selectedYear, selectedTab) :
+            getObjectivesData(user, selectedYear, selectedTab);
+
         archived = false;
 
         return objectives.map((item, index) => {

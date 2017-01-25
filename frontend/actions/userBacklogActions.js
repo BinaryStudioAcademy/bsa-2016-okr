@@ -160,13 +160,7 @@ export function addNewBacklogObjectiveKeyResults(userObjectiveId, body, callback
 
         return axios.post(`${ ROOT_URL }/api/userobjective/${ userObjectiveId }/keyresult/`, body)
             .then(response => {
-
-                if (!body.isItHomePage) {
-                    dispatch(addNewKeyResultToObjectiveOtherPerson(response.data, userObjectiveId));
-                } else {
-                    dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
-                }
-
+                dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
                 dispatch({ type: REMOVE_REQUEST	});
             })
             .then(() => {

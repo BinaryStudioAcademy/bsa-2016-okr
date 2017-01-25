@@ -5,6 +5,7 @@ import { ADD_REQUEST, REMOVE_REQUEST } from './appActions';
 import {
 	getNotAprovedObjectivesRequest,
 	getNotAprovedKeysRequest,
+	clearObjApproveITems
 } from './acceptObjectiveActions.js'
 
 import { getStats, getMyHistory } from './userDashboardActions';
@@ -35,9 +36,10 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 
 			if (!body.isItHomePage) {
 				dispatch(addNewKeyResultToObjectiveOtherPerson(response.data, userObjectiveId));
+			} else {
+				dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
 			}
 
-			dispatch(addNewKeyResultToObjective(response.data, userObjectiveId));
 			dispatch({ type: REMOVE_REQUEST	});
 			/*
 			if (callback != null) {
@@ -55,6 +57,7 @@ export function addNewKeyResults(userObjectiveId, body, callback, userId) {
 			let localRole = getStore().myState.me.localRole;
 
 			if(localRole === CONST.user.localRole.ADMIN) {
+				dispatch(clearObjApproveITems());
 				dispatch(getNotAprovedObjectivesRequest());
 				dispatch(getNotAprovedKeysRequest());
 			}
@@ -89,6 +92,8 @@ export function getAutocompleteKeyResults(objectId, title) {
 
 		return axios.get(`${ ROOT_URL }/api/keyresult/objective/${ objectId }/${ encodeURIComponent(title) }`)
 		.then(response => {
+			// console.log('keyresdata', response.data);
+
 			dispatch(receivedKeyResults(response.data));
 			dispatch({ type: REMOVE_REQUEST	});
 		})

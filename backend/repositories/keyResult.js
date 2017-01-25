@@ -49,7 +49,7 @@ KeyResultRepository.prototype.getAllDeletedPopulate = function(callback) {
 KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callback) {
 	var model = this.model;
 	var options = {
-		//isApproved: true,
+		// isApproved: true,
 		//isDeleted: false,
 		objectiveId: objectiveId
 	};
@@ -59,7 +59,7 @@ KeyResultRepository.prototype.autocomplete = function(title, objectiveId, callba
 	}
 
 	model
-			.find(options, { title: true, difficulty: true })
+			.find(options, { title: true, difficulty: true, isApproved: true, isDeleted: true })
 			.sort({ used: 'desc' })
 			.exec(callback);
 };
