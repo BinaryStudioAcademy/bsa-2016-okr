@@ -81,4 +81,10 @@ Repository.prototype.changeIsArchivedTo= function (id, flag, callback) {
 	query.exec(callback);
 }
 
+Repository.prototype.paginate = function (start, limit, sort, query = {}, callback) {
+	var model = this.model;
+	var query = model.find(query).sort(sort).skip(start).limit(limit);
+	return query;
+};
+
 module.exports = Repository;

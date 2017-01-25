@@ -7,7 +7,7 @@
 	left: 0;
 	bottom: 0;
 	margin-right: $right-stat-panel-width;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
 	&.full-screen {
 		margin-right: 0;
@@ -62,8 +62,10 @@ and (max-width: 1100px) {
 		position: relative;
 		margin-right: 0;
 	   //noinspection CssInvalidPropertyValue
-	   overflow-y: overlay;
-		overflow-x: hidden;
+	   overflow-y: auto;
+	   overflow-x: hidden;
+      height: 100%;
+     width: 100%;
 	}
 }
 

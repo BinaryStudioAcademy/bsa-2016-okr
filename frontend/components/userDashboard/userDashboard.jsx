@@ -43,20 +43,22 @@ class UserDashboard extends Component {
 	}
 
 	render() {
-		let _id;
+		let _id, user;
 		let { historyList, score } = this.props.userDashboard;
 
 		if(this.props.where === CONST.page.OTHER_PERSON_PAGE) {
-			({ _id } = this.props.userPage.user);
-		}	else {
-			({ _id } = this.props.myState.me);
+			user = this.props.userPage.user;
+			_id = this.props.userPage.user._id;
+		} else {
+			user = this.props.myState.me;
+			_id = this.props.myState.me._id;
 		}
 
 		return (
 			<div className="userDashboard">
 				<Tabs/>
 				<div className={ this.isVisibleContent(1) } >
-					<UserHistory historyList={ historyList } />
+					<UserHistory historyList={ historyList } user={ user } homePage={ this.props.where === CONST.page.HOME_PAGE } />
 				</div>
 				<div className={ this.isVisibleContent(2) } >
 					<Dashboard

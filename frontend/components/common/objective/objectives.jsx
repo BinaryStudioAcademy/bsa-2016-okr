@@ -40,6 +40,10 @@ class Objectives extends Component {
 		this.handleArchivingQuarter = this.handleArchivingQuarter.bind(this);
 		this.getDuplicateObjectiveByTitle = this.getDuplicateObjectiveByTitle.bind(this);
 		this.moveObjectiveToBacklog = this.moveObjectiveToBacklog.bind(this);
+		this.quarterArchivedStatus = this.quarterArchivedStatus.bind(this);
+		this.quarterArchivedReset = this.quarterArchivedReset.bind(this);
+
+		this.state = { canEditArchived: false };
 	}
 
 	componentWillMount() {
@@ -60,6 +64,8 @@ class Objectives extends Component {
 		} else {
 			this.props.otherPersonActions.setChangeTab(num);
 		}
+
+		this.quarterArchivedReset();
 	}
 
 	handleArchive(changeTo, objectiveId) {
@@ -80,6 +86,10 @@ class Objectives extends Component {
 		const { user } = this.props.user;
 		const userId = this.props.userId || session;
 		const isItHomePage = !isStringsEqual(user._id, userId);
+		const { me } = this.props.myState;
+		let selectedYear = '';
+		let selectedTab = '';
+		let userInfo = {};
 
 		if (isItHomePage) {
 			this.props.myStateActions.setChangeYear(year);
@@ -88,6 +98,8 @@ class Objectives extends Component {
 			this.props.otherPersonActions.setChangeYear(year);
 			this.props.userDashboardActions.getStats(CONST.page.OTHER_PERSON_PAGE);
 		}
+
+		this.quarterArchivedReset();
 	}
 
 	handleAddingNewQuarter(newQuarter) {
@@ -233,7 +245,11 @@ class Objectives extends Component {
 						confirmButtonColor: '#4caf50',
 						confirmButtonText: 'Yes, restore'
 					}, () => {
-						this.props.myStateActions.softDeleteMyObjectiveByIdApi(duplicateItem._id, false);
+						if (this.props.userId == undefined) {
+							this.props.myStateActions.softDeleteMyObjectiveByIdApi(duplicateItem._id, false);
+						} else {
+							this.props.otherPersonActions.softDeleteMyObjectiveByIdApi(duplicateItem._id, false);
+						}
 					});
 				} else {
 					sweetalert({
@@ -268,6 +284,22 @@ class Objectives extends Component {
 				this.props.myStateActions.moveObjectiveToBacklog(id, userId);
 			}
 		});
+	}
+
+	quarterArchivedReset() {
+		this.setState({ canEditArchived: false });
+	}
+
+	quarterArchivedStatus(e) {
+		this.setState({ canEditArchived: !this.state.canEditArchived });
+
+		if (this.refs.archivedQuarterBtn.classList.contains('btn-blue')) {
+			this.refs.archivedQuarterBtn.innerHTML = "Start editing";
+			this.refs.archivedQuarterBtn.classList.remove('btn-blue')
+		} else {
+			this.refs.archivedQuarterBtn.innerHTML = "Stop editing";
+			this.refs.archivedQuarterBtn.classList.add('btn-blue')
+		}
 	}
 
 	render() {
@@ -330,7 +362,7 @@ class Objectives extends Component {
 
 		if (( CONST.currentYear < selectedYear ||
 				( CONST.currentQuarter <= selectedTab && CONST.currentYear == selectedYear )) &&
-				( isItHomePage || session == userInfo.mentorId || userId == session || isAdmin)) {
+				( isItHomePage || session == userInfo.mentorId || userId == session)) {
 			archived = false;
 		} else {
 			archived = true;
@@ -338,6 +370,27 @@ class Objectives extends Component {
 
 		const editMode = isMentorActionAllowed(userInfo, me);
 		const isEmptyQuarters = isEmpty(userInfo.quarters);
+
+		let showBacklogBtn = false;
+
+		if ((CONST.currentQuarter == selectedTab && CONST.currentYear == selectedYear)
+			&& ( isItHomePage || editMode)) {
+			showBacklogBtn = true;
+		}
+
+		let editArchiveStatusBtn = (<button ref="archivedQuarterBtn"
+										className={ `btn btn-blue-hover archive-quarter-btn ${ this.state.canEditArchived ? 'btn-blue' : '' }` }
+										onClick={ this.quarterArchivedStatus }>
+									{ this.state.canEditArchived ? 'Stop editing' : 'Start editing' }</button>);
+		let canEditArchived = false;
+
+		if (archived && userInfo.objectives.length) {
+			canEditArchived = true;
+
+			if (!isItHomePage && session != userInfo.mentorId) {
+				canEditArchived = false;
+			}
+		}
 
 		return (
 			<div id="home-page-wrapper">
@@ -353,24 +406,28 @@ class Objectives extends Component {
 						isAdmin={ isAdmin }
 						editMode={ editMode }
 						userId={ userInfo._id } />
+				<div>{ canEditArchived ? editArchiveStatusBtn : '' }</div>
 				<div id='objectives' className={ isEmptyQuarters ? 'hidden' : ''} >
 					<ObjectivesList
 						mentorId={userInfo.mentorId}
 						categories={ displayedCategories }
 						isAdmin={ isAdmin }
+						userId={ userInfo._id }
 						isArchived = { archived }
 						quarter={ userInfo.currentQuarter }
+						showBacklogBtn={ showBacklogBtn }
 						objectives={ userInfo.objectives }
 						moveObjectiveToBacklog={ this.moveObjectiveToBacklog }
 						selectedYear= { selectedYear }
 						selectedTab={ selectedTab }
 						changeArchive={ this.handleArchive }
-						updateUserObjectiveApi= { this.props.myStateActions.updateUserObjectiveApi }
-						softDeleteMyObjectiveByIdApi={ this.props.myStateActions.softDeleteMyObjectiveByIdApi }
+						canEditArchived={ this.state.canEditArchived }
+						updateUserObjectiveApi= { isItHomePage ? this.props.myStateActions.updateUserObjectiveApi : this.props.otherPersonActions.updateUserObjectiveApi }
+						softDeleteMyObjectiveByIdApi={ isItHomePage ? this.props.myStateActions.softDeleteMyObjectiveByIdApi : this.props.otherPersonActions.softDeleteMyObjectiveByIdApi }
 						changeKeyResultScore={ this.changeKeyResultScore }
 						createObjective={ this.createObjective }
 						getObjectiveAutocompleteData={ this.getObjectiveAutocompleteData }
-						softDeleteObjectiveKeyResultByIdApi={ this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi }
+						softDeleteObjectiveKeyResultByIdApi={ isItHomePage ? this.props.myStateActions.softDeleteObjectiveKeyResultByIdApi : this.props.otherPersonActions.softDeleteObjectiveKeyResultByIdApi }
 						isItHomePage={ isItHomePage }
 						editKeyResult = { editKeyResult }
 						addNewKeyResults = { this.props.keyResultActions.addNewKeyResults }

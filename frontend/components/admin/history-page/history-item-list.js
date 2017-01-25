@@ -14,6 +14,7 @@ class HistoryItemList extends React.Component {
         super(props);
         this.onSort = this.onSort.bind(this);
         this.restoreDefaultIcons = this.restoreDefaultIcons.bind(this);
+        this.renderCount = 1;
     }
 
     getObjectId(item) {
@@ -67,7 +68,8 @@ class HistoryItemList extends React.Component {
 
     getHistoryObjectName(historyItem){
       if(historyItem.type.indexOf('USER_OBJECTIVE') !== -1){
-        return ` user objective \'${historyItem.userObjective.templateId.title}\'`;
+          let isBacklog = historyItem.userObjective.isBacklog ? 'backlog' : '';
+          return ` user ${ isBacklog } objective \'${historyItem.userObjective.templateId.title}\'`;
       }
 
       else if(historyItem.type.indexOf('OBJECTIVE') !== -1){
@@ -78,13 +80,13 @@ class HistoryItemList extends React.Component {
          let keyResult;
         if (historyItem.userObjective){
           let keyResults = historyItem.userObjective.keyResults;
-
+            let isBacklog = historyItem.userObjective.isBacklog ? 'backlog' : '';
           keyResults.forEach((key) => {
             if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
             keyResult = key;
 
           })
-          return `key result \'${keyResult.templateId.title} \'`;
+          return `${ isBacklog } key result \'${keyResult.templateId.title} \'`;
 
         }
         else {
@@ -116,7 +118,7 @@ class HistoryItemList extends React.Component {
   	}
 
   	renderItems(items, ref) {
-  		return ( <tbody ref={ref}>{items}</tbody> )
+        return ( <tbody ref={ref}>{items}</tbody> )
   	}
 
     render() {

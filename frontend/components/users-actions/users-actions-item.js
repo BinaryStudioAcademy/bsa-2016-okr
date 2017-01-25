@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { Link } from 'react-router';
 
 class UserHistory extends Component {
 	constructor(props) {
@@ -106,7 +107,7 @@ class UserHistory extends Component {
 					<p className="action-description">archived { this.getActionObjectName(item) }</p>
 				</div>
 			);
-		/*} else if (item.type.indexOf('TOOK_APPRENTICE') != -1) {
+		} else if (item.type.indexOf('TOOK_APPRENTICE') != -1) {
 			return (
 				<div className="action-text">
 					<p className="author">
@@ -125,50 +126,58 @@ class UserHistory extends Component {
 					</p>
 					<p className="action-description">finished mentoring { this.getActionObjectName(item) }</p>
 				</div>
-			); */ 
+			);
 		}
 	}
 
 	getActionObjectName(historyItem) {
-		if(historyItem.type.indexOf('BACKLOG') !== -1) {
-			if(historyItem.userObjective) {
-				return (<span> backlog objective <span className="history-target">"{historyItem.userObjective.templateId.title}"
-					to okr list</span></span>);
-			} else {
-				return (<span> objective <span className="history-target">"{historyItem.objective.title}"</span></span>);
-			}
-		} else if(historyItem.type.indexOf('OBJECTIVE') !== -1) {
+		let userInfo = '';
+
+		if (historyItem.user) {
+			let userName = historyItem.user.userInfo.firstName + ' ' + historyItem.user.userInfo.lastName;
+			let userLink = (<Link to={`user/${historyItem.user._id}`} className="user-link">{ userName }</Link>);
+			userInfo = <span>{ userLink }</span>;
+		}
+
+		if (historyItem.type.indexOf('OBJECTIVE') !== -1) {
 	 		if(historyItem.userObjective) {
-				return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
+				return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span>{ userInfo }</span>);
 	 		} else {
 	 			return (<span> objective <span className="history-target">"{historyItem.objective.title}"</span></span>);
 	 		}
 	 	} else if(historyItem.type.indexOf('KEY_RESULT') !== -1) {
-	 		if(historyItem.userObjective) {
+			if (historyItem.userObjective) {
 				let keyResults = historyItem.userObjective.keyResults;
 				let keyResult;
+				let objectiveName = historyItem.userObjective.templateId.title;
+
 				keyResults.forEach((key) => {
 					if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
 						keyResult = key;
 				})
-				return (<span>key result <span className="history-target">"{keyResult.templateId.title}"</span></span>);
+				return (<span>key result <span
+					className="history-target">"{keyResult.templateId.title}" to objective { objectiveName }</span>{ userInfo }</span>);
 			} else {
-				return (<span>key result <span className="history-target">"{historyItem.keyResult.title}"</span></span>);
+				return (
+					<span>key result <span className="history-target">"{historyItem.keyResult.title}"</span></span>);
 			}
-		/*} else if(historyItem.type.indexOf('APPRENTICE') !== -1){
-      return (<span><span className="history-target">{historyItem.user.userInfo.firstName} {historyItem.user.userInfo.lastName}</span></span>);
-    } else if(historyItem.type.indexOf('CATEGORY') !== -1){
-    	return (<span>category <span className="history-target">"{historyItem.category.title}"</span></span>);*/
+			// } else if (historyItem.type.indexOf('APPRENTICE') !== -1) {
+			// 	return (<span><span className="history-target">{historyItem.user.userInfo.firstName} {historyItem.user.userInfo.lastName}</span></span>);
+			// }
+		} else if(historyItem.type.indexOf('CATEGORY') !== -1){
+    		return (<span>category <span className="history-target">"{historyItem.category.title}"</span></span>);
   		} else {
-    		return (<span>historyItem == undefined</span>)
+    		return (<span>{ userInfo }</span>)
     	}
 	}
 
 	getIconType(item) {
 		if(item.type.indexOf('ADD') != -1)
 			return "fi flaticon-plus typeIcon green"
-		/*else if (item.type.indexOf('UPDATE') != -1 || item.type.indexOf('CHANGE') != -1)
-			return "fi flaticon-success typeIcon orange"*/
+        else if (item.type.indexOf('CHANGE') != -1)
+            return "fi flaticon-success typeIcon orange"
+		// else if (item.type.indexOf('UPDATE') != -1 || item.type.indexOf('CHANGE') != -1)
+		// 	return "fi flaticon-success typeIcon orange"
 		else if (item.type.indexOf('DELETE') != -1)
 			return "fi flaticon-error typeIcon red"
 		else if (item.type.indexOf('RESTORE') != -1)
@@ -177,16 +186,16 @@ class UserHistory extends Component {
 			return "fi flaticon-bookmark-1 typeIcon green"
 		else if (item.type.indexOf('ARCHIVED') != -1)
 			return "fi flaticon-archive-2 typeIcon orange"
-		/*else if (item.type.indexOf('TOOK') != -1)
+		else if (item.type.indexOf('TOOK') != -1)
 			return "fi flaticon-user-3 typeIcon green"
 		else if (item.type.indexOf('REMOVE') != -1)
-			return "fi flaticon-user-3 typeIcon red"*/
+			return "fi flaticon-user-3 typeIcon red"
 	}
 
 	render() {
 		let itemList = this.props.items.map((item, i) => {
 			return (
-				<div key={ item._id } className="actionEvent">
+				<div key={ i } className="actionEvent">
 					<div className="aside">
 						<span> <i className={ this.getIconType(item) } aria-hidden="true"></i></span>
 						<div className="eventDate">
@@ -202,9 +211,7 @@ class UserHistory extends Component {
 		
 		return (
 			<div className="userActions">
-					<div className="action-list-container">
-						{itemList}
-					</div>
+				<div className="action-list-container">{ itemList }</div>
 			</div>
 		)
 	}

@@ -16,10 +16,12 @@ import {
 	RECEIVED_HISTORY_ITEMS,
 	HISTORY_ITEMS_ERROR,
 	SET_HISTORY_LIMIT,
+	SET_PAGINATION_START,
+	RECEIVED_PAGINATED_ITEMS
 } from '../actions/historyActions';
 
 const initialState = {
-	limit: 100,
+	limit: 50,
 	lastHistoryRequest: GET_HISTORY_ITEMS,
 	historyItems: [],
 	searchValue: '',
@@ -31,8 +33,12 @@ const initialState = {
         sortField: 'date'
 	},
 	setHistoryFilterDateFrom:'',
-	setHistoryFilterDateTo:''
-
+	setHistoryFilterDateTo:'',
+	paginate: {
+		hasMore: true,
+		start: 0,
+		limit: 10
+	},
 };
 
 export default function historyReducer(state = initialState, action) {
@@ -149,6 +155,31 @@ export default function historyReducer(state = initialState, action) {
 				setHistoryFilterDateTo,
 				visibleItems: filterDate(state.visibleItems, state.setHistoryFilterDateFrom, setHistoryFilterDateTo, state.historyItems)
 			})
+		}
+
+		case SET_PAGINATION_START: {
+			const { start } = action;
+            let paginate = JSON.parse(JSON.stringify(state.paginate));
+			paginate.start = start;
+			return Object.assign({}, state, paginate);
+		}
+
+		case RECEIVED_PAGINATED_ITEMS: {
+			const { data } = action;
+			let paginate = JSON.parse(JSON.stringify(state.paginate));
+			let items = JSON.parse(JSON.stringify(state.historyItems));
+			items = items.concat(data.items);
+			paginate.hasMore = data.items.length ? true : false;
+
+			if (paginate.hasMore) {
+				paginate.start = items.length;
+			}
+
+			return Object.assign({}, state, {
+				historyItems: items,
+				visibleItems: items,
+				paginate: paginate
+			});
 		}
 
 		default: {

@@ -1,6 +1,8 @@
 @import "../common/variables";
 @import '../common/styles/commonStyles';
 
+$categoryTabBorder: 1px solid #607D8B;
+
 .category-tabs {
   .tab:hover{
     cursor: pointer;
@@ -30,14 +32,16 @@
       }
       &:last-child{
         border-radius: 0 3px 3px 0;
-        border-left: none;
+        border-right: $categoryTabBorder;
+        //border-left: none;
       }
       flex: 1 0 100px;
       text-align: center;
       padding: 6px 10px;
       color: #607D8B;
       background-color: #fff;
-      border: 1px solid #607D8B;
+      border: $categoryTabBorder;
+      border-right: 0;
       cursor: pointer;
     }
     li:focus{

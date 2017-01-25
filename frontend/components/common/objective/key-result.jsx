@@ -203,7 +203,8 @@ class KeyResult extends Component {
 						<i className="fi flaticon-garbage-2"></i>
 					</button>
 				);
-				if (CONST.currentQuarter == this.props.selectedTab && CONST.currentYear == this.props.selectedYear) {
+
+				if (!this.props.isBacklog && (CONST.currentQuarter == this.props.selectedTab && CONST.currentYear == this.props.selectedYear)) {
 					rangeElement = (
 						<input type="range" min="0" max="1" step="0.1" className="range keyScore"
 						       value={ score } onMouseUp={ this.changeScore } onChange={ this.onChange }/>
@@ -236,6 +237,14 @@ class KeyResult extends Component {
 					isEdit={ false }
 				/>
 			);
+
+			if (this.props.canEditArchived) {
+				rangeElement = (
+					<input type="range" min="0" max="1" step="0.1" className="range keyScore"
+						   value={ score } onMouseUp={ this.changeScore } onChange={ this.onChange }/>
+				);
+			}
+
 		}
 
 		return (

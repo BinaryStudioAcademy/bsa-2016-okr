@@ -150,16 +150,24 @@ module.exports = function add(session, userId, categoryId, quarterId, objectiveI
 				return callback(null, userObjective);
 			});
 		}, (userObjective, callback) => {
-			HistoryRepository.addUserObjective(session._id, userObjective._id, CONST.history.type.ADD, (err) => {
-				if(err) {
-					return callback(err, null);
-				};
 
-				// console.log('-----------------------------------');
-				// console.log('History event saved');
-				// console.log('-----------------------------------');
-				return callback(null, userObjective);
-			});
+			if (session._id == userId) {
+				HistoryRepository.addUserObjective(session._id, userObjective._id, CONST.history.type.ADD, (err) => {
+					if (err) {
+						return callback(err, null);
+					}
+
+					return callback(null, userObjective);
+				});
+			} else {
+				HistoryRepository.addUserObjectiveToOtherUser(session._id, userId, userObjective._id, CONST.history.type.ADD, (err) => {
+					if (err) {
+						return callback(err, null);
+					}
+
+					return callback(null, userObjective);
+				});
+			}
 		},
 		(userObjective, callback) => {
 			UserObjectiveRepository.getByIdPopulate(userObjective._id, (err, userObjective) => {

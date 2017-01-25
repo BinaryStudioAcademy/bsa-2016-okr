@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { isMentorActionAllowed, isEmpty } from '../../../backend/utils/ValidateService';
+import { Link } from 'react-router';
 
 import './userHistory.scss';
 
@@ -9,11 +11,12 @@ class UserHistory extends Component {
 
 		this.getHistoryType= this.getHistoryType.bind(this);
 		this.getHistoryObjectName = this.getHistoryObjectName.bind(this);
+		this.getUserInfo = this.getUserInfo.bind(this);
 	}
 
 	getHistoryType(item) {
 		let object = item.type.slice(item.type.indexOf(' ') + 1);
-		
+
 		if(item.type.indexOf('ADD') != -1) {
 			return (
 				<div className="action-text">
@@ -115,7 +118,7 @@ class UserHistory extends Component {
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
 						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">is now mentoring you</p>
+					<p className="action-description">is now mentoring { this.props.homePage ? this.getUserInfo(item) : 'you' }</p>
 				</div>
 			)
 		} else if (item.type.indexOf('REMOVED_APPRENTICE') != -1){
@@ -125,32 +128,50 @@ class UserHistory extends Component {
 						<img src="https://pp.vk.me/c626130/v626130341/22c8c/jg0oHo3TYWs.jpg" className="user-avatar"/>
 						<span className="author-name">{ item.author.userInfo.firstName } { item.author.userInfo.lastName }</span>
 					</p>
-					<p className="action-description">isn't your mentor now</p>
+					<p className="action-description">{ this.props.homePage ? (<span>finished mentoring { this.getUserInfo(item) }</span>) :
+						'isn\'t your mentor now' }</p>
 				</div>
 			)
 		}
 		
 	}
 
+	getUserInfo(historyItem) {
+		if (isEmpty(historyItem.user)) {
+			return;
+		}
+		let userName = historyItem.user.userInfo.firstName + ' ' + historyItem.user.userInfo.lastName;
+		let userLink = (<Link to={`user/${historyItem.user._id}`} className="user-link">{ userName }</Link>);
+		return (<span> to { userLink }</span>);
+	}
+
 	getHistoryObjectName(historyItem) {
+		let userInfo = '';
+
+		// user is mentor or admin and create something to his apprentice
+		if (historyItem.author._id == this.props.user._id && historyItem.user && isMentorActionAllowed(historyItem.user, this.props.user)) {
+			userInfo = this.getUserInfo(historyItem);
+		}
+
 		if(historyItem.userObjective == undefined) {return (<span>historyItem.userObjective == undefined</span>);};
 
-		if(historyItem.type.indexOf('BACKLOG') !== -1){
-			return (<span> backlog objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
-		};
+		let fromBacklog = historyItem.userObjective.isBacklog === true;
 
 		if(historyItem.type.indexOf('OBJECTIVE') !== -1){
-			return (<span> objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span></span>);
+			return (<span>{ fromBacklog ? 'backlog' : '' } objective <span className="history-target">"{historyItem.userObjective.templateId.title}"</span>{userInfo}</span>);
 	 	};
 
 		if(historyItem.type.indexOf('KEY_RESULT') !== -1) {
 			let keyResults = historyItem.userObjective.keyResults;
+			let isBacklog = historyItem.userObjective.isBacklog ? "backlog " : "";
 			let keyResult;
+			let objectiveName = historyItem.userObjective.templateId.title;
+
 			keyResults.forEach((key) => {
 				if (key.templateId._id == historyItem.userKeyResult || key._id == historyItem.userKeyResult)
 					keyResult = key;
 			})
-			return (<span>key result <span className="history-target">"{keyResult.templateId.title}"</span></span>);
+			return (<span> key result <span className="history-target">"{keyResult.templateId.title}" to { isBacklog } objective { objectiveName }</span>{userInfo}</span>);
 		}
 	}
 

@@ -216,14 +216,28 @@ UserObjectiveService.prototype.softDeleteKeyResult = function(session, userObjec
 				return callback(null, userObjective);
 			});
 		}, (userObjective, callback) => {
-			HistoryRepository.addUserObjective(session._id, userObjectiveId, historyType, (err, historyEvent) => {
-				if(err) {
-					return  callback(err, null);
-				}
+            historyType = userObjective.isBacklog ? CONST.history.type.UPDATE_BACKLOG : historyType;
 
-				return callback(null, userObjective);
-			});
-		}
+            if (userObjective.userId.equals(session._id)) {
+                HistoryRepository.addUserObjective(session._id, userObjectiveId, historyType, (err, historyEvent) => {
+                    if(err) {
+                        return  callback(err, null);
+                    }
+
+					return callback(null, userObjective);
+                });
+            } else {
+                HistoryRepository.addUserObjectiveToOtherUser(session._id, userObjective.userId, userObjectiveId, historyType, (err, historyEvent) => {
+                    if(err) {
+                        return  callback(err, null);
+                    }
+
+					return callback(null, userObjective);
+
+				});
+            }
+
+        }
 		], (err, result) => {
 			return callback(err, result)
 		})
@@ -268,12 +282,25 @@ UserObjectiveService.prototype.softDelete = function(session, userObjectiveId, f
 			});
 		},
 		(userObjective, callback) => {
-			HistoryRepository.addUserObjective(session._id, userObjectiveId, historyType, (err, historyEvent) => {
-				if(err) {
-					return  callback(err, null);
-				}
-				return callback(null, userObjective);
-			});
+			historyType = userObjective.isBacklog ? CONST.history.type.SOFT_DELETE_FROM_BACKLOG : historyType;
+
+            if (userObjective.userId.equals(session._id)) {
+                HistoryRepository.addUserObjective(session._id, userObjectiveId, historyType, (err, historyEvent) => {
+                    if(err) {
+                        return  callback(err, null);
+                    }
+
+					return callback(null, userObjective);
+				});
+			} else {
+                HistoryRepository.addUserObjectiveToOtherUser(session._id, userObjective.userId, userObjectiveId, historyType, (err, historyEvent) => {
+                    if(err) {
+                        return  callback(err, null);
+                    }
+
+					return callback(null, userObjective);
+				});
+            }
 		}
 		], (err, result) => {
 			return callback(err, result);
@@ -349,10 +376,18 @@ UserObjectiveService.prototype.setScoreToKeyResult = function(session, userId, o
 			});
 		},
 		(result, callback) => {
-			HistoryRepository.setScoreToKeyResult(userId, result, CONST.history.type.CHANGE_SCORE, (err) =>{
-				if (err)
-					return callback(err, null);
-			})
+			if (session._id == userId) {
+				HistoryRepository.setScoreToKeyResult(session._id, result, CONST.history.type.CHANGE_SCORE, (err) =>{
+					if (err)
+						return callback(err, null);
+				});
+			} else {
+				HistoryRepository.setScoreToKeyResultToOtherUser(session._id, userId, result, CONST.history.type.CHANGE_SCORE, (err) =>{
+					if (err)
+						return callback(err, null);
+				});
+			}
+
 			return callback(null, result);
 		}
 		], (err, result) => {

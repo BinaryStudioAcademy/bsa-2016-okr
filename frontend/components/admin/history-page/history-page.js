@@ -61,10 +61,10 @@ class HistoryPage extends React.Component {
    componentWillUnmount() {
      var scrollContainer = document.getElementById("central-window");
      scrollContainer.removeEventListener('scroll', this.scroller);
+     this.props.clearState();
    }
 
    render() {
-
        // if (this.props.history.historyItems.length === 0) {
 
        //    return (
@@ -89,31 +89,29 @@ class HistoryPage extends React.Component {
        // }
       let showFilters = this.props.history.showHistoryFilters;
       return (
-         <div>
-            <CentralWindow fullScreen={ true }>
-               <div className="history-page">
-                  <div id="top-panel">
-                     <div className="history-page-header">
-                           <div className="history-page-title">
-                              <p><span>History</span></p>
-                           </div>
-                        <button className="btn btn-blue" onClick={this.handleFilterShow}>
-                           <i className="fi flaticon-funnel"/>
-                           &nbsp;Filter
-                           <i className={ `fi-1 flaticon-1-arrow-${ showFilters ? 'up' : 'down' } upIcon` }/>
-                        </button>
-                        <div className="history-filter-container">
-                           <div className="history-filter-bar-container">
-                              <HistoryFilter/>
-                           </div>
+        <CentralWindow fullScreen={ true }>
+           <div className="history-page">
+              <div id="top-panel">
+                 <div className="history-page-header">
+                       <div className="history-page-title">
+                          <p><span>History</span></p>
+                       </div>
+                    <button className="btn btn-blue" onClick={this.handleFilterShow}>
+                       <i className="fi flaticon-funnel"/>
+                       &nbsp;Filter
+                       <i className={ `fi-1 flaticon-1-arrow-${ showFilters ? 'up' : 'down' } upIcon` }/>
+                    </button>
+                    <div className="history-filter-container">
+                       <div className="history-filter-bar-container">
+                          <HistoryFilter/>
+                       </div>
 
-                        </div>
-                     </div>
-                  </div>
-                  <HistoryItemList/>
-               </div>
-            </CentralWindow>
-         </div>
+                    </div>
+                 </div>
+              </div>
+              <HistoryItemList/>
+           </div>
+        </CentralWindow>
       )
    }
 
@@ -130,10 +128,6 @@ class HistoryPage extends React.Component {
 
     componentWillMount() {
         this.props.getHistoryItems();
-    }
-
-    componentWillUnmount(){
-      this.props.clearState();
     }
 }
 

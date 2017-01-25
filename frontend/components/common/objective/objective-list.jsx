@@ -37,6 +37,7 @@ class ObjectiveList extends Component {
       isAdmin,
       changeArchive,
       mentorId,
+	  userId,
       quarter = {},
       updateUserObjectiveApi,
       softDeleteMyObjectiveByIdApi,
@@ -60,16 +61,17 @@ class ObjectiveList extends Component {
 					})
 					.map((item, index) => {
 						// let isEstimate = item.keyResults.some(keyres => keyres.score > 0);
-						let showBacklogBtn = (this.props.quarter.index === CONST.currentQuarter);
 						return <ObjectiveItem index={ index } key={ item._id } item={ item }
 																	isArchived = { isArchived }
 																	isArchivedObjective = { item.isArchived }
 																	isAdmin = { isAdmin }
 																	mentorId = { mentorId }
+											  						userId = { userId }
 																	selectedYear= { this.props.selectedYear }
 																	selectedTab={ this.props.selectedTab }
 																	changeArchive = { changeArchive }
-											  						showBacklogBtn={ showBacklogBtn }
+																	canEditArchived={ this.props.canEditArchived }
+																	showBacklogBtn={ this.props.showBacklogBtn }
 											  						moveObjectiveToBacklog={ this.props.moveObjectiveToBacklog }
 																	updateUserObjectiveApi = { updateUserObjectiveApi }
 																	softDeleteMyObjectiveByIdApi={ softDeleteMyObjectiveByIdApi }

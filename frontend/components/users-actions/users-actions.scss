@@ -35,9 +35,9 @@
 .userActions{
 	padding: 10px 10px;
   margin: 0 40px;
-  max-width: 700px;
+  //max-width: 700px;
   min-width: 200px;
-  overflow-y:overlay;
+  //overflow-y:overlay;
   
   .aside{
     position: absolute;
@@ -57,8 +57,14 @@
   }
 
 	.actionEvent{
-    position:relative;
+    	position:relative;
 		padding: 10px 13px 10px 0px;
+		.user-link {
+			color: #673297;
+			margin-left: 5px;
+			font-weight: bold;
+			font-size: 16px;
+		}
 	}
 
   .actionEvent::after{

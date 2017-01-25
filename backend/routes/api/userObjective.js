@@ -24,10 +24,6 @@ router.post('/', (req, res, next) => {
 		return res.badRequest();
 	}
 
-	// if(req.session.localRole === CONST.user.localRole.ADMIN) {
-	// 	isApproved = true;
-	// }
-
 	return service.add(session, userId, categoryId, quarterId, objectiveId, title, isApproved, res.callback)
 });
 
@@ -134,7 +130,7 @@ router.delete('/:id/keyResult/:keyResultId/:flag', (req, res, next) => {
 router.post('/:id/keyresult/', (req, res, next) => {
 	var userObjectiveId = req.params.id || '';
 	var session = req.session;
-	var userId = req.body.userId || req.session._id;
+	var userId = req.body.userId;
 	var title = req.body.title || '';
 	var keyResultId = req.body.keyResultId || '';
 	var isApproved = false;
@@ -273,19 +269,4 @@ router.put('/updateWithoutValidation/:id',  (req, res, next) => {
 	//return repository.update(id, body, res.callback);
 });
 
-
-
-/* not sure if this is valid
-// TODO: Body validation
-router.put('/:id', (req, res, next) => {
-	var id = req.params.id;
-	var body = req.body;
-
-	if(!isCorrectId(id)) {
-		return res.badRequest();
-	};
-
-	return service.update(req.session._id, id, body, res.callback);
-});
-*/
 module.exports = router;

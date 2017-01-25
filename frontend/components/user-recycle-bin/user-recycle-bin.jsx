@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RecycleBin from '../common/recycle-bin/recycle-bin.js';
+import CentralWindow from "../../containers/central-window.jsx";
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,9 +15,9 @@ class UserRecycleBin extends Component {
 		let visibleFilterCategories = [{isVisible: true}, {isVisible: true}, {isVisible: false}];
 
 		return (
-			<div>
+			<CentralWindow fullScreen={ true }>
 			  <RecycleBin getData={this.getData.bind(this)} title={"Recycle bin"} visibleFilterCategories = {visibleFilterCategories} restoreItem={this.restoreItem.bind(this)}/>
-			</div>
+			</CentralWindow>
 		)
 	}
 

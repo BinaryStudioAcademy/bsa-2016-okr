@@ -56,8 +56,10 @@ class KeyResults extends Component {
 					title: title,
 					keyResultId: selectedItemId,
 					isItHomePage: this.props.isItHomePage || false,
+					userId: this.props.userId
 				};
-					this.props.addNewKeyResults(userObjectiveId, body);
+
+				this.props.addNewKeyResults(userObjectiveId, body);
 			}
 
 			sweetalert.close();
@@ -182,7 +184,8 @@ class KeyResults extends Component {
 				                      isArchived={ isArchived }
 				                      selectedYear= { this.props.selectedYear }
 															selectedTab={ this.props.selectedTab }
-				                      changeScore={ changeScore(item._id) }
+									  isBacklog={ this.props.isBacklog }
+									  changeScore={ changeScore(item._id) }
 				                      objectiveId={ this.props.objectiveId }
 				                      softDeleteObjectiveKeyResultByIdApi={ this.props.softDeleteObjectiveKeyResultByIdApi }
 				                      hideAddKeyResultInput = { this.hideAddKeyResultInput }
@@ -200,7 +203,9 @@ class KeyResults extends Component {
 				return <KeyResultItem index={index}
 				                      key={index}
 				                      item={item}
-				                      isArchived={ isArchived }
+									  changeScore={ changeScore(item._id) }
+									  canEditArchived={ this.props.canEditArchived }
+									  isArchived={ isArchived }
 				                      editKeyResult = { this.props.editKeyResult }
 				/>
 			});
