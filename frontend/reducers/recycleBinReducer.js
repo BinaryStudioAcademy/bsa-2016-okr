@@ -51,7 +51,7 @@ const initialState = {
 	usersNames: [],
 	objectiveType: true,
 	keyType: true,
-	sortByDate: SORTED_ASC,
+	sortByDate: SORTED_DESC,
 	sortByTitle: NOT_SORTED,
 	categoryType: true,
 	categoryOrTypeFilter: "",
@@ -208,7 +208,7 @@ export default function recBynReducer(state = initialState, action) {
 				usersNames: [],
 				objectiveType: true,
 				keyType: true,
-				sortByDate: SORTED_ASC,
+				sortByDate: SORTED_DESC,
 				sortByTitle: NOT_SORTED,
 				categoryType: true,
 				categoryOrTypeFilter: "",
@@ -665,38 +665,54 @@ function updateVisibleItems(items, dateFrom, dateTo, categoryOrTypeFilter, objec
 	return visibleItems;
 }
 
-function filterDate(items, dateFrom, dateTo) { 
-
+function filterDate(items, dateFrom, dateTo) {
 	let visibleItems = [];
 
-	if(dateFrom === "" && dateTo === "") { 	
+	if (dateFrom === "" && dateTo === "") {
 
 		visibleItems = JSON.parse(JSON.stringify(items));
-
 	}
 	else if(dateFrom === "" && dateTo != "") {
 		items =  JSON.parse(JSON.stringify(items));
+
 		for (let i = 0; i < items.length; i++) {
-			if (new Date(dateTo) >= new Date(items[i].deletedDate)) {
+			let itemDate = new Date(items[i].deletedDate);
+			itemDate.setHours(0, 0, 0, 0);
+			dateTo = new Date(dateTo);
+
+			if (dateTo >= itemDate) {
 				visibleItems.push(items[i]);
 			}
 		}
 	}
 	else if(dateFrom != "" && dateTo === ""){
-		items =  JSON.parse(JSON.stringify(items));
+		items = JSON.parse(JSON.stringify(items));
+
 		for (let i = 0; i < items.length; i++) {
-			if (new Date(dateFrom) <= new Date(items[i].deletedDate)) {
+			let itemDate = new Date(items[i].deletedDate);
+			itemDate.setHours(0, 0, 0, 0);
+			dateFrom = new Date(dateFrom);
+
+			if (dateFrom <= itemDate) {
 				visibleItems.push(items[i]);
 			}
 		}
 	}
 	else {
 		items =  JSON.parse(JSON.stringify(items));
+
 		for (let i = 0; i < items.length; i++) {
-			if (new Date(dateFrom) <= new Date(items[i].deletedDate) && new Date(dateTo) >= new Date(items[i].deletedDate)) {
+			let itemDate = new Date(items[i].deletedDate);
+			itemDate.setHours(0, 0, 0, 0);
+			dateFrom = new Date(dateFrom);
+			dateTo = new Date(dateTo);
+
+			if (dateFrom <= itemDate
+				&& dateTo >= itemDate) {
 				visibleItems.push(items[i]);
 			}
 		}
 	}
+
 	return visibleItems;
 }

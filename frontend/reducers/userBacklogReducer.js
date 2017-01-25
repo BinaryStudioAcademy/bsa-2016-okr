@@ -10,12 +10,15 @@ import {
     SOFT_DELETE_BACKLOG_OBJECTIVE_KEY_RESULT,
     RECEIVED_ERROR,
     ADDED_BACKLOG_OBJECTIVE_TO_QUARTER,
-    EDIT_BACKLOG_KEY_RESULT_TITLE_AND_DIFFICULTY
+    EDIT_BACKLOG_KEY_RESULT_TITLE_AND_DIFFICULTY,
+    ADD_TO_QUARTER_ERROR,
+    CLEAR_BACKLOG_ERRORS
 } from '../actions/userBacklogActions';
 
 const initialState = {
     categoryTabIndex: 0,
-    backlogObjectives: []
+    backlogObjectives: [],
+    errorMessage: ''
 };
 
 export default function userBacklogReducer(state = initialState, action) {
@@ -116,13 +119,25 @@ export default function userBacklogReducer(state = initialState, action) {
             });
         }
 
+        case CLEAR_BACKLOG_ERRORS: {
+            return Object.assign({}, state, {
+                errorMessage: ''
+            });
+        }
+
+        case ADD_TO_QUARTER_ERROR: {
+            let { message } = action.data;
+            return Object.assign({}, state, {
+                errorMessage: message
+            });
+        }
+
         default:
             return state;
     }
 }
 
 function addNewKeyResultToBacklog(objectives, userObjectiveId, keyResult) {
-    console.log('add keyresult');
     let data = objectives;
     data.forEach((objective) => {
         objective._id === userObjectiveId ? objective.keyResults.push(keyResult) : null;

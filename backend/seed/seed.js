@@ -15,12 +15,13 @@ function seed(items) {
 	async.forEach(mongoose.connection.collections, function (collection, done) {
 		collection.drop(function (err) {
 			if (err && err.message != 'ns not found') {
-				done(err);
+				return done(err);
 			}
 
 			console.log('Collection ' + collection.name + ' dropped successfully');
 
 			var seedItems = items[collection.name];
+
 			if (seedItems) {
 				collection.insertMany(seedItems, (err) => {
 					if (err) {
@@ -35,6 +36,7 @@ function seed(items) {
 			} else {
 				done();
 			}
+
 		});
 	}, (err, result) => {
 		if (!err) {

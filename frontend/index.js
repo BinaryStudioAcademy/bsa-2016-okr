@@ -38,24 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
 	render(
 		(<Provider store={store}>
 			<Router history={history}>
-			<Route path={ `${ROOT_URL}/` } component={App}>
-			<IndexRoute component={HomePage} />
-			<Route path="users" component={ListOfUsers} />
-			<Route path="user/:id" component={UserPage} />
-			<Route path="recycle-bin" component={UserRecycleBin} />
-			<Route path="charts" component={StatsPage} />
-			<Route path="history" component={History} />
-			<Route path="roles" component={RolesPage} onEnter={ adminOnly } />
-			<Route path="obj-accept" component={ObjAccept} onEnter={ adminOnly } />
-			<Route path="okr-managing" component={OKRmanaging} onEnter={ adminOnly } />
-			<Route path="admin-recycle-bin" component={AdminRecycleBin} onEnter={ adminOnly } />
-			<Route path="users-actions" component={ UsersActions } />
-			<Route path="objective" component={ObjectiveView} />
-			<Route path="backlog" component={UserBacklog} />
-			<Route path="*" component={NotFound}>
-			<IndexRedirect from="*" to="/" />
-			</Route>
-			</Route>
+				<Route path={ `${ROOT_URL}/` } component={App}>
+					<IndexRoute component={HomePage} />
+					<Route path="users" component={ListOfUsers} />
+					<Route path="user/:id" component={UserPage} />
+					<Route path="recycle-bin" component={UserRecycleBin} />
+					<Route path="charts" component={StatsPage} />
+					<Route path="history" component={History} />
+					<Route path="roles" component={RolesPage} onEnter={ adminOnly } />
+					<Route path="obj-accept" component={ObjAccept} onEnter={ adminOnly } />
+					<Route path="okr-managing" component={OKRmanaging} onEnter={ adminOnly } />
+					<Route path="admin-recycle-bin" component={AdminRecycleBin} onEnter={ adminOnly } />
+					<Route path="users-actions" component={ UsersActions } />
+					<Route path="objective" component={ObjectiveView} />
+					<Route path="backlog" component={UserBacklog} />
+					<Route path="*" component={NotFound}>
+					<IndexRedirect from="*" to="/" />
+				</Route>
+				</Route>
 			</Router>
 			</Provider>)
 			, document.getElementById('root'));

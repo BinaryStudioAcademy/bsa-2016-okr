@@ -136,11 +136,15 @@ render() {
 	let displayedCategoriesEl = displayedCategories.sort((a, b) => {
 		return a.title.localeCompare(b.title);
 	}).map((category, index) => {
-		let objectiveIndex = objectives.findIndex((objective) => {
-			return objective.category === category._id && objective.isDeleted == false;
-		});
+		let objectiveIndex = -1;
 
-		let isEmptyCategory = (objectiveIndex === -1) ? true : false;
+		if (!isEmpty(objectives)) {
+			objectiveIndex = objectives.findIndex((objective) => {
+				return objective.category === category._id && objective.isDeleted == false;
+			});
+		}
+
+		let isEmptyCategory = (objectiveIndex === -1);
 
 		return (
 			<CategoryItem

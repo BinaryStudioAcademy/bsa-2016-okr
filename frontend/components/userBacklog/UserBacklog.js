@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import cookie from 'react-cookie';
 
+import 'alertifyjs/build/css/alertify.css';
+import alertify from 'alertifyjs';
+
 import * as userBacklogActions from "../../actions/userBacklogActions";
 import * as objectiveActions from "../../actions/objectiveActions";
 import * as myStateActions from "../../actions/myStateActions";
@@ -18,7 +21,7 @@ import CategoriesTabs from './CategoryTabs';
 import ObjectiveInput from '../common/objective/objectiveInput.jsx';
 import ObjectiveItem from '../common/objective/objective.jsx';
 
-import '../common/styles/sweetalert.css';
+import './userBacklog.scss';
 
 const session = cookie.load('user-id');
 
@@ -70,15 +73,19 @@ class UserBacklog extends Component {
     }
 
     selectCategory(category) {
+        this.props.userBacklogActions.clearErrors();
         this.selectedCategory = category;
-        // let userId = this.props.routeParams.id || this.props.myState.me._id;
         this.props.userBacklogActions.getObjectivesByCategory(this.userId, category._id);
     }
 
     componentWillMount() {
         this.props.userBacklogActions.setActiveTab(0);
-        this.selectedCategory = this.props.categories.list[0];
+        this.selectedCategory = this.props.categories.list[0] || {};
         this.props.userBacklogActions.getObjectivesByCategory(this.userId, this.selectedCategory._id);
+    }
+
+    componentWillUnmount() {
+        this.props.userBacklogActions.clearErrors();
     }
 
     updateUserObjectiveApi(id, description, title) {
@@ -183,7 +190,6 @@ class UserBacklog extends Component {
                                   setAutocompleteKeyResultsSelectedItem = { this.props.keyResultActions.setAutocompleteKeyResultsSelectedItem }
             />
         });
-
     }
 
     getObjectiveAutoCompleteData(title) {
@@ -191,11 +197,28 @@ class UserBacklog extends Component {
         this.props.objectiveActions.getAutocompleteObjectivesBacklog(category._id, title);
     }
 
+    showAlertMessage() {
+        alertify.notify(this.props.userBacklog.errorMessage, 'error', 5, () => {
+            this.props.userBacklogActions.clearErrors();
+        });
+    }
+
     render() {
         let objectives = this.renderObjectives();
 
+        if (isEmpty(this.props.categories.list)) {
+            return <h1 className="placeholder">No categories</h1>;
+        }
+
+        if (this.props.userBacklog.errorMessage) {
+            this.showAlertMessage();
+        }
+
         return (
             <div className={ this.props.userId ? '' : 'main-content'}>
+                <div className="backlog-title">
+                    <p><span>Backlog</span></p>
+                </div>
                 <CategoriesTabs selectCategory={ this.selectCategory }/>
                 <ObjectiveInput
                     createObjective={ this.createBacklogObjective }

@@ -191,8 +191,11 @@ HistoryService.prototype.filterBy = function (eventList, filter, callback) {
 				&& !isNaN(Date.parse(filters[key].from))
 				&& !isNaN(Date.parse(filters[key].to)))
 			{
-				if (!( Date.parse(item.createdAt) >= Date.parse(filters[key].from) )
-				 || !( Date.parse(item.createdAt) <= Date.parse(filters[key].to)) )
+				var itemDate = new Date(item.createdAt);
+				var utc = itemDate.setHours(0, 0, 0, 0);
+
+				if (!( utc >= Date.parse(filters[key].from) )
+				 || !( utc <= Date.parse(filters[key].to)) )
 				{
 					isFiltered = false;
 				}

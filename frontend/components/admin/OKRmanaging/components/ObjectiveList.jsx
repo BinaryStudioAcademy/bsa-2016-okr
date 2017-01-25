@@ -40,6 +40,11 @@ class ObjectiveList extends Component {
     } = this.props;
 
     const { visibleObjectives } = objectivesList;
+
+    if (isEmpty(visibleObjectives)) {
+      return <div></div>;
+    }
+
     let displayedObjectivesEl = visibleObjectives.filter((objective) => {
       return !objective.isDeleted;
     }).sort((a, b) => {

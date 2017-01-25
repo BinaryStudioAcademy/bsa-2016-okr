@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actions from "../../../actions/recycleBinActions.js";
-
+import {NOT_SORTED, SORTED_ASC, SORTED_DESC} from "../../../../backend/config/constants";
 
 class RecycleBinFilter extends Component {
 
@@ -117,7 +117,7 @@ class RecycleBinFilter extends Component {
 		this.refs.dateFrom.onFieldChange('');
 		this.refs.dateTo.onFieldChange('');
 
-		this.props.updateAll("", "", "", true, true, false, true, "", false);
+		this.props.updateAll("", "", "", true, true, SORTED_DESC, true, "", false);
 
 	}
 
