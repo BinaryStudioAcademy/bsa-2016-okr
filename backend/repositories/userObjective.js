@@ -117,8 +117,7 @@ UserObjectiveRepository.prototype.getTemplateFieldByObjectiveIds = function(obje
 		.exec(callback);
 };
 
-UserObjectiveRepository.prototype.getDeletedByUserIdPopulate = function(userId, callback) {
-	
+UserObjectiveRepository.prototype.getDeletedByUserIdPopulate = function(userId, callback) {	
 	var model = this.model;
 
 	model
@@ -136,6 +135,50 @@ UserObjectiveRepository.prototype.getDeletedByUserIdPopulate = function(userId, 
 			}
 		})
 		.exec(callback);
-}
+};
+
+UserObjectiveRepository.prototype.getWithoutBacklogPopulate = function(callback) {
+	var model = this.model;
+	model
+		.find({ isDeleted: false, quarterId: { $ne: null } })
+		.populate({
+			path: "templateId",
+			populate: [{
+				path: "creator",
+				populate: {
+					path: 'userInfo mentor',
+					populate: {
+						path: 'userInfo'
+					}
+				}
+			}, {
+				path: 'category'
+			}],							
+		})
+		.populate({
+			path: 'keyResults.templateId',
+			populate: [{
+				path: "creator",
+				populate: {
+					path: 'userInfo mentor',
+					populate: {
+						path: 'userInfo'
+					}
+				}
+			}, {
+				path: "objectiveId",
+				populate: {
+					path: 'category'
+				}
+			}]
+		})
+		.populate({
+			path: "keyResults.deletedBy",
+			populate: {
+				path: 'userInfo'
+			}
+		})
+		.exec(callback);
+};
 
 module.exports = new UserObjectiveRepository();

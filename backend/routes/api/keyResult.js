@@ -8,6 +8,7 @@ const isCorrectId = ValidateService.isCorrectId;
 const HelpService = require('../../utils/HelpService');
 const KeyResultHelpService = require('../../utils/KeyResultHelpService');
 const getValidDifficulty = KeyResultHelpService.getValidDifficulty;
+const UserObjectiveService = require('../../services/userObjective');
 
 router.post('/', adminOnly, (req, res, next) => {
 	var objectiveId = req.body.objectiveId || '';
@@ -39,7 +40,7 @@ router.post('/', adminOnly, (req, res, next) => {
 });
 
 router.get('/notApproved/', adminOnly, (req, res, next) => {
- 	return repository.getAllNotApproved(res.callback);
+	return UserObjectiveService.getNotApprovedKeyResults(res.callback);
 });
 
 router.get('/objective/:objectiveId/:title*?', (req, res, next) => {

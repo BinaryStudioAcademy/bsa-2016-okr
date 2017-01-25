@@ -498,9 +498,3 @@ export function moveToBacklog(id) {
 		flag: true,
 	};
 }
-
-export function moveBacklogError(data) {
-	return {
-
-	}
-}

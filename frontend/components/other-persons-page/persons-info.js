@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import sweetalert from 'sweetalert';
 import '../common/styles/sweetalert.css';
+import { Link } from 'react-router';
 
 import * as actions from "../../actions/otherPersonActions.js";
 
@@ -11,6 +12,10 @@ class PersonsInfo extends Component {
 		super(props);
 		this.takeApprentice = this.takeApprentice.bind(this);
 		this.removeApprentice = this.removeApprentice.bind(this);
+		this.isMentorOrAdmin = this.isMentorOrAdmin.bind(this);
+		this.userHasMentor = this.userHasMentor.bind(this);
+		this.isPersonsMentor = this.isPersonsMentor.bind(this);
+		this.showBacklog = this.showBacklog.bind(this);
 	}
 
 	takeApprentice() {
@@ -45,18 +50,41 @@ class PersonsInfo extends Component {
 		}, function(){handler();});
 	}
 
+	isPersonsMentor() {
+		return this.userHasMentor() && (this.props.user.user.mentor._id == this.props.me._id);		
+	}
+
+	isMentorOrAdmin() {
+		return (this.props.me.localRole == 'mentor' || this.props.me.localRole == 'admin');
+	}
+
+	userHasMentor() {
+		return this.props.user.user.mentor !== null && this.props.user.user._id != this.props.me._id;
+	}
+
+	showBacklog(e) {
+		this.refs.showBacklogBtn.classList.toggle('btn-blue');
+		this.refs.showBacklogBtn.innerHTML = this.refs.showBacklogBtn.classList.contains('btn-blue') ? 'Hide backlog'
+			: 'Show backlog';
+		this.props.showBacklog();
+	}
+
 	render() {
 		let apprentice;
-
-		if (this.props.user.user.mentor == null && this.props.user.user._id != this.props.me._id && (this.props.me.localRole == 'mentor' || this.props.me.localRole == 'admin')) {
-			apprentice = (<button className="btn btn-blue-hover apprentice" title="apprentice" onClick={this.takeApprentice}>Take apprentice</button>);
-		}
-
+		let backlogBtn;	
 		let removeApprenticeButton;
 
-		if (this.props.user.user.mentor != null && this.props.user.user.mentor._id == this.props.me._id && this.props.user.user._id != this.props.me._id) {
-			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>Finish mentoring</button>);
+		if ((this.userHasMentor() && this.isPersonsMentor()) || this.props.me.localRole == 'admin') {
+			backlogBtn = <button ref="showBacklogBtn" onClick={ this.showBacklog } className="btn btn-blue-hover apprentice">Show backlog</button>
 		}
+
+		if (this.isMentorOrAdmin() && !this.userHasMentor()) {
+			apprentice = (<button className="btn btn-blue-hover apprentice" title="apprentice" onClick={this.takeApprentice}>Take apprentice</button>);
+		} 
+
+		if (!apprentice && (this.isPersonsMentor() || this.props.me.localRole == 'admin')) {
+			removeApprenticeButton = (<button className="btn btn-red-hover apprentice" title="remove apprentice" onClick={this.removeApprentice}>Finish mentoring</button>);
+		}		
 
 		let mentorAvatar = null;
 		const {user} = this.props.user
@@ -75,6 +103,7 @@ class PersonsInfo extends Component {
 		return (
 			<div id='topPanel'>
 				<div className='userInfo'>
+					{ backlogBtn }
 					{ apprentice }
 					{ removeApprenticeButton }
 					<div className='logo'>

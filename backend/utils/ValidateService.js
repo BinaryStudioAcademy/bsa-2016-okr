@@ -12,6 +12,7 @@ module.exports = {
 	isValidYear: isValidYear,
 	isValidQuarter: isValidQuarter,
 	isMentorActionAllowed: isMentorActionAllowed,
+	isAdmin: isAdmin
 };
 
 function isCorrectId(id) {
@@ -84,4 +85,8 @@ function isMentorActionAllowed(user, session) {
 		|| (mentorId === sessionId)
 		|| (session.localRole === CONST.user.localRole.ADMIN)
 	);
+}
+
+function isAdmin(user) {
+	return user.localRole === CONST.user.localRole.ADMIN;
 }

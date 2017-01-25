@@ -11,13 +11,14 @@ const isString = ValidateService.isString;
 const HelpService = require('../../utils/HelpService');
 const KeyResultHelpService = require('../../utils/KeyResultHelpService');
 const getValidDifficulty = KeyResultHelpService.getValidDifficulty;
+const UserObjectiveService = require('../../services/userObjective');
 
 router.get('/', (req, res, next) => {
 	return service.getAll(res.callback);
 });
 
  router.get('/notApproved/', adminOnly, (req, res, next) => {
- 	return repository.getAllNotApproved(res.callback);
+	return UserObjectiveService.getNotApprovedObjectives(res.callback);
  });
 
 router.get('/deleted', (req, res, next) => {

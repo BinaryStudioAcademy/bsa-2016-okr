@@ -14,7 +14,7 @@ function dbConnectionHandler() {
 	mongoose.Promise = require('bluebird');
 
 	mongoose.connect(config.uri, config.opts);
-	mongoose.set('debug', true);
+	// mongoose.set('debug', true);
 
 	this.connection = mongoose.connection;
 
